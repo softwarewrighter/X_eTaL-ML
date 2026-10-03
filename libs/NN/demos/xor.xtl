@@ -1,0 +1,22 @@
+#!/usr/bin/env xetal
+# XOR by a two-layer network with hand-set weights: no straight line
+# separates XOR's classes, but one hidden ReLU layer does. Every layer
+# is one nn:d_ense on the whole batch of four points at once.
+# Run with "just demo-lib NN xor".
+"nn:" u_se< "NN"
+# The four points, one per row, and their classes (1: same, 2: differ).
+x := 4 2 r_eshape 0.0 0.0 0.0 1.0 1.0 0.0 1.0 1.0
+y := 1 2 2 1
+# Hidden layer: h1 = relu(a + b), h2 = relu(a + b - 1); the last row
+# of each weight array is its bias.
+w1 := 3 2 r_eshape 1.0 1.0 1.0 1.0 0.0 -1.0
+h := nn:r_elu x nn:d_ense w1
+h
+# Output layer: class 2's score is 4 h1 - 8 h2 - 2, class 1's is 0.
+w2 := 3 2 r_eshape 0.0 4.0 0.0 -8.0 0.0 -2.0
+p := nn:s_oftmax h nn:d_ense w2
+p
+# The predicted classes, the accuracy and the loss.
+nn:a_rgmax p
+y nn:a_ccuracy p
+(2 nn:o_neHot y) nn:c_rossEntropy p

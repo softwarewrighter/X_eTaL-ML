@@ -3,7 +3,9 @@
 # -> 8 filters of 3 x 3 (8 x 26 x 26) -> ReLU -> 2 x 2 max-pooling
 # (8 x 13 x 13) -> dense (10) -> softmax. Every stage is an array
 # program over the whole picture: the convolution is the picture's
-# nine shifted copies times the filters, one matrix product.
+# nine shifted copies times the filters, one matrix product. ReLU,
+# the dense layer, softmax and argmax come from the NN library.
+"nn:" u_se< "NN"
 
 # -- the weights (written by train/: just cnn-train) ---------
 # Trained on the 60,000 MNIST training digits; 9782 of the 10,000
@@ -566,19 +568,18 @@ u:c_onv := { x ->
   y := k9 '+ '* i_nner (9 c_at 676) r_eshape v
   (8 c_at 26 c_at 26) r_eshape y + bc 'l_eft t_able o_ffsets 676
 }
-u:r_elu := { x -> 0.0 m_ax x }
 # -- pooling: the largest of each 2 x 2 block ----------
 u:p_ool := { x -> 'm_ax r_/_3 'm_ax r_/_5 (8 c_at 13 c_at 2 c_at 13 c_at 2) r_eshape x }
 # -- dense: 1352 pooled values to 10 -------------------
-u:d_ense := { h -> bd + r_avel ((1 c_at 1352) r_eshape r_avel h) '+ '* i_nner w }
-# -- softmax: the ten scores as probabilities ----------
-u:s_oftmax := { z ->
-  e := e_xp z - 'm_ax r_/ z
-  e / '+ r_/ e
-}
-u:c_lassify := { x -> u:s_oftmax u:d_ense u:p_ool u:r_elu u:c_onv x }
-# The digit with the largest probability.
-u:a_rgmax := { p -> '+ r_/ (f_loat p = 'm_ax r_/ p) * f_loat o_ffsets 10 }
+# The pooled values as one row, through the layer: w with the
+# biases bd as one more row.
+wb := w c_at (1 c_at 10) r_eshape bd
+u:d_ense := { h -> r_avel ((1 c_at 1352) r_eshape r_avel h) nn:d_ense wb }
+# -- softmax: the ten scores as probabilities (nn:s_oftmax) --
+u:c_lassify := { x -> nn:s_oftmax u:d_ense u:p_ool nn:r_elu u:c_onv x }
+# The digit with the largest probability (positions count from 1,
+# digits from 0).
+u:a_rgmax := { p -> (nn:a_rgmax p) - 1 }
 # -- end of the core -----------------------------------
 
 # The test digit 7, drawn darkest to brightest.
@@ -586,7 +587,7 @@ x := 8 s_elect samples
 s_hape x
 (1 + f_loor 0 m_ax 7 m_in 8.0 * x) s_elect " .:-=+*#"
 # The stages' shapes.
-(s_hape u:c_onv x) c_at (s_hape u:p_ool u:r_elu u:c_onv x) c_at s_hape u:d_ense u:p_ool u:r_elu u:c_onv x
+(s_hape u:c_onv x) c_at (s_hape u:p_ool nn:r_elu u:c_onv x) c_at s_hape u:d_ense u:p_ool nn:r_elu u:c_onv x
 # Its ten probabilities, rounded.
 (f_loat f_loor 0.5 + 1000.0 * u:c_lassify x) / 1000.0
 # What the network reads in each of the ten test digits (0 to 9).

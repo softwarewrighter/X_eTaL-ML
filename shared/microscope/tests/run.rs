@@ -39,3 +39,9 @@ fn errors_are_reported() {
 fn sections_cut_between_markers() {
     assert_eq!(section("a\n# start\nx\n# end\nb", "# start", "# end"), "# start\nx\n");
 }
+
+#[test]
+fn a_program_imports_this_repos_libraries() {
+    let out = microscope::run::output("\"nn:\" u_se< \"NN\"\nnn:r_elu -1.0 2.0\n", 1).unwrap();
+    assert_eq!(out, vec!["0.0 2.0".to_string()]);
+}

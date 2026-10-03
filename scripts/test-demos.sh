@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # Test the demos (every demos/<slug>/ but the template), or the named ones:
 #   - each top-level <slug>/*.xtl is a reg-rs baseline in <slug>/reg/
+#     (this repo's libraries on XETAL_PATH, so it can import them)
 #     (cli-<name>.rgt, .out, .err): run with the vendored xetal (--seed
 #     1, pictures to work/draw/<slug>/), its stdout, stderr and exit
 #     code must match;
@@ -26,6 +27,11 @@ command -v reg-rs >/dev/null || { echo "test: reg-rs not found on PATH" >&2; exi
 # command reads the same anywhere); the .rgt (command, exit code) and
 # the .out / .err are committed, the .tdb cache is not.
 export XETAL="$xetal"
+# This repo's libraries on XETAL_PATH, as paths relative to a demo's
+# directory (every demo is demos/<slug>/), so `u_se<` finds them and
+# baselines do not depend on where the repository is checked out.
+XETAL_PATH="$(cd "$root" && ls -d libs/*/src 2>/dev/null | sed 's#^#../../#' | paste -sd: -)"
+export XETAL_PATH
 # bless DIR DATA NAME COMMAND DESC: make (or remake) baseline NAME in
 # DATA from the current output, running COMMAND from DIR. An existing
 # baseline keeps its command and description; remaking (rather than

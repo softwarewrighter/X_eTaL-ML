@@ -29,6 +29,7 @@ pub fn matrix(name: &str, rows: usize, cols: usize, items: impl IntoIterator<Ite
 /// Run `src` and return its output lines, which must number `lines`;
 /// an X_eTaL error (or a different count) is the Err.
 pub fn output(src: &str, lines: usize) -> Result<Vec<String>, String> {
+    crate::libs::install();
     let run = xetal_play::run(src, 1);
     if !run.err.is_empty() {
         return Err(run.err);

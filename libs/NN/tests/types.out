@@ -1,0 +1,12 @@
+l:r_elu : Float -> Float
+l:l_eaky : Float -> Float -> Float
+l:s_igmoid : Num a => a -> Float
+l:t_anh : Float -> Float
+l:s_oftmax : Num a => a -> Float
+l:l_ogSoftmax : Float -> Float
+l:d_ense : Num a => a -> a -> a
+l:a_rgmax : Num a => a -> Int
+l:o_neHot : Int -> Int -> Float
+l:c_rossEntropy : Float -> Float -> Float
+l:m_se : Float -> Float -> Float
+l:a_ccuracy : Num a => Int -> a -> Float

@@ -84,7 +84,7 @@ an error before the forward pass, not a wrong number after it.
 
 | Library | Alias | What | Status |
 | ------- | ----- | ---- | ------ |
-| NN | `nn:` | activations, softmax by row, dense layers, argmax, one-hot, loss, accuracy | planned |
+| [NN](libs/NN/docs/README.md) | `nn:` | activations, softmax by row, dense layers, argmax, one-hot, loss, accuracy | ready |
 | Quant | `qz:` | FP16, INT8 and ternary quantization, storage and error | planned |
 | Conv | `cv:` | windows, 2-D convolution, pooling | planned |
 | Attention | `at:` | scaled dot-product attention, causal masks, heads | planned |
