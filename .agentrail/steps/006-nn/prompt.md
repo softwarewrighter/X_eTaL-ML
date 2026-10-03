@@ -1,0 +1,1 @@
+foundation step 6: the NN library (nn:) in libs/NN/: activations (r_elu, leaky, s_igmoid, t_anh if not built in), softmax and log-softmax by row, d_ense (x W + b), argmax by row, one-hot, cross-entropy, accuracy; tests with pinned types, page, a demo; moe-router and cnn-digits moved onto it where it fits, baselines unchanged.

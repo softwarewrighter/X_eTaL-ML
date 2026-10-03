@@ -1,0 +1,1 @@
+foundation step 7: the Quant library (qz:) in libs/Quant/: FP16 rounding, INT8 symmetric quantize/dequantize, ternary (BitNet b1.58 absmean) weights, storage bits, quantization error; tests with pinned types, page, a demo; ternary-net moved onto it, baselines unchanged.

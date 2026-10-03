@@ -1,0 +1,9 @@
+number = 6
+slug = "nn"
+status = "pending"
+description = "foundation step 6: the NN library (nn:) in libs/NN/: activations (r_elu, leak..."
+role = "production"
+context_files = []
+created_at = "2026-10-03T08:35:10"
+task_type = "lib"
+commits = []

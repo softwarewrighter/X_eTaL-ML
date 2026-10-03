@@ -1,0 +1,9 @@
+number = 3
+slug = "layout"
+status = "pending"
+description = "foundation step 3: both layouts. Demos as in X_eTaL-demos: demos/_template, s..."
+role = "production"
+context_files = []
+created_at = "2026-10-03T08:35:10"
+task_type = "layout"
+commits = []

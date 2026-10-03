@@ -1,0 +1,9 @@
+number = 7
+slug = "quant"
+status = "pending"
+description = "foundation step 7: the Quant library (qz:) in libs/Quant/: FP16 rounding, INT..."
+role = "production"
+context_files = []
+created_at = "2026-10-03T08:35:10"
+task_type = "lib"
+commits = []

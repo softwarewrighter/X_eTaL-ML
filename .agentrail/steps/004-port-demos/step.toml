@@ -1,0 +1,9 @@
+number = 4
+slug = "port-demos"
+status = "pending"
+description = "foundation step 4: take over ternary-net, moe-router and cnn-digits (CLI; pag..."
+role = "production"
+context_files = []
+created_at = "2026-10-03T08:35:10"
+task_type = "port"
+commits = []
