@@ -52,6 +52,15 @@ test-demo slug:
 bless slug:
     XETAL_BLESS=1 scripts/test-demos.sh "$1"
 
+# Train the ternary-net demo's network offline and write its weights into ternary-net.xtl (then just bless ternary-net)
+ternary-train:
+    cargo run --release -q --manifest-path demos/ternary-net/train/Cargo.toml
+
+# Fetch MNIST into work/mnist/, train the cnn-digits demo's network and write its weights into cnn-digits.xtl (then just bless cnn-digits)
+cnn-train:
+    scripts/mnist.sh
+    cargo run --release -q --manifest-path demos/cnn-digits/train/Cargo.toml
+
 # The libraries: name, recommended alias, what it is
 libs:
     @scripts/libs.py table | column -t -s "$(printf '\t')"

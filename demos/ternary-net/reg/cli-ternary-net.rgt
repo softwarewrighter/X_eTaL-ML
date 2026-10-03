@@ -1,0 +1,3 @@
+command = '"$XETAL" run --seed 1 --draw "$XETAL_DRAW" ternary-net.xtl'
+exit_code = 0
+desc = "ternary-net: ternary-net.xtl run by the vendored xetal CLI"

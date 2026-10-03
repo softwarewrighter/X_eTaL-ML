@@ -1,0 +1,9 @@
+# One demo's description: read by scripts/demos.py for the tests, the
+# README's demo list and the live catalog (pages/index.html).
+slug = "cnn-digits"
+title = "Tiny CNN"
+summary = "A tiny convolutional network trained on MNIST reads a handwritten digit: convolution as the picture's nine shifted copies times eight filters, ReLU, 2 x 2 max-pooling by reshape, a dense layer and softmax, every stage an array program."
+concepts = ["windows by rotation", "inner product", "reshape for pooling", "softmax"]
+status = "draft"
+order = 70
+needs = ["inner product speed"]

@@ -1,0 +1,9 @@
+# One demo's description: read by scripts/demos.py for the tests, the
+# README's demo list and the live catalog (pages/index.html).
+slug = "ternary-net"
+title = "1.58-bit network"
+summary = "One tiny classifier run with its weights stored four ways (FP32, FP16, INT8, ternary -1/0/+1) and compared: maps, accuracy, error, storage, operations. A ternary layer is additions and subtractions only; ternary works when the network was trained for it."
+concepts = ["inner product", "quantization as array expressions", "reduce over two axes", "masks"]
+status = "live"
+order = 60
+needs = ["inner product speed"]

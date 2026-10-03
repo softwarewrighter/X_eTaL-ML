@@ -1,0 +1,11 @@
+[package]
+name = "ternary-net-train"
+description = "Trains the ternary-net demo's tiny network offline and writes its weights into ternary-net.xtl"
+version = "0.1.0"
+edition = "2021"
+license = "MIT"
+publish = false
+
+[dependencies]
+
+[workspace]

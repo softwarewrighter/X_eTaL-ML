@@ -1,6 +1,6 @@
 number = 4
 slug = "port-demos"
-status = "pending"
+status = "in-progress"
 description = "foundation step 4: take over ternary-net, moe-router and cnn-digits (CLI; pag..."
 role = "production"
 context_files = []

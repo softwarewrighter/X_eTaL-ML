@@ -66,9 +66,9 @@ an error before the forward pass, not a wrong number after it.
 
 | Demo | What you see | Array ideas | Status |
 | ---- | ------------ | ----------- | ------ |
-| 1.58-bit network | one classifier with FP32, FP16, INT8 and ternary weights compared; a ternary layer as additions | inner product, quantization, masks | moving here from X_eTaL-demos |
-| MoE routing microscope | a sentence's tokens routed to their top-2 of 16 experts; nudge a token and see where the experts switch | matrix product, softmax, top-k by masks | moving here from X_eTaL-demos |
-| Tiny CNN | a digit read by a tiny network trained on MNIST, every stage visible | windows, convolution, reshape | moving here from X_eTaL-demos |
+| [1.58-bit network](demos/ternary-net/README.md) | one classifier with FP32, FP16, INT8 and ternary weights compared; a ternary layer as additions | inner product, quantization, masks | page being published |
+| [MoE routing microscope](demos/moe-router/README.md) | a sentence's tokens routed to their top-2 of 16 experts; nudge a token and see where the experts switch | matrix product, softmax, top-k by masks | page being published |
+| [Tiny CNN](demos/cnn-digits/README.md) | a digit read by a tiny network trained on MNIST, every stage visible | windows, convolution, reshape | command line; page planned |
 | Attention microscope | the attention heatmap, rows meeting columns | matrix product, transpose, softmax | planned |
 | Embedding explorer | PCA from 64 dimensions to a 3-D cloud | covariance, projection | planned |
 | Gradient descent | a small model trained in X_eTaL itself | outer product, reduce, iteration | planned |
