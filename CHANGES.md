@@ -13,6 +13,7 @@ refresh of the vendored X_eTaL.
 
 ## 2026-10-03
 
+- 10:00 `build` The live site: `just pages` (trunk per demo into pages/<slug>/ under /X_eTaL-ML/, the catalog pages/index.html retitled ML with links to the sibling sites), `serve-pages`, `serve`, `browser-check` (headless Chrome; browser-SLUG baselines for ternary-net and moe-router, passing), `screenshots`; .github/workflows/pages.yml (upload only); GitHub Pages enabled at https://softwarewrighter.github.io/X_eTaL-ML/; README live links; the logo as images/modern-xetal-logo.jpg with the favicon.
 - 09:42 `chore` Saga step port-demos completed.
 - 09:40 `demo` ternary-net, moe-router and cnn-digits taken over from X_eTaL-demos (programs, READMEs, reg-rs CLI baselines, web apps, trainers with `just ternary-train` and `just cnn-train`, scripts/mnist.sh): all baselines and web tests pass unchanged on abb8274, and both trainers rewrite their weights byte for byte. moe-router's page passes the word numbers as Ints (ask M7 landed). Asks M3-M9 re-run against abb8274: M7, M8 landed; M3 slower (about 700 ns per multiply-add); M4, M5, M9 open.
 - 09:12 `chore` Saga step layout completed.

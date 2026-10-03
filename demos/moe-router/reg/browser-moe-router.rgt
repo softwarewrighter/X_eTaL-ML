@@ -1,0 +1,3 @@
+command = "scripts/browser-check.sh moe-router"
+exit_code = 0
+desc = "moe-router: the built page run in headless Chrome shows X_eTaL's results"

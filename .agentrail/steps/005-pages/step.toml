@@ -1,6 +1,6 @@
 number = 5
 slug = "pages"
-status = "pending"
+status = "in-progress"
 description = "foundation step 5: the live site as in X_eTaL-demos: scripts/build-catalog.py..."
 role = "production"
 context_files = []

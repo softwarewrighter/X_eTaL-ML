@@ -1,0 +1,8 @@
+# Text the page shows only after X_eTaL has run (scripts/browser-check.sh).
+5 tokens
+3 tokens
+first: expert
+gate 1 =
+its probabilities
+The pair of experts changes 8 times along the path:
+between ε = 0.19 and 0.20: experts 9 and 11 → 11 and 9

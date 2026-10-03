@@ -61,6 +61,26 @@ cnn-train:
     scripts/mnist.sh
     cargo run --release -q --manifest-path demos/cnn-digits/train/Cargo.toml
 
+# Load one demo's built page in headless Chrome and check it shows X_eTaL's results
+browser-check slug:
+    scripts/browser-check.sh "$1"
+
+# Build the live site into pages/ (committed; the Pages workflow publishes it)
+pages:
+    scripts/build-pages.sh
+
+# Serve the built pages/ as GitHub Pages will: http://127.0.0.1:8098/X_eTaL-ML/
+serve-pages port="8098":
+    scripts/serve-pages.sh "$1"
+
+# Serve one demo's web app locally, rebuilt on change: just serve moe-router
+serve slug port="8095":
+    cd demos/{{slug}}/web && trunk serve --release --port {{port}} --address 127.0.0.1
+
+# Screenshot every demo (from the built pages/) into demos/<slug>/screenshot.png
+screenshots *slugs:
+    scripts/screenshots.sh "$@"
+
 # The libraries: name, recommended alias, what it is
 libs:
     @scripts/libs.py table | column -t -s "$(printf '\t')"

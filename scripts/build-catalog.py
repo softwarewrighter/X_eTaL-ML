@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Write pages/index.html: the live catalog of the demos.
+"""Write pages/index.html: the live catalog of the ML demos.
 
   scripts/build-catalog.py [OUT]     # default pages/index.html
 
@@ -28,7 +28,7 @@ PAGE = """<!doctype html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>X_eTaL Demos</title>
+<title>X_eTaL ML</title>
 <link rel="icon" href="favicon.ico">
 <style>
 :root {{ --bg:#fbfaf7; --fg:#1d1d1f; --muted:#5f6368; --card:#ffffff; --line:#e3e0d8;
@@ -71,10 +71,12 @@ code {{ font-family: ui-monospace, "JuliaMono", Menlo, monospace; }}
 <body>
 <main>
 <header>
-<div class="brand"><img class="logo" src="modern-xetal-logo.jpg" alt="X_eTaL"><h1>Demos</h1></div>
-<p class="lede">Small programs in <a href="{xetal}">X_eTaL</a>, a typed array language,
-that make something worth watching. Each one shows its program beside the result, so you
-can see a whole loop nest happen as one array expression.</p>
+<div class="brand"><img class="logo" src="modern-xetal-logo.jpg" alt="X_eTaL"><h1>ML</h1></div>
+<p class="lede">Machine learning in <a href="{xetal}">X_eTaL</a>, a typed array language:
+small models you can watch think. Each one shows its program beside the model, so you can
+see a layer, a router or a quantizer happen as one array expression. More X_eTaL:
+<a href="https://softwarewrighter.github.io/X_eTaL-demos/">visual demos</a>,
+<a href="https://softwarewrighter.github.io/X_eTaL-libraries/">libraries</a>.</p>
 </header>
 {body}
 </main>
