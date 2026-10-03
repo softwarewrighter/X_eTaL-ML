@@ -13,6 +13,7 @@ refresh of the vendored X_eTaL.
 
 ## 2026-10-03
 
+- 09:42 `chore` Saga step port-demos completed.
 - 09:40 `demo` ternary-net, moe-router and cnn-digits taken over from X_eTaL-demos (programs, READMEs, reg-rs CLI baselines, web apps, trainers with `just ternary-train` and `just cnn-train`, scripts/mnist.sh): all baselines and web tests pass unchanged on abb8274, and both trainers rewrite their weights byte for byte. moe-router's page passes the word numbers as Ints (ask M7 landed). Asks M3-M9 re-run against abb8274: M7, M8 landed; M3 slower (about 700 ns per multiply-add); M4, M5, M9 open.
 - 09:12 `chore` Saga step layout completed.
 - 09:10 `build` Layout: demos/<slug>/ (demos/_template, scripts/demos.py, test-demos.sh with reg-rs baselines, run-demo.sh, new-demo.sh, selftest-demos.sh, build-catalog.py) as in X_eTaL-demos, and libs/<Name>/ (templates/Library, scripts/xt, libs.py, test-libs.sh with pinned types, run-lib.sh, new-lib.sh, selftest-libs.sh, check-examples.py) as in X_eTaL-libraries; shared/microscope taken over; recipes (demos, new-demo, run, show, test-demo, bless, libs, path, new-lib, run-lib, demo-lib, show-lib, types, test-lib, bless-lib, test); the gate runs all of it.

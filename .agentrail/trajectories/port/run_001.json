@@ -1,0 +1,11 @@
+{
+  "task_type": "port",
+  "state": {
+    "number": 4,
+    "step": "port-demos"
+  },
+  "action": "rsync from X_eTaL-demos; test-demos; trainer reruns; asks repros",
+  "result": "success",
+  "reward": 1,
+  "timestamp": "2026-10-03T09:52:39"
+}

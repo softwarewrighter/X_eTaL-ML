@@ -1,0 +1,1 @@
+Took over ternary-net, moe-router, cnn-digits (CLI); baselines unchanged on abb8274; trainers reproduce weights byte for byte; M7/M8 landed (moe-router Int ids), M3 regressed, others open

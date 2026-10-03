@@ -1,9 +1,10 @@
 number = 4
 slug = "port-demos"
-status = "in-progress"
+status = "completed"
 description = "foundation step 4: take over ternary-net, moe-router and cnn-digits (CLI; pag..."
 role = "production"
 context_files = []
 created_at = "2026-10-03T08:35:10"
+completed_at = "2026-10-03T09:52:39"
 task_type = "port"
-commits = []
+commits = ["8be6e668caaee21b6a310e5fc03a74ce633b3afe"]
