@@ -1,0 +1,1 @@
+Scaffold: saga foundation (7 steps), CLAUDE.md + AGENTS.md symlink, README, COPYRIGHT, LICENSE, CHANGES.md, .gitignore, justfile, gate (markdown), docs/plan.md, docs/xetal-asks.md

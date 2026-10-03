@@ -13,5 +13,6 @@ refresh of the vendored X_eTaL.
 
 ## 2026-10-03
 
+- 08:42 `chore` Saga step scaffold completed.
 - 08:40 `build` Scaffold: the agentrail saga foundation (scaffold, vendor-xetal, layout, port-demos, pages, nn, quant); CLAUDE.md (AGENTS.md a symlink); README (why an array language for ML, how X_eTaL differs from APL, the three kinds of extensibility, the X_eTaL repositories, demos, libraries); COPYRIGHT and LICENSE (MIT) as in the sibling repos; docs/plan.md (A1-A12, the gallery, the libraries, sagas 1-4, the Net.xtlm design); docs/xetal-asks.md (M1-M9); .gitignore; justfile; the gate (ASCII-only markdown).
 - 07:07 `docs` The empty README (the repository's first commit).
