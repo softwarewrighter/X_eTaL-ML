@@ -1,9 +1,10 @@
 number = 3
 slug = "layout"
-status = "in-progress"
+status = "completed"
 description = "foundation step 3: both layouts. Demos as in X_eTaL-demos: demos/_template, s..."
 role = "production"
 context_files = []
 created_at = "2026-10-03T08:35:10"
+completed_at = "2026-10-03T09:08:04"
 task_type = "layout"
-commits = []
+commits = ["0447d65c35febd5399aae20a8c0d2ec7663d1908"]

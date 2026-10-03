@@ -1,0 +1,1 @@
+Both layouts with tooling from sibling repos (demos + libs), shared/microscope, recipes, gate runs self-tests
