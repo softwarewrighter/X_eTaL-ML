@@ -88,14 +88,14 @@ pages/                   the built live site (committed)
 | ----------- | ------------- | ------------ | ---- | ---- |
 | ternary-net | one classifier in FP32, FP16, INT8 and ternary; a ternary layer as additions | inner product, quantization, masks | X_eTaL-demos (live) | 1 |
 | moe-router | tokens routed to their top-2 of 16 experts; nudge a token and watch the experts switch | matrix product, softmax, top-k by masks | X_eTaL-demos (live) | 1 |
-| cnn-digits | draw a digit; conv, ReLU, pool, dense, softmax, every stage visible | windows by rotation, reshape, inner product | X_eTaL-demos (weights done, page planned) | 1 (CLI), 3 (page) |
-| attention | Q, K, V, S = Q K^T / sqrt d, softmax heatmap, rows meeting columns; a causal mask | matrix product, transpose, softmax | X_eTaL-demos (deferred there: transpose, now landed) | 3 |
-| embedding-explorer | 64-dimensional embeddings projected to a rotatable 3-D cloud by PCA | covariance, power iteration, transpose | X_eTaL-demos (deferred there) | 3 |
-| gradient-descent | a tiny model trained in X_eTaL itself: the loss surface, the path, the update as one expression | outer product, reduce, iteration | new | 3 |
-| micro-gpt | microgpt's forward pass (embedding, RMSNorm, attention, MLP) on weights trained offline; sample names | everything above | microgpt-mlpl (port) | 3 |
-| net-macro | a network written as `"..." net:n_etwork<` and its expansion beside it | `.xtlm` macros, `xetal expand` | new | 4 (blocked: M1) |
-| world-model | a ball's next frame predicted from the last three | recurrence, prediction | X_eTaL-demos (deferred) | 4 |
-| diffusion | noise to image, step by step | tensor transforms, iteration | X_eTaL-demos (deferred) | 4 |
+| cnn-digits | draw a digit; conv, ReLU, pool, dense, softmax, every stage visible | windows by rotation, reshape, inner product | X_eTaL-demos (weights done, page planned) | 1 (CLI), 2 (page) |
+| attention | Q, K, V, S = Q K^T / sqrt d, softmax heatmap, rows meeting columns; a causal mask | matrix product, transpose, softmax | X_eTaL-demos (deferred there: transpose, now landed) | 2 |
+| embedding-explorer | 64-dimensional embeddings projected to a rotatable 3-D cloud by PCA | covariance, power iteration, transpose | X_eTaL-demos (deferred there) | 4 (post-launch) |
+| gradient-descent | a tiny model trained in X_eTaL itself: the loss surface, the path, the update as one expression | outer product, reduce, iteration | new | 4 (post-launch) |
+| micro-gpt | microgpt's forward pass (embedding, RMSNorm, attention, MLP) on weights trained offline; sample names | everything above | microgpt-mlpl (port) | 4 (post-launch) |
+| net-macro | a network written as `"..." net:n_etwork<` and its expansion beside it | `.xtlm` macros, `xetal expand` | new | 3 (blocked: M1) |
+| world-model | a ball's next frame predicted from the last three | recurrence, prediction | X_eTaL-demos (deferred) | 4 (post-launch) |
+| diffusion | noise to image, step by step | tensor transforms, iteration | X_eTaL-demos (deferred) | 4 (post-launch) |
 
 ## The libraries
 
@@ -105,14 +105,14 @@ alias is the importer's choice.
 | Library | Alias | What | Taken from | Saga |
 | ------- | ----- | ---- | ---------- | ---- |
 | NN | `nn:` | activations (ReLU, leaky ReLU, sigmoid, tanh), softmax and log-softmax by row, a dense layer, argmax by row, one-hot, cross-entropy, accuracy | ternary-net, moe-router, cnn-digits | 1 |
-| Quant | `qz:` | FP16 rounding, INT8 symmetric quantize and dequantize, ternary (BitNet b1.58 absmean) weights, storage bits, quantization error | ternary-net | 1 |
-| Conv | `cv:` | windows by rotation, 2-D convolution of several filters, max- and average-pooling by reshape, padding | cnn-digits, X_eTaL-demos image-pipeline | 2 |
-| Attention | `at:` | scaled dot-product attention, causal mask, masked softmax, heads split and merged | research (attention) | 2 |
-| Norm | `nm:` | layer norm, RMSNorm, standardize columns, batch statistics | microgpt | 2 |
-| Embed | `em:` | centering, covariance, power iteration for the top components, PCA projection, cosine similarity, nearest neighbours | research (embedding explorer) | 2 |
-| Sample | `sm:` | temperature, top-k and top-p filtering, sampling from a distribution with `r_oll` | microgpt | 2 |
-| Optim | `op:` | hand-derived gradients for linear and logistic regression and a dense layer, SGD and momentum steps, a training loop by `p_ower` | new | 3 |
-| Net (`.xtlm`) | `net:` | `"784 128 relu 10 softmax" net:n_etwork<` -> a forward function built from `nn:` calls | research3.txt | 4 (blocked: M1) |
+| Quant | `qz:` | FP16 rounding, INT8 symmetric quantize and dequantize, ternary (BitNet b1.58 absmean) weights, storage bits, quantization error | ternary-net | 4 (post-launch) |
+| Conv | `cv:` | windows by rotation, 2-D convolution of several filters, max- and average-pooling by reshape, padding | cnn-digits, X_eTaL-demos image-pipeline | 4 (post-launch) |
+| Attention | `at:` | scaled dot-product attention, causal mask, masked softmax, heads split and merged | research (attention) | 4 (post-launch; the attention demo keeps its definitions) |
+| Norm | `nm:` | layer norm, RMSNorm, standardize columns, batch statistics | microgpt | 4 (post-launch) |
+| Embed | `em:` | centering, covariance, power iteration for the top components, PCA projection, cosine similarity, nearest neighbours | research (embedding explorer) | 4 (post-launch) |
+| Sample | `sm:` | temperature, top-k and top-p filtering, sampling from a distribution with `r_oll` | microgpt | 4 (post-launch) |
+| Optim | `op:` | hand-derived gradients for linear and logistic regression and a dense layer, SGD and momentum steps, a training loop by `p_ower` | new | 4 (post-launch) |
+| Net (`.xtlm`) | `net:` | `"784 128 relu 10 softmax" net:n_etwork<` -> a forward function built from `nn:` calls | research3.txt | 3 (blocked: M1) |
 
 ## Saga 1 -- foundation  [ACTIVE]
 
@@ -128,44 +128,62 @@ and the first two libraries.
 | 4 | port-demos | DONE: the three demos copied (web apps, trainers, reg-rs CLI baselines, screenshots; browser baselines wait for step 5); every baseline and web test passes unchanged on abb8274; both trainers reproduce the committed weights byte for byte (`just ternary-train`, `just cnn-train`, `scripts/mnist.sh`); asks re-run: M7 and M8 landed (moe-router now passes Int word numbers), M3 regressed (about 700 ns per multiply-add), M4, M5, M9 open; X_eTaL-demos' handoff (`docs/xetal-ml-asks.md` there) read. Planned: ternary-net, moe-router and cnn-digits (CLI) copied from X_eTaL-demos with their trainers (`just ternary-train`, `just cnn-train`, `scripts/mnist.sh`); baselines re-run on the new vendor (differences explained); each demo's asks re-checked against it (landed ones marked) |
 | 5 | pages | DONE: the pages tooling from X_eTaL-demos (base `/X_eTaL-ML/`, serve-pages on 8098, screenshots on 8099), the catalog retitled ML with links to the sibling sites; ternary-net and moe-router built and passing their browser baselines in headless Chrome (cnn-digits has no page yet: CLI only, its card says In progress); GitHub Pages enabled (build type workflow) at https://softwarewrighter.github.io/X_eTaL-ML/; README live links. Planned: the live site: catalog from `demo.toml`, trunk per demo, browser checks in headless Chrome, `.github/workflows/pages.yml` (upload only), screenshots; GitHub Pages enabled; README links |
 | 6 | nn | DONE: `libs/NN` with 12 exports (r_elu, l_eaky, s_igmoid, t_anh, s_oftmax, l_ogSoftmax, d_ense, a_rgmax, o_neHot, c_rossEntropy, m_se, a_ccuracy); softmax, log-softmax and argmax work along the last axis of any rank; tests (basics, 16 property checks), pinned types, page, the XOR demo; cnn-digits moved onto it (only its guesses line changed: Ints, not Floats); moe-router keeps its own definitions (A6 refined); demos run with `libs/` on XETAL_PATH and pages get the libraries from an in-memory store (`microscope::libs`). Planned: the NN library (`nn:`): tests, pinned types, page, a demo; moe-router and cnn-digits moved onto it, baselines unchanged |
-| 7 | quant | the Quant library (`qz:`): tests, pinned types, page, a demo; ternary-net moved onto it, baselines unchanged |
+| 7 | recorded-demos | inserted at the user's request: a VHS tape per demo rendered to an animated WebP (`just record`), `just tour SLUG` (the notebook paced, long lines clipped, data runs collapsed), a "Recorded CLI demos" page with how to run them in a clone |
+| 8 | quant | DEFERRED post-launch (research4.txt: no new breadth before the launch); blocked in the saga with that reason, moved to saga 4 |
 
-## Saga 2 -- building blocks
+## Reprioritized for the launch (2026-10-03, research4.txt)
+
+`../X_eTaL/docs/research4.txt` (an audit of all six repos) says the
+ecosystem has enough breadth; what is left before promoting it is to
+stabilize, synchronize, explain and give people one path through it.
+For this repo that means:
+
+- **Stop adding breadth.** No new library before the launch: NN is
+  enough to show the idea; Quant, Conv, Attention, Norm, Embed,
+  Sample and Optim wait (saga 4). No MicroGPT, embedding explorer,
+  gradient descent, world model or diffusion before the launch.
+- **Strongly desirable:** the CNN live page and the attention demo
+  (saga 2). The attention demo keeps its definitions in its program,
+  as moe-router does (A6), so it needs no new library.
+- **Macros right after them:** the network macro (`Net.xtlm`) is one
+  of three downstream consumers that make `.xtlm` convincing (with
+  X_eTaL-libraries' Control.xtlm and X_eTaL-extensions' binding
+  macros), so it is saga 3, ahead of all post-launch work, the day
+  `.xtlm` lands. Asked upstream: implement `.xtlm` before the
+  broader course (research4's order).
+- **The table / inner regression (M3)** is upstream's Saga 30; this
+  repo supplies the ML measurements (`just bench`) and re-checks them
+  when a fixed X_eTaL is vendored.
+- **One path for a newcomer:** the catalog's front page says what
+  each demo is, why it is an array expression and shows the X_eTaL;
+  the recorded CLI demos and the run-it-yourself instructions sit
+  beside the live pages; the ecosystem front door (upstream) links
+  here.
+- **Promotion blockers** this repo hits (M9 bound Bool arithmetic,
+  M3 speed) are listed for the cross-repo audit, and a known-good
+  X_eTaL commit is recorded for the six-repo release tag.
+
+## Saga 2 -- launch
 
 | # | Step slug | Delivers |
 | - | --------- | -------- |
-| 1 | conv | Conv (`cv:`); cnn-digits moved onto it |
-| 2 | attention-lib | Attention (`at:`) |
-| 3 | norm | Norm (`nm:`) |
-| 4 | embed | Embed (`em:`) |
-| 5 | sample | Sample (`sm:`) |
-| 6 | lib-site | the libraries in the live site: a page per library (reference, demos runnable in the browser, types), as X_eTaL-libraries' site |
-| 7 | release-1 | catalog, docs, asks reviewed against a fresh vendor, retrospective |
+| 1 | cnn-digits-page | draw a 28 x 28 digit (or pick one of ten); conv -> ReLU -> pool -> dense -> softmax in X_eTaL, every stage shown with its shape; click a conv output for patch x kernel = value; the X_eTaL pass equals the trainer's Rust pass; browser baseline, screenshot, recording |
+| 2 | attention | the attention microscope: X, Q, K, V, S = Q K^T / sqrt d, softmax heatmap, Y = A V for a short sentence; a causal mask; definitions in the program, each line inspectable; CLI baseline, page, browser baseline, recording |
+| 3 | bench | `just bench`: the ML workloads timed (a 1024 x 16 by 16 x 16 `i_nner`, `t_able` spreads, each demo's run), best of three, the abb8274 baseline in `docs/speed.md`; a warning on a regression over 15 percent, to verify upstream's Saga 30 fix |
+| 4 | start-here | the catalog's front: what each demo shows, why it is one array expression, its X_eTaL; recorded and live demos side by side; how to run them in a clone; README trimmed to what works today, with a status table; a link to the ecosystem front door |
+| 5 | asks-audit | refresh the vendor (after upstream's Saga 30 and terminal work), re-run every ask's repro, mark landed asks and remove their workarounds, list this repo's promotion blockers for the cross-repo audit |
+| 6 | release-1 | catalog, docs, retrospective; the X_eTaL commit this release is known to work with, for the six-repo tag |
 
-## Saga 3 -- the ML gallery
+## Saga 3 -- macros (blocked on M1)
 
-| # | Step slug | Delivers |
-| - | --------- | -------- |
-| 1 | cnn-digits-page | draw a 28 x 28 digit; conv -> ReLU -> pool -> dense -> softmax in X_eTaL; click a conv output for patch x kernel = value |
-| 2 | attention | the attention microscope: Q, K, V, scores, softmax heatmap, output; a causal mask; heads |
-| 3 | embedding-explorer | PCA from 64 dimensions to a rotatable 3-D cloud, every stage inspectable |
-| 4 | optim | Optim (`op:`) |
-| 5 | gradient-descent | training in X_eTaL: loss surface, path, update |
-| 6 | micro-gpt | microgpt inference in X_eTaL on offline-trained weights (port from microgpt-mlpl) |
-| 7 | release-2 | catalog, docs, retrospective |
-
-## Saga 4 -- macros and deferred (blocked)
-
-Started when a vendored X_eTaL supports `.xtlm` (ask M1) or the other
-asks below land; until then only the designs are kept current.
+Started when a vendored X_eTaL supports `.xtlm` (ask M1); until then
+only the design below is kept current.
 
 | # | Step slug | Delivers | Waits on |
 | - | --------- | -------- | -------- |
 | 1 | macro-survey | refresh the vendor; read what X_eTaL implemented (its Saga 19); confirm A10 and the Net design | M1 |
 | 2 | net-macro | `libs/Net/src/Net.xtlm`: `m:n_etwork<` turning a layer list into a forward function of `nn:` calls; tests of the expansion and the result; the net-macro demo showing source and expansion side by side | M1, M2 |
-| 3 | world-model | the tiny world model | training speed, maybe records |
-| 4 | diffusion | the diffusion panels | a learned denoiser, speed |
-| 5 | release-3 | catalog, docs, retrospective | |
+| 3 | release-2 | catalog, docs, retrospective | |
 
 ### Net.xtlm design sketch
 
@@ -185,6 +203,23 @@ so the macro adds notation, never semantics: the expansion is
 type-checked like any code. The exact shape of a dyadic macro call
 and of a definition it produces follows X_eTaL's decisions MC10 to
 MC13 as implemented.
+
+## Saga 4 -- post-launch
+
+The follow-up stream after the launch (research4: material for after
+the announcement), in this order:
+
+| # | Step slug | Delivers |
+| - | --------- | -------- |
+| 1 | quant | the Quant library (`qz:`); ternary-net moved onto it, baselines unchanged |
+| 2 | conv | Conv (`cv:`); cnn-digits moved onto it |
+| 3 | attention-lib | Attention (`at:`); the attention demo keeps its lesson |
+| 4 | norm, sample | Norm (`nm:`), Sample (`sm:`) |
+| 5 | micro-gpt | microgpt inference in X_eTaL on offline-trained weights (port from microgpt-mlpl) |
+| 6 | embed, embedding-explorer | Embed (`em:`); PCA from 64 dimensions to a rotatable 3-D cloud |
+| 7 | optim, gradient-descent | Optim (`op:`); training in X_eTaL |
+| 8 | lib-site | the libraries in the live site, as X_eTaL-libraries' site |
+| 9 | world-model, diffusion | the deferred research demos (training speed, a learned denoiser) |
 
 ## Cross-cutting
 

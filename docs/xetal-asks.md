@@ -15,7 +15,7 @@ X_eTaL (abb8274) on 2026-10-03.
 
 | # | Status | Kind | Ask | Demos, libraries | Workaround |
 | - | ------ | ---- | --- | ---------------- | ---------- |
-| M1 | filed | feature | `.xtlm` macro libraries: `m:n_ame<` macros, `(String, String) -> String`, imported with `u_se<` (X_eTaL decisions MC10 to MC13, its Saga 19; X_eTaL-libraries X1) | Net (`net:n_etwork<`), the net-macro demo | none: they wait (plan A10, saga 4) |
+| M1 | filed | feature | `.xtlm` macro libraries: `m:n_ame<` macros, `(String, String) -> String`, imported with `u_se<` (X_eTaL decisions MC10 to MC13, its Saga 19; X_eTaL-libraries X1). Priority (research4.txt): after the table / inner fix and the terminal, before the broader course; three repos wait on it | Net (`net:n_etwork<`), the net-macro demo | none: they wait (plan A10, saga 4) |
 | M2 | filed | feature | `xetal expand FILE`: the source after macro expansion (X_eTaL-libraries X2) | Net, net-macro | none: waits with M1 |
 | M3 | open | speed | `'+ '* i_nner` (matrix product): about 700 ns per multiply-add at abb8274, worse than at 06d39fa (370 ns); `t_able` regressed too (X_eTaL-demos measured 2.7x) | ternary-net, cnn-digits, NN (`nn:d_ense`) | small maps; pages rerun only what changed |
 | M4 | open | feature | Grade per row (top-k along an axis): `g_rade_2 M` still grades the columns as items | moe-router, Sample (top-k) | the row maximum as a mask, taken out, then the maximum again |

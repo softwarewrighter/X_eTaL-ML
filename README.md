@@ -73,11 +73,11 @@ an error before the forward pass, not a wrong number after it.
 | ---- | ------------ | ----------- | ------ |
 | [1.58-bit network](demos/ternary-net/README.md) ([live](https://softwarewrighter.github.io/X_eTaL-ML/ternary-net/)) | one classifier with FP32, FP16, INT8 and ternary weights compared; a ternary layer as additions | inner product, quantization, masks | live |
 | [MoE routing microscope](demos/moe-router/README.md) ([live](https://softwarewrighter.github.io/X_eTaL-ML/moe-router/)) | a sentence's tokens routed to their top-2 of 16 experts; nudge a token and see where the experts switch | matrix product, softmax, top-k by masks | live |
-| [Tiny CNN](demos/cnn-digits/README.md) | a digit read by a tiny network trained on MNIST, every stage visible | windows, convolution, reshape | command line; page planned |
-| Attention microscope | the attention heatmap, rows meeting columns | matrix product, transpose, softmax | planned |
-| Embedding explorer | PCA from 64 dimensions to a 3-D cloud | covariance, projection | planned |
-| Gradient descent | a small model trained in X_eTaL itself | outer product, reduce, iteration | planned |
-| micro-gpt | a tiny GPT's forward pass, sampling names | all of the above | planned |
+| [Tiny CNN](demos/cnn-digits/README.md) | a digit read by a tiny network trained on MNIST, every stage visible | windows, convolution, reshape | command line; page next |
+| Attention microscope | the attention heatmap, rows meeting columns | matrix product, transpose, softmax | next |
+| Embedding explorer | PCA from 64 dimensions to a 3-D cloud | covariance, projection | later |
+| Gradient descent | a small model trained in X_eTaL itself | outer product, reduce, iteration | later |
+| micro-gpt | a tiny GPT's forward pass, sampling names | all of the above | later |
 | Network macro | a network written as one macro call and its expansion | `.xtlm` macros | waiting on X_eTaL |
 
 ## Libraries
@@ -85,13 +85,13 @@ an error before the forward pass, not a wrong number after it.
 | Library | Alias | What | Status |
 | ------- | ----- | ---- | ------ |
 | [NN](libs/NN/docs/README.md) | `nn:` | activations, softmax by row, dense layers, argmax, one-hot, loss, accuracy | ready |
-| Quant | `qz:` | FP16, INT8 and ternary quantization, storage and error | planned |
-| Conv | `cv:` | windows, 2-D convolution, pooling | planned |
-| Attention | `at:` | scaled dot-product attention, causal masks, heads | planned |
-| Norm | `nm:` | layer norm, RMSNorm, standardizing | planned |
-| Embed | `em:` | covariance, principal components, cosine similarity | planned |
-| Sample | `sm:` | temperature, top-k and top-p sampling | planned |
-| Optim | `op:` | gradients for small models, SGD and momentum | planned |
+| Quant | `qz:` | FP16, INT8 and ternary quantization, storage and error | later |
+| Conv | `cv:` | windows, 2-D convolution, pooling | later |
+| Attention | `at:` | scaled dot-product attention, causal masks, heads | later |
+| Norm | `nm:` | layer norm, RMSNorm, standardizing | later |
+| Embed | `em:` | covariance, principal components, cosine similarity | later |
+| Sample | `sm:` | temperature, top-k and top-p sampling | later |
+| Optim | `op:` | gradients for small models, SGD and momentum | later |
 | Net (`.xtlm`) | `net:` | networks as a macro | waiting on X_eTaL |
 
 What the "waiting" items need from X_eTaL is listed in
