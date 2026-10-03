@@ -1,0 +1,1 @@
+Vendored X_eTaL abb8274 (own commit); vendor/build/check scripts from X_eTaL-demos + X_eTaL-libraries provenance; tools/vendor-probe; recipes; check-vendor in gate
