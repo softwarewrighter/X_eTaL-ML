@@ -100,9 +100,16 @@ and a checkout of [X_eTaL](https://github.com/softwarewrighter/X_eTaL)
 beside this one (only to refresh the vendored copy).
 
 ```bash
-just          # list the recipes
-just gate     # the pre-commit gate
+just                # list the recipes
+just xetal-version  # the vendored X_eTaL (vendor/xetal/VENDORED)
+just eval "'+ r_/ 1 2 3"
+just gate           # the pre-commit gate
 ```
+
+X_eTaL is used through a snapshot of a committed X_eTaL revision in
+`vendor/xetal/` (`just vendor [REF]` refreshes it); every recipe runs
+the CLI built from it into `target/xetal/`, so results do not depend
+on whatever `xetal` is on your PATH.
 
 ## Development
 
