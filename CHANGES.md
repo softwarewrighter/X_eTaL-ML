@@ -13,6 +13,7 @@ refresh of the vendored X_eTaL.
 
 ## 2026-10-03
 
+- 10:45 `fix` The catalog's moe-router card showed a picture of a "404 File not found" page (the screenshot came that way from X_eTaL-demos; the page itself works). `just screenshots` serves pages/ on a free port and refuses to shoot a page that does not answer 200, so a stale server on a fixed port can no longer answer instead; both screenshots retaken, pages/ rebuilt.
 - 10:04 `chore` Saga step pages completed (deploy verified: the catalog, ternary-net and moe-router pages answer at https://softwarewrighter.github.io/X_eTaL-ML/).
 - 10:00 `build` The live site: `just pages` (trunk per demo into pages/<slug>/ under /X_eTaL-ML/, the catalog pages/index.html retitled ML with links to the sibling sites), `serve-pages`, `serve`, `browser-check` (headless Chrome; browser-SLUG baselines for ternary-net and moe-router, passing), `screenshots`; .github/workflows/pages.yml (upload only); GitHub Pages enabled at https://softwarewrighter.github.io/X_eTaL-ML/; README live links; the logo as images/modern-xetal-logo.jpg with the favicon.
 - 09:42 `chore` Saga step port-demos completed.
