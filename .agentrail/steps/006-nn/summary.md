@@ -1,0 +1,1 @@
+NN library (12 exports, any-rank row functions), tests/checks/types/page/XOR demo; cnn-digits moved onto it; libs on XETAL_PATH for demos and in-memory store for pages

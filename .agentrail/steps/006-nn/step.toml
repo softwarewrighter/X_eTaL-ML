@@ -1,9 +1,10 @@
 number = 6
 slug = "nn"
-status = "in-progress"
+status = "completed"
 description = "foundation step 6: the NN library (nn:) in libs/NN/: activations (r_elu, leak..."
 role = "production"
 context_files = []
 created_at = "2026-10-03T08:35:10"
+completed_at = "2026-10-03T13:33:00"
 task_type = "lib"
-commits = []
+commits = ["6f95e700085fbf7ff008159e99ae550091247e49"]
