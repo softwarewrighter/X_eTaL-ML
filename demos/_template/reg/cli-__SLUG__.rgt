@@ -1,0 +1,3 @@
+command = '"$XETAL" run --seed 1 --draw "$XETAL_DRAW" __SLUG__.xtl'
+exit_code = 0
+desc = "__SLUG__: __SLUG__.xtl run by the vendored xetal CLI"

@@ -1,0 +1,9 @@
+# One demo's description: read by scripts/demos.py for the tests, the
+# README's demo list and the live catalog (pages/index.html).
+slug = "__SLUG__"            # the directory name, demos/<slug>/
+title = "__TITLE__"
+summary = "One sentence: what you see and what it reveals."
+concepts = ["arrays"]        # the X_eTaL ideas it shows
+status = "draft"             # draft | live | deferred
+order = 100                  # position in the catalog (lower first)
+needs = []                   # asks in docs/xetal-asks.md it waits on or works around

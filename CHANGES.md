@@ -13,6 +13,7 @@ refresh of the vendored X_eTaL.
 
 ## 2026-10-03
 
+- 09:10 `build` Layout: demos/<slug>/ (demos/_template, scripts/demos.py, test-demos.sh with reg-rs baselines, run-demo.sh, new-demo.sh, selftest-demos.sh, build-catalog.py) as in X_eTaL-demos, and libs/<Name>/ (templates/Library, scripts/xt, libs.py, test-libs.sh with pinned types, run-lib.sh, new-lib.sh, selftest-libs.sh, check-examples.py) as in X_eTaL-libraries; shared/microscope taken over; recipes (demos, new-demo, run, show, test-demo, bless, libs, path, new-lib, run-lib, demo-lib, show-lib, types, test-lib, bless-lib, test); the gate runs all of it.
 - 08:58 `chore` Saga step vendor-xetal completed.
 - 08:56 `build` Vendoring: `just vendor [REF]` (scripts/vendor-xetal.sh: git archive of a committed ref of ../X_eTaL), `just xetal` (built into target/xetal/ with XETAL_BUILD_SHA so `xetal --version` names the vendored commit), `xetal-version`, `eval`, `check-vendor` (eval, version, a demo, a standard-library import, tools/vendor-probe natively and for wasm32) in the gate; .cargo/config.toml (one target dir, the wasm stack size).
 - 08:54 `vendor` X_eTaL abb8274 vendored (transpose, exponent literals, linear Int strands, build provenance; no .xtlm yet).

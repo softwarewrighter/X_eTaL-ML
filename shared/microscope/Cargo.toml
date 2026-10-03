@@ -1,0 +1,15 @@
+[package]
+name = "microscope"
+description = "The shared shell of the X_eTaL ML demos' web pages (taken over from X_eTaL-demos): running X_eTaL and reading arrays back, decorated source, array views, stage chips, panels, header and footer"
+version = "0.1.0"
+edition = "2021"
+license = "MIT"
+publish = false
+
+[dependencies]
+xetal-play = { path = "../../vendor/xetal/components/web/crates/xetal-play" }
+yew = { version = "0.21", features = ["csr"] }
+wasm-bindgen = "0.2"
+web-sys = { version = "0.3", features = ["HtmlCanvasElement", "CanvasRenderingContext2d", "ImageData", "DomRect", "Element", "Window", "Performance"] }
+
+[workspace]

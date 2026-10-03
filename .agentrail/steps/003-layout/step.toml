@@ -1,6 +1,6 @@
 number = 3
 slug = "layout"
-status = "pending"
+status = "in-progress"
 description = "foundation step 3: both layouts. Demos as in X_eTaL-demos: demos/_template, s..."
 role = "production"
 context_files = []

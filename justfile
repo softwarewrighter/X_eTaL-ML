@@ -20,13 +20,78 @@ xetal-version:
     @cat vendor/xetal/VENDORED
     @"$(scripts/build-xetal.sh)" --version | head -1
 
-# Evaluate an expression with the vendored xetal: just eval "'+ r_/ 1 2 3"
+# Evaluate an expression with the vendored xetal, every library on XETAL_PATH: just eval "'+ r_/ 1 2 3"
 eval expr:
-    @"$(scripts/build-xetal.sh)" eval -e "$1"
+    @scripts/xt eval -e "$1"
 
 # Check the vendored X_eTaL: CLI builds, answers, names its commit; xetal-play usable natively and for wasm32
 check-vendor:
     scripts/check-vendor.sh
+
+# The demos, in catalog order
+demos:
+    @scripts/demos.py list
+
+# Start a demo sub-project from demos/_template: just new-demo attention "Attention microscope"
+new-demo slug title:
+    scripts/new-demo.sh "$1" "$2"
+
+# Run a demo's program (default SLUG.xtl) with the vendored xetal: just run moe-router
+run slug file="":
+    @scripts/run-demo.sh "$1" ${2:+"$2"}
+
+# Run a demo's program as a notebook: each statement drawn, then its output
+show slug file="":
+    @scripts/run-demo.sh --echo "$1" ${2:+"$2"}
+
+# Test one demo: its reg-rs baselines (CLI, page), web/ tests, test.sh
+test-demo slug:
+    scripts/test-demos.sh "$1"
+
+# Accept one demo's current output as its reg-rs baselines, creating missing ones (review the diff!)
+bless slug:
+    XETAL_BLESS=1 scripts/test-demos.sh "$1"
+
+# The libraries: name, recommended alias, what it is
+libs:
+    @scripts/libs.py table | column -t -s "$(printf '\t')"
+
+# The directories to put on XETAL_PATH: export XETAL_PATH="$(just path)"
+path:
+    @scripts/libs.py path
+
+# Start a library from templates/Library: just new-lib NN nn: "neural network layers"
+new-lib name alias summary:
+    scripts/new-lib.sh "$1" "$2" "$3"
+
+# Run a library's test programs (or one): just run-lib NN softmax
+run-lib name prog="":
+    @scripts/run-lib.sh "$1" ${2:+"$2"}
+
+# Run a library's demos (or one): just demo-lib NN xor
+demo-lib name prog="":
+    @scripts/run-lib.sh --demos "$1" ${2:+"$2"}
+
+# A library's demo as a notebook, each statement then its output
+show-lib name prog="":
+    @scripts/run-lib.sh --echo --demos "$1" ${2:+"$2"}
+
+# A library's exported names and their types: just types NN
+types name:
+    @scripts/xt type "libs/$1/src/$1.xtl"
+
+# Test one library with reg-rs: pinned types, test programs, demos
+test-lib name:
+    scripts/test-libs.sh "$1"
+
+# Create missing baselines and accept new output for one library (review the diff!)
+bless-lib name:
+    XETAL_BLESS=1 scripts/test-libs.sh "$1"
+
+# Test everything: every demo and every library (XETAL_BROWSER=0 skips the browser checks)
+test:
+    scripts/test-demos.sh
+    scripts/test-libs.sh
 
 # The full pre-commit gate
 gate:

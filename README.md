@@ -111,6 +111,23 @@ X_eTaL is used through a snapshot of a committed X_eTaL revision in
 the CLI built from it into `target/xetal/`, so results do not depend
 on whatever `xetal` is on your PATH.
 
+### Layout
+
+- `demos/<slug>/` -- one demo per directory: its `.xtl` programs, a
+  README, reg-rs baselines in `reg/`, an offline trainer in `train/`
+  when it has learned weights, and its web page in `web/`.
+- `libs/<Name>/` -- one library per directory: `src/<Name>.xtl`, its
+  reference page `docs/README.md`, `demos/`, and reg-rs `tests/`
+  (including `types.rgt`, which pins every export's type).
+
+```bash
+just demos                # the demos, in catalog order
+just run SLUG             # run a demo's program; just show SLUG as a notebook
+just libs                 # the libraries and their aliases
+export XETAL_PATH="$(just path)"   # use the libraries from your own programs
+just test                 # every demo and library baseline
+```
+
 ## Development
 
 Development is tracked with agentrail sagas, as in X_eTaL:
