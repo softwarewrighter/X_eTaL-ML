@@ -1,0 +1,9 @@
+number = 1
+slug = "cnn-digits-page"
+status = "pending"
+description = "launch step 1: the cnn-digits web app (demos/cnn-digits/web, on shared/micros..."
+role = "production"
+context_files = []
+created_at = "2026-10-03T17:26:44"
+task_type = "page"
+commits = []

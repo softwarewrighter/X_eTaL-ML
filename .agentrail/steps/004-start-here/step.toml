@@ -1,0 +1,9 @@
+number = 4
+slug = "start-here"
+status = "pending"
+description = "launch step 4: the newcomer's path: the catalog's front says what each demo s..."
+role = "production"
+context_files = []
+created_at = "2026-10-03T17:26:44"
+task_type = "docs"
+commits = []

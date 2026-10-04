@@ -114,7 +114,7 @@ alias is the importer's choice.
 | Optim | `op:` | hand-derived gradients for linear and logistic regression and a dense layer, SGD and momentum steps, a training loop by `p_ower` | new | 4 (post-launch) |
 | Net (`.xtlm`) | `net:` | `"784 128 relu 10 softmax" net:n_etwork<` -> a forward function built from `nn:` calls | research3.txt | 3 (blocked: M1) |
 
-## Saga 1 -- foundation  [ACTIVE]
+## Saga 1 -- foundation  [DONE, archived]
 
 Goal: the process, the vendored interpreter, both layouts (demos and
 libraries), the three ML demos taken over from X_eTaL-demos and live,
@@ -163,7 +163,7 @@ For this repo that means:
   M3 speed) are listed for the cross-repo audit, and a known-good
   X_eTaL commit is recorded for the six-repo release tag.
 
-## Saga 2 -- launch
+## Saga 2 -- launch  [ACTIVE]
 
 | # | Step slug | Delivers |
 | - | --------- | -------- |

@@ -1,0 +1,1 @@
+launch step 4: the newcomer's path: the catalog's front says what each demo shows, why it is one array expression, and shows its X_eTaL; recorded and live demos side by side; run-it-yourself; README trimmed to what works today, with a status table (demos, libraries, asks); a link to the ecosystem front door upstream when it exists.

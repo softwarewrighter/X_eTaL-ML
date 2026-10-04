@@ -1,0 +1,1 @@
+launch step 6: catalog and docs reviewed, recordings re-made if output changed, retrospective in docs/plan.md, the X_eTaL commit this release is known to work with recorded for the six-repo release tag.

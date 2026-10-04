@@ -1,0 +1,1 @@
+launch step 5: refresh the vendor (own commit) after upstream's Saga 30 and terminal work; re-run every ask's repro (M1-M9 and any new), mark landed asks, remove their workarounds with baselines re-checked; list this repo's promotion blockers for the cross-repo audit (research4.txt).

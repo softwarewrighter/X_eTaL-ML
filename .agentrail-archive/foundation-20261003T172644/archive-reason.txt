@@ -1,0 +1,1 @@
+foundation done: process, vendor, layouts, three ML demos live, NN library, recorded CLI demos; quant deferred post-launch (research4.txt)

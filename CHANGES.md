@@ -13,6 +13,7 @@ refresh of the vendored X_eTaL.
 
 ## 2026-10-03
 
+- 16:45 `plan` Saga foundation archived; saga launch started (cnn-digits-page, attention, bench, start-here, asks-audit, release-1).
 - 16:40 `chore` Saga step recorded-demos completed; step quant blocked (deferred post-launch, research4.txt).
 - 16:30 `feat` Recorded CLI demos: a VHS tape per demo (demos/<slug>/<slug>.tape) typing `just tour SLUG`, rendered by `just record` (vhs; ffmpeg to 8 fps and 960 px; gif2webp) to demos/<slug>/recording.webp (about 2 MB each); `just tour` (scripts/tour.py: the notebook paced, long lines clipped, runs of weight literals collapsed); the site's pages/recorded/ page (how to run them in a clone with the vendored X_eTaL, then each recording); catalog cards link it, and cnn-digits' card (no live page yet) shows its recording; README and demo READMEs show them.
 - 16:30 `fix` The favicon is blue (the user's request), so the ML pages' tab is told apart from X_eTaL-demos' lavender, X_eTaL-extensions' red and X_eTaL-games' green.

@@ -1,0 +1,9 @@
+number = 3
+slug = "bench"
+status = "pending"
+description = "launch step 3: just bench (scripts/bench.sh): the ML workloads timed with the..."
+role = "production"
+context_files = []
+created_at = "2026-10-03T17:26:44"
+task_type = "bench"
+commits = []
