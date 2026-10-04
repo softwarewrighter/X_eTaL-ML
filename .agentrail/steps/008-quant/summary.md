@@ -1,0 +1,1 @@
+BLOCKED: Deferred post-launch: research4.txt (2026-10-03) says no new breadth before the launch; Quant moves to saga 4 (post-launch) in docs/plan.md

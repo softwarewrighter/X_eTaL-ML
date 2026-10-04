@@ -1,0 +1,1 @@
+Recorded CLI demos: tapes, just tour, just record (vhs/ffmpeg/gif2webp ~2MB each), pages/recorded with clone-and-run instructions, catalog/READMEs; blue favicon; deploy verified

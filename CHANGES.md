@@ -13,6 +13,7 @@ refresh of the vendored X_eTaL.
 
 ## 2026-10-03
 
+- 16:40 `chore` Saga step recorded-demos completed; step quant blocked (deferred post-launch, research4.txt).
 - 16:30 `feat` Recorded CLI demos: a VHS tape per demo (demos/<slug>/<slug>.tape) typing `just tour SLUG`, rendered by `just record` (vhs; ffmpeg to 8 fps and 960 px; gif2webp) to demos/<slug>/recording.webp (about 2 MB each); `just tour` (scripts/tour.py: the notebook paced, long lines clipped, runs of weight literals collapsed); the site's pages/recorded/ page (how to run them in a clone with the vendored X_eTaL, then each recording); catalog cards link it, and cnn-digits' card (no live page yet) shows its recording; README and demo READMEs show them.
 - 16:30 `fix` The favicon is blue (the user's request), so the ML pages' tab is told apart from X_eTaL-demos' lavender, X_eTaL-extensions' red and X_eTaL-games' green.
 - 13:55 `plan` Reprioritized after ../X_eTaL/docs/research4.txt (stop breadth; stabilize, synchronize, explain): saga 2 is now the launch (CNN live page, attention demo, `just bench` for the table / inner regression, a start-here front, an asks audit, release-1), saga 3 the network macro the day `.xtlm` lands, saga 4 everything post-launch (Quant, Conv, Attention, Norm, Sample, Embed, Optim libraries; micro-gpt, embedding explorer, gradient descent, world model, diffusion). Step quant deferred post-launch. Ask M1 notes research4's order (before the broader course). README statuses: next / later.

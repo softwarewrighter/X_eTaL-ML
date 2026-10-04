@@ -1,6 +1,6 @@
 number = 8
 slug = "quant"
-status = "pending"
+status = "blocked"
 description = "foundation step 7: the Quant library (qz:) in libs/Quant/: FP16 rounding, INT..."
 role = "production"
 context_files = []
