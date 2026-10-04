@@ -6,7 +6,9 @@
 
 <p align="center">
   <b><a href="https://softwarewrighter.github.io/X_eTaL-ML/">The live ML demos</a></b>
-  -- every demo running in your browser (WebAssembly)
+  -- every demo running in your browser (WebAssembly)<br>
+  <b><a href="https://softwarewrighter.github.io/X_eTaL-ML/recorded/">Recorded CLI demos</a></b>
+  -- the same programs at the command line, and how to run them yourself
 </p>
 
 Machine learning in [X_eTaL](https://github.com/softwarewrighter/X_eTaL),
@@ -80,6 +82,26 @@ an error before the forward pass, not a wrong number after it.
 | micro-gpt | a tiny GPT's forward pass, sampling names | all of the above | later |
 | Network macro | a network written as one macro call and its expansion | `.xtlm` macros | waiting on X_eTaL |
 
+### Recorded at the command line
+
+Each demo also runs at the command line, with the X_eTaL vendored in
+this repository. The [recorded CLI demos](https://softwarewrighter.github.io/X_eTaL-ML/recorded/)
+show `just tour SLUG` for each: every statement of the program as
+X_eTaL draws it, then its result.
+
+![moe-router at the command line](demos/moe-router/recording.webp)
+
+To run them yourself (Rust stable and `just`; nothing else to
+install, X_eTaL comes vendored):
+
+```bash
+git clone https://github.com/softwarewrighter/X_eTaL-ML
+cd X_eTaL-ML
+just xetal               # build the vendored X_eTaL (once)
+just tour moe-router     # each statement, then its result
+just run cnn-digits      # just the results
+```
+
 ## Libraries
 
 | Library | Alias | What | Status |
@@ -130,6 +152,8 @@ just pages                # build the live site into pages/ (committed; a push p
 just serve-pages          # preview it at http://127.0.0.1:8098/X_eTaL-ML/
 just demos                # the demos, in catalog order
 just run SLUG             # run a demo's program; just show SLUG as a notebook
+just tour SLUG            # the notebook paced, long lines clipped (as recorded)
+just record [SLUG]        # re-record the CLI demos (vhs, ffmpeg, gif2webp)
 just libs                 # the libraries and their aliases
 export XETAL_PATH="$(just path)"   # use the libraries from your own programs
 just test                 # every demo and library baseline

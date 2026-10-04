@@ -1,7 +1,12 @@
 #!/usr/bin/env python3
-"""Write pages/index.html: the live catalog of the ML demos.
+"""Write pages/index.html, the live catalog of the ML demos, and
+pages/recorded/index.html, the demos recorded at the command line.
 
   scripts/build-catalog.py [OUT]     # default pages/index.html
+                                     # (the recorded page beside it, in recorded/)
+
+The recorded page shows each demo's recording.webp (just record),
+copied to recorded/<slug>.webp, under how to run the demos yourself.
 
 One card per demo (scripts/demos.py json, catalog order): title,
 summary, concepts, status, a link to its live page (pages/<slug>/, when
@@ -12,6 +17,7 @@ build (host, this repo's sha, yyyymmddThhmmss), plus the vendored X_eTaL commit.
 import datetime
 import html
 import json
+import shutil
 import socket
 import subprocess
 import sys
@@ -28,8 +34,8 @@ PAGE = """<!doctype html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>X_eTaL ML</title>
-<link rel="icon" href="favicon.ico">
+<title>{title}</title>
+<link rel="icon" href="{up}favicon.ico">
 <style>
 :root {{ --bg:#fbfaf7; --fg:#1d1d1f; --muted:#5f6368; --card:#ffffff; --line:#e3e0d8;
   --accent:#2457c5; --chip:#eef2fb; --live:#1f7a3a; --draft:#9a6200; --deferred:#8a8a8a; }}
@@ -66,17 +72,18 @@ footer .sep {{ margin: 0 8px; }}
 .brand h1 {{ margin: 0; }}
 .logo {{ height: 56px; width: auto; border-radius: 8px; }}
 code {{ font-family: ui-monospace, "JuliaMono", Menlo, monospace; }}
+pre {{ background:var(--card); border:1px solid var(--line); border-radius:8px; padding:12px 14px;
+  overflow-x:auto; font: 14px/1.5 ui-monospace, Menlo, monospace; }}
+.rec {{ background:var(--card); border:1px solid var(--line); border-radius:12px; padding:18px; margin: 0 0 24px; }}
+.rec h2 {{ margin:0 0 6px; font-size:1.2rem; }} .rec p {{ margin:0 0 12px; color:var(--muted); }}
+.rec img {{ width:100%; height:auto; border-radius:8px; display:block; background:#282a36; }}
+.howto h2 {{ font-size:1.2rem; margin: 8px 0; }}
 </style>
 </head>
 <body>
 <main>
 <header>
-<div class="brand"><img class="logo" src="modern-xetal-logo.jpg" alt="X_eTaL"><h1>ML</h1></div>
-<p class="lede">Machine learning in <a href="{xetal}">X_eTaL</a>, a typed array language:
-small models you can watch think. Each one shows its program beside the model, so you can
-see a layer, a router or a quantizer happen as one array expression. More X_eTaL:
-<a href="https://softwarewrighter.github.io/X_eTaL-demos/">visual demos</a>,
-<a href="https://softwarewrighter.github.io/X_eTaL-libraries/">libraries</a>.</p>
+{header}
 </header>
 {body}
 </main>
@@ -92,18 +99,64 @@ see a layer, a router or a quantizer happen as one array expression. More X_eTaL
 """
 
 
+CATALOG_HEADER = """<div class="brand"><img class="logo" src="modern-xetal-logo.jpg" alt="X_eTaL"><h1>ML</h1></div>
+<p class="lede">Machine learning in <a href="{xetal}">X_eTaL</a>, a typed array language:
+small models you can watch think. Each one shows its program beside the model, so you can
+see a layer, a router or a quantizer happen as one array expression.
+<a href="recorded/">Recorded CLI demos</a>, with how to run them yourself. More X_eTaL:
+<a href="https://softwarewrighter.github.io/X_eTaL-demos/">visual demos</a>,
+<a href="https://softwarewrighter.github.io/X_eTaL-libraries/">libraries</a>.</p>"""
+
+RECORDED_HEADER = """<div class="brand"><a href="../"><img class="logo" src="../modern-xetal-logo.jpg" alt="X_eTaL"></a><h1>Recorded CLI demos</h1></div>
+<p class="lede">The <a href="../">ML demos</a> run at the command line by the X_eTaL vendored in
+<a href="{repo}">the repository</a>: each statement of the program, drawn as X_eTaL
+renders it, then its result. Long lines are clipped and runs of weight literals collapsed;
+nothing else is edited.</p>"""
+
+HOWTO = """<section class="howto">
+<h2>Run them yourself</h2>
+<p class="lede">You need Rust (stable) and <a href="https://github.com/casey/just">just</a>. The
+repository carries its own copy of X_eTaL (<code>vendor/xetal/</code>, commit
+<a href="{xetal}/commit/{xsha}">{xshort}</a>), so nothing else is installed.</p>
+<pre>git clone {repo}
+cd X_eTaL-ML
+just xetal               # build the vendored X_eTaL (once, a minute or two)
+just demos               # the demos
+just tour moe-router     # a demo as above: each statement, then its result
+just run moe-router      # just the results
+just show moe-router     # every statement, unclipped</pre>
+</section>"""
+
+
+def recording(m):
+    slug = html.escape(m["slug"])
+    links = [f'<a href="{REPO}/blob/main/demos/{slug}/{slug}.xtl">The program</a>',
+             f'<a href="{REPO}/tree/main/demos/{slug}#readme">How it works</a>']
+    if m.get("web"):
+        links.insert(0, f'<a href="../{slug}/">Live page</a>')
+    return (f'<article class="rec" id="{slug}">\n<h2>{html.escape(m["title"])}</h2>\n'
+            f'<p>{html.escape(m["summary"])}</p>\n'
+            f'<img src="{slug}.webp" alt="{html.escape(m["title"])} at the command line: just tour {slug}" loading="lazy">\n'
+            f'<div class="links" style="margin-top:12px">{" ".join(links)}</div>\n</article>')
+
+
 def card(m):
     slug = html.escape(m["slug"])
     links = []
     if m.get("web"):
         links.append(f'<a href="{slug}/">Open the demo</a>')
+    if m.get("recording"):
+        links.append(f'<a href="recorded/#{slug}">Recorded</a>')
     links.append(f'<a href="{REPO}/tree/main/demos/{slug}#readme">How it works</a>')
     chips = "".join(f'<span class="chip">{html.escape(c)}</span>' for c in m["concepts"])
     st = m["status"]
     pic = ""
+    alt = html.escape(m["title"])
     if m.get("web") and m.get("picture"):
-        alt = html.escape(m["title"])
         pic = f'<a class="shot" href="{slug}/"><img src="{slug}/screenshot.png" alt="{alt}" loading="lazy"></a>\n'
+    elif m.get("recording"):
+        # No live page: the card shows the demo recorded at the command line.
+        pic = f'<a class="shot" href="recorded/#{slug}"><img src="recorded/{slug}.webp" alt="{alt} at the command line" loading="lazy"></a>\n'
     return (f'<article class="card" id="{slug}">\n{pic}'
             f'<span class="status {st}">{STATUS[st]}</span>\n'
             f'<h2>{html.escape(m["title"])}</h2>\n'
@@ -127,11 +180,21 @@ def main():
     else:
         body = '<p class="empty">The first demo is on its way.</p>'
     out.parent.mkdir(parents=True, exist_ok=True)
-    out.write_text(PAGE.format(
-        body=body, repo=REPO, xetal=XETAL, commit=git("rev-parse", "--short", "HEAD"),
-        xsha=vend["commit"], xshort=vend["commit"][:7], host=socket.gethostname().split(".")[0],
-        stamp=datetime.datetime.now(datetime.timezone.utc).strftime("%Y%m%dT%H%M%S")))
-    print(f"catalog: {out} ({len(demos)} demo(s))")
+    common = dict(repo=REPO, xetal=XETAL, commit=git("rev-parse", "--short", "HEAD"),
+                  xsha=vend["commit"], xshort=vend["commit"][:7], host=socket.gethostname().split(".")[0],
+                  stamp=datetime.datetime.now(datetime.timezone.utc).strftime("%Y%m%dT%H%M%S"))
+    out.write_text(PAGE.format(body=body, title="X_eTaL ML", up="",
+                               header=CATALOG_HEADER.format(**common), **common))
+    rec = out.parent / "recorded"
+    shutil.rmtree(rec, ignore_errors=True)
+    rec.mkdir()
+    recorded = [m for m in demos if m.get("recording")]
+    for m in recorded:
+        shutil.copy(ROOT / "demos" / m["slug"] / "recording.webp", rec / f'{m["slug"]}.webp')
+    rbody = HOWTO.format(**common) + "\n" + "\n".join(recording(m) for m in recorded)
+    (rec / "index.html").write_text(PAGE.format(body=rbody, title="X_eTaL ML: recorded CLI demos", up="../",
+                                                header=RECORDED_HEADER.format(**common), **common))
+    print(f"catalog: {out} ({len(demos)} demo(s)), {rec}/ ({len(recorded)} recorded)")
 
 
 if __name__ == "__main__":

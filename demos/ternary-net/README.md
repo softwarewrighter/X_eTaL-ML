@@ -19,6 +19,16 @@ Live: [1.58-bit network](https://softwarewrighter.github.io/X_eTaL-ML/ternary-ne
 
 [![1.58-bit network: the live page](screenshot.png)](https://softwarewrighter.github.io/X_eTaL-ML/ternary-net/)
 
+## Recorded at the command line
+
+![ternary-net at the command line: just tour ternary-net](recording.webp)
+
+`just tour ternary-net`: each statement of the program as X_eTaL draws it,
+then its result (long lines clipped, runs of weight literals
+collapsed), recorded with VHS (`ternary-net.tape`, `just record ternary-net`).
+All the recordings, with how to run them yourself:
+[Recorded CLI demos](https://softwarewrighter.github.io/X_eTaL-ML/recorded/).
+
 ## The program
 
 From `ternary-net.xtl` (the live page runs these sections, with the
@@ -86,6 +96,7 @@ agrees with a direct forward pass in Rust.
 
 ```bash
 just run ternary-net          # glyphs, the measures of all four formats, storage, the maps
+just tour ternary-net         # each statement, then its result, paced
 just show ternary-net         # the same as a notebook
 just serve ternary-net        # the web app at http://127.0.0.1:8095/
 just test-demo ternary-net    # its CLI and browser baselines and the web app's tests

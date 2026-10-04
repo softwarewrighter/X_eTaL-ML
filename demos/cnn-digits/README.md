@@ -9,6 +9,16 @@ shifted copies times the filters, one matrix product.
 The web app (draw a digit, see every stage) is the next step; the
 command-line program classifies ten MNIST test digits.
 
+## Recorded at the command line
+
+![cnn-digits at the command line: just tour cnn-digits](recording.webp)
+
+`just tour cnn-digits`: each statement of the program as X_eTaL draws it,
+then its result (long lines clipped, runs of weight literals
+collapsed), recorded with VHS (`cnn-digits.tape`, `just record cnn-digits`).
+All the recordings, with how to run them yourself:
+[Recorded CLI demos](https://softwarewrighter.github.io/X_eTaL-ML/recorded/).
+
 ## The program
 
 From `cnn-digits.xtl`:
@@ -57,6 +67,7 @@ Burges) from the PyTorch project's public mirror into `work/mnist/`
 
 ```bash
 just run cnn-digits          # a test digit, the stages' shapes, its probabilities, the ten digits read
+just tour cnn-digits         # each statement, then its result, paced
 just show cnn-digits         # the same as a notebook
 just test-demo cnn-digits    # its CLI baseline (reg-rs)
 ```

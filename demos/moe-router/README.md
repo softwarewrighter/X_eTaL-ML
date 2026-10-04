@@ -14,6 +14,16 @@ Live: [MoE routing microscope](https://softwarewrighter.github.io/X_eTaL-ML/moe-
 
 [![MoE routing microscope: the live page](screenshot.png)](https://softwarewrighter.github.io/X_eTaL-ML/moe-router/)
 
+## Recorded at the command line
+
+![moe-router at the command line: just tour moe-router](recording.webp)
+
+`just tour moe-router`: each statement of the program as X_eTaL draws it,
+then its result (long lines clipped, runs of weight literals
+collapsed), recorded with VHS (`moe-router.tape`, `just record moe-router`).
+All the recordings, with how to run them yourself:
+[Recorded CLI demos](https://softwarewrighter.github.io/X_eTaL-ML/recorded/).
+
 ## The program
 
 From `moe-router.xtl` (the live page runs these sections on your
@@ -104,6 +114,7 @@ point of the plane against direct scores.
 
 ```bash
 just run moe-router          # the red fox sentence: experts, gates, load; then the nudge
+just tour moe-router         # each statement, then its result, paced
 just show moe-router         # the same as a notebook
 just serve moe-router        # the web app at http://127.0.0.1:8095/
 just test-demo moe-router    # its CLI and browser baselines and the web app's tests

@@ -44,6 +44,14 @@ run slug file="":
 show slug file="":
     @scripts/run-demo.sh --echo "$1" ${2:+"$2"}
 
+# A demo as a paced notebook: each statement, then its result; long lines clipped, data runs collapsed
+tour slug:
+    @scripts/tour.py "$1"
+
+# Record demos at the command line (VHS tapes, demos/<slug>/<slug>.tape) as animated WebP: just record moe-router
+record *slugs:
+    scripts/record.sh "$@"
+
 # Test one demo: its reg-rs baselines (CLI, page), web/ tests, test.sh
 test-demo slug:
     scripts/test-demos.sh "$1"
