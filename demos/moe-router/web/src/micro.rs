@@ -8,6 +8,25 @@ use microscope::run::{numbers, output, section};
 /// The command-line program; the page runs its sections.
 pub const SOURCE: &str = include_str!("../../moe-router.xtl");
 
+/// The data the program reads, as the page's X_eTaL finds it: the
+/// same path as at the command line.
+pub const DATA: [(&str, &str); 1] = [("data/features.txt", include_str!("../../data/features.txt"))];
+
+/// Run `src` with the data files in the store (see `output`).
+fn out(src: &str, lines: usize) -> Result<Vec<String>, String> {
+    for (path, text) in DATA {
+        microscope::libs::add(path, text);
+    }
+    output(src, lines)
+}
+
+/// What both programs the page runs start with: the vocabulary's
+/// features (read from data/), the embeddings, the router weights,
+/// scores, softmax, top-2 and load.
+pub fn head() -> String {
+    format!("{}{}", tables(), core())
+}
+
 /// The vocabulary's features, the embeddings and the router weights.
 pub fn tables() -> &'static str {
     section(SOURCE, "# -- the vocabulary", "# -- the scores")
@@ -112,7 +131,7 @@ pub fn run(sentence: &str) -> Result<Anatomy, String> {
     }
     let ids: Vec<usize> = toks.iter().map(|t| t.1).collect();
     let n = ids.len();
-    let out = output(&program(&ids), 5)?;
+    let out = out(&program(&ids), 5)?;
     Ok(Anatomy {
         words: toks.into_iter().map(|t| t.0).collect(),
         x: numbers(&out[0], n * 8)?,
@@ -182,7 +201,7 @@ pub fn nudge_program(n: &Nudge) -> String {
 
 /// Run the nudge through X_eTaL.
 pub fn run_nudge(n: &Nudge) -> Result<Nudged, String> {
-    let out = output(&nudge_program(n), 6)?;
+    let out = out(&nudge_program(n), 6)?;
     Ok(Nudged {
         eps: numbers(&out[0], STEPS)?,
         first: numbers(&out[1], STEPS)?,
@@ -196,6 +215,6 @@ pub fn run_nudge(n: &Nudge) -> Result<Nudged, String> {
 /// The embedding table (37 x 8) and router weights (8 x 16), as X_eTaL
 /// holds them (for the tests' direct computations).
 pub fn tables_values() -> Result<(Vec<f64>, Vec<f64>), String> {
-    let out = output(&format!("{}r_avel E\nr_avel W\n", tables()), 2)?;
+    let out = out(&format!("{}r_avel E\nr_avel W\n", tables()), 2)?;
     Ok((numbers(&out[0], 37 * 8)?, numbers(&out[1], 8 * EXPERTS)?))
 }

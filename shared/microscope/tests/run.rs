@@ -51,3 +51,10 @@ fn a_program_imports_the_vendored_check_library() {
     let out = microscope::run::output("\"k:\" u_se< \"Check\"\n6 k:i_s 2 * 3\n", 1).unwrap();
     assert_eq!(out, vec!["ok".to_string()]);
 }
+
+#[test]
+fn a_program_reads_a_data_file_a_page_added() {
+    microscope::libs::add("data/probe.txt", "1 2\n3 4.5\n");
+    let out = microscope::run::output("'+ r_/ n_umbers []N_GET \"data/probe.txt\"\n", 1).unwrap();
+    assert_eq!(out, vec!["10.5".to_string()]);
+}

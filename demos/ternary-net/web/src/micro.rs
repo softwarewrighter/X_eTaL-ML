@@ -8,7 +8,23 @@ use microscope::run::{lit, matrix, numbers, output, section};
 /// The command-line program; the page runs its sections.
 pub const SOURCE: &str = include_str!("../../ternary-net.xtl");
 
-/// The trained weights and the test points (written by train/).
+/// The data the program reads (written by train/), as the page's
+/// X_eTaL finds it: the same paths as at the command line.
+pub const DATA: [(&str, &str); 3] = [
+    ("data/fp.txt", include_str!("../../data/fp.txt")),
+    ("data/qa.txt", include_str!("../../data/qa.txt")),
+    ("data/test.txt", include_str!("../../data/test.txt")),
+];
+
+/// Run `src` with the data files in the store (see `output`).
+fn out(src: &str, lines: usize) -> Result<Vec<String>, String> {
+    for (path, text) in DATA {
+        microscope::libs::add(path, text);
+    }
+    output(src, lines)
+}
+
+/// The weights and the test points, read from data/.
 pub fn weights() -> &'static str {
     section(SOURCE, "# -- the weights", "# -- end of the weights")
 }
@@ -104,7 +120,9 @@ impl Anatomy {
     }
 }
 
-fn head(s: &Setup) -> String {
+/// What every program the page runs starts with: the page's settings,
+/// the weights read from data/, the weight set, the functions.
+pub fn head(s: &Setup) -> String {
     format!("g := {SIDE}\nt := {}\n{}m := {}\n{}", lit(s.t), weights(), SETS[s.set % SETS.len()].1, functions())
 }
 
@@ -170,7 +188,7 @@ pub struct Formats {
 }
 
 pub fn run_formats(s: &Setup) -> Result<Formats, String> {
-    let out = output(&program_formats(s), 8)?;
+    let out = out(&program_formats(s), 8)?;
     let n = SIDE * SIDE;
     let tests = out[7].split_whitespace().count();
     Ok(Formats {
@@ -193,7 +211,7 @@ pub struct Ternary {
 }
 
 pub fn run_ternary(s: &Setup, y32: &[f64]) -> Result<Ternary, String> {
-    let out = output(&program_ternary(s, y32), 4)?;
+    let out = out(&program_ternary(s, y32), 4)?;
     let m = numbers::<f64>(&out[0], 3)?;
     let sc = numbers::<f64>(&out[3], 3)?;
     Ok(Ternary { measures: [m[0], m[1], m[2]], map: numbers(&out[1], SIDE * SIDE)?, q: numbers(&out[2], 768)?, scales: [sc[0], sc[1], sc[2]] })
@@ -210,7 +228,7 @@ pub struct Point {
 }
 
 pub fn run_point(s: &Setup) -> Result<Point, String> {
-    let out = output(&program_point(s), 5)?;
+    let out = out(&program_point(s), 5)?;
     Ok(Point {
         h1: numbers(&out[0], 16)?,
         adds: numbers(&out[1], 16)?,

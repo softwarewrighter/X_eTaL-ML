@@ -202,23 +202,10 @@ fn strand(v: &[f64]) -> String {
     v.iter().map(|&x| num(x)).collect::<Vec<_>>().join(" ")
 }
 
-/// A long strand broken into lines of about 12 numbers, each line a
-/// continuation inside parentheses (X_eTaL statements are one line, so
-/// the program binds pieces and joins them with c_at).
-fn bind(name: &str, shape: &str, v: &[f64]) -> String {
-    let chunks: Vec<String> = v.chunks(48).map(strand).collect();
-    let mut s = String::new();
-    for (k, c) in chunks.iter().enumerate() {
-        if k == 0 {
-            s += &format!("{name} := {c}\n");
-        } else {
-            s += &format!("{name} := {name} c_at {c}\n");
-        }
-    }
-    if !shape.is_empty() {
-        s += &format!("{name} := ({shape}) r_eshape {name}\n");
-    }
-    s
+/// The numbers `v` as text, `per` to a line, as `n_umbers []N_GET`
+/// reads them back.
+fn rows(v: &[f64], per: usize) -> String {
+    v.chunks(per).map(|c| strand(c) + "\n").collect()
 }
 
 fn main() {
@@ -237,21 +224,15 @@ fn main() {
     let px: Vec<f64> = test.iter().map(|(x, _)| x[0]).collect();
     let py: Vec<f64> = test.iter().map(|(x, _)| x[1]).collect();
     let pl: Vec<f64> = test.iter().map(|(_, c)| (c + 1) as f64).collect();
-    let section = format!(
-        "# -- the weights (written by train/: just ternary-train) ------\n\
-         # fp: trained in full precision; qa: fine-tuned for ternary\n\
-         # weights. Each is 17 x 3 x 16: for each row (16 inputs, padded\n\
-         # with 0, then the bias), layer and output (padded with 0).\n\
-         {}{}# The test points: x, y, and the arm (1, 2 or 3).\n{}{}{}",
-        bind("fp", "17 c_at 3 c_at 16", &fp.cube()),
-        bind("qa", "17 c_at 3 c_at 16", &qa.cube()),
-        bind("px", "", &px),
-        bind("py", "", &py),
-        bind("pl", "", &pl),
-    );
-    let path = concat!(env!("CARGO_MANIFEST_DIR"), "/../ternary-net.xtl");
-    let src = std::fs::read_to_string(path).expect("read ternary-net.xtl");
-    let (a, b) = (src.find("# -- the weights").expect("no weights marker"), src.find("# -- end of the weights").expect("no end marker"));
-    std::fs::write(path, format!("{}{}{}", &src[..a], section, &src[b..])).expect("write ternary-net.xtl");
-    eprintln!("wrote the weights into {path}");
+    // data/: each model as 51 rows of 16 (17 rows -- 16 inputs padded
+    // with 0, then the bias -- by 3 layers, 16 outputs padded with 0),
+    // and the test points, one per line: x, y, arm (1, 2 or 3).
+    let test_rows: Vec<f64> = (0..px.len()).flat_map(|i| [px[i], py[i], pl[i]]).collect();
+    let dir = concat!(env!("CARGO_MANIFEST_DIR"), "/../data");
+    std::fs::create_dir_all(dir).expect("data/");
+    for (file, text) in [("fp.txt", rows(&fp.cube(), 16)), ("qa.txt", rows(&qa.cube(), 16)), ("test.txt", rows(&test_rows, 3))] {
+        std::fs::write(format!("{dir}/{file}"), text).expect("write data/");
+    }
+    eprintln!("wrote data/fp.txt, qa.txt, test.txt");
+
 }

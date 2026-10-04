@@ -90,3 +90,20 @@ fn the_network_agrees_with_a_direct_forward_pass() {
     }
     assert_eq!(a.maps[0].len(), SIDE * SIDE);
 }
+
+#[test]
+fn the_page_shows_every_line_it_runs() {
+    use ternary_net_web::micro::{program_formats, program_point, program_ternary};
+    use ternary_net_web::view::program;
+    let s = Setup::default();
+    let shown = program(&s);
+    let ternary = program_ternary(&s, &[]);
+    for p in [program_formats(&s), ternary, program_point(&s)] {
+        for line in p.lines().filter(|l| !l.starts_with("y32 := (")) {
+            assert!(shown.lines().any(|l| l == line), "not shown: {line}");
+        }
+    }
+    // The weights are read where the page can be seen reading them.
+    assert!(shown.contains("fp := (17 c_at 3 c_at 16) r_eshape n_umbers []N_GET \"data/fp.txt\""));
+    assert!(shown.contains("y32 := (576 c_at 3) r_eshape ...   # FP32's outputs from run 1, passed in"));
+}

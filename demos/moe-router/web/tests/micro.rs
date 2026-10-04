@@ -72,3 +72,18 @@ fn experts_specialise_by_feature() {
     assert_eq!(a.top2(4)[0], 1);
     assert_eq!(a.top2(7)[0] % 4, 0);
 }
+
+#[test]
+fn the_page_shows_every_line_it_runs() {
+    use moe_router_web::micro::{nudge_program, program as sentence_program, Nudge};
+    use moe_router_web::view::program;
+    let ids = [1, 17, 9, 23];
+    let n = Nudge::default();
+    let shown = program(&ids, &n);
+    for p in [sentence_program(&ids), nudge_program(&n)] {
+        for line in p.lines() {
+            assert!(shown.lines().any(|l| l == line), "not shown: {line}");
+        }
+    }
+    assert!(shown.contains("F := (37 c_at 8) r_eshape n_umbers []N_GET \"data/features.txt\""));
+}

@@ -21,8 +21,10 @@ Live: [1.58-bit network](https://softwarewrighter.github.io/X_eTaL-ML/ternary-ne
 
 ## The program
 
-From `ternary-net.xtl` (the live page runs these sections, with the
-weights, threshold and point you pick):
+From `ternary-net.xtl`. The live page shows everything it runs: the
+program's head (your settings, the weights read from `data/`, these
+functions), then each of its three runs (the weight set, the
+threshold, the point you pick) as run:
 
 ```
 u:l_ayer := { x p -> (x '+ '* i_nner 16 t_ake p) + (o_ffsets t_ally x) 'r_ight t_able f_irst -1 t_ake p }
@@ -62,8 +64,12 @@ The weights are trained offline by `train/` (a small Rust program with
 no dependencies: Adam, softmax cross-entropy, 300 points; then 3000
 more steps where the forward pass uses the ternarized weights and the
 gradient updates the full-precision ones behind them, the
-straight-through estimator) and written into `ternary-net.xtl` as
-literals (`just ternary-train`, then `just bless ternary-net`).
+straight-through estimator) and written to `data/` (`just
+ternary-train`, then `just bless ternary-net`): `fp.txt` and `qa.txt`,
+each 51 rows of 16 (17 rows of a layer, 16 inputs padded with 0 then
+the bias, for each of 3 layers), and `test.txt`, one test point per
+line (x, y, arm). The program reads them with `n_umbers []N_GET`; the
+page is given the same files.
 
 On the page, the four cards show each format's map with the test
 points, its measures, storage and operations. The threshold slider

@@ -16,8 +16,10 @@ Live: [MoE routing microscope](https://softwarewrighter.github.io/X_eTaL-ML/moe-
 
 ## The program
 
-From `moe-router.xtl` (the live page runs these sections on your
-sentence):
+From `moe-router.xtl` (the vocabulary's features are read from
+`data/features.txt`, a row of 8 per word). The live page shows
+everything it runs: the shared head, then the sentence's run and the
+nudge's run as run:
 
 ```
 u:s_cores := { x -> 2.0 * x '+ '* i_nner W }

@@ -7,10 +7,11 @@
 
 # -- the vocabulary -------------------------------
 # words: the a of and in to cat dog fox bird horse one two three seven ten red blue green brown runs jumps eats sees sleeps park river city home apple bread fish cheese today night morning ?
-# Each word's 8 features: animal, number, colour, action, place,
+# Each word's 8 features (data/features.txt, a row per word, in the
+# order above): animal, number, colour, action, place,
 # food, function word, time (fish is an animal and a food; eats an
 # action and food; ? is any word not listed).
-F := (37 c_at 8) r_eshape 0 0 0 0 0 0 1 0  0 0 0 0 0 0 1 0  0 0 0 0 0 0 1 0  0 0 0 0 0 0 1 0  0 0 0 0 0.3 0 1 0  0 0 0 0 0 0 1 0  1 0 0 0 0 0 0 0  1 0 0 0 0 0 0 0  1 0 0 0 0 0 0 0  1 0 0 0 0 0 0 0  1 0 0 0 0 0 0 0  0 1 0 0 0 0 0 0  0 1 0 0 0 0 0 0  0 1 0 0 0 0 0 0  0 1 0 0 0 0 0 0  0 1 0 0 0 0 0 0  0 0 1 0 0 0 0 0  0 0 1 0 0 0 0 0  0 0 1 0 0 0 0 0  0 0 1 0 0 0 0 0  0 0 0 1 0 0 0 0  0 0 0 1 0 0 0 0  0 0 0 1 0 0.6 0 0  0 0 0 1 0 0 0 0  0 0 0 1 0 0 0 0.4  0 0 0 0 1 0 0 0  0 0 0 0 1 0 0 0  0 0 0 0 1 0 0 0  0 0 0 0 1 0 0 0  0 0 0 0 0 1 0 0  0 0 0 0 0 1 0 0  1 0 0 0 0 1 0 0  0 0 0 0 0 1 0 0  0 0 0 0 0 0 0 1  0 0 0 0 0 0 0 1  0 0 0 0 0 0 0 1  0.3 0.3 0.3 0.3 0.3 0.3 0.3 0.3
+F := (37 c_at 8) r_eshape n_umbers []N_GET "data/features.txt"
 # The embeddings: the features plus a small fixed ripple, so no two
 # words are quite the same.
 wr := f_loat (o_ffsets 37) 'l_eft t_able o_ffsets 8

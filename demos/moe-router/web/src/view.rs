@@ -1,10 +1,10 @@
-//! The program the page shows (the router weights, the core, the
-//! sentence's lines), the stages and the part computing each.
+//! The program the page shows (everything it runs: the shared head,
+//! then its two runs as run), the stages and the part computing each.
 
 use microscope::source::{between, block, find, Range};
 use yew::Html;
 
-use crate::micro::{core, nudge_core, weights, Nudge, SIDE, STEPS};
+use crate::micro::{head, nudge_program, program as sentence_program, Nudge, SIDE, STEPS};
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum Stage {
@@ -18,20 +18,19 @@ pub enum Stage {
 
 pub const STAGES: [Stage; 6] = [Stage::Embed, Stage::Scores, Stage::Softmax, Stage::Top2, Stage::Load, Stage::Nudge];
 
-/// The router weights, the core, the lines that route the sentence,
-/// and the nudge.
+/// What the page runs, all of it: the head both runs share (the
+/// features read from data/, the embeddings, the router weights,
+/// scores, softmax, top-2, load), then the sentence's run and the
+/// nudge's run as run. (The command-line program, moe-router.xtl, is
+/// the head and its own report at the end.)
 pub fn program(ids: &[usize], n: &Nudge) -> String {
-    let ids: Vec<String> = ids.iter().map(|i| i.to_string()).collect();
+    let h = head();
+    let tail = |p: String| p.strip_prefix(h.as_str()).map(str::to_string).unwrap_or(p);
     format!(
-        "# F, E: the 37 words' features and embeddings (not shown)\n{}{}# -- the sentence\nids := {}\nx := ids s_elect E\np := u:s_oftmax u:s_cores x\ngates := u:t_op2 p\nu:l_oad gates\n\
-         # -- the nudge\nw0 := {}\nwa := {}\nwb := {}\nk := {STEPS}\nside := {SIDE}\n{}",
-        weights(),
-        core(),
-        ids.join(" "),
-        n.w0,
-        n.wa,
-        n.wb,
-        nudge_core()
+        "{h}# -- run 1, when the sentence changes: route its tokens --\n{}\
+         # -- run 2, when the nudge changes: a token pushed towards others --\n{}",
+        tail(sentence_program(ids)),
+        tail(nudge_program(n)),
     )
 }
 

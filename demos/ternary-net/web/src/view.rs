@@ -5,7 +5,7 @@ use microscope::colour::Rgb;
 use microscope::source::{between, block, Range};
 use yew::Html;
 
-use crate::micro::{core, Setup, SETS, SIDE};
+use crate::micro::{head, program_formats, program_point, program_ternary, Setup, SIDE};
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum Stage {
@@ -19,13 +19,29 @@ pub enum Stage {
 
 pub const STAGES: [Stage; 6] = [Stage::Inputs, Stage::Network, Stage::Formats, Stage::Additions, Stage::Maps, Stage::Measures];
 
-/// The page's settings, then the core.
+/// What the page runs, all of it: the head every run shares (the
+/// page's settings, the weights read from data/, the functions), then
+/// each of its three runs as run. Only the FP32 outputs the second run
+/// is given (SIDE x SIDE x 3 numbers from the first) are elided, and a
+/// comment says so. (The command-line program, ternary-net.xtl, is the
+/// head and its own report at the end; see the demo's README.)
 pub fn program(s: &Setup) -> String {
+    let h = head(s);
+    let tail = |p: String| p.strip_prefix(h.as_str()).map(str::to_string).unwrap_or(p);
+    let ternary: Vec<String> = tail(program_ternary(s, &[]))
+        .lines()
+        .map(|l| match l.starts_with("y32 := (") {
+            true => format!("y32 := ({} c_at 3) r_eshape ...   # FP32's outputs from run 1, passed in", SIDE * SIDE),
+            false => l.to_string(),
+        })
+        .collect();
     format!(
-        "g := {SIDE}\nt := {}\n# fp, qa (the weights) and px, py, pl (the test points):\n# written by train/, not shown\nm := {}\n{}",
-        microscope::run::lit(s.t),
-        SETS[s.set % SETS.len()].1,
-        core()
+        "{h}# -- run 1, when the weight set changes: FP32, FP16, INT8 --\n{}\
+         # -- run 2, when the threshold moves: the ternary weights --\n{}\n\
+         # -- run 3, for the point clicked: one input through the layers --\n{}",
+        tail(program_formats(s)),
+        ternary.join("\n"),
+        tail(program_point(s)),
     )
 }
 
@@ -35,7 +51,7 @@ pub fn range(src: &str, stage: Stage) -> Range {
         Stage::Network => between(src, "u:l_ayer := ", "  3 t_ake_2"),
         Stage::Formats => between(src, "u:f_loats := ", "m2 := "),
         Stage::Additions => between(src, "u:a_dds := ", "u:a_dds := "),
-        Stage::Maps => between(src, "y32 := ", "y2 := "),
+        Stage::Maps => between(src, "y32 := grid", "y8 := grid"),
         Stage::Measures => between(src, "u:m_easures := { k y ->", "  acc c_at agree c_at err"),
     }
 }

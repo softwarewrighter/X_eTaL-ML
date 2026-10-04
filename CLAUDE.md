@@ -339,6 +339,9 @@ Read before working:
    lives in `demos/<slug>/data/` files read with `n_umbers []N_GET`,
    written by the demo's trainer from a downloaded, uncommitted
    dataset; never walls of literals or repeated lines.
+5d. A page shows all the code it runs (plan A16): the shared head,
+   then each run as run; nothing left out but a large passed-in
+   value, written `...` with a comment; a test checks it.
 6. Macro libraries (`.xtlm`) are blocked until X_eTaL supports them
    (ask M1): design them in `docs/plan.md`, never emulate them.
    Native (C ABI) code belongs in `../X_eTaL-extensions`.
