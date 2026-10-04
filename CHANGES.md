@@ -13,6 +13,7 @@ refresh of the vendored X_eTaL.
 
 ## 2026-10-04
 
+- 11:40 `chore` Saga step cnn-digits-page completed.
 - 11:35 `build` Port 8435 is this repo's (the user's choice: one port per X_eTaL repo, so one demo of each can run at once): `just serve SLUG` (was 8095) and `just serve-pages` (was 8098) default to it.
 - 11:30 `demo` Tiny CNN is live (https://softwarewrighter.github.io/X_eTaL-ML/cnn-digits/): draw a digit (strokes interpolated, so fast ones stay unbroken) or pick one of ten; X_eTaL runs the program's own network in the browser (about 100-150 ms); the 8 filters, the 8 feature maps (click a cell: its 3 x 3 patch times the filter, plus the bias, ReLU, equal to X_eTaL's value), the 8 pooled maps, the probabilities as bars; the program panel shows everything the page runs. Tests: each stage equals a direct Rust computation for all ten samples and the trainer's probabilities; patch arithmetic; unbroken strokes; every line shown. Browser baseline, screenshot; the tape and recording removed (live, plan A13); the recorded page now says every demo is live and keeps the run-it-yourself steps. Shared CSS for pads, rows of maps, patches, digit bars. The ternary-net and moe-router pages' program captions say they show everything run.
 - 09:35 `chore` Saga step ternary-net-data completed.
