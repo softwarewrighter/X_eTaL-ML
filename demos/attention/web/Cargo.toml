@@ -1,0 +1,15 @@
+[package]
+name = "attention-web"
+description = "The attention microscope: one head of attention run by X_eTaL on a sentence, its scores, weights and outputs shown"
+version = "0.1.0"
+edition = "2021"
+license = "MIT"
+publish = false
+
+[dependencies]
+microscope = { path = "../../../shared/microscope" }
+yew = { version = "0.21", features = ["csr"] }
+web-sys = { version = "0.3", features = ["HtmlInputElement"] }
+console_error_panic_hook = "0.1"
+
+[workspace]

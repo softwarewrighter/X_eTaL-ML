@@ -1,0 +1,4 @@
+# Text the page shows only after X_eTaL has run (scripts/browser-check.sh).
+its query against every key
+it looks at “animal”
+Its output, the weighted mix

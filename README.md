@@ -76,7 +76,7 @@ an error before the forward pass, not a wrong number after it.
 | [1.58-bit network](demos/ternary-net/README.md) ([live](https://softwarewrighter.github.io/X_eTaL-ML/ternary-net/)) | one classifier with FP32, FP16, INT8 and ternary weights compared; a ternary layer as additions | inner product, quantization, masks | live |
 | [MoE routing microscope](demos/moe-router/README.md) ([live](https://softwarewrighter.github.io/X_eTaL-ML/moe-router/)) | a sentence's tokens routed to their top-2 of 16 experts; nudge a token and see where the experts switch | matrix product, softmax, top-k by masks | live |
 | [Tiny CNN](demos/cnn-digits/README.md) ([live](https://softwarewrighter.github.io/X_eTaL-ML/cnn-digits/)) | draw a digit; filters, feature maps, pooling and probabilities, every stage computed by X_eTaL; click a map for its arithmetic | windows, convolution, reshape | live |
-| Attention microscope | the attention heatmap, rows meeting columns | matrix product, transpose, softmax | next |
+| [Attention microscope](demos/attention/README.md) ([live](https://softwarewrighter.github.io/X_eTaL-ML/attention/)) | one head of attention on a sentence: scores, weights, a causal mask; tired finds the animal, wide the street | matrix product, transpose, softmax | live |
 | Embedding explorer | PCA from 64 dimensions to a 3-D cloud | covariance, projection | later |
 | Gradient descent | a small model trained in X_eTaL itself | outer product, reduce, iteration | later |
 | micro-gpt | a tiny GPT's forward pass, sampling names | all of the above | later |

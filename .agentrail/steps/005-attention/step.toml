@@ -1,6 +1,6 @@
 number = 5
 slug = "attention"
-status = "pending"
+status = "in-progress"
 description = "launch step 2: the attention demo (demos/attention): a short sentence's embed..."
 role = "production"
 context_files = []

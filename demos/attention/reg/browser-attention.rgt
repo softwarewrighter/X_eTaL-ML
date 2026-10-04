@@ -1,0 +1,3 @@
+command = "scripts/browser-check.sh attention"
+exit_code = 0
+desc = "attention: the built page run in headless Chrome shows X_eTaL's results"

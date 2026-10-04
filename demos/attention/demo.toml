@@ -1,0 +1,9 @@
+# One demo's description: read by scripts/demos.py for the tests, the
+# README's demo list and the live catalog (pages/index.html).
+slug = "attention"            # the directory name, demos/<slug>/
+title = "Attention microscope"
+summary = "One head of attention as array algebra: every query against every key in one matrix product with a transpose, softmax by row, the output as a weighted mix. The head is set by hand so a word looks for what it can describe: tired finds the animal, wide the street. A causal mask; click a word to see its query against every key."
+concepts = ["matrix product", "transpose", "softmax by row", "masks"]        # the X_eTaL ideas it shows
+status = "live"             # draft | live | deferred
+order = 75                  # position in the catalog (lower first)
+needs = []                   # asks in docs/xetal-asks.md it waits on or works around

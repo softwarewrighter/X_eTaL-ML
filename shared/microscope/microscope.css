@@ -204,3 +204,13 @@ table.patch td { padding: 2px 6px; text-align: right; font-variant-numeric: tabu
 .bars.digits .bar b { font-size: .9rem; }
 .bars.digits .bar.best .fill { background: #f59f00; }
 .controls button.on { border-color: var(--accent); color: var(--accent); font-weight: 700; }
+
+/* attention: words against words */
+table.heat { border-collapse: collapse; font-size: .78rem; }
+table.heat th { font-weight: 600; padding: 2px 6px; text-align: right; white-space: nowrap; }
+table.heat th.ch { text-align: center; font-weight: 500; color: var(--muted); }
+table.heat td { min-width: 2.7em; padding: 3px 4px; text-align: center; font-variant-numeric: tabular-nums; }
+table.heat tr.pick { cursor: pointer; }
+table.heat tr.sel th { color: var(--accent); }
+table.heat tr.sel td { outline: 1px solid var(--accent); }
+.outs tr.best td { font-weight: 700; }
