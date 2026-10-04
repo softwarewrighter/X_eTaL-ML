@@ -15,6 +15,10 @@ got="$("$xetal" eval -e "'+ r_/_2 2 3 r_eshape r_ange 6")"
 got="$("$xetal" eval -e '"s:" u_se< "Stats"
 s:m_ean 1 2 3 4')"
 [ "$got" = "2.5" ] || { echo "check-vendor: Stats gave '$got', expected '2.5'" >&2; exit 1; }
+# The libraries vendored from X_eTaL-libraries load and work here.
+got="$("$root/scripts/xt" eval -e '"k:" u_se< "Check"
+6 k:i_s 2 * 3')"
+[ "$got" = "ok" ] || { echo "check-vendor: vendored Check gave '$got', expected 'ok'" >&2; exit 1; }
 cd "$root/tools/vendor-probe"
 cargo test -q >/dev/null 2>&1 || { cargo test; exit 1; }
 cargo check -q --target wasm32-unknown-unknown

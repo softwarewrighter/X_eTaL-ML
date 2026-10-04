@@ -103,15 +103,16 @@ CATALOG_HEADER = """<div class="brand"><img class="logo" src="modern-xetal-logo.
 <p class="lede">Machine learning in <a href="{xetal}">X_eTaL</a>, a typed array language:
 small models you can watch think. Each one shows its program beside the model, so you can
 see a layer, a router or a quantizer happen as one array expression.
-<a href="recorded/">Recorded CLI demos</a>, with how to run them yourself. More X_eTaL:
+<a href="recorded/">Recorded CLI demos</a> (the command-line-only ones), with how to run any demo yourself. More X_eTaL:
 <a href="https://softwarewrighter.github.io/X_eTaL-demos/">visual demos</a>,
 <a href="https://softwarewrighter.github.io/X_eTaL-libraries/">libraries</a>.</p>"""
 
 RECORDED_HEADER = """<div class="brand"><a href="../"><img class="logo" src="../modern-xetal-logo.jpg" alt="X_eTaL"></a><h1>Recorded CLI demos</h1></div>
-<p class="lede">The <a href="../">ML demos</a> run at the command line by the X_eTaL vendored in
+<p class="lede">The <a href="../">ML demos</a> that run only at the command line (the
+interactive ones are live in the browser), run by the X_eTaL vendored in
 <a href="{repo}">the repository</a>: each statement of the program, drawn as X_eTaL
 renders it, then its result. Long lines are clipped and runs of weight literals collapsed;
-nothing else is edited.</p>"""
+nothing else is edited. Every demo runs at the command line the same way.</p>"""
 
 HOWTO = """<section class="howto">
 <h2>Run them yourself</h2>

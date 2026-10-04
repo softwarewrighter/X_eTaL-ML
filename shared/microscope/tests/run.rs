@@ -45,3 +45,9 @@ fn a_program_imports_this_repos_libraries() {
     let out = microscope::run::output("\"nn:\" u_se< \"NN\"\nnn:r_elu -1.0 2.0\n", 1).unwrap();
     assert_eq!(out, vec!["0.0 2.0".to_string()]);
 }
+
+#[test]
+fn a_program_imports_the_vendored_check_library() {
+    let out = microscope::run::output("\"k:\" u_se< \"Check\"\n6 k:i_s 2 * 3\n", 1).unwrap();
+    assert_eq!(out, vec!["ok".to_string()]);
+}

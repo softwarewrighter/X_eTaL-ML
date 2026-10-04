@@ -19,10 +19,9 @@ Sources: `../X_eTaL/docs/research3.txt` (the split and the release
 plan: "Are we X_eTaL yet?"), the ML part of
 `../X_eTaL-demos/docs/research.txt` (attention, ternary networks, MoE
 routing, CNN, embeddings, world models, diffusion), and
-`../X_eTaL-libraries/docs/plan.md` (the library layout). All are
+`../X_eTaL-libraries/docs/plan.md` (the library layout), and
+`../X_eTaL/docs/research4.txt` (the launch priorities). All are
 archival, not normative; this plan turns them into sagas and steps.
-(`docs/research.txt`, named by the user as this repo's source, does
-not exist yet; see the open questions at the end.)
 
 Development is driven by agentrail sagas (one active saga in
 `.agentrail/`, finished sagas archived to `.agentrail-archive/`), as in
@@ -65,6 +64,8 @@ net:n_etwork<`) waits for `.xtlm` in X_eTaL (ask M1).
 | A10 | **Macro libraries (`.xtlm`) wait for X_eTaL** (its Saga 19; ask M1). They are designed here on paper (saga 4), never emulated. The ML one is `Net.xtlm`: `"784 128 relu 10 softmax" net:n_etwork<` expanding into ordinary, type-checked `nn:` calls, inspectable with `xetal expand`. | research3.txt: the release needs one domain-specific macro, not only control flow. |
 | A11 | The **live site** is built locally into `pages/` (`just pages`): a catalog `pages/index.html` from every `demos/*/demo.toml`, `pages/<slug>/` from trunk, and (saga 2) a library reference. `pages/` is committed; `.github/workflows/pages.yml` only uploads it. | Same model as the sibling repos: simple, fast, deterministic deploys. |
 | A12 | `just` is the entry point (recipes call `scripts/*.sh`); `CHANGES.md` gets a line for every commit (as in `../X_eTaL`); docs are ASCII-only markdown (`sw-markdown-checker`); user-facing docs say what and how, saga talk lives only here. | Same process as the sibling repos. |
+| A13 | **Live or recorded** (the user's decision, 2026-10-03): a demo that runs interactively in the browser is shown live (its page); a demo that runs only at the command line is shown recorded (a VHS tape, `just record`, an animated WebP on the recorded page, its README and its catalog card). When a CLI-only demo gets its page, its tape and recording go. Every demo runs at the command line (`just run`, `just tour`). | One way to see each demo, no duplicated upkeep. |
+| A14 | **Helpful libraries from X_eTaL-libraries are used, vendored** (the user's decision, 2026-10-03): `just vendor-libs [REF] [Name...]` snapshots their `src/` from a committed ref into `vendor/xetal-libraries/` (VENDORED records it; own commit), on `XETAL_PATH` beside `libs/` and in the pages' store. Now: Check, for the tests. | Reuse instead of re-writing; the same discipline as the vendored X_eTaL. |
 
 ## Layout
 
@@ -167,6 +168,7 @@ For this repo that means:
 
 | # | Step slug | Delivers |
 | - | --------- | -------- |
+| 0 | live-or-recorded | inserted: A13 applied (ternary-net's and moe-router's recordings and tapes removed; cnn-digits keeps its own until its page), A14 (Check vendored from X_eTaL-libraries fd93e45; NN's checks use it), research.txt question settled |
 | 1 | cnn-digits-page | draw a 28 x 28 digit (or pick one of ten); conv -> ReLU -> pool -> dense -> softmax in X_eTaL, every stage shown with its shape; click a conv output for patch x kernel = value; the X_eTaL pass equals the trainer's Rust pass; browser baseline, screenshot, recording |
 | 2 | attention | the attention microscope: X, Q, K, V, S = Q K^T / sqrt d, softmax heatmap, Y = A V for a short sentence; a causal mask; definitions in the program, each line inspectable; CLI baseline, page, browser baseline, recording |
 | 3 | bench | `just bench`: the ML workloads timed (a 1024 x 16 by 16 x 16 `i_nner`, `t_able` spreads, each demo's run), best of three, the abb8274 baseline in `docs/speed.md`; a warning on a regression over 15 percent, to verify upstream's Saga 30 fix |
@@ -234,9 +236,9 @@ the announcement), in this order:
   X_eTaL-demos (the user's decision, 2026-10-03); X_eTaL-demos then
   links here.
 
-## Open questions
+## Settled questions
 
-- `docs/research.txt`: the user named it as this repo's source, but
-  the repo had only an empty README. Until it is added, research3.txt
-  and X_eTaL-demos' research.txt stand in. If one is added, this plan
-  is reviewed against it.
+- `docs/research.txt`: none is needed here (the user, 2026-10-03);
+  the sources are `../X_eTaL/docs/research3.txt` and `research4.txt`
+  and X_eTaL-demos' research.txt.
+- Live or recorded: A13. Libraries from X_eTaL-libraries: A14.

@@ -1,25 +1,25 @@
 #!/usr/bin/env xetal
-# NN: properties that must hold, one "ok:" line each (a "FAIL:" line
-# fails the tests).
+# NN: properties that must hold, checked with Check (vendored from
+# X_eTaL-libraries): one "ok" line each and a summary; a "FAIL" line
+# fails the tests.
 "nn:" u_se< "NN"
-u:c_heck := { name ok -> ok ? "ok: " c_at name
-  "FAIL: " c_at name }
-u:a_ll := { b -> '& r_/ r_avel b }
+"k:" u_se< "Check"
 m := 3 4 r_eshape 0.5 -1.25 2.0 0.0 3.5 -2.0 1.0 0.25 -0.75 4.0
 p := nn:s_oftmax m
-"softmax rows sum to 1" u:c_heck u:a_ll (1.0 + 0.0 * '+ r_/_2 p) e_q~ '+ r_/_2 p
-"softmax is positive" u:c_heck u:a_ll p > 0.0
-"softmax ignores a shift" u:c_heck u:a_ll p e_q~ nn:s_oftmax m + 100.0
-"log-softmax is log of softmax" u:c_heck u:a_ll (l_og p) e_q~ nn:l_ogSoftmax m
-"softmax of a vector is one row" u:c_heck u:a_ll (r_avel 1 t_ake p) e_q~ nn:s_oftmax r_avel 1 t_ake m
-"softmax works along the last axis" u:c_heck u:a_ll (r_avel nn:s_oftmax 2 3 4 r_eshape m) e_q~ r_avel nn:s_oftmax 6 4 r_eshape m
-"sigmoid(-x) = 1 - sigmoid(x)" u:c_heck u:a_ll (nn:s_igmoid n_eg r_avel m) e_q~ 1.0 - nn:s_igmoid r_avel m
-"tanh is odd" u:c_heck u:a_ll (nn:t_anh n_eg r_avel m) e_q~ n_eg nn:t_anh r_avel m
-"relu is leaky with slope 0" u:c_heck u:a_ll (nn:r_elu m) = 0.0 nn:l_eaky m
-"argmax of one-hot is the label" u:c_heck u:a_ll 3 1 4 2 = nn:a_rgmax 4 nn:o_neHot 3 1 4 2
-"argmax takes the first of a tie" u:c_heck 2 = nn:a_rgmax 0.0 5.0 5.0
-"argmax picks softmax's largest" u:c_heck u:a_ll (nn:a_rgmax m) = nn:a_rgmax p
-"dense is x W + b" u:c_heck u:a_ll ((2 2 r_eshape 1.0 2.0 3.0 4.0) nn:d_ense 3 2 r_eshape 1.0 0.0 0.0 1.0 10.0 20.0) = 2 2 r_eshape 11.0 22.0 13.0 24.0
-"cross-entropy of a perfect guess is 0" u:c_heck 0.0 e_q~ (3 nn:o_neHot 1 2) nn:c_rossEntropy 3 nn:o_neHot 1 2
-"accuracy counts argmax hits" u:c_heck 0.5 e_q~ 1 2 nn:a_ccuracy 2 2 r_eshape 0.9 0.1 0.8 0.2
-"mse of equal arrays is 0" u:c_heck 0.0 e_q~ m nn:m_se m
+c1 := "softmax rows sum to 1" k:t_est 1.0 1.0 1.0 k:n_ear '+ r_/_2 p
+c2 := "softmax is positive" k:t_est k:t_rue '& r_/ r_avel p > 0.0
+c3 := "softmax ignores a shift" k:t_est p k:n_ear nn:s_oftmax m + 100.0
+c4 := "log-softmax is log of softmax" k:t_est (l_og p) k:n_ear nn:l_ogSoftmax m
+c5 := "a vector is one row" k:t_est (r_avel 1 t_ake p) k:n_ear nn:s_oftmax r_avel 1 t_ake m
+c6 := "softmax along the last axis" k:t_est (r_avel nn:s_oftmax 2 3 4 r_eshape m) k:n_ear r_avel nn:s_oftmax 6 4 r_eshape m
+c7 := "sigmoid(-x) = 1 - sigmoid(x)" k:t_est (nn:s_igmoid n_eg r_avel m) k:n_ear 1.0 - nn:s_igmoid r_avel m
+c8 := "tanh is odd" k:t_est (nn:t_anh n_eg r_avel m) k:n_ear n_eg nn:t_anh r_avel m
+c9 := "relu is leaky with slope 0" k:t_est (nn:r_elu m) k:i_s 0.0 nn:l_eaky m
+c10 := "argmax inverts one-hot" k:t_est 3 1 4 2 k:i_s nn:a_rgmax 4 nn:o_neHot 3 1 4 2
+c11 := "argmax takes the first of a tie" k:t_est 2 k:i_s nn:a_rgmax 0.0 5.0 5.0
+c12 := "argmax picks softmax's largest" k:t_est (nn:a_rgmax m) k:i_s nn:a_rgmax p
+c13 := "dense is x W + b" k:t_est (2 2 r_eshape 11.0 22.0 13.0 24.0) k:i_s (2 2 r_eshape 1.0 2.0 3.0 4.0) nn:d_ense 3 2 r_eshape 1.0 0.0 0.0 1.0 10.0 20.0
+c14 := "cross-entropy of a perfect guess is 0" k:t_est 0.0 k:n_ear (3 nn:o_neHot 1 2) nn:c_rossEntropy 3 nn:o_neHot 1 2
+c15 := "accuracy counts argmax hits" k:t_est 0.5 k:n_ear 1 2 nn:a_ccuracy 2 2 r_eshape 0.9 0.1 0.8 0.2
+c16 := "mse of equal arrays is 0" k:t_est 0.0 k:n_ear m nn:m_se m
+k:r_eport c1 k:a_nd c2 k:a_nd c3 k:a_nd c4 k:a_nd c5 k:a_nd c6 k:a_nd c7 k:a_nd c8 k:a_nd c9 k:a_nd c10 k:a_nd c11 k:a_nd c12 k:a_nd c13 k:a_nd c14 k:a_nd c15 k:a_nd c16

@@ -107,7 +107,8 @@ def main():
     elif cmd == "check":
         sys.exit(check())
     elif cmd == "path":
-        print(":".join(str(ROOT / "libs" / n / "src") for n in names()))
+        vendored = sorted(str(d) for d in (REPO / "vendor" / "xetal-libraries" / "libs").glob("*/src"))
+        print(":".join([str(ROOT / "libs" / n / "src") for n in names()] + vendored))
     else:
         sys.exit(f"libs.py: unknown command {cmd!r} (list, table, check, path)")
 

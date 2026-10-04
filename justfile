@@ -11,6 +11,10 @@ default:
 vendor ref="HEAD":
     scripts/vendor-xetal.sh "$1"
 
+# Snapshot libraries (default Check) from a committed ref of ../X_eTaL-libraries into vendor/xetal-libraries/; commit it on its own
+vendor-libs ref="HEAD" *names:
+    scripts/vendor-libraries.sh "$@"
+
 # Build the vendored xetal CLI into target/xetal/
 xetal:
     @scripts/build-xetal.sh

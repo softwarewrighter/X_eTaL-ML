@@ -328,6 +328,13 @@ Read before working:
    (status, kind, demos and libraries, why, minimal repro,
    workaround). Do not fix X_eTaL from this repo and do not hide a
    workaround: name it in the ask and on the demo's or library's page.
+5a. Use a helpful library from X_eTaL-libraries rather than
+   re-writing it: vendor it (`just vendor-libs [REF] [Name...]`, a
+   committed ref, its own commit); never edit `vendor/xetal-libraries/`.
+   Tests use its Check library (`"k:" u_se< "Check"`).
+5b. A demo that runs interactively in the browser is shown live; a
+   CLI-only demo is shown recorded (`demos/<slug>/<slug>.tape`, `just
+   record`); a demo that gets a page loses its tape (plan A13).
 6. Macro libraries (`.xtlm`) are blocked until X_eTaL supports them
    (ask M1): design them in `docs/plan.md`, never emulate them.
    Native (C ABI) code belongs in `../X_eTaL-extensions`.

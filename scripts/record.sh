@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
-# Record the demos at the command line: each demos/<slug>/<slug>.tape
+# Record the demos that run only at the command line (a demo with an
+# interactive page is shown live instead, and has no tape): each demos/<slug>/<slug>.tape
 # is played by VHS (charmbracelet/vhs; it types `just tour SLUG` in a
 # fresh shell at the repository root), and the GIF it writes to
 # work/record/ becomes demos/<slug>/recording.webp, the animated

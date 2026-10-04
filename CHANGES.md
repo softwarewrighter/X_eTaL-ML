@@ -13,6 +13,8 @@ refresh of the vendored X_eTaL.
 
 ## 2026-10-03
 
+- 18:40 `build` Check vendored from X_eTaL-libraries fd93e45 (`just vendor-libs [REF] [Name...]`, scripts/vendor-libraries.sh, vendor/xetal-libraries/VENDORED; the user's decision: use a helpful library where one exists): on XETAL_PATH for libraries and demos (scripts/xt, test-demos.sh, run-demo.sh, `just path`), in the pages' store (tested), checked by check-vendor. NN's 16 property checks now use `k:t_est` and `k:r_eport` (baseline rebased on purpose: the same 16 ok lines, worded as Check prints them, and its summary).
+- 18:40 `docs` Live or recorded (the user's decision, plan A13): a demo that runs interactively in the browser is shown live, a CLI-only demo recorded; ternary-net's and moe-router's recordings and tapes removed, cnn-digits keeps its own until its page lands; the recorded page, catalog, README and CLAUDE.md say so. The research.txt question settled (none needed here).
 - 16:45 `plan` Saga foundation archived; saga launch started (cnn-digits-page, attention, bench, start-here, asks-audit, release-1).
 - 16:40 `chore` Saga step recorded-demos completed; step quant blocked (deferred post-launch, research4.txt).
 - 16:30 `feat` Recorded CLI demos: a VHS tape per demo (demos/<slug>/<slug>.tape) typing `just tour SLUG`, rendered by `just record` (vhs; ffmpeg to 8 fps and 960 px; gif2webp) to demos/<slug>/recording.webp (about 2 MB each); `just tour` (scripts/tour.py: the notebook paced, long lines clipped, runs of weight literals collapsed); the site's pages/recorded/ page (how to run them in a clone with the vendored X_eTaL, then each recording); catalog cards link it, and cnn-digits' card (no live page yet) shows its recording; README and demo READMEs show them.

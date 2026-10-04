@@ -16,7 +16,8 @@ command-line program classifies ten MNIST test digits.
 `just tour cnn-digits`: each statement of the program as X_eTaL draws it,
 then its result (long lines clipped, runs of weight literals
 collapsed), recorded with VHS (`cnn-digits.tape`, `just record cnn-digits`).
-All the recordings, with how to run them yourself:
+Demos that run only at the command line are shown recorded (the
+interactive ones are live), with how to run them yourself:
 [Recorded CLI demos](https://softwarewrighter.github.io/X_eTaL-ML/recorded/).
 
 ## The program

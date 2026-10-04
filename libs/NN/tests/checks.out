@@ -2,15 +2,16 @@ ok: softmax rows sum to 1
 ok: softmax is positive
 ok: softmax ignores a shift
 ok: log-softmax is log of softmax
-ok: softmax of a vector is one row
-ok: softmax works along the last axis
+ok: a vector is one row
+ok: softmax along the last axis
 ok: sigmoid(-x) = 1 - sigmoid(x)
 ok: tanh is odd
 ok: relu is leaky with slope 0
-ok: argmax of one-hot is the label
+ok: argmax inverts one-hot
 ok: argmax takes the first of a tie
 ok: argmax picks softmax's largest
 ok: dense is x W + b
 ok: cross-entropy of a perfect guess is 0
 ok: accuracy counts argmax hits
 ok: mse of equal arrays is 0
+16 checks, all passed

@@ -14,16 +14,6 @@ Live: [MoE routing microscope](https://softwarewrighter.github.io/X_eTaL-ML/moe-
 
 [![MoE routing microscope: the live page](screenshot.png)](https://softwarewrighter.github.io/X_eTaL-ML/moe-router/)
 
-## Recorded at the command line
-
-![moe-router at the command line: just tour moe-router](recording.webp)
-
-`just tour moe-router`: each statement of the program as X_eTaL draws it,
-then its result (long lines clipped, runs of weight literals
-collapsed), recorded with VHS (`moe-router.tape`, `just record moe-router`).
-All the recordings, with how to run them yourself:
-[Recorded CLI demos](https://softwarewrighter.github.io/X_eTaL-ML/recorded/).
-
 ## The program
 
 From `moe-router.xtl` (the live page runs these sections on your

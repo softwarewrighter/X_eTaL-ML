@@ -30,7 +30,7 @@ export XETAL="$xetal"
 # This repo's libraries on XETAL_PATH, as paths relative to a demo's
 # directory (every demo is demos/<slug>/), so `u_se<` finds them and
 # baselines do not depend on where the repository is checked out.
-XETAL_PATH="$(cd "$root" && ls -d libs/*/src 2>/dev/null | sed 's#^#../../#' | paste -sd: -)"
+XETAL_PATH="$(cd "$root" && ls -d libs/*/src vendor/xetal-libraries/libs/*/src 2>/dev/null | sed 's#^#../../#' | paste -sd: -)"
 export XETAL_PATH
 # bless DIR DATA NAME COMMAND DESC: make (or remake) baseline NAME in
 # DATA from the current output, running COMMAND from DIR. An existing
