@@ -1,0 +1,8 @@
+number = 3
+slug = "ternary-net-data"
+status = "pending"
+description = "launch step 3 (inserted, plan A15): ternary-net's weights (38 c_at continuati..."
+role = "production"
+context_files = []
+created_at = "2026-10-03T21:25:37"
+commits = []

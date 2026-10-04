@@ -335,6 +335,10 @@ Read before working:
 5b. A demo that runs interactively in the browser is shown live; a
    CLI-only demo is shown recorded (`demos/<slug>/<slug>.tape`, `just
    record`); a demo that gets a page loses its tape (plan A13).
+5c. Programs are short and dense (plan A15): data (weights, samples)
+   lives in `demos/<slug>/data/` files read with `n_umbers []N_GET`,
+   written by the demo's trainer from a downloaded, uncommitted
+   dataset; never walls of literals or repeated lines.
 6. Macro libraries (`.xtlm`) are blocked until X_eTaL supports them
    (ask M1): design them in `docs/plan.md`, never emulate them.
    Native (C ABI) code belongs in `../X_eTaL-extensions`.

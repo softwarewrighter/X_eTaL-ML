@@ -1,0 +1,1 @@
+launch step 3 (inserted, plan A15): ternary-net's weights (38 c_at continuation lines in ternary-net.xtl) into demos/ternary-net/data/ written by its trainer (just ternary-train) and read with n_umbers []N_GET; its page (web/) puts the file into the in-memory store (microscope) before running; baselines and browser check unchanged in substance; program short.

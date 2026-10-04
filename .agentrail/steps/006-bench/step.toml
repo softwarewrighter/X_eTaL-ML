@@ -1,4 +1,4 @@
-number = 4
+number = 6
 slug = "bench"
 status = "pending"
 description = "launch step 3: just bench (scripts/bench.sh): the ML workloads timed with the..."

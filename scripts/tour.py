@@ -2,7 +2,7 @@
 """A demo as a paced notebook, for reading at a terminal or recording.
 
 Runs `scripts/run-demo.sh --echo SLUG` (each statement drawn, then its
-output) and passes the output on:
+output) and passes the output on as it comes:
   - every line clipped to the terminal's width (ANSI colours kept),
     an ellipsis where it was cut;
   - a run of data statements (longer than the width and mostly number
@@ -57,9 +57,9 @@ def main():
     slug = sys.argv[1]
     width = int(sys.argv[2]) if len(sys.argv) > 2 else shutil.get_terminal_size().columns
     pace = float(sys.argv[3]) if len(sys.argv) > 3 else 0.35
-    run = subprocess.run([os.path.join(ROOT, "scripts", "run-demo.sh"), "--echo", slug],
-                         capture_output=True, text=True)
-    lines = run.stdout.splitlines()
+    proc = subprocess.Popen([os.path.join(ROOT, "scripts", "run-demo.sh"), "--echo", slug],
+                            stdout=subprocess.PIPE, text=True, bufsize=1)
+    lines = (line.rstrip("\n") for line in proc.stdout)
     run_ = 0  # consecutive data statements so far
 
     def more():
@@ -79,9 +79,11 @@ def main():
             time.sleep(pace)
         print(clip(line, width), flush=True)
     more()
-    sys.stderr.write(run.stderr)
-    sys.exit(run.returncode)
+    sys.exit(proc.wait())
 
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except (BrokenPipeError, KeyboardInterrupt):
+        sys.exit(1)

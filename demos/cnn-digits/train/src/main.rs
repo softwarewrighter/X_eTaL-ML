@@ -181,21 +181,10 @@ fn num(x: f64, places: usize) -> String {
     if s == "-0.0" { "0.0".into() } else { s }
 }
 
-/// `name` bound to the numbers `v`, 40 to a line (joined with c_at),
-/// then reshaped to `shape` if given.
-fn bind(name: &str, shape: &str, v: &[f64], places: usize) -> String {
-    let mut s = String::new();
-    for (k, c) in v.chunks(40).enumerate() {
-        let c: Vec<String> = c.iter().map(|&x| num(x, places)).collect();
-        s += &match k {
-            0 => format!("{name} := {}\n", c.join(" ")),
-            _ => format!("{name} := {name} c_at {}\n", c.join(" ")),
-        };
-    }
-    if !shape.is_empty() {
-        s += &format!("{name} := ({shape}) r_eshape {name}\n");
-    }
-    s
+/// The numbers `v` as text, `per` to a line (rounded to `places`),
+/// as `n_umbers []N_GET` reads them back.
+fn rows(v: &[f64], per: usize, places: usize) -> String {
+    v.chunks(per).map(|c| c.iter().map(|&x| num(x, places)).collect::<Vec<_>>().join(" ") + "\n").collect()
 }
 
 fn main() {
@@ -232,25 +221,19 @@ fn main() {
     // One test digit of each class, the first in the test set.
     let samples: Vec<usize> = (0..10).map(|d| ty.iter().position(|&y| y == d).unwrap()).collect();
     let picked: Vec<f64> = samples.iter().flat_map(|&i| tx[i].iter().map(|v| (v * 100.0).round() / 100.0)).collect();
-    let section = format!(
-        "# -- the weights (written by train/: just cnn-train) ---------\n\
-         # Trained on the 60,000 MNIST training digits; {} of the 10,000\n\
-         # test digits ({:.2}%) are classified right.\n\
-         # k: 8 filters of 3 x 3; bc: their biases; w: 1352 x 10, one row\n\
-         # per pooled value (filter by filter, row by row); bd: 10 biases.\n\
-         {}{}{}{}\
-         # Ten test digits, one of each class (0 to 9), 28 x 28 each.\n{}",
-        (acc * 10000.0).round(),
-        acc * 100.0,
-        bind("k", "8 c_at 3 c_at 3", &net.k, 5),
-        bind("bc", "", &net.bc, 5),
-        bind("w", "1352 c_at 10", &net.w, 5),
-        bind("bd", "", &net.bd, 5),
-        bind("samples", "10 c_at 28 c_at 28", &picked, 2),
-    );
-    let path = concat!(env!("CARGO_MANIFEST_DIR"), "/../cnn-digits.xtl");
-    let src = std::fs::read_to_string(path).expect("read cnn-digits.xtl");
-    let (a, b) = (src.find("# -- the weights").expect("no weights marker"), src.find("# -- end of the weights").expect("no end marker"));
-    std::fs::write(path, format!("{}{}{}", &src[..a], section, &src[b..])).expect("write cnn-digits.xtl");
-    eprintln!("wrote the weights into {path}");
+    // data/: the filters (each row its 9 weights, then its bias), the
+    // dense layer (1352 weight rows, then the 10 biases: nn:d_ense's
+    // layout) and the samples (one 28-pixel image row per line).
+    let filters: Vec<f64> = (0..8).flat_map(|f| net.k[9 * f..9 * f + 9].iter().copied().chain([net.bc[f]])).collect();
+    let dense: Vec<f64> = net.w.iter().chain(net.bd.iter()).copied().collect();
+    let dir = concat!(env!("CARGO_MANIFEST_DIR"), "/../data");
+    std::fs::create_dir_all(dir).expect("data/");
+    // The probabilities this (Rust) forward pass gives each sample: the
+    // X_eTaL program checks that it computes the same.
+    let expected: Vec<f64> = picked.chunks(784).flat_map(|x| net.forward(x).out).collect();
+    for (file, text) in [("filters.txt", rows(&filters, 10, 5)), ("dense.txt", rows(&dense, 10, 5)), ("samples.txt", rows(&picked, 28, 2)), ("expected.txt", rows(&expected, 10, 15))] {
+        std::fs::write(format!("{dir}/{file}"), text).expect("write data/");
+    }
+    eprintln!("test accuracy {:.2}% ({} of 10,000); wrote data/filters.txt, dense.txt, samples.txt, expected.txt", acc * 100.0, (acc * 10000.0).round());
+
 }
