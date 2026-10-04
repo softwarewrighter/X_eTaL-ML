@@ -1,0 +1,1 @@
+cnn-digits: data files (A15), 595->66 lines, output shows filters/maps/pools/bars/readings, X_eTaL==Rust check, tour streams, re-recorded
