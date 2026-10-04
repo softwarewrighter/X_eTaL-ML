@@ -257,7 +257,7 @@ pub fn app() -> Html {
                 <div class="col">
                     <section class="panel code">
                         <h2>{"The program"}</h2>
-                        <p class="note">{"The router weights and the core of moe-router.xtl, then the lines that route your sentence, run by X_eTaL in your browser; the stage you pick is highlighted."}</p>
+                        <p class="note">{"Everything the page runs, in your browser: the head of moe-router.xtl (the features read from data/, the router, the core), then the run for your sentence and the run for the nudge; the stage you pick is highlighted."}</p>
                         { source(&ids, &model.nudge, model.focus) }
                     </section>
                 </div>

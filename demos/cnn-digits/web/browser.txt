@@ -1,0 +1,4 @@
+# Text the page shows only after X_eTaL has run (scripts/browser-check.sh).
+The network reads a 7
+The patch: filter 1, row
+X_eTaL's value in the map:

@@ -94,7 +94,7 @@ agrees with a direct forward pass in Rust.
 just run ternary-net          # glyphs, the measures of all four formats, storage, the maps
 just tour ternary-net         # each statement, then its result, paced
 just show ternary-net         # the same as a notebook
-just serve ternary-net        # the web app at http://127.0.0.1:8095/
+just serve ternary-net        # the web app at http://127.0.0.1:8435/
 just test-demo ternary-net    # its CLI and browser baselines and the web app's tests
 just ternary-train            # retrain and rewrite the weights (then just bless ternary-net)
 ```

@@ -1,0 +1,3 @@
+command = "scripts/browser-check.sh cnn-digits"
+exit_code = 0
+desc = "cnn-digits: the built page run in headless Chrome shows X_eTaL's results"

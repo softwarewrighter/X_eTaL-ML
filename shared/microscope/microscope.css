@@ -188,3 +188,19 @@ canvas.pic.strip { width: 100%; aspect-ratio: 121 / 28; height: auto; }
   .line { font-size: 1rem; }
   .gen { margin-left: 0; width: 100%; }
 }
+
+/* cnn-digits: the drawing pad, rows of 8 maps, the patch, digit bars */
+.padbox { width: min(100%, 300px); touch-action: none; cursor: crosshair; }
+canvas.pic.pad { width: 100%; border-radius: 6px; }
+.maps8 { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; margin: 6px 0 12px; }
+.maps8.kerns { grid-template-columns: repeat(8, minmax(0, 1fr)); max-width: 420px; }
+.maps8 figure { margin: 0; }
+.maps8 figcaption { font-size: .7rem; color: var(--muted); text-align: center; }
+.maps8.kerns figcaption { display: none; }
+.patchrow { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.patchrow .op { font-size: 1.4rem; }
+table.patch td { padding: 2px 6px; text-align: right; font-variant-numeric: tabular-nums; }
+.bars.digits { height: 140px; }
+.bars.digits .bar b { font-size: .9rem; }
+.bars.digits .bar.best .fill { background: #f59f00; }
+.controls button.on { border-color: var(--accent); color: var(--accent); font-weight: 700; }

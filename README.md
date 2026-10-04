@@ -75,7 +75,7 @@ an error before the forward pass, not a wrong number after it.
 | ---- | ------------ | ----------- | ------ |
 | [1.58-bit network](demos/ternary-net/README.md) ([live](https://softwarewrighter.github.io/X_eTaL-ML/ternary-net/)) | one classifier with FP32, FP16, INT8 and ternary weights compared; a ternary layer as additions | inner product, quantization, masks | live |
 | [MoE routing microscope](demos/moe-router/README.md) ([live](https://softwarewrighter.github.io/X_eTaL-ML/moe-router/)) | a sentence's tokens routed to their top-2 of 16 experts; nudge a token and see where the experts switch | matrix product, softmax, top-k by masks | live |
-| [Tiny CNN](demos/cnn-digits/README.md) | a digit read by a tiny network trained on MNIST, every stage visible | windows, convolution, reshape | command line; page next |
+| [Tiny CNN](demos/cnn-digits/README.md) ([live](https://softwarewrighter.github.io/X_eTaL-ML/cnn-digits/)) | draw a digit; filters, feature maps, pooling and probabilities, every stage computed by X_eTaL; click a map for its arithmetic | windows, convolution, reshape | live |
 | Attention microscope | the attention heatmap, rows meeting columns | matrix product, transpose, softmax | next |
 | Embedding explorer | PCA from 64 dimensions to a 3-D cloud | covariance, projection | later |
 | Gradient descent | a small model trained in X_eTaL itself | outer product, reduce, iteration | later |
@@ -85,13 +85,11 @@ an error before the forward pass, not a wrong number after it.
 ### Recorded at the command line
 
 A demo that runs interactively in the browser is shown live; a demo
-that runs only at the command line is shown recorded: the
+that runs only at the command line is shown recorded on the
 [recorded CLI demos](https://softwarewrighter.github.io/X_eTaL-ML/recorded/)
-show `just tour SLUG`, every statement of the program as X_eTaL draws
-it, then its result. Every demo, live or not, also runs at the
-command line with the X_eTaL vendored in this repository.
-
-![cnn-digits at the command line](demos/cnn-digits/recording.webp)
+page (`just tour SLUG`: every statement as X_eTaL draws it, then its
+result). Every demo has a live page now, and every one also runs at
+the command line with the X_eTaL vendored in this repository.
 
 To run them yourself (Rust stable and `just`; nothing else to
 install, X_eTaL comes vendored):
@@ -151,7 +149,7 @@ on whatever `xetal` is on your PATH.
 
 ```bash
 just pages                # build the live site into pages/ (committed; a push publishes it)
-just serve-pages          # preview it at http://127.0.0.1:8098/X_eTaL-ML/
+just serve-pages          # preview it at http://127.0.0.1:8435/X_eTaL-ML/
 just demos                # the demos, in catalog order
 just run SLUG             # run a demo's program; just show SLUG as a notebook
 just tour SLUG            # the notebook paced, long lines clipped (as recorded)

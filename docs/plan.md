@@ -173,7 +173,7 @@ For this repo that means:
 | 0 | live-or-recorded | inserted: A13 applied (ternary-net's and moe-router's recordings and tapes removed; cnn-digits keeps its own until its page), A14 (Check vendored from X_eTaL-libraries fd93e45; NN's checks use it), research.txt question settled |
 | 0b | cnn-digits-cli | inserted after the user's review ("the demo looks bad"): A15 for cnn-digits (595 lines with 533 `c_at` continuation lines -> 64; data/filters.txt, dense.txt, samples.txt, expected.txt written by the trainer); output that shows the network (digit, filters, feature maps, pooled maps, probability bars, the ten digits read and how sure); a final check that X_eTaL equals the trainer's Rust pass; `just tour` streams; re-recorded |
 | 0c | ternary-net-data | DONE: A15 for ternary-net (38 continuation lines -> data/fp.txt, qa.txt, test.txt from `just ternary-train`; output identical) and moe-router (the 37 x 8 feature literal -> data/features.txt; output identical); pages given the files (`microscope::libs::add`); and, after the user's review ("the live demo's source is incomplete"), A16 applied to both pages |
-| 1 | cnn-digits-page | draw a 28 x 28 digit (or pick one of ten); conv -> ReLU -> pool -> dense -> softmax in X_eTaL, every stage shown with its shape; click a conv output for patch x kernel = value; the X_eTaL pass equals the trainer's Rust pass; browser baseline, screenshot, recording |
+| 1 | cnn-digits-page | DONE: `demos/cnn-digits/web` live: draw (strokes interpolated) or pick a digit; X_eTaL (the program's own head, data from the store) runs every stage in about 100-150 ms in the browser; filters, 8 feature maps (click for the patch x filter arithmetic, checked against X_eTaL's value), 8 pooled maps, probability bars; the program panel shows all it runs (A16). Tests: every stage equals a direct Rust computation for all ten samples, the trainer's probabilities, the patch arithmetic, strokes unbroken, every line shown; browser baseline; screenshot; its tape and recording removed (A13). Verified drawing in Chrome. Planned: draw a 28 x 28 digit (or pick one of ten); conv -> ReLU -> pool -> dense -> softmax in X_eTaL, every stage shown with its shape; click a conv output for patch x kernel = value; the X_eTaL pass equals the trainer's Rust pass; browser baseline, screenshot, recording |
 | 2 | attention | the attention microscope: X, Q, K, V, S = Q K^T / sqrt d, softmax heatmap, Y = A V for a short sentence; a causal mask; definitions in the program, each line inspectable; CLI baseline, page, browser baseline, recording |
 | 3 | bench | `just bench`: the ML workloads timed (a 1024 x 16 by 16 x 16 `i_nner`, `t_able` spreads, each demo's run), best of three, the abb8274 baseline in `docs/speed.md`; a warning on a regression over 15 percent, to verify upstream's Saga 30 fix |
 | 4 | start-here | the catalog's front: what each demo shows, why it is one array expression, its X_eTaL; recorded and live demos side by side; how to run them in a clone; README trimmed to what works today, with a status table; a link to the ecosystem front door |
@@ -235,6 +235,10 @@ the announcement), in this order:
   baselines re-run.
 - When an ask lands, remove the workaround in the step that refreshes
   the vendor, and mark the ask landed.
+- Ports: 8435 is this repo's (the user's choice, 2026-10-04: one port
+  per X_eTaL repo, so a demo from each can run at once): `just serve
+  SLUG` and `just serve-pages` default to it; the headless checks pick
+  a free port.
 - The split: once ternary-net, moe-router and cnn-digits are pushed
   and live here (saga 1 steps 4 and 5), the user deletes them from
   X_eTaL-demos (the user's decision, 2026-10-03); X_eTaL-demos then

@@ -16,18 +16,17 @@ just xetal               # build the vendored X_eTaL (once)
 just run cnn-digits      # the digit, filters, feature maps, pooled maps, probabilities
 just tour cnn-digits     # each statement, then its result, paced
 just show cnn-digits     # the same as a notebook, unclipped
-just test-demo cnn-digits    # its CLI baseline (reg-rs)
+just serve cnn-digits        # the web app at http://127.0.0.1:8435/
+just test-demo cnn-digits    # its CLI and browser baselines and the web app's tests
 ```
 
-It runs at the command line only for now (an interactive page, draw a
-digit and see every stage, is next), so it is shown recorded:
+Live: [Tiny CNN](https://softwarewrighter.github.io/X_eTaL-ML/cnn-digits/)
+(draw a digit or pick one; X_eTaL runs every stage in your browser;
+click any feature map to see its patch times its filter).
 
-![cnn-digits at the command line: just tour cnn-digits](recording.webp)
+[![Tiny CNN: the live page](screenshot.png)](https://softwarewrighter.github.io/X_eTaL-ML/cnn-digits/)
 
-The [recorded CLI demos](https://softwarewrighter.github.io/X_eTaL-ML/recorded/)
-page has it with the others that run only at the command line.
-
-## What it prints
+## What the command line prints
 
 1. A test digit (a 7), 28 x 28, shaded darkest to brightest.
 2. The 8 learned filters, 3 x 3 each, from most negative (`=`) to
@@ -105,6 +104,10 @@ Burges) from the PyTorch project's public mirror into `work/mnist/`
 (gitignored), checks their MD5 sums and unpacks them.
 
 ## Workarounds
+
+The page shows everything it runs: the program's head (the import,
+the network read from `data/`, the core), then its own lines for the
+digit; a drawn digit's 784 values are written `...` with a comment.
 
 The ten digits are classified one at a time (`e_ach`, one number per
 call), because `e_ach` cannot yet return an array per item (nested

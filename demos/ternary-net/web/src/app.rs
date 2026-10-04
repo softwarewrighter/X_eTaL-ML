@@ -193,7 +193,7 @@ pub fn app() -> Html {
                 <div class="col">
                     <section class="panel code">
                         <h2>{"The program"}</h2>
-                        <p class="note">{"The page's settings, then the core of ternary-net.xtl, run by X_eTaL in your browser; the stage you pick is highlighted."}</p>
+                        <p class="note">{"Everything the page runs, in your browser: the head of ternary-net.xtl (your settings, the weights read from data/, the functions), then each of its three runs as run; the stage you pick is highlighted."}</p>
                         { source(&model.setup, model.focus) }
                     </section>
                 </div>

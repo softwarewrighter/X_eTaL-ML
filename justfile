@@ -81,12 +81,12 @@ browser-check slug:
 pages:
     scripts/build-pages.sh
 
-# Serve the built pages/ as GitHub Pages will: http://127.0.0.1:8098/X_eTaL-ML/
-serve-pages port="8098":
+# Serve the built pages/ as GitHub Pages will: http://127.0.0.1:8435/X_eTaL-ML/ (8435 is this repo's port; each X_eTaL repo has its own)
+serve-pages port="8435":
     scripts/serve-pages.sh "$1"
 
 # Serve one demo's web app locally, rebuilt on change: just serve moe-router
-serve slug port="8095":
+serve slug port="8435":
     cd demos/{{slug}}/web && trunk serve --release --port {{port}} --address 127.0.0.1
 
 # Screenshot every demo (from the built pages/) into demos/<slug>/screenshot.png

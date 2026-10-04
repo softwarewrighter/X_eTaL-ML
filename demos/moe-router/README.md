@@ -108,7 +108,7 @@ point of the plane against direct scores.
 just run moe-router          # the red fox sentence: experts, gates, load; then the nudge
 just tour moe-router         # each statement, then its result, paced
 just show moe-router         # the same as a notebook
-just serve moe-router        # the web app at http://127.0.0.1:8095/
+just serve moe-router        # the web app at http://127.0.0.1:8435/
 just test-demo moe-router    # its CLI and browser baselines and the web app's tests
 ```
 

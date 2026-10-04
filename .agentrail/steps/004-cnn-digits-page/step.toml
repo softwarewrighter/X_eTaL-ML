@@ -1,6 +1,6 @@
 number = 4
 slug = "cnn-digits-page"
-status = "pending"
+status = "in-progress"
 description = "launch step 1: the cnn-digits web app (demos/cnn-digits/web, on shared/micros..."
 role = "production"
 context_files = []

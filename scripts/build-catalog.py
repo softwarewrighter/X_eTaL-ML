@@ -193,6 +193,8 @@ def main():
     for m in recorded:
         shutil.copy(ROOT / "demos" / m["slug"] / "recording.webp", rec / f'{m["slug"]}.webp')
     rbody = HOWTO.format(**common) + "\n" + "\n".join(recording(m) for m in recorded)
+    if not recorded:
+        rbody += '\n<p class="lede">Every demo has a live page now (<a href="../">the catalog</a>), so none is shown recorded; each one still runs at the command line as above.</p>'
     (rec / "index.html").write_text(PAGE.format(body=rbody, title="X_eTaL ML: recorded CLI demos", up="../",
                                                 header=RECORDED_HEADER.format(**common), **common))
     print(f"catalog: {out} ({len(demos)} demo(s)), {rec}/ ({len(recorded)} recorded)")

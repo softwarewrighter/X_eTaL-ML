@@ -1,0 +1,15 @@
+[package]
+name = "cnn-digits-web"
+description = "A tiny CNN in the browser: draw a digit, X_eTaL runs the convolution, ReLU, pooling, dense layer and softmax, and every stage is shown"
+version = "0.1.0"
+edition = "2021"
+license = "MIT"
+publish = false
+
+[dependencies]
+microscope = { path = "../../../shared/microscope" }
+yew = { version = "0.21", features = ["csr"] }
+web-sys = { version = "0.3", features = ["Element", "DomRect", "PointerEvent"] }
+console_error_panic_hook = "0.1"
+
+[workspace]
