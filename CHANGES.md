@@ -13,6 +13,7 @@ refresh of the vendored X_eTaL.
 
 ## 2026-10-04
 
+- 09:35 `chore` Saga step ternary-net-data completed.
 - 09:30 `demo` ternary-net and moe-router read their data from files (plan A15): ternary-net's 38 weight continuation lines become data/fp.txt, qa.txt and test.txt, written by `just ternary-train`; moe-router's 37 x 8 feature literal becomes data/features.txt; both programs' output byte for byte unchanged; their pages put the files in the in-memory store (`microscope::libs::add`, tested).
 - 09:30 `fix` The live pages show all the code they run (the user's review: the source shown was a subset, with names used but never bound; plan A16): the shared head (settings, data read, functions), then each run as run (ternary-net's three, moe-router's two), only FP32's 1728 outputs passed between ternary-net's runs elided as `...` with a comment; tests check every line run is shown. READMEs updated.
 
