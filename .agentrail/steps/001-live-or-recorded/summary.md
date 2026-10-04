@@ -1,0 +1,1 @@
+A13 live-or-recorded applied (2 recordings removed), A14 Check vendored from X_eTaL-libraries and used by NN checks, research.txt settled

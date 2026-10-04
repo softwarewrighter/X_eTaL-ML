@@ -13,6 +13,7 @@ refresh of the vendored X_eTaL.
 
 ## 2026-10-03
 
+- 18:45 `chore` Saga step live-or-recorded completed.
 - 18:40 `build` Check vendored from X_eTaL-libraries fd93e45 (`just vendor-libs [REF] [Name...]`, scripts/vendor-libraries.sh, vendor/xetal-libraries/VENDORED; the user's decision: use a helpful library where one exists): on XETAL_PATH for libraries and demos (scripts/xt, test-demos.sh, run-demo.sh, `just path`), in the pages' store (tested), checked by check-vendor. NN's 16 property checks now use `k:t_est` and `k:r_eport` (baseline rebased on purpose: the same 16 ok lines, worded as Check prints them, and its summary).
 - 18:40 `docs` Live or recorded (the user's decision, plan A13): a demo that runs interactively in the browser is shown live, a CLI-only demo recorded; ternary-net's and moe-router's recordings and tapes removed, cnn-digits keeps its own until its page lands; the recorded page, catalog, README and CLAUDE.md say so. The research.txt question settled (none needed here).
 - 16:45 `plan` Saga foundation archived; saga launch started (cnn-digits-page, attention, bench, start-here, asks-audit, release-1).
