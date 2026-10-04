@@ -13,6 +13,7 @@ refresh of the vendored X_eTaL.
 
 ## 2026-10-04
 
+- 13:35 `chore` Saga step attention completed.
 - 13:30 `demo` Attention microscope, live (https://softwarewrighter.github.io/X_eTaL-ML/attention/): one head of attention in two lines of X_eTaL (S = Q K^T / sqrt d with the transpose `o_\`, softmax by row with a mask, Y = A V); a 21-word vocabulary with 8 features and a hand-set head in data/, so an adjective looks for what it can describe ("tired" finds the animal, "wide" the street; "it" finds the animal in both, which one layer cannot resolve, as the README explains). The CLI prints the heatmaps, what each word looks at and an output; the page takes any sentence, switches a causal mask, shows weights and scores as word tables and a word's query against every key, and shows everything it runs. Tests against the direct algebra; CLI and browser baselines; screenshot. Shared CSS for word tables (a header class renamed after it collided with the layout's `.col`).
 - 11:40 `chore` Saga step cnn-digits-page completed.
 - 11:35 `build` Port 8435 is this repo's (the user's choice: one port per X_eTaL repo, so one demo of each can run at once): `just serve SLUG` (was 8095) and `just serve-pages` (was 8098) default to it.

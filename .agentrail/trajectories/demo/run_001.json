@@ -1,0 +1,11 @@
+{
+  "task_type": "demo",
+  "state": {
+    "number": 5,
+    "step": "attention"
+  },
+  "action": "hand-set head, X_eTaL program, Yew page, tests, baselines",
+  "result": "success",
+  "reward": 1,
+  "timestamp": "2026-10-04T15:39:28"
+}
