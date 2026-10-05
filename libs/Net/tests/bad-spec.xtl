@@ -1,0 +1,5 @@
+#!/usr/bin/env xetal
+# Net: a spec starts with the input size.
+"nn:" u_se< "NN"
+"net:" u_se< "Net"
+"relu 2" net:p_arams< @

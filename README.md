@@ -50,10 +50,10 @@ an error before the forward pass, not a wrong number after it.
 - **Libraries extend the vocabulary.** ML building blocks (softmax,
   dense layers, quantization, convolution, attention) are ordinary
   `.xtl` libraries here, imported with `u_se<`, typed and tested.
-- **Macros extend the language.** With `.xtlm` macro libraries (in X_eTaL
-  since v0.1.0; the network macro here is next) a network can be written as
-  `"784 128 relu 10 softmax" net:n_etwork< ...`, expanding into
-  ordinary, visible, type-checked code.
+- **Macros extend the language.** The [Net](libs/Net/docs/README.md) macro
+  library lets a network be written as
+  `"784 128 relu 10 softmax" net:n_etwork< "w1 w2"`, which expands into
+  ordinary, visible, type-checked code (`xetal expand` shows it).
 - **Native extensions extend the machine.** Fast kernels and data
   loaders can come from Rust through typed facades
   ([X_eTaL-extensions](https://github.com/softwarewrighter/X_eTaL-extensions)).
@@ -106,6 +106,7 @@ just serve cnn-digits    # its page, at http://127.0.0.1:8435/
 | Library | Alias | What |
 | ------- | ----- | ---- |
 | [NN](libs/NN/docs/README.md) | `nn:` | activations, softmax by row (any rank), dense layers, argmax, one-hot, loss, accuracy |
+| [Net](libs/Net/docs/README.md) | `net:` | a macro library: `"784 128 relu 10 softmax" net:n_etwork< "w1 w2"` becomes an ordinary function of NN calls, shown by `xetal expand` |
 
 The demos import it (`"nn:" u_se< "NN"`), at the command line and in
 the browser. Tests use the Check library from
@@ -117,10 +118,10 @@ pinned like X_eTaL itself.
 | | Today |
 | - | ----- |
 | Demos | 4, all live, each with command-line and browser tests |
-| Libraries | NN (12 functions, typed, tested) |
+| Libraries | NN (12 functions, typed, tested); Net (3 macros, every expansion pinned) |
 | X_eTaL | pinned at X_eTaL v0.1.0 (`XETAL_COMMIT`, `just xetal-version`) |
 | Speed | measured and guarded (`just bench-check`, [`docs/speed.md`](docs/speed.md)); the CNN's whole program runs in a third of a second |
-| Next | a network written as one macro call (`.xtlm` macro libraries arrived in X_eTaL v0.1.0) |
+| Next | a demo page of a network written as one macro call, beside its expansion |
 | Waiting on X_eTaL | a grade per row, arrays in and out of the browser engine, `e_ach` returning arrays ([`docs/xetal-asks.md`](docs/xetal-asks.md)) |
 | Later | more libraries (quantization, convolution, attention, sampling), a tiny GPT, an embedding explorer, training in X_eTaL ([`docs/plan.md`](docs/plan.md)) |
 

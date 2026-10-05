@@ -1,0 +1,17 @@
+#!/usr/bin/env xetal
+# Net: the three macros. Run with "just run-lib Net basics".
+"nn:" u_se< "NN"
+"net:" u_se< "Net"
+w1 := 3 2 r_eshape 1.0 1.0 1.0 1.0 0.0 -1.0
+w2 := 3 2 r_eshape 0.0 4.0 0.0 -8.0 0.0 -2.0
+x := 4 2 r_eshape 0.0 0.0 0.0 1.0 1.0 0.0 1.0 1.0
+u:x_or := "2 2 relu 2 softmax" net:n_etwork< "w1 w2"
+u:x_or x
+nn:a_rgmax u:x_or x
+"2 2 relu 2 softmax" net:p_arams< @
+"784 128 relu 10 softmax" net:p_arams< @
+"2 2 relu 2 softmax" net:s_hapes< "w1 w2"
+"2 3 relu 2 softmax" net:s_hapes< "w1 w2"
+# One layer, no activation: a linear map.
+u:l_inear := "2 2" net:n_etwork< "w1"
+u:l_inear 1 2 r_eshape 1.0 2.0

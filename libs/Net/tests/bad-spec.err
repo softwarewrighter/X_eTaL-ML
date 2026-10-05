@@ -1,0 +1,1 @@
+error[bad-macro-argument]: a spec is sizes and activations, the input's size first: "784 128 relu 10 softmax" at 99..107

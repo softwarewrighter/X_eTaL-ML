@@ -1,0 +1,1 @@
+error[bad-macro-argument]: not a size or an activation (relu, sigmoid, tanh, softmax, logSoftmax): gelu at 149..159

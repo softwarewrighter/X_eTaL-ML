@@ -1,0 +1,1 @@
+Surveyed X_eTaL v0.1.0 macros; M11 filed (expansion cannot name importer's alias); tooling accepts .xtlm with pinned expansions

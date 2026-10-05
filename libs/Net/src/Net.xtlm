@@ -1,0 +1,86 @@
+# Net: a network written as one line -- its layer sizes and activations become ordinary NN calls
+# Import it with an alias of your choice: "net:" u_se< "Net".
+# Put libs/Net/src on XETAL_PATH ("just path"); the reference is libs/Net/docs.
+# Names with m: are macros; the others are private to this file.
+#
+# A macro is a function from the source text written left and right of
+# its call to the source that replaces the call, before the program is
+# compiled (X_eTaL MC10); xetal expand FILE shows the result. A spec
+# is a list of words: sizes and activations, the input's size first:
+# "784 128 relu 10 softmax". A size after the first is a dense layer
+# (nn:d_ense, with its weights: one array per layer, the bias its last
+# row); an activation is a function of NN (relu, sigmoid, tanh,
+# softmax, logSoftmax). The expansion calls NN under the alias nn:
+# (an expansion cannot ask which alias the caller chose), so import
+# NN as "nn:" u_se< "NN".
+
+# The words of t: runs of characters other than white space, boxed
+# (after X_eTaL's Combinators.xtlm).
+w_ords := { t -> (n_ot t m_ember? " \n\t") p_artition t }
+# The boxed texts b joined into one text.
+j_oin := { b -> d_isclose '{ x y -> e_nclose (d_isclose x) c_at d_isclose y } r_/ b }
+# Whether the text w is a whole number (a layer's size).
+s_ize? := { w -> '& r_/ w m_ember? "0123456789" }
+# Whether the text w names an activation.
+a_ct? := { w -> '| r_/ '{ a -> w m_atch d_isclose a } e_ach w_ords "relu sigmoid tanh softmax logSoftmax" }
+# An activation's function in NN: relu -> nn:r_elu.
+a_ct := { w -> "nn:" c_at (1 t_ake w) c_at "_" c_at 1 d_rop w }
+# The spec's sizes, as Ints.
+s_izes := { ws -> f_loor n_umbers j_oin '{ w -> (s_ize? d_isclose w) ? (d_isclose w) c_at " "; "" } m_ap ws }
+specShape := "a spec is sizes and activations, the input's size first: \"784 128 relu 10 softmax\""
+# What is wrong with the spec's words ws, or "".
+w_rong := { ws ->
+  2 > t_ally ws ? specShape
+  n_ot s_ize? d_isclose f_irst ws ? specShape
+  bad := '{ w -> n_ot (s_ize? d_isclose w) | a_ct? d_isclose w } e_ach ws
+  0 < '+ r_/ 0 + bad ? "not a size or an activation (relu, sigmoid, tanh, softmax, logSoftmax): " c_at d_isclose f_irst (w_here bad) s_elect ws
+  ""
+}
+
+## A forward function for the network the spec on the left describes,
+## using the weight arrays named on the right, one per dense layer in
+## order: an ordinary lambda of nn: calls, a batch (one example per
+## row) in, the last layer's output out.
+m:n_etwork< := { spec weights ->
+  ws := w_ords spec
+  ns := w_ords weights
+  0 < t_ally w_rong ws ? "bad-macro-argument left" []R_EJECT w_rong ws
+  size := '{ w -> s_ize? d_isclose w } e_ach ws
+  k := '+ s_\ 0 + size
+  (t_ally ns) != -1 + '+ r_/ 0 + size ? "bad-macro-argument right" []R_EJECT "name one weight array per dense layer: " c_at (f_ormat -1 + '+ r_/ 0 + size) c_at " for this spec, " c_at (f_ormat t_ally ns) c_at " given"
+  pre := '{ i ->
+    n_ot i s_elect size ? (a_ct d_isclose i s_elect ws) c_at " "
+    2 = i s_elect k ? ""
+    "("
+  } m_ap 1 d_rop r_ange t_ally ws
+  post := '{ i ->
+    n_ot i s_elect size ? ""
+    d := " nn:d_ense " c_at d_isclose ((i s_elect k) - 1) s_elect ns
+    2 = i s_elect k ? d
+    ")" c_at d
+  } m_ap 1 d_rop r_ange t_ally ws
+  "{ x -> " c_at (j_oin r_ev pre) c_at "x" c_at (j_oin post) c_at " }"
+}
+
+## How many numbers the network of the spec on the left has to learn
+## (weights and biases), worked out when the program is compiled: the
+## call becomes that number. Nothing is written on the right: @.
+m:p_arams< := { spec @ ->
+  ws := w_ords spec
+  0 < t_ally w_rong ws ? "bad-macro-argument left" []R_EJECT w_rong ws
+  s := s_izes ws
+  f_ormat '+ r_/ (1 + -1 d_rop s) * 1 d_rop s
+}
+
+## Whether the weight arrays named on the right have the shapes the
+## spec on the left says (a layer from m inputs to n outputs is
+## m + 1 by n: the bias is the last row): 1 or 0.
+m:s_hapes< := { spec weights ->
+  ws := w_ords spec
+  ns := w_ords weights
+  0 < t_ally w_rong ws ? "bad-macro-argument left" []R_EJECT w_rong ws
+  s := s_izes ws
+  (t_ally ns) != -1 + t_ally s ? "bad-macro-argument right" []R_EJECT "name one weight array per dense layer: " c_at (f_ormat -1 + t_ally s) c_at " for this spec, " c_at (f_ormat t_ally ns) c_at " given"
+  one := '{ i -> "((s_hape " c_at (d_isclose i s_elect ns) c_at ") m_atch " c_at (f_ormat 1 + i s_elect s) c_at " " c_at (f_ormat (i + 1) s_elect s) c_at ")" } m_ap r_ange t_ally ns
+  j_oin '{ i -> (i = 1) ? d_isclose i s_elect one; " & " c_at d_isclose i s_elect one } m_ap r_ange t_ally ns
+}

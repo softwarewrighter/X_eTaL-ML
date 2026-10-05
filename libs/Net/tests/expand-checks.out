@@ -1,0 +1,20 @@
+#!/usr/bin/env xetal
+# Net, checked with Check: the macro's network is the network written
+# by hand, for every activation.
+"nn:" u_se< "NN"
+"net:" u_se< "Net"
+"k:" u_se< "Check"
+a := 4 3 r_eshape 0.5 -1.0 0.25 2.0 0.0 -0.5 1.0 1.5 -2.0 0.1 0.2 0.3
+b := 4 2 r_eshape 1.0 -1.0 0.5 0.5 -0.25 2.0 0.0 0.1
+x := 5 3 r_eshape 0.3 -0.7 1.1 0.0 2.0 -1.5 0.9
+u:r_eluNet := ({ x -> nn:s_oftmax (nn:r_elu x nn:d_ense a) nn:d_ense b })
+u:s_igNet := ({ x -> nn:l_ogSoftmax (nn:s_igmoid x nn:d_ense a) nn:d_ense b })
+u:t_anhNet := ({ x -> (nn:t_anh x nn:d_ense a) nn:d_ense b })
+c1 := "relu then softmax" k:t_est (u:r_eluNet x) k:n_ear nn:s_oftmax (nn:r_elu x nn:d_ense a) nn:d_ense b
+c2 := "sigmoid then log-softmax" k:t_est (u:s_igNet x) k:n_ear nn:l_ogSoftmax (nn:s_igmoid x nn:d_ense a) nn:d_ense b
+c3 := "tanh, no last activation" k:t_est (u:t_anhNet x) k:n_ear (nn:t_anh x nn:d_ense a) nn:d_ense b
+c4 := "parameters counted" k:t_est 20 k:i_s (20)
+c5 := "shapes agree" k:t_est k:t_rue (((s_hape a) m_atch 4 3) & ((s_hape b) m_atch 4 2))
+c6 := "shapes disagree" k:t_est k:t_rue n_ot (((s_hape a) m_atch 4 4) & ((s_hape b) m_atch 5 2))
+k:r_eport c1 k:a_nd c2 k:a_nd c3 k:a_nd c4 k:a_nd c5 k:a_nd c6
+

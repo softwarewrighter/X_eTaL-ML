@@ -1,0 +1,11 @@
+{
+  "task_type": "survey",
+  "state": {
+    "number": 1,
+    "step": "macro-survey"
+  },
+  "action": "read lang-choices MC10-30, prototypes, libs.py/test-libs changes",
+  "result": "success",
+  "reward": 1,
+  "timestamp": "2026-10-05T13:23:05"
+}

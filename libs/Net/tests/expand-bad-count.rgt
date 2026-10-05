@@ -1,0 +1,2 @@
+command = "../../../scripts/xt expand bad-count.xtl"
+exit_code = 1

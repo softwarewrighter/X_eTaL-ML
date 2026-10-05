@@ -1,0 +1,19 @@
+#!/usr/bin/env xetal
+# Net, checked with Check: the macro's network is the network written
+# by hand, for every activation.
+"nn:" u_se< "NN"
+"net:" u_se< "Net"
+"k:" u_se< "Check"
+a := 4 3 r_eshape 0.5 -1.0 0.25 2.0 0.0 -0.5 1.0 1.5 -2.0 0.1 0.2 0.3
+b := 4 2 r_eshape 1.0 -1.0 0.5 0.5 -0.25 2.0 0.0 0.1
+x := 5 3 r_eshape 0.3 -0.7 1.1 0.0 2.0 -1.5 0.9
+u:r_eluNet := "3 3 relu 2 softmax" net:n_etwork< "a b"
+u:s_igNet := "3 3 sigmoid 2 logSoftmax" net:n_etwork< "a b"
+u:t_anhNet := "3 3 tanh 2" net:n_etwork< "a b"
+c1 := "relu then softmax" k:t_est (u:r_eluNet x) k:n_ear nn:s_oftmax (nn:r_elu x nn:d_ense a) nn:d_ense b
+c2 := "sigmoid then log-softmax" k:t_est (u:s_igNet x) k:n_ear nn:l_ogSoftmax (nn:s_igmoid x nn:d_ense a) nn:d_ense b
+c3 := "tanh, no last activation" k:t_est (u:t_anhNet x) k:n_ear (nn:t_anh x nn:d_ense a) nn:d_ense b
+c4 := "parameters counted" k:t_est 20 k:i_s "3 3 relu 2 softmax" net:p_arams< @
+c5 := "shapes agree" k:t_est k:t_rue "3 3 relu 2 softmax" net:s_hapes< "a b"
+c6 := "shapes disagree" k:t_est k:t_rue n_ot "3 4 relu 2 softmax" net:s_hapes< "a b"
+k:r_eport c1 k:a_nd c2 k:a_nd c3 k:a_nd c4 k:a_nd c5 k:a_nd c6

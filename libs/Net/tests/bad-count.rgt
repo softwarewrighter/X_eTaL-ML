@@ -1,0 +1,2 @@
+command = "../../../scripts/xt run bad-count.xtl"
+exit_code = 1

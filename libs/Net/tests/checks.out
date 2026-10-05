@@ -1,0 +1,7 @@
+ok: relu then softmax
+ok: sigmoid then log-softmax
+ok: tanh, no last activation
+ok: parameters counted
+ok: shapes agree
+ok: shapes disagree
+6 checks, all passed

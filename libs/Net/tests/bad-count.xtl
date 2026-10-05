@@ -1,0 +1,6 @@
+#!/usr/bin/env xetal
+# Net: one weight array per dense layer, or the call is rejected.
+"nn:" u_se< "NN"
+"net:" u_se< "Net"
+w := 3 2 r_eshape 0.0
+u:f_wd := "2 2 relu 2 softmax" net:n_etwork< "w"
