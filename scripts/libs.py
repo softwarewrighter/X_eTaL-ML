@@ -53,7 +53,8 @@ def exports(name):
     types = ROOT / "libs" / name / "tests" / "types.out"
     if not types.exists():
         return []
-    return [m.group(1) for m in re.finditer(r"^l:(\S+) :", types.read_text(), re.M)]
+    # l: exports of a library, m: macros of a macro library (name<).
+    return [m.group(1) for m in re.finditer(r"^[lm]:(\S+) :", types.read_text(), re.M)]
 
 
 def check():

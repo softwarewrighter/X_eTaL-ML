@@ -1,6 +1,6 @@
 number = 1
 slug = "macro-survey"
-status = "pending"
+status = "in-progress"
 description = "macros step 1: read what X_eTaL v0.1.0 implemented for macros (work/xetal/doc..."
 role = "production"
 context_files = []

@@ -25,33 +25,36 @@ X_eTaL (v0.1.0, 512b3ee) on 2026-10-05.
 | M8 | landed | feature | Float literals with an exponent (`1.5e-5`) | NN (`1e-12`), attention (`1e9`) | none |
 | M9 | landed | bug | A Bool bound to a name in arithmetic: works in X_eTaL v0.1.0 (`a := 1 2 > 0` then `1 * a` gives `1 1`) | masks | none left (no demo here carried the workaround) |
 | M10 | open | feature | `e_ach` returning an array per item (`'{ i -> i * 1 2 3 } e_ach 1 2` is refused: e_ach needs a single value from each call) | cnn-digits (the ten digits, one number per call), a per-row grade | one `e_ach` per number wanted |
+| M11 | filed | feature | A macro's text cannot name a library by the importer's alias: `m:f_` in an expansion is not rewritten to the alias the caller chose, and an expansion may not import (MC23), so a macro library cannot call its own `.xtl` half, or another library, without fixing the alias (X_eTaL-libraries X14) | Net (its networks call NN) | the expansion says `nn:`; the page tells the reader to import NN under that alias |
 ## Details
 
-### M1: `.xtlm` macro libraries
+### M1, M2: macro libraries and seeing an expansion (landed)
 
-X_eTaL decided (MC10 to MC13) and planned (its Saga 19) user macro
-libraries: a `.xtlm` file defines `m:name<` macros, each a function
-from the source text at the call's left and right to new source; a
-`Name.xtl` and `Name.xtlm` in one directory load together under one
-alias. The ML macro library this repo plans (plan A10, saga 4) is
-`Net.xtlm`:
+X_eTaL v0.1.0 has `.xtlm` macro libraries (MC10 to MC30: a macro is a
+function from the source text left and right of its call to new
+source; hooks such as `[]R_EJECT` report a bad argument at the call;
+hygiene is automatic) and `xetal expand FILE`. `libs/Net` is built on
+them: `"2 2 relu 2 softmax" net:n_etwork< "w1 w2"` becomes
+`{ x -> nn:s_oftmax (nn:r_elu x nn:d_ense w1) nn:d_ense w2 }`, and its
+tests pin every expansion.
+
+### M11: naming a library from a macro's text
 
 ```
-"net:" u_se< "Net"
-f := "784 128 relu 10 softmax" net:n_etwork< "W1 b1 W2 b2"
+# T.xtl:   l:d_ouble := { x -> x * 2 }
+# T.xtlm:  m:t_wice< := { @ e -> "m:d_ouble (" c_at e c_at ")" }
+"zz:" u_se< "T"
+@ zz:t_wice< "3 + 4"
+error[unknown-namespace]: no library is imported as m: here
 ```
 
-expanding into a definition built from `nn:` calls, then type-checked
-like any code. It shows a macro adding notation for a domain, not
-only control flow (research3.txt). Workaround: none; the library and
-its demo wait.
-
-### M2: seeing an expansion
-
-A macro whose expansion cannot be seen is magic. `xetal expand FILE`
-(or `--expand`) printing the program after expansion lets the
-net-macro demo show the layer list and the code it became side by
-side, and lets its tests pin the expansion.
+The macro's `m:` is rewritten at the call (`zz:t_wice<`) but not in the
+text it gives, and the text may not import, so the only way to call a
+library function from an expansion is to write a fixed alias and ask
+the caller to import under it. Net writes `nn:`. Ask: rewrite `m:` in
+a macro's text to the importer's alias (for the library's own `.xtl`
+half), or let a macro name a library it imports (a hook giving the
+caller's alias for it). X_eTaL-libraries filed the same as its X14.
 
 ### M3: matrix product speed (landed)
 

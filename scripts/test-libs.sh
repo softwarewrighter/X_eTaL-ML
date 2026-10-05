@@ -5,6 +5,8 @@
 #   - types.rgt: scripts/xt type ../src/<Name>.xtl (the exports' types);
 #   - NAME.rgt for each tests/NAME.xtl: scripts/xt run NAME.xtl;
 #   - demo-D.rgt for each demos/D.xtl: scripts/xt run ../demos/D.xtl;
+#   - for a macro library (src/<Name>.xtlm): expand-NAME.rgt and
+#     expand-demo-D.rgt, scripts/xt expand of each of those programs;
 # (scripts/xt: the pinned xetal, every libs/*/src on XETAL_PATH,
 # --seed 1 --ascii). A baseline missing, or left over from a program
 # that is gone, fails; so does any FAIL line (a failed Check) in a
@@ -34,6 +36,12 @@ for name in ${names[@]+"${names[@]}"}; do
   wanted=("types|$xt type ../src/$src|")
   for p in "$d"/tests/*.xtl; do [ -e "$p" ] && wanted+=("$(basename "$p" .xtl)|$xt run $(basename "$p")|$p"); done
   for p in "$d"/demos/*.xtl; do [ -e "$p" ] && wanted+=("demo-$(basename "$p" .xtl)|$xt run ../demos/$(basename "$p")|$p"); done
+  # A macro library: what each test and demo program becomes (xetal
+  # expand) is pinned too, so a changed expansion fails.
+  if [ -f "$d/src/$name.xtlm" ]; then
+    for p in "$d"/tests/*.xtl; do [ -e "$p" ] && wanted+=("expand-$(basename "$p" .xtl)|$xt expand $(basename "$p")|$p"); done
+    for p in "$d"/demos/*.xtl; do [ -e "$p" ] && wanted+=("expand-demo-$(basename "$p" .xtl)|$xt expand ../demos/$(basename "$p")|$p"); done
+  fi
   export REG_RS_DATA_DIR="$d/tests"
   cd "$d/tests"
   for w in "${wanted[@]}"; do

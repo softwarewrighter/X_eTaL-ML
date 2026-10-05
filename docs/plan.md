@@ -61,7 +61,7 @@ net:n_etwork<`) waits for `.xtlm` in X_eTaL (ask M1).
 | A7 | **Learned weights come from offline trainers** in `demos/<slug>/train/` (std-only Rust, deterministic seeds, `just <slug>-train`) and are written into the demo's `.xtl` as literals. Training in X_eTaL itself (hand-derived gradients for small models) is a library and demo of its own (saga 3), not a requirement. Datasets are fetched into gitignored `work/` (MD5-checked) and never committed. | Demos load instantly and are reproducible; X_eTaL's evaluator speed (asks) is not a training-loop speed. |
 | A8 | **Ported, not copied.** A function or model taken from another source (MLPL, microgpt, BitNet, a paper) is reimplemented from its documented behavior and cited in the source and on the page. Code from this author's own MIT repos (X_eTaL-demos, microgpt-mlpl) may be adapted with a note of where it came from. | Credit and lineage without license entanglement. |
 | A9 | A missing X_eTaL feature or bug is **not** fixed here nor hidden: it goes in `docs/xetal-asks.md` (status, kind, demos and libraries, why, minimal repro, workaround) and on the demo's or library's page. A demo or library that cannot be built waits in the deferred saga. | X_eTaL owns its language decisions; this repo is a consumer. |
-| A10 | **Macro libraries (`.xtlm`) wait for X_eTaL** (its Saga 19; ask M1). They are designed here on paper (saga 4), never emulated. The ML one is `Net.xtlm`: `"784 128 relu 10 softmax" net:n_etwork<` expanding into ordinary, type-checked `nn:` calls, inspectable with `xetal expand`. | research3.txt: the release needs one domain-specific macro, not only control flow. |
+| A10 | **Macro libraries (`.xtlm`)** are written against X_eTaL v0.1.0, which has them (asks M1, M2 landed; sagas 1 and 2 only designed them). The ML one is `Net.xtlm` (saga 3): `"784 128 relu 10 softmax" net:n_etwork< "w1 w2"` becomes an ordinary, type-checked lambda of `nn:` calls, shown by `xetal expand`; its tests pin each program's expansion. Because a macro's text cannot name the importer's alias (ask M11), the expansion says `nn:`. | research3.txt: the release needs one domain-specific macro, not only control flow. |
 | A11 | The **live site** is built locally into `pages/` (`just pages`, and by the gate): a catalog `pages/index.html` from every `demos/*/demo.toml` and `pages/<slug>/` from trunk. `pages/` is **not tracked on main** (the user's decision, 2026-10-05, as X_eTaL-games; sagas 1 and 2 committed it and a workflow uploaded it): `just publish` makes it the only commit of the `gh-pages` branch, replaced on every publish, which GitHub Pages serves. | Built files (four WebAssembly binaries per build) never accumulate in history; the published site always names the commit of main it was built from. |
 | A12 | `just` is the entry point (recipes call `scripts/*.sh`); `CHANGES.md` gets a line for every commit (as in `../X_eTaL`); docs are ASCII-only markdown (`sw-markdown-checker`); user-facing docs say what and how, saga talk lives only here. | Same process as the sibling repos. |
 | A13 | **Live or recorded** (the user's decision, 2026-10-03): a demo that runs interactively in the browser is shown live (its page); a demo that runs only at the command line is shown recorded (a VHS tape, `just record`, an animated WebP on the recorded page, its README and its catalog card). When a CLI-only demo gets its page, its tape and recording go. Every demo runs at the command line (`just run`, `just tour`). | One way to see each demo, no duplicated upkeep. |
@@ -116,7 +116,7 @@ alias is the importer's choice.
 | Embed | `em:` | centering, covariance, power iteration for the top components, PCA projection, cosine similarity, nearest neighbors | research (embedding explorer) | 4 (post-launch) |
 | Sample | `sm:` | temperature, top-k and top-p filtering, sampling from a distribution with `r_oll` | microgpt | 4 (post-launch) |
 | Optim | `op:` | hand-derived gradients for linear and logistic regression and a dense layer, SGD and momentum steps, a training loop by `p_ower` | new | 4 (post-launch) |
-| Net (`.xtlm`) | `net:` | `"784 128 relu 10 softmax" net:n_etwork<` -> a forward function built from `nn:` calls | research3.txt | 3 (blocked: M1) |
+| Net (`.xtlm`) | `net:` | `"784 128 relu 10 softmax" net:n_etwork<` -> a forward function built from `nn:` calls; `net:p_arams<`, `net:s_hapes<` | research3.txt | 3 |
 
 ## Saga 1 -- foundation  [DONE, archived]
 
@@ -193,28 +193,30 @@ survey of what X_eTaL implemented.
 
 | # | Step slug | Delivers | Waits on |
 | - | --------- | -------- | -------- |
-| 1 | macro-survey | refresh the vendor; read what X_eTaL implemented (its Saga 19); confirm A10 and the Net design | M1 |
-| 2 | net-macro | `libs/Net/src/Net.xtlm`: `m:n_etwork<` turning a layer list into a forward function of `nn:` calls; tests of the expansion and the result; the net-macro demo showing source and expansion side by side | M1, M2 |
+| 1 | macro-survey | DONE: X_eTaL v0.1.0's macros read and tried (MC10 to MC30, `lib/Macros.xtlm`, `Combinators.xtlm`, the hooks, hygiene, `xetal expand`); finding: a macro's text cannot name the importer's alias (ask M11, X_eTaL-libraries' X14), so Net's expansion says `nn:`; A10 and the sketch revised; the library tooling accepts `.xtlm` (macro types pinned, every test's and demo's expansion a baseline, `just expand-lib`) | |
+| 2 | net-macro | DONE: `libs/Net/src/Net.xtlm`: `net:n_etwork<`, `net:p_arams<`, `net:s_hapes<`; bad specs rejected at the call (`[]R_EJECT`); tests: basics, 6 checks against hand-written networks (relu, sigmoid, tanh), three rejections, every expansion pinned; page; the XOR demo | |
+| 3 | net-demo | a demo of a network written with the macro, its expansion beside it, at the command line and as a page | |
 | 3 | release-2 | catalog, docs, retrospective | |
 
-### Net.xtlm design sketch
+### Net.xtlm as built
 
 ```
-"nn:" u_se< "NN"
+"nn:"  u_se< "NN"
 "net:" u_se< "Net"
-f := "784 128 relu 10 softmax" net:n_etwork< "W1 b1 W2 b2"
+u:x_or := "2 2 relu 2 softmax" net:n_etwork< "w1 w2"
 ```
 
-expands (visible with `xetal expand`) to an ordinary definition:
+expands (visible with `xetal expand`) to
 
 ```
-f := { x -> nn:s_oftmax (nn:r_elu (x nn:d_ense W1 b1)) nn:d_ense W2 b2 }
+u:x_or := ({ g1:x -> nn:s_oftmax (nn:r_elu g1:x nn:d_ense w1) nn:d_ense w2 })
 ```
 
-so the macro adds notation, never semantics: the expansion is
-type-checked like any code. The exact shape of a dyadic macro call
-and of a definition it produces follows X_eTaL's decisions MC10 to
-MC13 as implemented.
+so the macro adds notation, never semantics. Differences from the
+first sketch: one weight array per layer (NN keeps the bias as the
+weights' last row), the function's name is bound by the caller, and
+two companions: `net:p_arams<` (the parameter count, a number written
+at compile time) and `net:s_hapes<` (the weights against the spec).
 
 ## Saga 4 -- post-launch
 

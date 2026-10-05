@@ -126,9 +126,13 @@ demo-lib name prog="":
 show-lib name prog="":
     @scripts/run-lib.sh --echo --demos "$1" ${2:+"$2"}
 
+# What a macro library's demo becomes after macro expansion: just expand-lib Net xor
+expand-lib name prog:
+    @cd libs/$1/demos && ../../../scripts/xt expand "${2%.xtl}.xtl"
+
 # A library's exported names and their types: just types NN
 types name:
-    @scripts/xt type "libs/$1/src/$1.xtl"
+    @for f in libs/$1/src/$1.xtl libs/$1/src/$1.xtlm; do [ -f "$f" ] && scripts/xt type "$f"; done; true
 
 # Test one library with reg-rs: pinned types, test programs, demos
 test-lib name:

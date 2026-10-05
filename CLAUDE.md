@@ -346,8 +346,10 @@ Read before working:
 5d. A page shows all the code it runs (plan A16): the shared head,
    then each run as run; nothing left out but a large passed-in
    value, written `...` with a comment; a test checks it.
-6. Macro libraries (`.xtlm`) are blocked until X_eTaL supports them
-   (ask M1): design them in `docs/plan.md`, never emulate them.
+6. Macro libraries (`.xtlm`, since X_eTaL v0.1.0) live in a library's
+   `src/` like `.xtl` ones; their tests pin each program's expansion
+   (`expand-*.rgt`) and check the result against hand-written code.
+   A macro's text names other libraries by a fixed alias (ask M11).
    Native (C ABI) code belongs in `../X_eTaL-extensions`.
 7. Learned weights come from offline trainers (`demos/<slug>/train/`,
    std-only Rust, fixed seeds); datasets go in gitignored `work/`,
