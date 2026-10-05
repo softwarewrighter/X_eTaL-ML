@@ -1,0 +1,1 @@
+macros step 2: libs/Net/src/Net.xtlm: a macro turning a layer list (sizes and activations) and weight names into a forward function of nn: calls; tests pin the expansion (xetal expand) and check the result equals the hand-written network; docs page; a demo program; README library table.

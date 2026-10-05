@@ -1,0 +1,9 @@
+number = 2
+slug = "net-macro"
+status = "pending"
+description = "macros step 2: libs/Net/src/Net.xtlm: a macro turning a layer list (sizes and..."
+role = "production"
+context_files = []
+created_at = "2026-10-05T11:10:55"
+task_type = "lib"
+commits = []

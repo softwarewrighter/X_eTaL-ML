@@ -1,0 +1,1 @@
+macros step 3: a demo (demos/net-macro or an addition to an existing one): a network written with the macro beside its expansion, at the command line (reg-rs) and as a page that shows source, expansion and result; browser baseline; catalog; publish and check-live.

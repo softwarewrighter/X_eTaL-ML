@@ -1,0 +1,9 @@
+number = 1
+slug = "macro-survey"
+status = "pending"
+description = "macros step 1: read what X_eTaL v0.1.0 implemented for macros (work/xetal/doc..."
+role = "production"
+context_files = []
+created_at = "2026-10-05T11:10:55"
+task_type = "survey"
+commits = []

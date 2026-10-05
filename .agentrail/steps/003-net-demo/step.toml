@@ -1,0 +1,9 @@
+number = 3
+slug = "net-demo"
+status = "pending"
+description = "macros step 3: a demo (demos/net-macro or an addition to an existing one): a ..."
+role = "production"
+context_files = []
+created_at = "2026-10-05T11:10:55"
+task_type = "demo"
+commits = []
