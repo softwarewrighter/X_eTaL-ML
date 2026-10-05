@@ -1,8 +1,9 @@
 number = 7
 slug = "american-spelling"
-status = "in-progress"
+status = "completed"
 description = "launch step 7 (inserted, the user's request after fixing X_eTaL-demos): Ameri..."
 role = "production"
 context_files = []
 created_at = "2026-10-04T21:30:37"
-commits = []
+completed_at = "2026-10-04T22:04:55"
+commits = ["70dee9baabad40393a4ac3352174d47c5ef1de4d"]

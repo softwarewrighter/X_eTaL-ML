@@ -1,0 +1,1 @@
+American spellings only: check-spelling.py + self-test in gate, 47 forms fixed, color module renamed, CLAUDE.md rule 10
