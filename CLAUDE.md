@@ -384,7 +384,8 @@ Read before working:
    unexpected).
 4. A detailed commit to `main`, including `.agentrail/`.
 5. `agentrail complete`, commit the `.agentrail/` change it makes,
-   push; `just publish` when a page changed.
+   push; `just publish` when a page changed, then `just check-live`
+   (the deployed pages run X_eTaL and report this commit).
 6. Report: what was pushed, the next step(s), blockers, questions,
    concerns, and asks for the user or the other X_eTaL repos.
 

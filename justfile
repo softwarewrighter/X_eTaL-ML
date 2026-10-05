@@ -86,6 +86,10 @@ pages:
 publish:
     scripts/publish-pages.sh
 
+# Verify the deployed site after a publish: the catalog reports this commit and every live page runs X_eTaL (headless Chrome)
+check-live:
+    scripts/check-live.sh
+
 # Serve the built pages/ as GitHub Pages will: http://127.0.0.1:8435/X_eTaL-ML/ (8435 is this repo's port; each X_eTaL repo has its own)
 serve-pages port="8435":
     scripts/serve-pages.sh "$1"
