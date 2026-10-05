@@ -20,10 +20,10 @@ pub fn lit(x: f64) -> String {
     lit_or_zero(x, 0.0)
 }
 
-/// A binding of a rows x cols matrix: `name := (rows c_at cols) r_eshape ...`.
+/// A binding of a rows x cols matrix: `name := rows cols r_eshape ...`.
 pub fn matrix(name: &str, rows: usize, cols: usize, items: impl IntoIterator<Item = String>) -> String {
     let body: Vec<String> = items.into_iter().collect();
-    format!("{name} := ({rows} c_at {cols}) r_eshape {}\n", body.join(" "))
+    format!("{name} := {rows} {cols} r_eshape {}\n", body.join(" "))
 }
 
 /// Run `src` and return its output lines, which must number `lines`;

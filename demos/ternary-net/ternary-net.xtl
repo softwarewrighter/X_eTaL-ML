@@ -15,8 +15,8 @@ t := 0.5
 # fp: trained in full precision; qa: fine-tuned for ternary
 # weights. Each is 17 x 3 x 16: for each row (16 inputs, padded
 # with 0, then the bias), layer and output (padded with 0).
-fp := (17 c_at 3 c_at 16) r_eshape n_umbers []N_GET "data/fp.txt"
-qa := (17 c_at 3 c_at 16) r_eshape n_umbers []N_GET "data/qa.txt"
+fp := 17 3 16 r_eshape n_umbers []N_GET "data/fp.txt"
+qa := 17 3 16 r_eshape n_umbers []N_GET "data/qa.txt"
 # The test points, one per line: x, y and the arm (1, 2 or 3).
 tp := n_umbers []N_GET "data/test.txt"
 tp := o_\ (((t_ally tp) d_iv 3) c_at 3) r_eshape tp

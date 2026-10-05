@@ -11,7 +11,7 @@
 # order above): animal, number, color, action, place,
 # food, function word, time (fish is an animal and a food; eats an
 # action and food; ? is any word not listed).
-F := (37 c_at 8) r_eshape n_umbers []N_GET "data/features.txt"
+F := 37 8 r_eshape n_umbers []N_GET "data/features.txt"
 # The embeddings: the features plus a small fixed ripple, so no two
 # words are quite the same.
 wr := f_loat (o_ffsets 37) 'l_eft t_able o_ffsets 8
@@ -91,10 +91,10 @@ g1 := 'm_ax r_/_2 gates
 first := '+ r_/_2 idx * f_loat gates = g1 'l_eft t_able o_ffsets 16
 second := ('+ r_/_2 idx * f_loat gates > 0.0) - first
 u:r_ound := { v -> (f_loat f_loor 0.5 + v * 1000.0) / 1000.0 }
-(2 c_at 8) r_eshape first c_at second
-(2 c_at 8) r_eshape (u:r_ound g1) c_at u:r_ound 1.0 - g1
+2 8 r_eshape first c_at second
+2 8 r_eshape (u:r_ound g1) c_at u:r_ound 1.0 - g1
 # The load on the 4 x 4 grid of experts.
-(4 c_at 4) r_eshape u:l_oad gates
+4 4 r_eshape u:l_oad gates
 
 # Nudging "green" towards "fox": the first and second experts at each
 # eps, then the eps values where the pair changes.

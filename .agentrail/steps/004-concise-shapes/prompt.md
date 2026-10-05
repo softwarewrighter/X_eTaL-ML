@@ -1,0 +1,1 @@
+maintenance (the user's review of the CNN demo): number literals strand, so (8 c_at 13 c_at 2) r_eshape is written 8 13 2 r_eshape everywhere (c_at only where a name is involved); two reduces along two axes become one (r_/_35); a gate check keeps the long form out.

@@ -30,8 +30,8 @@ pub fn program(s: &Setup) -> String {
     let tail = |p: String| p.strip_prefix(h.as_str()).map(str::to_string).unwrap_or(p);
     let ternary: Vec<String> = tail(program_ternary(s, &[]))
         .lines()
-        .map(|l| match l.starts_with("y32 := (") {
-            true => format!("y32 := ({} c_at 3) r_eshape ...   # FP32's outputs from run 1, passed in", SIDE * SIDE),
+        .map(|l| match l.starts_with(&format!("y32 := {} 3 r_eshape ", SIDE * SIDE)) {
+            true => format!("y32 := {} 3 r_eshape ...   # FP32's outputs from run 1, passed in", SIDE * SIDE),
             false => l.to_string(),
         })
         .collect();

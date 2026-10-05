@@ -6,10 +6,10 @@
 "nn:" u_se< "NN"
 
 # -- the vocabulary and the head, read from data/ ---------
-names := 8 t_ake_2 (21 c_at 9) r_eshape []N_GET "data/words.txt"
-F := (21 c_at 8) r_eshape n_umbers []N_GET "data/features.txt"
-Wq := (8 c_at 2) r_eshape n_umbers []N_GET "data/wq.txt"
-Wk := (8 c_at 2) r_eshape n_umbers []N_GET "data/wk.txt"
+names := 8 t_ake_2 21 9 r_eshape []N_GET "data/words.txt"
+F := 21 8 r_eshape n_umbers []N_GET "data/features.txt"
+Wq := 8 2 r_eshape n_umbers []N_GET "data/wq.txt"
+Wk := 8 2 r_eshape n_umbers []N_GET "data/wk.txt"
 
 # -- the core: attention for tokens X, where mask M allows ---
 u:s_cores := { X -> ((X '+ '* i_nner Wq) '+ '* i_nner o_\ X '+ '* i_nner Wk) / 2.0 ^ 0.5 }
@@ -24,7 +24,7 @@ u:h_eader := { ids -> "          " c_at r_avel (1 t_ake_2 ids s_elect names) c_a
 # The word each row looks at most, or - when no word gets half its weight.
 u:t_op := { ids A ->
   sure := 0.5 <= 'm_ax r_/_2 A
-  ids u:r_ows ((sure * (nn:a_rgmax A) s_elect ids) + 22 * n_ot sure) s_elect names c_at (1 c_at 8) r_eshape "-       "
+  ids u:r_ows ((sure * (nn:a_rgmax A) s_elect ids) + 22 * n_ot sure) s_elect names c_at 1 8 r_eshape "-       "
 }
 
 # "the animal did not cross the street because it was tired"

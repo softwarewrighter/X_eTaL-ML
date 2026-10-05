@@ -85,5 +85,5 @@ fn the_page_shows_every_line_it_runs() {
             assert!(shown.lines().any(|l| l == line), "not shown: {line}");
         }
     }
-    assert!(shown.contains("F := (37 c_at 8) r_eshape n_umbers []N_GET \"data/features.txt\""));
+    assert!(shown.contains("F := 37 8 r_eshape n_umbers []N_GET \"data/features.txt\""));
 }

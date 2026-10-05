@@ -103,11 +103,11 @@ fn the_page_shows_every_line_it_runs() {
     use cnn_digits_web::view::program as shown;
     for input in [Input::Sample(7), Input::Drawn(vec![0.5; 784])] {
         let s = shown(&input);
-        for line in program(&input).lines().filter(|l| !l.starts_with("x := (28 c_at 28) r_eshape ")) {
+        for line in program(&input).lines().filter(|l| !l.starts_with("x := 28 28 r_eshape ")) {
             assert!(s.lines().any(|l| l == line), "not shown: {line}");
         }
     }
-    assert!(shown(&Input::Drawn(vec![0.0; 784])).contains("x := (28 c_at 28) r_eshape ...   # the digit you drew, 784 numbers"));
+    assert!(shown(&Input::Drawn(vec![0.0; 784])).contains("x := 28 28 r_eshape ...   # the digit you drew, 784 numbers"));
 }
 
 #[test]

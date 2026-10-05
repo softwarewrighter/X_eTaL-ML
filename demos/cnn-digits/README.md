@@ -48,10 +48,10 @@ The whole network is a few lines:
 ```
 u:c_onv := { x ->
   v := 1 d_rop_4 -1 d_rop_4 1 d_rop_3 -1 d_rop_3 -1 0 1 o_-_2 -1 0 1 o_-_2 x
-  (8 c_at 26 c_at 26) r_eshape (k9 '+ '* i_nner (9 c_at 676) r_eshape v) + bc 'l_eft t_able o_ffsets 676
+  8 26 26 r_eshape (k9 '+ '* i_nner 9 676 r_eshape v) + bc 'l_eft t_able o_ffsets 676
 }
-u:p_ool := { x -> 'm_ax r_/_3 'm_ax r_/_5 (8 c_at 13 c_at 2 c_at 13 c_at 2) r_eshape x }
-u:c_lassify := { x -> f_irst nn:s_oftmax ((1 c_at 1352) r_eshape r_avel u:p_ool nn:r_elu u:c_onv x) nn:d_ense wb }
+u:p_ool := { x -> 'm_ax r_/_35 8 13 2 13 2 r_eshape x }
+u:c_lassify := { x -> f_irst nn:s_oftmax (1 1352 r_eshape r_avel u:p_ool nn:r_elu u:c_onv x) nn:d_ense wb }
 ```
 
 Read right to left:

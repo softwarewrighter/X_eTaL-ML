@@ -7,19 +7,19 @@
 "nn:" u_se< "NN"
 
 # -- the network, read from data/ ------------------------
-fb := (8 c_at 10) r_eshape n_umbers []N_GET "data/filters.txt"
+fb := 8 10 r_eshape n_umbers []N_GET "data/filters.txt"
 k9 := 9 t_ake_2 fb                      # 8 filters, 3 x 3 each as 9
 bc := r_avel -1 t_ake_2 fb              # their biases
-wb := (1353 c_at 10) r_eshape n_umbers []N_GET "data/dense.txt"
-samples := (10 c_at 28 c_at 28) r_eshape n_umbers []N_GET "data/samples.txt"
+wb := 1353 10 r_eshape n_umbers []N_GET "data/dense.txt"
+samples := 10 28 28 r_eshape n_umbers []N_GET "data/samples.txt"
 
 # -- the core: every stage one array expression ----------
 u:c_onv := { x ->
   v := 1 d_rop_4 -1 d_rop_4 1 d_rop_3 -1 d_rop_3 -1 0 1 o_-_2 -1 0 1 o_-_2 x
-  (8 c_at 26 c_at 26) r_eshape (k9 '+ '* i_nner (9 c_at 676) r_eshape v) + bc 'l_eft t_able o_ffsets 676
+  8 26 26 r_eshape (k9 '+ '* i_nner 9 676 r_eshape v) + bc 'l_eft t_able o_ffsets 676
 }
-u:p_ool := { x -> 'm_ax r_/_3 'm_ax r_/_5 (8 c_at 13 c_at 2 c_at 13 c_at 2) r_eshape x }
-u:c_lassify := { x -> f_irst nn:s_oftmax ((1 c_at 1352) r_eshape r_avel u:p_ool nn:r_elu u:c_onv x) nn:d_ense wb }
+u:p_ool := { x -> 'm_ax r_/_35 8 13 2 13 2 r_eshape x }
+u:c_lassify := { x -> f_irst nn:s_oftmax (1 1352 r_eshape r_avel u:p_ool nn:r_elu u:c_onv x) nn:d_ense wb }
 # -- end of the core -------------------------------------
 
 # -- drawing: values as shades, maps side by side --------
@@ -41,9 +41,9 @@ u:s_ide := { c ->
 
 # A test digit: a 7.
 x := 8 s_elect samples
-u:w_ide (28 c_at 28) r_eshape u:s_hade x
+u:w_ide 28 28 r_eshape u:s_hade x
 # The 8 filters (3 x 3), from most negative to most positive.
-u:s_ide (1 + f_loor 0 m_ax 4 m_in 2.5 + 2.0 * (8 c_at 3 c_at 3) r_eshape k9) s_elect "=-.+#"
+u:s_ide (1 + f_loor 0 m_ax 4 m_in 2.5 + 2.0 * 8 3 3 r_eshape k9) s_elect "=-.+#"
 # Convolution and ReLU: 8 maps of 26 x 26, what each filter finds.
 c := nn:r_elu u:c_onv x
 u:s_ide u:m_aps 4 t_ake c
@@ -55,7 +55,7 @@ u:w_ide u:s_ide u:m_aps 4 d_rop m
 # The ten probabilities, as bars: the network reads a 7.
 p := u:c_lassify x
 u:b_ars := { p -> (1 + (f_loor 0.5 + 50.0 * p) '> t_able o_ffsets 50) s_elect " #" }
-((10 c_at 1) r_eshape "0123456789") c_at_2 ((10 c_at 2) r_eshape " ") c_at_2 u:b_ars p
+(10 1 r_eshape "0123456789") c_at_2 (10 2 r_eshape " ") c_at_2 u:b_ars p
 f_loor 0.5 + 100.0 * p
 # The ten test digits (0 to 9): what the network reads, how sure (%).
 u:r_ead := { i -> (nn:a_rgmax u:c_lassify i s_elect samples) - 1 }
@@ -63,6 +63,6 @@ u:s_ure := { i -> f_loor 0.5 + 100.0 * 'm_ax r_/ u:c_lassify i s_elect samples }
 'u:r_ead e_ach r_ange 10
 'u:s_ure e_ach r_ange 10
 # The same probabilities as the trainer's Rust forward pass, for all ten?
-expected := (10 c_at 10) r_eshape n_umbers []N_GET "data/expected.txt"
+expected := 10 10 r_eshape n_umbers []N_GET "data/expected.txt"
 u:g_ap := { i -> 'm_ax r_/ a_bs (u:c_lassify i s_elect samples) - i s_elect expected }
 1e-9 > 'm_ax r_/ 'u:g_ap e_ach r_ange 10

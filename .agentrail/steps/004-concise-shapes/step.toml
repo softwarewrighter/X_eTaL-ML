@@ -1,0 +1,9 @@
+number = 4
+slug = "concise-shapes"
+status = "in-progress"
+description = "maintenance (the user's review of the CNN demo): number literals strand, so (..."
+role = "production"
+context_files = []
+created_at = "2026-10-05T15:15:41"
+task_type = "fix"
+commits = []

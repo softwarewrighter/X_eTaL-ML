@@ -13,12 +13,12 @@ pts := o_\ (((t_ally pts) d_iv 3) c_at 3) r_eshape pts
 xy := o_\ 2 t_ake pts
 arm := f_loor 3 s_elect pts
 # Each dense layer's weights, inputs + 1 by outputs (the bias last).
-a1 := (3 c_at 3) r_eshape n_umbers []N_GET "data/a1.txt"
-b1 := (3 c_at 4) r_eshape n_umbers []N_GET "data/b1.txt"
-b2 := (5 c_at 3) r_eshape n_umbers []N_GET "data/b2.txt"
-c1 := (3 c_at 16) r_eshape n_umbers []N_GET "data/c1.txt"
-c2 := (17 c_at 16) r_eshape n_umbers []N_GET "data/c2.txt"
-c3 := (17 c_at 3) r_eshape n_umbers []N_GET "data/c3.txt"
+a1 := 3 3 r_eshape n_umbers []N_GET "data/a1.txt"
+b1 := 3 4 r_eshape n_umbers []N_GET "data/b1.txt"
+b2 := 5 3 r_eshape n_umbers []N_GET "data/b2.txt"
+c1 := 3 16 r_eshape n_umbers []N_GET "data/c1.txt"
+c2 := 17 16 r_eshape n_umbers []N_GET "data/c2.txt"
+c3 := 17 3 r_eshape n_umbers []N_GET "data/c3.txt"
 
 # -- the networks: one line each --------------------------
 u:l_inear := "2 3 softmax" net:n_etwork< "a1"

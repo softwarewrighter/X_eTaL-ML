@@ -36,7 +36,7 @@ pub fn input_line(input: &Input) -> String {
         Input::Sample(d) => format!("x := {} s_elect samples", d + 1),
         Input::Drawn(v) => {
             let lits: Vec<String> = v.iter().map(|&p| lit((p.clamp(0.0, 1.0) * 100.0).round() / 100.0)).collect();
-            format!("x := (28 c_at 28) r_eshape {}", lits.join(" "))
+            format!("x := 28 28 r_eshape {}", lits.join(" "))
         }
     }
 }

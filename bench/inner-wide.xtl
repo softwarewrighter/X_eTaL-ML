@@ -1,4 +1,4 @@
 # The CNN's dense layer shape: a 1 x 1352 row by 1352 x 10, 40 times.
-x := (1 c_at 1352) r_eshape 0.5 0.25 0.125
-w := (1352 c_at 10) r_eshape 0.01 -0.02 0.03
+x := 1 1352 r_eshape 0.5 0.25 0.125
+w := 1352 10 r_eshape 0.01 -0.02 0.03
 '+ r_/ '{ i -> '+ r_/ r_avel x '+ '* i_nner w } e_ach r_ange 40

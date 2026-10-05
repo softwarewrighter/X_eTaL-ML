@@ -339,7 +339,10 @@ Read before working:
 5b. A demo that runs interactively in the browser is shown live; a
    CLI-only demo is shown recorded (`demos/<slug>/<slug>.tape`, `just
    record`); a demo that gets a page loses its tape (plan A13).
-5c. Programs are short and dense (plan A15): data (weights, samples)
+5c. Write X_eTaL concisely: number literals side by side are an array
+   (`8 13 2 r_eshape x`; `c_at` only where a name is involved), one
+   reduce takes several axes (`r_/_35`); the gate refuses literal
+   `c_at` chains. Programs are short and dense (plan A15): data (weights, samples)
    lives in `demos/<slug>/data/` files read with `n_umbers []N_GET`,
    written by the demo's trainer from a downloaded, uncommitted
    dataset; never walls of literals or repeated lines.

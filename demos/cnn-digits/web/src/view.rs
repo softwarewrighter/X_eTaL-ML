@@ -22,8 +22,8 @@ pub const STAGES: [Stage; 4] = [Stage::Digit, Stage::Conv, Stage::Pool, Stage::C
 pub fn program(input: &Input) -> String {
     let run: Vec<String> = tail(input)
         .lines()
-        .map(|l| match (input, l.starts_with("x := (28 c_at 28) r_eshape ")) {
-            (Input::Drawn(_), true) => "x := (28 c_at 28) r_eshape ...   # the digit you drew, 784 numbers".to_string(),
+        .map(|l| match (input, l.starts_with("x := 28 28 r_eshape ")) {
+            (Input::Drawn(_), true) => "x := 28 28 r_eshape ...   # the digit you drew, 784 numbers".to_string(),
             _ => l.to_string(),
         })
         .collect();
