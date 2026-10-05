@@ -11,6 +11,10 @@ planning and reordering, `release` milestone release, `chore`
 agentrail bookkeeping (step complete, saga archive), `vendor` a
 refresh of the vendored X_eTaL.
 
+## 2026-10-05
+
+- 00:30 `build` X_eTaL is pinned, not tracked (the user's request, as `../X_eTaL/docs/vendoring.md` describes and X_eTaL-demos does): `XETAL_COMMIT` holds the known-good commit (abb8274, as before); `just xetal` (scripts/xetal.sh) clones X_eTaL into the gitignored work/xetal, checks that commit out, builds it into target/xetal and links bin/xetal; `just xetal-pin [REF]` moves the pin. The Check library the same way (`XETAL_LIBRARIES_COMMIT`, scripts/xetal-libraries.sh, work/libs; `just libs-pin`). `vendor/` is gone (548 files of X_eTaL source and the Check snapshot); the web apps name X_eTaL's crates in work/xetal; scripts/check-xetal.sh and tools/xetal-probe replace the vendor check and probe; the pages' footers read XETAL_COMMIT. Every baseline unchanged. A fresh clone now needs the network once (`just xetal`). Docs say "pinned".
+
 ## 2026-10-04
 
 - 22:50 `chore` Saga step start-here completed.

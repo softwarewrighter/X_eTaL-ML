@@ -1,6 +1,6 @@
 # Speed
 
-How fast the vendored X_eTaL runs this repository's ML workloads, to
+How fast the pinned X_eTaL runs this repository's ML workloads, to
 see when an upstream change makes them faster or slower (ask M3 in
 [`xetal-asks.md`](xetal-asks.md): the matrix product, and X_eTaL's
 Saga 30 on the `t_able` / `i_nner` regression).
@@ -55,5 +55,5 @@ while whole-array arithmetic costs tens of nanoseconds per element
 06d39fa, and `t_able` 2.7x and `i_nner` 1.5x slower). Those two
 operations are what the ML demos spend their time in: the CNN page
 takes about 100-150 ms per digit in the browser, the 1.58-bit page's
-maps about a second. When a vendored X_eTaL fixes them, `just
+maps about a second. When a pinned X_eTaL fixes them, `just
 bench-check` lists these programs as faster.

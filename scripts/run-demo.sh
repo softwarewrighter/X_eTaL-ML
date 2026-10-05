@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Run a demo's program with the vendored xetal, in the demo's directory
+# Run a demo's program with the pinned xetal, in the demo's directory
 # (this repo's libraries on XETAL_PATH),
 # pictures ([]S_HOW) to work/draw/SLUG/. FILE defaults to SLUG.xtl.
 #   scripts/run-demo.sh SLUG [FILE] [-- XETAL_RUN_FLAGS...]
@@ -14,9 +14,9 @@ d="$root/demos/$slug"
 file="${2:-$slug.xtl}"
 [ -f "$d/$file" ] || { echo "run-demo: no $slug/$file" >&2; exit 1; }
 if head -1 "$d/$file" | grep -q -- '--untyped'; then flags+=(--untyped); fi
-xetal="$("$root/scripts/build-xetal.sh")"
+xetal="$("$root/scripts/xetal.sh")"
 mkdir -p "$root/work/draw/$slug"
 # This repo's libraries on XETAL_PATH (relative to the demo's directory).
-XETAL_PATH="$(cd "$root" && ls -d libs/*/src vendor/xetal-libraries/libs/*/src 2>/dev/null | sed 's#^#../../#' | paste -sd: -)"
+XETAL_PATH="$(cd "$root" && ls -d libs/*/src work/libs/*/src 2>/dev/null | sed 's#^#../../#' | paste -sd: -)"
 export XETAL_PATH
 cd "$d" && exec "$xetal" run ${flags[@]+"${flags[@]}"} --draw "$root/work/draw/$slug" "$file"

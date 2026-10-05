@@ -301,7 +301,7 @@ Read before working:
 - `../X_eTaL/docs/research3.txt` -- why this repo exists and the
   release plan (archival, NOT normative)
 - `../X_eTaL/docs/lang-choices.md`, `../X_eTaL/docs/reference.md` --
-  the language (read the vendored copy's era, not newer)
+  the language (read them at the pinned commit, `work/xetal/docs/`, not newer)
 
 ## Rules
 
@@ -319,18 +319,22 @@ Read before working:
 3. Commit `.rgt`/`.out`/`.err` baselines, never `.tdb*`. Rebless
    (`just bless`) only after reviewing the diff, and say so in the
    commit.
-4. X_eTaL is used only through the vendored snapshot in
-   `vendor/xetal/` (`just vendor [REF]` from a COMMITTED ref of
-   `../X_eTaL`, at a saga start or when an ask has landed, never
-   mid-step, always in its own commit with the baselines re-run).
-   Never edit files under `vendor/`.
+4. X_eTaL is not tracked here: `XETAL_COMMIT` pins the known-good
+   commit and `just xetal` (scripts/xetal.sh) clones it into the
+   gitignored `work/xetal/`, builds it and links `bin/xetal`
+   (`../X_eTaL/docs/vendoring.md`). Move the pin with `just xetal-pin
+   [REF]` (a COMMITTED ref of `../X_eTaL`), at a saga start or when an
+   ask has landed, never mid-step, `XETAL_COMMIT` in its own commit
+   after the baselines and `just bench-check` are re-run. Never edit
+   files under `work/xetal/`.
 5. Missing X_eTaL features and X_eTaL bugs go in `docs/xetal-asks.md`
    (status, kind, demos and libraries, why, minimal repro,
    workaround). Do not fix X_eTaL from this repo and do not hide a
    workaround: name it in the ask and on the demo's or library's page.
 5a. Use a helpful library from X_eTaL-libraries rather than
-   re-writing it: vendor it (`just vendor-libs [REF] [Name...]`, a
-   committed ref, its own commit); never edit `vendor/xetal-libraries/`.
+   re-writing it: it is pinned like X_eTaL (`XETAL_LIBRARIES_COMMIT`,
+   `just libs-pin [REF]`; the libraries used are listed in
+   scripts/xetal-libraries.sh and linked under `work/libs/`).
    Tests use its Check library (`"k:" u_se< "Check"`).
 5b. A demo that runs interactively in the browser is shown live; a
    CLI-only demo is shown recorded (`demos/<slug>/<slug>.tape`, `just
@@ -369,7 +373,7 @@ Read before working:
 ## Every step ends with
 
 1. Tests exist for what the step delivered, and `just gate` passes
-   (vendored X_eTaL, tooling self-tests, demo and library baselines,
+   (pinned X_eTaL, tooling self-tests, demo and library baselines,
    pinned types, pages current, markdown).
 2. Docs updated: README (gallery, libraries, status), the demo's or
    library's pages, `CHANGES.md`, `docs/plan.md`,

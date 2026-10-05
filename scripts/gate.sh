@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
-# The pre-commit gate: the vendored X_eTaL (scripts/check-vendor.sh),
+# The pre-commit gate: the pinned X_eTaL (scripts/check-xetal.sh;
+# it clones and builds on a fresh checkout),
 # the demo and library tooling (self-tests), the shared page shell,
 # every demo's tests, every library's tests and its page's examples,
 # then ASCII-only markdown for the docs we own.
@@ -7,7 +8,7 @@
 set -euo pipefail
 root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$root"
-"$root/scripts/check-vendor.sh"
+"$root/scripts/check-xetal.sh"
 "$root/scripts/selftest-demos.sh"
 "$root/scripts/selftest-libs.sh"
 # The shared shell of the demo pages (shared/microscope).

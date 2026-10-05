@@ -1,5 +1,5 @@
 #!/usr/bin/env xetal
-# NN: properties that must hold, checked with Check (vendored from
+# NN: properties that must hold, checked with Check (pinned from
 # X_eTaL-libraries): one "ok" line each and a summary; a "FAIL" line
 # fails the tests.
 "nn:" u_se< "NN"

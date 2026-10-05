@@ -12,7 +12,7 @@ One card per demo (scripts/demos.py json, catalog order): title,
 summary, concepts, status, a link to its live page (pages/<slug>/, when
 it has a web app) and to its README. The footer is the X_eTaL live
 demo's: copyright, license, the repository, and the build's provenance
-build (host, this repo's sha, yyyymmddThhmmss), plus the vendored X_eTaL commit.
+build (host, this repo's sha, yyyymmddThhmmss), plus the pinned X_eTaL commit (XETAL_COMMIT).
 """
 import datetime
 import html
@@ -21,7 +21,6 @@ import shutil
 import socket
 import subprocess
 import sys
-import tomllib
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -129,18 +128,19 @@ it. Then <a href="recorded/">run the demos yourself</a>, or see more X_eTaL:
 
 RECORDED_HEADER = """<div class="brand"><a href="../"><img class="logo" src="../modern-xetal-logo.jpg" alt="X_eTaL"></a><h1>Run the demos yourself</h1></div>
 <p class="lede">Every one of the <a href="../">ML demos</a> also runs at the command line, by the
-X_eTaL vendored in <a href="{repo}">the repository</a>: each statement of the program, drawn as
+X_eTaL commit <a href="{repo}">the repository</a> pins: each statement of the program, drawn as
 X_eTaL renders it, then its result. A demo that runs only at the command line is shown recorded
 below; the interactive ones are live in the browser.</p>"""
 
 HOWTO = """<section class="howto">
 <h2>From a clone</h2>
-<p class="lede">You need Rust (stable) and <a href="https://github.com/casey/just">just</a>. The
-repository carries its own copy of X_eTaL (<code>vendor/xetal/</code>, commit
-<a href="{xetal}/commit/{xsha}">{xshort}</a>), so nothing else is installed.</p>
+<p class="lede">You need Rust (stable), git and <a href="https://github.com/casey/just">just</a>. The
+repository pins the X_eTaL commit it is known to work with
+(<a href="{xetal}/commit/{xsha}">{xshort}</a>); <code>just xetal</code> fetches and builds
+exactly that one, so nothing else is installed.</p>
 <pre>git clone {repo}
 cd X_eTaL-ML
-just xetal               # build the vendored X_eTaL (once, a minute or two)
+just xetal               # fetch and build the pinned X_eTaL (once, a few minutes)
 just demos               # the demos
 just tour cnn-digits     # a demo, paced: each statement, then its result
 just run cnn-digits      # just the results
@@ -163,8 +163,8 @@ def recording(m):
 
 
 def rendered(line):
-    """A line of X_eTaL as the vendored xetal draws it: HTML spans."""
-    xetal = subprocess.run([str(ROOT / "scripts" / "build-xetal.sh")], capture_output=True, text=True, check=True).stdout.strip()
+    """A line of X_eTaL as the pinned xetal draws it: HTML spans."""
+    xetal = subprocess.run([str(ROOT / "scripts" / "xetal.sh")], capture_output=True, text=True, check=True).stdout.strip()
     r = subprocess.run([xetal, "render", "--html", "-e", line], capture_output=True, text=True, check=True)
     return r.stdout.rstrip("\n")
 
@@ -207,14 +207,14 @@ def main():
     out = Path(sys.argv[1]) if len(sys.argv) > 1 else ROOT / "pages" / "index.html"
     demos = json.loads(subprocess.run([str(ROOT / "scripts" / "demos.py"), "json"],
                                       capture_output=True, text=True, check=True).stdout)
-    vend = tomllib.loads((ROOT / "vendor" / "xetal" / "VENDORED").read_text())
+    xsha = (ROOT / "XETAL_COMMIT").read_text().strip()
     if demos:
         body = '<section class="grid">\n' + "\n".join(card(m) for m in demos) + "\n</section>"
     else:
         body = '<p class="empty">The first demo is on its way.</p>'
     out.parent.mkdir(parents=True, exist_ok=True)
     common = dict(repo=REPO, xetal=XETAL, commit=git("rev-parse", "--short", "HEAD"),
-                  xsha=vend["commit"], xshort=vend["commit"][:7], host=socket.gethostname().split(".")[0],
+                  xsha=xsha, xshort=xsha[:7], host=socket.gethostname().split(".")[0],
                   stamp=datetime.datetime.now(datetime.timezone.utc).strftime("%Y%m%dT%H%M%S"))
     out.write_text(PAGE.format(body=body, title="X_eTaL ML", up="",
                                header=CATALOG_HEADER.format(**common), **common))

@@ -88,13 +88,14 @@ demo's `data/` directory, not in the source.
 
 ### Run them yourself
 
-Rust (stable) and [`just`](https://github.com/casey/just); nothing
-else to install, X_eTaL comes vendored:
+Rust (stable), git and [`just`](https://github.com/casey/just);
+`just xetal` fetches and builds the X_eTaL commit this repository
+pins, so nothing else is installed:
 
 ```bash
 git clone https://github.com/softwarewrighter/X_eTaL-ML
 cd X_eTaL-ML
-just xetal               # build the vendored X_eTaL (once)
+just xetal               # fetch and build the pinned X_eTaL (once, a few minutes)
 just tour cnn-digits     # each statement, then its result
 just run attention       # just the results
 just serve cnn-digits    # its page, at http://127.0.0.1:8435/
@@ -109,7 +110,7 @@ just serve cnn-digits    # its page, at http://127.0.0.1:8435/
 The demos import it (`"nn:" u_se< "NN"`), at the command line and in
 the browser. Tests use the Check library from
 [X_eTaL-libraries](https://github.com/softwarewrighter/X_eTaL-libraries),
-vendored like X_eTaL itself.
+pinned like X_eTaL itself.
 
 ## Status
 
@@ -117,28 +118,33 @@ vendored like X_eTaL itself.
 | - | ----- |
 | Demos | 4, all live, each with command-line and browser tests |
 | Libraries | NN (12 functions, typed, tested) |
-| X_eTaL | vendored at a known commit (`just xetal-version`) |
+| X_eTaL | pinned at a known commit (`just xetal-version`) |
 | Speed | measured (`just bench`, [`docs/speed.md`](docs/speed.md)); matrix products are the slow part, being fixed upstream |
 | Waiting on X_eTaL | macro libraries (`.xtlm`), for a network written as one macro call; a faster matrix product ([`docs/xetal-asks.md`](docs/xetal-asks.md)) |
 | Later | more libraries (quantization, convolution, attention, sampling), a tiny GPT, an embedding explorer, training in X_eTaL ([`docs/plan.md`](docs/plan.md)) |
 
 ## Build
 
-Requirements: Rust (stable), [`just`](https://github.com/casey/just),
-and a checkout of [X_eTaL](https://github.com/softwarewrighter/X_eTaL)
-beside this one (only to refresh the vendored copy).
+Requirements: Rust (stable), git, and
+[`just`](https://github.com/casey/just). The first `just xetal` needs
+the network (it clones X_eTaL).
 
 ```bash
 just                # list the recipes
-just xetal-version  # the vendored X_eTaL (vendor/xetal/VENDORED)
+just xetal          # fetch and build the pinned X_eTaL (work/xetal, bin/xetal)
+just xetal-version  # which commits are pinned, and the binary's own report
 just eval "'+ r_/ 1 2 3"
 just gate           # the pre-commit gate
 ```
 
-X_eTaL is used through a snapshot of a committed X_eTaL revision in
-`vendor/xetal/` (`just vendor [REF]` refreshes it); every recipe runs
-the CLI built from it into `target/xetal/`, so results do not depend
-on whatever `xetal` is on your PATH.
+This repository tracks no copy of X_eTaL: `XETAL_COMMIT` holds the
+commit it is known to work with, and `just xetal` clones X_eTaL into
+the gitignored `work/xetal/`, checks that commit out, builds it and
+links `bin/xetal` to the binary (as X_eTaL's `docs/vendoring.md`
+describes). Every recipe runs that binary, so results do not depend
+on whatever `xetal` is on your PATH. The Check library from
+X_eTaL-libraries is pinned the same way (`XETAL_LIBRARIES_COMMIT`).
+`just xetal-pin [REF]` moves to a newer X_eTaL.
 
 ### Layout
 

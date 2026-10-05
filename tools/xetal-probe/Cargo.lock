@@ -238,13 +238,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "b4ac048d71ede7ee76d585517add45da530660ef4390e49b098733c6e897f254"
 
 [[package]]
-name = "vendor-probe"
-version = "0.1.0"
-dependencies = [
- "xetal-play",
-]
-
-[[package]]
 name = "winnow"
 version = "0.7.15"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -489,6 +482,13 @@ dependencies = [
  "xetal-base",
  "xetal-catalog",
  "xetal-ty",
+]
+
+[[package]]
+name = "xetal-probe"
+version = "0.1.0"
+dependencies = [
+ "xetal-play",
 ]
 
 [[package]]

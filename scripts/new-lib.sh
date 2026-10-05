@@ -11,7 +11,7 @@ name="${1:?$usage}"; alias="${2:?$usage}"; summary="${3:?$usage}"
 [[ "$name" =~ ^[A-Z][A-Za-z0-9]*$ ]] || { echo "new-lib: a library name is UpperCamel" >&2; exit 1; }
 [[ "$alias" =~ ^[a-z]+:$ ]] || { echo "new-lib: an alias is lowercase letters and a colon (t:)" >&2; exit 1; }
 [ ! -e "$base/libs/$name" ] || { echo "new-lib: libs/$name exists" >&2; exit 1; }
-[ ! -e "$root/vendor/xetal/lib/$name.xtl" ] || { echo "new-lib: $name is a standard library" >&2; exit 1; }
+[ ! -e "$root/work/xetal/lib/$name.xtl" ] || { echo "new-lib: $name is a standard library" >&2; exit 1; }
 mkdir -p "$base/libs"
 cp -R "$root/templates/Library" "$base/libs/$name"
 mv "$base/libs/$name/src/__NAME__.xtl" "$base/libs/$name/src/$name.xtl"

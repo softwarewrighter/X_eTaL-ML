@@ -5,7 +5,7 @@
 #   - types.rgt: scripts/xt type ../src/<Name>.xtl (the exports' types);
 #   - NAME.rgt for each tests/NAME.xtl: scripts/xt run NAME.xtl;
 #   - demo-D.rgt for each demos/D.xtl: scripts/xt run ../demos/D.xtl;
-# (scripts/xt: the vendored xetal, every libs/*/src on XETAL_PATH,
+# (scripts/xt: the pinned xetal, every libs/*/src on XETAL_PATH,
 # --seed 1 --ascii). A baseline missing, or left over from a program
 # that is gone, fails; so does any FAIL line (a failed Check) in a
 # baseline's output, unless the program says "# shows failures".
@@ -17,7 +17,7 @@ set -euo pipefail
 root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 base="${XETAL_LIBS_ROOT:-$root}"
 command -v reg-rs >/dev/null || { echo "test-libs: reg-rs not found on PATH" >&2; exit 127; }
-"$root/scripts/build-xetal.sh" >/dev/null
+"$root/scripts/xetal.sh" >/dev/null
 bless="${XETAL_BLESS:-}"
 [ "$bless" = 1 ] || "$root/scripts/libs.py" check
 if [ $# -gt 0 ]; then names=("$@"); else

@@ -26,7 +26,7 @@ from pathlib import Path
 
 REPO = Path(__file__).resolve().parent.parent
 ROOT = Path(os.environ.get("XETAL_LIBS_ROOT", REPO))
-STANDARD = {p.stem for p in (REPO / "vendor/xetal/lib").glob("*.xtl")}
+STANDARD = {p.stem for p in (REPO / "work/xetal/lib").glob("*.xtl")}
 
 
 def names():
@@ -107,8 +107,8 @@ def main():
     elif cmd == "check":
         sys.exit(check())
     elif cmd == "path":
-        vendored = sorted(str(d) for d in (REPO / "vendor" / "xetal-libraries" / "libs").glob("*/src"))
-        print(":".join([str(ROOT / "libs" / n / "src") for n in names()] + vendored))
+        used = sorted(str(d) for d in (REPO / "work" / "libs").glob("*/src"))
+        print(":".join([str(ROOT / "libs" / n / "src") for n in names()] + used))
     else:
         sys.exit(f"libs.py: unknown command {cmd!r} (list, table, check, path)")
 

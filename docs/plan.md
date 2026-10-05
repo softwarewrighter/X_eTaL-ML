@@ -52,8 +52,8 @@ net:n_etwork<`) waits for `.xtlm` in X_eTaL (ask M1).
 
 | # | Decision | Why |
 | - | -------- | --- |
-| A1 | X_eTaL is **vendored** into `vendor/xetal/` as a source snapshot of a committed ref of `../X_eTaL` (`just vendor [REF]`, default `HEAD`), recorded in `vendor/xetal/VENDORED`. Uncommitted work in `../X_eTaL` is never vendored. Same scripts as the sibling repos. | X_eTaL moves fast; demos and libraries need a recent but stable interpreter, refreshed deliberately, never mid-step. |
-| A2 | The vendored CLI builds into `target/xetal/` (`just xetal`); every recipe runs that binary, not one on the PATH. | Baselines and pinned types are tied to `VENDORED`. |
+| A1 | X_eTaL is **pinned, not tracked** (the user's decision, 2026-10-04, after `../X_eTaL/docs/vendoring.md`; saga 1 tracked a snapshot in `vendor/xetal/`): `XETAL_COMMIT` holds the known-good commit; `just xetal` (scripts/xetal.sh, as X_eTaL-demos') clones X_eTaL into the gitignored `work/xetal/`, checks that commit out, builds it and links `bin/xetal`; `just xetal-pin [REF]` moves the pin to a committed ref of `../X_eTaL`. | X_eTaL moves fast; this repo needs a recent but stable interpreter, changed deliberately, never mid-step, without carrying a copy of its source. |
+| A2 | The pinned CLI builds into `target/xetal/` and is reached as `bin/xetal`; every recipe runs that binary, not one on the PATH. The web apps name X_eTaL's crates by path inside `work/xetal/`. | Baselines and pinned types are tied to `XETAL_COMMIT`; the binary reports that commit itself. |
 | A3 | **Each demo is its own sub-project**, `demos/<slug>/`, exactly as in X_eTaL-demos: `demo.toml` (title, summary, concepts, status, order, needs), `README.md`, `<slug>.xtl` programs, `reg/` reg-rs baselines (`cli-NAME` per `.xtl`, `browser-SLUG` for its page), optional `test.sh`, `train/` (an offline trainer, std-only Rust, when the demo has learned weights) and `web/` (its own Cargo workspace: a Yew app on the vendored `xetal-play` and `shared/microscope`). A demo never reaches into another demo. | Demos evolve independently; the three taken over from X_eTaL-demos keep their layout and history. |
 | A4 | **Each library is its own directory**, `libs/<Name>/`, exactly as in X_eTaL-libraries: `src/<Name>.xtl` (later also `<Name>.xtlm`), `tests/` (reg-rs: `NAME.xtl` + `.rgt/.out/.err`, `types.rgt` pinning the exports' types, `demo-D.rgt` per demo), `docs/README.md` (the reference page), `demos/*.xtl` and a short `README.md`. `scripts/xt` runs the vendored xetal with every `libs/*/src` on `XETAL_PATH`. | One place per library; a library can be lifted out whole (into X_eTaL-libraries, or a user's `userlibs/`). |
 | A5 | **Library conventions** are X_eTaL's style guide (lang-choices section 16) as X_eTaL-libraries applies them: `l:` exports, private helpers unprefixed, function-first operands, `?`/`!` suffixes, no top-level expressions, a header with the import line and recommended alias, no export shadowing a built-in, no library named like a standard one. Recommended aliases do not collide with X_eTaL's (`c:` `m:` `s:`) or X_eTaL-libraries' (`k:` `t:` `se:` `n:` `cb:` `q:` `mx:` `r:` `f:` `p:` `d:` `sx:` `g:` `b:` `x:` `test:`). | The libraries teach the style and can be imported beside the general-purpose ones. |
@@ -65,7 +65,7 @@ net:n_etwork<`) waits for `.xtlm` in X_eTaL (ask M1).
 | A11 | The **live site** is built locally into `pages/` (`just pages`): a catalog `pages/index.html` from every `demos/*/demo.toml`, `pages/<slug>/` from trunk, and (saga 2) a library reference. `pages/` is committed; `.github/workflows/pages.yml` only uploads it. | Same model as the sibling repos: simple, fast, deterministic deploys. |
 | A12 | `just` is the entry point (recipes call `scripts/*.sh`); `CHANGES.md` gets a line for every commit (as in `../X_eTaL`); docs are ASCII-only markdown (`sw-markdown-checker`); user-facing docs say what and how, saga talk lives only here. | Same process as the sibling repos. |
 | A13 | **Live or recorded** (the user's decision, 2026-10-03): a demo that runs interactively in the browser is shown live (its page); a demo that runs only at the command line is shown recorded (a VHS tape, `just record`, an animated WebP on the recorded page, its README and its catalog card). When a CLI-only demo gets its page, its tape and recording go. Every demo runs at the command line (`just run`, `just tour`). | One way to see each demo, no duplicated upkeep. |
-| A14 | **Helpful libraries from X_eTaL-libraries are used, vendored** (the user's decision, 2026-10-03): `just vendor-libs [REF] [Name...]` snapshots their `src/` from a committed ref into `vendor/xetal-libraries/` (VENDORED records it; own commit), on `XETAL_PATH` beside `libs/` and in the pages' store. Now: Check, for the tests. | Reuse instead of re-writing; the same discipline as the vendored X_eTaL. |
+| A14 | **Helpful libraries from X_eTaL-libraries are used, pinned the same way** (the user's decision, 2026-10-03): `XETAL_LIBRARIES_COMMIT`, cloned into `work/xetal-libraries/` by scripts/xetal-libraries.sh (run by `just xetal`), each library used linked under `work/libs/`, on `XETAL_PATH` beside `libs/` and in the pages' store; `just libs-pin [REF]`. Now: Check, for the tests. | Reuse instead of re-writing; the same discipline as X_eTaL itself. |
 | A15 | **Programs are short; data lives in files** (the user's review, 2026-10-03: "APL is known for being compact... 100s of repeated lines is not good"): weights, samples and other data are files in `demos/<slug>/data/` (plain numbers, readable rows, written by the demo's trainer from a downloaded, uncommitted dataset), read with `n_umbers []N_GET`; the pages put the same files in their in-memory store. A program never carries walls of literals or repeated lines (`e_ach`, not ten copies of a call). | The demos must show what the language is good at: a network in a handful of dense lines. |
 | A16 | **A page shows all the code it runs** (the user's review, 2026-10-04: the live source was a subset, "e.g. m is not assigned"; "show explicit code that was omitted, the CLI and web code are not the same"): the source panel is the head the page's programs share, then each run as run, under a comment naming it; an elided value (a large array passed between runs) is written `...` with a comment saying what it is. A test checks that every line of every program the page runs is shown. | What a reader sees is what ran. |
 
@@ -79,9 +79,10 @@ libs/<Name>/             one ML library per directory (A4)
   README.md src/ tests/ docs/README.md demos/
 templates/Library/       what just new-lib copies
 shared/microscope/       the demo pages' shared Yew shell
-tools/vendor-probe/      proves xetal-play builds here, natively and for wasm32
+tools/xetal-probe/       proves xetal-play builds here, natively and for wasm32
 scripts/                 the logic behind the just recipes
-vendor/xetal/            the vendored X_eTaL (never edited)
+XETAL_COMMIT             the X_eTaL commit this repo is known to work with
+work/xetal/              its clone (gitignored; just xetal), never edited
 pages/                   the built live site (committed)
 ```
 
@@ -178,7 +179,8 @@ For this repo that means:
 | 2 | attention | DONE: `demos/attention` live: the vocabulary, features and one hand-set head in data/; attention in two lines (`u:s_cores`, `u:a_ttend`), the transpose `o_\`, a causal mask; the CLI prints heatmaps, what each word looks at, an output, the causal map and the "wide" sentence; the page (sentence, presets, mask switch, weights and scores as word tables, a word's query against every key, its output, all it runs). Tests: scores, weights and outputs equal the direct algebra; tired and it find the animal, wide the street; the causal mask; tokens; every line shown. Planned: the attention microscope: X, Q, K, V, S = Q K^T / sqrt d, softmax heatmap, Y = A V for a short sentence; a causal mask; definitions in the program, each line inspectable; CLI baseline, page, browser baseline, recording |
 | 3 | bench | DONE: `bench/` (dense, inner-wide, conv, softmax, table-spread) and every demo's program; `just bench` (table), `just bench-check` (SLOWER over 15% and 15 ms, faster listed), `just bench-bless` (per host, `bench/baseline/max.tsv`), as X_eTaL's own; docs/speed.md: about 770 ns per multiply-add in `i_nner`, 620 ns per `t_able` cell at abb8274; ask M3 points at it. Planned: `just bench`: the ML workloads timed (a 1024 x 16 by 16 x 16 `i_nner`, `t_able` spreads, each demo's run), best of three, the abb8274 baseline in `docs/speed.md`; a warning on a regression over 15 percent, to verify upstream's Saga 30 fix |
 | 4 | start-here | DONE: the catalog opens with what you are looking at, why an array language, where to start (the Tiny CNN first; links to the five sibling sites, all answering); each card shows the demo's key line drawn by the vendored xetal (`render --html`, `line` and `why` in demo.toml, self-tested) ; two columns; the run-it-yourself page retitled; README: the four demos with their lines, run them yourself, NN, a status table (today / waiting / later), the later rows gone from the tables; screenshots retaken. The ecosystem front door upstream does not exist yet: linked when it does. Planned: the catalog's front: what each demo shows, why it is one array expression, its X_eTaL; recorded and live demos side by side; how to run them in a clone; README trimmed to what works today, with a status table; a link to the ecosystem front door |
-| 5 | asks-audit | refresh the vendor (after upstream's Saga 30 and terminal work), re-run every ask's repro, mark landed asks and remove their workarounds, list this repo's promotion blockers for the cross-repo audit |
+| 4b | pinned-xetal | DONE: inserted at the user's request: A1, A2 and A14 as above; `vendor/` removed (548 files of X_eTaL source and the Check snapshot no longer tracked); scripts/xetal.sh, xetal-pin.sh, xetal-libraries.sh, check-xetal.sh; tools/xetal-probe; every path and doc; same commits as before (abb8274, fd93e45), every baseline unchanged |
+| 5 | asks-audit | move the pin (after upstream's Saga 30 and terminal work), re-run every ask's repro, mark landed asks and remove their workarounds, list this repo's promotion blockers for the cross-repo audit |
 | 6 | release-1 | catalog, docs, retrospective; the X_eTaL commit this release is known to work with, for the six-repo tag |
 
 ## Saga 3 -- macros (blocked on M1)
@@ -230,12 +232,12 @@ the announcement), in this order:
 
 ## Cross-cutting
 
-- Refresh the vendored X_eTaL (`just vendor`) at the start of a saga,
-  or when an ask in `docs/xetal-asks.md` has landed upstream; never
-  in the middle of a step. The refresh is its own commit, with the
-  baselines re-run.
-- When an ask lands, remove the workaround in the step that refreshes
-  the vendor, and mark the ask landed.
+- Move the X_eTaL pin (`just xetal-pin`) at the start of a saga, or
+  when an ask in `docs/xetal-asks.md` has landed upstream; never in
+  the middle of a step. `XETAL_COMMIT` changes in its own commit,
+  with the baselines and `just bench-check` re-run.
+- When an ask lands, remove the workaround in the step that moves the
+  pin, and mark the ask landed.
 - Ports: 8435 is this repo's (the user's choice, 2026-10-04: one port
   per X_eTaL repo, so a demo from each can run at once): `just serve
   SLUG` and `just serve-pages` default to it; the headless checks pick

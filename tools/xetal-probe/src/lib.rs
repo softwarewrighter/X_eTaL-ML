@@ -1,4 +1,4 @@
-//! The part of the vendored `xetal-play` API the demos rely on.
+//! The part of the pinned `xetal-play` API the demos rely on.
 
 /// Run a program, returning (output, errors).
 pub fn run(src: &str) -> (String, String) {

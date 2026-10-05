@@ -1,4 +1,4 @@
-use vendor_probe::run;
+use xetal_probe::run;
 
 #[test]
 fn evaluates_a_reduction() {

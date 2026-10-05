@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Time the ML workloads (bench/*.xtl and every demo's program) with the
-# vendored X_eTaL: each runs RUNS times (default 3) and the best wall
+# pinned X_eTaL: each runs RUNS times (default 3) and the best wall
 # time is printed as a markdown table, for docs/speed.md. Not part of
 # the gate (timings depend on the machine).
 #   scripts/bench.sh [RUNS]

@@ -7,8 +7,8 @@ license = "MIT"
 publish = false
 
 [dependencies]
-xetal-play = { path = "../../vendor/xetal/components/web/crates/xetal-play" }
-xetal-store = { path = "../../vendor/xetal/components/base/crates/xetal-store" }
+xetal-play = { path = "../../work/xetal/components/web/crates/xetal-play" }
+xetal-store = { path = "../../work/xetal/components/base/crates/xetal-store" }
 yew = { version = "0.21", features = ["csr"] }
 wasm-bindgen = "0.2"
 web-sys = { version = "0.3", features = ["HtmlCanvasElement", "CanvasRenderingContext2d", "ImageData", "DomRect", "Element", "Window", "Performance"] }

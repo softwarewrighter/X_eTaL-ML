@@ -50,7 +50,7 @@ fn sep() -> Html {
     html! { <span class="sep">{ "\u{00b7}" }</span> }
 }
 
-/// The footer, as the X_eTaL live demo shows it, plus the vendored
+/// The footer, as the X_eTaL live demo shows it, plus the pinned
 /// X_eTaL commit and the way back to the catalog.
 pub fn footer() -> Html {
     html! {

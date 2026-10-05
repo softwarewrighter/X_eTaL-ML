@@ -1,0 +1,12 @@
+[package]
+name = "xetal-probe"
+description = "Checks that a workspace outside vendor/xetal can depend on the pinned xetal-play (natively and for wasm32), as every demo's web app does"
+version = "0.1.0"
+edition = "2021"
+license = "MIT"
+publish = false
+
+[dependencies]
+xetal-play = { path = "../../work/xetal/components/web/crates/xetal-play" }
+
+[workspace]

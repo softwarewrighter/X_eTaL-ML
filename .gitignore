@@ -25,6 +25,9 @@ site/dist/
 *~
 .DS_Store
 
-# local scratch, datasets (MNIST) and demo output
+# the X_eTaL and X_eTaL-libraries clones (scripts/xetal.sh; XETAL_COMMIT
+# and XETAL_LIBRARIES_COMMIT are tracked), the binary's symlink, local
+# scratch, datasets (MNIST) and demo output
 /tmp/
 work/
+bin/xetal

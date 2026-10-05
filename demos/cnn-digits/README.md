@@ -8,11 +8,10 @@ copies times the filters, one matrix product.
 
 ## Run it
 
-From a clone of this repository (Rust and `just`; X_eTaL comes
-vendored):
+From a clone of this repository (Rust, git and `just`):
 
 ```bash
-just xetal               # build the vendored X_eTaL (once)
+just xetal               # fetch and build the pinned X_eTaL (once)
 just run cnn-digits      # the digit, filters, feature maps, pooled maps, probabilities
 just tour cnn-digits     # each statement, then its result, paced
 just show cnn-digits     # the same as a notebook, unclipped

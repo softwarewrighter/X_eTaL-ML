@@ -21,7 +21,7 @@ done
 if [ $# -gt 0 ]; then slugs=("$@"); else
   slugs=(); for t in demos/*/*.tape; do [ -e "$t" ] && slugs+=("$(basename "$(dirname "$t")")"); done
 fi
-"$root/scripts/build-xetal.sh" >/dev/null   # built before the tape starts typing
+"$root/scripts/xetal.sh" >/dev/null   # built before the tape starts typing
 mkdir -p work/record
 for slug in ${slugs[@]+"${slugs[@]}"}; do
   tape="demos/$slug/$slug.tape"

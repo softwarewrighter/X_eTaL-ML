@@ -7,30 +7,31 @@ set positional-arguments
 default:
     @just --list
 
-# Snapshot a committed ref of ../X_eTaL into vendor/xetal/ (default HEAD); commit it on its own
-vendor ref="HEAD":
-    scripts/vendor-xetal.sh "$1"
-
-# Snapshot libraries (default Check) from a committed ref of ../X_eTaL-libraries into vendor/xetal-libraries/; commit it on its own
-vendor-libs ref="HEAD" *names:
-    scripts/vendor-libraries.sh "$@"
-
-# Build the vendored xetal CLI into target/xetal/
+# Get and build xetal at the known-good commit in XETAL_COMMIT (clone in work/xetal, binary bin/xetal), and the libraries used from X_eTaL-libraries
 xetal:
-    @scripts/build-xetal.sh
+    @scripts/xetal.sh
 
-# The vendored X_eTaL: what was vendored (VENDORED) and the binary's version
+# Pin a newer X_eTaL: a committed ref of ../X_eTaL (default HEAD) into XETAL_COMMIT, built; then test, bench-check and commit
+xetal-pin ref="HEAD":
+    scripts/xetal-pin.sh "$1"
+
+# Pin a newer X_eTaL-libraries (for Check): a committed ref of ../X_eTaL-libraries into XETAL_LIBRARIES_COMMIT
+libs-pin ref="HEAD":
+    scripts/xetal-libraries.sh --pin "$1"
+
+# The pinned X_eTaL: the commits in XETAL_COMMIT and XETAL_LIBRARIES_COMMIT, and the binary's own report
 xetal-version:
-    @cat vendor/xetal/VENDORED
-    @"$(scripts/build-xetal.sh)" --version | head -1
+    @echo "XETAL_COMMIT $(cat XETAL_COMMIT)"
+    @echo "XETAL_LIBRARIES_COMMIT $(cat XETAL_LIBRARIES_COMMIT)"
+    @"$(scripts/xetal.sh)" --version
 
-# Evaluate an expression with the vendored xetal, every library on XETAL_PATH: just eval "'+ r_/ 1 2 3"
+# Evaluate an expression with the pinned xetal, every library on XETAL_PATH: just eval "'+ r_/ 1 2 3"
 eval expr:
     @scripts/xt eval -e "$1"
 
-# Check the vendored X_eTaL: CLI builds, answers, names its commit; xetal-play usable natively and for wasm32
-check-vendor:
-    scripts/check-vendor.sh
+# Check the pinned X_eTaL: CLI builds, answers, reports its commit; Check loads; xetal-play usable natively and for wasm32
+check-xetal:
+    scripts/check-xetal.sh
 
 # The demos, in catalog order
 demos:
@@ -40,7 +41,7 @@ demos:
 new-demo slug title:
     scripts/new-demo.sh "$1" "$2"
 
-# Run a demo's program (default SLUG.xtl) with the vendored xetal: just run moe-router
+# Run a demo's program (default SLUG.xtl) with the pinned xetal: just run moe-router
 run slug file="":
     @scripts/run-demo.sh "$1" ${2:+"$2"}
 
@@ -86,7 +87,7 @@ serve-pages port="8435":
     scripts/serve-pages.sh "$1"
 
 # Serve one demo's web app locally, rebuilt on change: just serve moe-router
-serve slug port="8435":
+serve slug port="8435": xetal
     cd demos/{{slug}}/web && trunk serve --release --port {{port}} --address 127.0.0.1
 
 # Screenshot every demo (from the built pages/) into demos/<slug>/screenshot.png

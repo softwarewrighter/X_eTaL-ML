@@ -1,7 +1,7 @@
 # Every Cargo workspace in this repo (tools/, demos/*/web/, shared/, site/)
 # builds into the one ./target: cargo finds this file by walking up from
-# where it runs. The vendored X_eTaL CLI builds into target/xetal/
-# (scripts/build-xetal.sh sets CARGO_TARGET_DIR).
+# where it runs. The pinned X_eTaL CLI builds into target/xetal/
+# (scripts/xetal.sh sets CARGO_TARGET_DIR).
 [build]
 target-dir = "target"
 

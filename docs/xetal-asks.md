@@ -4,13 +4,13 @@ Features the ML demos and libraries need that X_eTaL does not have
 yet, and bugs they uncovered. This repo does not change X_eTaL: each
 ask is filed here (and taken to `../X_eTaL`), the demo or library uses
 the workaround noted below or waits, and the workaround is removed
-when the ask lands in a vendored release (`vendor/xetal/VENDORED`).
+when the ask lands in the X_eTaL commit this repo pins (`XETAL_COMMIT`).
 
 Each entry: status (open, filed, landed, dropped), kind (feature, bug
 or speed), which demos or libraries need it, why, a minimal repro or
 example, and the workaround in use. Asks first filed by a sibling
 repo are copied here with this repo's users named, so this list
-stands on its own; every one was re-run against this repo's vendored
+stands on its own; every one was re-run against this repo's pinned
 X_eTaL (abb8274) on 2026-10-03.
 
 | # | Status | Kind | Ask | Demos, libraries | Workaround |
@@ -73,7 +73,7 @@ interactive. X_eTaL-demos filed the regression from 06d39fa (`t_able`
 steps of the machine, upstream D50) with its measurements. X_eTaL's
 Saga 30 takes it on; `just bench-check` here (docs/speed.md) times
 this repo's matrix products, convolution and `t_able` spreads against
-the abb8274 baseline, to confirm the fix when it is vendored.
+the abb8274 baseline, to confirm the fix when a commit with it is pinned.
 
 ### M4: grade per row
 

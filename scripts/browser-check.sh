@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Test one demo's built page in a real browser: headless Chrome loads
 # pages/<slug>/ (scripts/browser-dom.sh), whose WebAssembly runs the
-# demo's .xtl with the vendored X_eTaL; then the rendered page must
+# demo's .xtl with the pinned X_eTaL; then the rendered page must
 # show no X_eTaL error and every line of demos/<slug>/web/browser.txt
 # (text the page only shows once X_eTaL has run and printed its
 # arrays). Prints one line per check, the same each run, so reg-rs can
