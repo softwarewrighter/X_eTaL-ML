@@ -239,6 +239,7 @@ the announcement), in this order:
   with the baselines and `just bench-check` re-run.
 - When an ask lands, remove the workaround in the step that moves the
   pin, and mark the ask landed.
+- Tags: `v0.1.0` (2026-10-05, the user's request for the linked release of the X_eTaL repositories, as X_eTaL-games, X_eTaL-demos and X_eTaL-extensions have) marks the state after the history rewrite: four live demos, NN, X_eTaL abb8274. A later pin of a newer X_eTaL (asks-audit) is a new tag, not a moved one.
 - Ports: 8435 is this repo's (the user's choice, 2026-10-04: one port
   per X_eTaL repo, so a demo from each can run at once): `just serve
   SLUG` and `just serve-pages` default to it; the headless checks pick

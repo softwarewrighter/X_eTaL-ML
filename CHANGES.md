@@ -13,6 +13,7 @@ refresh of the vendored X_eTaL.
 
 ## 2026-10-05
 
+- 10:20 `release` v0.1.0 (the user's request, for the linked release of the X_eTaL repositories): four live ML demos (Tiny CNN, attention microscope, MoE routing microscope, 1.58-bit network), the NN library, the gate; works with X_eTaL abb8274 (XETAL_COMMIT). Tagged after the history rewrite, on a commit whose deployed site passes `just check-live`.
 - 10:12 `chore` Saga step publish-and-purge completed.
 - 10:10 `test` `just check-live` (scripts/check-live.sh; the user's request to verify the live demos after a deploy): waits until the deployed catalog reports this checkout's commit, then loads every demo's live page in headless Chrome and checks, as the local browser test does, that X_eTaL ran there with no error and every expected line shown. All four pass on the republished site. CLAUDE.md: after `just publish`, run it.
 - 09:50 `chore` History rewritten before the launch (the user's decision, with a force-push approved while only the user and one remote clone hold copies): pages/, vendor/ and the deleted demos/*/recording.webp files removed from every past commit (git filter-repo; a backup bundle first), 39 commits to 37 (the two snapshot-only vendor commits went), the pack from 12.2 MB to 2.1 MB, the current tree identical. Every commit ID changed: the saga records' commit references were mapped to the new ones (`agentrail audit` matches every completed step). Old clones must be cloned again.
