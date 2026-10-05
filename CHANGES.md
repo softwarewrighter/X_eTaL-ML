@@ -13,6 +13,7 @@ refresh of the vendored X_eTaL.
 
 ## 2026-10-05
 
+- 13:00 `plan` The launch is delayed (the user): step release-1 parked, saga launch archived; saga macros started (macro-survey, net-macro, net-demo), now that X_eTaL v0.1.0 has `.xtlm`.
 - 12:32 `chore` Saga step asks-audit completed.
 - 12:30 `release` v0.1.1: built against X_eTaL v0.1.0 (512b3ee); the same four demos and NN, 4 to 6 times faster.
 - 12:20 `docs` Asks audit on X_eTaL v0.1.0: M1 (`.xtlm` macro libraries), M2 (`xetal expand`), M3 (matrix product and `t_able` speed) and M9 (a bound Bool in arithmetic) landed; M4 (grade per row) and M5 (arrays in and out of xetal-play) still open; M10 added (`e_ach` returning an array per item). The timing baseline is now the v0.1.0 one (dense 804 to 145 ms, the CNN program 1.5 to 0.3 s; docs/speed.md shows both). README status, the demo READMEs and the plan follow (saga 3, the network macro, is unblocked).

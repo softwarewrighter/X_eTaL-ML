@@ -1,0 +1,1 @@
+BLOCKED: The launch is delayed (the user, 2026-10-05): the release review and retrospective wait for it; saga 3 (the network macro) goes first

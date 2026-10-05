@@ -167,7 +167,7 @@ For this repo that means:
   M3 speed) are listed for the cross-repo audit, and a known-good
   X_eTaL commit is recorded for the six-repo release tag.
 
-## Saga 2 -- launch  [ACTIVE]
+## Saga 2 -- launch  [DONE but release-1, parked: the launch is delayed; archived]
 
 | # | Step slug | Delivers |
 | - | --------- | -------- |
@@ -184,10 +184,11 @@ For this repo that means:
 | 5 | asks-audit | DONE: pinned X_eTaL v0.1.0 (512b3ee, 163 commits on from abb8274; its own commit); every baseline unchanged; the ML workloads 4 to 6 times faster (`just bench-check`; new baseline, docs/speed.md); asks re-run: M1 `.xtlm`, M2 `xetal expand`, M3 speed and M9 bound Bool landed, M4 grade per row and M5 arrays in and out still open, M10 (`e_ach` returning arrays) added; no workaround was left to remove (ternary-net and cnn-digits READMEs no longer call the matrix product slow); promotion blockers for the cross-repo audit: none from this repo (M4, M5, M10 are conveniences); tagged v0.1.1, built against X_eTaL v0.1.0. Planned: move the pin (after upstream's Saga 30 and terminal work), re-run every ask's repro, mark landed asks and remove their workarounds, list this repo's promotion blockers for the cross-repo audit |
 | 6 | release-1 | catalog, docs, retrospective; the X_eTaL commit this release is known to work with, for the six-repo tag |
 
-## Saga 3 -- macros (unblocked: M1 and M2 landed in X_eTaL v0.1.0)
+## Saga 3 -- macros  [ACTIVE]
 
 `.xtlm` macro libraries and `xetal expand` are in the X_eTaL this
-repo pins since 2026-10-05; the saga starts after release-1, with a
+repo pins since 2026-10-05. The launch being delayed (the user,
+2026-10-05), this saga goes ahead of release-1; it starts with a
 survey of what X_eTaL implemented.
 
 | # | Step slug | Delivers | Waits on |

@@ -1,6 +1,6 @@
 number = 12
 slug = "release-1"
-status = "pending"
+status = "blocked"
 description = "launch step 6: catalog and docs reviewed, recordings re-made if output change..."
 role = "production"
 context_files = []
