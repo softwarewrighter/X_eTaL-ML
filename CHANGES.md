@@ -13,6 +13,7 @@ refresh of the vendored X_eTaL.
 
 ## 2026-10-05
 
+- 09:30 `build` The site is published from the gh-pages branch (the user's decision, as X_eTaL-games): `just publish` (scripts/publish-pages.sh) makes the locally built pages/ the branch's only commit, replaced on every publish, and refuses a dirty work tree; pages/ is gitignored and no longer tracked on main; the upload workflow is gone; the gate builds the site fresh before the browser checks.
 - 00:40 `chore` Saga step pinned-xetal completed (a fresh clone from GitHub builds the pinned X_eTaL with `just xetal` in under a minute and runs the demos).
 - 00:30 `build` X_eTaL is pinned, not tracked (the user's request, as `../X_eTaL/docs/vendoring.md` describes and X_eTaL-demos does): `XETAL_COMMIT` holds the known-good commit (abb8274, as before); `just xetal` (scripts/xetal.sh) clones X_eTaL into the gitignored work/xetal, checks that commit out, builds it into target/xetal and links bin/xetal; `just xetal-pin [REF]` moves the pin. The Check library the same way (`XETAL_LIBRARIES_COMMIT`, scripts/xetal-libraries.sh, work/libs; `just libs-pin`). `vendor/` is gone (548 files of X_eTaL source and the Check snapshot); the web apps name X_eTaL's crates in work/xetal; scripts/check-xetal.sh and tools/xetal-probe replace the vendor check and probe; the pages' footers read XETAL_COMMIT. Every baseline unchanged. A fresh clone now needs the network once (`just xetal`). Docs say "pinned".
 

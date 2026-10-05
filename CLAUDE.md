@@ -354,8 +354,10 @@ Read before working:
    never committed. Ported code is reimplemented and cited (plan A8).
 8. `just` is the entry point (recipes call `scripts/*.sh`). New tasks
    get a recipe.
-9. The live site is built locally into `pages/` (`just pages`) and
-   committed; `.github/workflows/pages.yml` only uploads it.
+9. The live site is built locally into `pages/` (`just pages`; the
+   gate builds it too), which is NOT tracked on main: `just publish`
+   makes it the single commit of the `gh-pages` branch, which GitHub
+   Pages serves. Built files never enter main's history.
 10. American spellings only, everywhere (docs, comments, code
     identifiers, page text, commit messages): color, center, neighbor,
     gray, modeled, labeled, -ize. The user is American;
@@ -382,7 +384,7 @@ Read before working:
    unexpected).
 4. A detailed commit to `main`, including `.agentrail/`.
 5. `agentrail complete`, commit the `.agentrail/` change it makes,
-   push.
+   push; `just publish` when a page changed.
 6. Report: what was pushed, the next step(s), blockers, questions,
    concerns, and asks for the user or the other X_eTaL repos.
 

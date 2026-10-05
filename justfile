@@ -78,9 +78,13 @@ cnn-train:
 browser-check slug:
     scripts/browser-check.sh "$1"
 
-# Build the live site into pages/ (committed; the Pages workflow publishes it)
+# Build the live site into pages/ (not tracked; just publish publishes it)
 pages:
     scripts/build-pages.sh
+
+# Publish pages/ as the gh-pages branch's only commit (the live site); needs a clean work tree
+publish:
+    scripts/publish-pages.sh
 
 # Serve the built pages/ as GitHub Pages will: http://127.0.0.1:8435/X_eTaL-ML/ (8435 is this repo's port; each X_eTaL repo has its own)
 serve-pages port="8435":

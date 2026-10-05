@@ -15,6 +15,9 @@ cd "$root"
 (cd "$root/shared/microscope" && cargo test -q >/dev/null 2>&1 && cargo check -q --target wasm32-unknown-unknown) \
   || { (cd "$root/shared/microscope" && cargo test -q); echo "FAIL: shared/microscope"; exit 1; }
 echo "ok: shared/microscope"
+# The site built fresh (not tracked; just publish publishes it), so the
+# browser checks below run against this checkout's pages.
+"$root/scripts/build-pages.sh" >/dev/null
 "$root/scripts/test-demos.sh"
 "$root/scripts/test-libs.sh"
 "$root/scripts/check-examples.py"

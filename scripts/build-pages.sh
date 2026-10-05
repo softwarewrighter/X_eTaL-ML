@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
-# Build the live site into pages/, which is committed: the Pages
-# workflow publishes that folder as it is (nothing is built on GitHub).
+# Build the live site into pages/, which is not tracked: just publish
+# (scripts/publish-pages.sh) makes it the gh-pages branch's only
+# commit, which GitHub Pages serves (nothing is built on GitHub).
 #   - every demo with a web app (demos/<slug>/web/) is built with trunk
 #     into pages/<slug>/, served under /X_eTaL-ML/<slug>/;
 #   - pages/index.html, the catalog, from every demo.toml.
@@ -35,4 +36,4 @@ for d in "$root"/pages/*/; do
 done
 cp "$root/images/modern-xetal-logo.jpg" "$root/images/favicon.ico" "$root/pages/"
 "$root/scripts/build-catalog.py"
-echo "pages/ built; commit it (git add pages/) and push to publish."
+echo "pages/ built; just publish puts it live (after committing your changes)."

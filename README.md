@@ -156,7 +156,8 @@ X_eTaL-libraries is pinned the same way (`XETAL_LIBRARIES_COMMIT`).
   (including `types.rgt`, which pins every export's type).
 
 ```bash
-just pages                # build the live site into pages/ (committed; a push publishes it)
+just pages                # build the live site into pages/ (not tracked)
+just publish              # put it live: pages/ becomes the gh-pages branch
 just serve-pages          # preview it at http://127.0.0.1:8435/X_eTaL-ML/
 just demos                # the demos, in catalog order
 just run SLUG             # run a demo's program; just show SLUG as a notebook
