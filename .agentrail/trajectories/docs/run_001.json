@@ -1,0 +1,11 @@
+{
+  "task_type": "docs",
+  "state": {
+    "number": 8,
+    "step": "start-here"
+  },
+  "action": "build-catalog, demo.toml line/why, README, selftest fix",
+  "result": "success",
+  "reward": 1,
+  "timestamp": "2026-10-04T23:23:03"
+}

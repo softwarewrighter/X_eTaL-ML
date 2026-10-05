@@ -1,0 +1,1 @@
+Start-here: catalog front door with key lines drawn by xetal, README trimmed with status table, screenshots retaken, selftest
