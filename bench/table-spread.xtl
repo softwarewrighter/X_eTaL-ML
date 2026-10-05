@@ -1,0 +1,4 @@
+# Spreading row values across columns with t_able (as the demos'
+# masks and biases do), 512 by 512, four times.
+v := f_loat r_ange 512
+'+ r_/ '{ i -> '+ r_/ r_avel v 'l_eft t_able o_ffsets 512 } e_ach r_ange 4

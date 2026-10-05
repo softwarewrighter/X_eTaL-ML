@@ -1,6 +1,6 @@
 number = 6
 slug = "bench"
-status = "pending"
+status = "in-progress"
 description = "launch step 3: just bench (scripts/bench.sh): the ML workloads timed with the..."
 role = "production"
 context_files = []

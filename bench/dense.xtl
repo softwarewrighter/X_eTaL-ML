@@ -1,0 +1,5 @@
+# A dense layer's matrix product (ask M3's repro): 1024 x 16 by 16 x 16
+# with i_nner, four times.
+x := (1024 c_at 16) r_eshape 0.1 0.2 -0.3 0.5 0.7
+w := (16 c_at 16) r_eshape 0.3 -0.1 0.2 0.0 0.4
+'+ r_/ '{ i -> '+ r_/ r_avel x '+ '* i_nner w } e_ach r_ange 4

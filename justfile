@@ -134,6 +134,18 @@ test:
     scripts/test-demos.sh
     scripts/test-libs.sh
 
+# Time the ML workloads (bench/*.xtl and every demo), best of RUNS, as a table for docs/speed.md
+bench RUNS="3":
+    scripts/bench.sh {{RUNS}}
+
+# Check them against this machine's baseline: fails when one is more than 15% slower (shows the faster ones too)
+bench-check RUNS="5":
+    scripts/bench-check.sh {{RUNS}}
+
+# Record this machine's baseline (blessing a slowdown needs the user's approval)
+bench-bless RUNS="5":
+    scripts/bench-check.sh --bless {{RUNS}}
+
 # The full pre-commit gate
 gate:
     scripts/gate.sh

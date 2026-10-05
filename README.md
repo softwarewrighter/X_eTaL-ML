@@ -157,6 +157,7 @@ just record [SLUG]        # re-record the CLI-only demos (vhs, ffmpeg, gif2webp)
 just libs                 # the libraries and their aliases
 export XETAL_PATH="$(just path)"   # use the libraries from your own programs
 just test                 # every demo and library baseline
+just bench                # time the ML workloads (docs/speed.md)
 ```
 
 ## Development

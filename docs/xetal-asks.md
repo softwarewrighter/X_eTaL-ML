@@ -70,7 +70,10 @@ tens of nanoseconds per element: a dedicated kernel for `'+ '* i_nner`
 on Floats would make the 1.58-bit network's map finer and the CNN page
 interactive. X_eTaL-demos filed the regression from 06d39fa (`t_able`
 2.7x and `i_nner` 1.5x slower, after the higher-order built-ins became
-steps of the machine, upstream D50) with its measurements.
+steps of the machine, upstream D50) with its measurements. X_eTaL's
+Saga 30 takes it on; `just bench-check` here (docs/speed.md) times
+this repo's matrix products, convolution and `t_able` spreads against
+the abb8274 baseline, to confirm the fix when it is vendored.
 
 ### M4: grade per row
 
