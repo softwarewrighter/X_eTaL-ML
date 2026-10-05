@@ -1,8 +1,9 @@
 number = 10
 slug = "publish-and-purge"
-status = "in-progress"
+status = "completed"
 description = "launch step 10 (inserted, the user's decision 2026-10-05, as X_eTaL-games): (..."
 role = "production"
 context_files = []
 created_at = "2026-10-05T00:54:54"
-commits = []
+completed_at = "2026-10-05T01:53:37"
+commits = ["eb19ac8ef1018a99b1b810e66573f7731e5e9bfb"]

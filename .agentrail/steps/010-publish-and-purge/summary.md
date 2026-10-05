@@ -1,0 +1,1 @@
+Site from gh-pages (just publish), pages untracked; history purged of pages/, vendor/, recordings (12.2->2.1 MB) with backup bundle, saga refs mapped, force-pushed, fresh clone and live demos verified (just check-live)
