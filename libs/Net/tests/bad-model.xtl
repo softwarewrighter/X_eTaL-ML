@@ -1,0 +1,5 @@
+#!/usr/bin/env xetal
+# Net: a model's left side is the function's name and the files' prefix.
+"nn:" u_se< "NN"
+"net:" u_se< "Net"
+"u:f_wd" net:m_odel< "2 3 softmax"

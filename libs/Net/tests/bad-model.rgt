@@ -1,0 +1,2 @@
+command = "../../../scripts/xt run bad-model.xtl"
+exit_code = 1

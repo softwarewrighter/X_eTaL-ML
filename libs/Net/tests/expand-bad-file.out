@@ -1,0 +1,9 @@
+#!/usr/bin/env xetal
+# Net: a weight file holding the wrong count stops the program when the
+# model is loaded, naming the layer (r_eshape alone would silently
+# repeat or cut the data).
+"nn:" u_se< "NN"
+"net:" u_se< "Net"
+short1 := { v -> 9 = t_ally v ? 3 3 r_eshape v; []P_ANIC "data/short1.txt holds " c_at (f_ormat t_ally v) c_at " numbers; layer 1 of \"2 3 softmax\" (2 inputs and a bias, 3 outputs) needs 9" } n_umbers []N_GET "data/short1.txt"
+u:f_wd := { g1:x -> nn:s_oftmax g1:x nn:d_ense short1 }
+

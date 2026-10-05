@@ -15,3 +15,7 @@ nn:a_rgmax u:x_or x
 # One layer, no activation: a linear map.
 u:l_inear := "2 2" net:n_etwork< "w1"
 u:l_inear 1 2 r_eshape 1.0 2.0
+# A whole model from one spec: the weights read from data/t1.txt and
+# data/t2.txt, shaped as the spec says, then the function.
+"u:x_or2 t" net:m_odel< "2 2 relu 2 softmax"
+nn:a_rgmax u:x_or2 x

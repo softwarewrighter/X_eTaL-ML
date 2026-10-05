@@ -15,4 +15,10 @@ nn:a_rgmax u:x_or x
 # One layer, no activation: a linear map.
 u:l_inear := ({ g2:x -> g2:x nn:d_ense w1 })
 u:l_inear 1 2 r_eshape 1.0 2.0
+# A whole model from one spec: the weights read from data/t1.txt and
+# data/t2.txt, shaped as the spec says, then the function.
+t1 := { v -> 6 = t_ally v ? 3 2 r_eshape v; []P_ANIC "data/t1.txt holds " c_at (f_ormat t_ally v) c_at " numbers; layer 1 of \"2 2 relu 2 softmax\" (2 inputs and a bias, 2 outputs) needs 6" } n_umbers []N_GET "data/t1.txt"
+t2 := { v -> 6 = t_ally v ? 3 2 r_eshape v; []P_ANIC "data/t2.txt holds " c_at (f_ormat t_ally v) c_at " numbers; layer 2 of \"2 2 relu 2 softmax\" (2 inputs and a bias, 2 outputs) needs 6" } n_umbers []N_GET "data/t2.txt"
+u:x_or2 := { x -> nn:s_oftmax (nn:r_elu x nn:d_ense t1) nn:d_ense t2 }
+nn:a_rgmax u:x_or2 x
 

@@ -1,8 +1,9 @@
 #!/usr/bin/env xetal
 # Three networks for one task (which of three spiral arms is a point
-# on?), each written as one line: the Net macro library turns a spec,
-# sizes and activations, into an ordinary function of NN calls before
-# the program is compiled. xetal expand shows what it wrote.
+# on?), each described once, by one line: the Net macro library turns
+# a spec, sizes and activations, into the loading of the weights and
+# an ordinary function of NN calls before the program is compiled.
+# xetal expand shows what it wrote.
 "nn:" u_se< "NN"
 "net:" u_se< "Net"
 
@@ -12,25 +13,20 @@ pts := n_umbers []N_GET "data/points.txt"
 pts := o_\ (((t_ally pts) d_iv 3) c_at 3) r_eshape pts
 xy := o_\ 2 t_ake pts
 arm := f_loor 3 s_elect pts
-# Each dense layer's weights, inputs + 1 by outputs (the bias last).
-a1 := 3 3 r_eshape n_umbers []N_GET "data/a1.txt"
-b1 := 3 4 r_eshape n_umbers []N_GET "data/b1.txt"
-b2 := 5 3 r_eshape n_umbers []N_GET "data/b2.txt"
-c1 := 3 16 r_eshape n_umbers []N_GET "data/c1.txt"
-c2 := 17 16 r_eshape n_umbers []N_GET "data/c2.txt"
-c3 := 17 3 r_eshape n_umbers []N_GET "data/c3.txt"
 
-# -- the networks: one line each --------------------------
-u:l_inear := "2 3 softmax" net:n_etwork< "a1"
-u:s_mall := "2 4 tanh 3 softmax" net:n_etwork< "b1 b2"
-u:d_eep := "2 16 relu 16 relu 3 softmax" net:n_etwork< "c1 c2 c3"
+# -- the networks: each described once ---------------------
+# From a spec the macro writes the loading of each dense layer's
+# weights (data/a1.txt, ...: inputs + 1 by outputs, the bias last; the
+# program stops, naming the layer, if a file holds the wrong count)
+# and the forward function.
+"u:l_inear a" net:m_odel< "2 3 softmax"
+"u:s_mall b" net:m_odel< "2 4 tanh 3 softmax"
+"u:d_eep c" net:m_odel< "2 16 relu 16 relu 3 softmax"
 # -- end of the core --------------------------------------
 
 # How many numbers each has to learn, counted by the macro when the
 # program is compiled.
 ("2 3 softmax" net:p_arams< @) c_at ("2 4 tanh 3 softmax" net:p_arams< @) c_at "2 16 relu 16 relu 3 softmax" net:p_arams< @
-# The weights have the shapes the specs say.
-("2 3 softmax" net:s_hapes< "a1") & ("2 4 tanh 3 softmax" net:s_hapes< "b1 b2") & "2 16 relu 16 relu 3 softmax" net:s_hapes< "c1 c2 c3"
 # The share of the 120 test points each reads right: a line cannot
 # follow a spiral, a small network nearly can, the deep one does.
 (arm nn:a_ccuracy u:l_inear xy) c_at (arm nn:a_ccuracy u:s_mall xy) c_at arm nn:a_ccuracy u:d_eep xy

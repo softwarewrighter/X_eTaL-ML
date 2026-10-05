@@ -26,6 +26,7 @@ X_eTaL (v0.1.0, 512b3ee) on 2026-10-05.
 | M9 | landed | bug | A Bool bound to a name in arithmetic: works in X_eTaL v0.1.0 (`a := 1 2 > 0` then `1 * a` gives `1 1`) | masks | none left (no demo here carried the workaround) |
 | M10 | open | feature | `e_ach` returning an array per item (`'{ i -> i * 1 2 3 } e_ach 1 2` is refused: e_ach needs a single value from each call) | cnn-digits (the ten digits, one number per call), a per-row grade | one `e_ach` per number wanted |
 | M11 | filed | feature | A macro's text cannot name a library by the importer's alias: `m:f_` in an expansion is not rewritten to the alias the caller chose, and an expansion may not import (MC23), so a macro library cannot call its own `.xtl` half, or another library, without fixing the alias (X_eTaL-libraries X14) | Net (its networks call NN) | the expansion says `nn:`; the page tells the reader to import NN under that alias |
+| M12 | filed | feature | Shapes in types: a matrix's type is `Float`, so code can be well-typed and shape-wrong (a spec saying 4 outputs against a 3-column weight array ran and answered); `r_eshape` repeats or cuts data silently. Asked in three sizes: a shape ascription built-in now, rank in types next, sized types as research | Net (its models check at load instead), every demo | the Net macros write run-time checks that stop with an error naming the layer |
 ## Details
 
 ### M1, M2: macro libraries and seeing an expansion (landed)
@@ -79,6 +80,33 @@ grades the columns as items; a top-k per row needs each row graded
 call). Ask: a grade along an axis per row, so top-k is `k t_ake_2` of
 it. Workaround in moe-router: the largest of each row as a mask, taken
 out, then the largest again.
+
+### M12: shapes in types
+
+```
+a1 := 3 3 r_eshape 0.5
+u:f_wd := "2 4 softmax" net:n_etwork< "a1"    # the spec says 4 outputs
+u:f_wd 1 2 r_eshape 1.0                        # runs: three numbers
+2 3 r_eshape 1 2                               # 1 2 1 / 2 1 2: data repeated to fit
+```
+
+Inference sees `Float -> Float` and has nothing to object to: a
+matrix's type carries no shape, and `r_eshape` makes any data fit.
+The Net library closes the gap by writing run-time checks into the
+code its macros produce (a file's count at load, `net:s_hapes<`),
+which is the best a library can do. Asked, in rising size:
+
+1. A shape ascription built-in (`x :> 3 4`, say): checks at run time,
+   stops with an error that names the expected and actual shapes, and
+   gives a future checker a place to hang a type. Cheap, and what the
+   generated code wants today.
+2. Rank in types (vector, matrix, cube), the first typed step.
+3. Sized types (sizes as literals and variables with linear
+   arithmetic, data-dependent sizes existential with a coercion, as
+   Futhark's): the real fix, and a large change (every inferred type
+   changes, programs that reshape from computed vectors need
+   coercions, broadcasting needs typing rules). Research, with this
+   library and the ML demos as the motivating case.
 
 ### M5, M10
 

@@ -7,5 +7,5 @@ concepts = ["macro libraries (.xtlm)", "xetal expand", "matrix product", "softma
 status = "live"             # draft | live | deferred
 order = 50                  # position in the catalog (lower first)
 needs = []                   # asks in docs/xetal-asks.md it waits on or works around
-line = "u:d_eep := \"2 16 relu 16 relu 3 softmax\" net:n_etwork< \"c1 c2 c3\""
-why = "The line is a macro call: before the program is compiled it becomes the forward function written out, three matrix products and their activations, which is then type-checked like any code. The notation is new; the language underneath is not."
+line = "\"u:d_eep c\" net:m_odel< \"2 16 relu 16 relu 3 softmax\""
+why = "The line is a macro call: before the program is compiled it becomes the loading of three weight files, shaped and checked as the spec says, and the forward function written out, three matrix products and their activations, type-checked like any code. The spec is the one place the network is described."

@@ -1,0 +1,7 @@
+#!/usr/bin/env xetal
+# Net: a weight file holding the wrong count stops the program when the
+# model is loaded, naming the layer (r_eshape alone would silently
+# repeat or cut the data).
+"nn:" u_se< "NN"
+"net:" u_se< "Net"
+"u:f_wd short" net:m_odel< "2 3 softmax"

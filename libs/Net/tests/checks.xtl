@@ -16,4 +16,9 @@ c3 := "tanh, no last activation" k:t_est (u:t_anhNet x) k:n_ear (nn:t_anh x nn:d
 c4 := "parameters counted" k:t_est 20 k:i_s "3 3 relu 2 softmax" net:p_arams< @
 c5 := "shapes agree" k:t_est k:t_rue "3 3 relu 2 softmax" net:s_hapes< "a b"
 c6 := "shapes disagree" k:t_est k:t_rue n_ot "3 4 relu 2 softmax" net:s_hapes< "a b"
-k:r_eport c1 k:a_nd c2 k:a_nd c3 k:a_nd c4 k:a_nd c5 k:a_nd c6
+"u:m_odel t" net:m_odel< "2 2 relu 2 softmax"
+u:s_ame := "2 2 relu 2 softmax" net:n_etwork< "t1 t2"
+xs := 4 2 r_eshape 0.0 0.0 0.0 1.0 1.0 0.0 1.0 1.0
+c7 := "a model is the network of its loaded weights" k:t_est (u:m_odel xs) k:n_ear u:s_ame xs
+c8 := "its weights have the spec's shapes" k:t_est k:t_rue "2 2 relu 2 softmax" net:s_hapes< "t1 t2"
+k:r_eport c1 k:a_nd c2 k:a_nd c3 k:a_nd c4 k:a_nd c5 k:a_nd c6 k:a_nd c7 k:a_nd c8

@@ -23,7 +23,7 @@ echo "ok: shared/microscope"
 "$root/scripts/check-examples.py"
 # Concise X_eTaL: number literals strand, so a shape is written
 # 8 13 2 r_eshape x, never (8 c_at 13 c_at 2) r_eshape x (c_at is for names).
-if git ls-files '*.xtl' '*.xtlm' '*.rs' '*.md' | grep -v -E '^(CHANGES.md|docs/plan.md)$' | xargs grep -n -E '\(([0-9]+ c_at )+[0-9]+\)' ; then
+if git ls-files '*.xtl' '*.xtlm' '*.rs' '*.md' | grep -v -E '^(CHANGES.md|docs/plan.md|\.agentrail)' | xargs grep -n -E '\(([0-9]+ c_at )+[0-9]+\)' ; then
   echo "FAIL: literal c_at chains (write the numbers side by side)"; exit 1
 fi
 # American spellings only (the checker checks itself first).

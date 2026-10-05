@@ -30,47 +30,50 @@ just test-demo net-macro # its CLI and browser baselines and the web app's tests
 ## The program
 
 Three networks for one task (which of three spiral arms is a point
-on?), each one line of `net-macro.xtl`:
+on?), each described once, by one line of `net-macro.xtl`:
 
 ```
-u:l_inear := "2 3 softmax" net:n_etwork< "a1"
-u:s_mall := "2 4 tanh 3 softmax" net:n_etwork< "b1 b2"
-u:d_eep := "2 16 relu 16 relu 3 softmax" net:n_etwork< "c1 c2 c3"
+"u:l_inear a" net:m_odel< "2 3 softmax"
+"u:s_mall b" net:m_odel< "2 4 tanh 3 softmax"
+"u:d_eep c" net:m_odel< "2 16 relu 16 relu 3 softmax"
 ```
 
 A spec is sizes and activations, the input's size first: each number
-after the first is a dense layer, using the next weight array named on
-the right; each word is an activation of the
-[NN library](../../libs/NN/docs/README.md). What the three lines
-become (`just expand net-macro`):
+after the first is a dense layer, each word an activation of the
+[NN library](../../libs/NN/docs/README.md). From the spec the macro
+writes the loading of each dense layer's weights (`data/c1.txt`,
+`data/c2.txt`, `data/c3.txt`, shaped as the spec says) and the forward
+function. What the third line becomes (`just expand net-macro`):
 
 ```
-u:l_inear := ({ g1:x -> nn:s_oftmax g1:x nn:d_ense a1 })
-u:s_mall := ({ g2:x -> nn:s_oftmax (nn:t_anh g2:x nn:d_ense b1) nn:d_ense b2 })
-u:d_eep := ({ g3:x -> nn:s_oftmax (nn:r_elu (nn:r_elu g3:x nn:d_ense c1) nn:d_ense c2) nn:d_ense c3 })
+c1 := { v -> 48 = t_ally v ? 3 16 r_eshape v; []P_ANIC "data/c1.txt holds " c_at (f_ormat t_ally v) c_at " numbers; layer 1 of \"2 16 relu 16 relu 3 softmax\" (2 inputs and a bias, 16 outputs) needs 48" } n_umbers []N_GET "data/c1.txt"
+c2 := { v -> 272 = t_ally v ? 17 16 r_eshape v; []P_ANIC "..." } n_umbers []N_GET "data/c2.txt"
+c3 := { v -> 51 = t_ally v ? 17 3 r_eshape v; []P_ANIC "..." } n_umbers []N_GET "data/c3.txt"
+u:d_eep := { x -> nn:s_oftmax (nn:r_elu (nn:r_elu x nn:d_ense c1) nn:d_ense c2) nn:d_ense c3 }
 ```
 
-The functions one would write by hand (`g1:x`, `g2:x` and `g3:x` are
-their parameters, renamed by X_eTaL so that they cannot clash with a
-name of yours). Two
-more macros work on the same spec: `"spec" net:p_arams< @` becomes the
-number of weights and biases, counted when the program is compiled
-(9, 27 and 371 here), and `"spec" net:s_hapes< "w1 w2"` becomes a
-check that the weight arrays have the shapes the spec says.
+The function one would write by hand, and before it the weights read
+and checked: a file holding the wrong count stops the program with an
+error naming the layer, because shapes are not part of X_eTaL's types
+and `r_eshape` alone would silently repeat or cut the data (ask M12
+in [`docs/xetal-asks.md`](../../docs/xetal-asks.md)). The spec is the
+one place each network is described: the trainer reads these lines
+too. A third macro, `"spec" net:p_arams< @`, becomes the number of
+weights and biases, counted when the program is compiled (9, 27 and
+371 here).
 
 ## What it prints
 
 1. The three parameter counts.
-2. A 1: every weight array has the shape its spec says.
-3. The share of the 120 test points each network reads right: a line
+2. The share of the 120 test points each network reads right: a line
    cannot follow a spiral (0.375), the small network nearly can
    (0.875), the deep one does (1.0).
-4. What each decides over the square -1.1 to 1.1, as letters a, b, c.
+3. What each decides over the square -1.1 to 1.1, as letters a, b, c.
 
 On the page a spec that is not one of the three has no trained
-weights, so it is expanded and counted but not run; a spec the macro
-refuses (an unknown word, no input size) shows the macro's own
-message.
+weights, so it is expanded (with `net:n_etwork<`) and counted but not
+run; a spec the macro refuses (an unknown word, no input size) shows
+the macro's own message.
 
 ## The data
 

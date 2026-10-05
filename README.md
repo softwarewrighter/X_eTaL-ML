@@ -80,7 +80,7 @@ draw a digit and watch a network read it.
 | [Tiny CNN](demos/cnn-digits/README.md) ([live](https://softwarewrighter.github.io/X_eTaL-ML/cnn-digits/)) | draw a digit; filters, feature maps, pooling and probabilities, every stage computed by X_eTaL; click a map for its arithmetic | `-1 0 1 o_-_2 -1 0 1 o_-_2 x`: every 3 x 3 window of the picture at once |
 | [Attention microscope](demos/attention/README.md) ([live](https://softwarewrighter.github.io/X_eTaL-ML/attention/)) | one head of attention on your sentence: scores, weights, a causal mask; "tired" finds the animal, "wide" the street | `(Q '+ '* i_nner o_\ K) / 2.0 ^ 0.5`: every query against every key |
 | [MoE routing microscope](demos/moe-router/README.md) ([live](https://softwarewrighter.github.io/X_eTaL-ML/moe-router/)) | a sentence's tokens routed to their top-2 of 16 experts; nudge a token and see where the experts switch | `u:t_op2 u:s_oftmax u:s_cores x`: scores, softmax and top-2 for all tokens |
-| [Network macro](demos/net-macro/README.md) ([live](https://softwarewrighter.github.io/X_eTaL-ML/net-macro/)) | a network written as one line; the function the macro wrote for it; three networks on a spiral; type a spec of your own | `"2 16 relu 16 relu 3 softmax" net:n_etwork< "c1 c2 c3"`: a macro call that becomes the forward function |
+| [Network macro](demos/net-macro/README.md) ([live](https://softwarewrighter.github.io/X_eTaL-ML/net-macro/)) | a network written as one line; the function the macro wrote for it; three networks on a spiral; type a spec of your own | `"u:d_eep c" net:m_odel< "2 16 relu 16 relu 3 softmax"`: a macro call that becomes the weights' loading and the forward function |
 | [1.58-bit network](demos/ternary-net/README.md) ([live](https://softwarewrighter.github.io/X_eTaL-ML/ternary-net/)) | one classifier with FP32, FP16, INT8 and ternary weights compared; a ternary layer as additions | `(f_loat x > s) - f_loat x < n_eg s`: a layer's weights to -1, 0, +1 |
 
 Every page shows all the code it runs, beside the arrays that code
@@ -107,7 +107,7 @@ just serve cnn-digits    # its page, at http://127.0.0.1:8435/
 | Library | Alias | What |
 | ------- | ----- | ---- |
 | [NN](libs/NN/docs/README.md) | `nn:` | activations, softmax by row (any rank), dense layers, argmax, one-hot, loss, accuracy |
-| [Net](libs/Net/docs/README.md) | `net:` | a macro library: `"784 128 relu 10 softmax" net:n_etwork< "w1 w2"` becomes an ordinary function of NN calls, shown by `xetal expand` |
+| [Net](libs/Net/docs/README.md) | `net:` | a macro library: `"u:n_et w" net:m_odel< "784 128 relu 10 softmax"` becomes the weights' loading, checked, and an ordinary function of NN calls, shown by `xetal expand` |
 
 The demos import it (`"nn:" u_se< "NN"`), at the command line and in
 the browser. Tests use the Check library from

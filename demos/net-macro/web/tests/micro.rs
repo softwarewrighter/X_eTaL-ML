@@ -31,7 +31,8 @@ fn the_page_runs_the_command_line_programs_head_and_networks() {
     assert!(SOURCE.contains(head()));
     let n = networks();
     assert_eq!(n.iter().map(|n| n.spec.as_str()).collect::<Vec<_>>(), ["2 3 softmax", "2 4 tanh 3 softmax", "2 16 relu 16 relu 3 softmax"]);
-    assert!(n.iter().all(|n| head().contains(&format!("u:{} := \"{}\" net:n_etwork< \"{}\"", n.name, n.spec, n.weights))));
+    assert!(n.iter().all(|n| head().contains(&n.line())));
+    assert_eq!(n[2].weights(), "c1 c2 c3");
 }
 
 #[test]
@@ -43,10 +44,10 @@ fn each_macro_written_network_decides_what_the_arithmetic_decides() {
             for col in 0..SIDE {
                 let x = -1.1 + 2.2 * (0.5 + col as f64) / SIDE as f64;
                 let y = -1.1 + 2.2 * (0.5 + (SIDE - 1 - row) as f64) / SIDE as f64;
-                assert_eq!(r.map[row * SIDE + col], direct(&n.spec, &n.weights, x, y), "{} at {row} {col}", n.name);
+                assert_eq!(r.map[row * SIDE + col], direct(&n.spec, &n.weights(), x, y), "{} at {row} {col}", n.name);
             }
         }
-        let right = pts.chunks(3).filter(|p| direct(&n.spec, &n.weights, p[0], p[1]) == p[2] as usize).count();
+        let right = pts.chunks(3).filter(|p| direct(&n.spec, &n.weights(), p[0], p[1]) == p[2] as usize).count();
         assert!((r.accuracy - right as f64 / (pts.len() / 3) as f64).abs() < 1e-12, "{}", n.name);
     }
 }
@@ -56,7 +57,10 @@ fn the_macro_wrote_the_function_and_counted_the_parameters() {
     let n = networks();
     let deep = run(&n[2]).unwrap();
     assert_eq!(deep.params, 3 * 16 + 17 * 16 + 17 * 3);
-    assert!(deep.expansion.starts_with("u:d_eep := ("), "{}", deep.expansion);
+    assert!(deep.expansion.contains("u:d_eep := {"), "{}", deep.expansion);
+    // The weights' loading, each checked for its count, came from the same spec.
+    assert_eq!(deep.expansion.lines().count(), 4, "{}", deep.expansion);
+    assert!(deep.expansion.contains("c2 := { v -> 272 = t_ally v ? 17 16 r_eshape v; []P_ANIC"), "{}", deep.expansion);
     assert_eq!(deep.expansion.matches("nn:d_ense").count(), 3);
     assert_eq!(deep.expansion.matches("nn:r_elu").count(), 2);
     assert!(deep.expansion.contains("nn:s_oftmax") && deep.expansion.contains("nn:d_ense c3"));

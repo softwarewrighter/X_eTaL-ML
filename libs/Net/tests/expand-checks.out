@@ -16,5 +16,12 @@ c3 := "tanh, no last activation" k:t_est (u:t_anhNet x) k:n_ear (nn:t_anh x nn:d
 c4 := "parameters counted" k:t_est 20 k:i_s (20)
 c5 := "shapes agree" k:t_est k:t_rue (((s_hape a) m_atch 4 3) & ((s_hape b) m_atch 4 2))
 c6 := "shapes disagree" k:t_est k:t_rue n_ot (((s_hape a) m_atch 4 4) & ((s_hape b) m_atch 5 2))
-k:r_eport c1 k:a_nd c2 k:a_nd c3 k:a_nd c4 k:a_nd c5 k:a_nd c6
+t1 := { v -> 6 = t_ally v ? 3 2 r_eshape v; []P_ANIC "data/t1.txt holds " c_at (f_ormat t_ally v) c_at " numbers; layer 1 of \"2 2 relu 2 softmax\" (2 inputs and a bias, 2 outputs) needs 6" } n_umbers []N_GET "data/t1.txt"
+t2 := { v -> 6 = t_ally v ? 3 2 r_eshape v; []P_ANIC "data/t2.txt holds " c_at (f_ormat t_ally v) c_at " numbers; layer 2 of \"2 2 relu 2 softmax\" (2 inputs and a bias, 2 outputs) needs 6" } n_umbers []N_GET "data/t2.txt"
+u:m_odel := { x -> nn:s_oftmax (nn:r_elu x nn:d_ense t1) nn:d_ense t2 }
+u:s_ame := ({ g1:x -> nn:s_oftmax (nn:r_elu g1:x nn:d_ense t1) nn:d_ense t2 })
+xs := 4 2 r_eshape 0.0 0.0 0.0 1.0 1.0 0.0 1.0 1.0
+c7 := "a model is the network of its loaded weights" k:t_est (u:m_odel xs) k:n_ear u:s_ame xs
+c8 := "its weights have the spec's shapes" k:t_est k:t_rue (((s_hape t1) m_atch 3 2) & ((s_hape t2) m_atch 3 2))
+k:r_eport c1 k:a_nd c2 k:a_nd c3 k:a_nd c4 k:a_nd c5 k:a_nd c6 k:a_nd c7 k:a_nd c8
 

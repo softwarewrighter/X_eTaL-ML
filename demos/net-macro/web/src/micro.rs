@@ -22,29 +22,44 @@ pub const DATA: [(&str, &str); 7] = [
 /// The decision map is SIDE by SIDE points.
 pub const SIDE: usize = 40;
 
-/// One of the program's networks: its function's name, its spec and
-/// its weight arrays' names, as its line writes them.
+/// One of the program's networks: its function's name, its weight
+/// files' prefix and its spec, as its line `"u:NAME PREFIX"
+/// net:m_odel< "SPEC"` writes them.
 #[derive(Clone, Debug, PartialEq)]
 pub struct Network {
     pub name: String,
+    pub prefix: String,
     pub spec: String,
-    pub weights: String,
 }
 
-/// The program's networks: its lines `u:NAME := "SPEC" net:n_etwork< "W1 W2"`.
+impl Network {
+    /// The weight arrays the macro loads: PREFIX1 PREFIX2 ...
+    pub fn weights(&self) -> String {
+        let dense = self.spec.split_whitespace().filter(|w| w.parse::<usize>().is_ok()).count().saturating_sub(1);
+        (1..=dense).map(|k| format!("{}{k}", self.prefix)).collect::<Vec<_>>().join(" ")
+    }
+
+    /// Its line in the program.
+    pub fn line(&self) -> String {
+        format!("\"u:{} {}\" net:m_odel< \"{}\"", self.name, self.prefix, self.spec)
+    }
+}
+
+/// The program's networks, from its lines `"u:NAME PREFIX" net:m_odel< "SPEC"`.
 pub fn networks() -> Vec<Network> {
     SOURCE
         .lines()
         .filter_map(|l| {
-            let (name, rest) = l.strip_prefix("u:")?.split_once(" := \"")?;
-            let (spec, rest) = rest.split_once("\" net:n_etwork< \"")?;
-            Some(Network { name: name.into(), spec: spec.into(), weights: rest.strip_suffix('"')?.into() })
+            let (what, rest) = l.strip_prefix("\"u:")?.split_once("\" net:m_odel< \"")?;
+            let (name, prefix) = what.split_once(' ')?;
+            Some(Network { name: name.into(), prefix: prefix.into(), spec: rest.strip_suffix('"')?.into() })
         })
         .collect()
 }
 
-/// What the page's program starts with: the imports, the data read
-/// from data/ and the three networks.
+/// What the page's program starts with: the imports, the test points
+/// and the three networks (each line loads its weights and writes its
+/// function).
 pub fn head() -> &'static str {
     section(SOURCE, "\"nn:\" u_se< \"NN\"", "# -- end of the core")
 }
@@ -75,7 +90,8 @@ pub fn program(n: &Network) -> String {
 /// A network of the program, run.
 #[derive(Clone, Debug, PartialEq)]
 pub struct Trained {
-    /// The line the macro wrote for it.
+    /// What the macro wrote for its line: the weights loaded and
+    /// checked, then the function.
     pub expansion: String,
     /// The arm (1 to 3) decided at each map point, row by row.
     pub map: Vec<usize>,
@@ -91,9 +107,11 @@ fn store() {
     }
 }
 
-/// The line of an expanded program that binds `name`.
-fn written(expansion: &str, name: &str) -> String {
-    expansion.lines().find(|l| l.starts_with(&format!("u:{name} := "))).unwrap_or("").to_string()
+/// The lines of an expanded program that a model's call became: its
+/// weight arrays' loading and the function `name`.
+fn written(expansion: &str, name: &str, weights: &str) -> String {
+    let mine = |l: &str| l.starts_with(&format!("u:{name} := ")) || weights.split_whitespace().any(|w| l.starts_with(&format!("{w} := ")));
+    expansion.lines().filter(|l| mine(l)).collect::<Vec<_>>().join("\n")
 }
 
 pub fn run(n: &Network) -> Result<Trained, String> {
@@ -102,7 +120,7 @@ pub fn run(n: &Network) -> Result<Trained, String> {
     let out = output(&src, 4)?;
     let points: Vec<f64> = out[3].split_whitespace().map(|t| t.parse().map_err(|e| format!("{e}"))).collect::<Result<_, _>>()?;
     Ok(Trained {
-        expansion: written(&expanded(&src)?, &n.name),
+        expansion: written(&expanded(&src)?, &n.name, &n.weights()),
         map: numbers(&out[0], SIDE * SIDE)?,
         accuracy: numbers::<f64>(&out[1], 1)?[0],
         params: numbers::<usize>(&out[2], 1)?[0],
@@ -143,6 +161,6 @@ pub struct Typed {
 pub fn typed(spec: &str) -> Result<Typed, String> {
     store();
     let (network, params) = typed_programs(spec);
-    let expansion = written(&expanded(&network)?, "n_et");
+    let expansion = written(&expanded(&network)?, "n_et", "");
     Ok(Typed { expansion, params: numbers::<usize>(&output(&params, 1)?[0], 1)?[0] })
 }

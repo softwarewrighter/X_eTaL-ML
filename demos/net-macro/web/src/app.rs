@@ -9,7 +9,7 @@ use yew::prelude::*;
 
 use microscope::canvas::Canvas;
 use microscope::chrome::{footer, header, panel};
-use microscope::source::code;
+use microscope::source::{block, code, NONE};
 
 use crate::micro::{networks, weight_names, SIDE};
 use crate::model::{Action, Model, Shown};
@@ -35,18 +35,18 @@ fn controls(m: &UseReducerHandle<Model>) -> Html {
 
 fn call(m: &UseReducerHandle<Model>) -> Html {
     let line = match &m.shown {
-        Shown::Trained(n, _) => format!("u:{} := \"{}\" net:n_etwork< \"{}\"", n.name, n.spec, n.weights),
+        Shown::Trained(n, _) => n.line(),
         _ => format!("u:n_et := \"{}\" net:n_etwork< \"{}\"", m.spec, weight_names(&m.spec)),
     };
-    panel("1. The network, one line:", "net:n_etwork<",
-        "A spec is sizes and activations, the input's size first; on the right, one weight array per dense layer. The macro reads this text when the program is compiled.",
+    panel("1. The network, one line:", "net:m_odel<",
+        "A spec is sizes and activations, the input's size first. For a network of the program the macro also loads the weights, one file per dense layer, shaped as the spec says; a typed spec has no weights, so it uses net:n_etwork< with names. The macro reads this text when the program is compiled.",
         false, html! { <p class="calc">{code(&line)}</p> })
 }
 
 fn wrote(m: &UseReducerHandle<Model>) -> Html {
     let body = match &m.shown {
         Shown::Trained(_, r) => html! { <>
-            <p class="calc">{code(&r.expansion)}</p>
+            { block(&r.expansion, NONE) }
             <p class="calc">{code(&format!("\"{}\" net:p_arams< @", m.spec))}{" became "}{code(&r.params.to_string())}{format!(": {} numbers to learn.", r.params)}</p>
         </> },
         Shown::Typed(r) => html! { <>
@@ -59,7 +59,7 @@ fn wrote(m: &UseReducerHandle<Model>) -> Html {
         </> },
     };
     panel("2. What the macro wrote:", "xetal expand",
-        "Ordinary X_eTaL, type-checked like any code: each number after the first became a dense layer, each word an activation of the NN library. The notation adds nothing the code does not say.",
+        "Ordinary X_eTaL, type-checked like any code: each dense layer's weights read from its file and checked for the count the spec implies (the program stops, naming the layer, if a file is wrong), then the function: each number after the first a dense layer, each word an activation of NN. The notation adds nothing the code does not say.",
         true, body)
 }
 

@@ -2,8 +2,8 @@
 //!
 //! The task: which of three spiral arms a point (x, y) is on. The
 //! networks are the ones net-macro.xtl writes with the macro: every
-//! line `u:NAME := "SPEC" net:n_etwork< "W1 W2 ..."` is read from the
-//! program, so the program is the one place a network is described.
+//! line `"u:NAME PREFIX" net:m_odel< "SPEC"` is read from the program,
+//! so the program is the one place a network is described.
 //! Each is trained by Adam on softmax cross-entropy and its weights are
 //! written as the macro's functions take them: data/W.txt per dense
 //! layer, inputs + 1 rows by outputs columns, the bias the last row.
@@ -179,16 +179,17 @@ fn num(x: f64) -> String {
     if s == "-0.0" { "0.0".into() } else { s }
 }
 
-/// The lines `u:NAME := "SPEC" net:n_etwork< "W1 W2"` of the program:
-/// (name, spec, weight names).
+/// The lines `"u:NAME PREFIX" net:m_odel< "SPEC"` of the program:
+/// (name, spec, the weight files' names PREFIX1, PREFIX2, ...).
 fn networks(program: &str) -> Vec<(String, String, Vec<String>)> {
     program
         .lines()
         .filter_map(|l| {
-            let (name, rest) = l.strip_prefix("u:")?.split_once(" := \"")?;
-            let (spec, rest) = rest.split_once("\" net:n_etwork< \"")?;
-            let names = rest.strip_suffix('"')?;
-            Some((name.to_string(), spec.to_string(), names.split_whitespace().map(str::to_string).collect()))
+            let (what, rest) = l.strip_prefix("\"u:")?.split_once("\" net:m_odel< \"")?;
+            let (name, prefix) = what.split_once(' ')?;
+            let spec = rest.strip_suffix('"')?;
+            let dense = spec.split_whitespace().filter(|w| w.parse::<usize>().is_ok()).count() - 1;
+            Some((name.to_string(), spec.to_string(), (1..=dense).map(|k| format!("{prefix}{k}")).collect()))
         })
         .collect()
 }

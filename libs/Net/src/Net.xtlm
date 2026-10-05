@@ -37,17 +37,11 @@ w_rong := { ws ->
   ""
 }
 
-## A forward function for the network the spec on the left describes,
-## using the weight arrays named on the right, one per dense layer in
-## order: an ordinary lambda of nn: calls, a batch (one example per
-## row) in, the last layer's output out.
-m:n_etwork< := { spec weights ->
-  ws := w_ords spec
-  ns := w_ords weights
-  0 < t_ally w_rong ws ? "bad-macro-argument left" []R_EJECT w_rong ws
+# The forward function for the spec's words ws and the weight names
+# ns: a lambda of nn: calls, the input x through each layer in turn.
+f_unction := { ws ns ->
   size := '{ w -> s_ize? d_isclose w } e_ach ws
   k := '+ s_\ 0 + size
-  (t_ally ns) != -1 + '+ r_/ 0 + size ? "bad-macro-argument right" []R_EJECT "name one weight array per dense layer: " c_at (f_ormat -1 + '+ r_/ 0 + size) c_at " for this spec, " c_at (f_ormat t_ally ns) c_at " given"
   pre := '{ i ->
     n_ot i s_elect size ? (a_ct d_isclose i s_elect ws) c_at " "
     2 = i s_elect k ? ""
@@ -60,6 +54,49 @@ m:n_etwork< := { spec weights ->
     ")" c_at d
   } m_ap 1 d_rop r_ange t_ally ws
   "{ x -> " c_at (j_oin r_ev pre) c_at "x" c_at (j_oin post) c_at " }"
+}
+# What is wrong with the weight names ns for the spec's words ws, or "".
+c_ount := { ws ns ->
+  dense := -1 + '+ r_/ '{ w -> 0 + s_ize? d_isclose w } e_ach ws
+  (t_ally ns) = dense ? ""
+  "name one weight array per dense layer: " c_at (f_ormat dense) c_at " for this spec, " c_at (f_ormat t_ally ns) c_at " given"
+}
+
+## A forward function for the network the spec on the left describes,
+## using the weight arrays named on the right, one per dense layer in
+## order: an ordinary lambda of nn: calls, a batch (one example per
+## row) in, the last layer's output out.
+m:n_etwork< := { spec weights ->
+  ws := w_ords spec
+  ns := w_ords weights
+  0 < t_ally w_rong ws ? "bad-macro-argument left" []R_EJECT w_rong ws
+  0 < t_ally ws c_ount ns ? "bad-macro-argument right" []R_EJECT ws c_ount ns
+  ws f_unction ns
+}
+
+## A whole model from one spec: on the left the function's name and a
+## prefix ("u:d_eep c"), on the right the spec. It writes, as
+## statements, each dense layer's weights read from data/<prefix>K.txt
+## and reshaped as the spec says (inputs + 1 by outputs; the program
+## stops with an error naming the layer when a file does not hold that
+## many numbers, since r_eshape alone would silently repeat or cut the
+## data), then the function, as n_etwork< writes it. The spec is the
+## one place the network is described.
+m:m_odel< := { what spec ->
+  ws := w_ords spec
+  0 < t_ally w_rong ws ? "bad-macro-argument right" []R_EJECT w_rong ws
+  nm := w_ords what
+  2 != t_ally nm ? "bad-macro-argument left" []R_EJECT "write the function's name and the weight files' prefix: \"u:d_eep c\" (for data/c1.txt, data/c2.txt, ...)"
+  name := d_isclose f_irst nm
+  prefix := d_isclose 2 s_elect nm
+  s := s_izes ws
+  ns := '{ i -> prefix c_at f_ormat i } m_ap r_ange -1 + t_ally s
+  load := '{ i ->
+    w := d_isclose i s_elect ns
+    need := (1 + i s_elect s) * (i + 1) s_elect s
+    w c_at " := { v -> " c_at (f_ormat need) c_at " = t_ally v ? " c_at (f_ormat 1 + i s_elect s) c_at " " c_at (f_ormat (i + 1) s_elect s) c_at " r_eshape v; []P_ANIC \"data/" c_at w c_at ".txt holds \" c_at (f_ormat t_ally v) c_at \" numbers; layer " c_at (f_ormat i) c_at " of \\\"" c_at spec c_at "\\\" (" c_at (f_ormat i s_elect s) c_at " inputs and a bias, " c_at (f_ormat (i + 1) s_elect s) c_at " outputs) needs " c_at (f_ormat need) c_at "\" } n_umbers []N_GET \"data/" c_at w c_at ".txt\"\n"
+  } m_ap r_ange -1 + t_ally s
+  (j_oin load) c_at name c_at " := " c_at ws f_unction ns
 }
 
 ## How many numbers the network of the spec on the left has to learn
@@ -80,7 +117,7 @@ m:s_hapes< := { spec weights ->
   ns := w_ords weights
   0 < t_ally w_rong ws ? "bad-macro-argument left" []R_EJECT w_rong ws
   s := s_izes ws
-  (t_ally ns) != -1 + t_ally s ? "bad-macro-argument right" []R_EJECT "name one weight array per dense layer: " c_at (f_ormat -1 + t_ally s) c_at " for this spec, " c_at (f_ormat t_ally ns) c_at " given"
+  0 < t_ally ws c_ount ns ? "bad-macro-argument right" []R_EJECT ws c_ount ns
   one := '{ i -> "((s_hape " c_at (d_isclose i s_elect ns) c_at ") m_atch " c_at (f_ormat 1 + i s_elect s) c_at " " c_at (f_ormat (i + 1) s_elect s) c_at ")" } m_ap r_ange t_ally ns
   j_oin '{ i -> (i = 1) ? d_isclose i s_elect one; " & " c_at d_isclose i s_elect one } m_ap r_ange t_ally ns
 }

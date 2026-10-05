@@ -33,17 +33,56 @@ to n outputs it is m + 1 by n, the bias its last row.
 
 | Macro | Type | What |
 | ----- | ---- | ---- |
-| `"spec" net:n_etwork< "w1 w2 ..."` | `Char -> Char -> Char` | a forward function for the spec's network, using the weight arrays named, one per dense layer in order |
+| `"u:name prefix" net:m_odel< "spec"` | `Char -> Char -> Char` | a whole model from one spec, as statements: each dense layer's weights read from `data/prefix1.txt`, `data/prefix2.txt`, ... and shaped as the spec says (the program stops, naming the layer, when a file holds the wrong count), then the function `u:name` |
+| `"spec" net:n_etwork< "w1 w2 ..."` | `Char -> Char -> Char` | a forward function for the spec's network, using weight arrays you made yourself, one per dense layer in order |
 | `"spec" net:p_arams< @` | `Char -> Unit -> Char` | how many numbers the network has to learn, worked out when the program is compiled |
 | `"spec" net:s_hapes< "w1 w2 ..."` | `Char -> Char -> Char` | whether the weight arrays have the shapes the spec says: 1 or 0 |
 
 (The types are the macros' own: text in, text out. What a call gives
 is the code written, shown below.)
 
+## Which to use
+
+Say each fact once: `net:m_odel<` takes the network's one description,
+the spec, and derives the files' shapes from it, so the weights cannot
+be declared with a shape the spec contradicts. Use `net:n_etwork<`
+when the weight arrays come from somewhere else (made in the program,
+or trained in X_eTaL); then `net:s_hapes<` checks them against the
+spec.
+
+Where X_eTaL's types cannot reach (a matrix's type says nothing about
+its shape, and `r_eshape` repeats or cuts data to fit, silently), the
+code the macros write checks at the first moment it can and stops with
+an error that names the layer.
+
 ## Examples
 
-From `../tests/basics.xtl`, with `w1` and `w2` each 3 by 2 and `x` the
-four points of XOR:
+From `../tests/basics.xtl`. A model from one spec, its weights in
+`data/t1.txt` and `data/t2.txt`:
+
+```
+      "u:x_or2 t" net:m_odel< "2 2 relu 2 softmax"
+      nn:a_rgmax u:x_or2 x
+1 2 2 1
+```
+
+What that line became (`../tests/expand-basics.out`): the weights
+loaded and checked, then the function.
+
+```
+t1 := { v -> 6 = t_ally v ? 3 2 r_eshape v; []P_ANIC "data/t1.txt holds " c_at (f_ormat t_ally v) c_at " numbers; layer 1 of \"2 2 relu 2 softmax\" (2 inputs and a bias, 2 outputs) needs 6" } n_umbers []N_GET "data/t1.txt"
+t2 := { v -> 6 = t_ally v ? 3 2 r_eshape v; []P_ANIC "data/t2.txt holds " c_at (f_ormat t_ally v) c_at " numbers; layer 2 of \"2 2 relu 2 softmax\" (2 inputs and a bias, 2 outputs) needs 6" } n_umbers []N_GET "data/t2.txt"
+u:x_or2 := { x -> nn:s_oftmax (nn:r_elu x nn:d_ense t1) nn:d_ense t2 }
+```
+
+A file with the wrong count (`../tests/bad-file.xtl`):
+
+```
+error[panic]: data/short1.txt holds 5 numbers; layer 1 of "2 3 softmax" (2 inputs and a bias, 3 outputs) needs 9 at bad-file.xtl:7:1
+```
+
+With `w1` and `w2` each 3 by 2 made in the program, and `x` the four
+points of XOR:
 
 ```
       u:x_or := "2 2 relu 2 softmax" net:n_etwork< "w1 w2"
@@ -96,8 +135,9 @@ error[bad-macro-argument]: name one weight array per dense layer: 2 for this spe
   [`docs/xetal-asks.md`](../../../docs/xetal-asks.md)).
 - Dense layers and NN's activations only: a convolution or attention
   layer is written by hand, as the demos do.
-- `net:s_hapes<` checks when the program runs (shapes are not part of
-  X_eTaL's types); the spec's own mistakes are caught when it is
+- Shapes are not part of X_eTaL's types (ask M12), so a model's
+  weights are checked when they are loaded and `net:s_hapes<` when it
+  runs; the spec's own mistakes are caught when the program is
   compiled.
 
 ## Provenance

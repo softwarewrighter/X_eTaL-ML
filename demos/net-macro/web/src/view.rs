@@ -22,7 +22,7 @@ pub fn program(picked: Option<&Network>, spec: &str) -> String {
 /// The line that writes the network.
 pub fn range(src: &str, picked: Option<&Network>) -> Range {
     let start = match picked {
-        Some(n) => format!("u:{} := ", n.name),
+        Some(n) => n.line(),
         None => "u:n_et := ".to_string(),
     };
     between(src, &start, &start)
