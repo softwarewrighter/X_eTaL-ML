@@ -1,0 +1,1 @@
+X_eTaL and Check pinned by commit (XETAL_COMMIT, XETAL_LIBRARIES_COMMIT), cloned into work/, vendor/ removed; fresh GitHub clone verified
