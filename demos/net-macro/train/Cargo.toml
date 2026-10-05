@@ -1,0 +1,11 @@
+[package]
+name = "net-macro-train"
+description = "Trains the net-macro demo's networks offline (the specs read from net-macro.xtl) and writes their weights and the test points into data/"
+version = "0.1.0"
+edition = "2021"
+license = "MIT"
+publish = false
+
+[dependencies]
+
+[workspace]

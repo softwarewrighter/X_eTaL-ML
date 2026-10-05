@@ -41,6 +41,14 @@ pub fn output(src: &str, lines: usize) -> Result<Vec<String>, String> {
     }
 }
 
+/// `src` after macro expansion, as `xetal expand` prints it (the
+/// libraries, macro libraries among them, from the pages' store), or
+/// the error a macro call was refused with.
+pub fn expanded(src: &str) -> Result<String, String> {
+    crate::libs::install();
+    xetal_program::expanded_with("page", src, &xetal_macro::StoreLibraries).map_err(|d| d.to_string())
+}
+
 /// The `want` numbers of one printed line (an `r_avel` of an array).
 pub fn numbers<T: FromStr>(line: &str, want: usize) -> Result<Vec<T>, String>
 where

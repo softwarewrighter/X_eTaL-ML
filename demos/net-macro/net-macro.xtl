@@ -1,0 +1,44 @@
+#!/usr/bin/env xetal
+# Three networks for one task (which of three spiral arms is a point
+# on?), each written as one line: the Net macro library turns a spec,
+# sizes and activations, into an ordinary function of NN calls before
+# the program is compiled. xetal expand shows what it wrote.
+"nn:" u_se< "NN"
+"net:" u_se< "Net"
+
+# -- the data, read from data/ (just net-train) -----------
+# The test points, one per line: x, y and the arm (1, 2 or 3).
+pts := n_umbers []N_GET "data/points.txt"
+pts := o_\ (((t_ally pts) d_iv 3) c_at 3) r_eshape pts
+xy := o_\ 2 t_ake pts
+arm := f_loor 3 s_elect pts
+# Each dense layer's weights, inputs + 1 by outputs (the bias last).
+a1 := (3 c_at 3) r_eshape n_umbers []N_GET "data/a1.txt"
+b1 := (3 c_at 4) r_eshape n_umbers []N_GET "data/b1.txt"
+b2 := (5 c_at 3) r_eshape n_umbers []N_GET "data/b2.txt"
+c1 := (3 c_at 16) r_eshape n_umbers []N_GET "data/c1.txt"
+c2 := (17 c_at 16) r_eshape n_umbers []N_GET "data/c2.txt"
+c3 := (17 c_at 3) r_eshape n_umbers []N_GET "data/c3.txt"
+
+# -- the networks: one line each --------------------------
+u:l_inear := "2 3 softmax" net:n_etwork< "a1"
+u:s_mall := "2 4 tanh 3 softmax" net:n_etwork< "b1 b2"
+u:d_eep := "2 16 relu 16 relu 3 softmax" net:n_etwork< "c1 c2 c3"
+# -- end of the core --------------------------------------
+
+# How many numbers each has to learn, counted by the macro when the
+# program is compiled.
+("2 3 softmax" net:p_arams< @) c_at ("2 4 tanh 3 softmax" net:p_arams< @) c_at "2 16 relu 16 relu 3 softmax" net:p_arams< @
+# The weights have the shapes the specs say.
+("2 3 softmax" net:s_hapes< "a1") & ("2 4 tanh 3 softmax" net:s_hapes< "b1 b2") & "2 16 relu 16 relu 3 softmax" net:s_hapes< "c1 c2 c3"
+# The share of the 120 test points each reads right: a line cannot
+# follow a spiral, a small network nearly can, the deep one does.
+(arm nn:a_ccuracy u:l_inear xy) c_at (arm nn:a_ccuracy u:s_mall xy) c_at arm nn:a_ccuracy u:d_eep xy
+# What each decides over the square -1.1 .. 1.1 (a, b, c: the arms).
+g := 20
+c := -1.1 + 2.2 * (0.5 + f_loat o_ffsets g) / f_loat g
+grid := o_\ (2 c_at g * g) r_eshape (r_avel (o_ffsets g) 'r_ight t_able c) c_at r_avel (r_ev c) 'l_eft t_able o_ffsets g
+u:a_rms := { y -> (g c_at g) r_eshape (nn:a_rgmax y) s_elect "abc" }
+u:a_rms u:l_inear grid
+u:a_rms u:s_mall grid
+u:a_rms u:d_eep grid

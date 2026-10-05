@@ -1,6 +1,6 @@
 number = 3
 slug = "net-demo"
-status = "pending"
+status = "in-progress"
 description = "macros step 3: a demo (demos/net-macro or an addition to an existing one): a ..."
 role = "production"
 context_files = []

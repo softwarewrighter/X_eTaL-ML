@@ -1,0 +1,3 @@
+command = "scripts/browser-check.sh net-macro"
+exit_code = 0
+desc = "net-macro: the built page run in headless Chrome shows X_eTaL's results"

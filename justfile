@@ -49,6 +49,10 @@ run slug file="":
 show slug file="":
     @scripts/run-demo.sh --echo "$1" ${2:+"$2"}
 
+# A demo's program after macro expansion (what its macro calls became): just expand net-macro
+expand slug file="":
+    @cd demos/$1 && XETAL_PATH="$(cd ../.. && ls -d libs/*/src work/libs/*/src 2>/dev/null | sed 's#^#../../#' | paste -sd: -)" "$(../../scripts/xetal.sh)" expand "${2:-$1.xtl}"
+
 # A demo as a paced notebook: each statement, then its result; long lines clipped, data runs collapsed
 tour slug:
     @scripts/tour.py "$1"
@@ -68,6 +72,10 @@ bless slug:
 # Train the ternary-net demo's network offline and write its weights into ternary-net.xtl (then just bless ternary-net)
 ternary-train:
     cargo run --release -q --manifest-path demos/ternary-net/train/Cargo.toml
+
+# Train the net-macro demo's networks offline (their specs read from net-macro.xtl) and write data/ (then just bless net-macro)
+net-train:
+    cargo run --release -q --manifest-path demos/net-macro/train/Cargo.toml
 
 # Fetch MNIST into work/mnist/, train the cnn-digits demo's network and write its weights into cnn-digits.xtl (then just bless cnn-digits)
 cnn-train:

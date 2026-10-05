@@ -97,7 +97,7 @@ pages/                   the built live site (not tracked; just publish)
 | embedding-explorer | 64-dimensional embeddings projected to a rotatable 3-D cloud by PCA | covariance, power iteration, transpose | X_eTaL-demos (deferred there) | 4 (post-launch) |
 | gradient-descent | a tiny model trained in X_eTaL itself: the loss surface, the path, the update as one expression | outer product, reduce, iteration | new | 4 (post-launch) |
 | micro-gpt | microgpt's forward pass (embedding, RMSNorm, attention, MLP) on weights trained offline; sample names | everything above | microgpt-mlpl (port) | 4 (post-launch) |
-| net-macro | a network written as `"..." net:n_etwork<` and its expansion beside it | `.xtlm` macros, `xetal expand` | new | 3 (blocked: M1) |
+| net-macro | a network written as `"..." net:n_etwork<` and its expansion beside it; three networks on a spiral; any spec typed | `.xtlm` macros, `xetal expand` | new | 3 (live) |
 | world-model | a ball's next frame predicted from the last three | recurrence, prediction | X_eTaL-demos (deferred) | 4 (post-launch) |
 | diffusion | noise to image, step by step | tensor transforms, iteration | X_eTaL-demos (deferred) | 4 (post-launch) |
 
@@ -195,7 +195,7 @@ survey of what X_eTaL implemented.
 | - | --------- | -------- | -------- |
 | 1 | macro-survey | DONE: X_eTaL v0.1.0's macros read and tried (MC10 to MC30, `lib/Macros.xtlm`, `Combinators.xtlm`, the hooks, hygiene, `xetal expand`); finding: a macro's text cannot name the importer's alias (ask M11, X_eTaL-libraries' X14), so Net's expansion says `nn:`; A10 and the sketch revised; the library tooling accepts `.xtlm` (macro types pinned, every test's and demo's expansion a baseline, `just expand-lib`) | |
 | 2 | net-macro | DONE: `libs/Net/src/Net.xtlm`: `net:n_etwork<`, `net:p_arams<`, `net:s_hapes<`; bad specs rejected at the call (`[]R_EJECT`); tests: basics, 6 checks against hand-written networks (relu, sigmoid, tanh), three rejections, every expansion pinned; page; the XOR demo | |
-| 3 | net-demo | a demo of a network written with the macro, its expansion beside it, at the command line and as a page | |
+| 3 | net-demo | DONE: `demos/net-macro`, live: three networks on a three-arm spiral, each one line (`2 3 softmax`, `2 4 tanh 3 softmax`, `2 16 relu 16 relu 3 softmax`: 37.5%, 87.5%, 100% of the test points); weights from `just net-train`, which reads the specs from the program; the page shows the call, what the macro wrote (`microscope::run::expanded`), the parameter count and the decision map, expands and counts any typed spec and shows the macro's message for a refused one; `just expand SLUG`; the shell embeds `.xtlm` libraries. Tests: each macro-written network decides what a direct computation decides at every map point; a typed spec; refusals; a quote cannot break out; every line shown | |
 | 3 | release-2 | catalog, docs, retrospective | |
 
 ### Net.xtlm as built

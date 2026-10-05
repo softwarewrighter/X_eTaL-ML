@@ -25,7 +25,7 @@ fn pinned() -> String {
     }
 }
 
-/// `$OUT_DIR/libs.rs`: every libs/<Name>/src/<Name>.xtl as (file, source).
+/// `$OUT_DIR/libs.rs`: every libs/<Name>/src/<Name>.xtl and .xtlm as (file, source).
 fn libraries() {
     let here = std::path::Path::new(env!("CARGO_MANIFEST_DIR"));
     // This repo's libraries, then those used from X_eTaL-libraries.
@@ -34,10 +34,13 @@ fn libraries() {
         .iter()
         .inspect(|r| println!("cargo:rerun-if-changed={}", r.display()))
         .flat_map(|r| std::fs::read_dir(r).map(|d| d.filter_map(Result::ok).map(|e| e.path()).collect::<Vec<_>>()).unwrap_or_default())
-        .filter_map(|dir| {
-            let name = dir.file_name()?.to_str()?.to_string();
-            let src = dir.join("src").join(format!("{name}.xtl"));
-            src.is_file().then(|| (format!("{name}.xtl"), src))
+        .flat_map(|dir| {
+            // A library's functions (Name.xtl) and its macros (Name.xtlm).
+            let name = dir.file_name().and_then(|n| n.to_str()).unwrap_or("").to_string();
+            ["xtl", "xtlm"].into_iter().filter_map(move |ext| {
+                let src = dir.join("src").join(format!("{name}.{ext}"));
+                src.is_file().then(|| (format!("{name}.{ext}"), src))
+            })
         })
         .collect();
     found.sort();
