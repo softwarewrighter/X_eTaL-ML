@@ -715,7 +715,9 @@ version = "0.1.0"
 dependencies = [
  "wasm-bindgen",
  "web-sys",
+ "xetal-macro",
  "xetal-play",
+ "xetal-program",
  "xetal-store",
  "yew",
 ]
