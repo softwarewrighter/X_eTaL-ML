@@ -1,0 +1,1 @@
+just bench/bench-check/bench-bless for ML workloads, baseline max.tsv, docs/speed.md, M3 linked

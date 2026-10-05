@@ -1,9 +1,10 @@
 number = 6
 slug = "bench"
-status = "in-progress"
+status = "completed"
 description = "launch step 3: just bench (scripts/bench.sh): the ML workloads timed with the..."
 role = "production"
 context_files = []
 created_at = "2026-10-03T17:26:44"
+completed_at = "2026-10-04T19:41:22"
 task_type = "bench"
-commits = []
+commits = ["a5a1e62a25c239ed8d31e8272487710c725a4112"]
