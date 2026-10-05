@@ -5,5 +5,7 @@ title = "MoE routing microscope"
 summary = "A mixture-of-experts router: a sentence's tokens scored against 16 experts by one matrix product, softmax, top-2 by masks, gates and the experts' load; words route by meaning. Nudge a token towards another word and watch the experts switch abruptly where two scores tie."
 concepts = ["inner product", "softmax by row", "top-k by masks", "reduce", "outer product for a path and a plane of inputs"]
 status = "live"
-order = 65
+order = 30
 needs = ["per-row grade"]
+line = "gates := u:t_op2 u:s_oftmax u:s_cores x"
+why = "Every token against every expert is one matrix product, softmax works on every row at once, and top-2 is two masks over the whole score matrix: no sort per token."

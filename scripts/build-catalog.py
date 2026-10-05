@@ -38,12 +38,15 @@ PAGE = """<!doctype html>
 <link rel="icon" href="{up}favicon.ico">
 <style>
 :root {{ --bg:#fbfaf7; --fg:#1d1d1f; --muted:#5f6368; --card:#ffffff; --line:#e3e0d8;
-  --accent:#2457c5; --chip:#eef2fb; --live:#1f7a3a; --draft:#9a6200; --deferred:#8a8a8a; }}
+  --accent:#2457c5; --chip:#eef2fb; --live:#1f7a3a; --draft:#9a6200; --deferred:#8a8a8a;
+  --t-builtin:#1c5fd4; --t-user:#2b8a3e; --t-num:#9c6500; --t-sym:#0b7285; }}
 @media (prefers-color-scheme: dark) {{ :root:not([data-theme="light"]) {{
   --bg:#141518; --fg:#e8e6e3; --muted:#a0a4ab; --card:#1d1f23; --line:#30333a;
-  --accent:#8fb0ff; --chip:#262b36; --live:#5fcf7f; --draft:#e0a84a; --deferred:#8d9097; }} }}
+  --accent:#8fb0ff; --chip:#262b36; --live:#5fcf7f; --draft:#e0a84a; --deferred:#8d9097;
+  --t-builtin:#8fb0ff; --t-user:#8ce99a; --t-num:#ffd43b; --t-sym:#66d9e8; }} }}
 :root[data-theme="dark"] {{ --bg:#141518; --fg:#e8e6e3; --muted:#a0a4ab; --card:#1d1f23;
-  --line:#30333a; --accent:#8fb0ff; --chip:#262b36; --live:#5fcf7f; --draft:#e0a84a; --deferred:#8d9097; }}
+  --line:#30333a; --accent:#8fb0ff; --chip:#262b36; --live:#5fcf7f; --draft:#e0a84a; --deferred:#8d9097;
+  --t-builtin:#8fb0ff; --t-user:#8ce99a; --t-num:#ffd43b; --t-sym:#66d9e8; }}
 * {{ box-sizing: border-box; }}
 body {{ margin:0; background:var(--bg); color:var(--fg);
   font: 16px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; }}
@@ -52,7 +55,7 @@ header {{ padding: 48px 0 24px; }}
 h1 {{ font-size: 2rem; margin: 0 0 8px; letter-spacing: -0.01em; }}
 .lede {{ color: var(--muted); max-width: 46rem; margin: 0; }}
 .lede a, footer a {{ color: var(--accent); }}
-.grid {{ display:grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap:16px; padding: 8px 0 40px; }}
+.grid {{ display:grid; grid-template-columns: repeat(auto-fill, minmax(400px, 1fr)); gap:16px; padding: 8px 0 40px; }}
 .card {{ background:var(--card); border:1px solid var(--line); border-radius:12px; padding:18px;
   display:flex; flex-direction:column; gap:10px; }}
 .card h2 {{ font-size:1.15rem; margin:0; }}
@@ -78,6 +81,12 @@ pre {{ background:var(--card); border:1px solid var(--line); border-radius:8px; 
 .rec h2 {{ margin:0 0 6px; font-size:1.2rem; }} .rec p {{ margin:0 0 12px; color:var(--muted); }}
 .rec img {{ width:100%; height:auto; border-radius:8px; display:block; background:#282a36; }}
 .howto h2 {{ font-size:1.2rem; margin: 8px 0; }}
+.card pre.xtl {{ margin:0; padding:8px 10px; font-size:.8rem; white-space:pre-wrap; overflow-wrap:anywhere; }}
+.card p.why {{ font-size:.9rem; }}
+.c-builtin {{ color: var(--t-builtin); }} .c-userfunc, .c-libfunc, .c-macro {{ color: var(--t-user); }}
+.c-number {{ color: var(--t-num); }} .c-symbol {{ color: var(--t-sym); }} .c-comment {{ color: var(--muted); font-style: italic; }}
+.start {{ max-width: 46rem; margin: 14px 0 0; padding: 0; list-style: none; color: var(--muted); }}
+.start li {{ margin: 6px 0; }} .start b {{ color: var(--fg); }} .start a {{ color: var(--accent); }}
 </style>
 </head>
 <body>
@@ -101,21 +110,31 @@ pre {{ background:var(--card); border:1px solid var(--line); border-radius:8px; 
 
 CATALOG_HEADER = """<div class="brand"><img class="logo" src="modern-xetal-logo.jpg" alt="X_eTaL"><h1>ML</h1></div>
 <p class="lede">Machine learning in <a href="{xetal}">X_eTaL</a>, a typed array language:
-small models you can watch think. Each one shows its program beside the model, so you can
-see a layer, a router or a quantizer happen as one array expression.
-<a href="recorded/">Recorded CLI demos</a> (the command-line-only ones), with how to run any demo yourself. More X_eTaL:
+small models you can watch think.</p>
+<ul class="start">
+<li><b>What you are looking at.</b> Each demo is a short X_eTaL program running in your browser
+(WebAssembly). Its page shows the model's arrays beside the program that computed them, and all
+the code it runs.</li>
+<li><b>Why an array language.</b> A convolution, a router, a quantizer or an attention head is
+one expression over whole arrays, where other code has nested loops. Each card shows that line,
+as X_eTaL draws it.</li>
+<li><b>Where to start.</b> <a href="cnn-digits/">Draw a digit</a> and watch a tiny network read
+it. Then <a href="recorded/">run the demos yourself</a>, or see more X_eTaL:
+<a href="https://softwarewrighter.github.io/X_eTaL/">the language</a>,
 <a href="https://softwarewrighter.github.io/X_eTaL-demos/">visual demos</a>,
-<a href="https://softwarewrighter.github.io/X_eTaL-libraries/">libraries</a>.</p>"""
+<a href="https://softwarewrighter.github.io/X_eTaL-games/">games</a>,
+<a href="https://softwarewrighter.github.io/X_eTaL-libraries/">libraries</a>,
+<a href="https://softwarewrighter.github.io/X_eTaL-extensions/">extensions</a>.</li>
+</ul>"""
 
-RECORDED_HEADER = """<div class="brand"><a href="../"><img class="logo" src="../modern-xetal-logo.jpg" alt="X_eTaL"></a><h1>Recorded CLI demos</h1></div>
-<p class="lede">The <a href="../">ML demos</a> that run only at the command line (the
-interactive ones are live in the browser), run by the X_eTaL vendored in
-<a href="{repo}">the repository</a>: each statement of the program, drawn as X_eTaL
-renders it, then its result. Long lines are clipped and runs of weight literals collapsed;
-nothing else is edited. Every demo runs at the command line the same way.</p>"""
+RECORDED_HEADER = """<div class="brand"><a href="../"><img class="logo" src="../modern-xetal-logo.jpg" alt="X_eTaL"></a><h1>Run the demos yourself</h1></div>
+<p class="lede">Every one of the <a href="../">ML demos</a> also runs at the command line, by the
+X_eTaL vendored in <a href="{repo}">the repository</a>: each statement of the program, drawn as
+X_eTaL renders it, then its result. A demo that runs only at the command line is shown recorded
+below; the interactive ones are live in the browser.</p>"""
 
 HOWTO = """<section class="howto">
-<h2>Run them yourself</h2>
+<h2>From a clone</h2>
 <p class="lede">You need Rust (stable) and <a href="https://github.com/casey/just">just</a>. The
 repository carries its own copy of X_eTaL (<code>vendor/xetal/</code>, commit
 <a href="{xetal}/commit/{xsha}">{xshort}</a>), so nothing else is installed.</p>
@@ -123,9 +142,11 @@ repository carries its own copy of X_eTaL (<code>vendor/xetal/</code>, commit
 cd X_eTaL-ML
 just xetal               # build the vendored X_eTaL (once, a minute or two)
 just demos               # the demos
-just tour moe-router     # a demo as above: each statement, then its result
-just run moe-router      # just the results
-just show moe-router     # every statement, unclipped</pre>
+just tour cnn-digits     # a demo, paced: each statement, then its result
+just run cnn-digits      # just the results
+just show cnn-digits     # every statement, unclipped
+just serve cnn-digits    # its page, at http://127.0.0.1:8435/
+just bench               # how fast the ML workloads run</pre>
 </section>"""
 
 
@@ -139,6 +160,13 @@ def recording(m):
             f'<p>{html.escape(m["summary"])}</p>\n'
             f'<img src="{slug}.webp" alt="{html.escape(m["title"])} at the command line: just tour {slug}" loading="lazy">\n'
             f'<div class="links" style="margin-top:12px">{" ".join(links)}</div>\n</article>')
+
+
+def rendered(line):
+    """A line of X_eTaL as the vendored xetal draws it: HTML spans."""
+    xetal = subprocess.run([str(ROOT / "scripts" / "build-xetal.sh")], capture_output=True, text=True, check=True).stdout.strip()
+    r = subprocess.run([xetal, "render", "--html", "-e", line], capture_output=True, text=True, check=True)
+    return r.stdout.rstrip("\n")
 
 
 def card(m):
@@ -158,10 +186,14 @@ def card(m):
     elif m.get("recording"):
         # No live page: the card shows the demo recorded at the command line.
         pic = f'<a class="shot" href="recorded/#{slug}"><img src="recorded/{slug}.webp" alt="{alt} at the command line" loading="lazy"></a>\n'
+    # The demo's key line, drawn by X_eTaL, and why it is one expression.
+    one = ""
+    if m.get("line"):
+        one = f'<pre class="xtl">{rendered(m["line"])}</pre>\n<p class="why">{html.escape(m.get("why", ""))}</p>\n'
     return (f'<article class="card" id="{slug}">\n{pic}'
             f'<span class="status {st}">{STATUS[st]}</span>\n'
             f'<h2>{html.escape(m["title"])}</h2>\n'
-            f'<p>{html.escape(m["summary"])}</p>\n'
+            f'<p>{html.escape(m["summary"])}</p>\n{one}'
             f'<div class="chips">{chips}</div>\n'
             f'<div class="links">{" ".join(links)}</div>\n</article>')
 
@@ -195,7 +227,7 @@ def main():
     rbody = HOWTO.format(**common) + "\n" + "\n".join(recording(m) for m in recorded)
     if not recorded:
         rbody += '\n<p class="lede">Every demo has a live page now (<a href="../">the catalog</a>), so none is shown recorded; each one still runs at the command line as above.</p>'
-    (rec / "index.html").write_text(PAGE.format(body=rbody, title="X_eTaL ML: recorded CLI demos", up="../",
+    (rec / "index.html").write_text(PAGE.format(body=rbody, title="X_eTaL ML: run the demos yourself", up="../",
                                                 header=RECORDED_HEADER.format(**common), **common))
     print(f"catalog: {out} ({len(demos)} demo(s)), {rec}/ ({len(recorded)} recorded)")
 

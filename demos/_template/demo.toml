@@ -7,3 +7,7 @@ concepts = ["arrays"]        # the X_eTaL ideas it shows
 status = "draft"             # draft | live | deferred
 order = 100                  # position in the catalog (lower first)
 needs = []                   # asks in docs/xetal-asks.md it waits on or works around
+# Optional, shown on the catalog card: the demo's key line of X_eTaL
+# (drawn by xetal) and why it is one expression.
+# line = "'+ r_/ r_ange 10"
+# why = "One sentence."

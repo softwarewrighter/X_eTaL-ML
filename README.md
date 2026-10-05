@@ -7,8 +7,8 @@
 <p align="center">
   <b><a href="https://softwarewrighter.github.io/X_eTaL-ML/">The live ML demos</a></b>
   -- every demo running in your browser (WebAssembly)<br>
-  <b><a href="https://softwarewrighter.github.io/X_eTaL-ML/recorded/">Recorded CLI demos</a></b>
-  -- the demos that run only at the command line, and how to run any demo yourself
+  <b><a href="https://softwarewrighter.github.io/X_eTaL-ML/recorded/">Run them yourself</a></b>
+  -- every demo at the command line, from a clone
 </p>
 
 Machine learning in [X_eTaL](https://github.com/softwarewrighter/X_eTaL),
@@ -71,54 +71,56 @@ an error before the forward pass, not a wrong number after it.
 
 ## Demos
 
-| Demo | What you see | Array ideas | Status |
-| ---- | ------------ | ----------- | ------ |
-| [1.58-bit network](demos/ternary-net/README.md) ([live](https://softwarewrighter.github.io/X_eTaL-ML/ternary-net/)) | one classifier with FP32, FP16, INT8 and ternary weights compared; a ternary layer as additions | inner product, quantization, masks | live |
-| [MoE routing microscope](demos/moe-router/README.md) ([live](https://softwarewrighter.github.io/X_eTaL-ML/moe-router/)) | a sentence's tokens routed to their top-2 of 16 experts; nudge a token and see where the experts switch | matrix product, softmax, top-k by masks | live |
-| [Tiny CNN](demos/cnn-digits/README.md) ([live](https://softwarewrighter.github.io/X_eTaL-ML/cnn-digits/)) | draw a digit; filters, feature maps, pooling and probabilities, every stage computed by X_eTaL; click a map for its arithmetic | windows, convolution, reshape | live |
-| [Attention microscope](demos/attention/README.md) ([live](https://softwarewrighter.github.io/X_eTaL-ML/attention/)) | one head of attention on a sentence: scores, weights, a causal mask; tired finds the animal, wide the street | matrix product, transpose, softmax | live |
-| Embedding explorer | PCA from 64 dimensions to a 3-D cloud | covariance, projection | later |
-| Gradient descent | a small model trained in X_eTaL itself | outer product, reduce, iteration | later |
-| micro-gpt | a tiny GPT's forward pass, sampling names | all of the above | later |
-| Network macro | a network written as one macro call and its expansion | `.xtlm` macros | waiting on X_eTaL |
+All four run live in your browser and at the command line.
+[Start with the Tiny CNN](https://softwarewrighter.github.io/X_eTaL-ML/cnn-digits/):
+draw a digit and watch a network read it.
 
-### Recorded at the command line
+| Demo | What you see | The line that does it |
+| ---- | ------------ | --------------------- |
+| [Tiny CNN](demos/cnn-digits/README.md) ([live](https://softwarewrighter.github.io/X_eTaL-ML/cnn-digits/)) | draw a digit; filters, feature maps, pooling and probabilities, every stage computed by X_eTaL; click a map for its arithmetic | `-1 0 1 o_-_2 -1 0 1 o_-_2 x`: every 3 x 3 window of the picture at once |
+| [Attention microscope](demos/attention/README.md) ([live](https://softwarewrighter.github.io/X_eTaL-ML/attention/)) | one head of attention on your sentence: scores, weights, a causal mask; "tired" finds the animal, "wide" the street | `(Q '+ '* i_nner o_\ K) / 2.0 ^ 0.5`: every query against every key |
+| [MoE routing microscope](demos/moe-router/README.md) ([live](https://softwarewrighter.github.io/X_eTaL-ML/moe-router/)) | a sentence's tokens routed to their top-2 of 16 experts; nudge a token and see where the experts switch | `u:t_op2 u:s_oftmax u:s_cores x`: scores, softmax and top-2 for all tokens |
+| [1.58-bit network](demos/ternary-net/README.md) ([live](https://softwarewrighter.github.io/X_eTaL-ML/ternary-net/)) | one classifier with FP32, FP16, INT8 and ternary weights compared; a ternary layer as additions | `(f_loat x > s) - f_loat x < n_eg s`: a layer's weights to -1, 0, +1 |
 
-A demo that runs interactively in the browser is shown live; a demo
-that runs only at the command line is shown recorded on the
-[recorded CLI demos](https://softwarewrighter.github.io/X_eTaL-ML/recorded/)
-page (`just tour SLUG`: every statement as X_eTaL draws it, then its
-result). Every demo has a live page now, and every one also runs at
-the command line with the X_eTaL vendored in this repository.
+Every page shows all the code it runs, beside the arrays that code
+computed. Programs are short: weights and other data live in each
+demo's `data/` directory, not in the source.
 
-To run them yourself (Rust stable and `just`; nothing else to
-install, X_eTaL comes vendored):
+### Run them yourself
+
+Rust (stable) and [`just`](https://github.com/casey/just); nothing
+else to install, X_eTaL comes vendored:
 
 ```bash
 git clone https://github.com/softwarewrighter/X_eTaL-ML
 cd X_eTaL-ML
 just xetal               # build the vendored X_eTaL (once)
-just tour moe-router     # each statement, then its result
-just run cnn-digits      # just the results
+just tour cnn-digits     # each statement, then its result
+just run attention       # just the results
+just serve cnn-digits    # its page, at http://127.0.0.1:8435/
 ```
 
 ## Libraries
 
-| Library | Alias | What | Status |
-| ------- | ----- | ---- | ------ |
-| [NN](libs/NN/docs/README.md) | `nn:` | activations, softmax by row, dense layers, argmax, one-hot, loss, accuracy | ready |
-| Quant | `qz:` | FP16, INT8 and ternary quantization, storage and error | later |
-| Conv | `cv:` | windows, 2-D convolution, pooling | later |
-| Attention | `at:` | scaled dot-product attention, causal masks, heads | later |
-| Norm | `nm:` | layer norm, RMSNorm, standardizing | later |
-| Embed | `em:` | covariance, principal components, cosine similarity | later |
-| Sample | `sm:` | temperature, top-k and top-p sampling | later |
-| Optim | `op:` | gradients for small models, SGD and momentum | later |
-| Net (`.xtlm`) | `net:` | networks as a macro | waiting on X_eTaL |
+| Library | Alias | What |
+| ------- | ----- | ---- |
+| [NN](libs/NN/docs/README.md) | `nn:` | activations, softmax by row (any rank), dense layers, argmax, one-hot, loss, accuracy |
 
-What the "waiting" items need from X_eTaL is listed in
-[`docs/xetal-asks.md`](docs/xetal-asks.md); the roadmap is
-[`docs/plan.md`](docs/plan.md).
+The demos import it (`"nn:" u_se< "NN"`), at the command line and in
+the browser. Tests use the Check library from
+[X_eTaL-libraries](https://github.com/softwarewrighter/X_eTaL-libraries),
+vendored like X_eTaL itself.
+
+## Status
+
+| | Today |
+| - | ----- |
+| Demos | 4, all live, each with command-line and browser tests |
+| Libraries | NN (12 functions, typed, tested) |
+| X_eTaL | vendored at a known commit (`just xetal-version`) |
+| Speed | measured (`just bench`, [`docs/speed.md`](docs/speed.md)); matrix products are the slow part, being fixed upstream |
+| Waiting on X_eTaL | macro libraries (`.xtlm`), for a network written as one macro call; a faster matrix product ([`docs/xetal-asks.md`](docs/xetal-asks.md)) |
+| Later | more libraries (quantization, convolution, attention, sampling), a tiny GPT, an embedding explorer, training in X_eTaL ([`docs/plan.md`](docs/plan.md)) |
 
 ## Build
 

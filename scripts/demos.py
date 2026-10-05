@@ -18,6 +18,9 @@ ROOT = Path(__file__).resolve().parent.parent
 STATUSES = {"draft", "live", "deferred"}
 FIELDS = {"slug": str, "title": str, "summary": str, "concepts": list,
           "status": str, "order": int, "needs": list}
+# Optional: the demo's key line of X_eTaL and why it is one expression
+# (the catalog card shows both, the line rendered by xetal).
+OPTIONAL = {"line": str, "why": str}
 
 
 def demo_dirs():
@@ -29,6 +32,8 @@ def demo_dirs():
 def problems(d, meta):
     out = [f"{d.name}: missing or wrong type: {k}" for k, t in FIELDS.items()
            if not isinstance(meta.get(k), t)]
+    out += [f"{d.name}: wrong type: {k}" for k, t in OPTIONAL.items()
+            if k in meta and not isinstance(meta[k], t)]
     if meta.get("slug") != d.name:
         out.append(f"{d.name}: slug {meta.get('slug')!r} is not the directory name")
     if meta.get("status") not in STATUSES:

@@ -13,6 +13,7 @@ refresh of the vendored X_eTaL.
 
 ## 2026-10-04
 
+- 22:40 `docs` Start here: the catalog opens with what you are looking at, why an array language and where to start (the Tiny CNN, first in the order now; links to the language, visual demos, games, libraries and extensions sites); each card shows the demo's key line of X_eTaL, drawn by the vendored xetal (`render --html`; `line` and `why` in demo.toml; self-tested), and why it is one expression; two columns. The command-line page is "Run the demos yourself". README trimmed to what works today: the four demos with their lines, run them yourself, the NN library, a status table (today, waiting on X_eTaL, later). All four screenshots retaken.
 - 22:05 `chore` Saga step american-spelling completed.
 - 22:00 `fix` American spellings only (the user's request, as in X_eTaL-demos): `scripts/check-spelling.py` (from X_eTaL-demos) and its self-test run in the gate; the audit found 47 British forms (of color, colored, centered, center, labeled, modeled, specialize, neighbors) in docs, comments, page text and identifiers, all fixed; the shared shell's color module renamed to `color` (every page updated); moe-router's color feature is spelled the American way on the page; CLAUDE.md rule 10. Pages rebuilt.
 - 14:35 `chore` Saga step bench completed.
