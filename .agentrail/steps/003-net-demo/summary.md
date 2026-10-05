@@ -1,0 +1,1 @@
+Network macro demo live: three one-line networks on a spiral, expansion and params shown, typed specs, refusals; shell runs macro libraries and shows expansions

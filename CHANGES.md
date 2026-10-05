@@ -13,6 +13,7 @@ refresh of the vendored X_eTaL.
 
 ## 2026-10-05
 
+- 17:35 `chore` Saga step net-demo completed; saga macros done.
 - 17:30 `demo` Network macro, live (https://softwarewrighter.github.io/X_eTaL-ML/net-macro/): three networks for one task (a three-arm spiral), each one line of the Net macro library; the page shows the call, the function the macro wrote, the parameter count it wrote at compile time and what the network decides over the plane (37.5%, 87.5% and 100% of the test points), expands and counts any spec typed, and shows the macro's own message for a spec it refuses. Weights from `just net-train` (std-only Rust, Adam), which reads the specs from net-macro.xtl. `just expand SLUG` shows a demo after macro expansion. The shared shell embeds `.xtlm` libraries and gives pages `run::expanded` (tested natively and for wasm32). Tests against a direct computation at every map point; CLI and browser baselines; screenshot.
 - 15:05 `chore` Saga steps macro-survey and net-macro completed.
 - 15:00 `lib` Net (`net:`), a macro library (`.xtlm`): `"2 2 relu 2 softmax" net:n_etwork< "w1 w2"` becomes `{ x -> nn:s_oftmax (nn:r_elu x nn:d_ense w1) nn:d_ense w2 }`; `net:p_arams<` writes the parameter count when the program is compiled (101770 for "784 128 relu 10 softmax"); `net:s_hapes<` checks the weights against the spec. A bad spec is rejected at the call with a message. Tests: basics, 6 checks that the macro's networks equal hand-written ones, three rejections, every program's expansion pinned; page; the XOR demo.
