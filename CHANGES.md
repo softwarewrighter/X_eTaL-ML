@@ -13,6 +13,9 @@ refresh of the vendored X_eTaL.
 
 ## 2026-10-05
 
+- 12:30 `release` v0.1.1: built against X_eTaL v0.1.0 (512b3ee); the same four demos and NN, 4 to 6 times faster.
+- 12:20 `docs` Asks audit on X_eTaL v0.1.0: M1 (`.xtlm` macro libraries), M2 (`xetal expand`), M3 (matrix product and `t_able` speed) and M9 (a bound Bool in arithmetic) landed; M4 (grade per row) and M5 (arrays in and out of xetal-play) still open; M10 added (`e_ach` returning an array per item). The timing baseline is now the v0.1.0 one (dense 804 to 145 ms, the CNN program 1.5 to 0.3 s; docs/speed.md shows both). README status, the demo READMEs and the plan follow (saga 3, the network macro, is unblocked).
+- 12:00 `build` X_eTaL pinned at v0.1.0 (512b3ee, was abb8274): every baseline unchanged.
 - 10:20 `release` v0.1.0 (the user's request, for the linked release of the X_eTaL repositories): four live ML demos (Tiny CNN, attention microscope, MoE routing microscope, 1.58-bit network), the NN library, the gate; works with X_eTaL abb8274 (XETAL_COMMIT). Tagged after the history rewrite, on a commit whose deployed site passes `just check-live`.
 - 10:12 `chore` Saga step publish-and-purge completed.
 - 10:10 `test` `just check-live` (scripts/check-live.sh; the user's request to verify the live demos after a deploy): waits until the deployed catalog reports this checkout's commit, then loads every demo's live page in headless Chrome and checks, as the local browser test does, that X_eTaL ran there with no error and every expected line shown. All four pass on the republished site. CLAUDE.md: after `just publish`, run it.

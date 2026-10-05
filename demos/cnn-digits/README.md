@@ -111,7 +111,6 @@ digit; a drawn digit's 784 values are written `...` with a comment.
 The ten digits are classified one at a time (`e_ach`, one number per
 call), because `e_ach` cannot yet return an array per item (nested
 results come later upstream), and the convolution works on one
-picture. The dense layer is a matrix product of a 1 x 1352 row, slow
-per multiply-add (ask M3 in
-[`docs/xetal-asks.md`](../../docs/xetal-asks.md)), though the whole
-program runs in about 2 seconds.
+picture (ask M10 in
+[`docs/xetal-asks.md`](../../docs/xetal-asks.md)). The whole program
+runs in about a third of a second.

@@ -106,9 +106,8 @@ function takes at most two arguments: the formats are functions of the
 model, and the network takes the points and the model. Activations
 stay in full precision (only weights are quantized), and FP16 is
 simulated by rounding the mantissa (its smaller exponent range is not
-modeled). The matrix product is slow (an ask in
-[`docs/xetal-asks.md`](../../docs/xetal-asks.md)), so the page's map
-is 24 x 24 points and the page runs three programs from the same core:
+modeled). The page's map is 24 x 24 points, and to stay quick it runs
+three programs from the same core:
 the FP formats when the weight set changes, the ternary weights when
 the threshold moves (given FP32's outputs from the first), and the
 chosen point.

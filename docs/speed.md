@@ -31,29 +31,29 @@ finding.
 Each prints one small value, so printing does not count; each repeats
 its work with `e_ach`, not repeated lines.
 
-## The baseline: X_eTaL abb8274
+## The baseline: X_eTaL v0.1.0
 
-Measured 2026-10-04 on the development machine (an Apple M1 Max,
-release build, best of 5; other builds were running at the time):
+Measured 2026-10-05 on the development machine (an Apple M1 Max,
+release build, best of 5; other builds were running at the time),
+beside the first baseline, taken at abb8274 the day before:
 
-| Program | Best of 5 (ms) | Per unit of work |
-| ------- | -------------- | ---------------- |
-| `bench/dense.xtl` | 804 | about 770 ns per multiply-add (1,048,576) |
-| `bench/inner-wide.xtl` | 400 | about 740 ns per multiply-add (540,800) |
-| `bench/conv.xtl` | 577 | about 1.2 us per multiply-add (486,720), shifts included |
-| `bench/softmax.xtl` | 353 | about 0.55 us per row element, five array operations each |
-| `bench/table-spread.xtl` | 655 | about 620 ns per cell of the spread |
-| `demos/ternary-net/ternary-net.xtl` | 685 | |
-| `demos/moe-router/moe-router.xtl` | 139 | |
-| `demos/cnn-digits/cnn-digits.xtl` | 1539 | |
-| `demos/attention/attention.xtl` | 31 | |
+| Program | abb8274 (ms) | v0.1.0 (ms) | Per unit of work now |
+| ------- | ------------ | ----------- | -------------------- |
+| `bench/dense.xtl` | 804 | 145 | about 130 ns per multiply-add (1,048,576) |
+| `bench/inner-wide.xtl` | 400 | 87 | about 150 ns per multiply-add (540,800) |
+| `bench/conv.xtl` | 577 | 100 | about 190 ns per multiply-add (486,720), shifts included |
+| `bench/softmax.xtl` | 353 | 229 | about 0.35 us per row element, five array operations each |
+| `bench/table-spread.xtl` | 655 | 183 | about 170 ns per cell of the spread |
+| `demos/cnn-digits/cnn-digits.xtl` | 1539 | 315 | |
+| `demos/ternary-net/ternary-net.xtl` | 685 | 126 | |
+| `demos/moe-router/moe-router.xtl` | 139 | 56 | |
+| `demos/attention/attention.xtl` | 31 | 34 | |
 
-What it shows: a matrix product costs several hundred nanoseconds per
-multiply-add, and spreading with `t_able` several hundred per cell,
-while whole-array arithmetic costs tens of nanoseconds per element
-(X_eTaL-demos measured about 8x faster elementwise at abb8274 than at
-06d39fa, and `t_able` 2.7x and `i_nner` 1.5x slower). Those two
-operations are what the ML demos spend their time in: the CNN page
-takes about 100-150 ms per digit in the browser, the 1.58-bit page's
-maps about a second. When a pinned X_eTaL fixes them, `just
-bench-check` lists these programs as faster.
+(Each time includes about 10 ms to start the program.)
+
+What it shows: at abb8274 a matrix product cost several hundred
+nanoseconds per multiply-add and a `t_able` spread several hundred per
+cell, a regression X_eTaL's Saga 30 took on (ask M3). X_eTaL v0.1.0
+fixed it: the matrix product and `t_able` are 4 to 6 times faster, and
+so are the demos built on them. The baseline in `bench/baseline/` is
+now the v0.1.0 one, so `just bench-check` guards these times.

@@ -181,13 +181,14 @@ For this repo that means:
 | 4 | start-here | DONE: the catalog opens with what you are looking at, why an array language, where to start (the Tiny CNN first; links to the five sibling sites, all answering); each card shows the demo's key line drawn by the vendored xetal (`render --html`, `line` and `why` in demo.toml, self-tested) ; two columns; the run-it-yourself page retitled; README: the four demos with their lines, run them yourself, NN, a status table (today / waiting / later), the later rows gone from the tables; screenshots retaken. The ecosystem front door upstream does not exist yet: linked when it does. Planned: the catalog's front: what each demo shows, why it is one array expression, its X_eTaL; recorded and live demos side by side; how to run them in a clone; README trimmed to what works today, with a status table; a link to the ecosystem front door |
 | 4b | pinned-xetal | DONE: inserted at the user's request: A1, A2 and A14 as above; `vendor/` removed (548 files of X_eTaL source and the Check snapshot no longer tracked); scripts/xetal.sh, xetal-pin.sh, xetal-libraries.sh, check-xetal.sh; tools/xetal-probe; every path and doc; same commits as before (abb8274, fd93e45), every baseline unchanged |
 | 4c | publish-and-purge | DONE (the site live from gh-pages; history 12.2 MB to 2.1 MB, tree identical, saga references mapped, a fresh clone verified): inserted, the user's decision (as X_eTaL-games): A11 as above (scripts/publish-pages.sh, `just publish`, the workflow removed, the gate builds the site); then, with the user's explicit approval of a force-push before launch, history rewritten without `pages/`, `vendor/` and the deleted `recording.webp` files (a backup bundle first; the saga records' commit references mapped) |
-| 5 | asks-audit | move the pin (after upstream's Saga 30 and terminal work), re-run every ask's repro, mark landed asks and remove their workarounds, list this repo's promotion blockers for the cross-repo audit |
+| 5 | asks-audit | DONE: pinned X_eTaL v0.1.0 (512b3ee, 163 commits on from abb8274; its own commit); every baseline unchanged; the ML workloads 4 to 6 times faster (`just bench-check`; new baseline, docs/speed.md); asks re-run: M1 `.xtlm`, M2 `xetal expand`, M3 speed and M9 bound Bool landed, M4 grade per row and M5 arrays in and out still open, M10 (`e_ach` returning arrays) added; no workaround was left to remove (ternary-net and cnn-digits READMEs no longer call the matrix product slow); promotion blockers for the cross-repo audit: none from this repo (M4, M5, M10 are conveniences); tagged v0.1.1, built against X_eTaL v0.1.0. Planned: move the pin (after upstream's Saga 30 and terminal work), re-run every ask's repro, mark landed asks and remove their workarounds, list this repo's promotion blockers for the cross-repo audit |
 | 6 | release-1 | catalog, docs, retrospective; the X_eTaL commit this release is known to work with, for the six-repo tag |
 
-## Saga 3 -- macros (blocked on M1)
+## Saga 3 -- macros (unblocked: M1 and M2 landed in X_eTaL v0.1.0)
 
-Started when a vendored X_eTaL supports `.xtlm` (ask M1); until then
-only the design below is kept current.
+`.xtlm` macro libraries and `xetal expand` are in the X_eTaL this
+repo pins since 2026-10-05; the saga starts after release-1, with a
+survey of what X_eTaL implemented.
 
 | # | Step slug | Delivers | Waits on |
 | - | --------- | -------- | -------- |
@@ -239,7 +240,7 @@ the announcement), in this order:
   with the baselines and `just bench-check` re-run.
 - When an ask lands, remove the workaround in the step that moves the
   pin, and mark the ask landed.
-- Tags: `v0.1.0` (2026-10-05, the user's request for the linked release of the X_eTaL repositories, as X_eTaL-games, X_eTaL-demos and X_eTaL-extensions have) marks the state after the history rewrite: four live demos, NN, X_eTaL abb8274. A later pin of a newer X_eTaL (asks-audit) is a new tag, not a moved one.
+- Tags: `v0.1.0` (2026-10-05, the user's request for the linked release of the X_eTaL repositories, as X_eTaL-games, X_eTaL-demos and X_eTaL-extensions have) marks the state after the history rewrite: four live demos, NN, X_eTaL abb8274. `v0.1.1` (2026-10-05) is the same repository built against X_eTaL v0.1.0 (512b3ee), 4 to 6 times faster. Versions are independent per repository; each tag's notes name the X_eTaL it is built against.
 - Ports: 8435 is this repo's (the user's choice, 2026-10-04: one port
   per X_eTaL repo, so a demo from each can run at once): `just serve
   SLUG` and `just serve-pages` default to it; the headless checks pick

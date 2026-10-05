@@ -50,8 +50,8 @@ an error before the forward pass, not a wrong number after it.
 - **Libraries extend the vocabulary.** ML building blocks (softmax,
   dense layers, quantization, convolution, attention) are ordinary
   `.xtl` libraries here, imported with `u_se<`, typed and tested.
-- **Macros extend the language.** With `.xtlm` macro libraries (being
-  built in X_eTaL) a network can be written as
+- **Macros extend the language.** With `.xtlm` macro libraries (in X_eTaL
+  since v0.1.0; the network macro here is next) a network can be written as
   `"784 128 relu 10 softmax" net:n_etwork< ...`, expanding into
   ordinary, visible, type-checked code.
 - **Native extensions extend the machine.** Fast kernels and data
@@ -118,9 +118,10 @@ pinned like X_eTaL itself.
 | - | ----- |
 | Demos | 4, all live, each with command-line and browser tests |
 | Libraries | NN (12 functions, typed, tested) |
-| X_eTaL | pinned at a known commit (`just xetal-version`) |
-| Speed | measured (`just bench`, [`docs/speed.md`](docs/speed.md)); matrix products are the slow part, being fixed upstream |
-| Waiting on X_eTaL | macro libraries (`.xtlm`), for a network written as one macro call; a faster matrix product ([`docs/xetal-asks.md`](docs/xetal-asks.md)) |
+| X_eTaL | pinned at X_eTaL v0.1.0 (`XETAL_COMMIT`, `just xetal-version`) |
+| Speed | measured and guarded (`just bench-check`, [`docs/speed.md`](docs/speed.md)); the CNN's whole program runs in a third of a second |
+| Next | a network written as one macro call (`.xtlm` macro libraries arrived in X_eTaL v0.1.0) |
+| Waiting on X_eTaL | a grade per row, arrays in and out of the browser engine, `e_ach` returning arrays ([`docs/xetal-asks.md`](docs/xetal-asks.md)) |
 | Later | more libraries (quantization, convolution, attention, sampling), a tiny GPT, an embedding explorer, training in X_eTaL ([`docs/plan.md`](docs/plan.md)) |
 
 ## Build
