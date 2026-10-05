@@ -352,7 +352,11 @@ Read before working:
    get a recipe.
 9. The live site is built locally into `pages/` (`just pages`) and
    committed; `.github/workflows/pages.yml` only uploads it.
-10. Docs are ASCII-only markdown (`sw-markdown-checker`). User-facing
+10. American spellings only, everywhere (docs, comments, code
+    identifiers, page text, commit messages): color, center, neighbor,
+    gray, modeled, labeled, -ize. The user is American;
+    `scripts/check-spelling.py` (in the gate, with its self-test) fails
+    on British forms. Docs are ASCII-only markdown (`sw-markdown-checker`). User-facing
     docs (README, demo and library pages) say what and how; saga/step
     talk lives only in `docs/plan.md`.
 11. `CHANGES.md` gets a line for every commit (newest first, grouped

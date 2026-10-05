@@ -43,7 +43,7 @@ pub fn core() -> &'static str {
 }
 
 pub const EXPERTS: usize = 16;
-pub const FEATURES: [&str; 8] = ["animal", "number", "colour", "action", "place", "food", "function", "time"];
+pub const FEATURES: [&str; 8] = ["animal", "number", "color", "action", "place", "food", "function", "time"];
 
 /// The vocabulary, in order, from the program's `# words:` line; the
 /// last, `?`, stands for any word not listed.

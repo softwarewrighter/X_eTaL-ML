@@ -1,6 +1,6 @@
-number = 7
+number = 8
 slug = "start-here"
-status = "pending"
+status = "in-progress"
 description = "launch step 4: the newcomer's path: the catalog's front says what each demo s..."
 role = "production"
 context_files = []

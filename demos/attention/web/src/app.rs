@@ -6,7 +6,7 @@ use web_sys::HtmlInputElement;
 use yew::prelude::*;
 
 use microscope::chrome::{chip, footer, header, notice, panel};
-use microscope::colour::{ramp, DIVERGE, GLOW};
+use microscope::color::{ramp, DIVERGE, GLOW};
 use microscope::source::code;
 
 use crate::micro::{tokens, Anatomy, DIMS, FEATURES};
@@ -53,8 +53,8 @@ fn controls(m: &UseReducerHandle<Model>) -> Html {
     }
 }
 
-/// An n x n table of words against words, each cell coloured by its value.
-fn matrix(m: &UseReducerHandle<Model>, a: &Anatomy, values: &[f64], colour: impl Fn(f64) -> [u8; 3], digits: usize) -> Html {
+/// An n x n table of words against words, each cell colored by its value.
+fn matrix(m: &UseReducerHandle<Model>, a: &Anatomy, values: &[f64], color: impl Fn(f64) -> [u8; 3], digits: usize) -> Html {
     let n = a.n();
     html! {
         <table class="zs heat">
@@ -63,7 +63,7 @@ fn matrix(m: &UseReducerHandle<Model>, a: &Anatomy, values: &[f64], colour: impl
                 let d = m.dispatcher();
                 html! { <tr class={classes!("pick", (i == m.row).then_some("sel"))} onclick={Callback::from(move |_| d.dispatch(Action::Row(i)))}>
                     <th>{&a.words[i]}</th>
-                    { for (0..n).map(|j| { let v = values[i * n + j]; html! { <td style={rgb(colour(v))} title={format!("{v:.3}")}>{format!("{v:.digits$}")}</td> } }) }
+                    { for (0..n).map(|j| { let v = values[i * n + j]; html! { <td style={rgb(color(v))} title={format!("{v:.3}")}>{format!("{v:.digits$}")}</td> } }) }
                 </tr> }
             }) }
         </table>

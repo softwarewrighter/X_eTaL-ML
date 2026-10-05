@@ -9,7 +9,7 @@ use yew::prelude::*;
 
 use microscope::canvas::Canvas;
 use microscope::chrome::{chip, footer, header, notice, panel};
-use microscope::colour;
+use microscope::color;
 use microscope::source::code;
 
 use crate::micro::{expert_name, tokens, words, Anatomy, Nudge, Nudged, EXPERTS, FEATURES, SENTENCES, SIDE, STEPS};
@@ -66,7 +66,7 @@ fn controls(m: &UseReducerHandle<Model>) -> Html {
 
 /// The routing picture: tokens on the left, the 16 experts on the
 /// right, a curve from each token to its two experts as wide as the
-/// gate; the selected token's curves in colour.
+/// gate; the selected token's curves in color.
 fn picture(model: &UseReducerHandle<Model>, a: &Anatomy) -> Html {
     let n = a.n();
     let sel = model.token;
@@ -160,7 +160,7 @@ fn nudge(model: &UseReducerHandle<Model>, n: &Nudged) -> Html {
             </figure>
             <figure>
                 <Canvas rows={SIDE} cols={SIDE} rgba={Rc::new(slice(&n.slice_first, &n.slice_second))} mark={Some((cr, cc))} class="mid" />
-                <figcaption>{code("gg")}{format!(" : x0 + a d1 + b d2, a across, b up; one colour per pair; dark dots: \u{201c}{}\u{201d}, \u{201c}{}\u{201d}, \u{201c}{}\u{201d}", w[nd.w0 - 1], w[nd.wa - 1], w[nd.wb - 1])}</figcaption>
+                <figcaption>{code("gg")}{format!(" : x0 + a d1 + b d2, a across, b up; one color per pair; dark dots: \u{201c}{}\u{201d}, \u{201c}{}\u{201d}, \u{201c}{}\u{201d}", w[nd.w0 - 1], w[nd.wa - 1], w[nd.wb - 1])}</figcaption>
             </figure>
         </div>
         <p class="note">{ if changes.is_empty() { "No change of experts along this path.".to_string() } else { format!("The pair of experts changes {} time{} along the path:", changes.len(), if changes.len() == 1 { "" } else { "s" }) } }</p>
@@ -185,14 +185,14 @@ fn arrays(model: &UseReducerHandle<Model>, a: &Anatomy) -> Html {
     let n = a.n();
     let f = model.focus;
     html! { <>
-        { panel("1. Embed:", "x := ids s_elect E", "Each word's row of the embedding table: its 8 features (animal, number, colour, action, place, food, function word, time) plus a small ripple. One row per token.",
-            f == Stage::Embed, html! { <div class="pair">{pic(model, n, 8, colour::signed(&a.x), "x")}</div> }) }
+        { panel("1. Embed:", "x := ids s_elect E", "Each word's row of the embedding table: its 8 features (animal, number, color, action, place, food, function word, time) plus a small ripple. One row per token.",
+            f == Stage::Embed, html! { <div class="pair">{pic(model, n, 8, color::signed(&a.x), "x")}</div> }) }
         { panel("2. Scores:", "u:s_cores x", "One matrix product: every token against every expert's weights (8 x 16).",
-            f == Stage::Scores, html! { <div class="pair">{pic(model, n, EXPERTS, colour::signed(&a.scores), "u:s_cores x")}</div> }) }
+            f == Stage::Scores, html! { <div class="pair">{pic(model, n, EXPERTS, color::signed(&a.scores), "u:s_cores x")}</div> }) }
         { panel("3. Softmax:", "p := u:s_oftmax u:s_cores x", "Each row's scores as probabilities: e to each score, over the row's sum (the row's largest taken off first so nothing overflows).",
-            f == Stage::Softmax, html! { <div class="pair">{pic(model, n, EXPERTS, colour::field(&a.p, 0.0, 1.0), "p")}</div> }) }
+            f == Stage::Softmax, html! { <div class="pair">{pic(model, n, EXPERTS, color::field(&a.p, 0.0, 1.0), "p")}</div> }) }
         { panel("4. Top-2:", "gates := u:t_op2 p", "The largest of each row marks the first expert; with it taken out, the largest left marks the second. The two probabilities over their sum are the gates; the other 14 are 0.",
-            f == Stage::Top2, html! { <div class="pair">{pic(model, n, EXPERTS, colour::field(&a.gates, 0.0, 1.0), "gates")}</div> }) }
+            f == Stage::Top2, html! { <div class="pair">{pic(model, n, EXPERTS, color::field(&a.gates, 0.0, 1.0), "gates")}</div> }) }
         { panel("5. Load:", "u:l_oad gates", "Down each column, how many tokens have a gate there: each expert's share of the work.",
             f == Stage::Load, load(a)) }
     </> }

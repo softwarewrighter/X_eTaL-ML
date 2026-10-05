@@ -3,7 +3,7 @@
 
 Runs `scripts/run-demo.sh --echo SLUG` (each statement drawn, then its
 output) and passes the output on as it comes:
-  - every line clipped to the terminal's width (ANSI colours kept),
+  - every line clipped to the terminal's width (ANSI colors kept),
     an ellipsis where it was cut;
   - a run of data statements (longer than the width and mostly number
     literals, as weights and sample digits are) shown as its first

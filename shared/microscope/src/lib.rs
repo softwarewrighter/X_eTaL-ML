@@ -4,7 +4,7 @@
 //!
 //! - `run`: run a program, read printed arrays, write literals
 //! - `source`: decorated source with a highlighted range; shapes
-//! - `canvas`, `colour`: large arrays as pixels
+//! - `canvas`, `color`: large arrays as pixels
 //! - `cells`: small boards as clickable cells
 //! - `chrome`: header, stage chips, panels, notices, footer
 //! - `libs`: this repo's libraries, importable with `u_se<`
@@ -14,7 +14,7 @@
 pub mod canvas;
 pub mod cells;
 pub mod chrome;
-pub mod colour;
+pub mod color;
 pub mod libs;
 pub mod run;
 pub mod source;

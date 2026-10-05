@@ -3,7 +3,7 @@
 
 use yew::prelude::*;
 
-/// How a grid's cells are coloured.
+/// How a grid's cells are colored.
 #[derive(Clone, Copy, PartialEq)]
 pub enum Paint {
     /// 0 / 1 cells.

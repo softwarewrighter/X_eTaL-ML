@@ -259,7 +259,7 @@ pub fn run(s: &Setup) -> Result<Anatomy, String> {
     })
 }
 
-/// The point (x, y) at the centre of map cell (row, column) of a
+/// The point (x, y) at the center of map cell (row, column) of a
 /// picture `size` cells wide (y upwards, -1.1 .. 1.1).
 pub fn at(row: usize, col: usize, size: usize) -> (f64, f64) {
     let f = |k: usize| -1.1 + 2.2 * (k as f64 + 0.5) / size as f64;

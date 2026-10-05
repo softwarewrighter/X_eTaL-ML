@@ -8,7 +8,7 @@
 # -- the vocabulary -------------------------------
 # words: the a of and in to cat dog fox bird horse one two three seven ten red blue green brown runs jumps eats sees sleeps park river city home apple bread fish cheese today night morning ?
 # Each word's 8 features (data/features.txt, a row per word, in the
-# order above): animal, number, colour, action, place,
+# order above): animal, number, color, action, place,
 # food, function word, time (fish is an animal and a food; eats an
 # action and food; ? is any word not listed).
 F := (37 c_at 8) r_eshape n_umbers []N_GET "data/features.txt"
@@ -19,7 +19,7 @@ wc := f_loat (o_ffsets 37) 'r_ight t_able o_ffsets 8
 E := (f_loat F) + 0.15 * s_in (1.7 * wr) + 2.3 * wc
 # -- the router weights ---------------------------
 # 16 experts on a 4 x 4 grid: row r likes feature r
-# (animal, number, colour, action), column c likes
+# (animal, number, color, action), column c likes
 # feature 4 + c (place, food, function word, time),
 # plus a small fixed ripple.
 fi := (r_ange 8) 'l_eft t_able o_ffsets 16

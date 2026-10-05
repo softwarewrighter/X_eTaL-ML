@@ -13,6 +13,7 @@ refresh of the vendored X_eTaL.
 
 ## 2026-10-04
 
+- 22:00 `fix` American spellings only (the user's request, as in X_eTaL-demos): `scripts/check-spelling.py` (from X_eTaL-demos) and its self-test run in the gate; the audit found 47 British forms (of color, colored, centered, center, labeled, modeled, specialize, neighbors) in docs, comments, page text and identifiers, all fixed; the shared shell's color module renamed to `color` (every page updated); moe-router's color feature is spelled the American way on the page; CLAUDE.md rule 10. Pages rebuilt.
 - 14:35 `chore` Saga step bench completed.
 - 14:30 `build` Benchmarks for the ML workloads, as X_eTaL's own: bench/ (a dense layer's matrix product, the CNN's dense shape and convolution, softmax by row, `t_able` spreads; each repeats with `e_ach`) and every demo's program; `just bench` (best of 3, a table), `just bench-check` (against this machine's baseline: SLOWER over 15% and 15 ms; faster ones listed, so an upstream fix shows), `just bench-bless`; the abb8274 baseline in bench/baseline/max.tsv; docs/speed.md (about 770 ns per multiply-add in `i_nner`, 620 ns per `t_able` cell); ask M3 points at it. Not in the gate (timings depend on the machine).
 - 13:35 `chore` Saga step attention completed.

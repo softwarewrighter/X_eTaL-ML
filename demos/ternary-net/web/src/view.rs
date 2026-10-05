@@ -1,7 +1,7 @@
 //! The program the page shows, the stages and the part computing each,
-//! and the maps' colours.
+//! and the maps' colors.
 
-use microscope::colour::Rgb;
+use microscope::color::Rgb;
 use microscope::source::{between, block, Range};
 use yew::Html;
 
@@ -61,7 +61,7 @@ pub fn source(s: &Setup, focus: Stage) -> Html {
     block(&src, range(&src, focus))
 }
 
-/// Each arm's colour, strong (points) and light (the map).
+/// Each arm's color, strong (points) and light (the map).
 pub const ARMS: [(Rgb, Rgb); 3] =
     [([112, 72, 232], [222, 211, 255]), ([232, 89, 12], [255, 222, 189]), ([12, 140, 100], [200, 245, 228])];
 

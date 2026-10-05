@@ -9,7 +9,7 @@ use yew::prelude::*;
 
 use microscope::canvas::Canvas;
 use microscope::chrome::{chip, footer, header, notice, panel};
-use microscope::colour::{field, scaled, signed};
+use microscope::color::{field, scaled, signed};
 use microscope::source::code;
 
 use crate::micro::{Anatomy, Input};
@@ -110,12 +110,12 @@ fn pad(m: &UseReducerHandle<Model>, node: &NodeRef, drawing: &UseStateHandle<boo
 }
 
 /// Eight small images side by side (filters, maps).
-fn row_of(n: usize, rows: usize, cols: usize, values: &[f64], colour: fn(&[f64]) -> Vec<u8>, mark: Option<(usize, usize, usize)>, pick: Option<Callback<(usize, usize, usize)>>, class: &'static str) -> Html {
+fn row_of(n: usize, rows: usize, cols: usize, values: &[f64], color: fn(&[f64]) -> Vec<u8>, mark: Option<(usize, usize, usize)>, pick: Option<Callback<(usize, usize, usize)>>, class: &'static str) -> Html {
     let size = rows * cols;
     html! {
         <div class={classes!("maps8", class)}>
             { for (0..n).map(|f| {
-                let rgba = Rc::new(colour(&values[f * size..(f + 1) * size]));
+                let rgba = Rc::new(color(&values[f * size..(f + 1) * size]));
                 let onclick = pick.clone().map(|cb| Callback::from(move |(r, c): (usize, usize)| cb.emit((f, r, c))));
                 let mark = mark.and_then(|(g, r, c)| (g == f).then_some((r, c)));
                 html! { <figure>
@@ -200,7 +200,7 @@ pub fn app() -> Html {
         Some(a) => html! { <>
             <div class="layout">
                 <div class="col">
-                    { panel("1. The digit:", "x", "Pick a test digit, or clear the pad and draw one (large and centred, like MNIST's); the network runs when you lift the pen.", model.focus == Stage::Digit, pad(&model, &node, &drawing, &last)) }
+                    { panel("1. The digit:", "x", "Pick a test digit, or clear the pad and draw one (large and centered, like MNIST's); the network runs when you lift the pen.", model.focus == Stage::Digit, pad(&model, &node, &drawing, &last)) }
                     { probabilities(&model, a) }
                     { inspector(&model, a) }
                 </div>

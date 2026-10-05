@@ -5,8 +5,8 @@ experts. Here a sentence's tokens are scored against 16 experts by one
 matrix product, each token's scores become probabilities (softmax),
 each token keeps its two most likely experts (top-2), and their
 probabilities, renormalized, are the gates. The experts sit on a 4 x 4
-grid of feature pairs (animal, number, colour, action by place, food,
-function word, time), so words route by meaning: "red" to colour
+grid of feature pairs (animal, number, color, action by place, food,
+function word, time), so words route by meaning: "red" to color
 experts, "park" to place experts, "fish" (an animal and a food) to the
 animal x food expert. Type your own sentence.
 
@@ -56,7 +56,7 @@ for feature r and feature 4 + c, plus a ripple.
 
 On the page, the routing picture draws a curve from each token to its
 two experts, as wide as the gate; experts are shaded by load and the
-selected token (cycling, or clicked) is drawn in colour. The arrays
+selected token (cycling, or clicked) is drawn in color. The arrays
 are shown as pictures (embeddings, scores, probabilities, gates) with
 the load as bars, and the inspector shows a token's embedding, its
 scores and probabilities on the expert grid, and its gates' arithmetic.
@@ -65,7 +65,7 @@ The page's tests check that words are looked up (plurals, unknown
 words as `?`), that each row of probabilities sums to 1 and follows
 the scores (p_e / p_f = exp(s_e - s_f)), that the top-2 is the two
 largest by a direct sort, that the gates sum to 1, that the load counts
-each expert's tokens, and that experts specialise by feature.
+each expert's tokens, and that experts specialize by feature.
 
 ## Nudge a token
 
@@ -88,7 +88,7 @@ gg := u:t_op2 u:s_oftmax u:s_cores xg
 
 The page shows the gates along the path as a strip (experts down, eps
 across), lists the eps values where the chosen pair changes (pushing
-"green" towards "fox", eight times), and colours the plane by the
+"green" towards "fox", eight times), and colors the plane by the
 chosen pair. The point it makes: inputs that are almost the same can
 go to different experts. The scores are linear in the input, so the
 regions where a pair of experts wins are cut by straight lines, where

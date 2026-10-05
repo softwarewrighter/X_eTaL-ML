@@ -66,7 +66,7 @@ fn the_load_counts_each_experts_tokens() {
 #[test]
 fn experts_specialise_by_feature() {
     let a = run("the red fox eats fish in the park").unwrap();
-    // red: a colour expert (grid row 3); fish: animal x food (expert 2);
+    // red: a color expert (grid row 3); fish: animal x food (expert 2);
     // park: a place expert (grid column 1).
     assert_eq!(a.top2(1)[0] / 4, 2);
     assert_eq!(a.top2(4)[0], 1);

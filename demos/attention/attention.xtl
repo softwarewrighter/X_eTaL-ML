@@ -16,7 +16,7 @@ u:s_cores := { X -> ((X '+ '* i_nner Wq) '+ '* i_nner o_\ X '+ '* i_nner Wk) / 2
 u:a_ttend := { X M -> nn:s_oftmax (u:s_cores X) - 1e9 * 1.0 - M }
 # -- end of the core ---------------------------------------
 
-# -- drawing: rows labelled with their words ----------------
+# -- drawing: rows labeled with their words ----------------
 u:s_hade := { A -> (1 + f_loor 0.5 + 7.0 * A) s_elect " .:-=+*#" }
 u:r_ows := { ids C -> (ids s_elect names) c_at_2 (((t_ally ids) c_at 2) r_eshape " ") c_at_2 C }
 u:w_ide := { C -> ((-1 t_ake s_hape C) r_eshape 3) r_eplicate_2 C }

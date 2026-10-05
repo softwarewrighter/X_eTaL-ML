@@ -1,0 +1,1 @@
+launch step 7 (inserted, the user's request after fixing X_eTaL-demos): American spellings only, everywhere (docs, comments, identifiers, page text, commit messages). Take X_eTaL-demos' scripts/check-spelling.py (with its self-test) into the gate; audit the repo and fix every British form (the shared shell's colour module becomes color, as there); CLAUDE.md rule; rebuild pages.

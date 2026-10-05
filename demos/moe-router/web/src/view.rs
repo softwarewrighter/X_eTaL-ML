@@ -79,13 +79,13 @@ fn hsl(h: f64, s: f64, l: f64) -> [u8; 3] {
     [f(0.0), f(8.0), f(4.0)]
 }
 
-/// A colour for each (first, second) pair of experts.
+/// A color for each (first, second) pair of experts.
 pub fn pair_colour(first: f64, second: f64) -> [u8; 3] {
     let k = (first as usize * 7 + second as usize * 3) % 16;
     hsl(k as f64 * 360.0 / 16.0, 0.65, if first as usize % 2 == 0 { 0.72 } else { 0.62 })
 }
 
-/// The slice: each point coloured by its pair; the token, the two
+/// The slice: each point colored by its pair; the token, the two
 /// target words and the current point marked dark.
 pub fn slice(first: &[f64], second: &[f64]) -> Vec<u8> {
     let mut px = Vec::with_capacity(4 * first.len());
@@ -116,7 +116,7 @@ pub fn strip(gates: &[f64], cursor: usize) -> Vec<u8> {
     for e in 0..16 {
         for i in 0..STEPS {
             let g = gates[i * 16 + e];
-            let [r, gg, b] = microscope::colour::ramp(&microscope::colour::GLOW, g);
+            let [r, gg, b] = microscope::color::ramp(&microscope::color::GLOW, g);
             let [r, gg, b] = if i == cursor && g == 0.0 { [255, 146, 43] } else { [r, gg, b] };
             px[4 * (e * STEPS + i)..4 * (e * STEPS + i) + 4].copy_from_slice(&[r, gg, b, 255]);
         }

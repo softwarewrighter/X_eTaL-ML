@@ -1,4 +1,4 @@
-//! X_eTaL source drawn decorated (as X_eTaL renders it, coloured), with
+//! X_eTaL source drawn decorated (as X_eTaL renders it, colored), with
 //! a range highlighted as one continuous block, and shapes as s_hape.
 
 use xetal_play::{decorate, Class};

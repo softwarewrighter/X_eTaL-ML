@@ -7,7 +7,7 @@ fn mix(a: Rgb, b: Rgb, t: f64) -> Rgb {
     [f(0), f(1), f(2)]
 }
 
-/// A colour from `stops` spread evenly over 0..1.
+/// A color from `stops` spread evenly over 0..1.
 pub fn ramp(stops: &[Rgb], t: f64) -> Rgb {
     let t = t.clamp(0.0, 1.0) * (stops.len() - 1) as f64;
     let i = (t.floor() as usize).min(stops.len() - 2);
@@ -20,8 +20,8 @@ pub const GLOW: [Rgb; 5] = [[12, 10, 40], [88, 44, 160], [177, 151, 252], [255, 
 pub const DIVERGE: [Rgb; 3] = [[37, 99, 235], [245, 245, 245], [220, 38, 38]];
 
 /// RGBA pixels, one per value.
-pub fn pixels(values: &[f64], colour: impl Fn(f64) -> Rgb) -> Vec<u8> {
-    values.iter().flat_map(|&v| { let [r, g, b] = colour(v); [r, g, b, 255] }).collect()
+pub fn pixels(values: &[f64], color: impl Fn(f64) -> Rgb) -> Vec<u8> {
+    values.iter().flat_map(|&v| { let [r, g, b] = color(v); [r, g, b, 255] }).collect()
 }
 
 /// Values from lo (dark) to hi (bright).
