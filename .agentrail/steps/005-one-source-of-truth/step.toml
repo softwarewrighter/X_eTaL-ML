@@ -1,9 +1,10 @@
 number = 5
 slug = "one-source-of-truth"
-status = "in-progress"
+status = "completed"
 description = "maintenance (the user's decision, 2026-10-05): the Net macro library states e..."
 role = "production"
 context_files = []
 created_at = "2026-10-05T15:43:48"
+completed_at = "2026-10-05T16:23:16"
 task_type = "lib"
-commits = []
+commits = ["882b58e20e7184440ba593759f96b72631c01aa4"]

@@ -13,6 +13,7 @@ refresh of the vendored X_eTaL.
 
 ## 2026-10-05
 
+- 21:10 `chore` Saga step one-source-of-truth completed.
 - 21:00 `lib` Net: `"u:d_eep c" net:m_odel< "2 16 relu 16 relu 3 softmax"` writes a whole model from one spec: each dense layer's weights read from data/c1.txt, c2, c3 and reshaped as the spec says, with a check that stops the program naming the layer when a file holds the wrong count (`r_eshape` alone repeats or cuts data silently), then the forward function. The spec is the one place a network is described (the user's decision after reviewing what the macros check: well-typed code was still shape-wrong). `net:n_etwork<` stays for weights made elsewhere. Tests: a model equals the network of its loaded weights; a wrong file's error; a bad left side; expansions pinned. The net-macro demo, its trainer (which reads the lines) and its page use it. Ask M12 filed: shapes in types, in three sizes (an ascription built-in, rank in types, sized types as research).
 - 19:05 `chore` Saga step concise-shapes completed.
 - 19:00 `refactor` Shapes written the short way (the user's review of the CNN demo's pooling line): number literals side by side are already an array, so `(8 c_at 13 c_at 2 c_at 13 c_at 2) r_eshape x` is `8 13 2 13 2 r_eshape x` (46 places in 15 files: the demos, the benchmarks, the pages' generated lines, the docs), and the two reduces of pooling are one, `'m_ax r_/_35`. `c_at` stays only where a name is involved. Every command-line baseline unchanged. The gate refuses literal `c_at` chains; CLAUDE.md rule 5c.

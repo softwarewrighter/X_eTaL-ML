@@ -1,0 +1,1 @@
+net:m_odel< from one spec with fail-fast load checks; demo, trainer, page on it; ask M12 filed

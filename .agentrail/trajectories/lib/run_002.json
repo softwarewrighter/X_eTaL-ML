@@ -1,0 +1,11 @@
+{
+  "task_type": "lib",
+  "state": {
+    "number": 5,
+    "step": "one-source-of-truth"
+  },
+  "action": "macro, tests, docs, demo rewrite",
+  "result": "success",
+  "reward": 1,
+  "timestamp": "2026-10-05T16:23:16"
+}
