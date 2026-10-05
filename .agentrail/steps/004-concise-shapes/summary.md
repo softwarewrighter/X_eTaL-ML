@@ -1,0 +1,1 @@
+Literal c_at chains replaced by strands (46 places), pooling one reduce r_/_35, gate check, baselines unchanged

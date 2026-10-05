@@ -1,9 +1,10 @@
 number = 4
 slug = "concise-shapes"
-status = "in-progress"
+status = "completed"
 description = "maintenance (the user's review of the CNN demo): number literals strand, so (..."
 role = "production"
 context_files = []
 created_at = "2026-10-05T15:15:41"
+completed_at = "2026-10-05T15:21:35"
 task_type = "fix"
-commits = []
+commits = ["1140f74763d50884af098745365ed5bb9679cceb"]
