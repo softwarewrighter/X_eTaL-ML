@@ -1,9 +1,10 @@
 number = 2
 slug = "net-macro"
-status = "in-progress"
+status = "completed"
 description = "macros step 2: libs/Net/src/Net.xtlm: a macro turning a layer list (sizes and..."
 role = "production"
 context_files = []
 created_at = "2026-10-05T11:10:55"
+completed_at = "2026-10-05T13:23:05"
 task_type = "lib"
-commits = []
+commits = ["9e326bbdbb409b9ff4ac8132cb89bf2a97448370"]

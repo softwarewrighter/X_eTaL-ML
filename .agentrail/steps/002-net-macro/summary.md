@@ -1,0 +1,1 @@
+Net.xtlm: n_etwork<, p_arams<, s_hapes<; rejections; 13 baselines incl. expansions; docs; XOR demo

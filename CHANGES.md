@@ -13,6 +13,7 @@ refresh of the vendored X_eTaL.
 
 ## 2026-10-05
 
+- 15:05 `chore` Saga steps macro-survey and net-macro completed.
 - 15:00 `lib` Net (`net:`), a macro library (`.xtlm`): `"2 2 relu 2 softmax" net:n_etwork< "w1 w2"` becomes `{ x -> nn:s_oftmax (nn:r_elu x nn:d_ense w1) nn:d_ense w2 }`; `net:p_arams<` writes the parameter count when the program is compiled (101770 for "784 128 relu 10 softmax"); `net:s_hapes<` checks the weights against the spec. A bad spec is rejected at the call with a message. Tests: basics, 6 checks that the macro's networks equal hand-written ones, three rejections, every program's expansion pinned; page; the XOR demo.
 - 14:30 `build` Macro libraries in the library tooling (macro-survey): scripts/libs.py reads a `.xtlm`'s `m:` macros; test-libs.sh pins what each test and demo of a macro library becomes (`expand-*.rgt`, `xetal expand`); `just expand-lib`, `just types` for both halves. Ask M11 filed: a macro's text cannot name the importer's alias for a library (so Net writes `nn:`). Plan A10 and the Net design revised to what X_eTaL v0.1.0 implements; CLAUDE.md rule 6.
 - 13:00 `plan` The launch is delayed (the user): step release-1 parked, saga launch archived; saga macros started (macro-survey, net-macro, net-demo), now that X_eTaL v0.1.0 has `.xtlm`.
