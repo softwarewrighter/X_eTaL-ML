@@ -1,9 +1,10 @@
 number = 4
 slug = "net-train-macro"
-status = "in-progress"
+status = "completed"
 description = "training step 3: net:t_rain< (Net) writes from the spec the forward pass, the..."
 role = "production"
 context_files = []
 created_at = "2026-10-07T10:20:42"
+completed_at = "2026-10-07T15:39:13"
 task_type = "lib"
-commits = []
+commits = ["c8fd0a53d25bcc33014da6d2ebdee0149eede397"]
