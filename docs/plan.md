@@ -232,7 +232,7 @@ expression, as its forward pass is. This saga trains in X_eTaL.
 
 | # | Step slug | Delivers |
 | - | --------- | -------- |
-| 1 | backprop-microscope | one training step of a small network, every array visible: forward, loss, each layer's gradient as one expression, the update; every analytic gradient checked against finite differences (Powell's emphasis); CLI and page |
+| 1 | backprop-microscope | DONE: `demos/backprop`, live: a 2-4-3 network (tanh, softmax) on six spiral points; forward, loss, D2, G2, D1, G1 (each one expression, the bias row as `nn:d_ense` keeps it), the step; all 27 gradients checked against central finite differences (largest gap printed, below 1e-8); the page takes steps (the loss history), a learning-rate slider (too large overshoots), every array as a colored table, all code shown. Tests: equal to a hand-written Rust backprop to 1e-12; ten steps each lower the loss. Planned: one training step of a small network, every array visible: forward, loss, each layer's gradient as one expression, the update; every analytic gradient checked against finite differences (Powell's emphasis); CLI and page |
 | 2 | train-live | the spiral classifier trained in the browser by X_eTaL: the loss curve and the decision map changing as it learns |
 | 3 | net-train-macro | `net:t_rain<`: from the same one-line spec, the forward pass, the gradient code and an update step, all visible with `xetal expand`; the backward pieces in NN |
 | 4 | cnn-backprop | the Tiny CNN's backward pass after Shinkarov (reimplemented and cited): dense, unpooling by `r_eplicate`, ReLU, convolution; gradient steps shown on a few hundred digits |

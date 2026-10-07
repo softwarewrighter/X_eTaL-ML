@@ -13,6 +13,7 @@ refresh of the vendored X_eTaL.
 
 ## 2026-10-07
 
+- 11:50 `demo` Backprop microscope, live (https://softwarewrighter.github.io/X_eTaL-ML/backprop/): the first demo that trains. One step of a small network (2 inputs, 4 tanh units, softmax over 3) on six spiral points with every array shown: forward, loss, each layer's gradient as one expression (`G1 := (o_\ u:o_nes X) '+ '* i_nner D1`), the step; each of the 27 gradients checked against a central finite difference (Powell's habit), the largest gap printed. The page takes steps, keeps the loss history and has a learning-rate slider. Tests against a hand-written Rust backprop (to 1e-12); ten steps each lower the loss; a rate of 60 overshoots. Shared CSS for small arrays side by side.
 - 10:00 `plan` Saga 4, training in X_eTaL, after the APL Wiki's neural-network resources (every one trains in APL; every demo here infers): backprop-microscope, train-live, net-train-macro, cnn-backprop, classic-ml. Saga macros archived; post-launch is saga 5.
 
 ## 2026-10-05

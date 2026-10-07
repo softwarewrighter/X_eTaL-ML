@@ -214,3 +214,9 @@ table.heat tr.pick { cursor: pointer; }
 table.heat tr.sel th { color: var(--accent); }
 table.heat tr.sel td { outline: 1px solid var(--accent); }
 .outs tr.best td { font-weight: 700; }
+
+/* backprop: small arrays side by side */
+.arrs { display: flex; flex-wrap: wrap; gap: 14px; align-items: flex-start; margin: 6px 0 10px; }
+figure.arr { margin: 0; }
+figure.arr figcaption { font-size: .75rem; color: var(--muted); margin-top: 4px; }
+figure.arr table.heat td { min-width: 3.4em; }

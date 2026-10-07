@@ -1,0 +1,4 @@
+# Text the page shows only after X_eTaL has run (scripts/browser-check.sh).
+The largest difference over all 27 weights:
+: the gradients agree.
+(lower)

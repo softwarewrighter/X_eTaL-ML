@@ -1,6 +1,6 @@
 number = 1
 slug = "backprop-microscope"
-status = "pending"
+status = "in-progress"
 description = "training step 1: demos/backprop: a small network (2 inputs, tanh hidden layer..."
 role = "production"
 context_files = []

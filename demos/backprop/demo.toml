@@ -1,0 +1,11 @@
+# One demo's description: read by scripts/demos.py for the tests, the
+# README's demo list and the live catalog (pages/index.html).
+slug = "backprop"            # the directory name, demos/<slug>/
+title = "Backprop microscope"
+summary = "One step of training a small network, every array shown: the forward pass, the loss, each layer's gradient as one expression, the step. Each of the 27 gradients is checked by nudging its weight and watching the loss. Take steps and watch the loss fall."
+concepts = ["backpropagation", "matrix product with a transpose", "finite differences", "gradient descent"]        # the X_eTaL ideas it shows
+status = "live"             # draft | live | deferred
+order = 15                  # position in the catalog (lower first)
+needs = []                   # asks in docs/xetal-asks.md it waits on or works around
+line = "G1 := (o_\\ u:o_nes X) '+ '* i_nner D1"
+why = "A layer's gradient is its input transposed times what comes back from the layer above: one matrix product, for every weight and every example at once, where other code loops over each weight's contribution."
