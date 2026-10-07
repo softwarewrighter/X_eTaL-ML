@@ -1,0 +1,1 @@
+Training live: spiral made in X_eTaL, Adam in X_eTaL via p_ower, page trains 25 steps/frame with map and curves; tests vs Rust Adam; M13 filed; just run seeded

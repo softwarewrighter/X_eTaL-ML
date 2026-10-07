@@ -13,6 +13,7 @@ refresh of the vendored X_eTaL.
 
 ## 2026-10-07
 
+- 14:05 `chore` Saga step train-live completed.
 - 14:00 `demo` Training live, live (https://softwarewrighter.github.io/X_eTaL-ML/train-live/): X_eTaL trains a 2-16-3 network on 300 points of a spiral made in X_eTaL, in the browser, 25 steps a frame, redrawing the decision map and the loss and accuracy curves; the gradient is the backprop microscope's, Adam is written out, `p_ower` iterates the step (the state packed into one vector: ask M13 filed, a state of several arrays). From 1.319 loss and 30% right to 0.062 and 100% in 400 steps. Tests: 50 X_eTaL Adam steps equal Adam in Rust to 1e-9; it learns run by run.
 - 14:00 `fix` `just run` and `just tour` pass `--seed 1`, as the tests do, so a program that rolls gives the same result each run (it gave different numbers before).
 - 11:55 `chore` Saga step backprop-microscope completed.
