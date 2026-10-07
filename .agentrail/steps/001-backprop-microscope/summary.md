@@ -1,0 +1,1 @@
+Backprop microscope live: one step, every array, 27 gradients checked by finite differences; tests vs Rust backprop

@@ -1,9 +1,10 @@
 number = 1
 slug = "backprop-microscope"
-status = "in-progress"
+status = "completed"
 description = "training step 1: demos/backprop: a small network (2 inputs, tanh hidden layer..."
 role = "production"
 context_files = []
 created_at = "2026-10-07T10:20:42"
+completed_at = "2026-10-07T11:47:47"
 task_type = "demo"
-commits = []
+commits = ["2bdb25a3f3d45c73fdc860d67d1c0b842431a70b"]
