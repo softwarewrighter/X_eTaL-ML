@@ -11,8 +11,8 @@ use crate::micro::{head, tail, SIDE, STATE};
 pub fn program(lr: f64, trained: bool, steps: usize) -> String {
     let t: Vec<String> = tail(trained.then_some(&[0.0; STATE][..]), steps)
         .lines()
-        .map(|l| match l.starts_with(&format!("s := {STATE} r_eshape ")) {
-            true => format!("s := {STATE} r_eshape ...   # the state after the steps so far: weights, Adam's averages, the step count"),
+        .map(|l| match l.starts_with("s := (e_nclose ") {
+            true => "s := ...   # the state after the steps so far: seven boxed arrays (W1 W2 M1 M2 V1 V2 k)".to_string(),
             false => l.to_string(),
         })
         .collect();

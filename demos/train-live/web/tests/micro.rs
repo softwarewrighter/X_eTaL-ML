@@ -82,7 +82,7 @@ fn x_etal_trains_as_adam_in_rust_does_and_learns_the_spiral() {
 fn the_page_shows_every_line_it_runs() {
     use train_live_web::view::program as shown;
     let s = shown(0.02, true, 25);
-    for line in program(0.02, Some(&[0.5; STATE]), 25).lines().filter(|l| !l.starts_with("s := 298 r_eshape ")) {
+    for line in program(0.02, Some(&[0.5; STATE]), 25).lines().filter(|l| !l.starts_with("s := (e_nclose ")) {
         assert!(s.lines().any(|l| l == line), "not shown: {line}");
     }
     let s0 = shown(0.02, false, 25);

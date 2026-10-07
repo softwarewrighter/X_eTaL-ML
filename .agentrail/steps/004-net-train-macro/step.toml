@@ -1,6 +1,6 @@
-number = 3
+number = 4
 slug = "net-train-macro"
-status = "pending"
+status = "in-progress"
 description = "training step 3: net:t_rain< (Net) writes from the spec the forward pass, the..."
 role = "production"
 context_files = []

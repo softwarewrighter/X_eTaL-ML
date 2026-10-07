@@ -14,40 +14,49 @@ a := (2.0944 * f_loat arm) + (5.5 * t) + 0.1 * (f_loat (r_oll! n r_eshape 1001) 
 X := o_\ (2 c_at n) r_eshape ((0.1 + 0.9 * t) * c_os a) c_at (0.1 + 0.9 * t) * s_in a
 Y := 3 nn:o_neHot 1 + arm
 
-# -- the weights, one vector: W1 (3 x 16) then W2 (17 x 3) -----
-u:w_1 := { w -> 3 16 r_eshape 48 t_ake w }
-u:w_2 := { w -> 17 3 r_eshape 48 d_rop 99 t_ake w }
+# -- the network: W1 (3 x 16), W2 (17 x 3), each bias its last row --
 u:o_nes := { x -> x c_at_2 ((t_ally x) c_at 1) r_eshape 1.0 }
-u:f_orward := { w -> nn:s_oftmax (nn:t_anh X nn:d_ense u:w_1 w) nn:d_ense u:w_2 w }
-# The gradient of the loss by every weight, as one vector (the backprop
-# microscope's four lines).
-u:g_rad := { w ->
-  H := nn:t_anh X nn:d_ense u:w_1 w
-  D2 := ((nn:s_oftmax H nn:d_ense u:w_2 w) - Y) / f_loat n
-  D1 := (D2 '+ '* i_nner o_\ -1 d_rop u:w_2 w) * 1.0 - H * H
-  (r_avel (o_\ u:o_nes X) '+ '* i_nner D1) c_at r_avel (o_\ u:o_nes H) '+ '* i_nner D2
+u:f_orward := { W1 W2 -> nn:s_oftmax (nn:t_anh X nn:d_ense W1) nn:d_ense W2 }
+# The gradients of the loss by W1 and by W2, boxed together (the
+# backprop microscope's four lines).
+u:g_rad := { W1 W2 ->
+  H := nn:t_anh X nn:d_ense W1
+  D2 := ((nn:s_oftmax H nn:d_ense W2) - Y) / f_loat n
+  D1 := (D2 '+ '* i_nner o_\ -1 d_rop W2) * 1.0 - H * H
+  (e_nclose (o_\ u:o_nes X) '+ '* i_nner D1) c_at e_nclose (o_\ u:o_nes H) '+ '* i_nner D2
 }
-# -- Adam: the state is the weights, two running averages and the
-# step count, packed into one vector (p_ower iterates one array) -----
+# -- Adam: the state is seven boxed arrays, W1 W2 M1 M2 V1 V2 k (the
+# weights, the running averages of gradients and of their squares,
+# the step count), so p_ower can iterate it as one value --------------
 lr := 0.02
+# How far Adam moves a weight array, from its boxed averages m and v at step k.
+u:m_ove := { mv k -> ((d_isclose 1 s_elect mv) / 1.0 - 0.9 ^ k) / 0.00000001 + ((d_isclose 2 s_elect mv) / 1.0 - 0.999 ^ k) ^ 0.5 }
 u:a_dam := { s ->
-  w := 99 t_ake s
-  k := 1.0 + f_irst -1 t_ake s
-  g := u:g_rad w
-  m := (0.9 * 99 t_ake 99 d_rop s) + 0.1 * g
-  v := (0.999 * 99 t_ake 198 d_rop s) + 0.001 * g * g
-  ((w - lr * (m / 1.0 - 0.9 ^ k) / 0.00000001 + (v / 1.0 - 0.999 ^ k) ^ 0.5) c_at m c_at v) c_at k
+  W1 := d_isclose 1 s_elect s
+  W2 := d_isclose 2 s_elect s
+  k := 1.0 + d_isclose 7 s_elect s
+  g := W1 u:g_rad W2
+  G1 := d_isclose 1 s_elect g
+  G2 := d_isclose 2 s_elect g
+  M1 := (0.9 * d_isclose 3 s_elect s) + 0.1 * G1
+  M2 := (0.9 * d_isclose 4 s_elect s) + 0.1 * G2
+  V1 := (0.999 * d_isclose 5 s_elect s) + 0.001 * G1 * G1
+  V2 := (0.999 * d_isclose 6 s_elect s) + 0.001 * G2 * G2
+  W1 := W1 - lr * ((e_nclose M1) c_at e_nclose V1) u:m_ove k
+  W2 := W2 - lr * ((e_nclose M2) c_at e_nclose V2) u:m_ove k
+  (e_nclose W1) c_at (e_nclose W2) c_at (e_nclose M1) c_at (e_nclose M2) c_at (e_nclose V1) c_at (e_nclose V2) c_at e_nclose k
 }
 # The starting state: small random weights, zero averages, step 0.
-s0 := ((f_loat (r_oll! 99 r_eshape 2001) - 1001) / 1000.0) c_at 199 r_eshape 0.0
+w0 := (f_loat (r_oll! 99 r_eshape 2001) - 1001) / 1000.0
+s0 := (e_nclose 3 16 r_eshape 48 t_ake w0) c_at (e_nclose 17 3 r_eshape 48 d_rop w0) c_at (e_nclose 3 16 r_eshape 0.0) c_at (e_nclose 17 3 r_eshape 0.0) c_at (e_nclose 3 16 r_eshape 0.0) c_at (e_nclose 17 3 r_eshape 0.0) c_at e_nclose 0.0
 # -- end of the core ------------------------------------------
 
-u:l_oss := { w -> Y nn:c_rossEntropy u:f_orward w }
-u:r_ight := { w -> (1 + arm) nn:a_ccuracy u:f_orward w }
+u:l_oss := { s -> Y nn:c_rossEntropy (d_isclose 1 s_elect s) u:f_orward d_isclose 2 s_elect s }
+u:r_ight := { s -> (1 + arm) nn:a_ccuracy (d_isclose 1 s_elect s) u:f_orward d_isclose 2 s_elect s }
 # The loss and the share of points right: before, after 100 steps,
 # after 400.
 s1 := 100 'u:a_dam p_ower s0
 s2 := 300 'u:a_dam p_ower s1
 u:r_ound := { a -> (f_loat f_loor 0.5 + 1000.0 * a) / 1000.0 }
-u:r_ound (u:l_oss 99 t_ake s0) c_at (u:l_oss 99 t_ake s1) c_at u:l_oss 99 t_ake s2
-u:r_ound (u:r_ight 99 t_ake s0) c_at (u:r_ight 99 t_ake s1) c_at u:r_ight 99 t_ake s2
+u:r_ound (u:l_oss s0) c_at (u:l_oss s1) c_at u:l_oss s2
+u:r_ound (u:r_ight s0) c_at (u:r_ight s1) c_at u:r_ight s2

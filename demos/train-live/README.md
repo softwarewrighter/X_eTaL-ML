@@ -36,17 +36,27 @@ X := o_\ (2 c_at n) r_eshape ((0.1 + 0.9 * t) * c_os a) c_at (0.1 + 0.9 * t) * s
 ```
 
 The gradient is the [backprop microscope](../backprop/README.md)'s four
-lines, returning all 99 weights' gradients as one vector. Adam, one
-step:
+lines, giving W1's and W2's gradients boxed together. The training
+state is seven boxed arrays, `W1 W2 M1 M2 V1 V2 k` (the weights,
+Adam's running averages of gradients and of their squares, the step
+count), so that `p_ower` can iterate it as one value. Adam, one step:
 
 ```
+u:m_ove := { mv k -> ((d_isclose 1 s_elect mv) / 1.0 - 0.9 ^ k) / 0.00000001 + ((d_isclose 2 s_elect mv) / 1.0 - 0.999 ^ k) ^ 0.5 }
 u:a_dam := { s ->
-  w := 99 t_ake s
-  k := 1.0 + f_irst -1 t_ake s
-  g := u:g_rad w
-  m := (0.9 * 99 t_ake 99 d_rop s) + 0.1 * g
-  v := (0.999 * 99 t_ake 198 d_rop s) + 0.001 * g * g
-  ((w - lr * (m / 1.0 - 0.9 ^ k) / 0.00000001 + (v / 1.0 - 0.999 ^ k) ^ 0.5) c_at m c_at v) c_at k
+  W1 := d_isclose 1 s_elect s
+  W2 := d_isclose 2 s_elect s
+  k := 1.0 + d_isclose 7 s_elect s
+  g := W1 u:g_rad W2
+  G1 := d_isclose 1 s_elect g
+  G2 := d_isclose 2 s_elect g
+  M1 := (0.9 * d_isclose 3 s_elect s) + 0.1 * G1
+  M2 := (0.9 * d_isclose 4 s_elect s) + 0.1 * G2
+  V1 := (0.999 * d_isclose 5 s_elect s) + 0.001 * G1 * G1
+  V2 := (0.999 * d_isclose 6 s_elect s) + 0.001 * G2 * G2
+  W1 := W1 - lr * ((e_nclose M1) c_at e_nclose V1) u:m_ove k
+  W2 := W2 - lr * ((e_nclose M2) c_at e_nclose V2) u:m_ove k
+  (e_nclose W1) c_at (e_nclose W2) c_at (e_nclose M1) c_at (e_nclose M2) c_at (e_nclose V1) c_at (e_nclose V2) c_at e_nclose k
 }
 ```
 
@@ -63,9 +73,11 @@ The loss and the share of the 300 points right, at the start, after
 
 ## Workarounds
 
-`p_ower` iterates one array, so the state (the 99 weights, Adam's two
-averages and the step count) is packed into one vector of 298 and
-taken apart in each step with `t_ake` and `d_rop`: with a state of
-several arrays (a tuple or record, an X_eTaL-demos ask, M13 in
-[`docs/xetal-asks.md`](../../docs/xetal-asks.md)) the step would take
-and give the arrays by name.
+`p_ower` iterates one value, so the state's seven arrays travel boxed
+in one vector and are taken out by position (`d_isclose 3 s_elect s`).
+Boxes let the arrays keep their own shapes (an earlier version packed
+everything into one flat vector, with offsets); they cannot mix
+element types, and the positions are not names. Tuples with
+destructuring, then records, would let the step take and give
+`(W1; W2; M1; M2; V1; V2; k)` by name: being added to X_eTaL now (ask
+M13 in [`docs/xetal-asks.md`](../../docs/xetal-asks.md)).
