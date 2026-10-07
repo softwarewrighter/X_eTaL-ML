@@ -1,0 +1,43 @@
+#!/usr/bin/env xetal
+# XOR learned, the network and its training each written as one line:
+# t_rain< writes the training step (backpropagation and Adam) from the
+# same spec n_etwork< reads. Small random weights at the start.
+# Run with "just demo-lib Net train-xor"; see what was written with
+# "just expand-lib Net train-xor".
+"nn:" u_se< "NN"
+"net:" u_se< "Net"
+X := 4 2 r_eshape 0.0 0.0 0.0 1.0 1.0 0.0 1.0 1.0
+y := 1 2 2 1
+Y := 2 nn:o_neHot y
+lr := 0.05
+u:s_tep := { g1:s ->
+  g2:W1 := d_isclose 1 s_elect g1:s
+  g3:W2 := d_isclose 2 s_elect g1:s
+  g4:A0 := X
+  g5:A1 := nn:t_anh g4:A0 nn:d_ense g2:W1
+  g6:A2 := nn:s_oftmax g5:A1 nn:d_ense g3:W2
+  g7:D2 := (g6:A2 - Y) / f_loat t_ally X
+  g8:D1 := (g7:D2 '+ '* i_nner o_\ -1 d_rop g3:W2) * 1.0 - g5:A1 * g5:A1
+  g9:G1 := (o_\ g4:A0 c_at_2 ((t_ally g4:A0) c_at 1) r_eshape 1.0) '+ '* i_nner g8:D1
+  g10:G2 := (o_\ g5:A1 c_at_2 ((t_ally g5:A1) c_at 1) r_eshape 1.0) '+ '* i_nner g7:D2
+  g11:k := 1.0 + d_isclose 7 s_elect g1:s
+  g12:M1 := (0.9 * d_isclose 3 s_elect g1:s) + 0.1 * g9:G1
+  g13:V1 := (0.999 * d_isclose 5 s_elect g1:s) + 0.001 * g9:G1 * g9:G1
+  g2:W1 := g2:W1 - lr * (g12:M1 / 1.0 - 0.9 ^ g11:k) / 0.00000001 + (g13:V1 / 1.0 - 0.999 ^ g11:k) ^ 0.5
+  g14:M2 := (0.9 * d_isclose 4 s_elect g1:s) + 0.1 * g10:G2
+  g15:V2 := (0.999 * d_isclose 6 s_elect g1:s) + 0.001 * g10:G2 * g10:G2
+  g3:W2 := g3:W2 - lr * (g14:M2 / 1.0 - 0.9 ^ g11:k) / 0.00000001 + (g15:V2 / 1.0 - 0.999 ^ g11:k) ^ 0.5
+  (e_nclose g2:W1) c_at (e_nclose g3:W2) c_at (e_nclose g12:M1) c_at (e_nclose g14:M2) c_at (e_nclose g13:V1) c_at (e_nclose g15:V2) c_at e_nclose g11:k
+}
+w1 := (f_loat (3 4 r_eshape r_oll! 12 r_eshape 201) - 101) / 100.0
+w2 := (f_loat (5 2 r_eshape r_oll! 10 r_eshape 201) - 101) / 100.0
+s := 300 'u:s_tep p_ower ((e_nclose w1) c_at (e_nclose w2) c_at (e_nclose 0.0 * w1) c_at (e_nclose 0.0 * w2) c_at (e_nclose 0.0 * w1) c_at (e_nclose 0.0 * w2) c_at e_nclose 0.0)
+v1 := d_isclose 1 s_elect s
+v2 := d_isclose 2 s_elect s
+u:b_efore := ({ g16:x -> nn:s_oftmax (nn:t_anh g16:x nn:d_ense w1) nn:d_ense w2 })
+u:a_fter := ({ g17:x -> nn:s_oftmax (nn:t_anh g17:x nn:d_ense v1) nn:d_ense v2 })
+# The loss before and after 300 steps, and the classes read after.
+(Y nn:c_rossEntropy u:b_efore X) c_at Y nn:c_rossEntropy u:a_fter X
+nn:a_rgmax u:a_fter X
+y nn:a_ccuracy u:a_fter X
+

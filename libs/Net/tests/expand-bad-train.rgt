@@ -1,0 +1,2 @@
+command = "../../../scripts/xt expand bad-train.xtl"
+exit_code = 1

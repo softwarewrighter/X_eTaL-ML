@@ -13,6 +13,8 @@ refresh of the vendored X_eTaL.
 
 ## 2026-10-07
 
+- 16:30 `chore` Saga step net-train-macro completed.
+- 16:25 `lib` Net trains: `"u:s_tep X Y lr" net:t_rain< "2 4 tanh 2 softmax"` writes, from the spec that describes a network, its forward pass kept layer by layer, the backward pass (each layer's gradient the backprop microscope's expression, each activation's slope written in: tanh, sigmoid, relu, none) and an Adam step on a state of boxed arrays; `net:g_radient<` writes the gradient alone, `@ net:s_tate< "w1 w2"` the starting state. Everything visible with `xetal expand`. Tests: the written gradients against finite differences for four networks; 20 written steps equal train-live's hand-written ones; a spec not ending in softmax is refused at the call. Demo train-xor: XOR from random weights, loss 1.08 to 0.002 in 300 steps.
 - 15:35 `chore` Saga step boxed-state completed.
 - 15:30 `refactor` train-live's state is seven boxed arrays (`W1 W2 M1 M2 V1 V2 k`), iterated by `p_ower` as one value and taken apart by position, instead of one flat vector with offsets (`48 t_ake`, `99 d_rop`); the page writes and reads the boxes; output byte for byte unchanged, the Rust Adam comparison unchanged. Ask M13 updated: tuples with destructuring, then records, are being added upstream; boxes cover arrays of different shapes and one element type.
 - 14:05 `chore` Saga step train-live completed.

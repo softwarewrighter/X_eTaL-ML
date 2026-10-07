@@ -1,0 +1,2 @@
+command = "../../../scripts/xt expand ../demos/train-xor.xtl"
+exit_code = 0

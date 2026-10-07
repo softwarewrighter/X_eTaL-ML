@@ -1,0 +1,24 @@
+#!/usr/bin/env xetal
+# XOR learned, the network and its training each written as one line:
+# t_rain< writes the training step (backpropagation and Adam) from the
+# same spec n_etwork< reads. Small random weights at the start.
+# Run with "just demo-lib Net train-xor"; see what was written with
+# "just expand-lib Net train-xor".
+"nn:" u_se< "NN"
+"net:" u_se< "Net"
+X := 4 2 r_eshape 0.0 0.0 0.0 1.0 1.0 0.0 1.0 1.0
+y := 1 2 2 1
+Y := 2 nn:o_neHot y
+lr := 0.05
+"u:s_tep X Y lr" net:t_rain< "2 4 tanh 2 softmax"
+w1 := (f_loat (3 4 r_eshape r_oll! 12 r_eshape 201) - 101) / 100.0
+w2 := (f_loat (5 2 r_eshape r_oll! 10 r_eshape 201) - 101) / 100.0
+s := 300 'u:s_tep p_ower @ net:s_tate< "w1 w2"
+v1 := d_isclose 1 s_elect s
+v2 := d_isclose 2 s_elect s
+u:b_efore := "2 4 tanh 2 softmax" net:n_etwork< "w1 w2"
+u:a_fter := "2 4 tanh 2 softmax" net:n_etwork< "v1 v2"
+# The loss before and after 300 steps, and the classes read after.
+(Y nn:c_rossEntropy u:b_efore X) c_at Y nn:c_rossEntropy u:a_fter X
+nn:a_rgmax u:a_fter X
+y nn:a_ccuracy u:a_fter X

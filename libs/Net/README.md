@@ -2,7 +2,8 @@
 
 A network written as one line: a macro library that turns
 `"784 128 relu 10 softmax"` into an ordinary forward function of NN
-calls, visible with `xetal expand`.
+calls, visible with `xetal expand`; from the same spec, the
+backpropagated gradient and an Adam training step (`net:t_rain<`).
 
 ```
 "nn:"  u_se< "NN"
@@ -13,7 +14,7 @@ calls, visible with `xetal expand`.
 | --------- | ---- |
 | [`src/`](src/) | the macro library, `Net.xtlm` |
 | [`docs/`](docs/README.md) | the reference: every macro, what it writes, examples, limits |
-| [`demos/`](demos/) | programs that use it (XOR as one line) |
+| [`demos/`](demos/) | programs that use it (XOR as one line; XOR learned from random weights) |
 | [`tests/`](tests/) | reg-rs baselines: the test programs, what each becomes after expansion (`expand-*.rgt`), the macros' types (`types.rgt`) and the demos |
 
 ```bash

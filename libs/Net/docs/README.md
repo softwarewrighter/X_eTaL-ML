@@ -35,6 +35,9 @@ to n outputs it is m + 1 by n, the bias its last row.
 | ----- | ---- | ---- |
 | `"u:name prefix" net:m_odel< "spec"` | `Char -> Char -> Char` | a whole model from one spec, as statements: each dense layer's weights read from `data/prefix1.txt`, `data/prefix2.txt`, ... and shaped as the spec says (the program stops, naming the layer, when a file holds the wrong count), then the function `u:name` |
 | `"spec" net:n_etwork< "w1 w2 ..."` | `Char -> Char -> Char` | a forward function for the spec's network, using weight arrays you made yourself, one per dense layer in order |
+| `"u:g_rad X Y" net:g_radient< "spec"` | `Char -> Char -> Char` | the gradient of the cross-entropy loss by each layer's weights: a function from the weights boxed to the gradients boxed, backpropagation written out (the spec ends in softmax) |
+| `"u:s_tep X Y lr" net:t_rain< "spec"` | `Char -> Char -> Char` | a training step: from a state of 3L + 1 boxed arrays (each layer's weights, Adam's two running averages, the step count) to the next, by the gradient above and Adam |
+| `@ net:s_tate< "w1 w2 ..."` | `Unit -> Char -> Char` | the starting state for a training step: the weights, zero averages, step 0 |
 | `"spec" net:p_arams< @` | `Char -> Unit -> Char` | how many numbers the network has to learn, worked out when the program is compiled |
 | `"spec" net:s_hapes< "w1 w2 ..."` | `Char -> Char -> Char` | whether the weight arrays have the shapes the spec says: 1 or 0 |
 
@@ -121,8 +124,49 @@ error[bad-macro-argument]: not a size or an activation (relu, sigmoid, tanh, sof
 error[bad-macro-argument]: name one weight array per dense layer: 2 for this spec, 1 given at 190..193
 ```
 
+## Training
+
+The same spec that describes a network can train it. From
+`../demos/train-xor.xtl`:
+
+```
+"u:s_tep X Y lr" net:t_rain< "2 4 tanh 2 softmax"
+s := 300 'u:s_tep p_ower @ net:s_tate< "w1 w2"
+```
+
+Three hundred steps from small random weights: the loss falls from
+1.08 to 0.002 and all four points of XOR are read right. What the
+first line became (`just expand-lib Net train-xor`), with X_eTaL's
+hygiene renaming every name the macro binds (`g2:W1`, ...):
+
+```
+u:s_tep := { g1:s ->
+  g2:W1 := d_isclose 1 s_elect g1:s
+  g3:W2 := d_isclose 2 s_elect g1:s
+  g4:A0 := X
+  g5:A1 := nn:t_anh g4:A0 nn:d_ense g2:W1
+  g6:A2 := nn:s_oftmax g5:A1 nn:d_ense g3:W2
+  g7:D2 := (g6:A2 - Y) / f_loat t_ally X
+  g8:D1 := (g7:D2 '+ '* i_nner o_\ -1 d_rop g3:W2) * 1.0 - g5:A1 * g5:A1
+  g9:G1 := (o_\ g4:A0 c_at_2 ((t_ally g4:A0) c_at 1) r_eshape 1.0) '+ '* i_nner g8:D1
+  g10:G2 := (o_\ g5:A1 c_at_2 ((t_ally g5:A1) c_at 1) r_eshape 1.0) '+ '* i_nner g7:D2
+  ...
+}
+```
+
+(the rest is Adam for each layer and the next state). Each layer's
+gradient is the backprop microscope's expression; each activation's
+slope is written in where it goes back through it (tanh `1 - A * A`,
+sigmoid `A * (1 - A)`, relu `A > 0`). `../tests/gradients.xtl` checks
+the written gradients against finite differences for relu, sigmoid,
+tanh and no-activation networks; `../tests/train.xtl` checks that 20
+written training steps equal the hand-written ones of the
+[training-live demo](../../../demos/train-live/README.md).
+
 ## Demos
 
+- [`demos/train-xor.xtl`](../demos/train-xor.xtl): XOR learned from
+  random weights, the network and its training each one line.
 - [`demos/xor.xtl`](../demos/xor.xtl): XOR with the network as one
   line (`just demo-lib Net xor`), and what the macros wrote
   (`just expand-lib Net xor`).
@@ -134,7 +178,10 @@ error[bad-macro-argument]: name one weight array per dense layer: 2 for this spe
   and may not import a library itself (ask M11 in
   [`docs/xetal-asks.md`](../../../docs/xetal-asks.md)).
 - Dense layers and NN's activations only: a convolution or attention
-  layer is written by hand, as the demos do.
+  layer is written by hand, as the demos do. Training is with
+  cross-entropy on a softmax output, by Adam.
+- The training state is boxed arrays by position, until X_eTaL has
+  tuples (ask M13, in progress upstream).
 - Shapes are not part of X_eTaL's types (ask M12), so a model's
   weights are checked when they are loaded and `net:s_hapes<` when it
   runs; the spec's own mistakes are caught when the program is

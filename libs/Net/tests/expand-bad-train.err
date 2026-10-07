@@ -1,0 +1,1 @@
+error[bad-macro-argument]: a network trained with cross-entropy ends in softmax at 153..165

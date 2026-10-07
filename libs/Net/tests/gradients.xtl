@@ -1,0 +1,39 @@
+#!/usr/bin/env xetal
+# Net: the gradients g_radient< writes equal finite differences, for
+# networks of every activation, checked with Check.
+"nn:" u_se< "NN"
+"net:" u_se< "Net"
+"k:" u_se< "Check"
+X := 5 3 r_eshape 0.3 -0.7 1.1 0.0 2.0 -1.5 0.9 0.4
+Y := 3 nn:o_neHot 1 3 2 2 1
+w1 := 4 5 r_eshape 0.5 -1.0 0.25 2.0 0.0 -0.5 1.0 1.5 -2.0 0.1 0.2 0.3 -0.4
+w2 := 6 4 r_eshape 1.0 -1.0 0.5 0.5 -0.25 2.0 0.0 0.1 0.7
+w3 := 5 3 r_eshape 0.2 -0.6 0.9 -0.1 0.4
+v1 := 4 3 r_eshape 0.8 -0.3 0.5 0.1 -0.9
+"u:g_a X Y" net:g_radient< "3 5 relu 4 sigmoid 3 softmax"
+"u:g_b X Y" net:g_radient< "3 5 tanh 4 3 softmax"
+"u:g_c X Y" net:g_radient< "3 3 softmax"
+# The loss of weights w (boxed) for each network.
+u:l_a := { w -> Y nn:c_rossEntropy nn:s_oftmax (nn:s_igmoid (nn:r_elu X nn:d_ense d_isclose 1 s_elect w) nn:d_ense d_isclose 2 s_elect w) nn:d_ense d_isclose 3 s_elect w }
+u:l_b := { w -> Y nn:c_rossEntropy nn:s_oftmax ((nn:t_anh X nn:d_ense d_isclose 1 s_elect w) nn:d_ense d_isclose 2 s_elect w) nn:d_ense d_isclose 3 s_elect w }
+u:l_c := { w -> Y nn:c_rossEntropy nn:s_oftmax X nn:d_ense d_isclose 1 s_elect w }
+# Weights w (boxed) with box j's item i moved by d.
+u:n_udge := { w jid ->
+  j := f_loor 1 s_elect jid
+  i := f_loor 2 s_elect jid
+  a := d_isclose j s_elect w
+  b := a + (3 s_elect jid) * f_loat (s_hape a) r_eshape i = r_ange t_ally r_avel a
+  ((j - 1) t_ake w) c_at (e_nclose b) c_at j d_rop w
+}
+# The largest gap between box j of gradients g and its finite differences.
+e := 0.00001
+u:g_apA := { w j -> 'm_ax r_/ a_bs (r_avel d_isclose j s_elect u:g_a w) - '{ i -> ((u:l_a w u:n_udge (f_loat j) c_at (f_loat i) c_at e) - u:l_a w u:n_udge (f_loat j) c_at (f_loat i) c_at -1.0 * e) / 2.0 * e } e_ach r_ange t_ally r_avel d_isclose j s_elect w }
+u:g_apB := { w j -> 'm_ax r_/ a_bs (r_avel d_isclose j s_elect u:g_b w) - '{ i -> ((u:l_b w u:n_udge (f_loat j) c_at (f_loat i) c_at e) - u:l_b w u:n_udge (f_loat j) c_at (f_loat i) c_at -1.0 * e) / 2.0 * e } e_ach r_ange t_ally r_avel d_isclose j s_elect w }
+u:g_apC := { w j -> 'm_ax r_/ a_bs (r_avel d_isclose j s_elect u:g_c w) - '{ i -> ((u:l_c w u:n_udge (f_loat j) c_at (f_loat i) c_at e) - u:l_c w u:n_udge (f_loat j) c_at (f_loat i) c_at -1.0 * e) / 2.0 * e } e_ach r_ange t_ally r_avel d_isclose j s_elect w }
+wa := (e_nclose w1) c_at (e_nclose w2) c_at e_nclose w3
+wc := e_nclose v1
+c1 := "relu, sigmoid, softmax" k:t_est k:t_rue 0.0000001 > 'm_ax r_/ '{ j -> wa u:g_apA j } e_ach 1 2 3
+c2 := "tanh, none, softmax" k:t_est k:t_rue 0.0000001 > 'm_ax r_/ '{ j -> wa u:g_apB j } e_ach 1 2 3
+c3 := "one layer, softmax" k:t_est k:t_rue 0.0000001 > wc u:g_apC 1
+c4 := "each gradient has its weights' shape" k:t_est ((s_hape w1) c_at (s_hape w2) c_at s_hape w3) k:i_s (s_hape d_isclose 1 s_elect u:g_a wa) c_at (s_hape d_isclose 2 s_elect u:g_a wa) c_at s_hape d_isclose 3 s_elect u:g_a wa
+k:r_eport c1 k:a_nd c2 k:a_nd c3 k:a_nd c4

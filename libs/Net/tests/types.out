@@ -1,4 +1,7 @@
 m:n_etwork< : Char -> Char -> Char
 m:m_odel< : Char -> Char -> Char
+m:g_radient< : Char -> Char -> Char
+m:t_rain< : Char -> Char -> Char
+m:s_tate< : Unit -> Char -> Char
 m:p_arams< : Char -> Unit -> Char
 m:s_hapes< : Char -> Char -> Char
