@@ -1,9 +1,10 @@
 number = 3
 slug = "boxed-state"
-status = "in-progress"
+status = "completed"
 description = "maintenance (the user's go, 2026-10-07; tuples are being added upstream by an..."
 role = "production"
 context_files = []
 created_at = "2026-10-07T13:45:14"
+completed_at = "2026-10-07T15:07:29"
 task_type = "refactor"
-commits = []
+commits = ["4e69fa26c98dd6a8178b89d626b01921beaab4fd"]

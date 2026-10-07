@@ -13,6 +13,7 @@ refresh of the vendored X_eTaL.
 
 ## 2026-10-07
 
+- 15:35 `chore` Saga step boxed-state completed.
 - 15:30 `refactor` train-live's state is seven boxed arrays (`W1 W2 M1 M2 V1 V2 k`), iterated by `p_ower` as one value and taken apart by position, instead of one flat vector with offsets (`48 t_ake`, `99 d_rop`); the page writes and reads the boxes; output byte for byte unchanged, the Rust Adam comparison unchanged. Ask M13 updated: tuples with destructuring, then records, are being added upstream; boxes cover arrays of different shapes and one element type.
 - 14:05 `chore` Saga step train-live completed.
 - 14:00 `demo` Training live, live (https://softwarewrighter.github.io/X_eTaL-ML/train-live/): X_eTaL trains a 2-16-3 network on 300 points of a spiral made in X_eTaL, in the browser, 25 steps a frame, redrawing the decision map and the loss and accuracy curves; the gradient is the backprop microscope's, Adam is written out, `p_ower` iterates the step (the state packed into one vector: ask M13 filed, a state of several arrays). From 1.319 loss and 30% right to 0.062 and 100% in 400 steps. Tests: 50 X_eTaL Adam steps equal Adam in Rust to 1e-9; it learns run by run.
