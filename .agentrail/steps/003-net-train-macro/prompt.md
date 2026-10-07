@@ -1,0 +1,1 @@
+training step 3: net:t_rain< (Net) writes from the spec the forward pass, the gradient code and an update step; the backward pieces as NN functions; tests that the written gradients equal finite differences; xetal expand shows it; used by train-live.

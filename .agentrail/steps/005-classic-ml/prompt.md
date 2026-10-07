@@ -1,0 +1,1 @@
+training step 5: a fit/pred library after APLearn's list (k-means, kNN, PCA, logistic regression), tests, page; a k-means demo whose clusters move each iteration.

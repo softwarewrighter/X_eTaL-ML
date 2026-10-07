@@ -1,0 +1,1 @@
+training step 4: the Tiny CNN's backward pass after Shinkarov's CNN in APL (reimplemented and cited): dense, unpooling by r_eplicate, ReLU, convolution; gradients checked; gradient steps on a few hundred digits shown.

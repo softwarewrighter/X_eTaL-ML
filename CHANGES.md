@@ -11,6 +11,10 @@ planning and reordering, `release` milestone release, `chore`
 agentrail bookkeeping (step complete, saga archive), `vendor` a
 refresh of the vendored X_eTaL.
 
+## 2026-10-07
+
+- 10:00 `plan` Saga 4, training in X_eTaL, after the APL Wiki's neural-network resources (every one trains in APL; every demo here infers): backprop-microscope, train-live, net-train-macro, cnn-backprop, classic-ml. Saga macros archived; post-launch is saga 5.
+
 ## 2026-10-05
 
 - 21:10 `chore` Saga step one-source-of-truth completed.

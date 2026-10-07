@@ -220,7 +220,29 @@ weights' last row), the function's name is bound by the caller, and
 two companions: `net:p_arams<` (the parameter count, a number written
 at compile time) and `net:s_hapes<` (the weights against the spec).
 
-## Saga 4 -- post-launch
+## Saga 4 -- training in X_eTaL  [ACTIVE]
+
+After the APL Wiki's neural-network resources (2026-10-07, the
+user's request to look for more demos): every APL work it lists
+(Shinkarov's CNN in APL, Hsu and Serrao's U-Net, Serrao's workshop,
+Powell's tutorials) trains its network in the array language, while
+every demo here infers with weights trained offline. Backpropagation
+is where array notation pays off most: each layer's gradient is one
+expression, as its forward pass is. This saga trains in X_eTaL.
+
+| # | Step slug | Delivers |
+| - | --------- | -------- |
+| 1 | backprop-microscope | one training step of a small network, every array visible: forward, loss, each layer's gradient as one expression, the update; every analytic gradient checked against finite differences (Powell's emphasis); CLI and page |
+| 2 | train-live | the spiral classifier trained in the browser by X_eTaL: the loss curve and the decision map changing as it learns |
+| 3 | net-train-macro | `net:t_rain<`: from the same one-line spec, the forward pass, the gradient code and an update step, all visible with `xetal expand`; the backward pieces in NN |
+| 4 | cnn-backprop | the Tiny CNN's backward pass after Shinkarov (reimplemented and cited): dense, unpooling by `r_eplicate`, ReLU, convolution; gradient steps shown on a few hundred digits |
+| 5 | classic-ml | a `fit`/`pred` library after APLearn's list (k-means, kNN, PCA, logistic regression) and a k-means demo whose clusters move each iteration |
+
+Left out for now: MENACE (it fits X_eTaL-games, and X_eTaL ships
+TTTML, which learns tic-tac-toe by self-play); a U-Net (a tiny one on
+synthetic shapes is a later stretch).
+
+## Saga 5 -- post-launch
 
 The follow-up stream after the launch (research4: material for after
 the announcement), in this order:
@@ -232,8 +254,8 @@ the announcement), in this order:
 | 3 | attention-lib | Attention (`at:`); the attention demo keeps its lesson |
 | 4 | norm, sample | Norm (`nm:`), Sample (`sm:`) |
 | 5 | micro-gpt | microgpt inference in X_eTaL on offline-trained weights (port from microgpt-mlpl) |
-| 6 | embed, embedding-explorer | Embed (`em:`); PCA from 64 dimensions to a rotatable 3-D cloud |
-| 7 | optim, gradient-descent | Optim (`op:`); training in X_eTaL |
+| 6 | embed, embedding-explorer | Embed (`em:`); PCA from 64 dimensions to a rotatable 3-D cloud (PCA may come with saga 4's classic-ml) |
+| 7 | optim | Optim (`op:`), what saga 4 leaves of it |
 | 8 | lib-site | the libraries in the live site, as X_eTaL-libraries' site |
 | 9 | world-model, diffusion | the deferred research demos (training speed, a learned denoiser) |
 

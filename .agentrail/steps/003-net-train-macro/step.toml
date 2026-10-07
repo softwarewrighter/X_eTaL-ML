@@ -1,0 +1,9 @@
+number = 3
+slug = "net-train-macro"
+status = "pending"
+description = "training step 3: net:t_rain< (Net) writes from the spec the forward pass, the..."
+role = "production"
+context_files = []
+created_at = "2026-10-07T10:20:42"
+task_type = "lib"
+commits = []

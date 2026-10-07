@@ -1,0 +1,9 @@
+number = 5
+slug = "classic-ml"
+status = "pending"
+description = "training step 5: a fit/pred library after APLearn's list (k-means, kNN, PCA, ..."
+role = "production"
+context_files = []
+created_at = "2026-10-07T10:20:42"
+task_type = "lib"
+commits = []

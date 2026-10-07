@@ -1,24 +1,23 @@
-# macros
+# training
 
-Saga 3 of X_eTaL-ML (docs/plan.md): the network macro. X_eTaL v0.1.0
-has .xtlm macro libraries and xetal expand (asks M1, M2 landed); this
-saga writes Net.xtlm, a macro that turns a layer list into an ordinary,
-visible, type-checked forward function built from nn: calls, and a
-demo that shows the source beside its expansion.
+Saga 4 of X_eTaL-ML (docs/plan.md): training in X_eTaL. After the APL
+Wiki's neural-network resources, every one of which trains its
+network in APL, while every demo here infers with weights trained
+offline. Backpropagation is where array notation pays off: each
+layer's gradient is one expression.
 
-Rules as before (CLAUDE.md): pinned X_eTaL only; asks filed,
-workarounds named; American spellings; programs short, data in files;
-a page shows all the code it runs. Every step: tests exist and
-`just gate` passes, docs updated, .gitignore sane, a detailed commit
-to main including .agentrail/, `agentrail complete`, push, `just
-publish` and `just check-live` when a page changed, then a report.
+Rules as before (CLAUDE.md): pinned X_eTaL; asks filed; American
+spellings; ASCII docs; programs short, data in files; concise
+X_eTaL; a page shows all the code it runs. Every step: tests and
+`just gate`, docs, a detailed commit, `agentrail complete`, push,
+`just publish` and `just check-live` when a page changed, a report.
 
 ## Steps
 
-1. macro-survey -- read what X_eTaL v0.1.0 implemented (.xtlm, MC10 to
-   MC13, lib/Macros.xtlm, xetal expand); confirm or revise plan A10
-   and the Net design; the library tooling accepts .xtlm.
-2. net-macro -- libs/Net/src/Net.xtlm: the network macro; tests of the
-   expansion (xetal expand) and of the result; page; a demo.
-3. net-demo -- a demo (CLI and page) of a network written with the
-   macro, its expansion beside it.
+1. backprop-microscope -- one training step, every array visible,
+   gradients checked against finite differences; CLI and page.
+2. train-live -- the spiral classifier trained in the browser.
+3. net-train-macro -- net:t_rain< writes forward, gradients, update.
+4. cnn-backprop -- the Tiny CNN's backward pass (after Shinkarov).
+5. classic-ml -- a fit/pred library (k-means, kNN, PCA, logistic
+   regression) and a k-means demo.

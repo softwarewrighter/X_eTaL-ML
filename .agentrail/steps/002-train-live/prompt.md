@@ -1,0 +1,1 @@
+training step 2: the spiral classifier trained live in the browser by X_eTaL (full-batch gradient descent or Adam written in X_eTaL): the loss curve and the decision map as it learns; speed measured.

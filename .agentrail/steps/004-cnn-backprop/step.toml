@@ -1,0 +1,9 @@
+number = 4
+slug = "cnn-backprop"
+status = "pending"
+description = "training step 4: the Tiny CNN's backward pass after Shinkarov's CNN in APL (r..."
+role = "production"
+context_files = []
+created_at = "2026-10-07T10:20:42"
+task_type = "demo"
+commits = []

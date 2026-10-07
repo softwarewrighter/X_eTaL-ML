@@ -1,0 +1,9 @@
+number = 2
+slug = "train-live"
+status = "pending"
+description = "training step 2: the spiral classifier trained live in the browser by X_eTaL ..."
+role = "production"
+context_files = []
+created_at = "2026-10-07T10:20:42"
+task_type = "demo"
+commits = []

@@ -1,6 +1,6 @@
-name = "macros"
-status = "completed"
-current_step = 5
-created_at = "2026-10-05T11:10:55"
+name = "training"
+status = "active"
+current_step = 1
+created_at = "2026-10-07T10:20:42"
 plan_file = ".agentrail/plan.md"
 retroactive = false
