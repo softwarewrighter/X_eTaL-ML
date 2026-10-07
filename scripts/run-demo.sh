@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
 # Run a demo's program with the pinned xetal, in the demo's directory
 # (this repo's libraries on XETAL_PATH),
-# pictures ([]S_HOW) to work/draw/SLUG/. FILE defaults to SLUG.xtl.
+# pictures ([]S_HOW) to work/draw/SLUG/, seeded as the tests run it
+# (--seed 1), so a program that rolls gives the same result each run.
+# FILE defaults to SLUG.xtl.
 #   scripts/run-demo.sh SLUG [FILE] [-- XETAL_RUN_FLAGS...]
 #   scripts/run-demo.sh --echo SLUG [FILE]     # as a notebook
 set -euo pipefail
@@ -19,4 +21,4 @@ mkdir -p "$root/work/draw/$slug"
 # This repo's libraries on XETAL_PATH (relative to the demo's directory).
 XETAL_PATH="$(cd "$root" && ls -d libs/*/src work/libs/*/src 2>/dev/null | sed 's#^#../../#' | paste -sd: -)"
 export XETAL_PATH
-cd "$d" && exec "$xetal" run ${flags[@]+"${flags[@]}"} --draw "$root/work/draw/$slug" "$file"
+cd "$d" && exec "$xetal" run --seed 1 ${flags[@]+"${flags[@]}"} --draw "$root/work/draw/$slug" "$file"

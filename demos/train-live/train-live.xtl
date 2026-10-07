@@ -1,0 +1,53 @@
+#!/usr/bin/env xetal
+# Training in X_eTaL: a network (2 inputs, 16 tanh units, softmax over
+# 3) learns which of three spiral arms a point is on. The points are
+# made here; the backward pass is the backprop microscope's; Adam,
+# written out, moves the weights; p_ower repeats the step.
+"nn:" u_se< "NN"
+
+# -- the spiral: 100 points on each of three arms -----------
+n := 300
+i := o_ffsets n
+arm := i d_iv 100
+t := (0.5 + f_loat i m_od 100) / 100.0
+a := (2.0944 * f_loat arm) + (5.5 * t) + 0.1 * (f_loat (r_oll! n r_eshape 1001) - 501) / 500.0
+X := o_\ (2 c_at n) r_eshape ((0.1 + 0.9 * t) * c_os a) c_at (0.1 + 0.9 * t) * s_in a
+Y := 3 nn:o_neHot 1 + arm
+
+# -- the weights, one vector: W1 (3 x 16) then W2 (17 x 3) -----
+u:w_1 := { w -> 3 16 r_eshape 48 t_ake w }
+u:w_2 := { w -> 17 3 r_eshape 48 d_rop 99 t_ake w }
+u:o_nes := { x -> x c_at_2 ((t_ally x) c_at 1) r_eshape 1.0 }
+u:f_orward := { w -> nn:s_oftmax (nn:t_anh X nn:d_ense u:w_1 w) nn:d_ense u:w_2 w }
+# The gradient of the loss by every weight, as one vector (the backprop
+# microscope's four lines).
+u:g_rad := { w ->
+  H := nn:t_anh X nn:d_ense u:w_1 w
+  D2 := ((nn:s_oftmax H nn:d_ense u:w_2 w) - Y) / f_loat n
+  D1 := (D2 '+ '* i_nner o_\ -1 d_rop u:w_2 w) * 1.0 - H * H
+  (r_avel (o_\ u:o_nes X) '+ '* i_nner D1) c_at r_avel (o_\ u:o_nes H) '+ '* i_nner D2
+}
+# -- Adam: the state is the weights, two running averages and the
+# step count, packed into one vector (p_ower iterates one array) -----
+lr := 0.02
+u:a_dam := { s ->
+  w := 99 t_ake s
+  k := 1.0 + f_irst -1 t_ake s
+  g := u:g_rad w
+  m := (0.9 * 99 t_ake 99 d_rop s) + 0.1 * g
+  v := (0.999 * 99 t_ake 198 d_rop s) + 0.001 * g * g
+  ((w - lr * (m / 1.0 - 0.9 ^ k) / 0.00000001 + (v / 1.0 - 0.999 ^ k) ^ 0.5) c_at m c_at v) c_at k
+}
+# The starting state: small random weights, zero averages, step 0.
+s0 := ((f_loat (r_oll! 99 r_eshape 2001) - 1001) / 1000.0) c_at 199 r_eshape 0.0
+# -- end of the core ------------------------------------------
+
+u:l_oss := { w -> Y nn:c_rossEntropy u:f_orward w }
+u:r_ight := { w -> (1 + arm) nn:a_ccuracy u:f_orward w }
+# The loss and the share of points right: before, after 100 steps,
+# after 400.
+s1 := 100 'u:a_dam p_ower s0
+s2 := 300 'u:a_dam p_ower s1
+u:r_ound := { a -> (f_loat f_loor 0.5 + 1000.0 * a) / 1000.0 }
+u:r_ound (u:l_oss 99 t_ake s0) c_at (u:l_oss 99 t_ake s1) c_at u:l_oss 99 t_ake s2
+u:r_ound (u:r_ight 99 t_ake s0) c_at (u:r_ight 99 t_ake s1) c_at u:r_ight 99 t_ake s2

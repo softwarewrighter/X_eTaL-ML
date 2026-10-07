@@ -1,0 +1,3 @@
+command = "scripts/browser-check.sh train-live"
+exit_code = 0
+desc = "train-live: the built page run in headless Chrome shows X_eTaL's results"

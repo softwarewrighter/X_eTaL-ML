@@ -1,0 +1,4 @@
+# Text the page shows only after X_eTaL has run (scripts/browser-check.sh).
+What it decides:
+(blue, 0 to 100%)
+points right

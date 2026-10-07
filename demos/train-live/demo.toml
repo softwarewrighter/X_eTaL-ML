@@ -1,0 +1,11 @@
+# One demo's description: read by scripts/demos.py for the tests, the
+# README's demo list and the live catalog (pages/index.html).
+slug = "train-live"            # the directory name, demos/<slug>/
+title = "Training live"
+summary = "X_eTaL trains a small network in your browser: 300 points of a three-arm spiral made in X_eTaL, the backprop microscope's gradient, Adam written out, 25 steps a frame. Watch the decision regions bend to follow the spiral and the loss fall."
+concepts = ["training", "Adam", "p_ower for iteration", "backpropagation"]        # the X_eTaL ideas it shows
+status = "live"             # draft | live | deferred
+order = 16                  # position in the catalog (lower first)
+needs = []                   # asks in docs/xetal-asks.md it waits on or works around
+line = "s := 25 'u:a_dam p_ower s"
+why = "Training is a function iterated: one Adam step maps the state (the weights and two running averages) to the next, and p_ower repeats it, with no loop written; every step updates all 99 weights at once."

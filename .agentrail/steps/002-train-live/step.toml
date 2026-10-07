@@ -1,6 +1,6 @@
 number = 2
 slug = "train-live"
-status = "pending"
+status = "in-progress"
 description = "training step 2: the spiral classifier trained live in the browser by X_eTaL ..."
 role = "production"
 context_files = []

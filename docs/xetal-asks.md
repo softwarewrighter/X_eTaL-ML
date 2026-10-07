@@ -27,6 +27,7 @@ X_eTaL (v0.1.0, 512b3ee) on 2026-10-05.
 | M10 | open | feature | `e_ach` returning an array per item (`'{ i -> i * 1 2 3 } e_ach 1 2` is refused: e_ach needs a single value from each call) | cnn-digits (the ten digits, one number per call), a per-row grade | one `e_ach` per number wanted |
 | M11 | filed | feature | A macro's text cannot name a library by the importer's alias: `m:f_` in an expansion is not rewritten to the alias the caller chose, and an expansion may not import (MC23), so a macro library cannot call its own `.xtl` half, or another library, without fixing the alias (X_eTaL-libraries X14) | Net (its networks call NN) | the expansion says `nn:`; the page tells the reader to import NN under that alias |
 | M12 | filed | feature | Shapes in types: a matrix's type is `Float`, so code can be well-typed and shape-wrong (a spec saying 4 outputs against a 3-column weight array ran and answered); `r_eshape` repeats or cuts data silently. Asked in three sizes: a shape ascription built-in now, rank in types next, sized types as research | Net (its models check at load instead), every demo | the Net macros write run-time checks that stop with an error naming the layer |
+| M13 | open | feature | A state of several arrays for `p_ower` (a tuple or record; the X_eTaL-demos ask, on X_eTaL's wish list as named records) | train-live (Adam's state: weights and two averages) | the state packed into one vector, taken apart with `t_ake` and `d_rop` |
 ## Details
 
 ### M1, M2: macro libraries and seeing an expansion (landed)
