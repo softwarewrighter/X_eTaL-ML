@@ -99,6 +99,7 @@ pre {{ background:var(--card); border:1px solid var(--line); border-radius:8px; 
 <span>Copyright (c) 2026 Michael A Wright</span><span class="sep">&middot;</span>
 <span>MIT License</span><span class="sep">&middot;</span>
 <a href="{repo}" target="_blank">Repository</a><span class="sep">&middot;</span>
+<a href="{up}doc/">Cross-reference</a><span class="sep">&middot;</span>
 <span>X_eTaL <a href="{xetal}/commit/{xsha}" target="_blank">{xshort}</a></span><span class="sep">&middot;</span>
 <span>build (host {host}, sha {commit}, {stamp})</span>
 </footer>
@@ -124,6 +125,10 @@ it. Then <a href="recorded/">run the demos yourself</a>, or see more X_eTaL:
 <a href="https://softwarewrighter.github.io/X_eTaL-games/">games</a>,
 <a href="https://softwarewrighter.github.io/X_eTaL-libraries/">libraries</a>,
 <a href="https://softwarewrighter.github.io/X_eTaL-extensions/">extensions</a>.</li>
+<li><b>Read the code.</b> <a href="doc/">The cross-reference</a> (made by <code>xetal doc</code>):
+every demo program and library here, its documentation and sections, its source drawn as
+X_eTaL draws it, every name linked to where it is defined and used, into the NN and Net
+libraries and the built-ins.</li>
 </ul>"""
 
 RECORDED_HEADER = """<div class="brand"><a href="../"><img class="logo" src="../modern-xetal-logo.jpg" alt="X_eTaL"></a><h1>Run the demos yourself</h1></div>
@@ -177,6 +182,8 @@ def card(m):
     if m.get("recording"):
         links.append(f'<a href="recorded/#{slug}">Recorded</a>')
     links.append(f'<a href="{REPO}/tree/main/demos/{slug}#readme">How it works</a>')
+    # Its program in the cross-reference (scripts/doc-site.sh: pages/doc).
+    links.append(f'<a href="doc/demos-{slug}-{slug}.xtl.html">Read the code</a>')
     chips = "".join(f'<span class="chip">{html.escape(c)}</span>' for c in m["concepts"])
     st = m["status"]
     pic = ""

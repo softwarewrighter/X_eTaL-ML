@@ -1,7 +1,6 @@
 //! Trains the cnn-digits demo's tiny CNN on MNIST offline and writes
 //! its weights, its test accuracy and ten sample test digits into
-//! `../cnn-digits.xtl`, between `# -- the weights` and
-//! `# -- end of the weights`.
+//! `../data/`, where `../cnn-digits.xtl` reads them.
 //!
 //! The network: a 28 x 28 picture -> 8 filters of 3 x 3 (valid, so 8 x
 //! 26 x 26) -> ReLU -> 2 x 2 max-pooling (8 x 13 x 13) -> flattened

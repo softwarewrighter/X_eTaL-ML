@@ -29,26 +29,26 @@ pub fn head() -> String {
 
 /// The vocabulary's features, the embeddings and the router weights.
 pub fn tables() -> &'static str {
-    section(SOURCE, "# -- the vocabulary", "# -- the scores")
+    section(SOURCE, "### The vocabulary", "### The scores")
 }
 
 /// The router weights (shown on the page; the vocabulary is long).
 pub fn weights() -> &'static str {
-    section(SOURCE, "# -- the router weights", "# -- the scores")
+    section(SOURCE, "### The router weights", "### The scores")
 }
 
 /// Scores, softmax, top-2, load.
 pub fn core() -> &'static str {
-    section(SOURCE, "# -- the scores", "# -- end of the core")
+    section(SOURCE, "### The scores", "# -- end of the core")
 }
 
 pub const EXPERTS: usize = 16;
 pub const FEATURES: [&str; 8] = ["animal", "number", "color", "action", "place", "food", "function", "time"];
 
-/// The vocabulary, in order, from the program's `# words:` line; the
+/// The vocabulary, in order, from the program's `## words:` line; the
 /// last, `?`, stands for any word not listed.
 pub fn words() -> Vec<&'static str> {
-    SOURCE.lines().find_map(|l| l.strip_prefix("# words: ")).map_or(vec![], |w| w.split_whitespace().collect())
+    SOURCE.lines().find_map(|l| l.strip_prefix("## words: ")).map_or(vec![], |w| w.split_whitespace().collect())
 }
 
 /// Expert e (from 0) is on grid row e / 4 (it likes feature e / 4) and
@@ -145,7 +145,7 @@ pub fn run(sentence: &str) -> Result<Anatomy, String> {
 /// The nudge: its settings (word w0 pushed towards wa; the slice also
 /// towards wb; words numbered from 1) and the epsilon section.
 pub fn nudge_core() -> &'static str {
-    section(SOURCE, "# -- epsilon", "# -- end of the nudge")
+    section(SOURCE, "### Epsilon", "# -- end of the nudge")
 }
 
 /// Samples along epsilon (0 to 1.2) and the slice's side.

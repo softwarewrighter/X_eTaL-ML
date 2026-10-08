@@ -26,28 +26,28 @@ fn out(src: &str, lines: usize) -> Result<Vec<String>, String> {
 
 /// The weights and the test points, read from data/.
 pub fn weights() -> &'static str {
-    section(SOURCE, "# -- the weights", "# -- end of the weights")
+    section(SOURCE, "### The weights", "# -- end of the weights")
 }
 
 /// The inputs, the network, the formats, additions only, the maps
 /// and the measures.
 pub fn core() -> &'static str {
-    section(SOURCE, "# -- the inputs", "# -- end of the core")
+    section(SOURCE, "### The inputs", "# -- end of the core")
 }
 
 /// The functions and the weights in each format (the core up to the maps).
 pub fn functions() -> &'static str {
-    section(SOURCE, "# -- the inputs", "# -- the maps")
+    section(SOURCE, "### The inputs", "### The maps")
 }
 
 /// The maps: every map point through each format.
 pub fn maps() -> &'static str {
-    section(SOURCE, "# -- the maps", "# -- the measures")
+    section(SOURCE, "### The maps", "### The measures")
 }
 
 /// The measures (they read `y32`, FP32's map).
 pub fn measures() -> &'static str {
-    section(SOURCE, "# -- the measures", "# -- end of the core")
+    section(SOURCE, "### The measures", "# -- end of the core")
 }
 
 /// The map line computing `name` (`y32 := grid u:n_et m32`, ...).

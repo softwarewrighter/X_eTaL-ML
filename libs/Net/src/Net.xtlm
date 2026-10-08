@@ -1,37 +1,41 @@
-# Net: a network written as one line -- its layer sizes and activations become ordinary NN calls
-# Import it with an alias of your choice: "net:" u_se< "Net".
-# Put libs/Net/src on XETAL_PATH ("just path"); the reference is libs/Net/docs.
-# Names with m: are macros; the others are private to this file.
-#
-# A macro is a function from the source text written left and right of
-# its call to the source that replaces the call, before the program is
-# compiled (X_eTaL MC10); xetal expand FILE shows the result. A spec
-# is a list of words: sizes and activations, the input's size first:
-# "784 128 relu 10 softmax". A size after the first is a dense layer
-# (nn:d_ense, with its weights: one array per layer, the bias its last
-# row); an activation is a function of NN (relu, sigmoid, tanh,
-# softmax, logSoftmax). The expansion calls NN under the alias nn:
-# (an expansion cannot ask which alias the caller chose), so import
-# NN as "nn:" u_se< "NN".
+## Net: a network written as one line -- its layer sizes and activations become ordinary NN calls
+##
+## Import it with an alias of your choice: "net:" u_se< "Net".
+## Put libs/Net/src on XETAL_PATH ("just path"); the reference is libs/Net/docs.
+## Names with m: are macros; the others are private to this file.
+##
+## A macro is a function from the source text written left and right of
+## its call to the source that replaces the call, before the program is
+## compiled (X_eTaL MC10); xetal expand FILE shows the result. A spec
+## is a list of words: sizes and activations, the input's size first:
+## "784 128 relu 10 softmax". A size after the first is a dense layer
+## (nn:d_ense, with its weights: one array per layer, the bias its last
+## row); an activation is a function of NN (relu, sigmoid, tanh,
+## softmax, logSoftmax). The expansion calls NN under the alias nn:
+## (an expansion cannot ask which alias the caller chose), so import
+## NN as "nn:" u_se< "NN".
 
-# The words of t: runs of characters other than white space, boxed
-# (after X_eTaL's Combinators.xtlm).
+### Reading a spec (private)
+
+## The words of t: runs of characters other than white space, boxed
+## (after X_eTaL's Combinators.xtlm).
 w_ords := { t -> (n_ot t m_ember? " \n\t") p_artition t }
-# The boxed texts b joined into one text ("" for none).
+## The boxed texts b joined into one text ("" for none).
 j_oin := { b ->
   0 = t_ally b ? ""
   d_isclose '{ x y -> e_nclose (d_isclose x) c_at d_isclose y } r_/ b
 }
-# Whether the text w is a whole number (a layer's size).
+## Whether the text w is a whole number (a layer's size).
 s_ize? := { w -> '& r_/ w m_ember? "0123456789" }
-# Whether the text w names an activation.
+## Whether the text w names an activation.
 a_ct? := { w -> '| r_/ '{ a -> w m_atch d_isclose a } e_ach w_ords "relu sigmoid tanh softmax logSoftmax" }
-# An activation's function in NN: relu -> nn:r_elu.
+## An activation's function in NN: relu -> nn:r_elu.
 a_ct := { w -> "nn:" c_at (1 t_ake w) c_at "_" c_at 1 d_rop w }
-# The spec's sizes, as Ints.
+## The spec's sizes, as Ints.
 s_izes := { ws -> f_loor n_umbers j_oin '{ w -> (s_ize? d_isclose w) ? (d_isclose w) c_at " "; "" } m_ap ws }
+## What a spec looks like, for the messages.
 specShape := "a spec is sizes and activations, the input's size first: \"784 128 relu 10 softmax\""
-# What is wrong with the spec's words ws, or "".
+## What is wrong with the spec's words ws, or "".
 w_rong := { ws ->
   2 > t_ally ws ? specShape
   n_ot s_ize? d_isclose f_irst ws ? specShape
@@ -40,8 +44,10 @@ w_rong := { ws ->
   ""
 }
 
-# The forward function for the spec's words ws and the weight names
-# ns: a lambda of nn: calls, the input x through each layer in turn.
+### Writing the forward pass (private)
+
+## The forward function for the spec's words ws and the weight names
+## ns: a lambda of nn: calls, the input x through each layer in turn.
 f_unction := { ws ns ->
   size := '{ w -> s_ize? d_isclose w } e_ach ws
   k := '+ s_\ 0 + size
@@ -58,12 +64,14 @@ f_unction := { ws ns ->
   } m_ap 1 d_rop r_ange t_ally ws
   "{ x -> " c_at (j_oin r_ev pre) c_at "x" c_at (j_oin post) c_at " }"
 }
-# What is wrong with the weight names ns for the spec's words ws, or "".
+## What is wrong with the weight names ns for the spec's words ws, or "".
 c_ount := { ws ns ->
   dense := -1 + '+ r_/ '{ w -> 0 + s_ize? d_isclose w } e_ach ws
   (t_ally ns) = dense ? ""
   "name one weight array per dense layer: " c_at (f_ormat dense) c_at " for this spec, " c_at (f_ormat t_ally ns) c_at " given"
 }
+
+### Networks
 
 ## A forward function for the network the spec on the left describes,
 ## using the weight arrays named on the right, one per dense layer in
@@ -102,30 +110,32 @@ m:m_odel< := { what spec ->
   (j_oin load) c_at name c_at " := " c_at ws f_unction ns
 }
 
-# The function of NN for an activation word (relu -> nn:r_elu); "" for none.
+### Writing backpropagation (private)
+
+## The function of NN for an activation word (relu -> nn:r_elu); "" for none.
 a_ctFn := { w -> 0 = t_ally w ? ""; (a_ct w) c_at " " }
-# Its slope at its output A (the name of the array), times which the
-# error goes back through it; "" when there is none.
+## Its slope at its output A (the name of the array), times which the
+## error goes back through it; "" when there is none.
 s_lope := { w a ->
   w m_atch "relu" ? " * f_loat " c_at a c_at " > 0.0"
   w m_atch "tanh" ? " * 1.0 - " c_at a c_at " * " c_at a
   w m_atch "sigmoid" ? " * " c_at a c_at " * 1.0 - " c_at a
   ""
 }
-# The activation after each dense layer of the spec's words ws (a box
-# per layer, "" for none).
+## The activation after each dense layer of the spec's words ws (a box
+## per layer, "" for none).
 a_cts := { ws ->
   size := '{ w -> s_ize? d_isclose w } e_ach ws
   at := 1 d_rop w_here size
   '{ p -> (p < t_ally ws) & (n_ot (p + 1) s_elect size) ? d_isclose (p + 1) s_elect ws; "" } m_ap at
 }
-# N as text.
+## N as text.
 t_xt := { n -> f_ormat n }
 
-# The lines that take the weights from the boxed state s, run the
-# spec's network forward from the inputs and back from the targets,
-# and bind each layer's gradient G1 .. GL. ws: the spec's words; xy:
-# the inputs' and targets' names, boxed.
+## The lines that take the weights from the boxed state s, run the
+## spec's network forward from the inputs and back from the targets,
+## and bind each layer's gradient G1 .. GL. ws: the spec's words; xy:
+## the inputs' and targets' names, boxed.
 b_ackprop := { ws xy ->
   x := d_isclose 1 s_elect xy
   y := d_isclose 2 s_elect xy
@@ -139,12 +149,14 @@ b_ackprop := { ws xy ->
   grads := j_oin '{ l -> "  G" c_at (t_xt l) c_at " := (o_\\ A" c_at (t_xt l - 1) c_at " c_at_2 ((t_ally A" c_at (t_xt l - 1) c_at ") c_at 1) r_eshape 1.0) '+ '* i_nner D" c_at (t_xt l) c_at "\n" } m_ap r
   take c_at "  A0 := " c_at x c_at "\n" c_at fwd c_at dL c_at back c_at grads
 }
-# What is wrong with a trainable spec's words ws, or "".
+## What is wrong with a trainable spec's words ws, or "".
 t_rainable := { ws ->
   0 < t_ally w_rong ws ? w_rong ws
   n_ot (d_isclose f_irst r_ev ws) m_atch "softmax" ? "a network trained with cross-entropy ends in softmax"
   ""
 }
+
+### Training
 
 ## The gradient of the cross-entropy loss by each layer's weights, for
 ## the network the spec on the right describes: on the left the
@@ -196,9 +208,14 @@ m:s_tate< := { @ weights ->
   ws c_at zs c_at zs c_at "e_nclose 0.0"
 }
 
+### Counting and checking
+
 ## How many numbers the network of the spec on the left has to learn
 ## (weights and biases), worked out when the program is compiled: the
 ## call becomes that number. Nothing is written on the right: @.
+## >> "net:" u_se< "Net"
+## >> "2 16 relu 16 relu 3 softmax" net:p_arams< @
+## 371
 m:p_arams< := { spec @ ->
   ws := w_ords spec
   0 < t_ally w_rong ws ? "bad-macro-argument left" []R_EJECT w_rong ws
@@ -209,6 +226,11 @@ m:p_arams< := { spec @ ->
 ## Whether the weight arrays named on the right have the shapes the
 ## spec on the left says (a layer from m inputs to n outputs is
 ## m + 1 by n: the bias is the last row): 1 or 0.
+## >> "net:" u_se< "Net"
+## >> w1 := 3 4 r_eshape 0.0
+## >> w2 := 5 3 r_eshape 0.0
+## >> "2 4 tanh 3 softmax" net:s_hapes< "w1 w2"
+## 1
 m:s_hapes< := { spec weights ->
   ws := w_ords spec
   ns := w_ords weights

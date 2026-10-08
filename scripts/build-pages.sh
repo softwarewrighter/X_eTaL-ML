@@ -4,6 +4,7 @@
 # commit, which GitHub Pages serves (nothing is built on GitHub).
 #   - every demo with a web app (demos/<slug>/web/) is built with trunk
 #     into pages/<slug>/, served under /X_eTaL-ML/<slug>/;
+#   - pages/doc/, the cross-reference (scripts/doc-site.sh);
 #   - pages/index.html, the catalog, from every demo.toml.
 # A demo removed from demos/ loses its pages/<slug>/.
 #   scripts/build-pages.sh
@@ -34,6 +35,7 @@ for d in "$root"/pages/*/; do
   s="$(basename "$d")"
   printf '%s\n' ${keep[@]+"${keep[@]}"} | grep -qx "$s" || { echo "removing pages/$s/"; rm -rf "$d"; }
 done
+"$root/scripts/doc-site.sh"
 cp "$root/images/modern-xetal-logo.jpg" "$root/images/favicon.ico" "$root/pages/"
 "$root/scripts/build-catalog.py"
 echo "pages/ built; just publish puts it live (after committing your changes)."

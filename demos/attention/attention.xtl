@@ -1,33 +1,34 @@
 #!/usr/bin/env xetal
-# Attention as array algebra: every token's query meets every token's
-# key in one matrix product, S = Q K^T / sqrt d; softmax turns each row
-# into weights; the output is the weighted sum of the values, Y = A V.
-# One head, hand-set so that a word looks for what it can describe.
+## Attention as array algebra: every token's query meets every token's
+## key in one matrix product, S = Q K^T / sqrt d; softmax turns each row
+## into weights; the output is the weighted sum of the values, Y = A V.
+## One head, hand-set so that a word looks for what it can describe.
+
 "nn:" u_se< "NN"
 
-# -- the vocabulary and the head, read from data/ ---------
+### The vocabulary and the head, read from data/
 names := 8 t_ake_2 21 9 r_eshape []N_GET "data/words.txt"
 F := 21 8 r_eshape n_umbers []N_GET "data/features.txt"
 Wq := 8 2 r_eshape n_umbers []N_GET "data/wq.txt"
 Wk := 8 2 r_eshape n_umbers []N_GET "data/wk.txt"
 
-# -- the core: attention for tokens X, where mask M allows ---
+### The core: attention for tokens X, where mask M allows
 u:s_cores := { X -> ((X '+ '* i_nner Wq) '+ '* i_nner o_\ X '+ '* i_nner Wk) / 2.0 ^ 0.5 }
 u:a_ttend := { X M -> nn:s_oftmax (u:s_cores X) - 1e9 * 1.0 - M }
 # -- end of the core ---------------------------------------
 
-# -- drawing: rows labeled with their words ----------------
+### Drawing: rows labeled with their words
 u:s_hade := { A -> (1 + f_loor 0.5 + 7.0 * A) s_elect " .:-=+*#" }
 u:r_ows := { ids C -> (ids s_elect names) c_at_2 (((t_ally ids) c_at 2) r_eshape " ") c_at_2 C }
 u:w_ide := { C -> ((-1 t_ake s_hape C) r_eshape 3) r_eplicate_2 C }
 u:h_eader := { ids -> "          " c_at r_avel (1 t_ake_2 ids s_elect names) c_at_2 ((t_ally ids) c_at 2) r_eshape " " }
-# The word each row looks at most, or - when no word gets half its weight.
+## The word each row looks at most, or - when no word gets half its weight.
 u:t_op := { ids A ->
   sure := 0.5 <= 'm_ax r_/_2 A
   ids u:r_ows ((sure * (nn:a_rgmax A) s_elect ids) + 22 * n_ot sure) s_elect names c_at 1 8 r_eshape "-       "
 }
 
-# "the animal did not cross the street because it was tired"
+## "the animal did not cross the street because it was tired"
 ids := 1 3 12 15 13 1 7 20 11 14 16
 X := ids s_elect F
 n := t_ally ids
@@ -44,15 +45,15 @@ ids u:t_op A
 # animal's feature (animate, the first).
 (f_loat f_loor 0.5 + 100.0 * 11 s_elect A '+ '* i_nner X) / 100.0
 
-# A causal mask (a word sees only itself and the words before it, as
-# when generating text): "it" still finds the animal; "the" sees itself.
+## A causal mask (a word sees only itself and the words before it, as
+## when generating text): "it" still finds the animal; "the" sees itself.
 causal := f_loat (r_ange n) '>= t_able r_ange n
 u:h_eader ids
 ids u:r_ows u:w_ide u:s_hade X u:a_ttend causal
 
-# "... because it was wide": wide finds the street. "it" still finds
-# the animal: one head reads each word alone, so "it" cannot know yet
-# which word comes after it; resolving it takes another layer.
+## "... because it was wide": wide finds the street. "it" still finds
+## the animal: one head reads each word alone, so "it" cannot know yet
+## which word comes after it; resolving it takes another layer.
 w := 1 3 12 15 13 1 7 20 11 14 18
 B := (w s_elect F) u:a_ttend everyone
 w u:t_op B

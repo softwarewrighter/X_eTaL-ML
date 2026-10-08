@@ -1,23 +1,23 @@
 #!/usr/bin/env xetal
-# A 1.58-bit network: a tiny classifier (which of three spiral arms a
-# point is on, 2 -> 16 -> 16 -> 3) run with its weights stored four
-# ways: 32-bit and 16-bit floats (simulated by rounding), 8-bit
-# integers, and ternary -1 / 0 / +1 (log2 3 = 1.58 bits each), where
-# a layer is additions and subtractions of its inputs and one scale.
-# The same points go through all four; the measures compare them.
+## A 1.58-bit network: a tiny classifier (which of three spiral arms a
+## point is on, 2 -> 16 -> 16 -> 3) run with its weights stored four
+## ways: 32-bit and 16-bit floats (simulated by rounding), 8-bit
+## integers, and ternary -1 / 0 / +1 (log2 3 = 1.58 bits each), where
+## a layer is additions and subtractions of its inputs and one scale.
+## The same points go through all four; the measures compare them.
 
-# The map's side (g by g points) and the ternary threshold (a weight
-# is kept as +1 or -1 when its size passes t times the layer's mean).
+## The map's side (g by g points) and the ternary threshold (a weight
+## is kept as +1 or -1 when its size passes t times the layer's mean).
 g := 12
 t := 0.5
 
-# -- the weights, read from data/ (just ternary-train) --------
-# fp: trained in full precision; qa: fine-tuned for ternary
-# weights. Each is 17 x 3 x 16: for each row (16 inputs, padded
-# with 0, then the bias), layer and output (padded with 0).
+### The weights, read from data/ (just ternary-train)
+## fp: trained in full precision; qa: fine-tuned for ternary
+## weights. Each is 17 x 3 x 16: for each row (16 inputs, padded
+## with 0, then the bias), layer and output (padded with 0).
 fp := 17 3 16 r_eshape n_umbers []N_GET "data/fp.txt"
 qa := 17 3 16 r_eshape n_umbers []N_GET "data/qa.txt"
-# The test points, one per line: x, y and the arm (1, 2 or 3).
+## The test points, one per line: x, y and the arm (1, 2 or 3).
 tp := n_umbers []N_GET "data/test.txt"
 tp := o_\ (((t_ally tp) d_iv 3) c_at 3) r_eshape tp
 px := 1 s_elect tp
@@ -26,20 +26,20 @@ pl := 3 s_elect tp
 # -- end of the weights ----------------------------------------------
 
 m := qa
-# -- the inputs: points padded to 16 numbers ------------
-# Each point (x, y) becomes x e1 + y e2: a row of 16 with the rest 0,
-# so every layer is the same 16 wide.
+### The inputs: points padded to 16 numbers
+## Each point (x, y) becomes x e1 + y e2: a row of 16 with the rest 0,
+## so every layer is the same 16 wide.
 e1 := 16 t_ake 1.0
 e2 := 16 t_ake 0.0 1.0
 u:p_ad := { x y -> (x '* t_able e1) + y '* t_able e2 }
-# The map: g by g points over -1.1 .. 1.1, row by row, y downwards.
+## The map: g by g points over -1.1 .. 1.1, row by row, y downwards.
 c := -1.1 + 2.2 * (0.5 + f_loat o_ffsets g) / f_loat g
 gx := r_avel (o_ffsets g) 'r_ight t_able c
 gy := r_avel (r_ev c) 'l_eft t_able o_ffsets g
 grid := gx u:p_ad gy
 test := px u:p_ad py
-# -- the network: three layers of one array -------------
-# A layer plane p (17 x 16): 16 rows of weights, then the biases.
+### The network: three layers of one array
+## A layer plane p (17 x 16): 16 rows of weights, then the biases.
 u:l_ayer := { x p -> (x '+ '* i_nner 16 t_ake p) + (o_ffsets t_ally x) 'r_ight t_able f_irst -1 t_ake p }
 u:r_elu := { x -> 0.0 m_ax x }
 u:n_et := { x k ->
@@ -47,25 +47,25 @@ u:n_et := { x k ->
   h := u:r_elu h u:l_ayer 2 s_elect_2 k
   3 t_ake_2 h u:l_ayer 3 s_elect_2 k
 }
-# -- the formats: the weights rounded four ways ---------
-# w is 16 x 3 x 16 (input, layer, output); a value per layer is
-# spread back over its layer; the biases stay as they are.
+### The formats: the weights rounded four ways
+## w is 16 x 3 x 16 (input, layer, output); a value per layer is
+## spread back over its layer; the biases stay as they are.
 w := 16 t_ake m
 nw := 32.0 256.0 48.0
 u:l_ayers := { v -> (o_ffsets 16) 'r_ight t_able v 'l_eft t_able o_ffsets 16 }
 u:w_ith := { q k -> q c_at -1 t_ake k }
-# Floats: keep b bits after the leading one (23 for FP32, 10 FP16).
+## Floats: keep b bits after the leading one (23 for FP32, 10 FP16).
 u:f_loats := { b x ->
   s := 2.0 ^ (f_loat f_loor (l_og 0.000000001 m_ax a_bs x) / l_og 2.0) - b
   s * f_loat f_loor 0.5 + x / s
 }
-# INT8: each layer's largest weight becomes 127.
+## INT8: each layer's largest weight becomes 127.
 u:i_nt8 := { x ->
   s := u:l_ayers ('m_ax r_/_13 a_bs x) / 127.0
   s * f_loat f_loor 0.5 + x / s
 }
-# Ternary: +1 or -1 where the size passes t times the layer's mean
-# size, else 0; the scale a is the mean size of the kept weights.
+## Ternary: +1 or -1 where the size passes t times the layer's mean
+## size, else 0; the scale a is the mean size of the kept weights.
 u:t_ern := { k x ->
   s := k * u:l_ayers ('+ r_/_13 a_bs x) / nw
   (f_loat x > s) - f_loat x < n_eg s
@@ -76,21 +76,21 @@ m32 := (23.0 u:f_loats w) u:w_ith m
 m16 := (10.0 u:f_loats w) u:w_ith m
 m8 := (u:i_nt8 w) u:w_ith m
 m2 := (a * q) u:w_ith m
-# -- additions only: a ternary layer for one input h ----
-# Sum the inputs where the weight is +1, subtract those where it is
-# -1, then one multiply by the layer's scale.
+### Additions only: a ternary layer for one input h
+## Sum the inputs where the weight is +1, subtract those where it is
+## -1, then one multiply by the layer's scale.
 u:a_dds := { h k -> ('+ r_/ (h 'l_eft t_able o_ffsets 16) * f_loat k = 1.0) - '+ r_/ (h 'l_eft t_able o_ffsets 16) * f_loat k = -1.0 }
-# -- the maps: every map point through each format -----
+### The maps: every map point through each format
 y32 := grid u:n_et m32
 y16 := grid u:n_et m16
 y8 := grid u:n_et m8
 y2 := grid u:n_et m2
-# -- the measures ---------------------------------------
-# The arm each point is given (the largest of its three outputs).
+### The measures
+## The arm each point is given (the largest of its three outputs).
 u:a_rm := { y -> '+ r_/_2 (f_loat y = ('m_ax r_/_2 y) 'l_eft t_able o_ffsets 3) * (o_ffsets t_ally y) 'r_ight t_able 1.0 2.0 3.0 }
 u:m_ean := { x -> ('+ r_/ r_avel x) / f_loat t_ally r_avel x }
-# For a format's weights k and its map y: accuracy on the test
-# points, agreement with FP32 over the map, mean output error.
+## For a format's weights k and its map y: accuracy on the test
+## points, agreement with FP32 over the map, mean output error.
 u:m_easures := { k y ->
   acc := u:m_ean f_loat pl = u:a_rm test u:n_et k
   agree := u:m_ean f_loat (u:a_rm y) = u:a_rm y32

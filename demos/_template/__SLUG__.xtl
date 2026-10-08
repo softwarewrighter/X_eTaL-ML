@@ -1,5 +1,6 @@
 #!/usr/bin/env xetal
-# __TITLE__: replace this program. Each top-level *.xtl in the demo
-# directory is run by `just test` (with --seed 1) and its output
-# compared with its reg-rs baseline reg/cli-<name> (.rgt, .out, .err).
+## __TITLE__: replace this program. Each top-level *.xtl in the demo
+## directory is run by `just test` (with --seed 1) and its output
+## compared with its reg-rs baseline reg/cli-<name> (.rgt, .out, .err).
+
 '+ r_/ r_ange 10

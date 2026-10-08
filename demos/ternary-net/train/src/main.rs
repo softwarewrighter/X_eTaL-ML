@@ -1,6 +1,5 @@
 //! Trains the ternary-net demo's network offline and writes its weights
-//! into `../ternary-net.xtl`, between `# -- the weights` and
-//! `# -- end of the weights`.
+//! into `../data/`, where `../ternary-net.xtl` reads them.
 //!
 //! The task: which of three spiral arms a point (x, y) in -1..1 belongs
 //! to. The network: 2 -> 16 -> 16 -> 3, ReLU between layers. Two sets of

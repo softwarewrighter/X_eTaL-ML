@@ -1,9 +1,10 @@
 #!/usr/bin/env xetal
-# XOR learned, the network and its training each written as one line:
-# t_rain< writes the training step (backpropagation and Adam) from the
-# same spec n_etwork< reads. Small random weights at the start.
-# Run with "just demo-lib Net train-xor"; see what was written with
-# "just expand-lib Net train-xor".
+## XOR learned, the network and its training each written as one line:
+## t_rain< writes the training step (backpropagation and Adam) from the
+## same spec n_etwork< reads. Small random weights at the start.
+## Run with "just demo-lib Net train-xor"; see what was written with
+## "just expand-lib Net train-xor".
+
 "nn:" u_se< "NN"
 "net:" u_se< "Net"
 X := 4 2 r_eshape 0.0 0.0 0.0 1.0 1.0 0.0 1.0 1.0

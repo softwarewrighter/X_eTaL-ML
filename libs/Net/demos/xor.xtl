@@ -1,21 +1,22 @@
 #!/usr/bin/env xetal
-# XOR, the network written as one line. NN's own demo builds the same
-# two layers by hand; here the spec "2 2 relu 2 softmax" is the
-# network, and xetal expand shows the function the macro wrote.
-# Run with "just demo-lib Net xor"; see it with "just expand-lib Net xor".
+## XOR, the network written as one line. NN's own demo builds the same
+## two layers by hand; here the spec "2 2 relu 2 softmax" is the
+## network, and xetal expand shows the function the macro wrote.
+## Run with "just demo-lib Net xor"; see it with "just expand-lib Net xor".
+
 "nn:" u_se< "NN"
 "net:" u_se< "Net"
-# The four points and their classes (1: same, 2: differ).
+## The four points and their classes (1: same, 2: differ).
 x := 4 2 r_eshape 0.0 0.0 0.0 1.0 1.0 0.0 1.0 1.0
 y := 1 2 2 1
-# The weights, set by hand: each layer's bias is its last row.
+## The weights, set by hand: each layer's bias is its last row.
 w1 := 3 2 r_eshape 1.0 1.0 1.0 1.0 0.0 -1.0
 w2 := 3 2 r_eshape 0.0 4.0 0.0 -8.0 0.0 -2.0
 # How many numbers this network has, counted when the program is
 # compiled, and whether the weights have the shapes the spec says.
 "2 2 relu 2 softmax" net:p_arams< @
 "2 2 relu 2 softmax" net:s_hapes< "w1 w2"
-# The network: a function, written by the macro.
+## The network: a function, written by the macro.
 u:x_or := "2 2 relu 2 softmax" net:n_etwork< "w1 w2"
 p := u:x_or x
 p

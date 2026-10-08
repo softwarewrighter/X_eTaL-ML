@@ -1,0 +1,8 @@
+number = 7
+slug = "xref-docs"
+status = "in-progress"
+description = "the user's go, 2026-10-07: cross-reference docs (X_eTaL's xetal doc, its doc-..."
+role = "production"
+context_files = []
+created_at = "2026-10-07T21:24:02"
+commits = []

@@ -1,11 +1,12 @@
 #!/usr/bin/env xetal
-# One step of training, every array shown: a small network (2 inputs,
-# 4 tanh units, softmax over 3 classes) on six points of a spiral. The
-# forward pass, the loss, each layer's gradient as one expression, the
-# step; then every gradient checked against a finite difference.
+## One step of training, every array shown: a small network (2 inputs,
+## 4 tanh units, softmax over 3 classes) on six points of a spiral. The
+## forward pass, the loss, each layer's gradient as one expression, the
+## step; then every gradient checked against a finite difference.
+
 "nn:" u_se< "NN"
 
-# -- the batch and the starting weights, read from data/ --------
+### The batch and the starting weights, read from data/
 b := 6 3 r_eshape n_umbers []N_GET "data/batch.txt"
 X := 2 t_ake_2 b                       # 6 points, x and y
 Y := 3 nn:o_neHot f_loor r_avel -1 t_ake_2 b   # their arms, one-hot
@@ -13,19 +14,19 @@ W1 := 3 4 r_eshape n_umbers []N_GET "data/w1.txt"   # 2 inputs, then the bias ro
 W2 := 5 3 r_eshape n_umbers []N_GET "data/w2.txt"   # 4 inputs, then the bias row
 lr := 0.5
 
-# -- forward ------------------------------------------------------
+### Forward
 H := nn:t_anh X nn:d_ense W1           # 6 x 4
 P := nn:s_oftmax H nn:d_ense W2        # 6 x 3
 L := Y nn:c_rossEntropy P
 
-# -- backward: each layer's gradient, one expression each ---------
+### Backward: each layer's gradient, one expression each
 u:o_nes := { x -> x c_at_2 ((t_ally x) c_at 1) r_eshape 1.0 }   # a column of 1s: the bias input
 D2 := (P - Y) / f_loat t_ally X                    # loss by the output scores (softmax with cross-entropy)
 G2 := (o_\ u:o_nes H) '+ '* i_nner D2              # W2's gradient, 5 x 3
 D1 := (D2 '+ '* i_nner o_\ -1 d_rop W2) * 1.0 - H * H   # back through W2 and tanh
 G1 := (o_\ u:o_nes X) '+ '* i_nner D1              # W1's gradient, 3 x 4
 
-# -- the step -------------------------------------------------------
+### The step
 V1 := W1 - lr * G1
 V2 := W2 - lr * G2
 u:l_oss := { w1 w2 -> Y nn:c_rossEntropy nn:s_oftmax (nn:t_anh X nn:d_ense w1) nn:d_ense w2 }
@@ -39,8 +40,8 @@ L c_at V1 u:l_oss V2
 # The gradients (rounded): W1's, then W2's.
 u:r_ound G1
 u:r_ound G2
-# Each analytic gradient against a central finite difference, (L(w + e)
-# - L(w - e)) / 2e for every weight: the largest difference of all 27.
+## Each analytic gradient against a central finite difference, (L(w + e)
+## - L(w - e)) / 2e for every weight: the largest difference of all 27.
 e := 0.00001
 u:b_ump := { w i -> e * f_loat (s_hape w) r_eshape i = r_ange t_ally r_avel w }
 F1 := (s_hape W1) r_eshape '{ i -> (((W1 + W1 u:b_ump i) u:l_oss W2) - (W1 - W1 u:b_ump i) u:l_oss W2) / 2.0 * e } e_ach r_ange 12

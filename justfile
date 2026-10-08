@@ -90,6 +90,14 @@ browser-check slug:
 pages:
     scripts/build-pages.sh
 
+# The cross-reference (xetal doc) of every library and demo program, into pages/doc; just pages builds it too
+doc:
+    scripts/doc-site.sh
+
+# Run every ## >> example in the libraries' doc comments (xetal doc --test); the gate runs it
+doc-test:
+    scripts/doc-test.sh
+
 # Publish pages/ as the gh-pages branch's only commit (the live site); needs a clean work tree
 publish:
     scripts/publish-pages.sh

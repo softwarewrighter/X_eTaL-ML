@@ -1,0 +1,1 @@
+X_eTaL-libraries' Plot PR landed (6e7ef0a, the remote agent's note 2026-10-07): just libs-pin 6e7ef0a; drop the stretch-the-losses and needs-two-points workarounds in backprop, train-live and net-macro; loss and accuracy in one p:c_hart!; baselines, docs, publish

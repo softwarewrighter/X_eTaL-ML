@@ -8,7 +8,9 @@
   <b><a href="https://softwarewrighter.github.io/X_eTaL-ML/">The live ML demos</a></b>
   -- every demo running in your browser (WebAssembly)<br>
   <b><a href="https://softwarewrighter.github.io/X_eTaL-ML/recorded/">Run them yourself</a></b>
-  -- every demo at the command line, from a clone
+  -- every demo at the command line, from a clone<br>
+  <b><a href="https://softwarewrighter.github.io/X_eTaL-ML/doc/">Read the code</a></b>
+  -- the cross-reference of every demo program and library (`xetal doc`)
 </p>
 
 Machine learning in [X_eTaL](https://github.com/softwarewrighter/X_eTaL),
@@ -87,7 +89,11 @@ draw a digit and watch a network read it.
 
 Every page shows all the code it runs, beside the arrays that code
 computed. Programs are short: weights and other data live in each
-demo's `data/` directory, not in the source.
+demo's `data/` directory, not in the source. Every program and library
+is in [the cross-reference](https://softwarewrighter.github.io/X_eTaL-ML/doc/)
+(`xetal doc`, `just doc`): its `##` documentation and `###` sections,
+its source drawn as X_eTaL draws it, every name linked to where it is
+defined and used.
 
 ### Run them yourself
 
@@ -123,7 +129,7 @@ imports).
 | | Today |
 | - | ----- |
 | Demos | 7, all live, each with command-line and browser tests; two of them train in X_eTaL |
-| Libraries | NN (12 functions, typed, tested); Net (6 macros, every expansion pinned; written gradients checked against finite differences) |
+| Libraries | NN (12 functions, typed, tested); Net (6 macros, every expansion pinned; written gradients checked against finite differences); every item documented, 28 doc examples run by the gate |
 | X_eTaL | pinned at X_eTaL v0.1.0 (`XETAL_COMMIT`, `just xetal-version`) |
 | Speed | measured and guarded (`just bench-check`, [`docs/speed.md`](docs/speed.md)); the CNN's whole program runs in a third of a second |
 | Waiting on X_eTaL | a grade per row, arrays in and out of the browser engine, `e_ach` returning arrays ([`docs/xetal-asks.md`](docs/xetal-asks.md)) |
@@ -162,7 +168,9 @@ X_eTaL-libraries are pinned the same way (`XETAL_LIBRARIES_COMMIT`).
   (including `types.rgt`, which pins every export's type).
 
 ```bash
-just pages                # build the live site into pages/ (not tracked)
+just pages                # build the live site into pages/ (not tracked), the cross-reference in pages/doc
+just doc                  # the cross-reference alone (xetal doc), into pages/doc
+just doc-test             # run every ## >> example in the libraries' doc comments
 just publish              # put it live: pages/ becomes the gh-pages branch
 just serve-pages          # preview it at http://127.0.0.1:8435/X_eTaL-ML/
 just demos                # the demos, in catalog order

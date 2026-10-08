@@ -20,6 +20,7 @@ echo "ok: shared/microscope"
 "$root/scripts/build-pages.sh" >/dev/null
 "$root/scripts/test-demos.sh"
 "$root/scripts/test-libs.sh"
+"$root/scripts/doc-test.sh"
 "$root/scripts/check-examples.py"
 # Concise X_eTaL: number literals strand, so a shape is written
 # 8 13 2 r_eshape x, never (8 c_at 13 c_at 2) r_eshape x (c_at is for names).

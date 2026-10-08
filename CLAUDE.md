@@ -349,6 +349,14 @@ Read before working:
 5d. A page shows all the code it runs (plan A16): the shared head,
    then each run as run; nothing left out but a large passed-in
    value, written `...` with a comment; a test checks it.
+5e. Programs and libraries carry `xetal doc` comments (X_eTaL S9):
+   `##` above a definition documents it, a `##` block at the top
+   documents the file (a blank line after it, or it documents the
+   line below), `### Title` starts a section, `## >>` lines
+   are examples with their output (library examples are run by the
+   gate, `just doc-test`). `#` stays for remarks, and `# -- end of
+   ...` markers that pages and trainers cut programs at. `just doc`
+   builds the cross-reference into pages/doc (live at /doc).
 6. Macro libraries (`.xtlm`, since X_eTaL v0.1.0) live in a library's
    `src/` like `.xtl` ones; their tests pin each program's expansion
    (`expand-*.rgt`) and check the result against hand-written code.

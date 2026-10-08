@@ -1,44 +1,44 @@
 #!/usr/bin/env xetal
-# A mixture-of-experts router: each token of a sentence is scored
-# against 16 experts by one matrix product, the scores become
-# probabilities (softmax), each token keeps its two most likely
-# experts (top-2), and their probabilities, renormalized, are the
-# gates. The experts' load is how many tokens each one got.
+## A mixture-of-experts router: each token of a sentence is scored
+## against 16 experts by one matrix product, the scores become
+## probabilities (softmax), each token keeps its two most likely
+## experts (top-2), and their probabilities, renormalized, are the
+## gates. The experts' load is how many tokens each one got.
 
-# -- the vocabulary -------------------------------
-# words: the a of and in to cat dog fox bird horse one two three seven ten red blue green brown runs jumps eats sees sleeps park river city home apple bread fish cheese today night morning ?
-# Each word's 8 features (data/features.txt, a row per word, in the
-# order above): animal, number, color, action, place,
-# food, function word, time (fish is an animal and a food; eats an
-# action and food; ? is any word not listed).
+### The vocabulary
+## words: the a of and in to cat dog fox bird horse one two three seven ten red blue green brown runs jumps eats sees sleeps park river city home apple bread fish cheese today night morning ?
+## Each word's 8 features (data/features.txt, a row per word, in the
+## order above): animal, number, color, action, place,
+## food, function word, time (fish is an animal and a food; eats an
+## action and food; ? is any word not listed).
 F := 37 8 r_eshape n_umbers []N_GET "data/features.txt"
-# The embeddings: the features plus a small fixed ripple, so no two
-# words are quite the same.
+## The embeddings: the features plus a small fixed ripple, so no two
+## words are quite the same.
 wr := f_loat (o_ffsets 37) 'l_eft t_able o_ffsets 8
 wc := f_loat (o_ffsets 37) 'r_ight t_able o_ffsets 8
 E := (f_loat F) + 0.15 * s_in (1.7 * wr) + 2.3 * wc
-# -- the router weights ---------------------------
-# 16 experts on a 4 x 4 grid: row r likes feature r
-# (animal, number, color, action), column c likes
-# feature 4 + c (place, food, function word, time),
-# plus a small fixed ripple.
+### The router weights
+## 16 experts on a 4 x 4 grid: row r likes feature r
+## (animal, number, color, action), column c likes
+## feature 4 + c (place, food, function word, time),
+## plus a small fixed ripple.
 fi := (r_ange 8) 'l_eft t_able o_ffsets 16
 ei := (r_ange 8) 'r_ight t_able o_ffsets 16
 W := (2.0 * f_loat (fi = 1 + ei d_iv 4) | fi = 5 + ei m_od 4) + 0.4 * s_in (0.9 * f_loat fi) + 1.3 * f_loat ei
-# -- the scores: every token against every expert ---
+### The scores: every token against every expert
 u:s_cores := { x -> 2.0 * x '+ '* i_nner W }
-# -- softmax: each row into probabilities ---------
-# Each row's largest is taken off first (the same
-# result, no overflow); the row's sum divides it.
+### Softmax: each row into probabilities
+## Each row's largest is taken off first (the same
+## result, no overflow); the row's sum divides it.
 u:s_oftmax := { s ->
   e := e_xp s - ('m_ax r_/_2 s) 'l_eft t_able o_ffsets 16
   e / ('+ r_/_2 e) 'l_eft t_able o_ffsets 16
 }
-# -- top-2: the two largest of each row, as masks ---
-# The largest of each row marks the first expert;
-# taken out, the largest of what is left marks the
-# second. The gates are the two probabilities over
-# their sum, 0 for the other 14 experts.
+### Top-2: the two largest of each row, as masks
+## The largest of each row marks the first expert;
+## taken out, the largest of what is left marks the
+## second. The gates are the two probabilities over
+## their sum, 0 for the other 14 experts.
 u:t_op2 := { p ->
   m1 := 'm_ax r_/_2 p
   s1 := f_loat p = m1 'l_eft t_able o_ffsets 16
@@ -47,31 +47,31 @@ u:t_op2 := { p ->
   s2 := f_loat p2 = m2 'l_eft t_able o_ffsets 16
   (p * s1 + s2) / (m1 + m2) 'l_eft t_able o_ffsets 16
 }
-# -- the load: how many tokens each expert got ----
+### The load: how many tokens each expert got
 u:l_oad := { g -> '+ r_/ f_loat g > 0.0 }
 # -- end of the core ------------------------------
 
-# -- the nudge: a token pushed towards other words --
-# Word w0 (green) moves towards word wa (fox) by eps
-# from 0 to 1.2 in k steps; the slice spans the
-# directions to wa and to wb (fish), side by side.
+### The nudge: a token pushed towards other words
+## Word w0 (green) moves towards word wa (fox) by eps
+## from 0 to 1.2 in k steps; the slice spans the
+## directions to wa and to wb (fish), side by side.
 w0 := 19
 wa := 9
 wb := 32
 k := 61
 side := 24
-# -- epsilon: where the experts change --------------
-# Each token's first and second expert, 1 to 16.
+### Epsilon: where the experts change
+## Each token's first and second expert, 1 to 16.
 u:f_irst := { g -> '+ r_/_2 (f_loat g = ('m_ax r_/_2 g) 'l_eft t_able o_ffsets 16) * (o_ffsets t_ally g) 'r_ight t_able f_loat r_ange 16 }
 u:s_econd := { g -> ('+ r_/_2 (f_loat g > 0.0) * (o_ffsets t_ally g) 'r_ight t_able f_loat r_ange 16) - u:f_irst g }
 x0 := w0 s_elect E
 d1 := (wa s_elect E) - x0
 d2 := (wb s_elect E) - x0
-# x0 + eps d1 for every eps: one row each.
+## x0 + eps d1 for every eps: one row each.
 eps := 1.2 * (f_loat o_ffsets k) / f_loat k - 1
 xs := (eps '* t_able d1) + (o_ffsets k) 'r_ight t_able x0
 gs := u:t_op2 u:s_oftmax u:s_cores xs
-# The slice: x0 + a d1 + b d2 over a grid of a and b.
+## The slice: x0 + a d1 + b d2 over a grid of a and b.
 c := -0.25 + 1.5 * (f_loat o_ffsets side) / f_loat side - 1
 sa := r_avel (o_ffsets side) 'r_ight t_able c
 sb := r_avel (r_ev c) 'l_eft t_able o_ffsets side
@@ -79,13 +79,13 @@ xg := (sa '* t_able d1) + (sb '* t_able d2) + (o_ffsets side * side) 'r_ight t_a
 gg := u:t_op2 u:s_oftmax u:s_cores xg
 # -- end of the nudge -------------------------------
 
-# "the red fox eats fish in the park": word numbers (from 1).
+## "the red fox eats fish in the park": word numbers (from 1).
 ids := 1 17 9 23 32 5 1 26
 x := ids s_elect E
 s_hape x
 gates := u:t_op2 u:s_oftmax u:s_cores x
-# Each token's first and second expert (numbered 1 to 16, row by
-# row on the grid) and their gates.
+## Each token's first and second expert (numbered 1 to 16, row by
+## row on the grid) and their gates.
 idx := (o_ffsets 8) 'r_ight t_able f_loat r_ange 16
 g1 := 'm_ax r_/_2 gates
 first := '+ r_/_2 idx * f_loat gates = g1 'l_eft t_able o_ffsets 16
@@ -101,7 +101,7 @@ u:r_ound := { v -> (f_loat f_loor 0.5 + v * 1000.0) / 1000.0 }
 (2 c_at k) r_eshape (u:f_irst gs) c_at u:s_econd gs
 pair := (16.0 * u:f_irst gs) + u:s_econd gs
 u:r_ound (1 + w_here (1 d_rop pair) != -1 d_rop pair) s_elect eps
-# The slice, each point's pair as a letter: regions with straight
-# edges, where two experts' scores tie.
+## The slice, each point's pair as a letter: regions with straight
+## edges, where two experts' scores tie.
 pg := (16.0 * u:f_irst gg) + u:s_econd gg
 (side c_at side) r_eshape ((u_nique pg) i_ndexOf pg) s_elect "abcdefghijklmnopqrstuvwxyz"

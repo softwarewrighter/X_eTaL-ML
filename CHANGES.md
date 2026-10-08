@@ -11,6 +11,12 @@ planning and reordering, `release` milestone release, `chore`
 agentrail bookkeeping (step complete, saga archive), `vendor` a
 refresh of the vendored X_eTaL.
 
+## 2026-10-08
+
+- 01:30 `chore` Saga step xref-docs completed.
+- 01:25 `docs` The cross-reference, as X_eTaL publishes its own: `xetal doc` over every library, library demo and demo program into pages/doc, live at /doc (`just doc`; `just pages` builds it), linked from the catalog's lede and footer, each card ("Read the code"), every demo page's footer and the README. NN and Net documented throughout: a `##` file doc, a `##` doc on every item (14 of 14, 23 of 23), `###` sections, 28 `## >>` examples, run by the gate (`just doc-test`). The demo programs' comments became file docs, definition docs and `###` sections (the `# -- end of ...` markers stay); pages cutting at the old dividers follow the new headings; moe-router reads its `## words:` line; two trainers' stale header comments corrected. Every output baseline unchanged. CLAUDE.md rule 5e; the library template is documented.
+- 00:40 `plan` Steps xref-docs (the user's go) and plot-pin (X_eTaL-libraries' Plot PR landed) inserted before cnn-backprop.
+
 ## 2026-10-07
 
 - 20:40 `chore` Saga step plot-curves completed.

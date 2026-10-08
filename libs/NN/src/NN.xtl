@@ -1,57 +1,90 @@
-# NN: neural-network building blocks -- activations, softmax by row, dense layers, one-hot, loss, accuracy
-# Import it with an alias of your choice: "nn:" u_se< "NN".
-# Put libs/NN/src on XETAL_PATH ("just path"); the reference is libs/NN/docs.
-# Names with l: are exported; the others are private to this file.
-#
-# A batch is a matrix, one example per row; a layer's weights are a
-# matrix with one row per input and one column per output, and its
-# bias is one more row at the bottom (so a layer is one array, and
-# x nn:d_ense wb takes two arguments). Activations work item by item
-# on any shape. Softmax, log-softmax and argmax work along the last
-# axis of any array: a vector is one example, a matrix one per row, a
-# rank-3 array a batch of sequences.
+## NN: neural-network building blocks -- activations, softmax by row, dense layers, one-hot, loss, accuracy
+##
+## Import it with an alias of your choice: "nn:" u_se< "NN".
+## Put libs/NN/src on XETAL_PATH ("just path"); the reference is libs/NN/docs.
+## Names with l: are exported; the others are private to this file.
+##
+## A batch is a matrix, one example per row; a layer's weights are a
+## matrix with one row per input and one column per output, and its
+## bias is one more row at the bottom (so a layer is one array, and
+## `x nn:d_ense wb` takes two arguments). Activations work item by item
+## on any shape. Softmax, log-softmax and argmax work along the last
+## axis of any array: a vector is one example, a matrix one per row, a
+## rank-3 array a batch of sequences.
 
-# The row values r (one per row of m) spread across m's columns.
+### Helpers (private)
+
+## The row values r (one per row of m) spread across m's columns.
 s_pread := { r m -> o_\ ((-1 t_ake s_hape m) c_at t_ally r) r_eshape r }
 
-# m as a matrix of its last-axis rows (a vector becomes one row).
+## m as a matrix of its last-axis rows (a vector becomes one row).
 r_ows := { m -> (('* r_/ -1 d_rop s_hape m) c_at -1 t_ake s_hape m) r_eshape m }
 
-# r_elu x: max(x, 0), item by item.
+### Activations
+
+## `r_elu x`: max(x, 0), item by item.
+## >> "nn:" u_se< "NN"
+## >> nn:r_elu -1.5 0.0 2.0
+## 0.0 0.0 2.0
 l:r_elu := { x -> x m_ax 0.0 }
 
-# a l_eaky x: leaky ReLU, x where positive and a times x elsewhere.
+## `a l_eaky x`: leaky ReLU, x where positive and a times x elsewhere.
+## >> "nn:" u_se< "NN"
+## >> 0.1 nn:l_eaky -2.0 3.0
+## -0.2 3.0
 l:l_eaky := { a x -> (x m_ax 0.0) + a * x m_in 0.0 }
 
-# s_igmoid x: 1 / (1 + e^-x), item by item.
+## `s_igmoid x`: 1 / (1 + e^-x), item by item.
+## >> "nn:" u_se< "NN"
+## >> nn:s_igmoid 0.0 2.0
+## 0.5 0.8807970779778823
 l:s_igmoid := { x -> 1.0 / 1.0 + e_xp n_eg x }
 
-# t_anh x: the hyperbolic tangent, as 2 s_igmoid(2x) - 1.
+## `t_anh x`: the hyperbolic tangent, as 2 s_igmoid(2x) - 1.
+## >> "nn:" u_se< "NN"
+## >> nn:t_anh 0.0
+## 0.0
 l:t_anh := { x -> (2.0 * l:s_igmoid 2.0 * x) - 1.0 }
 
-# s_oftmax m: each row into probabilities; the row's largest is taken
-# off first (the same result, no overflow), the row's sum divides.
+### Softmax and argmax: along the last axis
+
+## `s_oftmax m`: each row into probabilities; the row's largest is taken
+## off first (the same result, no overflow), the row's sum divides.
+## >> "nn:" u_se< "NN"
+## >> nn:s_oftmax 1.0 2.0 3.0
+## 0.09003057317038046 0.24472847105479764 0.6652409557748218
 l:s_oftmax := { a ->
   m := r_ows a
   e := e_xp m - ('m_ax r_/_2 m) s_pread m
   (s_hape a) r_eshape e / ('+ r_/_2 e) s_pread e
 }
 
-# l_ogSoftmax m: the logarithm of each row's softmax, computed stably.
+## `l_ogSoftmax m`: the logarithm of each row's softmax, computed stably.
 l:l_ogSoftmax := { a ->
   m := r_ows a
   z := m - ('m_ax r_/_2 m) s_pread m
   (s_hape a) r_eshape z - (l_og '+ r_/_2 e_xp z) s_pread z
 }
 
-# x d_ense wb: the layer x W + b for a batch x (one row each) and wb,
-# the weights W with the bias b as one more row at the bottom.
+### Layers
+
+## `x d_ense wb`: the layer x W + b for a batch x (one row each) and wb,
+## the weights W with the bias b as one more row at the bottom.
+## >> "nn:" u_se< "NN"
+## >> (2 2 r_eshape 1.0 2.0 3.0 4.0) nn:d_ense 3 2 r_eshape 1.0 0.0 0.0 2.0 10.0 20.0
+## 11.0 24.0
+## 13.0 28.0
 l:d_ense := { x wb ->
   (x '+ '* i_nner -1 d_rop wb) + (o_ffsets t_ally x) 'r_ight t_able f_irst -1 t_ake wb
 }
 
-# a_rgmax a: for each row (along the last axis), the position (from
-# 1) of its largest item (the first, on a tie); a vector gives one Int.
+### Labels
+
+## `a_rgmax a`: for each row (along the last axis), the position (from
+## 1) of its largest item (the first, on a tie); a vector gives one Int.
+## >> "nn:" u_se< "NN"
+## >> nn:a_rgmax 2 3 r_eshape 1.0 2.0 3.0 -1.0 0.0 5.0
+## 3 3
 l:a_rgmax := { a ->
   m := r_ows a
   n := f_irst -1 t_ake s_hape m
@@ -59,16 +92,32 @@ l:a_rgmax := { a ->
   (-1 d_rop s_hape a) r_eshape f_loor 'm_in r_/_2 (hit * (o_ffsets t_ally m) 'r_ight t_able f_loat r_ange n) + (1.0 - hit) * f_loat n + 1
 }
 
-# k o_neHot y: the labels y (1 to k) as rows of k Floats, 1.0 at the label.
+## `k o_neHot y`: the labels y (1 to k) as rows of k Floats, 1.0 at the label.
+## >> "nn:" u_se< "NN"
+## >> 3 nn:o_neHot 2 1 3
+## 0.0 1.0 0.0
+## 1.0 0.0 0.0
+## 0.0 0.0 1.0
 l:o_neHot := { k y -> f_loat y '= t_able r_ange k }
 
-# y c_rossEntropy p: the mean over rows of -sum(y log p), for one-hot
-# (or probability) rows y and predicted probabilities p; p is clamped
-# at 1e-12 first, so a probability of 0 costs 27.6, not a log error.
+### Loss and accuracy
+
+## `y c_rossEntropy p`: the mean over rows of -sum(y log p), for one-hot
+## (or probability) rows y and predicted probabilities p; p is clamped
+## at 1e-12 first, so a probability of 0 costs 27.6, not a log error.
+## >> "nn:" u_se< "NN"
+## >> (2 nn:o_neHot 1 2) nn:c_rossEntropy 2 2 r_eshape 0.9 0.1 0.2 0.8
+## 0.164252033486018
 l:c_rossEntropy := { y p -> ('+ r_/ '+ r_/_2 n_eg y * l_og p m_ax 1e-12) / f_loat t_ally p }
 
-# y m_se p: the mean squared error over every item.
+## `y m_se p`: the mean squared error over every item.
+## >> "nn:" u_se< "NN"
+## >> 1.0 2.0 nn:m_se 1.0 4.0
+## 2.0
 l:m_se := { y p -> ('+ r_/ r_avel (y - p) ^ 2) / f_loat t_ally r_avel p }
 
-# y a_ccuracy p: the fraction of rows of p whose argmax is the label y.
+## `y a_ccuracy p`: the fraction of rows of p whose argmax is the label y.
+## >> "nn:" u_se< "NN"
+## >> 3 2 nn:a_ccuracy 2 3 r_eshape 1.0 2.0 3.0 -1.0 0.0 5.0
+## 0.5
 l:a_ccuracy := { y p -> ('+ r_/ f_loat y = l:a_rgmax p) / f_loat t_ally y }
