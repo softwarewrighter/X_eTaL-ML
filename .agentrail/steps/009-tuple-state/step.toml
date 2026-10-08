@@ -1,6 +1,6 @@
 number = 9
 slug = "tuple-state"
-status = "pending"
+status = "in-progress"
 description = "ask M13 landed (tuples through p_ower, X_eTaL 96060b5, pinned 2026-10-08): tr..."
 role = "production"
 context_files = []

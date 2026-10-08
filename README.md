@@ -130,7 +130,7 @@ imports).
 | - | ----- |
 | Demos | 7, all live, each with command-line and browser tests; two of them train in X_eTaL |
 | Libraries | NN (12 functions, typed, tested); Net (6 macros, every expansion pinned; written gradients checked against finite differences); every item documented, 28 doc examples run by the gate |
-| X_eTaL | pinned at X_eTaL main 96060b5, after v0.1.0: tuples, `h:` private names (`XETAL_COMMIT`, `just xetal-version`); X_eTaL-libraries at 6e7ef0a (Plot's charts) |
+| X_eTaL | pinned at X_eTaL main d284a8c, after v0.1.0: tuples with patterns (the training state is one), `h:` private names, the doc site by directory (`XETAL_COMMIT`, `just xetal-version`); X_eTaL-libraries at 69bb369 (Plot's charts, every library documented) |
 | Speed | measured and guarded (`just bench-check`, [`docs/speed.md`](docs/speed.md)); the CNN's whole program runs in a third of a second |
 | Waiting on X_eTaL | a grade per row, arrays in and out of the browser engine, `e_ach` returning arrays ([`docs/xetal-asks.md`](docs/xetal-asks.md)) |
 | Later | more libraries (quantization, convolution, attention, sampling), a tiny GPT, an embedding explorer, training in X_eTaL ([`docs/plan.md`](docs/plan.md)) |

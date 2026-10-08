@@ -82,7 +82,7 @@ fn x_etal_trains_as_adam_in_rust_does_and_learns_the_spiral() {
 fn the_page_shows_every_line_it_runs() {
     use train_live_web::view::program as shown;
     let s = shown(0.02, true, 25);
-    let elided = |l: &&str| ["s := (e_nclose ", "losses := (", "right := ("].iter().any(|p| l.starts_with(p));
+    let elided = |l: &&str| ["s := (3 16 r_eshape ", "losses := (", "right := ("].iter().any(|p| l.starts_with(p));
     for line in program(0.02, Some(&[0.5; STATE]), 25, &[(1.3, 0.3)]).lines().filter(|l| !elided(l)) {
         assert!(s.lines().any(|l| l == line), "not shown: {line}");
     }

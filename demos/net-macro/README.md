@@ -92,8 +92,9 @@ s := 400 'u:s_tep p_ower s0
 ```
 
 `net:t_rain<` writes the forward pass, the backward pass (each layer's
-gradient, each activation's slope) and an Adam step on a state of
-boxed arrays; `net:s_tate<` the starting state. It prints the loss
+gradient, each activation's slope) and an Adam step on a state that
+is a tuple, `(W1, W2, W3, M1, ..., V3, k)`, taken apart by name;
+`net:s_tate<` the starting state. It prints the loss
 and the share of points right before and after: from 1.0959 and 42%
 to 0.0005 and 100% (about 30 ms a step natively).
 

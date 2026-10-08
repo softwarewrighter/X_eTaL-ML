@@ -38,27 +38,22 @@ X := o_\ (2 c_at n) r_eshape ((0.1 + 0.9 * t) * c_os a) c_at (0.1 + 0.9 * t) * s
 ```
 
 The gradient is the [backprop microscope](../backprop/README.md)'s four
-lines, giving W1's and W2's gradients boxed together. The training
-state is seven boxed arrays, `W1 W2 M1 M2 V1 V2 k` (the weights,
-Adam's running averages of gradients and of their squares, the step
-count), so that `p_ower` can iterate it as one value. Adam, one step:
+lines, giving W1's and W2's gradients as a pair. The training state
+is a tuple, `(W1, W2, M1, M2, V1, V2, k)` (the weights, Adam's running
+averages of gradients and of their squares, the step count), so that
+`p_ower` can iterate it as one value, and the step takes it apart by
+name. Adam, one step:
 
 ```
-u:m_ove := { mv k -> ((d_isclose 1 s_elect mv) / 1.0 - 0.9 ^ k) / 0.00000001 + ((d_isclose 2 s_elect mv) / 1.0 - 0.999 ^ k) ^ 0.5 }
-u:a_dam := { s ->
-  W1 := d_isclose 1 s_elect s
-  W2 := d_isclose 2 s_elect s
-  k := 1.0 + d_isclose 7 s_elect s
-  g := W1 u:g_rad W2
-  G1 := d_isclose 1 s_elect g
-  G2 := d_isclose 2 s_elect g
-  M1 := (0.9 * d_isclose 3 s_elect s) + 0.1 * G1
-  M2 := (0.9 * d_isclose 4 s_elect s) + 0.1 * G2
-  V1 := (0.999 * d_isclose 5 s_elect s) + 0.001 * G1 * G1
-  V2 := (0.999 * d_isclose 6 s_elect s) + 0.001 * G2 * G2
-  W1 := W1 - lr * ((e_nclose M1) c_at e_nclose V1) u:m_ove k
-  W2 := W2 - lr * ((e_nclose M2) c_at e_nclose V2) u:m_ove k
-  (e_nclose W1) c_at (e_nclose W2) c_at (e_nclose M1) c_at (e_nclose M2) c_at (e_nclose V1) c_at (e_nclose V2) c_at e_nclose k
+u:m_ove := { (m, v) k -> (m / 1.0 - 0.9 ^ k) / 0.00000001 + (v / 1.0 - 0.999 ^ k) ^ 0.5 }
+u:a_dam := { (W1, W2, M1, M2, V1, V2, k) ->
+  k := 1.0 + k
+  (G1, G2) := W1 u:g_rad W2
+  M1 := (0.9 * M1) + 0.1 * G1
+  M2 := (0.9 * M2) + 0.1 * G2
+  V1 := (0.999 * V1) + 0.001 * G1 * G1
+  V2 := (0.999 * V2) + 0.001 * G2 * G2
+  (W1 - lr * (M1, V1) u:m_ove k, W2 - lr * (M2, V2) u:m_ove k, M1, M2, V1, V2, k)
 }
 ```
 
@@ -73,14 +68,12 @@ The loss and the share of the 300 points right, at the start, after
 100 steps and after 400: from 1.319 and 29.7% to 0.884 and 43%, then
 0.062 and 100%.
 
-## Workarounds
+## History
 
-`p_ower` iterates one value, so the state's seven arrays travel boxed
-in one vector and are taken out by position (`d_isclose 3 s_elect s`).
-Boxes let the arrays keep their own shapes (an earlier version packed
-everything into one flat vector, with offsets); they cannot mix
-element types, and the positions are not names. Tuples with
-destructuring, then records, would let the step take and give
-`(W1; W2; M1; M2; V1; V2; k)` by name: tuples through `p_ower` have
-landed in the X_eTaL this repo pins, and the state moves to them in a
-coming step (ask M13 in [`docs/xetal-asks.md`](../../docs/xetal-asks.md)).
+The state was first one flat vector with offsets (`48 t_ake`), then
+seven boxed arrays taken out by position (`d_isclose 3 s_elect s`),
+while X_eTaL had no way to carry several arrays through `p_ower`.
+Tuples with patterns (ask M13 in
+[`docs/xetal-asks.md`](../../docs/xetal-asks.md)) landed in X_eTaL
+in October 2026, and the state became the tuple above; the output
+did not change.

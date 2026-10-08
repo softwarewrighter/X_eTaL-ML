@@ -19,33 +19,29 @@ u:g_rad := { W1 W2 ->
   H := nn:t_anh X nn:d_ense W1
   D2 := ((nn:s_oftmax H nn:d_ense W2) - Y) / f_loat n
   D1 := (D2 '+ '* i_nner o_\ -1 d_rop W2) * 1.0 - H * H
-  (e_nclose (o_\ u:o_nes X) '+ '* i_nner D1) c_at e_nclose (o_\ u:o_nes H) '+ '* i_nner D2
+  ((o_\ u:o_nes X) '+ '* i_nner D1, (o_\ u:o_nes H) '+ '* i_nner D2)
 }
-u:m_ove := { mv k -> ((d_isclose 1 s_elect mv) / 1.0 - 0.9 ^ k) / 0.00000001 + ((d_isclose 2 s_elect mv) / 1.0 - 0.999 ^ k) ^ 0.5 }
-u:h_and := { s ->
-  W1 := d_isclose 1 s_elect s
-  W2 := d_isclose 2 s_elect s
-  k := 1.0 + d_isclose 7 s_elect s
-  g := W1 u:g_rad W2
-  M1 := (0.9 * d_isclose 3 s_elect s) + 0.1 * d_isclose 1 s_elect g
-  M2 := (0.9 * d_isclose 4 s_elect s) + 0.1 * d_isclose 2 s_elect g
-  V1 := (0.999 * d_isclose 5 s_elect s) + 0.001 * (d_isclose 1 s_elect g) * d_isclose 1 s_elect g
-  V2 := (0.999 * d_isclose 6 s_elect s) + 0.001 * (d_isclose 2 s_elect g) * d_isclose 2 s_elect g
-  W1 := W1 - lr * ((e_nclose M1) c_at e_nclose V1) u:m_ove k
-  W2 := W2 - lr * ((e_nclose M2) c_at e_nclose V2) u:m_ove k
-  (e_nclose W1) c_at (e_nclose W2) c_at (e_nclose M1) c_at (e_nclose M2) c_at (e_nclose V1) c_at (e_nclose V2) c_at e_nclose k
+u:m_ove := { (m, v) k -> (m / 1.0 - 0.9 ^ k) / 0.00000001 + (v / 1.0 - 0.999 ^ k) ^ 0.5 }
+u:h_and := { (W1, W2, M1, M2, V1, V2, k) ->
+  k := 1.0 + k
+  (G1, G2) := W1 u:g_rad W2
+  M1 := (0.9 * M1) + 0.1 * G1
+  M2 := (0.9 * M2) + 0.1 * G2
+  V1 := (0.999 * V1) + 0.001 * G1 * G1
+  V2 := (0.999 * V2) + 0.001 * G2 * G2
+  (W1 - lr * (M1, V1) u:m_ove k, W2 - lr * (M2, V2) u:m_ove k, M1, M2, V1, V2, k)
 }
 # By the macro, from the spec.
 "u:m_acro X Y lr" net:t_rain< "2 16 tanh 3 softmax"
 w1 := 3 16 r_eshape 0.31 -0.42 0.17 0.05 -0.28 0.44 -0.13 0.36
 w2 := 17 3 r_eshape -0.21 0.33 0.08 -0.39 0.26
 s0 := @ net:s_tate< "w1 w2"
-a20 := 20 'u:h_and p_ower s0
-b20 := 20 'u:m_acro p_ower s0
-u:l_oss := { s -> Y nn:c_rossEntropy nn:s_oftmax (nn:t_anh X nn:d_ense d_isclose 1 s_elect s) nn:d_ense d_isclose 2 s_elect s }
-c1 := "W1 as by hand" k:t_est (d_isclose 1 s_elect a20) k:n_ear d_isclose 1 s_elect b20
-c2 := "W2 as by hand" k:t_est (d_isclose 2 s_elect a20) k:n_ear d_isclose 2 s_elect b20
-c3 := "Adam's averages as by hand" k:t_est (r_avel d_isclose 6 s_elect a20) k:n_ear r_avel d_isclose 6 s_elect b20
-c4 := "twenty steps counted" k:t_est 20.0 k:n_ear d_isclose 7 s_elect b20
-c5 := "the loss falls" k:t_est k:t_rue (u:l_oss b20) < u:l_oss s0
+(a1, a2, _, _, _, av2, _) := 20 'u:h_and p_ower s0
+(b1, b2, _, _, _, bv2, bk) := 20 'u:m_acro p_ower s0
+u:l_oss := { W1 W2 -> Y nn:c_rossEntropy nn:s_oftmax (nn:t_anh X nn:d_ense W1) nn:d_ense W2 }
+c1 := "W1 as by hand" k:t_est a1 k:n_ear b1
+c2 := "W2 as by hand" k:t_est a2 k:n_ear b2
+c3 := "Adam's averages as by hand" k:t_est (r_avel av2) k:n_ear r_avel bv2
+c4 := "twenty steps counted" k:t_est 20.0 k:n_ear bk
+c5 := "the loss falls" k:t_est k:t_rue (b1 u:l_oss b2) < w1 u:l_oss w2
 k:r_eport c1 k:a_nd c2 k:a_nd c3 k:a_nd c4 k:a_nd c5

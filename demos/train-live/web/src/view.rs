@@ -13,7 +13,7 @@ pub fn program(lr: f64, trained: bool, steps: usize) -> String {
     let t: Vec<String> = tail(trained.then_some(&[0.0; STATE][..]), steps, if trained { &earlier[..] } else { &[] })
         .lines()
         .map(|l| match l {
-            l if l.starts_with("s := (e_nclose ") => "s := ...   # the state after the steps so far: seven boxed arrays (W1 W2 M1 M2 V1 V2 k)".to_string(),
+            l if l.starts_with("s := (3 16 r_eshape ") => "s := (...)   # the state after the steps so far: (W1, W2, M1, M2, V1, V2, k)".to_string(),
             l if l.starts_with("losses := (") => "losses := (...) c_at 1 t_ake now   # the loss after each run so far".to_string(),
             l if l.starts_with("right := (") => "right := (...) c_at -1 t_ake now   # the share right after each run so far".to_string(),
             l => l.to_string(),

@@ -137,6 +137,9 @@ fn training_runs_on_from_the_state_the_page_holds() {
     let all = train(spec, &sizes, None, 40, &[]).unwrap();
     let half = train(spec, &sizes, None, 20, &[]).unwrap();
     let rest = train(spec, &sizes, Some(&half.state), 20, &[(start.loss, start.right), (half.loss, half.right)]).unwrap();
+    // One layer: the state is (w1, m1, v1, k).
+    let line = train("2 3 softmax", &[2, 3], None, 10, &[]).unwrap();
+    assert_eq!(line.state.len(), 3 * 9 + 1);
     let gap = all.state.iter().zip(&rest.state).map(|(a, b)| (a - b).abs()).fold(0.0, f64::max);
     assert!(gap < 1e-9, "{gap}");
     assert!(rest.loss < start.loss - 0.1);

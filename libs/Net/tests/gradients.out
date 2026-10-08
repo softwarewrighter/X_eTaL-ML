@@ -1,5 +1,5 @@
 ok: relu, sigmoid, softmax
 ok: tanh, none, softmax
-ok: one layer, softmax
+ok: one layer, softmax: one array in, one out
 ok: each gradient has its weights' shape
 4 checks, all passed

@@ -13,6 +13,10 @@ refresh of the vendored X_eTaL.
 
 ## 2026-10-08
 
+- 05:10 `chore` Saga step tuple-state completed.
+- 05:05 `lib` `demo` The training state is a tuple, taken apart by name (ask M13 landed): train-live's Adam step is `{ (W1, W2, M1, M2, V1, V2, k) -> ... }`, its gradient a pair, `u:m_ove` takes `(m, v)`; Net's `net:t_rain<` writes a step whose parameter is the state's pattern and which gives the tuple back, `net:s_tate<` writes `(w1, w2, 0.0 * w1, ...)`, `net:g_radient<` takes and gives tuples (one array for one layer); the pages write the state as a tuple literal and read its parts by name. No `d_isclose N s_elect s` left. Every output unchanged; Net's expansions reblessed after review; its gradient test checks each layer by name.
+- 04:30 `vendor` X_eTaL pinned at d284a8c (tuple patterns; the doc site groups files by directory) and X_eTaL-libraries at 69bb369 (every library documented with ## and ###; Check's helpers h:, no warnings on the new X_eTaL). Every baseline unchanged before the tuple change.
+
 - 03:25 `build` The shared microscope's and xetal-probe's Cargo.lock for X_eTaL 96060b5 (left out of the pin commit).
 - 03:20 `chore` Saga step plot-pin completed.
 - 03:15 `demo` The training curves in one chart with axes: the backprop microscope, train-live and the net-macro page draw with Plot's `p:c_hart!` (a title, named axes, a legend; loss and share right together), from the first run; the losses are no longer stretched and nothing waits for a second point (both workarounds dropped). Tests read the chart's first series.

@@ -42,7 +42,7 @@ pub fn train_program(spec: &str, sizes: &[usize], steps: usize, runs: usize) -> 
     let t: Vec<String> = train_tail(spec, sizes, (runs > 0).then_some(&state[..]), steps, &earlier)
         .lines()
         .map(|l| match l {
-            l if l.starts_with("s := (e_nclose ") => "s := ...   # the state after the steps so far: each layer's weights, Adam's averages, the step count".to_string(),
+            l if l.starts_with("s := (") && l.contains(" r_eshape ") => "s := (...)   # the state after the steps so far: each layer's weights, Adam's averages, the step count".to_string(),
             l if l.starts_with("losses := (") => "losses := (...) c_at 1 t_ake now   # the loss after each run so far".to_string(),
             l if l.starts_with("right := (") => "right := (...) c_at -1 t_ake now   # the share right after each run so far".to_string(),
             l => l.to_string(),
