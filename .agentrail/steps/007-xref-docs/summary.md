@@ -1,0 +1,1 @@
+xetal doc cross-reference at /doc over libs, lib demos and demo programs; NN and Net fully documented with sections and 28 doctests in the gate; demo comments converted; links from catalog/cards/footers/README; rule 5e
