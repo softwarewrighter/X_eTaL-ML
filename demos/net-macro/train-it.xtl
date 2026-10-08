@@ -1,0 +1,42 @@
+#!/usr/bin/env xetal
+# Training a network from its one-line spec: the Net macro library
+# writes, from "2 16 relu 16 relu 3 softmax", the network's backward
+# pass and an Adam step (net:t_rain<) and the starting state
+# (net:s_tate<); p_ower repeats the step. The task is net-macro's: which
+# of three spiral arms is a point on? Here the 300 training points are
+# made in X_eTaL, and the weights start small and random.
+"nn:" u_se< "NN"
+"net:" u_se< "Net"
+
+# -- the spiral: 100 points on each of three arms -----------
+n := 300
+i := o_ffsets n
+arm := i d_iv 100
+t := (0.5 + f_loat i m_od 100) / 100.0
+a := (2.0944 * f_loat arm) + (5.5 * t) + 0.1 * (f_loat (r_oll! n r_eshape 1001) - 501) / 500.0
+X := o_\ (2 c_at n) r_eshape ((0.1 + 0.9 * t) * c_os a) c_at (0.1 + 0.9 * t) * s_in a
+Y := 3 nn:o_neHot 1 + arm
+lr := 0.02
+
+# -- the network and its training, from one spec ------------
+"u:s_tep X Y lr" net:t_rain< "2 16 relu 16 relu 3 softmax"
+# Small random weights of a shape (inputs + 1 by outputs), then the state.
+u:r_andom := { sh -> sh r_eshape (f_loat (r_oll! ('* r_/ sh) r_eshape 2001) - 1001) / 2000.0 }
+w1 := u:r_andom 3 16
+w2 := u:r_andom 17 16
+w3 := u:r_andom 17 3
+s0 := @ net:s_tate< "w1 w2 w3"
+u:s_tart := "2 16 relu 16 relu 3 softmax" net:n_etwork< "w1 w2 w3"
+# -- end of the core ------------------------------------------
+
+# Four hundred steps; then the trained weights, out of the state, and
+# the network on them.
+s := 400 'u:s_tep p_ower s0
+w1 := d_isclose 1 s_elect s
+w2 := d_isclose 2 s_elect s
+w3 := d_isclose 3 s_elect s
+u:t_rained := "2 16 relu 16 relu 3 softmax" net:n_etwork< "w1 w2 w3"
+# The loss and the share of the 300 points right, before and after.
+u:r_ound := { a -> (f_loat f_loor 0.5 + 10000.0 * a) / 10000.0 }
+u:r_ound (Y nn:c_rossEntropy u:s_tart X) c_at Y nn:c_rossEntropy u:t_rained X
+u:r_ound ((1 + arm) nn:a_ccuracy u:s_tart X) c_at (1 + arm) nn:a_ccuracy u:t_rained X

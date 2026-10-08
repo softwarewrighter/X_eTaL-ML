@@ -6,7 +6,7 @@
 //! - `source`: decorated source with a highlighted range; shapes
 //! - `canvas`, `color`: large arrays as pixels
 //! - `cells`: small boards as clickable cells
-//! - `chrome`: header, stage chips, panels, notices, footer
+//! - `chrome`: header, stage chips, panels, pictures, notices, footer
 //! - `libs`: this repo's libraries, importable with `u_se<`
 //!
 //! Pages also link `microscope.css` (trunk: `rel="css"`).

@@ -1,4 +1,4 @@
-use net_macro_web::micro::{clean, head, networks, program, run, typed, typed_programs, weight_names, DATA, SIDE, SOURCE};
+use net_macro_web::micro::{clean, head, networks, parts, program, run, step_written, train, train_head, train_program, trainable, typed, typed_programs, weight_names, DATA, SIDE, SOURCE, TRAIN_SOURCE, TRAIN_SPEC};
 
 fn data(path: &str) -> Vec<f64> {
     DATA.iter().find(|d| d.0 == path).unwrap().1.split_whitespace().map(|t| t.parse().unwrap()).collect()
@@ -100,4 +100,52 @@ fn the_page_shows_every_line_it_runs() {
     for line in a.lines().chain(b.lines()) {
         assert!(s.lines().any(|l| l == line), "not shown: {line}");
     }
+}
+
+#[test]
+fn the_page_trains_with_train_its_own_lines() {
+    let sizes = trainable(TRAIN_SPEC).unwrap();
+    // For the program's own spec the page's head is train-it.xtl's.
+    assert_eq!(train_head(TRAIN_SPEC, &sizes), TRAIN_SOURCE[TRAIN_SOURCE.find("\"nn:\" u_se<").unwrap()..TRAIN_SOURCE.find("# -- end of the core").unwrap()]);
+    let head = train_head("2 8 tanh 3 softmax", &[2, 8, 3]);
+    assert!(head.contains("w1 := u:r_andom 3 8\nw2 := u:r_andom 9 3\n") && !head.contains("w3"), "{head}");
+    assert!(head.contains("net:t_rain< \"2 8 tanh 3 softmax\"") && head.contains("net:s_tate< \"w1 w2\""), "{head}");
+}
+
+#[test]
+fn a_spec_trains_here_only_from_2_inputs_to_3_softmax() {
+    assert_eq!(trainable("2 16 relu 16 relu 3 softmax").unwrap(), [2, 16, 16, 3]);
+    assert_eq!(trainable("2 3 softmax").unwrap(), [2, 3]);
+    for bad in ["784 128 relu 10 softmax", "2 4 tanh 3", "2 4 tanh 2 softmax", "2 100 relu 3 softmax", ""] {
+        assert!(trainable(bad).is_err(), "{bad}");
+    }
+    assert_eq!(parts(&[2, 4, 3]), [(3, 4), (5, 3), (3, 4), (5, 3), (3, 4), (5, 3), (1, 1)]);
+}
+
+#[test]
+fn training_runs_on_from_the_state_the_page_holds() {
+    // 40 steps at once equal 20 then 20 carried through the page's state.
+    let (spec, sizes) = ("2 8 tanh 3 softmax", vec![2, 8, 3]);
+    let start = train(spec, &sizes, None, 0, &[]).unwrap();
+    assert!((start.loss - 1.1).abs() < 0.1 && start.pictures.is_empty(), "{} {}", start.loss, start.pictures.len());
+    let all = train(spec, &sizes, None, 40, &[]).unwrap();
+    let half = train(spec, &sizes, None, 20, &[]).unwrap();
+    let rest = train(spec, &sizes, Some(&half.state), 20, &[(start.loss, start.right), (half.loss, half.right)]).unwrap();
+    let gap = all.state.iter().zip(&rest.state).map(|(a, b)| (a - b).abs()).fold(0.0, f64::max);
+    assert!(gap < 1e-9, "{gap}");
+    assert!(rest.loss < start.loss - 0.1);
+    assert_eq!(rest.points.len(), 900);
+    assert!(rest.pictures.iter().all(|p| p.starts_with("<svg") && p.contains("<polyline")));
+    // Two earlier runs and this one: three points on each curve.
+    assert!(rest.pictures[0].matches(',').count() == 3, "{}", rest.pictures[0]);
+}
+
+#[test]
+fn the_default_spec_learns_the_spiral() {
+    let sizes = trainable(TRAIN_SPEC).unwrap();
+    let a = train(TRAIN_SPEC, &sizes, None, 200, &[]).unwrap();
+    assert!(a.right > 0.9 && a.loss < 0.3, "{} {}", a.loss, a.right);
+    let step = step_written(TRAIN_SPEC, &sizes).unwrap();
+    assert!(step.starts_with("u:s_tep := {") && step.ends_with('}') && step.contains("nn:r_elu"), "{step}");
+    assert!(train_program(TRAIN_SPEC, &sizes, None, 1, &[(1.1, 0.3)]).contains("p:l_ine!"));
 }

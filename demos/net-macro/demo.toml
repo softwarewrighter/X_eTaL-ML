@@ -2,8 +2,8 @@
 # README's demo list and the live catalog (pages/index.html).
 slug = "net-macro"            # the directory name, demos/<slug>/
 title = "Network macro"
-summary = "A network written as one line: a macro library reads a spec such as \"2 16 relu 16 relu 3 softmax\" when the program is compiled and writes the forward function in its place, as ordinary code you can read. Three networks on one task, a spiral: a line, a small network, a deep one. Type a spec of your own and see what the macro writes, or refuses."
-concepts = ["macro libraries (.xtlm)", "xetal expand", "matrix product", "softmax by row"]        # the X_eTaL ideas it shows
+summary = "A network written as one line: a macro library reads a spec such as \"2 16 relu 16 relu 3 softmax\" when the program is compiled and writes the forward function in its place, as ordinary code you can read. Three networks on one task, a spiral: a line, a small network, a deep one. Type a spec of your own and see what the macro writes, or refuses; then train it in your browser from random weights, by the training step the macro writes from the same spec."
+concepts = ["macro libraries (.xtlm)", "xetal expand", "matrix product", "softmax by row", "backpropagation", "p_ower"]        # the X_eTaL ideas it shows
 status = "live"             # draft | live | deferred
 order = 50                  # position in the catalog (lower first)
 needs = []                   # asks in docs/xetal-asks.md it waits on or works around

@@ -82,7 +82,7 @@ draw a digit and watch a network read it.
 | [Training live](demos/train-live/README.md) ([live](https://softwarewrighter.github.io/X_eTaL-ML/train-live/)) | X_eTaL trains a small network on a spiral in your browser; the decision regions bend to follow it as the loss falls | `s := 25 'u:a_dam p_ower s`: Adam's step, iterated |
 | [Attention microscope](demos/attention/README.md) ([live](https://softwarewrighter.github.io/X_eTaL-ML/attention/)) | one head of attention on your sentence: scores, weights, a causal mask; "tired" finds the animal, "wide" the street | `(Q '+ '* i_nner o_\ K) / 2.0 ^ 0.5`: every query against every key |
 | [MoE routing microscope](demos/moe-router/README.md) ([live](https://softwarewrighter.github.io/X_eTaL-ML/moe-router/)) | a sentence's tokens routed to their top-2 of 16 experts; nudge a token and see where the experts switch | `u:t_op2 u:s_oftmax u:s_cores x`: scores, softmax and top-2 for all tokens |
-| [Network macro](demos/net-macro/README.md) ([live](https://softwarewrighter.github.io/X_eTaL-ML/net-macro/)) | a network written as one line; the function the macro wrote for it; three networks on a spiral; type a spec of your own | `"u:d_eep c" net:m_odel< "2 16 relu 16 relu 3 softmax"`: a macro call that becomes the weights' loading and the forward function |
+| [Network macro](demos/net-macro/README.md) ([live](https://softwarewrighter.github.io/X_eTaL-ML/net-macro/)) | a network written as one line; the function the macro wrote for it; three networks on a spiral; type a spec of your own and train it in the browser | `"u:d_eep c" net:m_odel< "2 16 relu 16 relu 3 softmax"`: a macro call that becomes the weights' loading and the forward function |
 | [1.58-bit network](demos/ternary-net/README.md) ([live](https://softwarewrighter.github.io/X_eTaL-ML/ternary-net/)) | one classifier with FP32, FP16, INT8 and ternary weights compared; a ternary layer as additions | `(f_loat x > s) - f_loat x < n_eg s`: a layer's weights to -1, 0, +1 |
 
 Every page shows all the code it runs, beside the arrays that code
@@ -112,9 +112,11 @@ just serve cnn-digits    # its page, at http://127.0.0.1:8435/
 | [Net](libs/Net/docs/README.md) | `net:` | a macro library: `"u:n_et w" net:m_odel< "784 128 relu 10 softmax"` becomes the weights' loading, checked, and an ordinary function of NN calls, shown by `xetal expand`; `"u:s_tep X Y lr" net:t_rain< "2 4 tanh 2 softmax"` writes the network's backprop and an Adam step |
 
 The demos import it (`"nn:" u_se< "NN"`), at the command line and in
-the browser. Tests use the Check library from
+the browser. From
 [X_eTaL-libraries](https://github.com/softwarewrighter/X_eTaL-libraries),
-pinned like X_eTaL itself.
+pinned like X_eTaL itself, the tests use Check and the pages draw
+training curves with Plot (and Strings, Format and Lists, which it
+imports).
 
 ## Status
 
@@ -146,8 +148,8 @@ commit it is known to work with, and `just xetal` clones X_eTaL into
 the gitignored `work/xetal/`, checks that commit out, builds it and
 links `bin/xetal` to the binary (as X_eTaL's `docs/vendoring.md`
 describes). Every recipe runs that binary, so results do not depend
-on whatever `xetal` is on your PATH. The Check library from
-X_eTaL-libraries is pinned the same way (`XETAL_LIBRARIES_COMMIT`).
+on whatever `xetal` is on your PATH. The libraries used from
+X_eTaL-libraries are pinned the same way (`XETAL_LIBRARIES_COMMIT`).
 `just xetal-pin [REF]` moves to a newer X_eTaL.
 
 ### Layout

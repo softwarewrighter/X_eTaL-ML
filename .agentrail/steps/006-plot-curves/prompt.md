@@ -1,0 +1,1 @@
+the user's go, 2026-10-07: the backprop microscope's loss history drawn as a curve by X_eTaL-libraries' Plot (p:l_ine!, in the page's program), and train-live's loss/accuracy curves drawn by Plot instead of the page's Rust SVG; Plot's gaps (axes, several lines, the range of at least 1) told to X_eTaL-libraries

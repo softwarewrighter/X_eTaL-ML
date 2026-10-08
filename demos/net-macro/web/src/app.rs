@@ -1,24 +1,27 @@
 //! The page: a spec to pick or type, the line that calls the macro, the
 //! function the macro wrote, the parameter count, and for the program's
-//! trained networks what they decide over the plane.
+//! trained networks what they decide over the plane; and any spec from
+//! 2 inputs to 3 softmax trained in the page, from random weights, by
+//! the step the macro writes.
 
 use std::rc::Rc;
 
+use gloo_timers::callback::Timeout;
 use web_sys::HtmlInputElement;
 use yew::prelude::*;
 
 use microscope::canvas::Canvas;
-use microscope::chrome::{footer, header, panel};
+use microscope::chrome::{footer, header, notice, panel, picture};
 use microscope::source::{block, code, NONE};
 
-use crate::micro::{networks, weight_names, SIDE};
-use crate::model::{Action, Model, Shown};
-use crate::view::{map, source};
+use crate::micro::{networks, trainable, weight_names, SIDE};
+use crate::model::{Action, Model, Shown, CHUNK, LIMIT};
+use crate::view::{map, source, train_source};
 
 fn controls(m: &UseReducerHandle<Model>) -> Html {
     let d = m.dispatcher();
     let on_text = Callback::from(move |e: Event| d.dispatch(Action::Spec(e.target_unchecked_into::<HtmlInputElement>().value())));
-    html! {
+    html! { <>
         <div class="controls">
             <span>{"A network: "}</span>
             { for networks().into_iter().map(|n| {
@@ -30,6 +33,31 @@ fn controls(m: &UseReducerHandle<Model>) -> Html {
             <input class="sentence" type="text" value={m.spec.clone()} onchange={on_text} aria-label="Spec" />
             <span class="gen">{format!("X_eTaL: {:.0} ms", m.ms)}</span>
         </div>
+        <div class="controls">
+            { train_buttons(m) }
+        </div>
+    </> }
+}
+
+fn train_buttons(m: &UseReducerHandle<Model>) -> Html {
+    let d = m.dispatcher();
+    let train = Callback::from(move |_| d.dispatch(Action::Train));
+    let can = trainable(&m.spec).is_ok();
+    match &m.training {
+        None => html! { <>
+            <button class="on" onclick={train} disabled={!can}>{"Train it"}</button>
+            <span class="gen">{ if can { "from random weights, in your browser" } else { "a spec from 2 inputs to 3 softmax trains here" } }</span>
+        </> },
+        Some(t) => {
+            let d = m.dispatcher();
+            let playing = t.playing;
+            let play = Callback::from(move |_| d.dispatch(Action::Play(!playing)));
+            html! { <>
+                <button class="on" onclick={play} disabled={t.steps >= LIMIT}>{ if playing { "Pause" } else { "Go on" } }</button>
+                <button onclick={train}>{"Start again"}</button>
+                <span class="gen">{format!("step {} of {LIMIT} \u{00b7} X_eTaL: {:.0} ms a step", t.steps, t.ms_per_step)}</span>
+            </> }
+        }
     }
 }
 
@@ -76,9 +104,41 @@ fn computes(m: &UseReducerHandle<Model>) -> Html {
     panel("3. What it computes:", "u:d_eep grid", "Which of three spiral arms is a point on? A line cannot follow a spiral; a small network nearly can; the deep one does.", false, body)
 }
 
+fn trains(m: &UseReducerHandle<Model>) -> Html {
+    let note = "From the same spec the macro writes the network's backward pass and an Adam step, then p_ower repeats it: the 300 points of a spiral made in X_eTaL, the weights small and random at the start. Each run is a few steps from the state the page holds.";
+    let body = match (&m.training, trainable(&m.spec)) {
+        (Some(t), _) => {
+            let first = t.history.first().map_or(0.0, |h| h.1);
+            html! { <>
+                <div class="padbox"><Canvas rows={SIDE} cols={SIDE} rgba={Rc::new(map(&t.after.map, &t.after.points))} class="pad" /></div>
+                <p class="calc">{format!("After {} steps: loss {:.3} (from {first:.3}), {:.1}% of the 300 points right.", t.steps, t.after.loss, 100.0 * t.after.right)}</p>
+                { for t.after.pictures.iter().zip(["The loss after each run, stretched to its own range (losses):", "The share of points right after each run (right):"]).map(|(svg, what)| html! { <>
+                    <p class="note">{what}</p>
+                    { picture(svg, what) }
+                </> }) }
+                <p class="note">{"Drawn by the Plot library's p:l_ine!, in the program's last lines, from the second run on."}</p>
+                <p class="calc">{code(&format!("\"u:s_tep X Y lr\" net:t_rain< \"{}\"", m.spec))}{" became:"}</p>
+                { block(&t.step, NONE) }
+            </> }
+        }
+        (None, Ok(_)) => html! { <p class="note">{"Press Train it to train this spec here."}</p> },
+        (None, Err(why)) => html! { <p class="note">{why}</p> },
+    };
+    panel("4. Train it here:", "net:t_rain<", note, false, body)
+}
+
 #[function_component(App)]
 pub fn app() -> Html {
     let model = use_reducer(Model::new);
+    {
+        // While training plays, run the next steps once this frame has drawn.
+        let d = model.dispatcher();
+        let (playing, steps) = model.training.as_ref().map_or((false, 0), |t| (t.playing, t.steps));
+        use_effect_with((playing, steps), move |&(playing, _)| {
+            let t = playing.then(|| Timeout::new(30, move || d.dispatch(Action::Tick)));
+            move || drop(t)
+        });
+    }
     let picked = match &model.shown {
         Shown::Trained(n, _) => Some(n.clone()),
         _ => None,
@@ -88,15 +148,24 @@ pub fn app() -> Html {
         <header>
             { header("Network macro", "A network written as one line. X_eTaL's macro libraries extend the language itself: the Net library reads a spec such as \u{201c}2 16 relu 16 relu 3 softmax\u{201d} when the program is compiled and writes the forward function in its place, as ordinary code you can read. Pick a network, or type a spec of your own, and see what the macro wrote.") }
             { controls(&model) }
+            { notice(&model.notice) }
         </header>
         <main>
             <div class="layout even">
-                <div class="col">{ call(&model) }{ wrote(&model) }{ computes(&model) }</div>
+                <div class="col">{ call(&model) }{ wrote(&model) }{ computes(&model) }{ trains(&model) }</div>
                 <div class="col">
                     <section class="panel code">
                         <h2>{"The program"}</h2>
-                        <p class="note">{"Everything the page runs, in your browser: for a network of net-macro.xtl, the program's head (the data and the three networks) and this run's lines; for a spec you typed, the two small programs. The line that calls the macro is highlighted."}</p>
-                        { source(picked.as_ref(), &model.spec) }
+                        { match &model.training {
+                            Some(t) => html! { <>
+                                <p class="note">{"Everything the page runs to train, in your browser: the head of train-it.xtl for this spec (the spiral, the training step the macro writes, the starting state), then each run's lines. The line that writes the training step is highlighted."}</p>
+                                { train_source(&model.spec, &t.sizes, CHUNK, t.history.len()) }
+                            </> },
+                            None => html! { <>
+                                <p class="note">{"Everything the page runs, in your browser: for a network of net-macro.xtl, the program's head (the data and the three networks) and this run's lines; for a spec you typed, the two small programs. The line that calls the macro is highlighted."}</p>
+                                { source(picked.as_ref(), &model.spec) }
+                            </> },
+                        } }
                     </section>
                 </div>
             </div>

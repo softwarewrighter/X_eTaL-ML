@@ -1,0 +1,1 @@
+the user's go, 2026-10-07: the net-macro live page gets a train-it mode: the spec the user types is trained in the browser from random weights (net:s_tate<) by the step net:t_rain< writes, with the loss/accuracy curves and the decision map redrawn as it learns; the expanded training step shown; tests, docs, publish, check-live

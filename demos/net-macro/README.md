@@ -10,7 +10,8 @@ hidden: `xetal expand` shows what was written.
 Live: [Network macro](https://softwarewrighter.github.io/X_eTaL-ML/net-macro/)
 (pick one of three networks, or type a spec of your own, and see the
 function the macro wrote, its parameter count, and what the network
-decides).
+decides; then train it in your browser from random weights, by the
+training step the macro writes from the same spec).
 
 [![Network macro: the live page](screenshot.png)](https://softwarewrighter.github.io/X_eTaL-ML/net-macro/)
 
@@ -21,6 +22,7 @@ From a clone of this repository (Rust, git and `just`):
 ```bash
 just xetal               # fetch and build the pinned X_eTaL (once)
 just run net-macro       # parameter counts, accuracies, the three decision maps
+just run net-macro train-it.xtl   # the deep network trained from random weights
 just expand net-macro    # the program after macro expansion: what the macros wrote
 just tour net-macro      # each statement, then its result, paced
 just serve net-macro     # the web app at http://127.0.0.1:8435/
@@ -75,6 +77,35 @@ weights, so it is expanded (with `net:n_etwork<`) and counted but not
 run; a spec the macro refuses (an unknown word, no input size) shows
 the macro's own message.
 
+## Training it: `train-it.xtl`
+
+The same spec can train the network. `train-it.xtl` makes 300 points
+of the spiral in X_eTaL, starts from small random weights and repeats
+the step the [Net](../../libs/Net/docs/README.md) library writes:
+
+```
+"u:s_tep X Y lr" net:t_rain< "2 16 relu 16 relu 3 softmax"
+...
+s0 := @ net:s_tate< "w1 w2 w3"
+...
+s := 400 'u:s_tep p_ower s0
+```
+
+`net:t_rain<` writes the forward pass, the backward pass (each layer's
+gradient, each activation's slope) and an Adam step on a state of
+boxed arrays; `net:s_tate<` the starting state. It prints the loss
+and the share of points right before and after: from 1.0959 and 42%
+to 0.0005 and 100% (about 30 ms a step natively).
+
+On the page, "Train it" does this for the spec in the box, any spec
+from 2 inputs to 3 softmax, 10 steps a frame up to 400 (about 40 ms a
+step in the browser for the deep network, so 15 to 20 seconds in
+all): the decision map redraws as it learns, the loss and the share
+right are drawn after each run by the
+[Plot](https://github.com/softwarewrighter/X_eTaL-libraries) library's
+`p:l_ine!` in the program's own last lines, and the training step the
+macro wrote is shown.
+
 ## The data
 
 `data/` holds what the program reads with `n_umbers []N_GET`:
@@ -91,6 +122,12 @@ one place, and trains each with Adam on 300 points of the same spiral
 (a fixed seed: the same weights every run, in about 2 seconds).
 
 ## Workarounds
+
+Plot's line chart (`p:l_ine!`) keeps a vertical range of at least 1,
+so a loss that changes by less would draw nearly flat: the page's
+program stretches the losses to their own range first (the line says
+so), and prints the real values beside the chart. A line also needs
+two points, so the curves appear from the second run on.
 
 The code the macro writes calls NN as `nn:`, so the program imports NN
 under that alias: a macro's text cannot ask which alias the caller

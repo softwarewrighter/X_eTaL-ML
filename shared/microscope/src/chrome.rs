@@ -41,6 +41,12 @@ pub fn panel(title: &str, src: &str, note: &str, focus: bool, body: Html) -> Htm
     }
 }
 
+/// A picture the program showed with `[]S_HOW` (an SVG document X_eTaL
+/// wrote from numbers), scaled to the panel.
+pub fn picture(svg: &str, label: &str) -> Html {
+    html! { <div class="picture" role="img" aria-label={label.to_string()}>{ Html::from_html_unchecked(AttrValue::from(svg.to_string())) }</div> }
+}
+
 /// Why the last change was not shown, if there is a reason.
 pub fn notice(text: &Option<String>) -> Html {
     html! { for text.iter().map(|n| html! { <p class="notice" role="status">{n}</p> }) }

@@ -4,7 +4,7 @@ use microscope::color::Rgb;
 use microscope::source::{between, block, Range};
 use yew::Html;
 
-use crate::micro::{head, tail, typed_programs, Network, SIDE};
+use crate::micro::{head, parts, tail, train_head, train_tail, typed_programs, Network, SIDE};
 
 /// What the page runs, all of it: for a network of the program, the
 /// head (the data, the three networks) then the run's lines; for a
@@ -31,6 +31,30 @@ pub fn range(src: &str, picked: Option<&Network>) -> Range {
 pub fn source(picked: Option<&Network>, spec: &str) -> Html {
     let src = program(picked, spec);
     block(&src, range(&src, picked))
+}
+
+/// What the page runs to train `spec`, all of it: train-it.xtl's head
+/// for the spec, then a run's lines, the state and the history it
+/// carries from run to run elided.
+pub fn train_program(spec: &str, sizes: &[usize], steps: usize, runs: usize) -> String {
+    let state = vec![0.0; parts(sizes).iter().map(|(r, c)| r * c).sum()];
+    let earlier = vec![(0.0, 0.0); runs];
+    let t: Vec<String> = train_tail(spec, sizes, (runs > 0).then_some(&state[..]), steps, &earlier)
+        .lines()
+        .map(|l| match l {
+            l if l.starts_with("s := (e_nclose ") => "s := ...   # the state after the steps so far: each layer's weights, Adam's averages, the step count".to_string(),
+            l if l.starts_with("losses := (") => "losses := (...) c_at 1 t_ake now   # the loss after each run so far".to_string(),
+            l if l.starts_with("right := (") => "right := (...) c_at -1 t_ake now   # the share right after each run so far".to_string(),
+            l => l.to_string(),
+        })
+        .collect();
+    format!("{}# -- each run: a few steps from the state the page holds --\n{}\n", train_head(spec, sizes), t.join("\n"))
+}
+
+pub fn train_source(spec: &str, sizes: &[usize], steps: usize, runs: usize) -> Html {
+    let src = train_program(spec, sizes, steps, runs);
+    let start = "\"u:s_tep X Y lr\" net:t_rain<";
+    block(&src, between(&src, start, start))
 }
 
 const ARMS: [Rgb; 3] = [[255, 224, 178], [200, 230, 201], [187, 222, 251]];
