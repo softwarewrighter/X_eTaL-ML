@@ -1,8 +1,9 @@
 number = 6
 slug = "plot-curves"
-status = "in-progress"
+status = "completed"
 description = "the user's go, 2026-10-07: the backprop microscope's loss history drawn as a ..."
 role = "production"
 context_files = []
 created_at = "2026-10-07T18:58:04"
-commits = []
+completed_at = "2026-10-07T21:19:34"
+commits = ["fec80e4fcf18ad4595c401326e9335e5270ad760"]

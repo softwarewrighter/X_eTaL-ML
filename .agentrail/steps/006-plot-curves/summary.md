@@ -1,0 +1,1 @@
+backprop and train-live curves drawn by Plot in the page programs; workarounds named; ask M14 (shared picture state) with a lock in microscope::run
