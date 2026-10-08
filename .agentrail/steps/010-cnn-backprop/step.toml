@@ -1,4 +1,4 @@
-number = 9
+number = 10
 slug = "cnn-backprop"
 status = "pending"
 description = "training step 4: the Tiny CNN's backward pass after Shinkarov's CNN in APL (r..."

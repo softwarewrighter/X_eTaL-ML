@@ -101,9 +101,9 @@ On the page, "Train it" does this for the spec in the box, any spec
 from 2 inputs to 3 softmax, 10 steps a frame up to 400 (about 40 ms a
 step in the browser for the deep network, so 15 to 20 seconds in
 all): the decision map redraws as it learns, the loss and the share
-right are drawn after each run by the
+right are drawn after each run, in one chart, by the
 [Plot](https://github.com/softwarewrighter/X_eTaL-libraries) library's
-`p:l_ine!` in the program's own last lines, and the training step the
+`p:c_hart!` in the program's own last lines, and the training step the
 macro wrote is shown.
 
 ## The data
@@ -122,12 +122,6 @@ one place, and trains each with Adam on 300 points of the same spiral
 (a fixed seed: the same weights every run, in about 2 seconds).
 
 ## Workarounds
-
-Plot's line chart (`p:l_ine!`) keeps a vertical range of at least 1,
-so a loss that changes by less would draw nearly flat: the page's
-program stretches the losses to their own range first (the line says
-so), and prints the real values beside the chart. A line also needs
-two points, so the curves appear from the second run on.
 
 The code the macro writes calls NN as `nn:`, so the program imports NN
 under that alias: a macro's text cannot ask which alias the caller

@@ -13,6 +13,9 @@ refresh of the vendored X_eTaL.
 
 ## 2026-10-08
 
+- 03:20 `chore` Saga step plot-pin completed.
+- 03:15 `demo` The training curves in one chart with axes: the backprop microscope, train-live and the net-macro page draw with Plot's `p:c_hart!` (a title, named axes, a legend; loss and share right together), from the first run; the losses are no longer stretched and nothing waits for a second point (both workarounds dropped). Tests read the chart's first series.
+- 03:00 `vendor` X_eTaL-libraries pinned at 6e7ef0a (Plot: axes and labels, several lines, `p:c_hart!`, a single point, a small range), which needs X_eTaL 96060b5: X_eTaL pinned there too (tuples through `p_ower`, ask M13 landed; `h:` file-private names). NN's and Net's private helpers written `h:` (`xetal migrate`), as bare ones are deprecated. Every baseline unchanged; bench-check 1 to 15% faster. Step tuple-state inserted.
 - 01:30 `chore` Saga step xref-docs completed.
 - 01:25 `docs` The cross-reference, as X_eTaL publishes its own: `xetal doc` over every library, library demo and demo program into pages/doc, live at /doc (`just doc`; `just pages` builds it), linked from the catalog's lede and footer, each card ("Read the code"), every demo page's footer and the README. NN and Net documented throughout: a `##` file doc, a `##` doc on every item (14 of 14, 23 of 23), `###` sections, 28 `## >>` examples, run by the gate (`just doc-test`). The demo programs' comments became file docs, definition docs and `###` sections (the `# -- end of ...` markers stay); pages cutting at the old dividers follow the new headings; moe-router reads its `## words:` line; two trainers' stale header comments corrected. Every output baseline unchanged. CLAUDE.md rule 5e; the library template is documented.
 - 00:40 `plan` Steps xref-docs (the user's go) and plot-pin (X_eTaL-libraries' Plot PR landed) inserted before cnn-backprop.

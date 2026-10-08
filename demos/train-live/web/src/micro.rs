@@ -46,18 +46,13 @@ fn history(earlier: &[f64], now: &str) -> String {
 }
 
 /// The loss and the share right after every run so far, drawn by Plot
-/// (from the second run: a line takes two points).
+/// in one chart.
 fn curves(earlier: &[(f64, f64)]) -> String {
-    if earlier.is_empty() {
-        return String::new();
-    }
     format!(
         "\"p:\" u_se< \"Plot\"\n\
          losses := {}\n\
          right := {}\n\
-         # The loss stretched to its own range (Plot's line chart keeps a range of at least 1).\n\
-         lossChart := p:l_ine! (losses - 'm_in r_/ losses) / 0.000001 m_ax ('m_ax r_/ losses) - 'm_in r_/ losses\n\
-         rightChart := p:l_ine! right\n",
+         chart := (\"Training\" \"run (25 steps each)\" \"\" \"loss\" \"share right\") p:c_hart! (e_nclose losses) c_at e_nclose right\n",
         history(&earlier.iter().map(|e| e.0).collect::<Vec<_>>(), "1 t_ake now"),
         history(&earlier.iter().map(|e| e.1).collect::<Vec<_>>(), "-1 t_ake now"),
     )

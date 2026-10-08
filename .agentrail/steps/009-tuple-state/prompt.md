@@ -1,0 +1,1 @@
+ask M13 landed (tuples through p_ower, X_eTaL 96060b5, pinned 2026-10-08): train-live's Adam state and Net's t_rain</s_tate< state as a tuple taken apart by name instead of boxed arrays by position; pages write and read it; baselines, docs

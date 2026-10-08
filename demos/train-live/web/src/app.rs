@@ -45,13 +45,10 @@ fn curves(m: &UseReducerHandle<Model>) -> Html {
     let charts = m.after.as_ref().map(|a| a.pictures.clone()).unwrap_or_default();
     let body = html! { <>
         <p class="calc">{"loss "}<b>{format!("{l:.3}")}</b>{format!(" (from {first:.3}) \u{00b7} points right ")}<b>{format!("{:.1}%", 100.0 * r)}</b></p>
-        { for charts.iter().zip(["The loss after each run, stretched to its own range (losses):", "The share of points right after each run (right):"]).map(|(svg, what)| html! { <>
-            <p class="note">{what}</p>
-            { picture(svg, what) }
-        </> }) }
-        <p class="note">{"Drawn by the Plot library's p:l_ine!, in the program's last lines, from the second run on."}</p>
+        { for charts.iter().map(|svg| picture(svg, "the loss and the share of points right after each run")) }
+        <p class="note">{"Drawn by the Plot library's p:c_hart!, in the program's last lines."}</p>
     </> };
-    panel("The loss and the points right:", "p:l_ine! losses", "Over the steps so far, measured on the 300 training points after every run.", false, body)
+    panel("The loss and the points right:", "p:c_hart!", "Over the steps so far, measured on the 300 training points after every run.", false, body)
 }
 
 #[function_component(App)]

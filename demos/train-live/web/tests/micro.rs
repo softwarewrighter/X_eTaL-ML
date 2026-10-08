@@ -92,12 +92,19 @@ fn the_page_shows_every_line_it_runs() {
     }
 }
 
+/// The y of each point of a chart's first series (Plot draws it in blue).
+fn first_series(svg: &str) -> Vec<f64> {
+    let line = svg.split("<polyline").find(|p| p.contains("stroke=\"#2563eb\"")).expect("a first series");
+    line.split("points=\"").nth(1).unwrap().split('"').next().unwrap().split(' ').map(|p| p.split(',').nth(1).unwrap().parse().unwrap()).collect()
+}
+
 #[test]
 fn the_curves_are_drawn_by_plot_in_the_program() {
     let a0 = run(0.02, None, 0, &[]).unwrap();
-    assert!(a0.pictures.is_empty(), "one point is no line yet");
+    assert_eq!(a0.pictures.len(), 1, "one chart from the first run, a point");
     let a = run(0.02, Some(&a0.state), 25, &[(a0.loss, a0.right)]).unwrap();
-    assert_eq!(a.pictures.len(), 2);
-    assert!(a.pictures.iter().all(|p| p.starts_with("<svg") && p.matches(',').count() == 2), "{:?}", a.pictures);
+    assert_eq!(a.pictures.len(), 1);
+    let c = &a.pictures[0];
+    assert!(c.starts_with("<svg") && c.contains("Training") && c.contains("share right") && first_series(c).len() == 2, "{c}");
     assert!(program(0.02, None, 25, &[(1.3, 0.3)]).contains("losses := (1.3) c_at 1 t_ake now\nright := (0.3) c_at -1 t_ake now\n"));
 }

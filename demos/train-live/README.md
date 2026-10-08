@@ -8,8 +8,8 @@ network decides, so you watch the regions bend to follow the spiral.
 
 Live: [Training live](https://softwarewrighter.github.io/X_eTaL-ML/train-live/)
 (press Train; change the learning rate and start again). The loss and
-the share of points right are drawn after every run by the
-[Plot](https://github.com/softwarewrighter/X_eTaL-libraries) library's `p:l_ine!`, in the page's program.
+the share of points right are drawn after every run, in one chart, by
+the [Plot](https://github.com/softwarewrighter/X_eTaL-libraries) library's `p:c_hart!`, in the page's program.
 
 [![Training live: the live page](screenshot.png)](https://softwarewrighter.github.io/X_eTaL-ML/train-live/)
 
@@ -81,11 +81,6 @@ Boxes let the arrays keep their own shapes (an earlier version packed
 everything into one flat vector, with offsets); they cannot mix
 element types, and the positions are not names. Tuples with
 destructuring, then records, would let the step take and give
-`(W1; W2; M1; M2; V1; V2; k)` by name: being added to X_eTaL now (ask
-M13 in [`docs/xetal-asks.md`](../../docs/xetal-asks.md)).
-
-Plot's line chart keeps a vertical range of at least 1 and needs two
-points, so the page's program stretches the losses to their own range
-(the line says so), prints the real values beside the charts, and
-draws from the second run on. Plot gaining axes, several lines in one
-chart and a free range is asked of X_eTaL-libraries.
+`(W1; W2; M1; M2; V1; V2; k)` by name: tuples through `p_ower` have
+landed in the X_eTaL this repo pins, and the state moves to them in a
+coming step (ask M13 in [`docs/xetal-asks.md`](../../docs/xetal-asks.md)).

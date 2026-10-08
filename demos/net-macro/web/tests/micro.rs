@@ -122,12 +122,18 @@ fn a_spec_trains_here_only_from_2_inputs_to_3_softmax() {
     assert_eq!(parts(&[2, 4, 3]), [(3, 4), (5, 3), (3, 4), (5, 3), (3, 4), (5, 3), (1, 1)]);
 }
 
+/// The y of each point of a chart's first series (Plot draws it in blue).
+fn first_series(svg: &str) -> Vec<f64> {
+    let line = svg.split("<polyline").find(|p| p.contains("stroke=\"#2563eb\"")).expect("a first series");
+    line.split("points=\"").nth(1).unwrap().split('"').next().unwrap().split(' ').map(|p| p.split(',').nth(1).unwrap().parse().unwrap()).collect()
+}
+
 #[test]
 fn training_runs_on_from_the_state_the_page_holds() {
     // 40 steps at once equal 20 then 20 carried through the page's state.
     let (spec, sizes) = ("2 8 tanh 3 softmax", vec![2, 8, 3]);
     let start = train(spec, &sizes, None, 0, &[]).unwrap();
-    assert!((start.loss - 1.1).abs() < 0.1 && start.pictures.is_empty(), "{} {}", start.loss, start.pictures.len());
+    assert!((start.loss - 1.1).abs() < 0.1 && start.pictures.len() == 1, "{} {}", start.loss, start.pictures.len());
     let all = train(spec, &sizes, None, 40, &[]).unwrap();
     let half = train(spec, &sizes, None, 20, &[]).unwrap();
     let rest = train(spec, &sizes, Some(&half.state), 20, &[(start.loss, start.right), (half.loss, half.right)]).unwrap();
@@ -135,9 +141,10 @@ fn training_runs_on_from_the_state_the_page_holds() {
     assert!(gap < 1e-9, "{gap}");
     assert!(rest.loss < start.loss - 0.1);
     assert_eq!(rest.points.len(), 900);
-    assert!(rest.pictures.iter().all(|p| p.starts_with("<svg") && p.contains("<polyline")));
-    // Two earlier runs and this one: three points on each curve.
-    assert!(rest.pictures[0].matches(',').count() == 3, "{}", rest.pictures[0]);
+    assert_eq!(rest.pictures.len(), 1);
+    // Two earlier runs and this one: three points on each line, the loss falling.
+    let loss = first_series(&rest.pictures[0]);
+    assert!(loss.len() == 3 && loss[2] > loss[0], "{loss:?}");
 }
 
 #[test]
@@ -147,5 +154,5 @@ fn the_default_spec_learns_the_spiral() {
     assert!(a.right > 0.9 && a.loss < 0.3, "{} {}", a.loss, a.right);
     let step = step_written(TRAIN_SPEC, &sizes).unwrap();
     assert!(step.starts_with("u:s_tep := {") && step.ends_with('}') && step.contains("nn:r_elu"), "{step}");
-    assert!(train_program(TRAIN_SPEC, &sizes, None, 1, &[(1.1, 0.3)]).contains("p:l_ine!"));
+    assert!(train_program(TRAIN_SPEC, &sizes, None, 1, &[]).contains("p:c_hart!"));
 }

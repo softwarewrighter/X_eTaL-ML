@@ -86,9 +86,8 @@ fn step(m: &UseReducerHandle<Model>, s: &Step) -> Html {
     let body = html! { <>
         <div class="arrs">{ table("V1", &s.v1, I + 1, J, 3) }{ table("V2", &s.v2, J + 1, K, 3) }</div>
         <p class="calc">{"The loss now "}{code(&format!("{a:.6}"))}{", after this step "}{code(&format!("{b:.6}"))}{if b < a { " (lower)" } else { " (higher: the learning rate is too large)" }}</p>
-        <p class="note">{"The loss at each step taken, now, and after this step (losses, stretched to their own range):"}</p>
         { picture(&s.chart, "the loss at each step") }
-        <p class="note">{"Losses so far: "}{ m.losses.iter().chain([&b]).map(|l| format!("{l:.4}")).collect::<Vec<_>>().join(", ") }{". Drawn by the Plot library's p:l_ine!, in the program's last lines."}</p>
+        <p class="note">{"Losses so far: "}{ m.losses.iter().chain([&b]).map(|l| format!("{l:.4}")).collect::<Vec<_>>().join(", ") }{". Drawn by the Plot library's p:c_hart!, in the program's last lines."}</p>
     </> };
     panel("3. The step:", "V1 := W1 - lr * G1", "Every weight moves against its gradient, scaled by the learning rate. Take the step to make these the weights, and run the step again from there.", m.focus == Stage::Step, body)
 }

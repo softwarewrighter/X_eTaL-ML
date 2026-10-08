@@ -76,8 +76,7 @@ pub fn tail(earlier: &[f64]) -> String {
          r_avel X\nr_avel Y\nr_avel H\nr_avel P\nL c_at V1 u:l_oss V2\nr_avel D2\nr_avel G2\nr_avel D1\nr_avel G1\nr_avel V1\nr_avel V2\nr_avel F1\nr_avel F2\ngap\n\
          \"p:\" u_se< \"Plot\"\n\
          losses := {}\n\
-         # The losses stretched to their own range (Plot's line chart keeps a range of at least 1).\n\
-         lossChart := p:l_ine! (losses - 'm_in r_/ losses) / 0.000001 m_ax ('m_ax r_/ losses) - 'm_in r_/ losses\n",
+         chart := (\"The loss: each step taken, now, after this step\" \"step\" \"loss\" \"\") p:c_hart! 1 r_eshape e_nclose losses\n",
         line("e"),
         line("u:b_ump"),
         line("F1"),

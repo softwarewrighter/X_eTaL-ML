@@ -112,11 +112,8 @@ fn trains(m: &UseReducerHandle<Model>) -> Html {
             html! { <>
                 <div class="padbox"><Canvas rows={SIDE} cols={SIDE} rgba={Rc::new(map(&t.after.map, &t.after.points))} class="pad" /></div>
                 <p class="calc">{format!("After {} steps: loss {:.3} (from {first:.3}), {:.1}% of the 300 points right.", t.steps, t.after.loss, 100.0 * t.after.right)}</p>
-                { for t.after.pictures.iter().zip(["The loss after each run, stretched to its own range (losses):", "The share of points right after each run (right):"]).map(|(svg, what)| html! { <>
-                    <p class="note">{what}</p>
-                    { picture(svg, what) }
-                </> }) }
-                <p class="note">{"Drawn by the Plot library's p:l_ine!, in the program's last lines, from the second run on."}</p>
+                { for t.after.pictures.iter().map(|svg| picture(svg, "the loss and the share of points right after each run")) }
+                <p class="note">{"Drawn by the Plot library's p:c_hart!, in the program's last lines."}</p>
                 <p class="calc">{code(&format!("\"u:s_tep X Y lr\" net:t_rain< \"{}\"", m.spec))}{" became:"}</p>
                 { block(&t.step, NONE) }
             </> }

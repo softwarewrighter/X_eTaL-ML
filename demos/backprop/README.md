@@ -7,7 +7,7 @@ calculus, by nudging its weight and watching the loss move.
 
 Live: [Backprop microscope](https://softwarewrighter.github.io/X_eTaL-ML/backprop/)
 (take steps and watch the loss fall, drawn after every step by the
-[Plot](https://github.com/softwarewrighter/X_eTaL-libraries) library's `p:l_ine!` in the page's program; change the
+[Plot](https://github.com/softwarewrighter/X_eTaL-libraries) library's `p:c_hart!` in the page's program; change the
 learning rate and watch it overshoot).
 
 [![Backprop microscope: the live page](screenshot.png)](https://softwarewrighter.github.io/X_eTaL-ML/backprop/)
@@ -83,15 +83,6 @@ derive the gradient, then check it.
 network-macro demo's test points; `data/w1.txt` and `data/w2.txt` the
 starting weights, fixed (seeded random numbers, biases 0), each with
 its bias as the last row.
-
-## Workarounds
-
-The page's program draws the loss at each step taken, now and after
-the step shown with Plot's `p:l_ine!`, which keeps a vertical range of
-at least 1: a loss that moves by hundredths would draw flat, so the
-program stretches the losses to their own range first (the line says
-so) and the page prints the real values below the chart. Plot gaining
-axes and a free range is asked of X_eTaL-libraries.
 
 ## Background
 

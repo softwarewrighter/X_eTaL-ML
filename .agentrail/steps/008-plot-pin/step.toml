@@ -1,6 +1,6 @@
 number = 8
 slug = "plot-pin"
-status = "pending"
+status = "in-progress"
 description = "X_eTaL-libraries' Plot PR landed (6e7ef0a, the remote agent's note 2026-10-07..."
 role = "production"
 context_files = []
