@@ -1,0 +1,1 @@
+net-macro page trains the typed spec in the browser via net:t_rain<; train-it.xtl CLI; curves by X_eTaL-libraries Plot (first use); runner returns pictures; plot-curves step inserted

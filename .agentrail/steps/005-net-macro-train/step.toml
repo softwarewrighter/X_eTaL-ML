@@ -1,8 +1,9 @@
 number = 5
 slug = "net-macro-train"
-status = "in-progress"
+status = "completed"
 description = "the user's go, 2026-10-07: the net-macro live page gets a train-it mode: the ..."
 role = "production"
 context_files = []
 created_at = "2026-10-07T15:55:39"
-commits = []
+completed_at = "2026-10-07T19:03:42"
+commits = ["69e1ae3364e3649a2e6ee1a0c6d11b789b447249"]
