@@ -19,27 +19,27 @@
 
 ## The words of t: runs of characters other than white space, boxed
 ## (after X_eTaL's Combinators.xtlm).
-w_ords := { t -> (n_ot t m_ember? " \n\t") p_artition t }
+h:w_ords := { t -> (n_ot t m_ember? " \n\t") p_artition t }
 ## The boxed texts b joined into one text ("" for none).
-j_oin := { b ->
+h:j_oin := { b ->
   0 = t_ally b ? ""
   d_isclose '{ x y -> e_nclose (d_isclose x) c_at d_isclose y } r_/ b
 }
 ## Whether the text w is a whole number (a layer's size).
-s_ize? := { w -> '& r_/ w m_ember? "0123456789" }
+h:s_ize? := { w -> '& r_/ w m_ember? "0123456789" }
 ## Whether the text w names an activation.
-a_ct? := { w -> '| r_/ '{ a -> w m_atch d_isclose a } e_ach w_ords "relu sigmoid tanh softmax logSoftmax" }
+h:a_ct? := { w -> '| r_/ '{ a -> w m_atch d_isclose a } e_ach h:w_ords "relu sigmoid tanh softmax logSoftmax" }
 ## An activation's function in NN: relu -> nn:r_elu.
-a_ct := { w -> "nn:" c_at (1 t_ake w) c_at "_" c_at 1 d_rop w }
+h:a_ct := { w -> "nn:" c_at (1 t_ake w) c_at "_" c_at 1 d_rop w }
 ## The spec's sizes, as Ints.
-s_izes := { ws -> f_loor n_umbers j_oin '{ w -> (s_ize? d_isclose w) ? (d_isclose w) c_at " "; "" } m_ap ws }
+h:s_izes := { ws -> f_loor n_umbers h:j_oin '{ w -> (h:s_ize? d_isclose w) ? (d_isclose w) c_at " "; "" } m_ap ws }
 ## What a spec looks like, for the messages.
 specShape := "a spec is sizes and activations, the input's size first: \"784 128 relu 10 softmax\""
 ## What is wrong with the spec's words ws, or "".
-w_rong := { ws ->
+h:w_rong := { ws ->
   2 > t_ally ws ? specShape
-  n_ot s_ize? d_isclose f_irst ws ? specShape
-  bad := '{ w -> n_ot (s_ize? d_isclose w) | a_ct? d_isclose w } e_ach ws
+  n_ot h:s_ize? d_isclose f_irst ws ? specShape
+  bad := '{ w -> n_ot (h:s_ize? d_isclose w) | h:a_ct? d_isclose w } e_ach ws
   0 < '+ r_/ 0 + bad ? "not a size or an activation (relu, sigmoid, tanh, softmax, logSoftmax): " c_at d_isclose f_irst (w_here bad) s_elect ws
   ""
 }
@@ -48,11 +48,11 @@ w_rong := { ws ->
 
 ## The forward function for the spec's words ws and the weight names
 ## ns: a lambda of nn: calls, the input x through each layer in turn.
-f_unction := { ws ns ->
-  size := '{ w -> s_ize? d_isclose w } e_ach ws
+h:f_unction := { ws ns ->
+  size := '{ w -> h:s_ize? d_isclose w } e_ach ws
   k := '+ s_\ 0 + size
   pre := '{ i ->
-    n_ot i s_elect size ? (a_ct d_isclose i s_elect ws) c_at " "
+    n_ot i s_elect size ? (h:a_ct d_isclose i s_elect ws) c_at " "
     2 = i s_elect k ? ""
     "("
   } m_ap 1 d_rop r_ange t_ally ws
@@ -62,11 +62,11 @@ f_unction := { ws ns ->
     2 = i s_elect k ? d
     ")" c_at d
   } m_ap 1 d_rop r_ange t_ally ws
-  "{ x -> " c_at (j_oin r_ev pre) c_at "x" c_at (j_oin post) c_at " }"
+  "{ x -> " c_at (h:j_oin r_ev pre) c_at "x" c_at (h:j_oin post) c_at " }"
 }
 ## What is wrong with the weight names ns for the spec's words ws, or "".
-c_ount := { ws ns ->
-  dense := -1 + '+ r_/ '{ w -> 0 + s_ize? d_isclose w } e_ach ws
+h:c_ount := { ws ns ->
+  dense := -1 + '+ r_/ '{ w -> 0 + h:s_ize? d_isclose w } e_ach ws
   (t_ally ns) = dense ? ""
   "name one weight array per dense layer: " c_at (f_ormat dense) c_at " for this spec, " c_at (f_ormat t_ally ns) c_at " given"
 }
@@ -78,11 +78,11 @@ c_ount := { ws ns ->
 ## order: an ordinary lambda of nn: calls, a batch (one example per
 ## row) in, the last layer's output out.
 m:n_etwork< := { spec weights ->
-  ws := w_ords spec
-  ns := w_ords weights
-  0 < t_ally w_rong ws ? "bad-macro-argument left" []R_EJECT w_rong ws
-  0 < t_ally ws c_ount ns ? "bad-macro-argument right" []R_EJECT ws c_ount ns
-  ws f_unction ns
+  ws := h:w_ords spec
+  ns := h:w_ords weights
+  0 < t_ally h:w_rong ws ? "bad-macro-argument left" []R_EJECT h:w_rong ws
+  0 < t_ally ws h:c_ount ns ? "bad-macro-argument right" []R_EJECT ws h:c_ount ns
+  ws h:f_unction ns
 }
 
 ## A whole model from one spec: on the left the function's name and a
@@ -94,29 +94,29 @@ m:n_etwork< := { spec weights ->
 ## data), then the function, as n_etwork< writes it. The spec is the
 ## one place the network is described.
 m:m_odel< := { what spec ->
-  ws := w_ords spec
-  0 < t_ally w_rong ws ? "bad-macro-argument right" []R_EJECT w_rong ws
-  nm := w_ords what
+  ws := h:w_ords spec
+  0 < t_ally h:w_rong ws ? "bad-macro-argument right" []R_EJECT h:w_rong ws
+  nm := h:w_ords what
   2 != t_ally nm ? "bad-macro-argument left" []R_EJECT "write the function's name and the weight files' prefix: \"u:d_eep c\" (for data/c1.txt, data/c2.txt, ...)"
   name := d_isclose f_irst nm
   prefix := d_isclose 2 s_elect nm
-  s := s_izes ws
+  s := h:s_izes ws
   ns := '{ i -> prefix c_at f_ormat i } m_ap r_ange -1 + t_ally s
   load := '{ i ->
     w := d_isclose i s_elect ns
     need := (1 + i s_elect s) * (i + 1) s_elect s
     w c_at " := { v -> " c_at (f_ormat need) c_at " = t_ally v ? " c_at (f_ormat 1 + i s_elect s) c_at " " c_at (f_ormat (i + 1) s_elect s) c_at " r_eshape v; []P_ANIC \"data/" c_at w c_at ".txt holds \" c_at (f_ormat t_ally v) c_at \" numbers; layer " c_at (f_ormat i) c_at " of \\\"" c_at spec c_at "\\\" (" c_at (f_ormat i s_elect s) c_at " inputs and a bias, " c_at (f_ormat (i + 1) s_elect s) c_at " outputs) needs " c_at (f_ormat need) c_at "\" } n_umbers []N_GET \"data/" c_at w c_at ".txt\"\n"
   } m_ap r_ange -1 + t_ally s
-  (j_oin load) c_at name c_at " := " c_at ws f_unction ns
+  (h:j_oin load) c_at name c_at " := " c_at ws h:f_unction ns
 }
 
 ### Writing backpropagation (private)
 
 ## The function of NN for an activation word (relu -> nn:r_elu); "" for none.
-a_ctFn := { w -> 0 = t_ally w ? ""; (a_ct w) c_at " " }
+h:a_ctFn := { w -> 0 = t_ally w ? ""; (h:a_ct w) c_at " " }
 ## Its slope at its output A (the name of the array), times which the
 ## error goes back through it; "" when there is none.
-s_lope := { w a ->
+h:s_lope := { w a ->
   w m_atch "relu" ? " * f_loat " c_at a c_at " > 0.0"
   w m_atch "tanh" ? " * 1.0 - " c_at a c_at " * " c_at a
   w m_atch "sigmoid" ? " * " c_at a c_at " * 1.0 - " c_at a
@@ -124,34 +124,34 @@ s_lope := { w a ->
 }
 ## The activation after each dense layer of the spec's words ws (a box
 ## per layer, "" for none).
-a_cts := { ws ->
-  size := '{ w -> s_ize? d_isclose w } e_ach ws
+h:a_cts := { ws ->
+  size := '{ w -> h:s_ize? d_isclose w } e_ach ws
   at := 1 d_rop w_here size
   '{ p -> (p < t_ally ws) & (n_ot (p + 1) s_elect size) ? d_isclose (p + 1) s_elect ws; "" } m_ap at
 }
 ## N as text.
-t_xt := { n -> f_ormat n }
+h:t_xt := { n -> f_ormat n }
 
 ## The lines that take the weights from the boxed state s, run the
 ## spec's network forward from the inputs and back from the targets,
 ## and bind each layer's gradient G1 .. GL. ws: the spec's words; xy:
 ## the inputs' and targets' names, boxed.
-b_ackprop := { ws xy ->
+h:b_ackprop := { ws xy ->
   x := d_isclose 1 s_elect xy
   y := d_isclose 2 s_elect xy
-  acts := a_cts ws
+  acts := h:a_cts ws
   L := t_ally acts
   r := r_ange L
-  take := j_oin '{ l -> "  W" c_at (t_xt l) c_at " := d_isclose " c_at (t_xt l) c_at " s_elect s\n" } m_ap r
-  fwd := j_oin '{ l -> "  A" c_at (t_xt l) c_at " := " c_at (a_ctFn d_isclose l s_elect acts) c_at "A" c_at (t_xt l - 1) c_at " nn:d_ense W" c_at (t_xt l) c_at "\n" } m_ap r
-  dL := "  D" c_at (t_xt L) c_at " := (A" c_at (t_xt L) c_at " - " c_at y c_at ") / f_loat t_ally " c_at x c_at "\n"
-  back := j_oin '{ l -> "  D" c_at (t_xt l) c_at " := (D" c_at (t_xt l + 1) c_at " '+ '* i_nner o_\\ -1 d_rop W" c_at (t_xt l + 1) c_at ")" c_at ((d_isclose l s_elect acts) s_lope "A" c_at t_xt l) c_at "\n" } m_ap r_ev -1 d_rop r
-  grads := j_oin '{ l -> "  G" c_at (t_xt l) c_at " := (o_\\ A" c_at (t_xt l - 1) c_at " c_at_2 ((t_ally A" c_at (t_xt l - 1) c_at ") c_at 1) r_eshape 1.0) '+ '* i_nner D" c_at (t_xt l) c_at "\n" } m_ap r
+  take := h:j_oin '{ l -> "  W" c_at (h:t_xt l) c_at " := d_isclose " c_at (h:t_xt l) c_at " s_elect s\n" } m_ap r
+  fwd := h:j_oin '{ l -> "  A" c_at (h:t_xt l) c_at " := " c_at (h:a_ctFn d_isclose l s_elect acts) c_at "A" c_at (h:t_xt l - 1) c_at " nn:d_ense W" c_at (h:t_xt l) c_at "\n" } m_ap r
+  dL := "  D" c_at (h:t_xt L) c_at " := (A" c_at (h:t_xt L) c_at " - " c_at y c_at ") / f_loat t_ally " c_at x c_at "\n"
+  back := h:j_oin '{ l -> "  D" c_at (h:t_xt l) c_at " := (D" c_at (h:t_xt l + 1) c_at " '+ '* i_nner o_\\ -1 d_rop W" c_at (h:t_xt l + 1) c_at ")" c_at ((d_isclose l s_elect acts) h:s_lope "A" c_at h:t_xt l) c_at "\n" } m_ap r_ev -1 d_rop r
+  grads := h:j_oin '{ l -> "  G" c_at (h:t_xt l) c_at " := (o_\\ A" c_at (h:t_xt l - 1) c_at " c_at_2 ((t_ally A" c_at (h:t_xt l - 1) c_at ") c_at 1) r_eshape 1.0) '+ '* i_nner D" c_at (h:t_xt l) c_at "\n" } m_ap r
   take c_at "  A0 := " c_at x c_at "\n" c_at fwd c_at dL c_at back c_at grads
 }
 ## What is wrong with a trainable spec's words ws, or "".
-t_rainable := { ws ->
-  0 < t_ally w_rong ws ? w_rong ws
+h:t_rainable := { ws ->
+  0 < t_ally h:w_rong ws ? h:w_rong ws
   n_ot (d_isclose f_irst r_ev ws) m_atch "softmax" ? "a network trained with cross-entropy ends in softmax"
   ""
 }
@@ -165,13 +165,13 @@ t_rainable := { ws ->
 ## @ net:s_tate< or e_nclose writes them) and gives the gradients boxed,
 ## each the shape of its layer's weights: backpropagation, written out.
 m:g_radient< := { what spec ->
-  ws := w_ords spec
-  0 < t_ally t_rainable ws ? "bad-macro-argument right" []R_EJECT t_rainable ws
-  nm := w_ords what
+  ws := h:w_ords spec
+  0 < t_ally h:t_rainable ws ? "bad-macro-argument right" []R_EJECT h:t_rainable ws
+  nm := h:w_ords what
   3 != t_ally nm ? "bad-macro-argument left" []R_EJECT "write the function's name, then the inputs' and the targets': \"u:g_rad X Y\""
-  L := t_ally a_cts ws
-  out := (j_oin '{ l -> "(e_nclose G" c_at (t_xt l) c_at ") c_at " } m_ap -1 d_rop r_ange L) c_at "e_nclose G" c_at t_xt L
-  (d_isclose 1 s_elect nm) c_at " := { s ->\n" c_at (ws b_ackprop 1 d_rop nm) c_at "  " c_at out c_at "\n}"
+  L := t_ally h:a_cts ws
+  out := (h:j_oin '{ l -> "(e_nclose G" c_at (h:t_xt l) c_at ") c_at " } m_ap -1 d_rop r_ange L) c_at "e_nclose G" c_at h:t_xt L
+  (d_isclose 1 s_elect nm) c_at " := { s ->\n" c_at (ws h:b_ackprop 1 d_rop nm) c_at "  " c_at out c_at "\n}"
 }
 
 ## A training step for the network the spec on the right describes:
@@ -183,28 +183,28 @@ m:g_radient< := { what spec ->
 ## each layer's gradient by backpropagation (as g_radient< writes it),
 ## and Adam. The spec must end in softmax.
 m:t_rain< := { what spec ->
-  ws := w_ords spec
-  0 < t_ally t_rainable ws ? "bad-macro-argument right" []R_EJECT t_rainable ws
-  nm := w_ords what
+  ws := h:w_ords spec
+  0 < t_ally h:t_rainable ws ? "bad-macro-argument right" []R_EJECT h:t_rainable ws
+  nm := h:w_ords what
   4 != t_ally nm ? "bad-macro-argument left" []R_EJECT "write the step's name, then the inputs', the targets' and the learning rate's: \"u:s_tep X Y lr\""
   lr := d_isclose 4 s_elect nm
-  L := t_ally a_cts ws
+  L := t_ally h:a_cts ws
   r := r_ange L
-  adam := j_oin '{ l ->
-    i := t_xt l
-    "  M" c_at i c_at " := (0.9 * d_isclose " c_at (t_xt L + l) c_at " s_elect s) + 0.1 * G" c_at i c_at "\n  V" c_at i c_at " := (0.999 * d_isclose " c_at (t_xt (2 * L) + l) c_at " s_elect s) + 0.001 * G" c_at i c_at " * G" c_at i c_at "\n  W" c_at i c_at " := W" c_at i c_at " - " c_at lr c_at " * (M" c_at i c_at " / 1.0 - 0.9 ^ k) / 0.00000001 + (V" c_at i c_at " / 1.0 - 0.999 ^ k) ^ 0.5\n"
+  adam := h:j_oin '{ l ->
+    i := h:t_xt l
+    "  M" c_at i c_at " := (0.9 * d_isclose " c_at (h:t_xt L + l) c_at " s_elect s) + 0.1 * G" c_at i c_at "\n  V" c_at i c_at " := (0.999 * d_isclose " c_at (h:t_xt (2 * L) + l) c_at " s_elect s) + 0.001 * G" c_at i c_at " * G" c_at i c_at "\n  W" c_at i c_at " := W" c_at i c_at " - " c_at lr c_at " * (M" c_at i c_at " / 1.0 - 0.9 ^ k) / 0.00000001 + (V" c_at i c_at " / 1.0 - 0.999 ^ k) ^ 0.5\n"
   } m_ap r
-  out := "  " c_at (j_oin '{ l -> "(e_nclose W" c_at (t_xt l) c_at ") c_at " } m_ap r) c_at (j_oin '{ l -> "(e_nclose M" c_at (t_xt l) c_at ") c_at " } m_ap r) c_at (j_oin '{ l -> "(e_nclose V" c_at (t_xt l) c_at ") c_at " } m_ap r) c_at "e_nclose k\n"
-  (d_isclose 1 s_elect nm) c_at " := { s ->\n" c_at (ws b_ackprop 1 d_rop 3 t_ake nm) c_at "  k := 1.0 + d_isclose " c_at (t_xt 1 + 3 * L) c_at " s_elect s\n" c_at adam c_at out c_at "}"
+  out := "  " c_at (h:j_oin '{ l -> "(e_nclose W" c_at (h:t_xt l) c_at ") c_at " } m_ap r) c_at (h:j_oin '{ l -> "(e_nclose M" c_at (h:t_xt l) c_at ") c_at " } m_ap r) c_at (h:j_oin '{ l -> "(e_nclose V" c_at (h:t_xt l) c_at ") c_at " } m_ap r) c_at "e_nclose k\n"
+  (d_isclose 1 s_elect nm) c_at " := { s ->\n" c_at (ws h:b_ackprop 1 d_rop 3 t_ake nm) c_at "  k := 1.0 + d_isclose " c_at (h:t_xt 1 + 3 * L) c_at " s_elect s\n" c_at adam c_at out c_at "}"
 }
 
 ## The starting state for a training step (t_rain<) from the weight
 ## arrays named on the right: the weights, zero averages, step 0.
 m:s_tate< := { @ weights ->
-  ns := w_ords weights
+  ns := h:w_ords weights
   0 = t_ally ns ? "bad-macro-argument right" []R_EJECT "name the starting weight arrays, one per dense layer"
-  ws := j_oin '{ w -> "(e_nclose " c_at (d_isclose w) c_at ") c_at " } m_ap ns
-  zs := j_oin '{ w -> "(e_nclose 0.0 * " c_at (d_isclose w) c_at ") c_at " } m_ap ns
+  ws := h:j_oin '{ w -> "(e_nclose " c_at (d_isclose w) c_at ") c_at " } m_ap ns
+  zs := h:j_oin '{ w -> "(e_nclose 0.0 * " c_at (d_isclose w) c_at ") c_at " } m_ap ns
   ws c_at zs c_at zs c_at "e_nclose 0.0"
 }
 
@@ -217,9 +217,9 @@ m:s_tate< := { @ weights ->
 ## >> "2 16 relu 16 relu 3 softmax" net:p_arams< @
 ## 371
 m:p_arams< := { spec @ ->
-  ws := w_ords spec
-  0 < t_ally w_rong ws ? "bad-macro-argument left" []R_EJECT w_rong ws
-  s := s_izes ws
+  ws := h:w_ords spec
+  0 < t_ally h:w_rong ws ? "bad-macro-argument left" []R_EJECT h:w_rong ws
+  s := h:s_izes ws
   f_ormat '+ r_/ (1 + -1 d_rop s) * 1 d_rop s
 }
 
@@ -232,11 +232,11 @@ m:p_arams< := { spec @ ->
 ## >> "2 4 tanh 3 softmax" net:s_hapes< "w1 w2"
 ## 1
 m:s_hapes< := { spec weights ->
-  ws := w_ords spec
-  ns := w_ords weights
-  0 < t_ally w_rong ws ? "bad-macro-argument left" []R_EJECT w_rong ws
-  s := s_izes ws
-  0 < t_ally ws c_ount ns ? "bad-macro-argument right" []R_EJECT ws c_ount ns
+  ws := h:w_ords spec
+  ns := h:w_ords weights
+  0 < t_ally h:w_rong ws ? "bad-macro-argument left" []R_EJECT h:w_rong ws
+  s := h:s_izes ws
+  0 < t_ally ws h:c_ount ns ? "bad-macro-argument right" []R_EJECT ws h:c_ount ns
   one := '{ i -> "((s_hape " c_at (d_isclose i s_elect ns) c_at ") m_atch " c_at (f_ormat 1 + i s_elect s) c_at " " c_at (f_ormat (i + 1) s_elect s) c_at ")" } m_ap r_ange t_ally ns
-  j_oin '{ i -> (i = 1) ? d_isclose i s_elect one; " & " c_at d_isclose i s_elect one } m_ap r_ange t_ally ns
+  h:j_oin '{ i -> (i = 1) ? d_isclose i s_elect one; " & " c_at d_isclose i s_elect one } m_ap r_ange t_ally ns
 }
