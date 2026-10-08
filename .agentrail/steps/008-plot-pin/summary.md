@@ -1,0 +1,1 @@
+pins moved (X_eTaL 96060b5, libraries 6e7ef0a), NN/Net h: helpers, three pages chart with p:c_hart!, workarounds dropped
