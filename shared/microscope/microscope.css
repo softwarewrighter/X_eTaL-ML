@@ -221,11 +221,6 @@ figure.arr { margin: 0; }
 figure.arr figcaption { font-size: .75rem; color: var(--muted); margin-top: 4px; }
 figure.arr table.heat td { min-width: 3.4em; }
 
-/* train-live: the loss and accuracy curves */
-svg.curves { background: var(--card, #fff); border: 1px solid var(--line); border-radius: 6px; max-width: 420px; }
-svg.curves polyline { fill: none; stroke-width: 2; }
-svg.curves polyline.loss { stroke: #e8590c; }
-svg.curves polyline.right { stroke: #1c7ed6; }
 b.loss { color: #e8590c; } b.right { color: #1c7ed6; }
 
 /* a picture a program showed ([]S_HOW), such as a Plot chart */

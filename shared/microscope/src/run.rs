@@ -37,7 +37,13 @@ pub fn output(src: &str, lines: usize) -> Result<Vec<String>, String> {
 /// document.
 pub fn output_pictures(src: &str, lines: usize) -> Result<(Vec<String>, Vec<String>), String> {
     crate::libs::install();
-    let run = xetal_play::run(src, 1);
+    // One program at a time: X_eTaL collects a run's pictures in state
+    // shared across threads, so runs at once (tests) would mix them.
+    static ONE: std::sync::Mutex<()> = std::sync::Mutex::new(());
+    let run = {
+        let _one = ONE.lock().unwrap_or_else(|e| e.into_inner());
+        xetal_play::run(src, 1)
+    };
     if !run.err.is_empty() {
         return Err(run.err);
     }

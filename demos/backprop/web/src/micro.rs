@@ -2,7 +2,7 @@
 //! data, run for one training step from the weights the page holds.
 //! Nothing here knows about the browser.
 
-use microscope::run::{lit, numbers, output, section};
+use microscope::run::{lit, numbers, output_pictures, section};
 
 /// The command-line program.
 pub const SOURCE: &str = include_str!("../../backprop.xtl");
@@ -21,16 +21,18 @@ pub const J: usize = 4;
 pub const K: usize = 3;
 
 /// What the page sets: the weights (None: the starting ones, read
-/// from data/) and the learning rate.
+/// from data/), the learning rate, and the loss at each step taken
+/// before these weights.
 #[derive(Clone, Debug, PartialEq)]
 pub struct Setup {
     pub weights: Option<(Vec<f64>, Vec<f64>)>,
     pub lr: f64,
+    pub earlier: Vec<f64>,
 }
 
 impl Default for Setup {
     fn default() -> Self {
-        Setup { weights: None, lr: 0.5 }
+        Setup { weights: None, lr: 0.5, earlier: vec![] }
     }
 }
 
@@ -56,22 +58,37 @@ fn line(name: &str) -> &'static str {
     SOURCE.lines().find(|l| l.starts_with(&format!("{name} := "))).unwrap_or("")
 }
 
+/// The losses to draw: those of the steps taken before (`earlier`),
+/// then the loss now and after this step.
+fn losses(earlier: &[f64]) -> String {
+    match earlier.is_empty() {
+        true => "L c_at V1 u:l_oss V2".into(),
+        false => format!("({}) c_at L c_at V1 u:l_oss V2", earlier.iter().map(|&v| lit(v)).collect::<Vec<_>>().join(" ")),
+    }
+}
+
 /// The run's own lines: the finite-difference check, as the program
-/// writes it, and every array the page draws.
-pub fn tail() -> String {
+/// writes it, every array the page draws, and the losses so far drawn
+/// by the Plot library.
+pub fn tail(earlier: &[f64]) -> String {
     format!(
         "{}\n{}\n{}\n{}\n{}\n\
-         r_avel X\nr_avel Y\nr_avel H\nr_avel P\nL c_at V1 u:l_oss V2\nr_avel D2\nr_avel G2\nr_avel D1\nr_avel G1\nr_avel V1\nr_avel V2\nr_avel F1\nr_avel F2\ngap\n",
+         r_avel X\nr_avel Y\nr_avel H\nr_avel P\nL c_at V1 u:l_oss V2\nr_avel D2\nr_avel G2\nr_avel D1\nr_avel G1\nr_avel V1\nr_avel V2\nr_avel F1\nr_avel F2\ngap\n\
+         \"p:\" u_se< \"Plot\"\n\
+         losses := {}\n\
+         # The losses stretched to their own range (Plot's line chart keeps a range of at least 1).\n\
+         lossChart := p:l_ine! (losses - 'm_in r_/ losses) / 0.000001 m_ax ('m_ax r_/ losses) - 'm_in r_/ losses\n",
         line("e"),
         line("u:b_ump"),
         line("F1"),
         line("F2"),
-        line("gap")
+        line("gap"),
+        losses(earlier)
     )
 }
 
 pub fn program(s: &Setup) -> String {
-    format!("{}{}", head(s), tail())
+    format!("{}{}", head(s), tail(&s.earlier))
 }
 
 /// One training step, as X_eTaL computed it.
@@ -95,13 +112,15 @@ pub struct Step {
     pub f2: Vec<f64>,
     /// The largest difference between the analytic and finite-difference gradients.
     pub gap: f64,
+    /// Plot's chart of the losses: the steps taken, now, after this step (SVG).
+    pub chart: String,
 }
 
 pub fn run(s: &Setup) -> Result<Step, String> {
     for (path, text) in DATA {
         microscope::libs::add(path, text);
     }
-    let out = output(&program(s), 14)?;
+    let (out, pictures) = output_pictures(&program(s), 14)?;
     let l = numbers::<f64>(&out[4], 2)?;
     Ok(Step {
         x: numbers(&out[0], N * I)?,
@@ -118,5 +137,6 @@ pub fn run(s: &Setup) -> Result<Step, String> {
         f1: numbers(&out[11], (I + 1) * J)?,
         f2: numbers(&out[12], (J + 1) * K)?,
         gap: numbers::<f64>(&out[13], 1)?[0],
+        chart: pictures.into_iter().next().ok_or("no chart of the losses")?,
     })
 }

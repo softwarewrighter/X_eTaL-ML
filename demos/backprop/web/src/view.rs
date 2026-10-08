@@ -25,7 +25,14 @@ pub fn program(s: &Setup) -> String {
             _ => l.to_string(),
         })
         .collect();
-    format!("{}\n# -- the run: the check, and every array the page shows --\n{}", h.join("\n"), tail())
+    let t: Vec<String> = tail(&s.earlier)
+        .lines()
+        .map(|l| match l.starts_with("losses := (") {
+            true => "losses := (...) c_at L c_at V1 u:l_oss V2   # the loss at each step taken before".to_string(),
+            false => l.to_string(),
+        })
+        .collect();
+    format!("{}\n# -- the run: the check, every array the page shows, the losses drawn --\n{}\n", h.join("\n"), t.join("\n"))
 }
 
 pub fn range(src: &str, stage: Stage) -> Range {

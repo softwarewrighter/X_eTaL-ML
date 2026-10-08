@@ -28,6 +28,7 @@ X_eTaL (v0.1.0, 512b3ee) on 2026-10-05.
 | M11 | filed | feature | A macro's text cannot name a library by the importer's alias: `m:f_` in an expansion is not rewritten to the alias the caller chose, and an expansion may not import (MC23), so a macro library cannot call its own `.xtl` half, or another library, without fixing the alias (X_eTaL-libraries X14) | Net (its networks call NN) | the expansion says `nn:`; the page tells the reader to import NN under that alias |
 | M12 | filed | feature | Shapes in types: a matrix's type is `Float`, so code can be well-typed and shape-wrong (a spec saying 4 outputs against a 3-column weight array ran and answered); `r_eshape` repeats or cuts data silently. Asked in three sizes: a shape ascription built-in now, rank in types next, sized types as research | Net (its models check at load instead), every demo | the Net macros write run-time checks that stop with an error naming the layer |
 | M13 | in progress | feature | A state of several arrays for `p_ower`: tuples with destructuring, then records (first asked by X_eTaL-demos; on X_eTaL's wish list as named records). Being added upstream (2026-10-07). Boxes already carry arrays of different shapes and one element type, by position; tuples would carry mixed types, by name | train-live (Adam's state), net-train-macro | the state as a vector of boxed arrays, taken out with `d_isclose N s_elect s` |
+| M14 | open | bug | `xetal_play::run` collects a run's `[]S_HOW` pictures in state shared across threads (`xetal_store::take_shown()`), so two runs at once take each other's pictures: a run can come back with none, or with another's | backprop, train-live, net-macro (their Rust tests, which cargo runs in parallel; a page runs one program at a time) | `microscope::run` runs one program at a time behind a lock |
 ## Details
 
 ### M1, M2: macro libraries and seeing an expansion (landed)
@@ -108,6 +109,15 @@ which is the best a library can do. Asked, in rising size:
    changes, programs that reshape from computed vectors need
    coercions, broadcasting needs typing rules). Research, with this
    library and the ML demos as the motivating case.
+
+### M14: pictures from runs at once
+
+Two threads each run `"p:" u_se< "Plot"` then `c := p:l_ine! 1.0 2.0
+3.0` with `xetal_play::run`: now and then one run returns two
+pictures and the other none (seen in backprop's web tests, 1 run in 2
+with cargo's parallel tests). The pictures should belong to the run,
+as its output does. Workaround: one program at a time, behind a lock
+in `shared/microscope/src/run.rs`.
 
 ### M5, M10
 

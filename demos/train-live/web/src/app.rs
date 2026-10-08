@@ -9,12 +9,12 @@ use web_sys::HtmlInputElement;
 use yew::prelude::*;
 
 use microscope::canvas::Canvas;
-use microscope::chrome::{footer, header, notice, panel};
+use microscope::chrome::{footer, header, notice, panel, picture};
 use microscope::source::code;
 
 use crate::micro::SIDE;
 use crate::model::{Action, Model, CHUNK, LIMIT};
-use crate::view::{map, polyline, source};
+use crate::view::{map, source};
 
 fn act(m: &UseReducerHandle<Model>, a: impl Fn() -> Action + 'static) -> Callback<MouseEvent> {
     let d = m.dispatcher();
@@ -40,19 +40,18 @@ fn controls(m: &UseReducerHandle<Model>) -> Html {
 }
 
 fn curves(m: &UseReducerHandle<Model>) -> Html {
-    let (w, h) = (360.0, 140.0);
-    let top = m.history.iter().map(|x| x.1).fold(0.0_f64, f64::max).max(0.1);
-    let loss: Vec<(usize, f64)> = m.history.iter().map(|x| (x.0, x.1)).collect();
-    let right: Vec<(usize, f64)> = m.history.iter().map(|x| (x.0, x.2)).collect();
     let (l, r) = m.history.last().map_or((0.0, 0.0), |x| (x.1, x.2));
+    let first = m.history.first().map_or(0.0, |x| x.1);
+    let charts = m.after.as_ref().map(|a| a.pictures.clone()).unwrap_or_default();
     let body = html! { <>
-        <svg class="curves" viewBox={format!("0 0 {w} {h}")} width="100%" role="img" aria-label="loss and accuracy over the steps">
-            <polyline class="loss" points={polyline(&loss, LIMIT, top, w, h)} />
-            <polyline class="right" points={polyline(&right, LIMIT, 1.0, w, h)} />
-        </svg>
-        <p class="calc">{"loss "}<b class="loss">{format!("{l:.3}")}</b>{" (orange, from "}{format!("{top:.2}")}{" at the top) \u{00b7} points right "}<b class="right">{format!("{:.1}%", 100.0 * r)}</b>{" (blue, 0 to 100%)"}</p>
+        <p class="calc">{"loss "}<b>{format!("{l:.3}")}</b>{format!(" (from {first:.3}) \u{00b7} points right ")}<b>{format!("{:.1}%", 100.0 * r)}</b></p>
+        { for charts.iter().zip(["The loss after each run, stretched to its own range (losses):", "The share of points right after each run (right):"]).map(|(svg, what)| html! { <>
+            <p class="note">{what}</p>
+            { picture(svg, what) }
+        </> }) }
+        <p class="note">{"Drawn by the Plot library's p:l_ine!, in the program's last lines, from the second run on."}</p>
     </> };
-    panel("The loss and the points right:", "u:l_oss w", "Over the steps so far, measured on the 300 training points after every run.", false, body)
+    panel("The loss and the points right:", "p:l_ine! losses", "Over the steps so far, measured on the 300 training points after every run.", false, body)
 }
 
 #[function_component(App)]

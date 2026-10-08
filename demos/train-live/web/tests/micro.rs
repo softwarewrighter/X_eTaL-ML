@@ -57,23 +57,23 @@ fn the_page_runs_the_command_line_programs_head() {
 
 #[test]
 fn x_etal_trains_as_adam_in_rust_does_and_learns_the_spiral() {
-    let a0 = run(0.02, None, 0).unwrap();
+    let a0 = run(0.02, None, 0, &[]).unwrap();
     assert_eq!(a0.state.len(), STATE);
     assert_eq!((a0.points.len(), a0.arms.len(), a0.map.len()), (2 * POINTS, POINTS, SIDE * SIDE));
     let (s50, l50) = direct(&a0.points, &a0.arms, &a0.state, 50, 0.02);
-    let a50 = run(0.02, Some(&a0.state), 50).unwrap();
+    let a50 = run(0.02, Some(&a0.state), 50, &[]).unwrap();
     assert!(a50.state.iter().zip(&s50).all(|(p, q)| (p - q).abs() < 1e-9), "50 Adam steps agree");
     assert!((a50.loss - l50).abs() < 1e-9);
     // Run by run, as the page does, to 400 steps.
     let mut s = a50.state.clone();
     let mut last = a50.loss;
     for _ in 0..14 {
-        let a = run(0.02, Some(&s), 25).unwrap();
+        let a = run(0.02, Some(&s), 25, &[]).unwrap();
         assert!(a.loss < last + 0.05, "the loss keeps falling: {} after {last}", a.loss);
         last = a.loss;
         s = a.state;
     }
-    let a = run(0.02, Some(&s), 0).unwrap();
+    let a = run(0.02, Some(&s), 0, &[]).unwrap();
     assert!(a.right > 0.95 && a.loss < 0.2, "after 400 steps: {} right, loss {}", a.right, a.loss);
     assert!(a0.right < 0.6, "untrained: {}", a0.right);
 }
@@ -82,11 +82,22 @@ fn x_etal_trains_as_adam_in_rust_does_and_learns_the_spiral() {
 fn the_page_shows_every_line_it_runs() {
     use train_live_web::view::program as shown;
     let s = shown(0.02, true, 25);
-    for line in program(0.02, Some(&[0.5; STATE]), 25).lines().filter(|l| !l.starts_with("s := (e_nclose ")) {
+    let elided = |l: &&str| ["s := (e_nclose ", "losses := (", "right := ("].iter().any(|p| l.starts_with(p));
+    for line in program(0.02, Some(&[0.5; STATE]), 25, &[(1.3, 0.3)]).lines().filter(|l| !elided(l)) {
         assert!(s.lines().any(|l| l == line), "not shown: {line}");
     }
     let s0 = shown(0.02, false, 25);
-    for line in program(0.02, None, 25).lines() {
+    for line in program(0.02, None, 25, &[]).lines() {
         assert!(s0.lines().any(|l| l == line), "not shown: {line}");
     }
+}
+
+#[test]
+fn the_curves_are_drawn_by_plot_in_the_program() {
+    let a0 = run(0.02, None, 0, &[]).unwrap();
+    assert!(a0.pictures.is_empty(), "one point is no line yet");
+    let a = run(0.02, Some(&a0.state), 25, &[(a0.loss, a0.right)]).unwrap();
+    assert_eq!(a.pictures.len(), 2);
+    assert!(a.pictures.iter().all(|p| p.starts_with("<svg") && p.matches(',').count() == 2), "{:?}", a.pictures);
+    assert!(program(0.02, None, 25, &[(1.3, 0.3)]).contains("losses := (1.3) c_at 1 t_ake now\nright := (0.3) c_at -1 t_ake now\n"));
 }

@@ -7,7 +7,9 @@ out in X_eTaL; the page runs 25 steps at a time and redraws what the
 network decides, so you watch the regions bend to follow the spiral.
 
 Live: [Training live](https://softwarewrighter.github.io/X_eTaL-ML/train-live/)
-(press Train; change the learning rate and start again).
+(press Train; change the learning rate and start again). The loss and
+the share of points right are drawn after every run by the
+[Plot](https://github.com/softwarewrighter/X_eTaL-libraries) library's `p:l_ine!`, in the page's program.
 
 [![Training live: the live page](screenshot.png)](https://softwarewrighter.github.io/X_eTaL-ML/train-live/)
 
@@ -81,3 +83,9 @@ element types, and the positions are not names. Tuples with
 destructuring, then records, would let the step take and give
 `(W1; W2; M1; M2; V1; V2; k)` by name: being added to X_eTaL now (ask
 M13 in [`docs/xetal-asks.md`](../../docs/xetal-asks.md)).
+
+Plot's line chart keeps a vertical range of at least 1 and needs two
+points, so the page's program stretches the losses to their own range
+(the line says so), prints the real values beside the charts, and
+draws from the second run on. Plot gaining axes, several lines in one
+chart and a free range is asked of X_eTaL-libraries.

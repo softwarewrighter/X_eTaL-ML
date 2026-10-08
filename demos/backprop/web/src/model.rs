@@ -38,12 +38,7 @@ impl Model {
         let t = now();
         match run(&setup) {
             Ok(s) => {
-                let mut losses = self.losses.clone();
-                if setup.weights.is_none() {
-                    losses = vec![s.loss.0];
-                } else if losses.last() != Some(&s.loss.0) {
-                    losses.push(s.loss.0);
-                }
+                let losses = [setup.earlier.clone(), vec![s.loss.0]].concat();
                 Model { setup, step: Some(Rc::new(s)), losses, ms: now() - t, notice: None, ..self }
             }
             Err(e) => Model { notice: Some(format!("X_eTaL stopped: {e} (showing the last good run)")), ..self },
@@ -65,12 +60,12 @@ impl Reducible for Model {
         Rc::new(match action {
             Action::Take => match m.step.clone() {
                 Some(s) => {
-                    let setup = Setup { weights: Some((s.v1.clone(), s.v2.clone())), ..m.setup.clone() };
+                    let setup = Setup { weights: Some((s.v1.clone(), s.v2.clone())), earlier: m.losses.clone(), ..m.setup.clone() };
                     m.rerun(setup)
                 }
                 None => m,
             },
-            Action::Reset => Model { losses: vec![], ..m }.rerun(Setup { weights: None, lr: 0.5 }),
+            Action::Reset => Model { losses: vec![], ..m }.rerun(Setup::default()),
             Action::Rate(lr) => {
                 let setup = Setup { lr, ..m.setup.clone() };
                 m.rerun(setup)

@@ -9,11 +9,14 @@ use crate::micro::{head, tail, SIDE, STATE};
 /// What the page runs, all of it: the head, then the run's lines, the
 /// state it carries from run to run elided once it has trained.
 pub fn program(lr: f64, trained: bool, steps: usize) -> String {
-    let t: Vec<String> = tail(trained.then_some(&[0.0; STATE][..]), steps)
+    let earlier = [(0.0, 0.0)];
+    let t: Vec<String> = tail(trained.then_some(&[0.0; STATE][..]), steps, if trained { &earlier[..] } else { &[] })
         .lines()
-        .map(|l| match l.starts_with("s := (e_nclose ") {
-            true => "s := ...   # the state after the steps so far: seven boxed arrays (W1 W2 M1 M2 V1 V2 k)".to_string(),
-            false => l.to_string(),
+        .map(|l| match l {
+            l if l.starts_with("s := (e_nclose ") => "s := ...   # the state after the steps so far: seven boxed arrays (W1 W2 M1 M2 V1 V2 k)".to_string(),
+            l if l.starts_with("losses := (") => "losses := (...) c_at 1 t_ake now   # the loss after each run so far".to_string(),
+            l if l.starts_with("right := (") => "right := (...) c_at -1 t_ake now   # the share right after each run so far".to_string(),
+            l => l.to_string(),
         })
         .collect();
     format!("{}# -- each run: a few dozen steps from the state the page holds --\n{}\n", head(lr), t.join("\n"))
@@ -45,14 +48,4 @@ pub fn map(arms: &[usize], points: &[f64], labels: &[usize]) -> Vec<u8> {
         }
     }
     px
-}
-
-/// An SVG polyline's points for values over steps (0 .. max_steps
-/// across, 0 .. top up).
-pub fn polyline(values: &[(usize, f64)], max_steps: usize, top: f64, w: f64, h: f64) -> String {
-    values
-        .iter()
-        .map(|&(s, v)| format!("{:.1},{:.1}", w * s as f64 / max_steps.max(1) as f64, h - h * (v / top).clamp(0.0, 1.0)))
-        .collect::<Vec<_>>()
-        .join(" ")
 }

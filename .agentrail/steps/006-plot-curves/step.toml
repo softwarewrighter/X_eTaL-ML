@@ -1,6 +1,6 @@
 number = 6
 slug = "plot-curves"
-status = "pending"
+status = "in-progress"
 description = "the user's go, 2026-10-07: the backprop microscope's loss history drawn as a ..."
 role = "production"
 context_files = []

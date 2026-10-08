@@ -85,3 +85,22 @@ fn the_page_shows_every_line_it_runs() {
     }
     assert!(shown(&stepped).contains("W1 := 3 4 r_eshape ...   # the weights after the steps taken"));
 }
+
+#[test]
+fn the_losses_are_drawn_by_plot_in_the_program() {
+    // From the start: the loss now and after the step, two points.
+    let s = run(&Setup::default()).unwrap();
+    assert!(s.chart.starts_with("<svg") && s.chart.matches(',').count() == 2, "{}", s.chart);
+    // Three steps taken, as the page takes them: five points, falling
+    // (y grows downward).
+    let mut setup = Setup::default();
+    let mut r = s;
+    for _ in 0..3 {
+        setup = Setup { earlier: [setup.earlier.clone(), vec![r.loss.0]].concat(), weights: Some((r.v1.clone(), r.v2.clone())), ..setup };
+        r = run(&setup).unwrap();
+    }
+    let pts: Vec<f64> = r.chart.split("points=\"").nth(1).unwrap().split('"').next().unwrap().split(' ').map(|p| p.split(',').nth(1).unwrap().parse().unwrap()).collect();
+    assert_eq!(pts.len(), 5);
+    assert!(pts.windows(2).all(|w| w[1] > w[0]), "{pts:?}");
+    assert!(program(&Setup { earlier: vec![1.2], ..Setup::default() }).contains("losses := (1.2) c_at L c_at V1 u:l_oss V2\n"));
+}

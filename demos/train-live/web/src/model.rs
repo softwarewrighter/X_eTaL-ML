@@ -41,7 +41,7 @@ impl Model {
     /// The starting state, untrained (zero steps).
     fn start(lr: f64) -> Self {
         let m = Model { lr, after: None, steps: 0, history: vec![], playing: false, ms_per_step: 0.0, notice: None };
-        match run(lr, None, 0) {
+        match run(lr, None, 0, &[]) {
             Ok(a) => Model { history: vec![(0, a.loss, a.right)], after: Some(Rc::new(a)), ..m },
             Err(e) => Model { notice: Some(format!("X_eTaL stopped: {e}")), ..m },
         }
@@ -65,8 +65,9 @@ impl Reducible for Model {
                     return Rc::new(Model { playing: false, ..m });
                 }
                 let state = m.after.as_ref().map(|a| a.state.clone());
+                let earlier: Vec<(f64, f64)> = m.history.iter().map(|h| (h.1, h.2)).collect();
                 let t = now();
-                match run(m.lr, state.as_deref(), CHUNK) {
+                match run(m.lr, state.as_deref(), CHUNK, &earlier) {
                     Ok(a) => {
                         let steps = m.steps + CHUNK;
                         let mut history = m.history.clone();

@@ -3,7 +3,7 @@
 //! Adam's averages per layer, the step count). Nothing here knows about
 //! the browser.
 
-use microscope::run::{lit, numbers, output, section};
+use microscope::run::{lit, numbers, output_pictures, section};
 
 /// The command-line program.
 pub const SOURCE: &str = include_str!("../../train-live.xtl");
@@ -37,9 +37,37 @@ fn line(name: &str) -> &'static str {
     SOURCE.lines().find(|l| l.starts_with(&format!("{name} := "))).unwrap_or("")
 }
 
+/// Earlier values and this run's, as X_eTaL: `(v1 v2 ...) c_at NOW`.
+fn history(earlier: &[f64], now: &str) -> String {
+    match earlier.is_empty() {
+        true => now.to_string(),
+        false => format!("({}) c_at {now}", earlier.iter().map(|&v| lit(v)).collect::<Vec<_>>().join(" ")),
+    }
+}
+
+/// The loss and the share right after every run so far, drawn by Plot
+/// (from the second run: a line takes two points).
+fn curves(earlier: &[(f64, f64)]) -> String {
+    if earlier.is_empty() {
+        return String::new();
+    }
+    format!(
+        "\"p:\" u_se< \"Plot\"\n\
+         losses := {}\n\
+         right := {}\n\
+         # The loss stretched to its own range (Plot's line chart keeps a range of at least 1).\n\
+         lossChart := p:l_ine! (losses - 'm_in r_/ losses) / 0.000001 m_ax ('m_ax r_/ losses) - 'm_in r_/ losses\n\
+         rightChart := p:l_ine! right\n",
+        history(&earlier.iter().map(|e| e.0).collect::<Vec<_>>(), "1 t_ake now"),
+        history(&earlier.iter().map(|e| e.1).collect::<Vec<_>>(), "-1 t_ake now"),
+    )
+}
+
 /// The run's own lines: the state to start from (the program's s0, or
-/// the page's), `steps` Adam steps, then what the page shows.
-pub fn tail(state: Option<&[f64]>, steps: usize) -> String {
+/// the page's), `steps` Adam steps, what the page shows, then the loss
+/// and share right so far (`earlier`: after each earlier run) drawn by
+/// the Plot library.
+pub fn tail(state: Option<&[f64]>, steps: usize, earlier: &[(f64, f64)]) -> String {
     let start = match state {
         None => "s := s0".to_string(),
         Some(s) => format!("s := {}", boxes(s)),
@@ -48,9 +76,10 @@ pub fn tail(state: Option<&[f64]>, steps: usize) -> String {
         "{start}\ns := {steps} 'u:a_dam p_ower s\n{}\n{}\nu:j_oin := {{ b -> d_isclose '{{ x y -> e_nclose (d_isclose x) c_at d_isclose y }} r_/ b }}\ng := {SIDE}\n\
          c := -1.1 + 2.2 * (0.5 + f_loat o_ffsets g) / f_loat g\n\
          grid := o_\\ (2 c_at g * g) r_eshape (r_avel (o_ffsets g) 'r_ight t_able c) c_at r_avel (r_ev c) 'l_eft t_able o_ffsets g\n\
-         r_avel u:j_oin '{{ b -> r_avel d_isclose b }} m_ap s\n(u:l_oss s) c_at u:r_ight s\nnn:a_rgmax nn:s_oftmax (nn:t_anh grid nn:d_ense d_isclose 1 s_elect s) nn:d_ense d_isclose 2 s_elect s\nr_avel X\n1 + arm\n",
+         r_avel u:j_oin '{{ b -> r_avel d_isclose b }} m_ap s\nnow := (u:l_oss s) c_at u:r_ight s\nnow\nnn:a_rgmax nn:s_oftmax (nn:t_anh grid nn:d_ense d_isclose 1 s_elect s) nn:d_ense d_isclose 2 s_elect s\nr_avel X\n1 + arm\n{}",
         line("u:l_oss"),
-        line("u:r_ight")
+        line("u:r_ight"),
+        curves(earlier)
     )
 }
 
@@ -71,8 +100,8 @@ pub fn boxes(s: &[f64]) -> String {
         .join(" c_at ")
 }
 
-pub fn program(lr: f64, state: Option<&[f64]>, steps: usize) -> String {
-    format!("{}{}", head(lr), tail(state, steps))
+pub fn program(lr: f64, state: Option<&[f64]>, steps: usize, earlier: &[(f64, f64)]) -> String {
+    format!("{}{}", head(lr), tail(state, steps, earlier))
 }
 
 /// After a run of steps, as X_eTaL computed it.
@@ -86,10 +115,13 @@ pub struct After {
     /// The training points, x y pairs, and their arms.
     pub points: Vec<f64>,
     pub arms: Vec<usize>,
+    /// Plot's charts of the loss and of the share right so far, SVG
+    /// (none on the first run).
+    pub pictures: Vec<String>,
 }
 
-pub fn run(lr: f64, state: Option<&[f64]>, steps: usize) -> Result<After, String> {
-    let out = output(&program(lr, state, steps), 5)?;
+pub fn run(lr: f64, state: Option<&[f64]>, steps: usize, earlier: &[(f64, f64)]) -> Result<After, String> {
+    let (out, pictures) = output_pictures(&program(lr, state, steps, earlier), 5)?;
     let lr2 = numbers::<f64>(&out[1], 2)?;
     Ok(After {
         state: numbers(&out[0], STATE)?,
@@ -98,5 +130,6 @@ pub fn run(lr: f64, state: Option<&[f64]>, steps: usize) -> Result<After, String
         map: numbers(&out[2], SIDE * SIDE)?,
         points: numbers(&out[3], 2 * POINTS)?,
         arms: numbers(&out[4], POINTS)?,
+        pictures,
     })
 }
