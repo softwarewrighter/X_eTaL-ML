@@ -1,8 +1,9 @@
 number = 9
 slug = "tuple-state"
-status = "in-progress"
+status = "completed"
 description = "ask M13 landed (tuples through p_ower, X_eTaL 96060b5, pinned 2026-10-08): tr..."
 role = "production"
 context_files = []
 created_at = "2026-10-08T12:02:40"
-commits = []
+completed_at = "2026-10-08T15:04:01"
+commits = ["8735b744d31c0c13b1e327676fe3e4739608e7ed"]
