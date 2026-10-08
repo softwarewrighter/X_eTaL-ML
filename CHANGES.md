@@ -13,6 +13,7 @@ refresh of the vendored X_eTaL.
 
 ## 2026-10-08
 
+- 03:25 `build` The shared microscope's and xetal-probe's Cargo.lock for X_eTaL 96060b5 (left out of the pin commit).
 - 03:20 `chore` Saga step plot-pin completed.
 - 03:15 `demo` The training curves in one chart with axes: the backprop microscope, train-live and the net-macro page draw with Plot's `p:c_hart!` (a title, named axes, a legend; loss and share right together), from the first run; the losses are no longer stretched and nothing waits for a second point (both workarounds dropped). Tests read the chart's first series.
 - 03:00 `vendor` X_eTaL-libraries pinned at 6e7ef0a (Plot: axes and labels, several lines, `p:c_hart!`, a single point, a small range), which needs X_eTaL 96060b5: X_eTaL pinned there too (tuples through `p_ower`, ask M13 landed; `h:` file-private names). NN's and Net's private helpers written `h:` (`xetal migrate`), as bare ones are deprecated. Every baseline unchanged; bench-check 1 to 15% faster. Step tuple-state inserted.
