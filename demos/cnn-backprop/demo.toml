@@ -1,0 +1,11 @@
+# One demo's description: read by scripts/demos.py for the tests, the
+# README's demo list and the live catalog (pages/index.html).
+slug = "cnn-backprop"            # the directory name, demos/<slug>/
+title = "CNN training"
+summary = "X_eTaL trains a tiny convolutional network in your browser, from random weights, on 600 handwritten digits: the backward pass through softmax, the dense layer, max-pooling, ReLU and the convolution, checked against finite differences; Adam, 20 digits a step. Watch the filters form and the test digits come to be read right, from 12% to about 90% in 40 steps."
+concepts = ["training", "backpropagation", "convolution", "max-pooling", "tuples"]        # the X_eTaL ideas it shows
+status = "live"             # draft | live | deferred
+order = 17                  # position in the catalog (lower first)
+needs = []                   # asks in docs/xetal-asks.md it waits on or works around
+line = "GK := DM '+ '* i_nner o_\\ V"
+why = "The filters' gradient over a whole batch is one matrix product: what came back to every position of every map, times the transposed 3 x 3 windows of every digit, the same windows the convolution used going forward."

@@ -1,0 +1,3 @@
+# Text the page shows only after X_eTaL has run (scripts/browser-check.sh).
+The filters:
+On all 200 test digits: loss

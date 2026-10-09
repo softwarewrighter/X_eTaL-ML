@@ -1,0 +1,1 @@
+the user's ask, 2026-10-08: X_eTaL step 090 (8cbc30a) adds []A (the uppercase letters) and []D (the digits): re-pin X_eTaL at or after it (the doc tooling fixes too), replace "0123456789" and alphabet literals in programs and libraries with []A and []D as appropriate; baselines, docs, /doc rebuilt

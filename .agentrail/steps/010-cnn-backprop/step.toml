@@ -1,6 +1,6 @@
 number = 10
 slug = "cnn-backprop"
-status = "pending"
+status = "in-progress"
 description = "training step 4: the Tiny CNN's backward pass after Shinkarov's CNN in APL (r..."
 role = "production"
 context_files = []

@@ -1,0 +1,11 @@
+[package]
+name = "cnn-backprop-train"
+description = "Writes the cnn-backprop demo's digits: a few hundred MNIST training and test digits, from work/mnist into data/"
+version = "0.1.0"
+edition = "2021"
+license = "MIT"
+publish = false
+
+[dependencies]
+
+[workspace]

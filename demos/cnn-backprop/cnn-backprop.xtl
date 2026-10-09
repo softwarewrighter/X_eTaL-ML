@@ -1,0 +1,118 @@
+#!/usr/bin/env xetal
+## Training a tiny convolutional network in X_eTaL, from random
+## weights, on 600 handwritten digits: 28 x 28 -> 8 filters of 3 x 3
+## -> ReLU -> 2 x 2 max-pooling -> dense -> softmax, as cnn-digits
+## reads them. The backward pass undoes each stage in turn: the dense
+## layer, the pooling (each block's gradient to its largest item), the
+## ReLU and the convolution, each a few array expressions over the
+## whole batch; it is checked against finite differences. Adam moves
+## the weights, 20 digits a step, and p_ower repeats the step.
+
+"nn:" u_se< "NN"
+
+### The digits, read from data/ (just cnn-backprop-data)
+## 600 digits to train on, 200 to test with: each a label, then 784 pixels.
+tr := 600 785 r_eshape n_umbers []N_GET "data/train.txt"
+te := 200 785 r_eshape n_umbers []N_GET "data/test.txt"
+## The pictures, 0.0 to 1.0, and the labels one-hot (digit d is class d + 1).
+X := 600 28 28 r_eshape (f_loat 1 d_rop_2 tr) / 255.0
+Y := 10 nn:o_neHot 1 + f_loor r_avel 1 t_ake_2 tr
+TX := 200 28 28 r_eshape (f_loat 1 d_rop_2 te) / 255.0
+ty := 1 + f_loor r_avel 1 t_ake_2 te
+
+### Forward: the network of cnn-digits, for a batch x of n digits
+## Every 3 x 3 window of every digit: 9 rows, a column per digit and position.
+u:w_indows := { x -> (9 c_at 676 * t_ally x) r_eshape 1 d_rop_5 -1 d_rop_5 1 d_rop_4 -1 d_rop_4 -1 0 1 o_-_3 -1 0 1 o_-_3 x }
+## The 8 filters K (8 x 9) and their biases B over every window: n x 8 x 26 x 26.
+u:c_onv := { (K, B) V -> n := (t_ally r_avel V) d_iv 6084; (n c_at 8 26 26) r_eshape 2 1 3 t_ranspose (8 c_at n c_at 676) r_eshape (K '+ '* i_nner V) + B 'l_eft t_able o_ffsets n * 676 }
+## The largest of each 2 x 2 block: n x 8 x 13 x 13.
+u:p_ool := { a -> 'm_ax r_/_46 ((t_ally a) c_at 8 13 2 13 2) r_eshape a }
+## Each digit's probabilities for 0 to 9.
+u:p_robs := { (K, B, W) x -> nn:s_oftmax (((t_ally x) c_at 1352) r_eshape u:p_ool nn:r_elu (K, B) u:c_onv u:w_indows x) nn:d_ense W }
+
+### Backward: each stage undone, in reverse
+## Each 2 x 2 block of the maps as a last axis of 4 (n x 8 x 13 x 13 x 4), and back.
+u:b_locks := { a -> ((2 t_ake s_hape a) c_at 13 13 4) r_eshape 1 2 3 5 4 6 t_ranspose ((2 t_ake s_hape a) c_at 13 2 13 2) r_eshape a }
+u:m_aps := { r -> ((2 t_ake s_hape r) c_at 26 26) r_eshape 1 2 3 5 4 6 t_ranspose ((2 t_ake s_hape r) c_at 13 13 2 2) r_eshape r }
+## The gradients of the loss by K, B and W, for the digits numbered i.
+u:g_rad := { (K, B, W) i ->
+  x := i s_elect X
+  y := i s_elect Y
+  n := t_ally x
+  V := u:w_indows x
+  C := (K, B) u:c_onv V
+  A := nn:r_elu C
+  Q := u:p_ool A
+  F := (n c_at 1352) r_eshape Q
+  P := nn:s_oftmax F nn:d_ense W
+  D3 := (P - y) / f_loat n
+  GW := (o_\ F c_at_2 ((n c_at 1) r_eshape 1.0)) '+ '* i_nner D3
+  DQ := (n c_at 8 13 13) r_eshape D3 '+ '* i_nner o_\ -1 d_rop W
+  R := u:b_locks A
+  hit := f_loat R = (s_hape R) r_eshape (r_avel Q) 'l_eft t_able 1 2 3 4
+  first := hit * f_loat 1.0 = '+ s_\_5 hit
+  DC := (u:m_aps first * (s_hape R) r_eshape (r_avel DQ) 'l_eft t_able 1 2 3 4) * f_loat C > 0.0
+  DM := (8 c_at n * 676) r_eshape 2 1 3 t_ranspose (n c_at 8 c_at 676) r_eshape DC
+  (DM '+ '* i_nner o_\ V, '+ r_/_2 DM, GW)
+}
+
+### Adam, on a state of (K, B, W, their averages, the step count)
+## The learning rate and the digits per step.
+lr := 0.01
+bs := 20
+## How far Adam moves a weight array, from its averages (m, v) at step t.
+u:m_ove := { (m, v) t -> (m / 1.0 - 0.9 ^ t) / 0.00000001 + (v / 1.0 - 0.999 ^ t) ^ 0.5 }
+## One step, on the next 20 training digits (30 steps go through all 600).
+u:s_tep := { (K, B, W, MK, MB, MW, VK, VB, VW, t) ->
+  i := (r_ange bs) + bs * (f_loor t) m_od 600 d_iv bs
+  t := 1.0 + t
+  (GK, GB, GW) := (K, B, W) u:g_rad i
+  MK := (0.9 * MK) + 0.1 * GK
+  MB := (0.9 * MB) + 0.1 * GB
+  MW := (0.9 * MW) + 0.1 * GW
+  VK := (0.999 * VK) + 0.001 * GK * GK
+  VB := (0.999 * VB) + 0.001 * GB * GB
+  VW := (0.999 * VW) + 0.001 * GW * GW
+  (K - lr * (MK, VK) u:m_ove t, B - lr * (MB, VB) u:m_ove t, W - lr * (MW, VW) u:m_ove t, MK, MB, MW, VK, VB, VW, t)
+}
+## The starting state: small random filters and dense weights; the
+## filters' biases a little above 0, so that ReLU starts off its kink
+## (a blank window's output is then 0.01, not exactly 0).
+K := 0.8 * (f_loat (8 9 r_eshape r_oll! 72 r_eshape 2001) - 1001) / 1000.0
+B := 8 r_eshape 0.01
+W := 0.05 * (f_loat (1353 10 r_eshape r_oll! 13530 r_eshape 2001) - 1001) / 1000.0
+s0 := (K, B, W, 0.0 * K, 0.0 * B, 0.0 * W, 0.0 * K, 0.0 * B, 0.0 * W, 0.0)
+## The loss and the share right on the 200 test digits.
+u:t_est := { (K, B, W, _, _, _, _, _, _, _) ->
+  p := (K, B, W) u:p_robs TX
+  ((10 nn:o_neHot ty) nn:c_rossEntropy p) c_at ty nn:a_ccuracy p
+}
+# -- end of the core ----------------------------------------
+
+### The check: every gradient against a finite difference
+## The loss on digits i, and e at item j of an array shaped as w.
+u:l_oss := { (K, B, W) i -> (i s_elect Y) nn:c_rossEntropy (K, B, W) u:p_robs i s_elect X }
+e := 0.00001
+u:b_ump := { w j -> e * f_loat (s_hape w) r_eshape j = r_ange t_ally r_avel w }
+## On four digits: the first filter's 9 weights, the 8 biases, 6 dense weights.
+i4 := 1 2 3 4
+(GK, GB, GW) := (K, B, W) u:g_rad i4
+FK := '{ j -> (((K + K u:b_ump j, B, W) u:l_oss i4) - (K - K u:b_ump j, B, W) u:l_oss i4) / 2.0 * e } e_ach r_ange 9
+FB := '{ j -> (((K, B + B u:b_ump j, W) u:l_oss i4) - (K, B - B u:b_ump j, W) u:l_oss i4) / 2.0 * e } e_ach r_ange 8
+wj := 1 77 500 6000 13521 13530
+FW := '{ j -> (((K, B, W + W u:b_ump j) u:l_oss i4) - (K, B, W - W u:b_ump j) u:l_oss i4) / 2.0 * e } e_ach wj
+gap := ('m_ax r_/ a_bs (9 t_ake r_avel GK) - FK) m_ax ('m_ax r_/ a_bs GB - FB) m_ax 'm_ax r_/ a_bs (wj s_elect r_avel GW) - FW
+gap < 1e-8
+
+### Training
+## The test loss and share right: at the start, after 10 steps (200
+## digits), after 40 (800: each training digit seen about once and a
+## third).
+u:r_ound := { a -> (f_loat f_loor 0.5 + 1000.0 * a) / 1000.0 }
+s1 := 10 'u:s_tep p_ower s0
+s2 := 30 'u:s_tep p_ower s1
+u:r_ound (u:t_est s0) c_at (u:t_est s1) c_at u:t_est s2
+## The first 20 test digits as the trained network reads them, and their labels.
+(K2, B2, W2, _, _, _, _, _, _, _) := s2
+(nn:a_rgmax (K2, B2, W2) u:p_robs 20 t_ake TX) - 1
+(20 t_ake ty) - 1

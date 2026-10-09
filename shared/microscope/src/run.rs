@@ -36,12 +36,22 @@ pub fn output(src: &str, lines: usize) -> Result<Vec<String>, String> {
 /// pictures it showed with `[]S_HOW` (Plot's charts), each an SVG
 /// document.
 pub fn output_pictures(src: &str, lines: usize) -> Result<(Vec<String>, Vec<String>), String> {
+    output_with(&[], src, lines)
+}
+
+/// As `output_pictures`, with `files` (path, text) put first where the
+/// program's `[]N_GET` finds them (a page's state between runs).
+pub fn output_with(files: &[(String, String)], src: &str, lines: usize) -> Result<(Vec<String>, Vec<String>), String> {
     crate::libs::install();
-    // One program at a time: X_eTaL collects a run's pictures in state
-    // shared across threads, so runs at once (tests) would mix them.
+    // One program at a time, its files with it: X_eTaL collects a run's
+    // pictures in state shared across threads, and the files are shared
+    // too, so runs at once (tests) would mix them.
     static ONE: std::sync::Mutex<()> = std::sync::Mutex::new(());
     let run = {
         let _one = ONE.lock().unwrap_or_else(|e| e.into_inner());
+        for (path, text) in files {
+            crate::libs::add(path, text);
+        }
         xetal_play::run(src, 1)
     };
     if !run.err.is_empty() {

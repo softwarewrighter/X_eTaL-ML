@@ -1,0 +1,8 @@
+number = 11
+slug = "char-builtins"
+status = "pending"
+description = "the user's ask, 2026-10-08: X_eTaL step 090 (8cbc30a) adds []A (the uppercase..."
+role = "production"
+context_files = []
+created_at = "2026-10-08T17:33:00"
+commits = []

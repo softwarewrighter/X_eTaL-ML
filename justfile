@@ -77,6 +77,11 @@ ternary-train:
 net-train:
     cargo run --release -q --manifest-path demos/net-macro/train/Cargo.toml
 
+# Fetch MNIST into work/mnist/ and write the cnn-backprop demo's digits (600 to train on, 200 to test) into its data/
+cnn-backprop-data:
+    scripts/mnist.sh
+    cargo run --release -q --manifest-path demos/cnn-backprop/train/Cargo.toml
+
 # Fetch MNIST into work/mnist/, train the cnn-digits demo's network and write its weights into cnn-digits.xtl (then just bless cnn-digits)
 cnn-train:
     scripts/mnist.sh
