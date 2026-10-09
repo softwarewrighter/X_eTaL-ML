@@ -1,6 +1,6 @@
 number = 11
 slug = "char-builtins"
-status = "pending"
+status = "in-progress"
 description = "the user's ask, 2026-10-08: X_eTaL step 090 (8cbc30a) adds []A (the uppercase..."
 role = "production"
 context_files = []

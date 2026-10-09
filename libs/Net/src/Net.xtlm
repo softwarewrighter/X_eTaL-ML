@@ -26,7 +26,7 @@ h:j_oin := { b ->
   d_isclose '{ x y -> e_nclose (d_isclose x) c_at d_isclose y } r_/ b
 }
 ## Whether the text w is a whole number (a layer's size).
-h:s_ize? := { w -> '& r_/ w m_ember? "0123456789" }
+h:s_ize? := { w -> '& r_/ w m_ember? []D }
 ## Whether the text w names an activation.
 h:a_ct? := { w -> '| r_/ '{ a -> w m_atch d_isclose a } e_ach h:w_ords "relu sigmoid tanh softmax logSoftmax" }
 ## An activation's function in NN: relu -> nn:r_elu.

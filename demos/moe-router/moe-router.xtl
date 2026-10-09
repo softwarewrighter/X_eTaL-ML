@@ -104,4 +104,4 @@ u:r_ound (1 + w_here (1 d_rop pair) != -1 d_rop pair) s_elect eps
 ## The slice, each point's pair as a letter: regions with straight
 ## edges, where two experts' scores tie.
 pg := (16.0 * u:f_irst gg) + u:s_econd gg
-(side c_at side) r_eshape ((u_nique pg) i_ndexOf pg) s_elect "abcdefghijklmnopqrstuvwxyz"
+(side c_at side) r_eshape ((u_nique pg) i_ndexOf pg) s_elect []A

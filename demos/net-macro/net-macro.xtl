@@ -31,11 +31,11 @@ arm := f_loor 3 s_elect pts
 # The share of the 120 test points each reads right: a line cannot
 # follow a spiral, a small network nearly can, the deep one does.
 (arm nn:a_ccuracy u:l_inear xy) c_at (arm nn:a_ccuracy u:s_mall xy) c_at arm nn:a_ccuracy u:d_eep xy
-## What each decides over the square -1.1 .. 1.1 (a, b, c: the arms).
+## What each decides over the square -1.1 .. 1.1 (A, B, C: the arms).
 g := 20
 c := -1.1 + 2.2 * (0.5 + f_loat o_ffsets g) / f_loat g
 grid := o_\ (2 c_at g * g) r_eshape (r_avel (o_ffsets g) 'r_ight t_able c) c_at r_avel (r_ev c) 'l_eft t_able o_ffsets g
-u:a_rms := { y -> (g c_at g) r_eshape (nn:a_rgmax y) s_elect "abc" }
+u:a_rms := { y -> (g c_at g) r_eshape (nn:a_rgmax y) s_elect []A }
 u:a_rms u:l_inear grid
 u:a_rms u:s_mall grid
 u:a_rms u:d_eep grid

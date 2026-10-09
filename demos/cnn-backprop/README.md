@@ -15,6 +15,8 @@ readings and the test loss and accuracy redrawn after each, the chart
 by the [Plot](https://github.com/softwarewrighter/X_eTaL-libraries)
 library in the page's program).
 
+[![CNN training: the live page](screenshot.png)](https://softwarewrighter.github.io/X_eTaL-ML/cnn-backprop/)
+
 ## Run it
 
 From a clone of this repository (Rust, git and `just`):

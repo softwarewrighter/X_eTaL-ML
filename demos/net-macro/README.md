@@ -70,7 +70,7 @@ weights and biases, counted when the program is compiled (9, 27 and
 2. The share of the 120 test points each network reads right: a line
    cannot follow a spiral (0.375), the small network nearly can
    (0.875), the deep one does (1.0).
-3. What each decides over the square -1.1 to 1.1, as letters a, b, c.
+3. What each decides over the square -1.1 to 1.1, as letters A, B, C.
 
 On the page a spec that is not one of the three has no trained
 weights, so it is expanded (with `net:n_etwork<`) and counted but not

@@ -11,6 +11,12 @@ planning and reordering, `release` milestone release, `chore`
 agentrail bookkeeping (step complete, saga archive), `vendor` a
 refresh of the vendored X_eTaL.
 
+## 2026-10-09
+
+- 12:40 `chore` Saga step char-builtins completed.
+- 12:35 `refactor` Digit and letter literals replaced by X_eTaL's `[]D` and `[]A`: cnn-digits' bar labels and Net's size check use `[]D`; the letters that label map cells are `s_elect []A` (moe-router, net-macro, ternary-net), so those maps print A, B, C (their command-line baselines reblessed, the same but for case; lowercase letters have no built-in yet). cnn-backprop's screenshot, for its card and README.
+- 12:20 `vendor` X_eTaL pinned at 4952874 (a file's doc header needs no blank line; stray doc blocks warn, none here) and X_eTaL-libraries at c9de461 (its literals replaced with `[]D`, `[]A`). Every baseline unchanged.
+
 ## 2026-10-08
 
 - 08:40 `chore` Saga step cnn-backprop completed.

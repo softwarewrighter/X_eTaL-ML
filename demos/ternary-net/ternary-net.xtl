@@ -110,5 +110,5 @@ u:r_ound (m32 u:m_easures y32) c_at (m16 u:m_easures y16) c_at (m8 u:m_easures y
 (32 * 336) c_at (16 * 336) c_at (8 * 336) c_at u:r_ound 336.0 * (l_og 3.0) / l_og 2.0
 '+ r_/ r_avel a_bs q
 # The map's arms, FP32 and then ternary.
-(g c_at g) r_eshape (f_loor u:a_rm y32) s_elect "abc"
-(g c_at g) r_eshape (f_loor u:a_rm y2) s_elect "abc"
+(g c_at g) r_eshape (f_loor u:a_rm y32) s_elect []A
+(g c_at g) r_eshape (f_loor u:a_rm y2) s_elect []A
