@@ -1,8 +1,9 @@
 number = 11
 slug = "char-builtins"
-status = "in-progress"
+status = "completed"
 description = "the user's ask, 2026-10-08: X_eTaL step 090 (8cbc30a) adds []A (the uppercase..."
 role = "production"
 context_files = []
 created_at = "2026-10-08T17:33:00"
-commits = []
+completed_at = "2026-10-09T12:57:38"
+commits = ["c09bc1b6ac47132f97d7e532a6c4d4a491a66be1"]

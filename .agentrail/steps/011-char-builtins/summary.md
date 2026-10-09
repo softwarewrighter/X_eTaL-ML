@@ -1,0 +1,1 @@
+pins X_eTaL 4952874, libraries c9de461; []D/[]A replace digit and letter literals; three map baselines case-only; cnn-backprop screenshot
