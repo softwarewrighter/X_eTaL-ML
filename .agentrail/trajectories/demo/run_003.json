@@ -1,0 +1,11 @@
+{
+  "task_type": "demo",
+  "state": {
+    "number": 10,
+    "step": "cnn-backprop"
+  },
+  "action": "batched forward/backward in X_eTaL, FD check, data extractor, web app, tests, browser check, gate",
+  "result": "success",
+  "reward": 1,
+  "timestamp": "2026-10-08T21:16:56"
+}

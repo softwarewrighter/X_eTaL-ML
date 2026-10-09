@@ -1,0 +1,1 @@
+new live demo cnn-backprop: CNN trained in X_eTaL from random weights on 600 MNIST digits, backward pass checked by finite differences, page trains live with Plot chart; ask M16
