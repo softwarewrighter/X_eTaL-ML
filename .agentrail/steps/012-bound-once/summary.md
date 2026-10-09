@@ -1,0 +1,1 @@
+repo bound-once clean with pure renames (no !), Net macro regenerated, pages' runs s0/s->s1; check-rebind.py in gate + microscope::source::rebound in page tests; outputs unchanged

@@ -1,8 +1,9 @@
 number = 12
 slug = "bound-once"
-status = "in-progress"
+status = "completed"
 description = "the user's go, 2026-10-09: ahead of X_eTaL step 091 (lang-choices M1 changed:..."
 role = "production"
 context_files = []
 created_at = "2026-10-09T13:13:03"
-commits = []
+completed_at = "2026-10-09T13:48:01"
+commits = ["bb8189a08da6887bd811eb1ae3a3e15b92c1f354"]
