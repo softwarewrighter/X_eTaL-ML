@@ -19,21 +19,19 @@ u:s_tep := { (g1:W1, g2:W2, g3:M1, g4:M2, g5:V1, g6:V2, g7:k) ->
   g12:D1 := (g11:D2 '+ '* i_nner o_\ -1 d_rop g2:W2) * 1.0 - g9:A1 * g9:A1
   g13:G1 := (o_\ g8:A0 c_at_2 ((t_ally g8:A0) c_at 1) r_eshape 1.0) '+ '* i_nner g12:D1
   g14:G2 := (o_\ g9:A1 c_at_2 ((t_ally g9:A1) c_at 1) r_eshape 1.0) '+ '* i_nner g11:D2
-  g7:k := 1.0 + g7:k
-  g3:M1 := (0.9 * g3:M1) + 0.1 * g13:G1
-  g5:V1 := (0.999 * g5:V1) + 0.001 * g13:G1 * g13:G1
-  g1:W1 := g1:W1 - lr * (g3:M1 / 1.0 - 0.9 ^ g7:k) / 0.00000001 + (g5:V1 / 1.0 - 0.999 ^ g7:k) ^ 0.5
-  g4:M2 := (0.9 * g4:M2) + 0.1 * g14:G2
-  g6:V2 := (0.999 * g6:V2) + 0.001 * g14:G2 * g14:G2
-  g2:W2 := g2:W2 - lr * (g4:M2 / 1.0 - 0.9 ^ g7:k) / 0.00000001 + (g6:V2 / 1.0 - 0.999 ^ g7:k) ^ 0.5
-  (g1:W1, g2:W2, g3:M1, g4:M2, g5:V1, g6:V2, g7:k)
+  g15:n := 1.0 + g7:k
+  g16:m1 := (0.9 * g3:M1) + 0.1 * g13:G1
+  g17:v1 := (0.999 * g5:V1) + 0.001 * g13:G1 * g13:G1
+  g18:m2 := (0.9 * g4:M2) + 0.1 * g14:G2
+  g19:v2 := (0.999 * g6:V2) + 0.001 * g14:G2 * g14:G2
+  (g1:W1 - lr * (g16:m1 / 1.0 - 0.9 ^ g15:n) / 0.00000001 + (g17:v1 / 1.0 - 0.999 ^ g15:n) ^ 0.5, g2:W2 - lr * (g18:m2 / 1.0 - 0.9 ^ g15:n) / 0.00000001 + (g19:v2 / 1.0 - 0.999 ^ g15:n) ^ 0.5, g16:m1, g18:m2, g17:v1, g19:v2, g15:n)
 }
 w1 := (f_loat (3 4 r_eshape r_oll! 12 r_eshape 201) - 101) / 100.0
 w2 := (f_loat (5 2 r_eshape r_oll! 10 r_eshape 201) - 101) / 100.0
 ## The state after 300 steps, a tuple: the weights first.
 (v1, v2, _, _, _, _, _) := 300 'u:s_tep p_ower ((w1, w2, 0.0 * w1, 0.0 * w2, 0.0 * w1, 0.0 * w2, 0.0))
-u:b_efore := ({ g15:x -> nn:s_oftmax (nn:t_anh g15:x nn:d_ense w1) nn:d_ense w2 })
-u:a_fter := ({ g16:x -> nn:s_oftmax (nn:t_anh g16:x nn:d_ense v1) nn:d_ense v2 })
+u:b_efore := ({ g20:x -> nn:s_oftmax (nn:t_anh g20:x nn:d_ense w1) nn:d_ense w2 })
+u:a_fter := ({ g21:x -> nn:s_oftmax (nn:t_anh g21:x nn:d_ense v1) nn:d_ense v2 })
 # The loss before and after 300 steps, and the classes read after.
 (Y nn:c_rossEntropy u:b_efore X) c_at Y nn:c_rossEntropy u:a_fter X
 nn:a_rgmax u:a_fter X

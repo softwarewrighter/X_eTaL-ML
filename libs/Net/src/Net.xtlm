@@ -195,14 +195,19 @@ m:t_rain< := { what spec ->
   lr := d_isclose 4 s_elect nm
   L := t_ally h:a_cts ws
   r := r_ange L
-  adam := h:j_oin '{ l ->
+  ## Adam's averages, new names m1 .. mL and v1 .. vL (each name is bound once).
+  avgs := h:j_oin '{ l ->
     i := h:t_xt l
-    "  M" c_at i c_at " := (0.9 * M" c_at i c_at ") + 0.1 * G" c_at i c_at "\n  V" c_at i c_at " := (0.999 * V" c_at i c_at ") + 0.001 * G" c_at i c_at " * G" c_at i c_at "\n  W" c_at i c_at " := W" c_at i c_at " - " c_at lr c_at " * (M" c_at i c_at " / 1.0 - 0.9 ^ k) / 0.00000001 + (V" c_at i c_at " / 1.0 - 0.999 ^ k) ^ 0.5\n"
+    "  m" c_at i c_at " := (0.9 * M" c_at i c_at ") + 0.1 * G" c_at i c_at "\n  v" c_at i c_at " := (0.999 * V" c_at i c_at ") + 0.001 * G" c_at i c_at " * G" c_at i c_at "\n"
   } m_ap r
-  names := h:j_oin '{ l -> "W" c_at (h:t_xt l) c_at ", " } m_ap r
-  names := names c_at (h:j_oin '{ l -> "M" c_at (h:t_xt l) c_at ", " } m_ap r) c_at h:j_oin '{ l -> "V" c_at (h:t_xt l) c_at ", " } m_ap r
-  state := "(" c_at names c_at "k)"
-  (d_isclose 1 s_elect nm) c_at " := { " c_at state c_at " ->\n" c_at (ws h:b_ackprop 1 d_rop 3 t_ake nm) c_at "  k := 1.0 + k\n" c_at adam c_at "  " c_at state c_at "\n}"
+  ## The next state: each layer's weights moved, the averages, the count n.
+  moved := h:j_oin '{ l ->
+    i := h:t_xt l
+    "W" c_at i c_at " - " c_at lr c_at " * (m" c_at i c_at " / 1.0 - 0.9 ^ n) / 0.00000001 + (v" c_at i c_at " / 1.0 - 0.999 ^ n) ^ 0.5, "
+  } m_ap r
+  next := "(" c_at moved c_at (h:j_oin '{ l -> "m" c_at (h:t_xt l) c_at ", " } m_ap r) c_at (h:j_oin '{ l -> "v" c_at (h:t_xt l) c_at ", " } m_ap r) c_at "n)"
+  state := "(" c_at (h:j_oin '{ l -> "W" c_at (h:t_xt l) c_at ", " } m_ap r) c_at (h:j_oin '{ l -> "M" c_at (h:t_xt l) c_at ", " } m_ap r) c_at (h:j_oin '{ l -> "V" c_at (h:t_xt l) c_at ", " } m_ap r) c_at "k)"
+  (d_isclose 1 s_elect nm) c_at " := { " c_at state c_at " ->\n" c_at (ws h:b_ackprop 1 d_rop 3 t_ake nm) c_at "  n := 1.0 + k\n" c_at avgs c_at "  " c_at next c_at "\n}"
 }
 
 ## The starting state for a training step (t_rain<) from the weight

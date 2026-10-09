@@ -13,6 +13,9 @@ refresh of the vendored X_eTaL.
 
 ## 2026-10-09
 
+- 14:30 `chore` Saga step bound-once completed.
+- 14:25 `refactor` Every name bound once in its scope, ahead of X_eTaL's coming rule (lang-choices M1; its step 091), with pure code and no `!` (nothing here mutates): the Adam steps of train-live, cnn-backprop and Net's train test name their new values (`m1 := (0.9 * M1) + 0.1 * G1`, the count `t` or `n`); Net's `t_rain<` writes the averages under new names and the moved weights in the returned tuple, and binds its own `names` once; net-macro's and ternary-net's data reads name the raw numbers `nums`; ternary-net's layers `h1`, `h2`; train-it's trained weights `v1 .. v3`; the training pages' runs go from `s0` (or the page's `s`) to `s1`, their patterns named apart from the program's. `test` `scripts/check-rebind.py` (self-tested; in the gate; `just check-rebind`) over every program, library and macro expansion, and `microscope::source::rebound` in the three training pages' tests. CLAUDE.md rule 5f. Every output unchanged; Net's expansion baselines reblessed (the step's new names).
+
 - 12:40 `chore` Saga step char-builtins completed.
 - 12:35 `refactor` Digit and letter literals replaced by X_eTaL's `[]D` and `[]A`: cnn-digits' bar labels and Net's size check use `[]D`; the letters that label map cells are `s_elect []A` (moe-router, net-macro, ternary-net), so those maps print A, B, C (their command-line baselines reblessed, the same but for case; lowercase letters have no built-in yet). cnn-backprop's screenshot, for its card and README.
 - 12:20 `vendor` X_eTaL pinned at 4952874 (a file's doc header needs no blank line; stray doc blocks warn, none here) and X_eTaL-libraries at c9de461 (its literals replaced with `[]D`, `[]A`). Every baseline unchanged.

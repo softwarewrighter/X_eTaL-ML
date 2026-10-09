@@ -42,18 +42,19 @@ lines, giving W1's and W2's gradients as a pair. The training state
 is a tuple, `(W1, W2, M1, M2, V1, V2, k)` (the weights, Adam's running
 averages of gradients and of their squares, the step count), so that
 `p_ower` can iterate it as one value, and the step takes it apart by
-name. Adam, one step:
+name; the step's new values get new names (each name is bound once).
+Adam, one step:
 
 ```
 u:m_ove := { (m, v) k -> (m / 1.0 - 0.9 ^ k) / 0.00000001 + (v / 1.0 - 0.999 ^ k) ^ 0.5 }
 u:a_dam := { (W1, W2, M1, M2, V1, V2, k) ->
-  k := 1.0 + k
+  t := 1.0 + k
   (G1, G2) := W1 u:g_rad W2
-  M1 := (0.9 * M1) + 0.1 * G1
-  M2 := (0.9 * M2) + 0.1 * G2
-  V1 := (0.999 * V1) + 0.001 * G1 * G1
-  V2 := (0.999 * V2) + 0.001 * G2 * G2
-  (W1 - lr * (M1, V1) u:m_ove k, W2 - lr * (M2, V2) u:m_ove k, M1, M2, V1, V2, k)
+  m1 := (0.9 * M1) + 0.1 * G1
+  m2 := (0.9 * M2) + 0.1 * G2
+  v1 := (0.999 * V1) + 0.001 * G1 * G1
+  v2 := (0.999 * V2) + 0.001 * G2 * G2
+  (W1 - lr * (m1, v1) u:m_ove t, W2 - lr * (m2, v2) u:m_ove t, m1, m2, v1, v2, t)
 }
 ```
 

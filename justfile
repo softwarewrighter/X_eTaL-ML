@@ -99,6 +99,10 @@ pages:
 doc:
     scripts/doc-site.sh
 
+# Check that every name is bound once in its scope (X_eTaL lang-choices M1): programs, libraries, macro expansions; the gate runs it
+check-rebind:
+    scripts/check-rebind.py
+
 # Run every ## >> example in the libraries' doc comments (xetal doc --test); the gate runs it
 doc-test:
     scripts/doc-test.sh

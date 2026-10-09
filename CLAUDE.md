@@ -349,6 +349,13 @@ Read before working:
 5d. A page shows all the code it runs (plan A16): the shared head,
    then each run as run; nothing left out but a large passed-in
    value, written `...` with a comment; a test checks it.
+5f. Each name is bound once in its scope (X_eTaL lang-choices M1): a
+   file's top level, a lambda's body with its parameters. A new value
+   gets a new name (`m1 := (0.9 * M1) + ...`, `s1 := 25 'u:a_dam
+   p_ower s0`) or is computed where it is used; `!` only for a value
+   that really varies (none here); `_ :=` discards. Macros and the
+   pages' generated programs follow it too. `just check-rebind` (in
+   the gate) and the pages' tests (`microscope::source::rebound`).
 5e. Programs and libraries carry `xetal doc` comments (X_eTaL S9):
    `##` above a definition documents it, a `##` block at the top
    documents the file (a blank line after it, or it documents the

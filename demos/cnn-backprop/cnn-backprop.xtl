@@ -65,15 +65,15 @@ u:m_ove := { (m, v) t -> (m / 1.0 - 0.9 ^ t) / 0.00000001 + (v / 1.0 - 0.999 ^ t
 ## One step, on the next 20 training digits (30 steps go through all 600).
 u:s_tep := { (K, B, W, MK, MB, MW, VK, VB, VW, t) ->
   i := (r_ange bs) + bs * (f_loor t) m_od 600 d_iv bs
-  t := 1.0 + t
+  n := 1.0 + t
   (GK, GB, GW) := (K, B, W) u:g_rad i
-  MK := (0.9 * MK) + 0.1 * GK
-  MB := (0.9 * MB) + 0.1 * GB
-  MW := (0.9 * MW) + 0.1 * GW
-  VK := (0.999 * VK) + 0.001 * GK * GK
-  VB := (0.999 * VB) + 0.001 * GB * GB
-  VW := (0.999 * VW) + 0.001 * GW * GW
-  (K - lr * (MK, VK) u:m_ove t, B - lr * (MB, VB) u:m_ove t, W - lr * (MW, VW) u:m_ove t, MK, MB, MW, VK, VB, VW, t)
+  mk := (0.9 * MK) + 0.1 * GK
+  mb := (0.9 * MB) + 0.1 * GB
+  mw := (0.9 * MW) + 0.1 * GW
+  vk := (0.999 * VK) + 0.001 * GK * GK
+  vb := (0.999 * VB) + 0.001 * GB * GB
+  vw := (0.999 * VW) + 0.001 * GW * GW
+  (K - lr * (mk, vk) u:m_ove n, B - lr * (mb, vb) u:m_ove n, W - lr * (mw, vw) u:m_ove n, mk, mb, mw, vk, vb, vw, n)
 }
 ## The starting state: small random filters and dense weights; the
 ## filters' biases a little above 0, so that ReLU starts off its kink

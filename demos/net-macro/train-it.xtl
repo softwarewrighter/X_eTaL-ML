@@ -32,8 +32,8 @@ u:s_tart := "2 16 relu 16 relu 3 softmax" net:n_etwork< "w1 w2 w3"
 
 ## Four hundred steps; then the trained weights, out of the state, and
 ## the network on them.
-(w1, w2, w3, _, _, _, _, _, _, _) := 400 'u:s_tep p_ower s0
-u:t_rained := "2 16 relu 16 relu 3 softmax" net:n_etwork< "w1 w2 w3"
+(v1, v2, v3, _, _, _, _, _, _, _) := 400 'u:s_tep p_ower s0
+u:t_rained := "2 16 relu 16 relu 3 softmax" net:n_etwork< "v1 v2 v3"
 ## The loss and the share of the 300 points right, before and after.
 u:r_ound := { a -> (f_loat f_loor 0.5 + 10000.0 * a) / 10000.0 }
 u:r_ound (Y nn:c_rossEntropy u:s_tart X) c_at Y nn:c_rossEntropy u:t_rained X

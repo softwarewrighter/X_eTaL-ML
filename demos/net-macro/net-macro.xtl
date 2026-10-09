@@ -10,8 +10,8 @@
 
 ### The data, read from data/ (just net-train)
 ## The test points, one per line: x, y and the arm (1, 2 or 3).
-pts := n_umbers []N_GET "data/points.txt"
-pts := o_\ (((t_ally pts) d_iv 3) c_at 3) r_eshape pts
+nums := n_umbers []N_GET "data/points.txt"
+pts := o_\ (((t_ally nums) d_iv 3) c_at 3) r_eshape nums
 xy := o_\ 2 t_ake pts
 arm := f_loor 3 s_elect pts
 

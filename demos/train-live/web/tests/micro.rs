@@ -108,3 +108,16 @@ fn the_curves_are_drawn_by_plot_in_the_program() {
     assert!(c.starts_with("<svg") && c.contains("Training") && c.contains("share right") && first_series(c).len() == 2, "{c}");
     assert!(program(0.02, None, 25, &[(1.3, 0.3)]).contains("losses := (1.3) c_at 1 t_ake now\nright := (0.3) c_at -1 t_ake now\n"));
 }
+
+#[test]
+fn every_name_is_bound_once_in_what_the_page_runs() {
+    // X_eTaL binds each name once in its scope (lang-choices M1): the
+    // first run and a later one, as the page writes them.
+    for src in [program(0.02, None, 25, &[]), program(0.02, Some(&[0.5; STATE]), 25, &[(1.3, 0.3)])] {
+        assert!(microscope::source::rebound(&src).is_empty(), "{:?}", microscope::source::rebound(&src));
+    }
+    assert!(!microscope::source::rebound("a := 1\na := 2\n").is_empty(), "the check finds a rebinding");
+    // The step as it was written before: parameters bound again in the body.
+    let old = "u:a_dam := { (W1, W2, M1, M2, V1, V2, k) ->\n  k := 1.0 + k\n  M1 := (0.9 * M1)\n  (W1, W2, M1, M2, V1, V2, k)\n}\n";
+    assert_eq!(microscope::source::rebound(old), ["line 2: k (first line 1)", "line 3: M1 (first line 1)"]);
+}

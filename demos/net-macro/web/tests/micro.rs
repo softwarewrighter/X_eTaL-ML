@@ -159,3 +159,13 @@ fn the_default_spec_learns_the_spiral() {
     assert!(step.starts_with("u:s_tep := {") && step.ends_with('}') && step.contains("nn:r_elu"), "{step}");
     assert!(train_program(TRAIN_SPEC, &sizes, None, 1, &[]).contains("p:c_hart!"));
 }
+
+#[test]
+fn every_name_is_bound_once_in_what_the_page_runs() {
+    // X_eTaL binds each name once in its scope (lang-choices M1): the
+    // first run and a later one, as the page writes them.
+    for src in [train_program(TRAIN_SPEC, &trainable(TRAIN_SPEC).unwrap(), None, 10, &[]), train_program("2 8 tanh 3 softmax", &[2, 8, 3], Some(&[0.1; 3 * (27 + 27) + 1]), 10, &[(1.1, 0.3)])] {
+        assert!(microscope::source::rebound(&src).is_empty(), "{:?}", microscope::source::rebound(&src));
+    }
+    assert!(!microscope::source::rebound("a := 1\na := 2\n").is_empty(), "the check finds a rebinding");
+}

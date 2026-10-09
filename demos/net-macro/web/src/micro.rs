@@ -230,10 +230,11 @@ pub fn tuple(sizes: &[usize], s: &[f64]) -> String {
     format!("({t})")
 }
 
-/// The state's names, layer by layer: w1 .. wL, m1 .. mL, v1 .. vL, k.
+/// The state's names in a run, layer by layer: W1 .. WL, M1 .. ML,
+/// V1 .. VL, k (the program binds w1 .. wL itself).
 fn state_names(sizes: &[usize]) -> Vec<String> {
     let l = sizes.len() - 1;
-    ["w", "m", "v"].iter().flat_map(|p| (1..=l).map(move |k| format!("{p}{k}"))).chain(["k".to_string()]).collect()
+    ["W", "M", "V"].iter().flat_map(|p| (1..=l).map(move |k| format!("{p}{k}"))).chain(["k".to_string()]).collect()
 }
 
 /// Earlier values and this run's, as X_eTaL: `(v1 v2 ...) c_at NOW`.
@@ -262,16 +263,16 @@ fn curves(earlier: &[(f64, f64)]) -> String {
 /// the page shows, then the loss and accuracy so far (`earlier`: the
 /// loss and share right after each earlier run) drawn by Plot.
 pub fn train_tail(spec: &str, sizes: &[usize], state: Option<&[f64]>, steps: usize, earlier: &[(f64, f64)]) -> String {
-    let start = match state {
-        None => "s := s0".to_string(),
-        Some(s) => format!("s := {}", tuple(sizes, s)),
+    let (start, from) = match state {
+        None => (String::new(), "s0"),
+        Some(s) => (format!("s := {}\n", tuple(sizes, s)), "s"),
     };
-    let names = weight_names(spec);
+    let names = (1..sizes.len()).map(|k| format!("W{k}")).collect::<Vec<_>>().join(" ");
     let parts = state_names(sizes);
-    let weights = format!("({}) := s\n", parts.join(", "));
+    let weights = format!("({}) := s1\n", parts.join(", "));
     let out = parts.iter().map(|p| if p == "k" { "k".to_string() } else { format!("(r_avel {p})") }).collect::<Vec<_>>().join(" c_at ");
     format!(
-        "{start}\ns := {steps} 'u:s_tep p_ower s\n{weights}u:t_rained := \"{spec}\" net:n_etwork< \"{names}\"\n\
+        "{start}s1 := {steps} 'u:s_tep p_ower {from}\n{weights}u:t_rained := \"{spec}\" net:n_etwork< \"{names}\"\n\
          g := {SIDE}\n{}\n{}\n\
          {out}\n\
          now := (Y nn:c_rossEntropy u:t_rained X) c_at (1 + arm) nn:a_ccuracy u:t_rained X\n\

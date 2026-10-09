@@ -18,8 +18,8 @@ t := 0.5
 fp := 17 3 16 r_eshape n_umbers []N_GET "data/fp.txt"
 qa := 17 3 16 r_eshape n_umbers []N_GET "data/qa.txt"
 ## The test points, one per line: x, y and the arm (1, 2 or 3).
-tp := n_umbers []N_GET "data/test.txt"
-tp := o_\ (((t_ally tp) d_iv 3) c_at 3) r_eshape tp
+nums := n_umbers []N_GET "data/test.txt"
+tp := o_\ (((t_ally nums) d_iv 3) c_at 3) r_eshape nums
 px := 1 s_elect tp
 py := 2 s_elect tp
 pl := 3 s_elect tp
@@ -43,9 +43,9 @@ test := px u:p_ad py
 u:l_ayer := { x p -> (x '+ '* i_nner 16 t_ake p) + (o_ffsets t_ally x) 'r_ight t_able f_irst -1 t_ake p }
 u:r_elu := { x -> 0.0 m_ax x }
 u:n_et := { x k ->
-  h := u:r_elu x u:l_ayer 1 s_elect_2 k
-  h := u:r_elu h u:l_ayer 2 s_elect_2 k
-  3 t_ake_2 h u:l_ayer 3 s_elect_2 k
+  h1 := u:r_elu x u:l_ayer 1 s_elect_2 k
+  h2 := u:r_elu h1 u:l_ayer 2 s_elect_2 k
+  3 t_ake_2 h2 u:l_ayer 3 s_elect_2 k
 }
 ### The formats: the weights rounded four ways
 ## w is 16 x 3 x 16 (input, layer, output); a value per layer is

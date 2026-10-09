@@ -34,3 +34,13 @@ fn the_page_runs_the_command_line_programs_core() {
     assert!(head().contains("u:g_rad := { (K, B, W) i ->") && head().contains("u:s_tep := {"));
     assert!(program(true, 2, &[]).contains("s := (8 9 r_eshape n_umbers []N_GET \"state/K.txt\", n_umbers []N_GET \"state/B.txt\""));
 }
+
+#[test]
+fn every_name_is_bound_once_in_what_the_page_runs() {
+    // X_eTaL binds each name once in its scope (lang-choices M1): the
+    // first run and a later one, as the page writes them.
+    for src in [program(false, 2, &[]), program(true, 2, &[(2.6, 0.1)])] {
+        assert!(microscope::source::rebound(&src).is_empty(), "{:?}", microscope::source::rebound(&src));
+    }
+    assert!(!microscope::source::rebound("a := 1\na := 2\n").is_empty(), "the check finds a rebinding");
+}

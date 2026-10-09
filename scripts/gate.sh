@@ -22,6 +22,9 @@ echo "ok: shared/microscope"
 "$root/scripts/test-libs.sh"
 "$root/scripts/doc-test.sh"
 "$root/scripts/check-examples.py"
+# Each name bound once in its scope (X_eTaL lang-choices M1).
+"$root/scripts/check-rebind.py" --self-test
+"$root/scripts/check-rebind.py"
 # Concise X_eTaL: number literals strand, so a shape is written
 # 8 13 2 r_eshape x, never (8 c_at 13 c_at 2) r_eshape x (c_at is for names).
 if git ls-files '*.xtl' '*.xtlm' '*.rs' '*.md' | grep -v -E '^(CHANGES.md|docs/plan.md|\.agentrail)' | xargs grep -n -E '\(([0-9]+ c_at )+[0-9]+\)' ; then

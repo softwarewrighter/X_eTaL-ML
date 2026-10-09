@@ -83,3 +83,57 @@ pub fn shape(dims: &[usize], meaning: &str) -> Html {
     };
     html! { <span class="shape" title={format!("the array's shape (s_hape): {meaning}")}>{ shown }</span> }
 }
+
+/// Names bound again in their own scope, as "line N: name (first line
+/// M)": X_eTaL binds each name once in a file's top level and in a
+/// lambda's body with its parameters (lang-choices M1); shadowing an
+/// outer name is fine, `_` binds nothing, a name ending in `!` is a
+/// variable. The same rule as scripts/check-rebind.py, for the
+/// programs a page writes at run time.
+pub fn rebound(src: &str) -> Vec<String> {
+    fn is_name(t: &str) -> bool {
+        t.chars().next().is_some_and(|c| c.is_ascii_alphabetic())
+    }
+    fn names(pattern: &str) -> Vec<String> {
+        pattern
+            .split(|c: char| !(c.is_ascii_alphanumeric() || c == '_' || c == ':' || c == '?' || c == '!'))
+            .filter(|t| is_name(t) && !t.ends_with('!'))
+            .map(str::to_string)
+            .collect()
+    }
+    let mut scopes: Vec<std::collections::HashMap<String, usize>> = vec![Default::default()];
+    let mut found = vec![];
+    for (i, line) in src.lines().enumerate().map(|(i, l)| (i + 1, l)) {
+        // The line without its comment (a # outside strings).
+        let mut quote = false;
+        let code: String = line.chars().take_while(|&c| { if c == '"' { quote = !quote; } quote || c != '#' }).collect();
+        let s = code.trim();
+        if let Some((lhs, _)) = s.split_once(":=") {
+            let lhs = lhs.trim();
+            let simple = is_name(lhs) && !lhs.contains(char::is_whitespace);
+            let pattern = lhs.starts_with('(') && lhs.ends_with(')') && !lhs[1..].contains('(');
+            if simple || pattern {
+                for n in names(lhs) {
+                    let scope = scopes.last_mut().expect("a scope");
+                    match scope.get(&n) {
+                        Some(first) => found.push(format!("line {i}: {n} (first line {first})")),
+                        None => {
+                            scope.insert(n, i);
+                        }
+                    }
+                }
+            }
+        }
+        let opened = code.matches('{').count() as i64 - code.matches('}').count() as i64;
+        if opened > 0 {
+            let params = code.rfind('{').and_then(|at| code[at + 1..].trim_end().strip_suffix("->").map(names)).unwrap_or_default();
+            scopes.push(params.into_iter().map(|n| (n, i)).collect());
+        }
+        for _ in 0..(-opened).max(0) {
+            if scopes.len() > 1 {
+                scopes.pop();
+            }
+        }
+    }
+    found
+}

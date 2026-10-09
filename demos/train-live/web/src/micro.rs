@@ -59,21 +59,21 @@ fn curves(earlier: &[(f64, f64)]) -> String {
 }
 
 /// The run's own lines: the state to start from (the program's s0, or
-/// the page's), `steps` Adam steps, what the page shows, then the loss
+/// the page's s), `steps` Adam steps to s1 (each name bound once), what the page shows, then the loss
 /// and share right so far (`earlier`: after each earlier run) drawn by
 /// the Plot library.
 pub fn tail(state: Option<&[f64]>, steps: usize, earlier: &[(f64, f64)]) -> String {
-    let start = match state {
-        None => "s := s0".to_string(),
-        Some(s) => format!("s := {}", tuple(s)),
+    let (start, from) = match state {
+        None => (String::new(), "s0"),
+        Some(s) => (format!("s := {}\n", tuple(s)), "s"),
     };
     format!(
-        "{start}\ns := {steps} 'u:a_dam p_ower s\n{}\n{}\ng := {SIDE}\n\
+        "{start}s1 := {steps} 'u:a_dam p_ower {from}\n{}\n{}\ng := {SIDE}\n\
          c := -1.1 + 2.2 * (0.5 + f_loat o_ffsets g) / f_loat g\n\
          grid := o_\\ (2 c_at g * g) r_eshape (r_avel (o_ffsets g) 'r_ight t_able c) c_at r_avel (r_ev c) 'l_eft t_able o_ffsets g\n\
-         (w1, w2, m1, m2, v1, v2, k) := s\n\
+         (w1, w2, m1, m2, v1, v2, k) := s1\n\
          (r_avel w1) c_at (r_avel w2) c_at (r_avel m1) c_at (r_avel m2) c_at (r_avel v1) c_at (r_avel v2) c_at k\n\
-         now := (u:l_oss s) c_at u:r_ight s\nnow\nnn:a_rgmax nn:s_oftmax (nn:t_anh grid nn:d_ense w1) nn:d_ense w2\nr_avel X\n1 + arm\n{}",
+         now := (u:l_oss s1) c_at u:r_ight s1\nnow\nnn:a_rgmax nn:s_oftmax (nn:t_anh grid nn:d_ense w1) nn:d_ense w2\nr_avel X\n1 + arm\n{}",
         line("u:l_oss"),
         line("u:r_ight"),
         curves(earlier)

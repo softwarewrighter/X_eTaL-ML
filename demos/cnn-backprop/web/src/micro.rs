@@ -37,17 +37,17 @@ pub fn head() -> &'static str {
     section(SOURCE, "\"nn:\" u_se< \"NN\"", "# -- end of the core")
 }
 
-/// The state read back from the files the page keeps.
+/// The state read back from the files the page keeps, as s.
 fn start(trained: bool) -> String {
     if !trained {
-        return "s := s0".into();
+        return String::new();
     }
     let part = |&(name, r, c): &(&str, usize, usize)| match (r, c) {
         (1, 1) => format!("f_irst n_umbers []N_GET \"state/{name}.txt\""),
         (1, _) => format!("n_umbers []N_GET \"state/{name}.txt\""),
         _ => format!("{r} {c} r_eshape n_umbers []N_GET \"state/{name}.txt\""),
     };
-    format!("s := ({})", PARTS.iter().map(part).collect::<Vec<_>>().join(", "))
+    format!("s := ({})\n", PARTS.iter().map(part).collect::<Vec<_>>().join(", "))
 }
 
 /// Earlier values and this run's, as X_eTaL: `(v1 v2 ...) c_at NOW`.
@@ -64,14 +64,16 @@ fn history(earlier: &[f64], now: &str) -> String {
 /// then the test loss and share right after every run so far
 /// (`earlier`) drawn by Plot.
 pub fn tail(trained: bool, steps: usize, earlier: &[(f64, f64)]) -> String {
-    let names: Vec<&str> = PARTS.iter().map(|p| p.0).collect();
-    let out: String = PARTS.iter().map(|&(n, r, c)| if r * c == 1 || r == 1 { format!("{n}\n") } else { format!("r_avel {n}\n") }).collect();
+    // The parts' names in the run, lowercase: the program binds K, B and W itself.
+    let names: Vec<String> = PARTS.iter().map(|p| p.0.to_lowercase()).collect();
+    let out: String = PARTS.iter().zip(&names).map(|(&(_, r, c), n)| if r * c == 1 || r == 1 { format!("{n}\n") } else { format!("r_avel {n}\n") }).collect();
     format!(
-        "{}\ns := {steps} 'u:s_tep p_ower s\n({}) := s\n{out}\
-         now := u:t_est s\nnow\n(nn:a_rgmax (K, B, W) u:p_robs {SHOWN} t_ake TX) - 1\n\
+        "{}s1 := {steps} 'u:s_tep p_ower {}\n({}) := s1\n{out}\
+         now := u:t_est s1\nnow\n(nn:a_rgmax (k, b, w) u:p_robs {SHOWN} t_ake TX) - 1\n\
          \"p:\" u_se< \"Plot\"\nlosses := {}\nright := {}\n\
          chart := (\"Training\" \"run ({steps} steps each)\" \"\" \"test loss\" \"test share right\") p:c_hart! (e_nclose losses) c_at e_nclose right\n",
         start(trained),
+        if trained { "s" } else { "s0" },
         names.join(", "),
         history(&earlier.iter().map(|e| e.0).collect::<Vec<_>>(), "1 t_ake now"),
         history(&earlier.iter().map(|e| e.1).collect::<Vec<_>>(), "-1 t_ake now"),

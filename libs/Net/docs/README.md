@@ -148,15 +148,19 @@ u:s_tep := { (g1:W1, g2:W2, g3:M1, g4:M2, g5:V1, g6:V2, g7:k) ->
   g12:D1 := (g11:D2 '+ '* i_nner o_\ -1 d_rop g2:W2) * 1.0 - g9:A1 * g9:A1
   g13:G1 := (o_\ g8:A0 c_at_2 ((t_ally g8:A0) c_at 1) r_eshape 1.0) '+ '* i_nner g12:D1
   g14:G2 := (o_\ g9:A1 c_at_2 ((t_ally g9:A1) c_at 1) r_eshape 1.0) '+ '* i_nner g11:D2
+  g15:n := 1.0 + g7:k
+  g16:m1 := (0.9 * g3:M1) + 0.1 * g13:G1
+  g17:v1 := (0.999 * g5:V1) + 0.001 * g13:G1 * g13:G1
   ...
-  (g1:W1, g2:W2, g3:M1, g4:M2, g5:V1, g6:V2, g7:k)
+  (g1:W1 - lr * (g16:m1 / 1.0 - 0.9 ^ g15:n) / 0.00000001 + ..., ..., g16:m1, g18:m2, g17:v1, g19:v2, g15:n)
 }
 ```
 
 The state is a tuple, taken apart by name in the step's parameter and
-given back whole; `@ net:s_tate< "w1 w2"` writes the first, `(w1, w2,
+given back whole, each new value under a new name (X_eTaL binds each
+name once in its scope); `@ net:s_tate< "w1 w2"` writes the first, `(w1, w2,
 0.0 * w1, 0.0 * w2, 0.0 * w1, 0.0 * w2, 0.0)`. The lines left out are
-Adam for each layer. Each layer's
+the second layer's averages and its moved weights. Each layer's
 gradient is the backprop microscope's expression; each activation's
 slope is written in where it goes back through it (tanh `1 - A * A`,
 sigmoid `A * (1 - A)`, relu `A > 0`). `../tests/gradients.xtl` checks
