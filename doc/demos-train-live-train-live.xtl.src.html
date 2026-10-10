@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>demos/train-live/train-live.xtl - X_eTaL doc</title>
+<link rel="stylesheet" href="style.css">
+<script src="theme.js"></script>
+<script defer src="search-index.js"></script>
+<script defer src="search.js"></script>
+</head>
+<body>
+<nav class="side">
+<a class="home" href="index.html">X_eTaL doc</a>
+<input id="search" type="search" autocomplete="off" placeholder="Search: a name, or a type" title="A name (mean finds m_ean), or a type: Num a =&gt; a -&gt; a -&gt; a finds +, m_ax ...">
+<h2>Files</h2>
+<h3>demos/attention/</h3>
+<ul>
+<li><a href="demos-attention-attention.xtl.html">attention.xtl</a></li>
+</ul>
+<h3>demos/backprop/</h3>
+<ul>
+<li><a href="demos-backprop-backprop.xtl.html">backprop.xtl</a></li>
+</ul>
+<h3>demos/cnn-backprop/</h3>
+<ul>
+<li><a href="demos-cnn-backprop-cnn-backprop.xtl.html">cnn-backprop.xtl</a></li>
+</ul>
+<h3>demos/cnn-digits/</h3>
+<ul>
+<li><a href="demos-cnn-digits-cnn-digits.xtl.html">cnn-digits.xtl</a></li>
+</ul>
+<h3>demos/k-means/</h3>
+<ul>
+<li><a href="demos-k-means-k-means.xtl.html">k-means.xtl</a></li>
+</ul>
+<h3>demos/moe-router/</h3>
+<ul>
+<li><a href="demos-moe-router-moe-router.xtl.html">moe-router.xtl</a></li>
+</ul>
+<h3>demos/net-macro/</h3>
+<ul>
+<li><a href="demos-net-macro-net-macro.xtl.html">net-macro.xtl</a></li>
+<li><a href="demos-net-macro-train-it.xtl.html">train-it.xtl</a></li>
+</ul>
+<h3>demos/ternary-net/</h3>
+<ul>
+<li><a href="demos-ternary-net-ternary-net.xtl.html">ternary-net.xtl</a></li>
+</ul>
+<h3>demos/train-live/</h3>
+<ul>
+<li><a href="demos-train-live-train-live.xtl.html">train-live.xtl</a></li>
+</ul>
+<h3>libs/Learn/demos/</h3>
+<ul>
+<li><a href="libs-Learn-demos-blobs.xtl.html">blobs.xtl</a></li>
+</ul>
+<h3>libs/Learn/src/</h3>
+<ul>
+<li><a href="libs-Learn-src-Learn.xtl.html">Learn.xtl</a></li>
+</ul>
+<h3>libs/Net/demos/</h3>
+<ul>
+<li><a href="libs-Net-demos-train-xor.xtl.html">train-xor.xtl</a></li>
+<li><a href="libs-Net-demos-xor.xtl.html">xor.xtl</a></li>
+</ul>
+<h3>libs/Net/src/</h3>
+<ul>
+<li><a href="libs-Net-src-Net.xtlm.html">Net.xtlm</a></li>
+</ul>
+<h3>libs/NN/demos/</h3>
+<ul>
+<li><a href="libs-NN-demos-xor.xtl.html">xor.xtl</a></li>
+</ul>
+<h3>libs/NN/src/</h3>
+<ul>
+<li><a href="libs-NN-src-NN.xtl.html">NN.xtl</a></li>
+</ul>
+<ul>
+<li><a href="builtins.html">built-ins</a></li>
+</ul>
+<h2>On this page</h2>
+<ul>
+<li class="item"><a href="#L10">n</a></li>
+<li class="item"><a href="#L11">i</a></li>
+<li class="item"><a href="#L12">arm</a></li>
+<li class="item"><a href="#L13">t</a></li>
+<li class="item"><a href="#L14">a</a></li>
+<li class="item"><a href="#L15">X</a></li>
+<li class="item"><a href="#L16">Y</a></li>
+<li class="item"><a href="#L19"><span class="c-userfunc">ᵘo̲nes</span></a></li>
+<li class="item"><a href="#L20"><span class="c-userfunc">ᵘf̲orward</span></a></li>
+<li class="item"><a href="#L23"><span class="c-userfunc">ᵘg̲rad</span></a></li>
+<li class="item"><a href="#L34">lr</a></li>
+<li class="item"><a href="#L36"><span class="c-userfunc">ᵘm̲ove</span></a></li>
+<li class="item"><a href="#L38"><span class="c-userfunc">ᵘa̲dam</span></a></li>
+<li class="item"><a href="#L48">w0</a></li>
+<li class="item"><a href="#L49">W1</a></li>
+<li class="item"><a href="#L50">W2</a></li>
+<li class="item"><a href="#L51">s0</a></li>
+<li class="item"><a href="#L55"><span class="c-userfunc">ᵘl̲oss</span></a></li>
+<li class="item"><a href="#L56"><span class="c-userfunc">ᵘr̲ight</span></a></li>
+<li class="item"><a href="#L59">s1</a></li>
+<li class="item"><a href="#L60">s2</a></li>
+<li class="item"><a href="#L61"><span class="c-userfunc">ᵘr̲ound</span></a></li>
+</ul>
+</nav>
+<main>
+<button class="theme" title="Light or dark">theme</button>
+<section id="results"></section>
+<h1><span class="kind">source</span><a href="demos-train-live-train-live.xtl.html">demos/train-live/train-live.xtl</a></h1>
+<div class="source"><span class="line" id="L1"><a class="ln" href="#L1">1</a><span class="c-comment">⍝</span><span class="c-comment">!/usr/bin/env xetal</span></span>
+<span class="line" id="L2"><a class="ln" href="#L2">2</a><span class="c-comment">⍝</span><span class="c-comment"># Training in X_eTaL: a network (2 inputs, 16 tanh units, softmax over</span></span>
+<span class="line" id="L3"><a class="ln" href="#L3">3</a><span class="c-comment">⍝</span><span class="c-comment"># 3) learns which of three spiral arms a point is on. The points are</span></span>
+<span class="line" id="L4"><a class="ln" href="#L4">4</a><span class="c-comment">⍝</span><span class="c-comment"># made here; the backward pass is the backprop microscope's; Adam,</span></span>
+<span class="line" id="L5"><a class="ln" href="#L5">5</a><span class="c-comment">⍝</span><span class="c-comment"># written out, moves the weights; p_ower repeats the step.</span></span>
+<span class="line" id="L6"><a class="ln" href="#L6">6</a></span>
+<span class="line" id="L7"><a class="ln" href="#L7">7</a><span class="c-libfunc">ⁿⁿ⁼</span><span class="c-macro">u̲se&lt;</span> <a href="libs-NN-src-NN.xtl.html" class="c-string">&quot;NN&quot;</a></span>
+<span class="line" id="L8"><a class="ln" href="#L8">8</a></span>
+<span class="line" id="L9"><a class="ln" href="#L9">9</a><span class="c-comment">⍝</span><span class="c-comment">## The spiral: 100 points on each of three arms</span></span>
+<span class="line" id="L10"><a class="ln" href="#L10">10</a>n ← <span class="c-number">300</span></span>
+<span class="line" id="L11"><a class="ln" href="#L11">11</a>i ← <a href="builtins.html#o_ffsets" class="c-builtin">o̲ffsets</a> <a href="demos-train-live-train-live.xtl.html#n">n</a></span>
+<span class="line" id="L12"><a class="ln" href="#L12">12</a>arm ← <a href="demos-train-live-train-live.xtl.html#i">i</a> <a href="builtins.html#d_iv" class="c-builtin">d̲iv</a> <span class="c-number">100</span></span>
+<span class="line" id="L13"><a class="ln" href="#L13">13</a>t ← (<span class="c-number">0.5</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="demos-train-live-train-live.xtl.html#i">i</a> <a href="builtins.html#m_od" class="c-builtin">m̲od</a> <span class="c-number">100</span>) <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-number">100.0</span></span>
+<span class="line" id="L14"><a class="ln" href="#L14">14</a>a ← (<span class="c-number">2.0944</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="demos-train-live-train-live.xtl.html#arm">arm</a>) <a href="builtins.html#-2b" class="c-symbol">+</a> (<span class="c-number">5.5</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="demos-train-live-train-live.xtl.html#t">t</a>) <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">0.1</span> <a href="builtins.html#-2a" class="c-symbol">×</a> (<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> (<a href="builtins.html#r_oll-21" class="c-builtin">r̲oll!</a> <a href="demos-train-live-train-live.xtl.html#n">n</a> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">1001</span>) <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">501</span>) <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-number">500.0</span></span>
+<span class="line" id="L15"><a class="ln" href="#L15">15</a>X ← <a href="builtins.html#o_-5c" class="c-builtin">o̲\</a> (<span class="c-number">2</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="demos-train-live-train-live.xtl.html#n">n</a>) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> ((<span class="c-number">0.1</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">0.9</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="demos-train-live-train-live.xtl.html#t">t</a>) <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#c_os" class="c-builtin">c̲os</a> <a href="demos-train-live-train-live.xtl.html#a">a</a>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-number">0.1</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">0.9</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="demos-train-live-train-live.xtl.html#t">t</a>) <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#s_in" class="c-builtin">s̲in</a> <a href="demos-train-live-train-live.xtl.html#a">a</a></span>
+<span class="line" id="L16"><a class="ln" href="#L16">16</a>Y ← <span class="c-number">3</span> <a href="libs-NN-src-NN.xtl.html#l.o_neHot" class="c-libfunc">ⁿⁿo̲neHot</a> <span class="c-number">1</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="demos-train-live-train-live.xtl.html#arm">arm</a></span>
+<span class="line" id="L17"><a class="ln" href="#L17">17</a></span>
+<span class="line" id="L18"><a class="ln" href="#L18">18</a><span class="c-comment">⍝</span><span class="c-comment">## The network: W1 (3 x 16), W2 (17 x 3), each bias its last row</span></span>
+<span class="line" id="L19"><a class="ln" href="#L19">19</a><span class="c-userfunc">ᵘo̲nes</span> ← { x → x <a href="builtins.html#c_at" class="c-builtin">c̲at₂</a> ((<a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> x) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">1</span>) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">1.0</span> }</span>
+<span class="line" id="L20"><a class="ln" href="#L20">20</a><span class="c-userfunc">ᵘf̲orward</span> ← { W1 W2 → <a href="libs-NN-src-NN.xtl.html#l.s_oftmax" class="c-libfunc">ⁿⁿs̲oftmax</a> (<a href="libs-NN-src-NN.xtl.html#l.t_anh" class="c-libfunc">ⁿⁿt̲anh</a> <a href="demos-train-live-train-live.xtl.html#X">X</a> <a href="libs-NN-src-NN.xtl.html#l.d_ense" class="c-libfunc">ⁿⁿd̲ense</a> W1) <a href="libs-NN-src-NN.xtl.html#l.d_ense" class="c-libfunc">ⁿⁿd̲ense</a> W2 }</span>
+<span class="line" id="L21"><a class="ln" href="#L21">21</a><span class="c-comment">⍝</span><span class="c-comment"># The gradients of the loss by W1 and by W2, a pair (the backprop</span></span>
+<span class="line" id="L22"><a class="ln" href="#L22">22</a><span class="c-comment">⍝</span><span class="c-comment"># microscope's four lines).</span></span>
+<span class="line" id="L23"><a class="ln" href="#L23">23</a><span class="c-userfunc">ᵘg̲rad</span> ← { W1 W2 →</span>
+<span class="line" id="L24"><a class="ln" href="#L24">24</a>  H ← <a href="libs-NN-src-NN.xtl.html#l.t_anh" class="c-libfunc">ⁿⁿt̲anh</a> <a href="demos-train-live-train-live.xtl.html#X">X</a> <a href="libs-NN-src-NN.xtl.html#l.d_ense" class="c-libfunc">ⁿⁿd̲ense</a> W1</span>
+<span class="line" id="L25"><a class="ln" href="#L25">25</a>  D2 ← ((<a href="libs-NN-src-NN.xtl.html#l.s_oftmax" class="c-libfunc">ⁿⁿs̲oftmax</a> H <a href="libs-NN-src-NN.xtl.html#l.d_ense" class="c-libfunc">ⁿⁿd̲ense</a> W2) <a href="builtins.html#-2d" class="c-symbol">−</a> <a href="demos-train-live-train-live.xtl.html#Y">Y</a>) <a href="builtins.html#-2f" class="c-symbol">÷</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="demos-train-live-train-live.xtl.html#n">n</a></span>
+<span class="line" id="L26"><a class="ln" href="#L26">26</a>  D1 ← (D2 <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#i_nner" class="c-builtin">i̲nner</a> <a href="builtins.html#o_-5c" class="c-builtin">o̲\</a> <span class="c-number">-1</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> W2) <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">1.0</span> <a href="builtins.html#-2d" class="c-symbol">−</a> H <a href="builtins.html#-2a" class="c-symbol">×</a> H</span>
+<span class="line" id="L27"><a class="ln" href="#L27">27</a>  ((<a href="builtins.html#o_-5c" class="c-builtin">o̲\</a> <a href="demos-train-live-train-live.xtl.html#u.o_nes" class="c-userfunc">ᵘo̲nes</a> <a href="demos-train-live-train-live.xtl.html#X">X</a>) <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#i_nner" class="c-builtin">i̲nner</a> D1, (<a href="builtins.html#o_-5c" class="c-builtin">o̲\</a> <a href="demos-train-live-train-live.xtl.html#u.o_nes" class="c-userfunc">ᵘo̲nes</a> H) <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#i_nner" class="c-builtin">i̲nner</a> D2)</span>
+<span class="line" id="L28"><a class="ln" href="#L28">28</a>}</span>
+<span class="line" id="L29"><a class="ln" href="#L29">29</a><span class="c-comment">⍝</span><span class="c-comment">## Adam</span></span>
+<span class="line" id="L30"><a class="ln" href="#L30">30</a><span class="c-comment">⍝</span><span class="c-comment"> The state is a tuple, (W1, W2, M1, M2, V1, V2, k): the weights, the</span></span>
+<span class="line" id="L31"><a class="ln" href="#L31">31</a><span class="c-comment">⍝</span><span class="c-comment"> running averages of gradients and of their squares, the step count;</span></span>
+<span class="line" id="L32"><a class="ln" href="#L32">32</a><span class="c-comment">⍝</span><span class="c-comment"> p_ower iterates it as one value.</span></span>
+<span class="line" id="L33"><a class="ln" href="#L33">33</a><span class="c-comment">⍝</span><span class="c-comment"># The learning rate.</span></span>
+<span class="line" id="L34"><a class="ln" href="#L34">34</a>lr ← <span class="c-number">0.02</span></span>
+<span class="line" id="L35"><a class="ln" href="#L35">35</a><span class="c-comment">⍝</span><span class="c-comment"># How far Adam moves a weight array, from its averages (m, v) at step k.</span></span>
+<span class="line" id="L36"><a class="ln" href="#L36">36</a><span class="c-userfunc">ᵘm̲ove</span> ← { (m, v) k → (m <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-number">1.0</span> <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">0.9</span> <a href="builtins.html#-5e" class="c-symbol">^</a> k) <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-number">0.00000001</span> <a href="builtins.html#-2b" class="c-symbol">+</a> (v <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-number">1.0</span> <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">0.999</span> <a href="builtins.html#-5e" class="c-symbol">^</a> k) <a href="builtins.html#-5e" class="c-symbol">^</a> <span class="c-number">0.5</span> }</span>
+<span class="line" id="L37"><a class="ln" href="#L37">37</a><span class="c-comment">⍝</span><span class="c-comment"># One step of Adam.</span></span>
+<span class="line" id="L38"><a class="ln" href="#L38">38</a><span class="c-userfunc">ᵘa̲dam</span> ← { (<a href="demos-train-live-train-live.xtl.html#W1">W1</a>, <a href="demos-train-live-train-live.xtl.html#W2">W2</a>, M1, M2, V1, V2, k) →</span>
+<span class="line" id="L39"><a class="ln" href="#L39">39</a>  t ← <span class="c-number">1.0</span> <a href="builtins.html#-2b" class="c-symbol">+</a> k</span>
+<span class="line" id="L40"><a class="ln" href="#L40">40</a>  (G1, G2) ← <a href="demos-train-live-train-live.xtl.html#W1">W1</a> <a href="demos-train-live-train-live.xtl.html#u.g_rad" class="c-userfunc">ᵘg̲rad</a> <a href="demos-train-live-train-live.xtl.html#W2">W2</a></span>
+<span class="line" id="L41"><a class="ln" href="#L41">41</a>  m1 ← (<span class="c-number">0.9</span> <a href="builtins.html#-2a" class="c-symbol">×</a> M1) <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">0.1</span> <a href="builtins.html#-2a" class="c-symbol">×</a> G1</span>
+<span class="line" id="L42"><a class="ln" href="#L42">42</a>  m2 ← (<span class="c-number">0.9</span> <a href="builtins.html#-2a" class="c-symbol">×</a> M2) <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">0.1</span> <a href="builtins.html#-2a" class="c-symbol">×</a> G2</span>
+<span class="line" id="L43"><a class="ln" href="#L43">43</a>  v1 ← (<span class="c-number">0.999</span> <a href="builtins.html#-2a" class="c-symbol">×</a> V1) <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">0.001</span> <a href="builtins.html#-2a" class="c-symbol">×</a> G1 <a href="builtins.html#-2a" class="c-symbol">×</a> G1</span>
+<span class="line" id="L44"><a class="ln" href="#L44">44</a>  v2 ← (<span class="c-number">0.999</span> <a href="builtins.html#-2a" class="c-symbol">×</a> V2) <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">0.001</span> <a href="builtins.html#-2a" class="c-symbol">×</a> G2 <a href="builtins.html#-2a" class="c-symbol">×</a> G2</span>
+<span class="line" id="L45"><a class="ln" href="#L45">45</a>  (<a href="demos-train-live-train-live.xtl.html#W1">W1</a> <a href="builtins.html#-2d" class="c-symbol">−</a> <a href="demos-train-live-train-live.xtl.html#lr">lr</a> <a href="builtins.html#-2a" class="c-symbol">×</a> (m1, v1) <a href="demos-train-live-train-live.xtl.html#u.m_ove" class="c-userfunc">ᵘm̲ove</a> t, <a href="demos-train-live-train-live.xtl.html#W2">W2</a> <a href="builtins.html#-2d" class="c-symbol">−</a> <a href="demos-train-live-train-live.xtl.html#lr">lr</a> <a href="builtins.html#-2a" class="c-symbol">×</a> (m2, v2) <a href="demos-train-live-train-live.xtl.html#u.m_ove" class="c-userfunc">ᵘm̲ove</a> t, m1, m2, v1, v2, t)</span>
+<span class="line" id="L46"><a class="ln" href="#L46">46</a>}</span>
+<span class="line" id="L47"><a class="ln" href="#L47">47</a><span class="c-comment">⍝</span><span class="c-comment"># The starting state: small random weights, zero averages, step 0.</span></span>
+<span class="line" id="L48"><a class="ln" href="#L48">48</a>w0 ← (<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> (<a href="builtins.html#r_oll-21" class="c-builtin">r̲oll!</a> <span class="c-number">99</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">2001</span>) <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1001</span>) <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-number">1000.0</span></span>
+<span class="line" id="L49"><a class="ln" href="#L49">49</a>W1 ← <span class="c-number">3</span> <span class="c-number">16</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">48</span> <a href="builtins.html#t_ake" class="c-builtin">t̲ake</a> <a href="demos-train-live-train-live.xtl.html#w0">w0</a></span>
+<span class="line" id="L50"><a class="ln" href="#L50">50</a>W2 ← <span class="c-number">17</span> <span class="c-number">3</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">48</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> <a href="demos-train-live-train-live.xtl.html#w0">w0</a></span>
+<span class="line" id="L51"><a class="ln" href="#L51">51</a>s0 ← (<a href="demos-train-live-train-live.xtl.html#W1">W1</a>, <a href="demos-train-live-train-live.xtl.html#W2">W2</a>, <span class="c-number">0.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="demos-train-live-train-live.xtl.html#W1">W1</a>, <span class="c-number">0.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="demos-train-live-train-live.xtl.html#W2">W2</a>, <span class="c-number">0.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="demos-train-live-train-live.xtl.html#W1">W1</a>, <span class="c-number">0.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="demos-train-live-train-live.xtl.html#W2">W2</a>, <span class="c-number">0.0</span>)</span>
+<span class="line" id="L52"><a class="ln" href="#L52">52</a><span class="c-comment">⍝</span><span class="c-comment"> -- end of the core ------------------------------------------</span></span>
+<span class="line" id="L53"><a class="ln" href="#L53">53</a></span>
+<span class="line" id="L54"><a class="ln" href="#L54">54</a><span class="c-comment">⍝</span><span class="c-comment"># The loss, and the share of points right, of a state.</span></span>
+<span class="line" id="L55"><a class="ln" href="#L55">55</a><span class="c-userfunc">ᵘl̲oss</span> ← { (<a href="demos-train-live-train-live.xtl.html#W1">W1</a>, <a href="demos-train-live-train-live.xtl.html#W2">W2</a>, _, _, _, _, _) → <a href="demos-train-live-train-live.xtl.html#Y">Y</a> <a href="libs-NN-src-NN.xtl.html#l.c_rossEntropy" class="c-libfunc">ⁿⁿc̲rossEntropy</a> <a href="demos-train-live-train-live.xtl.html#W1">W1</a> <a href="demos-train-live-train-live.xtl.html#u.f_orward" class="c-userfunc">ᵘf̲orward</a> <a href="demos-train-live-train-live.xtl.html#W2">W2</a> }</span>
+<span class="line" id="L56"><a class="ln" href="#L56">56</a><span class="c-userfunc">ᵘr̲ight</span> ← { (<a href="demos-train-live-train-live.xtl.html#W1">W1</a>, <a href="demos-train-live-train-live.xtl.html#W2">W2</a>, _, _, _, _, _) → (<span class="c-number">1</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="demos-train-live-train-live.xtl.html#arm">arm</a>) <a href="libs-NN-src-NN.xtl.html#l.a_ccuracy" class="c-libfunc">ⁿⁿa̲ccuracy</a> <a href="demos-train-live-train-live.xtl.html#W1">W1</a> <a href="demos-train-live-train-live.xtl.html#u.f_orward" class="c-userfunc">ᵘf̲orward</a> <a href="demos-train-live-train-live.xtl.html#W2">W2</a> }</span>
+<span class="line" id="L57"><a class="ln" href="#L57">57</a><span class="c-comment">⍝</span><span class="c-comment"># The loss and the share of points right: before, after 100 steps,</span></span>
+<span class="line" id="L58"><a class="ln" href="#L58">58</a><span class="c-comment">⍝</span><span class="c-comment"># after 400.</span></span>
+<span class="line" id="L59"><a class="ln" href="#L59">59</a>s1 ← <span class="c-number">100</span> <span class="c-userfunc">'</span><a href="demos-train-live-train-live.xtl.html#u.a_dam" class="c-userfunc">ᵘa̲dam</a> <a href="builtins.html#p_ower" class="c-builtin">p̲ower</a> <a href="demos-train-live-train-live.xtl.html#s0">s0</a></span>
+<span class="line" id="L60"><a class="ln" href="#L60">60</a>s2 ← <span class="c-number">300</span> <span class="c-userfunc">'</span><a href="demos-train-live-train-live.xtl.html#u.a_dam" class="c-userfunc">ᵘa̲dam</a> <a href="builtins.html#p_ower" class="c-builtin">p̲ower</a> <a href="demos-train-live-train-live.xtl.html#s1">s1</a></span>
+<span class="line" id="L61"><a class="ln" href="#L61">61</a><span class="c-userfunc">ᵘr̲ound</span> ← { a → (<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> <span class="c-number">0.5</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">1000.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> a) <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-number">1000.0</span> }</span>
+<span class="line" id="L62"><a class="ln" href="#L62">62</a><a href="demos-train-live-train-live.xtl.html#u.r_ound" class="c-userfunc">ᵘr̲ound</a> (<a href="demos-train-live-train-live.xtl.html#u.l_oss" class="c-userfunc">ᵘl̲oss</a> <a href="demos-train-live-train-live.xtl.html#s0">s0</a>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="demos-train-live-train-live.xtl.html#u.l_oss" class="c-userfunc">ᵘl̲oss</a> <a href="demos-train-live-train-live.xtl.html#s1">s1</a>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="demos-train-live-train-live.xtl.html#u.l_oss" class="c-userfunc">ᵘl̲oss</a> <a href="demos-train-live-train-live.xtl.html#s2">s2</a></span>
+<span class="line" id="L63"><a class="ln" href="#L63">63</a><a href="demos-train-live-train-live.xtl.html#u.r_ound" class="c-userfunc">ᵘr̲ound</a> (<a href="demos-train-live-train-live.xtl.html#u.r_ight" class="c-userfunc">ᵘr̲ight</a> <a href="demos-train-live-train-live.xtl.html#s0">s0</a>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="demos-train-live-train-live.xtl.html#u.r_ight" class="c-userfunc">ᵘr̲ight</a> <a href="demos-train-live-train-live.xtl.html#s1">s1</a>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="demos-train-live-train-live.xtl.html#u.r_ight" class="c-userfunc">ᵘr̲ight</a> <a href="demos-train-live-train-live.xtl.html#s2">s2</a></span>
+</div>
+</main>
+</body>
+</html>

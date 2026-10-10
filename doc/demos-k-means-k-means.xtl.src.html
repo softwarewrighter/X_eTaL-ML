@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>demos/k-means/k-means.xtl - X_eTaL doc</title>
+<link rel="stylesheet" href="style.css">
+<script src="theme.js"></script>
+<script defer src="search-index.js"></script>
+<script defer src="search.js"></script>
+</head>
+<body>
+<nav class="side">
+<a class="home" href="index.html">X_eTaL doc</a>
+<input id="search" type="search" autocomplete="off" placeholder="Search: a name, or a type" title="A name (mean finds m_ean), or a type: Num a =&gt; a -&gt; a -&gt; a finds +, m_ax ...">
+<h2>Files</h2>
+<h3>demos/attention/</h3>
+<ul>
+<li><a href="demos-attention-attention.xtl.html">attention.xtl</a></li>
+</ul>
+<h3>demos/backprop/</h3>
+<ul>
+<li><a href="demos-backprop-backprop.xtl.html">backprop.xtl</a></li>
+</ul>
+<h3>demos/cnn-backprop/</h3>
+<ul>
+<li><a href="demos-cnn-backprop-cnn-backprop.xtl.html">cnn-backprop.xtl</a></li>
+</ul>
+<h3>demos/cnn-digits/</h3>
+<ul>
+<li><a href="demos-cnn-digits-cnn-digits.xtl.html">cnn-digits.xtl</a></li>
+</ul>
+<h3>demos/k-means/</h3>
+<ul>
+<li><a href="demos-k-means-k-means.xtl.html">k-means.xtl</a></li>
+</ul>
+<h3>demos/moe-router/</h3>
+<ul>
+<li><a href="demos-moe-router-moe-router.xtl.html">moe-router.xtl</a></li>
+</ul>
+<h3>demos/net-macro/</h3>
+<ul>
+<li><a href="demos-net-macro-net-macro.xtl.html">net-macro.xtl</a></li>
+<li><a href="demos-net-macro-train-it.xtl.html">train-it.xtl</a></li>
+</ul>
+<h3>demos/ternary-net/</h3>
+<ul>
+<li><a href="demos-ternary-net-ternary-net.xtl.html">ternary-net.xtl</a></li>
+</ul>
+<h3>demos/train-live/</h3>
+<ul>
+<li><a href="demos-train-live-train-live.xtl.html">train-live.xtl</a></li>
+</ul>
+<h3>libs/Learn/demos/</h3>
+<ul>
+<li><a href="libs-Learn-demos-blobs.xtl.html">blobs.xtl</a></li>
+</ul>
+<h3>libs/Learn/src/</h3>
+<ul>
+<li><a href="libs-Learn-src-Learn.xtl.html">Learn.xtl</a></li>
+</ul>
+<h3>libs/Net/demos/</h3>
+<ul>
+<li><a href="libs-Net-demos-train-xor.xtl.html">train-xor.xtl</a></li>
+<li><a href="libs-Net-demos-xor.xtl.html">xor.xtl</a></li>
+</ul>
+<h3>libs/Net/src/</h3>
+<ul>
+<li><a href="libs-Net-src-Net.xtlm.html">Net.xtlm</a></li>
+</ul>
+<h3>libs/NN/demos/</h3>
+<ul>
+<li><a href="libs-NN-demos-xor.xtl.html">xor.xtl</a></li>
+</ul>
+<h3>libs/NN/src/</h3>
+<ul>
+<li><a href="libs-NN-src-NN.xtl.html">NN.xtl</a></li>
+</ul>
+<ul>
+<li><a href="builtins.html">built-ins</a></li>
+</ul>
+<h2>On this page</h2>
+<ul>
+<li class="item"><a href="#L12">n</a></li>
+<li class="item"><a href="#L13">i</a></li>
+<li class="item"><a href="#L14">b</a></li>
+<li class="item"><a href="#L15">cx</a></li>
+<li class="item"><a href="#L16">cy</a></li>
+<li class="item"><a href="#L17">spread</a></li>
+<li class="item"><a href="#L19"><span class="c-userfunc">ᵘn̲oise</span></a></li>
+<li class="item"><a href="#L20">X</a></li>
+<li class="item"><a href="#L23">g</a></li>
+<li class="item"><a href="#L24">c</a></li>
+<li class="item"><a href="#L25">grid</a></li>
+<li class="item"><a href="#L29">k</a></li>
+<li class="item"><a href="#L31">C0</a></li>
+<li class="item"><a href="#L33">F0</a></li>
+<li class="item"><a href="#L36"><span class="c-userfunc">ᵘr̲ound</span></a></li>
+<li class="item"><a href="#L40">C10</a></li>
+</ul>
+</nav>
+<main>
+<button class="theme" title="Light or dark">theme</button>
+<section id="results"></section>
+<h1><span class="kind">source</span><a href="demos-k-means-k-means.xtl.html">demos/k-means/k-means.xtl</a></h1>
+<div class="source"><span class="line" id="L1"><a class="ln" href="#L1">1</a><span class="c-comment">⍝</span><span class="c-comment">!/usr/bin/env xetal</span></span>
+<span class="line" id="L2"><a class="ln" href="#L2">2</a><span class="c-comment">⍝</span><span class="c-comment"># k-means, step by step: 300 points in five blobs, five centers. Each</span></span>
+<span class="line" id="L3"><a class="ln" href="#L3">3</a><span class="c-comment">⍝</span><span class="c-comment"># step gives every point the nearest center, then moves each center to</span></span>
+<span class="line" id="L4"><a class="ln" href="#L4">4</a><span class="c-comment">⍝</span><span class="c-comment"># the mean of its points (the Learn library's k_step: a few array</span></span>
+<span class="line" id="L5"><a class="ln" href="#L5">5</a><span class="c-comment">⍝</span><span class="c-comment"># expressions over all the points at once). From a poor start, five</span></span>
+<span class="line" id="L6"><a class="ln" href="#L6">6</a><span class="c-comment">⍝</span><span class="c-comment"># points of one blob, the centers travel across the plane to the</span></span>
+<span class="line" id="L7"><a class="ln" href="#L7">7</a><span class="c-comment">⍝</span><span class="c-comment"># blobs; from Learn's farthest-first start they barely need to.</span></span>
+<span class="line" id="L8"><a class="ln" href="#L8">8</a></span>
+<span class="line" id="L9"><a class="ln" href="#L9">9</a><span class="c-libfunc">ᵐˡ⁼</span><span class="c-macro">u̲se&lt;</span> <a href="libs-Learn-src-Learn.xtl.html" class="c-string">&quot;Learn&quot;</a></span>
+<span class="line" id="L10"><a class="ln" href="#L10">10</a></span>
+<span class="line" id="L11"><a class="ln" href="#L11">11</a><span class="c-comment">⍝</span><span class="c-comment">## The points: five blobs of 60, each its own center and spread</span></span>
+<span class="line" id="L12"><a class="ln" href="#L12">12</a>n ← <span class="c-number">300</span></span>
+<span class="line" id="L13"><a class="ln" href="#L13">13</a>i ← <a href="builtins.html#o_ffsets" class="c-builtin">o̲ffsets</a> <a href="demos-k-means-k-means.xtl.html#n">n</a></span>
+<span class="line" id="L14"><a class="ln" href="#L14">14</a>b ← <span class="c-number">1</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="demos-k-means-k-means.xtl.html#i">i</a> <a href="builtins.html#d_iv" class="c-builtin">d̲iv</a> <span class="c-number">60</span></span>
+<span class="line" id="L15"><a class="ln" href="#L15">15</a>cx ← <a href="demos-k-means-k-means.xtl.html#b">b</a> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <span class="c-number">-0.6</span> <span class="c-number">0.5</span> <span class="c-number">0.0</span> <span class="c-number">-0.5</span> <span class="c-number">0.6</span></span>
+<span class="line" id="L16"><a class="ln" href="#L16">16</a>cy ← <a href="demos-k-means-k-means.xtl.html#b">b</a> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <span class="c-number">0.5</span> <span class="c-number">0.6</span> <span class="c-number">-0.05</span> <span class="c-number">-0.6</span> <span class="c-number">-0.5</span></span>
+<span class="line" id="L17"><a class="ln" href="#L17">17</a>spread ← <a href="demos-k-means-k-means.xtl.html#b">b</a> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <span class="c-number">0.12</span> <span class="c-number">0.16</span> <span class="c-number">0.1</span> <span class="c-number">0.2</span> <span class="c-number">0.08</span></span>
+<span class="line" id="L18"><a class="ln" href="#L18">18</a><span class="c-comment">⍝</span><span class="c-comment"># A little noise, the sum of two draws (so it bunches toward the middle).</span></span>
+<span class="line" id="L19"><a class="ln" href="#L19">19</a><span class="c-userfunc">ᵘn̲oise</span> ← { m → (<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> (<a href="builtins.html#r_oll-21" class="c-builtin">r̲oll!</a> m <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">1001</span>) <a href="builtins.html#-2b" class="c-symbol">+</a> (<a href="builtins.html#r_oll-21" class="c-builtin">r̲oll!</a> m <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">1001</span>) <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1002</span>) <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-number">1000.0</span> }</span>
+<span class="line" id="L20"><a class="ln" href="#L20">20</a>X ← <a href="builtins.html#o_-5c" class="c-builtin">o̲\</a> (<span class="c-number">2</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="demos-k-means-k-means.xtl.html#n">n</a>) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> (<a href="demos-k-means-k-means.xtl.html#cx">cx</a> <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="demos-k-means-k-means.xtl.html#spread">spread</a> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="demos-k-means-k-means.xtl.html#u.n_oise" class="c-userfunc">ᵘn̲oise</a> <a href="demos-k-means-k-means.xtl.html#n">n</a>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="demos-k-means-k-means.xtl.html#cy">cy</a> <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="demos-k-means-k-means.xtl.html#spread">spread</a> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="demos-k-means-k-means.xtl.html#u.n_oise" class="c-userfunc">ᵘn̲oise</a> <a href="demos-k-means-k-means.xtl.html#n">n</a></span>
+<span class="line" id="L21"><a class="ln" href="#L21">21</a></span>
+<span class="line" id="L22"><a class="ln" href="#L22">22</a><span class="c-comment">⍝</span><span class="c-comment">## The map: a grid of g x g points over the square -1 .. 1</span></span>
+<span class="line" id="L23"><a class="ln" href="#L23">23</a>g ← <span class="c-number">40</span></span>
+<span class="line" id="L24"><a class="ln" href="#L24">24</a>c ← <span class="c-number">-1.0</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">2.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> (<span class="c-number">0.5</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="builtins.html#o_ffsets" class="c-builtin">o̲ffsets</a> <a href="demos-k-means-k-means.xtl.html#g">g</a>) <a href="builtins.html#-2f" class="c-symbol">÷</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="demos-k-means-k-means.xtl.html#g">g</a></span>
+<span class="line" id="L25"><a class="ln" href="#L25">25</a>grid ← <a href="builtins.html#o_-5c" class="c-builtin">o̲\</a> (<span class="c-number">2</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="demos-k-means-k-means.xtl.html#g">g</a> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="demos-k-means-k-means.xtl.html#g">g</a>) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> (<a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> (<a href="builtins.html#o_ffsets" class="c-builtin">o̲ffsets</a> <a href="demos-k-means-k-means.xtl.html#g">g</a>) <span class="c-builtin">'</span><a href="builtins.html#r_ight" class="c-builtin">r̲ight</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> <a href="demos-k-means-k-means.xtl.html#c">c</a>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> (<a href="builtins.html#r_ev" class="c-builtin">r̲ev</a> <a href="demos-k-means-k-means.xtl.html#c">c</a>) <span class="c-builtin">'</span><a href="builtins.html#l_eft" class="c-builtin">l̲eft</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> <a href="builtins.html#o_ffsets" class="c-builtin">o̲ffsets</a> <a href="demos-k-means-k-means.xtl.html#g">g</a></span>
+<span class="line" id="L26"><a class="ln" href="#L26">26</a><span class="c-comment">⍝</span><span class="c-comment"> -- end of the core ------------------------------------------</span></span>
+<span class="line" id="L27"><a class="ln" href="#L27">27</a></span>
+<span class="line" id="L28"><a class="ln" href="#L28">28</a><span class="c-comment">⍝</span><span class="c-comment">## Two starts, the same steps</span></span>
+<span class="line" id="L29"><a class="ln" href="#L29">29</a>k ← <span class="c-number">5</span></span>
+<span class="line" id="L30"><a class="ln" href="#L30">30</a><span class="c-comment">⍝</span><span class="c-comment"># A poor start: the first five points, all in the first blob.</span></span>
+<span class="line" id="L31"><a class="ln" href="#L31">31</a>C0 ← <a href="demos-k-means-k-means.xtl.html#k">k</a> <a href="builtins.html#t_ake" class="c-builtin">t̲ake</a> <a href="demos-k-means-k-means.xtl.html#X">X</a></span>
+<span class="line" id="L32"><a class="ln" href="#L32">32</a><span class="c-comment">⍝</span><span class="c-comment"># Learn's start: the first point, then each time the farthest from those so far.</span></span>
+<span class="line" id="L33"><a class="ln" href="#L33">33</a>F0 ← <a href="demos-k-means-k-means.xtl.html#k">k</a> <a href="libs-Learn-src-Learn.xtl.html#l.f_arthest" class="c-libfunc">ᵐˡf̲arthest</a> <a href="demos-k-means-k-means.xtl.html#X">X</a></span>
+<span class="line" id="L34"><a class="ln" href="#L34">34</a><span class="c-comment">⍝</span><span class="c-comment"># The inertia (the sum of squared distances to the nearest center)</span></span>
+<span class="line" id="L35"><a class="ln" href="#L35">35</a><span class="c-comment">⍝</span><span class="c-comment"># after 0 to 10 steps, from each start: it never rises.</span></span>
+<span class="line" id="L36"><a class="ln" href="#L36">36</a><span class="c-userfunc">ᵘr̲ound</span> ← { a → (<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> <span class="c-number">0.5</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">1000.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> a) <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-number">1000.0</span> }</span>
+<span class="line" id="L37"><a class="ln" href="#L37">37</a><a href="demos-k-means-k-means.xtl.html#u.r_ound" class="c-userfunc">ᵘr̲ound</a> <span class="c-quote">'</span>{ j → (j <span class="c-quote">'</span>{ C → <a href="demos-k-means-k-means.xtl.html#X">X</a> <a href="libs-Learn-src-Learn.xtl.html#l.k_step" class="c-libfunc">ᵐˡk̲step</a> C } <a href="builtins.html#p_ower" class="c-builtin">p̲ower</a> <a href="demos-k-means-k-means.xtl.html#C0">C0</a>) <a href="libs-Learn-src-Learn.xtl.html#l.i_nertia" class="c-libfunc">ᵐˡi̲nertia</a> <a href="demos-k-means-k-means.xtl.html#X">X</a> } <a href="builtins.html#e_ach" class="c-builtin">e̲ach</a> <a href="builtins.html#o_ffsets" class="c-builtin">o̲ffsets</a> <span class="c-number">11</span></span>
+<span class="line" id="L38"><a class="ln" href="#L38">38</a><a href="demos-k-means-k-means.xtl.html#u.r_ound" class="c-userfunc">ᵘr̲ound</a> <span class="c-quote">'</span>{ j → (j <span class="c-quote">'</span>{ C → <a href="demos-k-means-k-means.xtl.html#X">X</a> <a href="libs-Learn-src-Learn.xtl.html#l.k_step" class="c-libfunc">ᵐˡk̲step</a> C } <a href="builtins.html#p_ower" class="c-builtin">p̲ower</a> <a href="demos-k-means-k-means.xtl.html#F0">F0</a>) <a href="libs-Learn-src-Learn.xtl.html#l.i_nertia" class="c-libfunc">ᵐˡi̲nertia</a> <a href="demos-k-means-k-means.xtl.html#X">X</a> } <a href="builtins.html#e_ach" class="c-builtin">e̲ach</a> <a href="builtins.html#o_ffsets" class="c-builtin">o̲ffsets</a> <span class="c-number">11</span></span>
+<span class="line" id="L39"><a class="ln" href="#L39">39</a><span class="c-comment">⍝</span><span class="c-comment"># The centers after 10 steps from the poor start, one per row.</span></span>
+<span class="line" id="L40"><a class="ln" href="#L40">40</a>C10 ← <span class="c-number">10</span> <span class="c-quote">'</span>{ C → <a href="demos-k-means-k-means.xtl.html#X">X</a> <a href="libs-Learn-src-Learn.xtl.html#l.k_step" class="c-libfunc">ᵐˡk̲step</a> C } <a href="builtins.html#p_ower" class="c-builtin">p̲ower</a> <a href="demos-k-means-k-means.xtl.html#C0">C0</a></span>
+<span class="line" id="L41"><a class="ln" href="#L41">41</a><a href="demos-k-means-k-means.xtl.html#u.r_ound" class="c-userfunc">ᵘr̲ound</a> <a href="demos-k-means-k-means.xtl.html#C10">C10</a></span>
+<span class="line" id="L42"><a class="ln" href="#L42">42</a><span class="c-comment">⍝</span><span class="c-comment"># Which center each point of the map is nearest (A to E).</span></span>
+<span class="line" id="L43"><a class="ln" href="#L43">43</a>(<a href="demos-k-means-k-means.xtl.html#g">g</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="demos-k-means-k-means.xtl.html#g">g</a>) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> (<a href="demos-k-means-k-means.xtl.html#C10">C10</a> <a href="libs-Learn-src-Learn.xtl.html#l.a_ssign" class="c-libfunc">ᵐˡa̲ssign</a> <a href="demos-k-means-k-means.xtl.html#grid">grid</a>) <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="builtins.html#-5b-5dA" class="c-builtin">⎕A</a></span>
+</div>
+</main>
+</body>
+</html>

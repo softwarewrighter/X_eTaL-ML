@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>libs/Learn/src/Learn.xtl - X_eTaL doc</title>
+<link rel="stylesheet" href="style.css">
+<script src="theme.js"></script>
+<script defer src="search-index.js"></script>
+<script defer src="search.js"></script>
+</head>
+<body>
+<nav class="side">
+<a class="home" href="index.html">X_eTaL doc</a>
+<input id="search" type="search" autocomplete="off" placeholder="Search: a name, or a type" title="A name (mean finds m_ean), or a type: Num a =&gt; a -&gt; a -&gt; a finds +, m_ax ...">
+<h2>Files</h2>
+<h3>demos/attention/</h3>
+<ul>
+<li><a href="demos-attention-attention.xtl.html">attention.xtl</a></li>
+</ul>
+<h3>demos/backprop/</h3>
+<ul>
+<li><a href="demos-backprop-backprop.xtl.html">backprop.xtl</a></li>
+</ul>
+<h3>demos/cnn-backprop/</h3>
+<ul>
+<li><a href="demos-cnn-backprop-cnn-backprop.xtl.html">cnn-backprop.xtl</a></li>
+</ul>
+<h3>demos/cnn-digits/</h3>
+<ul>
+<li><a href="demos-cnn-digits-cnn-digits.xtl.html">cnn-digits.xtl</a></li>
+</ul>
+<h3>demos/k-means/</h3>
+<ul>
+<li><a href="demos-k-means-k-means.xtl.html">k-means.xtl</a></li>
+</ul>
+<h3>demos/moe-router/</h3>
+<ul>
+<li><a href="demos-moe-router-moe-router.xtl.html">moe-router.xtl</a></li>
+</ul>
+<h3>demos/net-macro/</h3>
+<ul>
+<li><a href="demos-net-macro-net-macro.xtl.html">net-macro.xtl</a></li>
+<li><a href="demos-net-macro-train-it.xtl.html">train-it.xtl</a></li>
+</ul>
+<h3>demos/ternary-net/</h3>
+<ul>
+<li><a href="demos-ternary-net-ternary-net.xtl.html">ternary-net.xtl</a></li>
+</ul>
+<h3>demos/train-live/</h3>
+<ul>
+<li><a href="demos-train-live-train-live.xtl.html">train-live.xtl</a></li>
+</ul>
+<h3>libs/Learn/demos/</h3>
+<ul>
+<li><a href="libs-Learn-demos-blobs.xtl.html">blobs.xtl</a></li>
+</ul>
+<h3>libs/Learn/src/</h3>
+<ul>
+<li><a href="libs-Learn-src-Learn.xtl.html">Learn.xtl</a></li>
+</ul>
+<h3>libs/Net/demos/</h3>
+<ul>
+<li><a href="libs-Net-demos-train-xor.xtl.html">train-xor.xtl</a></li>
+<li><a href="libs-Net-demos-xor.xtl.html">xor.xtl</a></li>
+</ul>
+<h3>libs/Net/src/</h3>
+<ul>
+<li><a href="libs-Net-src-Net.xtlm.html">Net.xtlm</a></li>
+</ul>
+<h3>libs/NN/demos/</h3>
+<ul>
+<li><a href="libs-NN-demos-xor.xtl.html">xor.xtl</a></li>
+</ul>
+<h3>libs/NN/src/</h3>
+<ul>
+<li><a href="libs-NN-src-NN.xtl.html">NN.xtl</a></li>
+</ul>
+<ul>
+<li><a href="builtins.html">built-ins</a></li>
+</ul>
+<h2>On this page</h2>
+<ul>
+<li><a href="#section-1">Helpers (private)</a></li>
+<li class="item"><a href="#h.d_ist"><span class="c-libfunc">ʰd̲ist</span></a></li>
+<li class="item"><a href="#h.o_nes"><span class="c-libfunc">ʰo̲nes</span></a></li>
+<li><a href="#section-2">k-means: clusters by their centers</a></li>
+<li class="item"><a href="#l.a_ssign"><span class="c-libfunc">ˡa̲ssign</span></a></li>
+<li class="item"><a href="#l.k_step"><span class="c-libfunc">ˡk̲step</span></a></li>
+<li class="item"><a href="#l.i_nertia"><span class="c-libfunc">ˡi̲nertia</span></a></li>
+<li class="item"><a href="#l.f_arthest"><span class="c-libfunc">ˡf̲arthest</span></a></li>
+<li class="item"><a href="#l.k_means"><span class="c-libfunc">ˡk̲means</span></a></li>
+<li><a href="#section-3">k nearest neighbors: a vote</a></li>
+<li class="item"><a href="#l.k_nn"><span class="c-libfunc">ˡk̲nn</span></a></li>
+<li><a href="#section-4">PCA: the directions of most variance</a></li>
+<li class="item"><a href="#l.p_ca"><span class="c-libfunc">ˡp̲ca</span></a></li>
+<li class="item"><a href="#l.p_roject"><span class="c-libfunc">ˡp̲roject</span></a></li>
+<li><a href="#section-5">Logistic regression: classes by a softmax</a></li>
+<li class="item"><a href="#l.l_ogistic"><span class="c-libfunc">ˡl̲ogistic</span></a></li>
+<li class="item"><a href="#l.p_redict"><span class="c-libfunc">ˡp̲redict</span></a></li>
+</ul>
+</nav>
+<main>
+<button class="theme" title="Light or dark">theme</button>
+<section id="results"></section>
+<h1><span class="kind">library</span>libs/Learn/src/Learn.xtl</h1>
+<div class="doc">
+<p>Learn: classic machine learning: k-means, k nearest neighbors, PCA, logistic regression</p>
+<p>Import it with an alias of your choice: &quot;ml:&quot; u_se&lt; &quot;Learn&quot;.
+Put libs/Learn/src on XETAL_PATH (&quot;just path&quot;); the reference is libs/Learn/docs.
+Names with l: are exported; h: names are private to this file.</p>
+<p>After APLearn's list (k-means, kNN, PCA, logistic regression), each
+a fit and a predict: the data X is a matrix, one example per row;
+labels count from 1. Every model is whole-array arithmetic, and an
+iterative fit is a step repeated by p_ower.</p>
+</div>
+<p class="meta"><a href="libs-Learn-src-Learn.xtl.src.html">source</a> &middot; imports <code><span class="c-error">nn:</span></code> <a href="libs-NN-src-NN.xtl.html">libs/NN/src/NN.xtl</a></p>
+<h2 class="section" id="section-1">Helpers (private)</h2>
+<div class="item" id="h.d_ist">
+<h3><a href="#h.d_ist"><span class="c-libfunc">ʰd̲ist</span></a> <span class="type">: Float -&gt; Float -&gt; Float</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="libs-Learn-src-Learn.xtl.src.html#L17">line 17</a></div>
+<div class="doc">
+<p>The squared distance between every row of A (n x d) and every row of B (k x d): n x k.</p>
+</div>
+<pre class="code"><span class="c-libfunc">ʰd̲ist</span> ← { A B → ((<span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/₂</a> A <a href="builtins.html#-2a" class="c-symbol">×</a> A) <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/₂</a> B <a href="builtins.html#-2a" class="c-symbol">×</a> B) <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">2.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> A <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#i_nner" class="c-builtin">i̲nner</a> <a href="builtins.html#o_-5c" class="c-builtin">o̲\</a> B }</pre>
+<div class="uses">Used in: <a href="libs-Learn-src-Learn.xtl.html#l.a_ssign"><span class="c-libfunc">ˡa̲ssign</span></a>, <a href="libs-Learn-src-Learn.xtl.html#l.i_nertia"><span class="c-libfunc">ˡi̲nertia</span></a>, <a href="libs-Learn-src-Learn.xtl.html#l.f_arthest"><span class="c-libfunc">ˡf̲arthest</span></a>, <a href="libs-Learn-src-Learn.xtl.html#l.k_nn"><span class="c-libfunc">ˡk̲nn</span></a></div>
+</div>
+<div class="item" id="h.o_nes">
+<h3><a href="#h.o_nes"><span class="c-libfunc">ʰo̲nes</span></a> <span class="type">: Float -&gt; Float</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="libs-Learn-src-Learn.xtl.src.html#L20">line 20</a></div>
+<div class="doc">
+<p>X with a column of 1s on the right (for a bias row).</p>
+</div>
+<pre class="code"><span class="c-libfunc">ʰo̲nes</span> ← { X → X <a href="builtins.html#c_at" class="c-builtin">c̲at₂</a> ((<a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> X) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">1</span>) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">1.0</span> }</pre>
+<div class="uses">Used in: <a href="libs-Learn-src-Learn.xtl.html#l.l_ogistic"><span class="c-libfunc">ˡl̲ogistic</span></a></div>
+</div>
+<h2 class="section" id="section-2">k-means: clusters by their centers</h2>
+<div class="item" id="l.a_ssign">
+<h3><a href="#l.a_ssign"><span class="c-libfunc">ˡa̲ssign</span></a> <span class="type">: Float -&gt; Float -&gt; Int</span></h3>
+<div class="meta">function &middot; <a href="libs-Learn-src-Learn.xtl.src.html#L28">line 28</a></div>
+<div class="doc">
+<p><code>C <span class="c-builtin">a̲ssign</span> X</code>: the nearest of the centers C (one per row) for each row of X, from 1.</p>
+<pre class="example"><span class="prompt">      </span><span class="c-libfunc">ᵐˡ⁼</span><span class="c-macro">u̲se&lt;</span> <a href="libs-Learn-src-Learn.xtl.html" class="c-string">&quot;Learn&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span>(<span class="c-number">2</span> <span class="c-number">2</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.0</span> <span class="c-number">0.0</span> <span class="c-number">10.0</span> <span class="c-number">10.0</span>) <a href="libs-Learn-src-Learn.xtl.html#l.a_ssign" class="c-libfunc">ᵐˡa̲ssign</a> <span class="c-number">3</span> <span class="c-number">2</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">1.0</span> <span class="c-number">0.0</span> <span class="c-number">9.0</span> <span class="c-number">9.0</span> <span class="c-number">0.0</span> <span class="c-number">2.0</span>
+1 2 1</pre>
+</div>
+<pre class="code"><span class="c-libfunc">ˡa̲ssign</span> ← { C X → <a href="libs-NN-src-NN.xtl.html#l.a_rgmax" class="c-libfunc">ⁿⁿa̲rgmax</a> <a href="builtins.html#n_eg" class="c-builtin">n̲eg</a> X <a href="libs-Learn-src-Learn.xtl.html#h.d_ist" class="c-libfunc">ʰd̲ist</a> C }</pre>
+<div class="uses">Used in: <a href="libs-Learn-src-Learn.xtl.html#l.k_step"><span class="c-libfunc">ˡk̲step</span></a>, <a href="libs-Learn-demos-blobs.xtl.src.html#L19">libs/Learn/demos/blobs.xtl:19</a>, <a href="demos-k-means-k-means.xtl.src.html#L43">demos/k-means/k-means.xtl:43</a></div>
+</div>
+<div class="item" id="l.k_step">
+<h3><a href="#l.k_step"><span class="c-libfunc">ˡk̲step</span></a> <span class="type">: Float -&gt; Float -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="libs-Learn-src-Learn.xtl.src.html#L38">line 38</a></div>
+<div class="doc">
+<p><code>X <span class="c-builtin">k̲step</span> C</code>: one step of k-means (Lloyd's): each center moved to
+the mean of the rows of X nearest it; a center no row is nearest
+stays where it is. Repeat it with p_ower.</p>
+<pre class="example"><span class="prompt">      </span><span class="c-libfunc">ᵐˡ⁼</span><span class="c-macro">u̲se&lt;</span> <a href="libs-Learn-src-Learn.xtl.html" class="c-string">&quot;Learn&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span>X ← <span class="c-number">4</span> <span class="c-number">2</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.0</span> <span class="c-number">0.0</span> <span class="c-number">0.0</span> <span class="c-number">2.0</span> <span class="c-number">10.0</span> <span class="c-number">10.0</span> <span class="c-number">10.0</span> <span class="c-number">12.0</span></pre>
+<pre class="example"><span class="prompt">      </span>X <a href="libs-Learn-src-Learn.xtl.html#l.k_step" class="c-libfunc">ᵐˡk̲step</a> <span class="c-number">2</span> <span class="c-number">2</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">1.0</span> <span class="c-number">1.0</span> <span class="c-number">9.0</span> <span class="c-number">9.0</span>
+ 0.0  1.0
+10.0 11.0</pre>
+</div>
+<pre class="code"><span class="c-libfunc">ˡk̲step</span> ← { X C →
+  O ← (<a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> C) <a href="libs-NN-src-NN.xtl.html#l.o_neHot" class="c-libfunc">ⁿⁿo̲neHot</a> C <a href="libs-Learn-src-Learn.xtl.html#l.a_ssign" class="c-libfunc">ˡa̲ssign</a> X
+  n ← (<span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/₁</a> O) <span class="c-builtin">'</span><a href="builtins.html#l_eft" class="c-builtin">l̲eft</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> <a href="builtins.html#o_ffsets" class="c-builtin">o̲ffsets</a> <span class="c-number">2</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> X
+  (((<a href="builtins.html#o_-5c" class="c-builtin">o̲\</a> O) <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#i_nner" class="c-builtin">i̲nner</a> X) <a href="builtins.html#-2b" class="c-symbol">+</a> C <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> n <a href="builtins.html#-3d" class="c-symbol">=</a> <span class="c-number">0.0</span>) <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-number">1.0</span> <a href="builtins.html#m_ax" class="c-builtin">m̲ax</a> n
+}</pre>
+<div class="uses">Used in: <a href="libs-Learn-src-Learn.xtl.html#l.k_means"><span class="c-libfunc">ˡk̲means</span></a>, <a href="demos-k-means-k-means.xtl.src.html#L37">demos/k-means/k-means.xtl:37</a>, <a href="demos-k-means-k-means.xtl.src.html#L38">demos/k-means/k-means.xtl:38</a>, <a href="demos-k-means-k-means.xtl.html#C10">C10</a></div>
+</div>
+<div class="item" id="l.i_nertia">
+<h3><a href="#l.i_nertia"><span class="c-libfunc">ˡi̲nertia</span></a> <span class="type">: Float -&gt; Float -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="libs-Learn-src-Learn.xtl.src.html#L45">line 45</a></div>
+<div class="doc">
+<p><code>C <span class="c-builtin">i̲nertia</span> X</code>: the sum of each row's squared distance to its nearest center.</p>
+</div>
+<pre class="code"><span class="c-libfunc">ˡi̲nertia</span> ← { C X → <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> <span class="c-builtin">'</span><a href="builtins.html#m_in" class="c-builtin">m̲in</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/₂</a> X <a href="libs-Learn-src-Learn.xtl.html#h.d_ist" class="c-libfunc">ʰd̲ist</a> C }</pre>
+<div class="uses">Used in: <a href="demos-k-means-k-means.xtl.src.html#L37">demos/k-means/k-means.xtl:37</a>, <a href="demos-k-means-k-means.xtl.src.html#L38">demos/k-means/k-means.xtl:38</a></div>
+</div>
+<div class="item" id="l.f_arthest">
+<h3><a href="#l.f_arthest"><span class="c-libfunc">ˡf̲arthest</span></a> <span class="type">: Int -&gt; Float -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="libs-Learn-src-Learn.xtl.src.html#L49">line 49</a></div>
+<div class="doc">
+<p><code>k <span class="c-builtin">f̲arthest</span> X</code>: k starting centers, chosen without chance: the
+first row, then each time the row farthest from the centers so far.</p>
+</div>
+<pre class="code"><span class="c-libfunc">ˡf̲arthest</span> ← { k X →
+  d ← <span class="c-number">2</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> X
+  (k <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span>) <span class="c-quote">'</span>{ C → C <a href="builtins.html#c_at" class="c-builtin">c̲at₁</a> (<span class="c-number">1</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> d) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> (<a href="libs-NN-src-NN.xtl.html#l.a_rgmax" class="c-libfunc">ⁿⁿa̲rgmax</a> <span class="c-builtin">'</span><a href="builtins.html#m_in" class="c-builtin">m̲in</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/₂</a> X <a href="libs-Learn-src-Learn.xtl.html#h.d_ist" class="c-libfunc">ʰd̲ist</a> C) <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> X } <a href="builtins.html#p_ower" class="c-builtin">p̲ower</a> <span class="c-number">1</span> <a href="builtins.html#t_ake" class="c-builtin">t̲ake</a> X
+}</pre>
+<div class="uses">Used in: <a href="libs-Learn-src-Learn.xtl.html#l.k_means"><span class="c-libfunc">ˡk̲means</span></a>, <a href="demos-k-means-k-means.xtl.html#F0">F0</a></div>
+</div>
+<div class="item" id="l.k_means">
+<h3><a href="#l.k_means"><span class="c-libfunc">ˡk̲means</span></a> <span class="type">: (Int, Int) -&gt; Float -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="libs-Learn-src-Learn.xtl.src.html#L55">line 55</a></div>
+<div class="doc">
+<p><code>(k, n) <span class="c-builtin">k̲means</span> X</code>: k centers after n steps from the farthest-first start.</p>
+</div>
+<pre class="code"><span class="c-libfunc">ˡk̲means</span> ← { (k, n) X → n <span class="c-quote">'</span>{ C → X <a href="libs-Learn-src-Learn.xtl.html#l.k_step" class="c-libfunc">ˡk̲step</a> C } <a href="builtins.html#p_ower" class="c-builtin">p̲ower</a> k <a href="libs-Learn-src-Learn.xtl.html#l.f_arthest" class="c-libfunc">ˡf̲arthest</a> X }</pre>
+<div class="uses">Used in: <a href="libs-Learn-demos-blobs.xtl.html#C">C</a></div>
+</div>
+<h2 class="section" id="section-3">k nearest neighbors: a vote</h2>
+<div class="item" id="l.k_nn">
+<h3><a href="#l.k_nn"><span class="c-libfunc">ˡk̲nn</span></a> <span class="type">: (Int, Float, Int) -&gt; Float -&gt; Int</span></h3>
+<div class="meta">function &middot; <a href="libs-Learn-src-Learn.xtl.src.html#L67">line 67</a></div>
+<div class="doc">
+<p><code>(k, X, y) <span class="c-builtin">k̲nn</span> Q</code>: for each row of Q, the label most of its k
+nearest rows of X have (y: X's labels, from 1); on a tie the
+smallest label. The neighbors are found nearest first, each masked
+once taken (X_eTaL has no grade along a row yet).</p>
+<pre class="example"><span class="prompt">      </span><span class="c-libfunc">ᵐˡ⁼</span><span class="c-macro">u̲se&lt;</span> <a href="libs-Learn-src-Learn.xtl.html" class="c-string">&quot;Learn&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span>X ← <span class="c-number">4</span> <span class="c-number">1</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.0</span> <span class="c-number">1.0</span> <span class="c-number">10.0</span> <span class="c-number">11.0</span></pre>
+<pre class="example"><span class="prompt">      </span>(<span class="c-number">3</span>, X, <span class="c-number">1</span> <span class="c-number">1</span> <span class="c-number">2</span> <span class="c-number">2</span>) <a href="libs-Learn-src-Learn.xtl.html#l.k_nn" class="c-libfunc">ᵐˡk̲nn</a> <span class="c-number">2</span> <span class="c-number">1</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.5</span> <span class="c-number">10.5</span>
+1 2</pre>
+</div>
+<pre class="code"><span class="c-libfunc">ˡk̲nn</span> ← { (k, X, y) Q →
+  c ← <span class="c-builtin">'</span><a href="builtins.html#m_ax" class="c-builtin">m̲ax</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> y
+  D ← Q <a href="libs-Learn-src-Learn.xtl.html#h.d_ist" class="c-libfunc">ʰd̲ist</a> X
+  (_, V) ← k <span class="c-quote">'</span>{ (d, v) →
+    j ← <a href="libs-NN-src-NN.xtl.html#l.a_rgmax" class="c-libfunc">ⁿⁿa̲rgmax</a> <a href="builtins.html#n_eg" class="c-builtin">n̲eg</a> d
+    (d <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">1e300</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> j <span class="c-symbol">'</span><a href="builtins.html#-3d" class="c-symbol">=</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> <a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> X, v <a href="builtins.html#-2b" class="c-symbol">+</a> c <a href="libs-NN-src-NN.xtl.html#l.o_neHot" class="c-libfunc">ⁿⁿo̲neHot</a> j <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> y)
+  } <a href="builtins.html#p_ower" class="c-builtin">p̲ower</a> (D, ((<a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> Q) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> c) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.0</span>)
+  <a href="libs-NN-src-NN.xtl.html#l.a_rgmax" class="c-libfunc">ⁿⁿa̲rgmax</a> V
+}</pre>
+<div class="uses">Used in: <a href="libs-Learn-demos-blobs.xtl.src.html#L22">libs/Learn/demos/blobs.xtl:22</a></div>
+</div>
+<h2 class="section" id="section-4">PCA: the directions of most variance</h2>
+<div class="item" id="l.p_ca">
+<h3><a href="#l.p_ca"><span class="c-libfunc">ˡp̲ca</span></a> <span class="type">: Int -&gt; Float -&gt; (Float, Float, Float)</span></h3>
+<div class="meta">function &middot; <a href="libs-Learn-src-Learn.xtl.src.html#L84">line 84</a></div>
+<div class="doc">
+<p><code>n <span class="c-builtin">p̲ca</span> X</code>: the mean of X's rows, the first n principal directions
+(a column each, unit length) and the variance along each: (mu, V,
+ev). Power iteration on the covariance, each direction then taken
+out of it (deflation); a direction's sign makes its items sum
+positive.</p>
+</div>
+<pre class="code"><span class="c-libfunc">ˡp̲ca</span> ← { n X →
+  d ← <span class="c-number">2</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> X
+  mu ← (<span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/₁</a> X) <a href="builtins.html#-2f" class="c-symbol">÷</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> X
+  Z ← X <a href="builtins.html#-2d" class="c-symbol">−</a> (<a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> X) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> mu
+  S0 ← ((<a href="builtins.html#o_-5c" class="c-builtin">o̲\</a> Z) <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#i_nner" class="c-builtin">i̲nner</a> Z) <a href="builtins.html#-2f" class="c-symbol">÷</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> X
+  u0 ← <span class="c-number">1.0</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">0.1</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="builtins.html#o_ffsets" class="c-builtin">o̲ffsets</a> d
+  (_, V, ev, _) ← n <span class="c-quote">'</span>{ (S, V, ev, i) →
+    v ← <span class="c-number">200</span> <span class="c-quote">'</span>{ u → w ← S <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#i_nner" class="c-builtin">i̲nner</a> u◆ w <a href="builtins.html#-2f" class="c-symbol">÷</a> (<span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> w <a href="builtins.html#-2a" class="c-symbol">×</a> w) <a href="builtins.html#-5e" class="c-symbol">^</a> <span class="c-number">0.5</span> } <a href="builtins.html#p_ower" class="c-builtin">p̲ower</a> u0
+    v1 ← v <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">1.0</span> <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">2.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <span class="c-number">0.0</span> <a href="builtins.html#-3e" class="c-symbol">&gt;</a> <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> v
+    lam ← <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> v1 <a href="builtins.html#-2a" class="c-symbol">×</a> S <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#i_nner" class="c-builtin">i̲nner</a> v1
+    (S <a href="builtins.html#-2d" class="c-symbol">−</a> lam <a href="builtins.html#-2a" class="c-symbol">×</a> v1 <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> v1, V <a href="builtins.html#-2b" class="c-symbol">+</a> v1 <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> i <a href="builtins.html#-3d" class="c-symbol">=</a> <a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> n, ev <a href="builtins.html#-2b" class="c-symbol">+</a> lam <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> i <a href="builtins.html#-3d" class="c-symbol">=</a> <a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> n, i <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">1</span>)
+  } <a href="builtins.html#p_ower" class="c-builtin">p̲ower</a> (S0, (d <a href="builtins.html#c_at" class="c-builtin">c̲at</a> n) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.0</span>, n <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.0</span>, <span class="c-number">1</span>)
+  (mu, V, ev)
+}</pre>
+<div class="uses">Used in: <a href="libs-Learn-demos-blobs.xtl.html#mu">mu</a></div>
+</div>
+<div class="item" id="l.p_roject">
+<h3><a href="#l.p_roject"><span class="c-libfunc">ˡp̲roject</span></a> <span class="type">: (Num a, Any b) =&gt; (a, a, b) -&gt; a -&gt; a</span></h3>
+<div class="meta">function &middot; <a href="libs-Learn-src-Learn.xtl.src.html#L100">line 100</a></div>
+<div class="doc">
+<p><code>(mu, V, ev) <span class="c-builtin">p̲roject</span> X</code>: each row of X in the principal directions: n columns.</p>
+</div>
+<pre class="code"><span class="c-libfunc">ˡp̲roject</span> ← { (mu, V, _) X → (X <a href="builtins.html#-2d" class="c-symbol">−</a> (<a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> X) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> mu) <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#i_nner" class="c-builtin">i̲nner</a> V }</pre>
+</div>
+<h2 class="section" id="section-5">Logistic regression: classes by a softmax</h2>
+<div class="item" id="l.l_ogistic">
+<h3><a href="#l.l_ogistic"><span class="c-libfunc">ˡl̲ogistic</span></a> <span class="type">: (Int, Float) -&gt; (Float, Int) -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="libs-Learn-src-Learn.xtl.src.html#L108">line 108</a></div>
+<div class="doc">
+<p><code>(n, lr) <span class="c-builtin">l̲ogistic</span> (X, y)</code>: the weights of a softmax over X's
+columns (a row per column, the bias the last row; one column per
+label), after n steps of gradient descent on the cross-entropy at
+rate lr, from zeros.</p>
+</div>
+<pre class="code"><span class="c-libfunc">ˡl̲ogistic</span> ← { (n, lr) (X, y) →
+  Y ← (<span class="c-builtin">'</span><a href="builtins.html#m_ax" class="c-builtin">m̲ax</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> y) <a href="libs-NN-src-NN.xtl.html#l.o_neHot" class="c-libfunc">ⁿⁿo̲neHot</a> y
+  G ← <a href="builtins.html#o_-5c" class="c-builtin">o̲\</a> <a href="libs-Learn-src-Learn.xtl.html#h.o_nes" class="c-libfunc">ʰo̲nes</a> X
+  n <span class="c-quote">'</span>{ W → W <a href="builtins.html#-2d" class="c-symbol">−</a> lr <a href="builtins.html#-2a" class="c-symbol">×</a> (G <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#i_nner" class="c-builtin">i̲nner</a> (<a href="libs-NN-src-NN.xtl.html#l.s_oftmax" class="c-libfunc">ⁿⁿs̲oftmax</a> X <a href="libs-NN-src-NN.xtl.html#l.d_ense" class="c-libfunc">ⁿⁿd̲ense</a> W) <a href="builtins.html#-2d" class="c-symbol">−</a> Y) <a href="builtins.html#-2f" class="c-symbol">÷</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> X } <a href="builtins.html#p_ower" class="c-builtin">p̲ower</a> ((<span class="c-number">1</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">2</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> X) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">2</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> Y) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.0</span>
+}</pre>
+<div class="uses">Used in: <a href="libs-Learn-demos-blobs.xtl.html#W">W</a></div>
+</div>
+<div class="item" id="l.p_redict">
+<h3><a href="#l.p_redict"><span class="c-libfunc">ˡp̲redict</span></a> <span class="type">: Num a =&gt; a -&gt; a -&gt; Int</span></h3>
+<div class="meta">function &middot; <a href="libs-Learn-src-Learn.xtl.src.html#L115">line 115</a></div>
+<div class="doc">
+<p><code>W <span class="c-builtin">p̲redict</span> X</code>: the label (from 1) the weights W give each row of X.</p>
+</div>
+<pre class="code"><span class="c-libfunc">ˡp̲redict</span> ← { W X → <a href="libs-NN-src-NN.xtl.html#l.a_rgmax" class="c-libfunc">ⁿⁿa̲rgmax</a> <a href="libs-NN-src-NN.xtl.html#l.s_oftmax" class="c-libfunc">ⁿⁿs̲oftmax</a> X <a href="libs-NN-src-NN.xtl.html#l.d_ense" class="c-libfunc">ⁿⁿd̲ense</a> W }</pre>
+<div class="uses">Used in: <a href="libs-Learn-demos-blobs.xtl.src.html#L24">libs/Learn/demos/blobs.xtl:24</a></div>
+</div>
+</main>
+</body>
+</html>

@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Attention Microscope</title>
+  
+<script type="module">
+import init, * as bindings from '/X_eTaL-ML/attention/attention-web-f4a4b8fd255c9b10.js';
+const wasm = await init({ module_or_path: '/X_eTaL-ML/attention/attention-web-f4a4b8fd255c9b10_bg.wasm' });
+
+
+window.wasmBindings = bindings;
+
+
+dispatchEvent(new CustomEvent("TrunkApplicationStarted", {detail: {wasm}}));
+
+</script>
+  
+  <link rel="icon" href="/X_eTaL-ML/attention/favicon-a11bc0a2bcd81290.ico" integrity="sha384-xOjSLs9ZRBKy2hF6zlqNv+0U86E4BqZOJy7H7a4GXSVwDQMNie0D851/sRBSYI9a"/>
+  <link rel="stylesheet" href="/X_eTaL-ML/attention/microscope-2f1fabe718956dac.css" integrity="sha384-dbc25dleJAsuQXTG1eT75dT76dN31tWSYFyZo/9Jr7qOEtOLRcZ2byPuVjmo+0gd"/>
+<link rel="modulepreload" href="/X_eTaL-ML/attention/attention-web-f4a4b8fd255c9b10.js" crossorigin="anonymous" integrity="sha384-ZtlTA9ZbADybXk06rRGYYweJid2516CxzGzWu/eWyIf1lGWE/3DALyrIyk15h4BD"><link rel="preload" href="/X_eTaL-ML/attention/attention-web-f4a4b8fd255c9b10_bg.wasm" crossorigin="anonymous" integrity="sha384-X0qktr2Fsj9qzy5Go2DIZTzl6fZm4ijB9bNwLOtifYAQ21qPk7my5RonCA4sYac+" as="fetch" type="application/wasm"></head>
+<body></body>
+</html>

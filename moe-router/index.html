@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>MoE Routing Microscope</title>
+  
+<script type="module">
+import init, * as bindings from '/X_eTaL-ML/moe-router/moe-router-web-1c903377b5c59fe8.js';
+const wasm = await init({ module_or_path: '/X_eTaL-ML/moe-router/moe-router-web-1c903377b5c59fe8_bg.wasm' });
+
+
+window.wasmBindings = bindings;
+
+
+dispatchEvent(new CustomEvent("TrunkApplicationStarted", {detail: {wasm}}));
+
+</script>
+  
+  <link rel="icon" href="/X_eTaL-ML/moe-router/favicon-a11bc0a2bcd81290.ico" integrity="sha384-xOjSLs9ZRBKy2hF6zlqNv+0U86E4BqZOJy7H7a4GXSVwDQMNie0D851/sRBSYI9a"/>
+  <link rel="stylesheet" href="/X_eTaL-ML/moe-router/microscope-2f1fabe718956dac.css" integrity="sha384-dbc25dleJAsuQXTG1eT75dT76dN31tWSYFyZo/9Jr7qOEtOLRcZ2byPuVjmo+0gd"/>
+<link rel="modulepreload" href="/X_eTaL-ML/moe-router/moe-router-web-1c903377b5c59fe8.js" crossorigin="anonymous" integrity="sha384-w0QjbS7CPRxYNQFPywBt6IgiInfYPM5oRVAndYbgDjl255NeU6hi5amEYLCDH0gS"><link rel="preload" href="/X_eTaL-ML/moe-router/moe-router-web-1c903377b5c59fe8_bg.wasm" crossorigin="anonymous" integrity="sha384-+6KpyptkFfh3Vou/2HpgndtbYw7Rf2R/zP1mgarZMxL2HipXIHlJd1ZPjeyd3bhD" as="fetch" type="application/wasm"></head>
+<body></body>
+</html>

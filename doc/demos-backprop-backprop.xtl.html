@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>demos/backprop/backprop.xtl - X_eTaL doc</title>
+<link rel="stylesheet" href="style.css">
+<script src="theme.js"></script>
+<script defer src="search-index.js"></script>
+<script defer src="search.js"></script>
+</head>
+<body>
+<nav class="side">
+<a class="home" href="index.html">X_eTaL doc</a>
+<input id="search" type="search" autocomplete="off" placeholder="Search: a name, or a type" title="A name (mean finds m_ean), or a type: Num a =&gt; a -&gt; a -&gt; a finds +, m_ax ...">
+<h2>Files</h2>
+<h3>demos/attention/</h3>
+<ul>
+<li><a href="demos-attention-attention.xtl.html">attention.xtl</a></li>
+</ul>
+<h3>demos/backprop/</h3>
+<ul>
+<li><a href="demos-backprop-backprop.xtl.html">backprop.xtl</a></li>
+</ul>
+<h3>demos/cnn-backprop/</h3>
+<ul>
+<li><a href="demos-cnn-backprop-cnn-backprop.xtl.html">cnn-backprop.xtl</a></li>
+</ul>
+<h3>demos/cnn-digits/</h3>
+<ul>
+<li><a href="demos-cnn-digits-cnn-digits.xtl.html">cnn-digits.xtl</a></li>
+</ul>
+<h3>demos/k-means/</h3>
+<ul>
+<li><a href="demos-k-means-k-means.xtl.html">k-means.xtl</a></li>
+</ul>
+<h3>demos/moe-router/</h3>
+<ul>
+<li><a href="demos-moe-router-moe-router.xtl.html">moe-router.xtl</a></li>
+</ul>
+<h3>demos/net-macro/</h3>
+<ul>
+<li><a href="demos-net-macro-net-macro.xtl.html">net-macro.xtl</a></li>
+<li><a href="demos-net-macro-train-it.xtl.html">train-it.xtl</a></li>
+</ul>
+<h3>demos/ternary-net/</h3>
+<ul>
+<li><a href="demos-ternary-net-ternary-net.xtl.html">ternary-net.xtl</a></li>
+</ul>
+<h3>demos/train-live/</h3>
+<ul>
+<li><a href="demos-train-live-train-live.xtl.html">train-live.xtl</a></li>
+</ul>
+<h3>libs/Learn/demos/</h3>
+<ul>
+<li><a href="libs-Learn-demos-blobs.xtl.html">blobs.xtl</a></li>
+</ul>
+<h3>libs/Learn/src/</h3>
+<ul>
+<li><a href="libs-Learn-src-Learn.xtl.html">Learn.xtl</a></li>
+</ul>
+<h3>libs/Net/demos/</h3>
+<ul>
+<li><a href="libs-Net-demos-train-xor.xtl.html">train-xor.xtl</a></li>
+<li><a href="libs-Net-demos-xor.xtl.html">xor.xtl</a></li>
+</ul>
+<h3>libs/Net/src/</h3>
+<ul>
+<li><a href="libs-Net-src-Net.xtlm.html">Net.xtlm</a></li>
+</ul>
+<h3>libs/NN/demos/</h3>
+<ul>
+<li><a href="libs-NN-demos-xor.xtl.html">xor.xtl</a></li>
+</ul>
+<h3>libs/NN/src/</h3>
+<ul>
+<li><a href="libs-NN-src-NN.xtl.html">NN.xtl</a></li>
+</ul>
+<ul>
+<li><a href="builtins.html">built-ins</a></li>
+</ul>
+<h2>On this page</h2>
+<ul>
+<li><a href="#section-1">The batch and the starting weights, read from data/</a></li>
+<li class="item"><a href="#b">b</a></li>
+<li class="item"><a href="#X">X</a></li>
+<li class="item"><a href="#Y">Y</a></li>
+<li class="item"><a href="#W1">W1</a></li>
+<li class="item"><a href="#W2">W2</a></li>
+<li class="item"><a href="#lr">lr</a></li>
+<li><a href="#section-2">Forward</a></li>
+<li class="item"><a href="#H">H</a></li>
+<li class="item"><a href="#P">P</a></li>
+<li class="item"><a href="#L">L</a></li>
+<li><a href="#section-3">Backward: each layer's gradient, one expression each</a></li>
+<li class="item"><a href="#u.o_nes"><span class="c-userfunc">ᵘo̲nes</span></a></li>
+<li class="item"><a href="#D2">D2</a></li>
+<li class="item"><a href="#G2">G2</a></li>
+<li class="item"><a href="#D1">D1</a></li>
+<li class="item"><a href="#G1">G1</a></li>
+<li><a href="#section-4">The step</a></li>
+<li class="item"><a href="#V1">V1</a></li>
+<li class="item"><a href="#V2">V2</a></li>
+<li class="item"><a href="#u.l_oss"><span class="c-userfunc">ᵘl̲oss</span></a></li>
+<li class="item"><a href="#u.r_ound"><span class="c-userfunc">ᵘr̲ound</span></a></li>
+<li class="item"><a href="#e">e</a></li>
+<li class="item"><a href="#u.b_ump"><span class="c-userfunc">ᵘb̲ump</span></a></li>
+<li class="item"><a href="#F1">F1</a></li>
+<li class="item"><a href="#F2">F2</a></li>
+<li class="item"><a href="#gap">gap</a></li>
+</ul>
+</nav>
+<main>
+<button class="theme" title="Light or dark">theme</button>
+<section id="results"></section>
+<h1><span class="kind">program</span>demos/backprop/backprop.xtl</h1>
+<div class="doc">
+<p>One step of training, every array shown: a small network (2 inputs,
+4 tanh units, softmax over 3 classes) on six points of a spiral. The
+forward pass, the loss, each layer's gradient as one expression, the
+step; then every gradient checked against a finite difference.</p>
+</div>
+<p class="meta"><a href="demos-backprop-backprop.xtl.src.html">source</a> &middot; imports <code><span class="c-error">nn:</span></code> <a href="libs-NN-src-NN.xtl.html">libs/NN/src/NN.xtl</a></p>
+<h2 class="section" id="section-1">The batch and the starting weights, read from data/</h2>
+<div class="item" id="b">
+<h3><a href="#b">b</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-backprop-backprop.xtl.src.html#L10">line 10</a></div>
+<pre class="code">b ← <span class="c-number">6</span> <span class="c-number">3</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <a href="builtins.html#n_umbers" class="c-builtin">n̲umbers</a> <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;data/batch.txt&quot;</span></pre>
+<div class="uses">Used in: <a href="demos-backprop-backprop.xtl.html#X">X</a>, <a href="demos-backprop-backprop.xtl.html#Y">Y</a></div>
+</div>
+<div class="item" id="X">
+<h3><a href="#X">X</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-backprop-backprop.xtl.src.html#L11">line 11</a></div>
+<pre class="code">X ← <span class="c-number">2</span> <a href="builtins.html#t_ake" class="c-builtin">t̲ake₂</a> <a href="demos-backprop-backprop.xtl.html#b">b</a>                          <span class="c-comment">⍝</span><span class="c-comment"> 6 points, x and y</span></pre>
+<div class="uses">Used in: <a href="demos-backprop-backprop.xtl.html#H">H</a>, <a href="demos-backprop-backprop.xtl.html#D2">D2</a>, <a href="demos-backprop-backprop.xtl.html#G1">G1</a>, <a href="demos-backprop-backprop.xtl.html#u.l_oss"><span class="c-userfunc">ᵘl̲oss</span></a></div>
+</div>
+<div class="item" id="Y">
+<h3><a href="#Y">Y</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-backprop-backprop.xtl.src.html#L12">line 12</a></div>
+<pre class="code">Y ← <span class="c-number">3</span> <a href="libs-NN-src-NN.xtl.html#l.o_neHot" class="c-libfunc">ⁿⁿo̲neHot</a> <a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> <span class="c-number">-1</span> <a href="builtins.html#t_ake" class="c-builtin">t̲ake₂</a> <a href="demos-backprop-backprop.xtl.html#b">b</a>          <span class="c-comment">⍝</span><span class="c-comment"> their arms, one-hot</span></pre>
+<div class="uses">Used in: <a href="demos-backprop-backprop.xtl.html#L">L</a>, <a href="demos-backprop-backprop.xtl.html#D2">D2</a>, <a href="demos-backprop-backprop.xtl.html#u.l_oss"><span class="c-userfunc">ᵘl̲oss</span></a></div>
+</div>
+<div class="item" id="W1">
+<h3><a href="#W1">W1</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-backprop-backprop.xtl.src.html#L13">line 13</a></div>
+<pre class="code">W1 ← <span class="c-number">3</span> <span class="c-number">4</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <a href="builtins.html#n_umbers" class="c-builtin">n̲umbers</a> <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;data/w1.txt&quot;</span>        <span class="c-comment">⍝</span><span class="c-comment"> 2 inputs, then the bias row</span></pre>
+<div class="uses">Used in: <a href="demos-backprop-backprop.xtl.html#H">H</a>, <a href="demos-backprop-backprop.xtl.html#V1">V1</a>, <a href="demos-backprop-backprop.xtl.html#F1">F1</a>, <a href="demos-backprop-backprop.xtl.html#F2">F2</a></div>
+</div>
+<div class="item" id="W2">
+<h3><a href="#W2">W2</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-backprop-backprop.xtl.src.html#L14">line 14</a></div>
+<pre class="code">W2 ← <span class="c-number">5</span> <span class="c-number">3</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <a href="builtins.html#n_umbers" class="c-builtin">n̲umbers</a> <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;data/w2.txt&quot;</span>        <span class="c-comment">⍝</span><span class="c-comment"> 4 inputs, then the bias row</span></pre>
+<div class="uses">Used in: <a href="demos-backprop-backprop.xtl.html#P">P</a>, <a href="demos-backprop-backprop.xtl.html#D1">D1</a>, <a href="demos-backprop-backprop.xtl.html#V2">V2</a>, <a href="demos-backprop-backprop.xtl.html#F1">F1</a>, <a href="demos-backprop-backprop.xtl.html#F2">F2</a></div>
+</div>
+<div class="item" id="lr">
+<h3><a href="#lr">lr</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-backprop-backprop.xtl.src.html#L15">line 15</a></div>
+<pre class="code">lr ← <span class="c-number">0.5</span></pre>
+<div class="uses">Used in: <a href="demos-backprop-backprop.xtl.html#V1">V1</a>, <a href="demos-backprop-backprop.xtl.html#V2">V2</a></div>
+</div>
+<h2 class="section" id="section-2">Forward</h2>
+<div class="item" id="H">
+<h3><a href="#H">H</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-backprop-backprop.xtl.src.html#L18">line 18</a></div>
+<pre class="code">H ← <a href="libs-NN-src-NN.xtl.html#l.t_anh" class="c-libfunc">ⁿⁿt̲anh</a> <a href="demos-backprop-backprop.xtl.html#X">X</a> <a href="libs-NN-src-NN.xtl.html#l.d_ense" class="c-libfunc">ⁿⁿd̲ense</a> <a href="demos-backprop-backprop.xtl.html#W1">W1</a>                <span class="c-comment">⍝</span><span class="c-comment"> 6 x 4</span></pre>
+<div class="uses">Used in: <a href="demos-backprop-backprop.xtl.html#P">P</a>, <a href="demos-backprop-backprop.xtl.html#G2">G2</a>, <a href="demos-backprop-backprop.xtl.html#D1">D1</a></div>
+</div>
+<div class="item" id="P">
+<h3><a href="#P">P</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-backprop-backprop.xtl.src.html#L19">line 19</a></div>
+<pre class="code">P ← <a href="libs-NN-src-NN.xtl.html#l.s_oftmax" class="c-libfunc">ⁿⁿs̲oftmax</a> <a href="demos-backprop-backprop.xtl.html#H">H</a> <a href="libs-NN-src-NN.xtl.html#l.d_ense" class="c-libfunc">ⁿⁿd̲ense</a> <a href="demos-backprop-backprop.xtl.html#W2">W2</a>             <span class="c-comment">⍝</span><span class="c-comment"> 6 x 3</span></pre>
+<div class="uses">Used in: <a href="demos-backprop-backprop.xtl.html#L">L</a>, <a href="demos-backprop-backprop.xtl.html#D2">D2</a>, <a href="demos-backprop-backprop.xtl.src.html#L37">demos/backprop/backprop.xtl:37</a></div>
+</div>
+<div class="item" id="L">
+<h3><a href="#L">L</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-backprop-backprop.xtl.src.html#L20">line 20</a></div>
+<pre class="code">L ← <a href="demos-backprop-backprop.xtl.html#Y">Y</a> <a href="libs-NN-src-NN.xtl.html#l.c_rossEntropy" class="c-libfunc">ⁿⁿc̲rossEntropy</a> <a href="demos-backprop-backprop.xtl.html#P">P</a></pre>
+<div class="uses">Used in: <a href="demos-backprop-backprop.xtl.src.html#L39">demos/backprop/backprop.xtl:39</a></div>
+</div>
+<h2 class="section" id="section-3">Backward: each layer's gradient, one expression each</h2>
+<div class="item" id="u.o_nes">
+<h3><a href="#u.o_nes"><span class="c-userfunc">ᵘo̲nes</span></a> <span class="type">: Float -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="demos-backprop-backprop.xtl.src.html#L23">line 23</a></div>
+<pre class="code"><span class="c-userfunc">ᵘo̲nes</span> ← { x → x <a href="builtins.html#c_at" class="c-builtin">c̲at₂</a> ((<a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> x) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">1</span>) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">1.0</span> }            <span class="c-comment">⍝</span><span class="c-comment"> a column of 1s: the bias input</span></pre>
+<div class="uses">Used in: <a href="demos-backprop-backprop.xtl.html#G2">G2</a>, <a href="demos-backprop-backprop.xtl.html#G1">G1</a></div>
+</div>
+<div class="item" id="D2">
+<h3><a href="#D2">D2</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-backprop-backprop.xtl.src.html#L24">line 24</a></div>
+<pre class="code">D2 ← (<a href="demos-backprop-backprop.xtl.html#P">P</a> <a href="builtins.html#-2d" class="c-symbol">−</a> <a href="demos-backprop-backprop.xtl.html#Y">Y</a>) <a href="builtins.html#-2f" class="c-symbol">÷</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> <a href="demos-backprop-backprop.xtl.html#X">X</a>                       <span class="c-comment">⍝</span><span class="c-comment"> loss by the output scores (softmax with cross-entropy)</span></pre>
+<div class="uses">Used in: <a href="demos-backprop-backprop.xtl.html#G2">G2</a>, <a href="demos-backprop-backprop.xtl.html#D1">D1</a></div>
+</div>
+<div class="item" id="G2">
+<h3><a href="#G2">G2</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-backprop-backprop.xtl.src.html#L25">line 25</a></div>
+<pre class="code">G2 ← (<a href="builtins.html#o_-5c" class="c-builtin">o̲\</a> <a href="demos-backprop-backprop.xtl.html#u.o_nes" class="c-userfunc">ᵘo̲nes</a> <a href="demos-backprop-backprop.xtl.html#H">H</a>) <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#i_nner" class="c-builtin">i̲nner</a> <a href="demos-backprop-backprop.xtl.html#D2">D2</a>                   <span class="c-comment">⍝</span><span class="c-comment"> W2's gradient, 5 x 3</span></pre>
+<div class="uses">Used in: <a href="demos-backprop-backprop.xtl.html#V2">V2</a>, <a href="demos-backprop-backprop.xtl.src.html#L42">demos/backprop/backprop.xtl:42</a>, <a href="demos-backprop-backprop.xtl.html#gap">gap</a></div>
+</div>
+<div class="item" id="D1">
+<h3><a href="#D1">D1</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-backprop-backprop.xtl.src.html#L26">line 26</a></div>
+<pre class="code">D1 ← (<a href="demos-backprop-backprop.xtl.html#D2">D2</a> <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#i_nner" class="c-builtin">i̲nner</a> <a href="builtins.html#o_-5c" class="c-builtin">o̲\</a> <span class="c-number">-1</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> <a href="demos-backprop-backprop.xtl.html#W2">W2</a>) <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">1.0</span> <a href="builtins.html#-2d" class="c-symbol">−</a> <a href="demos-backprop-backprop.xtl.html#H">H</a> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="demos-backprop-backprop.xtl.html#H">H</a>       <span class="c-comment">⍝</span><span class="c-comment"> back through W2 and tanh</span></pre>
+<div class="uses">Used in: <a href="demos-backprop-backprop.xtl.html#G1">G1</a></div>
+</div>
+<div class="item" id="G1">
+<h3><a href="#G1">G1</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-backprop-backprop.xtl.src.html#L27">line 27</a></div>
+<pre class="code">G1 ← (<a href="builtins.html#o_-5c" class="c-builtin">o̲\</a> <a href="demos-backprop-backprop.xtl.html#u.o_nes" class="c-userfunc">ᵘo̲nes</a> <a href="demos-backprop-backprop.xtl.html#X">X</a>) <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#i_nner" class="c-builtin">i̲nner</a> <a href="demos-backprop-backprop.xtl.html#D1">D1</a>                   <span class="c-comment">⍝</span><span class="c-comment"> W1's gradient, 3 x 4</span></pre>
+<div class="uses">Used in: <a href="demos-backprop-backprop.xtl.html#V1">V1</a>, <a href="demos-backprop-backprop.xtl.src.html#L41">demos/backprop/backprop.xtl:41</a>, <a href="demos-backprop-backprop.xtl.html#gap">gap</a></div>
+</div>
+<h2 class="section" id="section-4">The step</h2>
+<div class="item" id="V1">
+<h3><a href="#V1">V1</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-backprop-backprop.xtl.src.html#L30">line 30</a></div>
+<pre class="code">V1 ← <a href="demos-backprop-backprop.xtl.html#W1">W1</a> <a href="builtins.html#-2d" class="c-symbol">−</a> <a href="demos-backprop-backprop.xtl.html#lr">lr</a> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="demos-backprop-backprop.xtl.html#G1">G1</a></pre>
+<div class="uses">Used in: <a href="demos-backprop-backprop.xtl.src.html#L39">demos/backprop/backprop.xtl:39</a></div>
+</div>
+<div class="item" id="V2">
+<h3><a href="#V2">V2</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-backprop-backprop.xtl.src.html#L31">line 31</a></div>
+<pre class="code">V2 ← <a href="demos-backprop-backprop.xtl.html#W2">W2</a> <a href="builtins.html#-2d" class="c-symbol">−</a> <a href="demos-backprop-backprop.xtl.html#lr">lr</a> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="demos-backprop-backprop.xtl.html#G2">G2</a></pre>
+<div class="uses">Used in: <a href="demos-backprop-backprop.xtl.src.html#L39">demos/backprop/backprop.xtl:39</a></div>
+</div>
+<div class="item" id="u.l_oss">
+<h3><a href="#u.l_oss"><span class="c-userfunc">ᵘl̲oss</span></a> <span class="type">: Float -&gt; Float -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="demos-backprop-backprop.xtl.src.html#L32">line 32</a></div>
+<pre class="code"><span class="c-userfunc">ᵘl̲oss</span> ← { w1 w2 → <a href="demos-backprop-backprop.xtl.html#Y">Y</a> <a href="libs-NN-src-NN.xtl.html#l.c_rossEntropy" class="c-libfunc">ⁿⁿc̲rossEntropy</a> <a href="libs-NN-src-NN.xtl.html#l.s_oftmax" class="c-libfunc">ⁿⁿs̲oftmax</a> (<a href="libs-NN-src-NN.xtl.html#l.t_anh" class="c-libfunc">ⁿⁿt̲anh</a> <a href="demos-backprop-backprop.xtl.html#X">X</a> <a href="libs-NN-src-NN.xtl.html#l.d_ense" class="c-libfunc">ⁿⁿd̲ense</a> w1) <a href="libs-NN-src-NN.xtl.html#l.d_ense" class="c-libfunc">ⁿⁿd̲ense</a> w2 }</pre>
+<div class="uses">Used in: <a href="demos-backprop-backprop.xtl.src.html#L39">demos/backprop/backprop.xtl:39</a>, <a href="demos-backprop-backprop.xtl.html#F1">F1</a>, <a href="demos-backprop-backprop.xtl.html#F2">F2</a></div>
+</div>
+<div class="item" id="u.r_ound">
+<h3><a href="#u.r_ound"><span class="c-userfunc">ᵘr̲ound</span></a> <span class="type">: Float -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="demos-backprop-backprop.xtl.src.html#L35">line 35</a></div>
+<pre class="code"><span class="c-userfunc">ᵘr̲ound</span> ← { a → (<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> <span class="c-number">0.5</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">10000.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> a) <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-number">10000.0</span> }</pre>
+<div class="uses">Used in: <a href="demos-backprop-backprop.xtl.src.html#L37">demos/backprop/backprop.xtl:37</a>, <a href="demos-backprop-backprop.xtl.src.html#L41">demos/backprop/backprop.xtl:41</a>, <a href="demos-backprop-backprop.xtl.src.html#L42">demos/backprop/backprop.xtl:42</a></div>
+</div>
+<div class="item" id="e">
+<h3><a href="#e">e</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-backprop-backprop.xtl.src.html#L45">line 45</a></div>
+<div class="doc">
+<p>Each analytic gradient against a central finite difference, (L(w + e)
+- L(w - e)) / 2e for every weight: the largest difference of all 27.</p>
+</div>
+<pre class="code">e ← <span class="c-number">0.00001</span></pre>
+<div class="uses">Used in: <a href="demos-backprop-backprop.xtl.html#u.b_ump"><span class="c-userfunc">ᵘb̲ump</span></a>, <a href="demos-backprop-backprop.xtl.html#F1">F1</a>, <a href="demos-backprop-backprop.xtl.html#F2">F2</a></div>
+</div>
+<div class="item" id="u.b_ump">
+<h3><a href="#u.b_ump"><span class="c-userfunc">ᵘb̲ump</span></a> <span class="type">: a -&gt; Int -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="demos-backprop-backprop.xtl.src.html#L46">line 46</a></div>
+<pre class="code"><span class="c-userfunc">ᵘb̲ump</span> ← { w i → <a href="demos-backprop-backprop.xtl.html#e">e</a> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> (<a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> w) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> i <a href="builtins.html#-3d" class="c-symbol">=</a> <a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> w }</pre>
+<div class="uses">Used in: <a href="demos-backprop-backprop.xtl.html#F1">F1</a>, <a href="demos-backprop-backprop.xtl.html#F2">F2</a></div>
+</div>
+<div class="item" id="F1">
+<h3><a href="#F1">F1</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-backprop-backprop.xtl.src.html#L47">line 47</a></div>
+<pre class="code">F1 ← (<a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> <a href="demos-backprop-backprop.xtl.html#W1">W1</a>) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-quote">'</span>{ i → (((<a href="demos-backprop-backprop.xtl.html#W1">W1</a> <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="demos-backprop-backprop.xtl.html#W1">W1</a> <a href="demos-backprop-backprop.xtl.html#u.b_ump" class="c-userfunc">ᵘb̲ump</a> i) <a href="demos-backprop-backprop.xtl.html#u.l_oss" class="c-userfunc">ᵘl̲oss</a> <a href="demos-backprop-backprop.xtl.html#W2">W2</a>) <a href="builtins.html#-2d" class="c-symbol">−</a> (<a href="demos-backprop-backprop.xtl.html#W1">W1</a> <a href="builtins.html#-2d" class="c-symbol">−</a> <a href="demos-backprop-backprop.xtl.html#W1">W1</a> <a href="demos-backprop-backprop.xtl.html#u.b_ump" class="c-userfunc">ᵘb̲ump</a> i) <a href="demos-backprop-backprop.xtl.html#u.l_oss" class="c-userfunc">ᵘl̲oss</a> <a href="demos-backprop-backprop.xtl.html#W2">W2</a>) <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-number">2.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="demos-backprop-backprop.xtl.html#e">e</a> } <a href="builtins.html#e_ach" class="c-builtin">e̲ach</a> <a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <span class="c-number">12</span></pre>
+<div class="uses">Used in: <a href="demos-backprop-backprop.xtl.html#gap">gap</a></div>
+</div>
+<div class="item" id="F2">
+<h3><a href="#F2">F2</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-backprop-backprop.xtl.src.html#L48">line 48</a></div>
+<pre class="code">F2 ← (<a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> <a href="demos-backprop-backprop.xtl.html#W2">W2</a>) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-quote">'</span>{ i → ((<a href="demos-backprop-backprop.xtl.html#W1">W1</a> <a href="demos-backprop-backprop.xtl.html#u.l_oss" class="c-userfunc">ᵘl̲oss</a> <a href="demos-backprop-backprop.xtl.html#W2">W2</a> <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="demos-backprop-backprop.xtl.html#W2">W2</a> <a href="demos-backprop-backprop.xtl.html#u.b_ump" class="c-userfunc">ᵘb̲ump</a> i) <a href="builtins.html#-2d" class="c-symbol">−</a> <a href="demos-backprop-backprop.xtl.html#W1">W1</a> <a href="demos-backprop-backprop.xtl.html#u.l_oss" class="c-userfunc">ᵘl̲oss</a> <a href="demos-backprop-backprop.xtl.html#W2">W2</a> <a href="builtins.html#-2d" class="c-symbol">−</a> <a href="demos-backprop-backprop.xtl.html#W2">W2</a> <a href="demos-backprop-backprop.xtl.html#u.b_ump" class="c-userfunc">ᵘb̲ump</a> i) <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-number">2.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="demos-backprop-backprop.xtl.html#e">e</a> } <a href="builtins.html#e_ach" class="c-builtin">e̲ach</a> <a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <span class="c-number">15</span></pre>
+<div class="uses">Used in: <a href="demos-backprop-backprop.xtl.html#gap">gap</a></div>
+</div>
+<div class="item" id="gap">
+<h3><a href="#gap">gap</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-backprop-backprop.xtl.src.html#L49">line 49</a></div>
+<pre class="code">gap ← (<span class="c-builtin">'</span><a href="builtins.html#m_ax" class="c-builtin">m̲ax</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> <a href="builtins.html#a_bs" class="c-builtin">a̲bs</a> <a href="demos-backprop-backprop.xtl.html#G1">G1</a> <a href="builtins.html#-2d" class="c-symbol">−</a> <a href="demos-backprop-backprop.xtl.html#F1">F1</a>) <a href="builtins.html#m_ax" class="c-builtin">m̲ax</a> <span class="c-builtin">'</span><a href="builtins.html#m_ax" class="c-builtin">m̲ax</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> <a href="builtins.html#a_bs" class="c-builtin">a̲bs</a> <a href="demos-backprop-backprop.xtl.html#G2">G2</a> <a href="builtins.html#-2d" class="c-symbol">−</a> <a href="demos-backprop-backprop.xtl.html#F2">F2</a></pre>
+<div class="uses">Used in: <a href="demos-backprop-backprop.xtl.src.html#L50">demos/backprop/backprop.xtl:50</a></div>
+</div>
+</main>
+</body>
+</html>

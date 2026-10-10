@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>libs/Net/src/Net.xtlm - X_eTaL doc</title>
+<link rel="stylesheet" href="style.css">
+<script src="theme.js"></script>
+<script defer src="search-index.js"></script>
+<script defer src="search.js"></script>
+</head>
+<body>
+<nav class="side">
+<a class="home" href="index.html">X_eTaL doc</a>
+<input id="search" type="search" autocomplete="off" placeholder="Search: a name, or a type" title="A name (mean finds m_ean), or a type: Num a =&gt; a -&gt; a -&gt; a finds +, m_ax ...">
+<h2>Files</h2>
+<h3>demos/attention/</h3>
+<ul>
+<li><a href="demos-attention-attention.xtl.html">attention.xtl</a></li>
+</ul>
+<h3>demos/backprop/</h3>
+<ul>
+<li><a href="demos-backprop-backprop.xtl.html">backprop.xtl</a></li>
+</ul>
+<h3>demos/cnn-backprop/</h3>
+<ul>
+<li><a href="demos-cnn-backprop-cnn-backprop.xtl.html">cnn-backprop.xtl</a></li>
+</ul>
+<h3>demos/cnn-digits/</h3>
+<ul>
+<li><a href="demos-cnn-digits-cnn-digits.xtl.html">cnn-digits.xtl</a></li>
+</ul>
+<h3>demos/k-means/</h3>
+<ul>
+<li><a href="demos-k-means-k-means.xtl.html">k-means.xtl</a></li>
+</ul>
+<h3>demos/moe-router/</h3>
+<ul>
+<li><a href="demos-moe-router-moe-router.xtl.html">moe-router.xtl</a></li>
+</ul>
+<h3>demos/net-macro/</h3>
+<ul>
+<li><a href="demos-net-macro-net-macro.xtl.html">net-macro.xtl</a></li>
+<li><a href="demos-net-macro-train-it.xtl.html">train-it.xtl</a></li>
+</ul>
+<h3>demos/ternary-net/</h3>
+<ul>
+<li><a href="demos-ternary-net-ternary-net.xtl.html">ternary-net.xtl</a></li>
+</ul>
+<h3>demos/train-live/</h3>
+<ul>
+<li><a href="demos-train-live-train-live.xtl.html">train-live.xtl</a></li>
+</ul>
+<h3>libs/Learn/demos/</h3>
+<ul>
+<li><a href="libs-Learn-demos-blobs.xtl.html">blobs.xtl</a></li>
+</ul>
+<h3>libs/Learn/src/</h3>
+<ul>
+<li><a href="libs-Learn-src-Learn.xtl.html">Learn.xtl</a></li>
+</ul>
+<h3>libs/Net/demos/</h3>
+<ul>
+<li><a href="libs-Net-demos-train-xor.xtl.html">train-xor.xtl</a></li>
+<li><a href="libs-Net-demos-xor.xtl.html">xor.xtl</a></li>
+</ul>
+<h3>libs/Net/src/</h3>
+<ul>
+<li><a href="libs-Net-src-Net.xtlm.html">Net.xtlm</a></li>
+</ul>
+<h3>libs/NN/demos/</h3>
+<ul>
+<li><a href="libs-NN-demos-xor.xtl.html">xor.xtl</a></li>
+</ul>
+<h3>libs/NN/src/</h3>
+<ul>
+<li><a href="libs-NN-src-NN.xtl.html">NN.xtl</a></li>
+</ul>
+<ul>
+<li><a href="builtins.html">built-ins</a></li>
+</ul>
+<h2>On this page</h2>
+<ul>
+<li><a href="#section-1">Reading a spec (private)</a></li>
+<li class="item"><a href="#h.w_ords"><span class="c-libfunc">ʰw̲ords</span></a></li>
+<li class="item"><a href="#h.j_oin"><span class="c-libfunc">ʰj̲oin</span></a></li>
+<li class="item"><a href="#h.s_ize-3f"><span class="c-libfunc">ʰs̲ize?</span></a></li>
+<li class="item"><a href="#h.a_ct-3f"><span class="c-libfunc">ʰa̲ct?</span></a></li>
+<li class="item"><a href="#h.a_ct"><span class="c-libfunc">ʰa̲ct</span></a></li>
+<li class="item"><a href="#h.s_izes"><span class="c-libfunc">ʰs̲izes</span></a></li>
+<li class="item"><a href="#specShape">specShape</a></li>
+<li class="item"><a href="#h.w_rong"><span class="c-libfunc">ʰw̲rong</span></a></li>
+<li><a href="#section-2">Writing the forward pass (private)</a></li>
+<li class="item"><a href="#h.f_unction"><span class="c-libfunc">ʰf̲unction</span></a></li>
+<li class="item"><a href="#h.c_ount"><span class="c-libfunc">ʰc̲ount</span></a></li>
+<li><a href="#section-3">Networks</a></li>
+<li class="item"><a href="#m.n_etwork-3c"><span class="c-macro">ᵐn̲etwork&lt;</span></a></li>
+<li class="item"><a href="#m.m_odel-3c"><span class="c-macro">ᵐm̲odel&lt;</span></a></li>
+<li><a href="#section-4">Writing backpropagation (private)</a></li>
+<li class="item"><a href="#h.a_ctFn"><span class="c-libfunc">ʰa̲ctFn</span></a></li>
+<li class="item"><a href="#h.s_lope"><span class="c-libfunc">ʰs̲lope</span></a></li>
+<li class="item"><a href="#h.a_cts"><span class="c-libfunc">ʰa̲cts</span></a></li>
+<li class="item"><a href="#h.t_xt"><span class="c-libfunc">ʰt̲xt</span></a></li>
+<li class="item"><a href="#h.t_uple"><span class="c-libfunc">ʰt̲uple</span></a></li>
+<li class="item"><a href="#h.b_ackprop"><span class="c-libfunc">ʰb̲ackprop</span></a></li>
+<li class="item"><a href="#h.t_rainable"><span class="c-libfunc">ʰt̲rainable</span></a></li>
+<li><a href="#section-5">Training</a></li>
+<li class="item"><a href="#m.g_radient-3c"><span class="c-macro">ᵐg̲radient&lt;</span></a></li>
+<li class="item"><a href="#m.t_rain-3c"><span class="c-macro">ᵐt̲rain&lt;</span></a></li>
+<li class="item"><a href="#m.s_tate-3c"><span class="c-macro">ᵐs̲tate&lt;</span></a></li>
+<li><a href="#section-6">Counting and checking</a></li>
+<li class="item"><a href="#m.p_arams-3c"><span class="c-macro">ᵐp̲arams&lt;</span></a></li>
+<li class="item"><a href="#m.s_hapes-3c"><span class="c-macro">ᵐs̲hapes&lt;</span></a></li>
+</ul>
+</nav>
+<main>
+<button class="theme" title="Light or dark">theme</button>
+<section id="results"></section>
+<h1><span class="kind">macro library</span>libs/Net/src/Net.xtlm</h1>
+<div class="doc">
+<p>Net: a network written as one line -- its layer sizes and activations become ordinary NN calls</p>
+<p>Import it with an alias of your choice: &quot;net:&quot; u_se&lt; &quot;Net&quot;.
+Put libs/Net/src on XETAL_PATH (&quot;just path&quot;); the reference is libs/Net/docs.
+Names with m: are macros; the others are private to this file.</p>
+<p>A macro is a function from the source text written left and right of
+its call to the source that replaces the call, before the program is
+compiled (X_eTaL MC10); xetal expand FILE shows the result. A spec
+is a list of words: sizes and activations, the input's size first:
+&quot;784 128 relu 10 softmax&quot;. A size after the first is a dense layer
+(nn:d_ense, with its weights: one array per layer, the bias its last
+row); an activation is a function of NN (relu, sigmoid, tanh,
+softmax, logSoftmax). The expansion calls NN under the alias nn:
+(an expansion cannot ask which alias the caller chose), so import
+NN as &quot;nn:&quot; u_se&lt; &quot;NN&quot;.</p>
+</div>
+<p class="meta"><a href="libs-Net-src-Net.xtlm.src.html">source</a></p>
+<h2 class="section" id="section-1">Reading a spec (private)</h2>
+<div class="item" id="h.w_ords">
+<h3><a href="#h.w_ords"><span class="c-libfunc">ʰw̲ords</span></a> <span class="type">: Char -&gt; Box Char</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="libs-Net-src-Net.xtlm.src.html#L22">line 22</a></div>
+<div class="doc">
+<p>The words of t: runs of characters other than white space, boxed
+(after X_eTaL's Combinators.xtlm).</p>
+</div>
+<pre class="code"><span class="c-libfunc">ʰw̲ords</span> ← { t → (<a href="builtins.html#n_ot" class="c-builtin">n̲ot</a> t <a href="builtins.html#m_ember-3f" class="c-builtin">m̲ember?</a> <span class="c-string">&quot; \n\t&quot;</span>) <a href="builtins.html#p_artition" class="c-builtin">p̲artition</a> t }</pre>
+<div class="uses">Used in: <a href="libs-Net-src-Net.xtlm.html#h.a_ct-3f"><span class="c-libfunc">ʰa̲ct?</span></a>, <a href="libs-Net-src-Net.xtlm.html#m.n_etwork-3c"><span class="c-macro">ᵐn̲etwork&lt;</span></a>, <a href="libs-Net-src-Net.xtlm.html#m.m_odel-3c"><span class="c-macro">ᵐm̲odel&lt;</span></a>, <a href="libs-Net-src-Net.xtlm.html#m.g_radient-3c"><span class="c-macro">ᵐg̲radient&lt;</span></a>, <a href="libs-Net-src-Net.xtlm.html#m.t_rain-3c"><span class="c-macro">ᵐt̲rain&lt;</span></a>, <a href="libs-Net-src-Net.xtlm.html#m.s_tate-3c"><span class="c-macro">ᵐs̲tate&lt;</span></a>, <a href="libs-Net-src-Net.xtlm.html#m.p_arams-3c"><span class="c-macro">ᵐp̲arams&lt;</span></a>, <a href="libs-Net-src-Net.xtlm.html#m.s_hapes-3c"><span class="c-macro">ᵐs̲hapes&lt;</span></a></div>
+</div>
+<div class="item" id="h.j_oin">
+<h3><a href="#h.j_oin"><span class="c-libfunc">ʰj̲oin</span></a> <span class="type">: Box Char -&gt; Char</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="libs-Net-src-Net.xtlm.src.html#L24">line 24</a></div>
+<div class="doc">
+<p>The boxed texts b joined into one text (&quot;&quot; for none).</p>
+</div>
+<pre class="code"><span class="c-libfunc">ʰj̲oin</span> ← { b →
+  <span class="c-number">0</span> <a href="builtins.html#-3d" class="c-symbol">=</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> b ? <span class="c-string">&quot;&quot;</span>
+  <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> <span class="c-quote">'</span>{ x y → <a href="builtins.html#e_nclose" class="c-builtin">e̲nclose</a> (<a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> x) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> y } <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> b
+}</pre>
+<div class="uses">Used in: <a href="libs-Net-src-Net.xtlm.html#h.s_izes"><span class="c-libfunc">ʰs̲izes</span></a>, <a href="libs-Net-src-Net.xtlm.html#h.f_unction"><span class="c-libfunc">ʰf̲unction</span></a>, <a href="libs-Net-src-Net.xtlm.html#m.m_odel-3c"><span class="c-macro">ᵐm̲odel&lt;</span></a>, <a href="libs-Net-src-Net.xtlm.html#h.t_uple"><span class="c-libfunc">ʰt̲uple</span></a>, <a href="libs-Net-src-Net.xtlm.html#h.b_ackprop"><span class="c-libfunc">ʰb̲ackprop</span></a>, <a href="libs-Net-src-Net.xtlm.html#m.t_rain-3c"><span class="c-macro">ᵐt̲rain&lt;</span></a>, <a href="libs-Net-src-Net.xtlm.html#m.s_tate-3c"><span class="c-macro">ᵐs̲tate&lt;</span></a>, <a href="libs-Net-src-Net.xtlm.html#m.s_hapes-3c"><span class="c-macro">ᵐs̲hapes&lt;</span></a></div>
+</div>
+<div class="item" id="h.s_ize-3f">
+<h3><a href="#h.s_ize-3f"><span class="c-libfunc">ʰs̲ize?</span></a> <span class="type">: Truthy a =&gt; Char -&gt; a</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="libs-Net-src-Net.xtlm.src.html#L29">line 29</a></div>
+<div class="doc">
+<p>Whether the text w is a whole number (a layer's size).</p>
+</div>
+<pre class="code"><span class="c-libfunc">ʰs̲ize?</span> ← { w → <span class="c-symbol">'</span><a href="builtins.html#-26" class="c-symbol">∧</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> w <a href="builtins.html#m_ember-3f" class="c-builtin">m̲ember?</a> <a href="builtins.html#-5b-5dD" class="c-builtin">⎕D</a> }</pre>
+<div class="uses">Used in: <a href="libs-Net-src-Net.xtlm.html#h.s_izes"><span class="c-libfunc">ʰs̲izes</span></a>, <a href="libs-Net-src-Net.xtlm.html#h.w_rong"><span class="c-libfunc">ʰw̲rong</span></a>, <a href="libs-Net-src-Net.xtlm.html#h.f_unction"><span class="c-libfunc">ʰf̲unction</span></a>, <a href="libs-Net-src-Net.xtlm.html#h.c_ount"><span class="c-libfunc">ʰc̲ount</span></a>, <a href="libs-Net-src-Net.xtlm.html#h.a_cts"><span class="c-libfunc">ʰa̲cts</span></a></div>
+</div>
+<div class="item" id="h.a_ct-3f">
+<h3><a href="#h.a_ct-3f"><span class="c-libfunc">ʰa̲ct?</span></a> <span class="type">: Truthy a =&gt; Char -&gt; a</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="libs-Net-src-Net.xtlm.src.html#L31">line 31</a></div>
+<div class="doc">
+<p>Whether the text w names an activation.</p>
+</div>
+<pre class="code"><span class="c-libfunc">ʰa̲ct?</span> ← { w → <span class="c-symbol">'</span><a href="builtins.html#-7c" class="c-symbol">∨</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> <span class="c-quote">'</span>{ a → w <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> a } <a href="builtins.html#e_ach" class="c-builtin">e̲ach</a> <a href="libs-Net-src-Net.xtlm.html#h.w_ords" class="c-libfunc">ʰw̲ords</a> <span class="c-string">&quot;relu sigmoid tanh softmax logSoftmax&quot;</span> }</pre>
+<div class="uses">Used in: <a href="libs-Net-src-Net.xtlm.html#h.w_rong"><span class="c-libfunc">ʰw̲rong</span></a></div>
+</div>
+<div class="item" id="h.a_ct">
+<h3><a href="#h.a_ct"><span class="c-libfunc">ʰa̲ct</span></a> <span class="type">: Char -&gt; Char</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="libs-Net-src-Net.xtlm.src.html#L33">line 33</a></div>
+<div class="doc">
+<p>An activation's function in NN: relu -&gt; nn:r_elu.</p>
+</div>
+<pre class="code"><span class="c-libfunc">ʰa̲ct</span> ← { w → <span class="c-string">&quot;nn:&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-number">1</span> <a href="builtins.html#t_ake" class="c-builtin">t̲ake</a> w) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;_&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">1</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> w }</pre>
+<div class="uses">Used in: <a href="libs-Net-src-Net.xtlm.html#h.f_unction"><span class="c-libfunc">ʰf̲unction</span></a>, <a href="libs-Net-src-Net.xtlm.html#h.a_ctFn"><span class="c-libfunc">ʰa̲ctFn</span></a></div>
+</div>
+<div class="item" id="h.s_izes">
+<h3><a href="#h.s_izes"><span class="c-libfunc">ʰs̲izes</span></a> <span class="type">: Box Char -&gt; Int</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="libs-Net-src-Net.xtlm.src.html#L35">line 35</a></div>
+<div class="doc">
+<p>The spec's sizes, as Ints.</p>
+</div>
+<pre class="code"><span class="c-libfunc">ʰs̲izes</span> ← { ws → <a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> <a href="builtins.html#n_umbers" class="c-builtin">n̲umbers</a> <a href="libs-Net-src-Net.xtlm.html#h.j_oin" class="c-libfunc">ʰj̲oin</a> <span class="c-quote">'</span>{ w → (<a href="libs-Net-src-Net.xtlm.html#h.s_ize-3f" class="c-libfunc">ʰs̲ize?</a> <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> w) ? (<a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> w) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; &quot;</span>◆ <span class="c-string">&quot;&quot;</span> } <a href="builtins.html#m_ap" class="c-builtin">m̲ap</a> ws }</pre>
+<div class="uses">Used in: <a href="libs-Net-src-Net.xtlm.html#m.m_odel-3c"><span class="c-macro">ᵐm̲odel&lt;</span></a>, <a href="libs-Net-src-Net.xtlm.html#m.p_arams-3c"><span class="c-macro">ᵐp̲arams&lt;</span></a>, <a href="libs-Net-src-Net.xtlm.html#m.s_hapes-3c"><span class="c-macro">ᵐs̲hapes&lt;</span></a></div>
+</div>
+<div class="item" id="specShape">
+<h3><a href="#specShape">specShape</a> <span class="type">: Char</span></h3>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="libs-Net-src-Net.xtlm.src.html#L37">line 37</a></div>
+<div class="doc">
+<p>What a spec looks like, for the messages.</p>
+</div>
+<pre class="code">specShape ← <span class="c-string">&quot;a spec is sizes and activations, the input's size first: \&quot;784 128 relu 10 softmax\&quot;&quot;</span></pre>
+<div class="uses">Used in: <a href="libs-Net-src-Net.xtlm.html#h.w_rong"><span class="c-libfunc">ʰw̲rong</span></a></div>
+</div>
+<div class="item" id="h.w_rong">
+<h3><a href="#h.w_rong"><span class="c-libfunc">ʰw̲rong</span></a> <span class="type">: Box Char -&gt; Char</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="libs-Net-src-Net.xtlm.src.html#L39">line 39</a></div>
+<div class="doc">
+<p>What is wrong with the spec's words ws, or &quot;&quot;.</p>
+</div>
+<pre class="code"><span class="c-libfunc">ʰw̲rong</span> ← { ws →
+  <span class="c-number">2</span> <a href="builtins.html#-3e" class="c-symbol">&gt;</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> ws ? <a href="libs-Net-src-Net.xtlm.html#specShape">specShape</a>
+  <a href="builtins.html#n_ot" class="c-builtin">n̲ot</a> <a href="libs-Net-src-Net.xtlm.html#h.s_ize-3f" class="c-libfunc">ʰs̲ize?</a> <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> ws ? <a href="libs-Net-src-Net.xtlm.html#specShape">specShape</a>
+  bad ← <span class="c-quote">'</span>{ w → <a href="builtins.html#n_ot" class="c-builtin">n̲ot</a> (<a href="libs-Net-src-Net.xtlm.html#h.s_ize-3f" class="c-libfunc">ʰs̲ize?</a> <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> w) <a href="builtins.html#-7c" class="c-symbol">∨</a> <a href="libs-Net-src-Net.xtlm.html#h.a_ct-3f" class="c-libfunc">ʰa̲ct?</a> <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> w } <a href="builtins.html#e_ach" class="c-builtin">e̲ach</a> ws
+  <span class="c-number">0</span> <a href="builtins.html#-3c" class="c-symbol">&lt;</a> <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> <span class="c-number">0</span> <a href="builtins.html#-2b" class="c-symbol">+</a> bad ? <span class="c-string">&quot;not a size or an activation (relu, sigmoid, tanh, softmax, logSoftmax): &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> (<a href="builtins.html#w_here" class="c-builtin">w̲here</a> bad) <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> ws
+  <span class="c-string">&quot;&quot;</span>
+}</pre>
+<div class="uses">Used in: <a href="libs-Net-src-Net.xtlm.html#m.n_etwork-3c"><span class="c-macro">ᵐn̲etwork&lt;</span></a>, <a href="libs-Net-src-Net.xtlm.html#m.m_odel-3c"><span class="c-macro">ᵐm̲odel&lt;</span></a>, <a href="libs-Net-src-Net.xtlm.html#h.t_rainable"><span class="c-libfunc">ʰt̲rainable</span></a>, <a href="libs-Net-src-Net.xtlm.html#m.p_arams-3c"><span class="c-macro">ᵐp̲arams&lt;</span></a>, <a href="libs-Net-src-Net.xtlm.html#m.s_hapes-3c"><span class="c-macro">ᵐs̲hapes&lt;</span></a></div>
+</div>
+<h2 class="section" id="section-2">Writing the forward pass (private)</h2>
+<div class="item" id="h.f_unction">
+<h3><a href="#h.f_unction"><span class="c-libfunc">ʰf̲unction</span></a> <span class="type">: Box Char -&gt; Box Char -&gt; Char</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="libs-Net-src-Net.xtlm.src.html#L51">line 51</a></div>
+<div class="doc">
+<p>The forward function for the spec's words ws and the weight names
+ns: a lambda of nn: calls, the input x through each layer in turn.</p>
+</div>
+<pre class="code"><span class="c-libfunc">ʰf̲unction</span> ← { ws ns →
+  size ← <span class="c-quote">'</span>{ w → <a href="libs-Net-src-Net.xtlm.html#h.s_ize-3f" class="c-libfunc">ʰs̲ize?</a> <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> w } <a href="builtins.html#e_ach" class="c-builtin">e̲ach</a> ws
+  k ← <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#s_-5c" class="c-builtin">s̲\</a> <span class="c-number">0</span> <a href="builtins.html#-2b" class="c-symbol">+</a> size
+  pre ← <span class="c-quote">'</span>{ i →
+    <a href="builtins.html#n_ot" class="c-builtin">n̲ot</a> i <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> size ? (<a href="libs-Net-src-Net.xtlm.html#h.a_ct" class="c-libfunc">ʰa̲ct</a> <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> i <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> ws) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; &quot;</span>
+    <span class="c-number">2</span> <a href="builtins.html#-3d" class="c-symbol">=</a> i <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> k ? <span class="c-string">&quot;&quot;</span>
+    <span class="c-string">&quot;(&quot;</span>
+  } <a href="builtins.html#m_ap" class="c-builtin">m̲ap</a> <span class="c-number">1</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> <a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> ws
+  post ← <span class="c-quote">'</span>{ i →
+    <a href="builtins.html#n_ot" class="c-builtin">n̲ot</a> i <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> size ? <span class="c-string">&quot;&quot;</span>
+    d ← <span class="c-string">&quot; nn:d_ense &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> ((i <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> k) <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span>) <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> ns
+    <span class="c-number">2</span> <a href="builtins.html#-3d" class="c-symbol">=</a> i <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> k ? d
+    <span class="c-string">&quot;)&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> d
+  } <a href="builtins.html#m_ap" class="c-builtin">m̲ap</a> <span class="c-number">1</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> <a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> ws
+  <span class="c-string">&quot;{ x -&gt; &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="libs-Net-src-Net.xtlm.html#h.j_oin" class="c-libfunc">ʰj̲oin</a> <a href="builtins.html#r_ev" class="c-builtin">r̲ev</a> pre) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;x&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="libs-Net-src-Net.xtlm.html#h.j_oin" class="c-libfunc">ʰj̲oin</a> post) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; }&quot;</span>
+}</pre>
+<div class="uses">Used in: <a href="libs-Net-src-Net.xtlm.html#m.n_etwork-3c"><span class="c-macro">ᵐn̲etwork&lt;</span></a>, <a href="libs-Net-src-Net.xtlm.html#m.m_odel-3c"><span class="c-macro">ᵐm̲odel&lt;</span></a></div>
+</div>
+<div class="item" id="h.c_ount">
+<h3><a href="#h.c_ount"><span class="c-libfunc">ʰc̲ount</span></a> <span class="type">: Box Char -&gt; a -&gt; Char</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="libs-Net-src-Net.xtlm.src.html#L68">line 68</a></div>
+<div class="doc">
+<p>What is wrong with the weight names ns for the spec's words ws, or &quot;&quot;.</p>
+</div>
+<pre class="code"><span class="c-libfunc">ʰc̲ount</span> ← { ws ns →
+  dense ← <span class="c-number">-1</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> <span class="c-quote">'</span>{ w → <span class="c-number">0</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="libs-Net-src-Net.xtlm.html#h.s_ize-3f" class="c-libfunc">ʰs̲ize?</a> <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> w } <a href="builtins.html#e_ach" class="c-builtin">e̲ach</a> ws
+  (<a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> ns) <a href="builtins.html#-3d" class="c-symbol">=</a> dense ? <span class="c-string">&quot;&quot;</span>
+  <span class="c-string">&quot;name one weight array per dense layer: &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> dense) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; for this spec, &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> ns) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; given&quot;</span>
+}</pre>
+<div class="uses">Used in: <a href="libs-Net-src-Net.xtlm.html#m.n_etwork-3c"><span class="c-macro">ᵐn̲etwork&lt;</span></a>, <a href="libs-Net-src-Net.xtlm.html#m.s_hapes-3c"><span class="c-macro">ᵐs̲hapes&lt;</span></a></div>
+</div>
+<h2 class="section" id="section-3">Networks</h2>
+<div class="item" id="m.n_etwork-3c">
+<h3><a href="#m.n_etwork-3c"><span class="c-macro">ᵐn̲etwork&lt;</span></a> <span class="type">: Char -&gt; Char -&gt; Char</span></h3>
+<div class="meta">macro &middot; <a href="libs-Net-src-Net.xtlm.src.html#L80">line 80</a></div>
+<div class="doc">
+<p>A forward function for the network the spec on the left describes,
+using the weight arrays named on the right, one per dense layer in
+order: an ordinary lambda of nn: calls, a batch (one example per
+row) in, the last layer's output out.</p>
+</div>
+<pre class="code"><span class="c-macro">ᵐn̲etwork&lt;</span> ← { spec weights →
+  ws ← <a href="libs-Net-src-Net.xtlm.html#h.w_ords" class="c-libfunc">ʰw̲ords</a> spec
+  ns ← <a href="libs-Net-src-Net.xtlm.html#h.w_ords" class="c-libfunc">ʰw̲ords</a> weights
+  <span class="c-number">0</span> <a href="builtins.html#-3c" class="c-symbol">&lt;</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> <a href="libs-Net-src-Net.xtlm.html#h.w_rong" class="c-libfunc">ʰw̲rong</a> ws ? <span class="c-string">&quot;bad-macro-argument left&quot;</span> <a href="builtins.html#-5b-5dR_EJECT" class="c-builtin">⎕R̲EJECT</a> <a href="libs-Net-src-Net.xtlm.html#h.w_rong" class="c-libfunc">ʰw̲rong</a> ws
+  <span class="c-number">0</span> <a href="builtins.html#-3c" class="c-symbol">&lt;</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> ws <a href="libs-Net-src-Net.xtlm.html#h.c_ount" class="c-libfunc">ʰc̲ount</a> ns ? <span class="c-string">&quot;bad-macro-argument right&quot;</span> <a href="builtins.html#-5b-5dR_EJECT" class="c-builtin">⎕R̲EJECT</a> ws <a href="libs-Net-src-Net.xtlm.html#h.c_ount" class="c-libfunc">ʰc̲ount</a> ns
+  ws <a href="libs-Net-src-Net.xtlm.html#h.f_unction" class="c-libfunc">ʰf̲unction</a> ns
+}</pre>
+<div class="uses">Used in: <a href="libs-Net-demos-train-xor.xtl.html#u.b_efore"><span class="c-userfunc">ᵘb̲efore</span></a>, <a href="libs-Net-demos-train-xor.xtl.html#u.a_fter"><span class="c-userfunc">ᵘa̲fter</span></a>, <a href="libs-Net-demos-xor.xtl.html#u.x_or"><span class="c-userfunc">ᵘx̲or</span></a>, <a href="demos-net-macro-train-it.xtl.html#u.s_tart"><span class="c-userfunc">ᵘs̲tart</span></a>, <a href="demos-net-macro-train-it.xtl.html#u.t_rained"><span class="c-userfunc">ᵘt̲rained</span></a></div>
+</div>
+<div class="item" id="m.m_odel-3c">
+<h3><a href="#m.m_odel-3c"><span class="c-macro">ᵐm̲odel&lt;</span></a> <span class="type">: Char -&gt; Char -&gt; Char</span></h3>
+<div class="meta">macro &middot; <a href="libs-Net-src-Net.xtlm.src.html#L96">line 96</a></div>
+<div class="doc">
+<p>A whole model from one spec: on the left the function's name and a
+prefix (&quot;u:d_eep c&quot;), on the right the spec. It writes, as
+statements, each dense layer's weights read from data/&lt;prefix&gt;K.txt
+and reshaped as the spec says (inputs + 1 by outputs; the program
+stops with an error naming the layer when a file does not hold that
+many numbers, since r_eshape alone would silently repeat or cut the
+data), then the function, as n_etwork&lt; writes it. The spec is the
+one place the network is described.</p>
+</div>
+<pre class="code"><span class="c-macro">ᵐm̲odel&lt;</span> ← { what spec →
+  ws ← <a href="libs-Net-src-Net.xtlm.html#h.w_ords" class="c-libfunc">ʰw̲ords</a> spec
+  <span class="c-number">0</span> <a href="builtins.html#-3c" class="c-symbol">&lt;</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> <a href="libs-Net-src-Net.xtlm.html#h.w_rong" class="c-libfunc">ʰw̲rong</a> ws ? <span class="c-string">&quot;bad-macro-argument right&quot;</span> <a href="builtins.html#-5b-5dR_EJECT" class="c-builtin">⎕R̲EJECT</a> <a href="libs-Net-src-Net.xtlm.html#h.w_rong" class="c-libfunc">ʰw̲rong</a> ws
+  nm ← <a href="libs-Net-src-Net.xtlm.html#h.w_ords" class="c-libfunc">ʰw̲ords</a> what
+  <span class="c-number">2</span> <a href="builtins.html#-21-3d" class="c-symbol">≠</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> nm ? <span class="c-string">&quot;bad-macro-argument left&quot;</span> <a href="builtins.html#-5b-5dR_EJECT" class="c-builtin">⎕R̲EJECT</a> <span class="c-string">&quot;write the function's name and the weight files' prefix: \&quot;u:d_eep c\&quot; (for data/c1.txt, data/c2.txt, ...)&quot;</span>
+  name ← <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> nm
+  prefix ← <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> <span class="c-number">2</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> nm
+  s ← <a href="libs-Net-src-Net.xtlm.html#h.s_izes" class="c-libfunc">ʰs̲izes</a> ws
+  ns ← <span class="c-quote">'</span>{ i → prefix <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> i } <a href="builtins.html#m_ap" class="c-builtin">m̲ap</a> <a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <span class="c-number">-1</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> s
+  load ← <span class="c-quote">'</span>{ i →
+    w ← <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> i <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> ns
+    need ← (<span class="c-number">1</span> <a href="builtins.html#-2b" class="c-symbol">+</a> i <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> s) <a href="builtins.html#-2a" class="c-symbol">×</a> (i <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">1</span>) <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> s
+    w <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; := { v -&gt; &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> need) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; = t_ally v ? &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <span class="c-number">1</span> <a href="builtins.html#-2b" class="c-symbol">+</a> i <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> s) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> (i <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">1</span>) <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> s) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; r_eshape v; []P_ANIC \&quot;data/&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> w <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;.txt holds \&quot; c_at (f_ormat t_ally v) c_at \&quot; numbers; layer &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> i) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; of \\\&quot;&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> spec <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;\\\&quot; (&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> i <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> s) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; inputs and a bias, &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> (i <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">1</span>) <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> s) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; outputs) needs &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> need) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;\&quot; } n_umbers []N_GET \&quot;data/&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> w <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;.txt\&quot;\n&quot;</span>
+  } <a href="builtins.html#m_ap" class="c-builtin">m̲ap</a> <a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <span class="c-number">-1</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> s
+  (<a href="libs-Net-src-Net.xtlm.html#h.j_oin" class="c-libfunc">ʰj̲oin</a> load) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> name <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; := &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> ws <a href="libs-Net-src-Net.xtlm.html#h.f_unction" class="c-libfunc">ʰf̲unction</a> ns
+}</pre>
+<div class="uses">Used in: <a href="demos-net-macro-net-macro.xtl.html#a1">a1</a>, <a href="demos-net-macro-net-macro.xtl.html#b1">b1</a>, <a href="demos-net-macro-net-macro.xtl.html#c1">c1</a></div>
+</div>
+<h2 class="section" id="section-4">Writing backpropagation (private)</h2>
+<div class="item" id="h.a_ctFn">
+<h3><a href="#h.a_ctFn"><span class="c-libfunc">ʰa̲ctFn</span></a> <span class="type">: Char -&gt; Char</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="libs-Net-src-Net.xtlm.src.html#L116">line 116</a></div>
+<div class="doc">
+<p>The function of NN for an activation word (relu -&gt; nn:r_elu); &quot;&quot; for none.</p>
+</div>
+<pre class="code"><span class="c-libfunc">ʰa̲ctFn</span> ← { w → <span class="c-number">0</span> <a href="builtins.html#-3d" class="c-symbol">=</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> w ? <span class="c-string">&quot;&quot;</span>◆ (<a href="libs-Net-src-Net.xtlm.html#h.a_ct" class="c-libfunc">ʰa̲ct</a> w) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; &quot;</span> }</pre>
+<div class="uses">Used in: <a href="libs-Net-src-Net.xtlm.html#h.b_ackprop"><span class="c-libfunc">ʰb̲ackprop</span></a></div>
+</div>
+<div class="item" id="h.s_lope">
+<h3><a href="#h.s_lope"><span class="c-libfunc">ʰs̲lope</span></a> <span class="type">: Char -&gt; Char -&gt; Char</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="libs-Net-src-Net.xtlm.src.html#L119">line 119</a></div>
+<div class="doc">
+<p>Its slope at its output A (the name of the array), times which the
+error goes back through it; &quot;&quot; when there is none.</p>
+</div>
+<pre class="code"><span class="c-libfunc">ʰs̲lope</span> ← { w a →
+  w <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> <span class="c-string">&quot;relu&quot;</span> ? <span class="c-string">&quot; * f_loat &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> a <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; &gt; 0.0&quot;</span>
+  w <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> <span class="c-string">&quot;tanh&quot;</span> ? <span class="c-string">&quot; * 1.0 - &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> a <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; * &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> a
+  w <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> <span class="c-string">&quot;sigmoid&quot;</span> ? <span class="c-string">&quot; * &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> a <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; * 1.0 - &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> a
+  <span class="c-string">&quot;&quot;</span>
+}</pre>
+<div class="uses">Used in: <a href="libs-Net-src-Net.xtlm.html#h.b_ackprop"><span class="c-libfunc">ʰb̲ackprop</span></a></div>
+</div>
+<div class="item" id="h.a_cts">
+<h3><a href="#h.a_cts"><span class="c-libfunc">ʰa̲cts</span></a> <span class="type">: Box Char -&gt; Box Char</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="libs-Net-src-Net.xtlm.src.html#L127">line 127</a></div>
+<div class="doc">
+<p>The activation after each dense layer of the spec's words ws (a box
+per layer, &quot;&quot; for none).</p>
+</div>
+<pre class="code"><span class="c-libfunc">ʰa̲cts</span> ← { ws →
+  size ← <span class="c-quote">'</span>{ w → <a href="libs-Net-src-Net.xtlm.html#h.s_ize-3f" class="c-libfunc">ʰs̲ize?</a> <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> w } <a href="builtins.html#e_ach" class="c-builtin">e̲ach</a> ws
+  at ← <span class="c-number">1</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> <a href="builtins.html#w_here" class="c-builtin">w̲here</a> size
+  <span class="c-quote">'</span>{ p → (p <a href="builtins.html#-3c" class="c-symbol">&lt;</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> ws) <a href="builtins.html#-26" class="c-symbol">∧</a> (<a href="builtins.html#n_ot" class="c-builtin">n̲ot</a> (p <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">1</span>) <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> size) ? <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> (p <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">1</span>) <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> ws◆ <span class="c-string">&quot;&quot;</span> } <a href="builtins.html#m_ap" class="c-builtin">m̲ap</a> at
+}</pre>
+<div class="uses">Used in: <a href="libs-Net-src-Net.xtlm.html#h.b_ackprop"><span class="c-libfunc">ʰb̲ackprop</span></a>, <a href="libs-Net-src-Net.xtlm.html#m.g_radient-3c"><span class="c-macro">ᵐg̲radient&lt;</span></a>, <a href="libs-Net-src-Net.xtlm.html#m.t_rain-3c"><span class="c-macro">ᵐt̲rain&lt;</span></a></div>
+</div>
+<div class="item" id="h.t_xt">
+<h3><a href="#h.t_xt"><span class="c-libfunc">ʰt̲xt</span></a> <span class="type">: a -&gt; Char</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="libs-Net-src-Net.xtlm.src.html#L133">line 133</a></div>
+<div class="doc">
+<p>N as text.</p>
+</div>
+<pre class="code"><span class="c-libfunc">ʰt̲xt</span> ← { n → <a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> n }</pre>
+<div class="uses">Used in: <a href="libs-Net-src-Net.xtlm.html#h.t_uple"><span class="c-libfunc">ʰt̲uple</span></a>, <a href="libs-Net-src-Net.xtlm.html#h.b_ackprop"><span class="c-libfunc">ʰb̲ackprop</span></a>, <a href="libs-Net-src-Net.xtlm.html#m.t_rain-3c"><span class="c-macro">ᵐt̲rain&lt;</span></a></div>
+</div>
+<div class="item" id="h.t_uple">
+<h3><a href="#h.t_uple"><span class="c-libfunc">ʰt̲uple</span></a> <span class="type">: Char -&gt; Int -&gt; Char</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="libs-Net-src-Net.xtlm.src.html#L137">line 137</a></div>
+<div class="doc">
+<p>The names P1 .. PL as X_eTaL's tuple text, &quot;(P1, P2)&quot;; one alone is
+not a tuple, &quot;P1&quot; (X_eTaL has no one-element tuple).</p>
+</div>
+<pre class="code"><span class="c-libfunc">ʰt̲uple</span> ← { p L →
+  L <a href="builtins.html#-3d" class="c-symbol">=</a> <span class="c-number">1</span> ? p <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;1&quot;</span>
+  <span class="c-string">&quot;(&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="libs-Net-src-Net.xtlm.html#h.j_oin" class="c-libfunc">ʰj̲oin</a> <span class="c-quote">'</span>{ l → (l <a href="builtins.html#-3d" class="c-symbol">=</a> <span class="c-number">1</span>) ? p <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="libs-Net-src-Net.xtlm.html#h.t_xt" class="c-libfunc">ʰt̲xt</a> l◆ <span class="c-string">&quot;, &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> p <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="libs-Net-src-Net.xtlm.html#h.t_xt" class="c-libfunc">ʰt̲xt</a> l } <a href="builtins.html#m_ap" class="c-builtin">m̲ap</a> <a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> L) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;)&quot;</span>
+}</pre>
+<div class="uses">Used in: <a href="libs-Net-src-Net.xtlm.html#m.g_radient-3c"><span class="c-macro">ᵐg̲radient&lt;</span></a></div>
+</div>
+<div class="item" id="h.b_ackprop">
+<h3><a href="#h.b_ackprop"><span class="c-libfunc">ʰb̲ackprop</span></a> <span class="type">: Box Char -&gt; Box Char -&gt; Char</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="libs-Net-src-Net.xtlm.src.html#L146">line 146</a></div>
+<div class="doc">
+<p>The lines that run the spec's network forward from the inputs
+(the weights W1 .. WL bound by the caller) and back from the targets,
+and bind each layer's gradient G1 .. GL. ws: the spec's words; xy:
+the inputs' and targets' names, boxed.</p>
+</div>
+<pre class="code"><span class="c-libfunc">ʰb̲ackprop</span> ← { ws xy →
+  x ← <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> <span class="c-number">1</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> xy
+  y ← <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> <span class="c-number">2</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> xy
+  acts ← <a href="libs-Net-src-Net.xtlm.html#h.a_cts" class="c-libfunc">ʰa̲cts</a> ws
+  L ← <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> acts
+  r ← <a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> L
+  fwd ← <a href="libs-Net-src-Net.xtlm.html#h.j_oin" class="c-libfunc">ʰj̲oin</a> <span class="c-quote">'</span>{ l → <span class="c-string">&quot;  A&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="libs-Net-src-Net.xtlm.html#h.t_xt" class="c-libfunc">ʰt̲xt</a> l) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; := &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="libs-Net-src-Net.xtlm.html#h.a_ctFn" class="c-libfunc">ʰa̲ctFn</a> <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> l <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> acts) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;A&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="libs-Net-src-Net.xtlm.html#h.t_xt" class="c-libfunc">ʰt̲xt</a> l <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; nn:d_ense W&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="libs-Net-src-Net.xtlm.html#h.t_xt" class="c-libfunc">ʰt̲xt</a> l) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;\n&quot;</span> } <a href="builtins.html#m_ap" class="c-builtin">m̲ap</a> r
+  dL ← <span class="c-string">&quot;  D&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="libs-Net-src-Net.xtlm.html#h.t_xt" class="c-libfunc">ʰt̲xt</a> L) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; := (A&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="libs-Net-src-Net.xtlm.html#h.t_xt" class="c-libfunc">ʰt̲xt</a> L) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; - &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> y <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;) / f_loat t_ally &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> x <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;\n&quot;</span>
+  back ← <a href="libs-Net-src-Net.xtlm.html#h.j_oin" class="c-libfunc">ʰj̲oin</a> <span class="c-quote">'</span>{ l → <span class="c-string">&quot;  D&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="libs-Net-src-Net.xtlm.html#h.t_xt" class="c-libfunc">ʰt̲xt</a> l) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; := (D&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="libs-Net-src-Net.xtlm.html#h.t_xt" class="c-libfunc">ʰt̲xt</a> l <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">1</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; '+ '* i_nner o_\\ -1 d_rop W&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="libs-Net-src-Net.xtlm.html#h.t_xt" class="c-libfunc">ʰt̲xt</a> l <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">1</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;)&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> ((<a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> l <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> acts) <a href="libs-Net-src-Net.xtlm.html#h.s_lope" class="c-libfunc">ʰs̲lope</a> <span class="c-string">&quot;A&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="libs-Net-src-Net.xtlm.html#h.t_xt" class="c-libfunc">ʰt̲xt</a> l) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;\n&quot;</span> } <a href="builtins.html#m_ap" class="c-builtin">m̲ap</a> <a href="builtins.html#r_ev" class="c-builtin">r̲ev</a> <span class="c-number">-1</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> r
+  grads ← <a href="libs-Net-src-Net.xtlm.html#h.j_oin" class="c-libfunc">ʰj̲oin</a> <span class="c-quote">'</span>{ l → <span class="c-string">&quot;  G&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="libs-Net-src-Net.xtlm.html#h.t_xt" class="c-libfunc">ʰt̲xt</a> l) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; := (o_\\ A&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="libs-Net-src-Net.xtlm.html#h.t_xt" class="c-libfunc">ʰt̲xt</a> l <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; c_at_2 ((t_ally A&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="libs-Net-src-Net.xtlm.html#h.t_xt" class="c-libfunc">ʰt̲xt</a> l <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;) c_at 1) r_eshape 1.0) '+ '* i_nner D&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="libs-Net-src-Net.xtlm.html#h.t_xt" class="c-libfunc">ʰt̲xt</a> l) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;\n&quot;</span> } <a href="builtins.html#m_ap" class="c-builtin">m̲ap</a> r
+  <span class="c-string">&quot;  A0 := &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> x <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;\n&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> fwd <a href="builtins.html#c_at" class="c-builtin">c̲at</a> dL <a href="builtins.html#c_at" class="c-builtin">c̲at</a> back <a href="builtins.html#c_at" class="c-builtin">c̲at</a> grads
+}</pre>
+<div class="uses">Used in: <a href="libs-Net-src-Net.xtlm.html#m.g_radient-3c"><span class="c-macro">ᵐg̲radient&lt;</span></a>, <a href="libs-Net-src-Net.xtlm.html#m.t_rain-3c"><span class="c-macro">ᵐt̲rain&lt;</span></a></div>
+</div>
+<div class="item" id="h.t_rainable">
+<h3><a href="#h.t_rainable"><span class="c-libfunc">ʰt̲rainable</span></a> <span class="type">: Box Char -&gt; Char</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="libs-Net-src-Net.xtlm.src.html#L159">line 159</a></div>
+<div class="doc">
+<p>What is wrong with a trainable spec's words ws, or &quot;&quot;.</p>
+</div>
+<pre class="code"><span class="c-libfunc">ʰt̲rainable</span> ← { ws →
+  <span class="c-number">0</span> <a href="builtins.html#-3c" class="c-symbol">&lt;</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> <a href="libs-Net-src-Net.xtlm.html#h.w_rong" class="c-libfunc">ʰw̲rong</a> ws ? <a href="libs-Net-src-Net.xtlm.html#h.w_rong" class="c-libfunc">ʰw̲rong</a> ws
+  <a href="builtins.html#n_ot" class="c-builtin">n̲ot</a> (<a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> <a href="builtins.html#r_ev" class="c-builtin">r̲ev</a> ws) <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> <span class="c-string">&quot;softmax&quot;</span> ? <span class="c-string">&quot;a network trained with cross-entropy ends in softmax&quot;</span>
+  <span class="c-string">&quot;&quot;</span>
+}</pre>
+<div class="uses">Used in: <a href="libs-Net-src-Net.xtlm.html#m.g_radient-3c"><span class="c-macro">ᵐg̲radient&lt;</span></a>, <a href="libs-Net-src-Net.xtlm.html#m.t_rain-3c"><span class="c-macro">ᵐt̲rain&lt;</span></a></div>
+</div>
+<h2 class="section" id="section-5">Training</h2>
+<div class="item" id="m.g_radient-3c">
+<h3><a href="#m.g_radient-3c"><span class="c-macro">ᵐg̲radient&lt;</span></a> <span class="type">: Char -&gt; Char -&gt; Char</span></h3>
+<div class="meta">macro &middot; <a href="libs-Net-src-Net.xtlm.src.html#L173">line 173</a></div>
+<div class="doc">
+<p>The gradient of the cross-entropy loss by each layer's weights, for
+the network the spec on the right describes: on the left the
+function's name, the inputs' and the targets' (one-hot rows):
+&quot;u:g_rad X Y&quot;. The function takes the weights as a tuple
+(W1, .., WL) and gives the gradients as a tuple (G1, .., GL),
+each the shape of its layer's weights: backpropagation, written out.</p>
+</div>
+<pre class="code"><span class="c-macro">ᵐg̲radient&lt;</span> ← { what spec →
+  ws ← <a href="libs-Net-src-Net.xtlm.html#h.w_ords" class="c-libfunc">ʰw̲ords</a> spec
+  <span class="c-number">0</span> <a href="builtins.html#-3c" class="c-symbol">&lt;</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> <a href="libs-Net-src-Net.xtlm.html#h.t_rainable" class="c-libfunc">ʰt̲rainable</a> ws ? <span class="c-string">&quot;bad-macro-argument right&quot;</span> <a href="builtins.html#-5b-5dR_EJECT" class="c-builtin">⎕R̲EJECT</a> <a href="libs-Net-src-Net.xtlm.html#h.t_rainable" class="c-libfunc">ʰt̲rainable</a> ws
+  nm ← <a href="libs-Net-src-Net.xtlm.html#h.w_ords" class="c-libfunc">ʰw̲ords</a> what
+  <span class="c-number">3</span> <a href="builtins.html#-21-3d" class="c-symbol">≠</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> nm ? <span class="c-string">&quot;bad-macro-argument left&quot;</span> <a href="builtins.html#-5b-5dR_EJECT" class="c-builtin">⎕R̲EJECT</a> <span class="c-string">&quot;write the function's name, then the inputs' and the targets': \&quot;u:g_rad X Y\&quot;&quot;</span>
+  L ← <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> <a href="libs-Net-src-Net.xtlm.html#h.a_cts" class="c-libfunc">ʰa̲cts</a> ws
+  (<a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> <span class="c-number">1</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> nm) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; := { &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot;W&quot;</span> <a href="libs-Net-src-Net.xtlm.html#h.t_uple" class="c-libfunc">ʰt̲uple</a> L) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; -&gt;\n&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (ws <a href="libs-Net-src-Net.xtlm.html#h.b_ackprop" class="c-libfunc">ʰb̲ackprop</a> <span class="c-number">1</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> nm) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;  &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot;G&quot;</span> <a href="libs-Net-src-Net.xtlm.html#h.t_uple" class="c-libfunc">ʰt̲uple</a> L) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;\n}&quot;</span>
+}</pre>
+</div>
+<div class="item" id="m.t_rain-3c">
+<h3><a href="#m.t_rain-3c"><span class="c-macro">ᵐt̲rain&lt;</span></a> <span class="type">: Char -&gt; Char -&gt; Char</span></h3>
+<div class="meta">macro &middot; <a href="libs-Net-src-Net.xtlm.src.html#L190">line 190</a></div>
+<div class="doc">
+<p>A training step for the network the spec on the right describes:
+on the left the function's name, the inputs', the targets' (one-hot
+rows) and the learning rate's (&quot;u:s_tep X Y lr&quot;). The step takes the
+state, a tuple of 3L + 1 arrays (each layer's weights, Adam's running
+averages of gradients and of their squares, the step count; @
+net:s_tate&lt; writes the first), and gives the next: the forward pass,
+each layer's gradient by backpropagation (as g_radient&lt; writes it),
+and Adam. The spec must end in softmax.</p>
+</div>
+<pre class="code"><span class="c-macro">ᵐt̲rain&lt;</span> ← { what spec →
+  ws ← <a href="libs-Net-src-Net.xtlm.html#h.w_ords" class="c-libfunc">ʰw̲ords</a> spec
+  <span class="c-number">0</span> <a href="builtins.html#-3c" class="c-symbol">&lt;</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> <a href="libs-Net-src-Net.xtlm.html#h.t_rainable" class="c-libfunc">ʰt̲rainable</a> ws ? <span class="c-string">&quot;bad-macro-argument right&quot;</span> <a href="builtins.html#-5b-5dR_EJECT" class="c-builtin">⎕R̲EJECT</a> <a href="libs-Net-src-Net.xtlm.html#h.t_rainable" class="c-libfunc">ʰt̲rainable</a> ws
+  nm ← <a href="libs-Net-src-Net.xtlm.html#h.w_ords" class="c-libfunc">ʰw̲ords</a> what
+  <span class="c-number">4</span> <a href="builtins.html#-21-3d" class="c-symbol">≠</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> nm ? <span class="c-string">&quot;bad-macro-argument left&quot;</span> <a href="builtins.html#-5b-5dR_EJECT" class="c-builtin">⎕R̲EJECT</a> <span class="c-string">&quot;write the step's name, then the inputs', the targets' and the learning rate's: \&quot;u:s_tep X Y lr\&quot;&quot;</span>
+  lr ← <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> <span class="c-number">4</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> nm
+  L ← <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> <a href="libs-Net-src-Net.xtlm.html#h.a_cts" class="c-libfunc">ʰa̲cts</a> ws
+  r ← <a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> L
+  <span class="c-comment">⍝</span><span class="c-comment"># Adam's averages, new names m1 .. mL and v1 .. vL (each name is bound once).</span>
+  avgs ← <a href="libs-Net-src-Net.xtlm.html#h.j_oin" class="c-libfunc">ʰj̲oin</a> <span class="c-quote">'</span>{ l →
+    i ← <a href="libs-Net-src-Net.xtlm.html#h.t_xt" class="c-libfunc">ʰt̲xt</a> l
+    <span class="c-string">&quot;  m&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> i <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; := (0.9 * M&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> i <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;) + 0.1 * G&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> i <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;\n  v&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> i <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; := (0.999 * V&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> i <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;) + 0.001 * G&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> i <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; * G&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> i <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;\n&quot;</span>
+  } <a href="builtins.html#m_ap" class="c-builtin">m̲ap</a> r
+  <span class="c-comment">⍝</span><span class="c-comment"># The next state: each layer's weights moved, the averages, the count n.</span>
+  moved ← <a href="libs-Net-src-Net.xtlm.html#h.j_oin" class="c-libfunc">ʰj̲oin</a> <span class="c-quote">'</span>{ l →
+    i ← <a href="libs-Net-src-Net.xtlm.html#h.t_xt" class="c-libfunc">ʰt̲xt</a> l
+    <span class="c-string">&quot;W&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> i <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; - &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> lr <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; * (m&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> i <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; / 1.0 - 0.9 ^ n) / 0.00000001 + (v&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> i <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; / 1.0 - 0.999 ^ n) ^ 0.5, &quot;</span>
+  } <a href="builtins.html#m_ap" class="c-builtin">m̲ap</a> r
+  next ← <span class="c-string">&quot;(&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> moved <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="libs-Net-src-Net.xtlm.html#h.j_oin" class="c-libfunc">ʰj̲oin</a> <span class="c-quote">'</span>{ l → <span class="c-string">&quot;m&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="libs-Net-src-Net.xtlm.html#h.t_xt" class="c-libfunc">ʰt̲xt</a> l) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;, &quot;</span> } <a href="builtins.html#m_ap" class="c-builtin">m̲ap</a> r) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="libs-Net-src-Net.xtlm.html#h.j_oin" class="c-libfunc">ʰj̲oin</a> <span class="c-quote">'</span>{ l → <span class="c-string">&quot;v&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="libs-Net-src-Net.xtlm.html#h.t_xt" class="c-libfunc">ʰt̲xt</a> l) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;, &quot;</span> } <a href="builtins.html#m_ap" class="c-builtin">m̲ap</a> r) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;n)&quot;</span>
+  state ← <span class="c-string">&quot;(&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="libs-Net-src-Net.xtlm.html#h.j_oin" class="c-libfunc">ʰj̲oin</a> <span class="c-quote">'</span>{ l → <span class="c-string">&quot;W&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="libs-Net-src-Net.xtlm.html#h.t_xt" class="c-libfunc">ʰt̲xt</a> l) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;, &quot;</span> } <a href="builtins.html#m_ap" class="c-builtin">m̲ap</a> r) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="libs-Net-src-Net.xtlm.html#h.j_oin" class="c-libfunc">ʰj̲oin</a> <span class="c-quote">'</span>{ l → <span class="c-string">&quot;M&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="libs-Net-src-Net.xtlm.html#h.t_xt" class="c-libfunc">ʰt̲xt</a> l) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;, &quot;</span> } <a href="builtins.html#m_ap" class="c-builtin">m̲ap</a> r) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="libs-Net-src-Net.xtlm.html#h.j_oin" class="c-libfunc">ʰj̲oin</a> <span class="c-quote">'</span>{ l → <span class="c-string">&quot;V&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="libs-Net-src-Net.xtlm.html#h.t_xt" class="c-libfunc">ʰt̲xt</a> l) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;, &quot;</span> } <a href="builtins.html#m_ap" class="c-builtin">m̲ap</a> r) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;k)&quot;</span>
+  (<a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> <span class="c-number">1</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> nm) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; := { &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> state <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; -&gt;\n&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (ws <a href="libs-Net-src-Net.xtlm.html#h.b_ackprop" class="c-libfunc">ʰb̲ackprop</a> <span class="c-number">1</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> <span class="c-number">3</span> <a href="builtins.html#t_ake" class="c-builtin">t̲ake</a> nm) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;  n := 1.0 + k\n&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> avgs <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;  &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> next <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;\n}&quot;</span>
+}</pre>
+<div class="uses">Used in: <a href="libs-Net-demos-train-xor.xtl.html#u.s_tep"><span class="c-userfunc">ᵘs̲tep</span></a>, <a href="demos-net-macro-train-it.xtl.html#u.s_tep"><span class="c-userfunc">ᵘs̲tep</span></a></div>
+</div>
+<div class="item" id="m.s_tate-3c">
+<h3><a href="#m.s_tate-3c"><span class="c-macro">ᵐs̲tate&lt;</span></a> <span class="type">: Unit -&gt; Char -&gt; Char</span></h3>
+<div class="meta">macro &middot; <a href="libs-Net-src-Net.xtlm.src.html#L215">line 215</a></div>
+<div class="doc">
+<p>The starting state for a training step (t_rain&lt;) from the weight
+arrays named on the right: the weights, zero averages, step 0.</p>
+</div>
+<pre class="code"><span class="c-macro">ᵐs̲tate&lt;</span> ← { @ weights →
+  ns ← <a href="libs-Net-src-Net.xtlm.html#h.w_ords" class="c-libfunc">ʰw̲ords</a> weights
+  <span class="c-number">0</span> <a href="builtins.html#-3d" class="c-symbol">=</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> ns ? <span class="c-string">&quot;bad-macro-argument right&quot;</span> <a href="builtins.html#-5b-5dR_EJECT" class="c-builtin">⎕R̲EJECT</a> <span class="c-string">&quot;name the starting weight arrays, one per dense layer&quot;</span>
+  ws ← <a href="libs-Net-src-Net.xtlm.html#h.j_oin" class="c-libfunc">ʰj̲oin</a> <span class="c-quote">'</span>{ w → (<a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> w) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;, &quot;</span> } <a href="builtins.html#m_ap" class="c-builtin">m̲ap</a> ns
+  zs ← <a href="libs-Net-src-Net.xtlm.html#h.j_oin" class="c-libfunc">ʰj̲oin</a> <span class="c-quote">'</span>{ w → <span class="c-string">&quot;0.0 * &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> w) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;, &quot;</span> } <a href="builtins.html#m_ap" class="c-builtin">m̲ap</a> ns
+  <span class="c-string">&quot;(&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> ws <a href="builtins.html#c_at" class="c-builtin">c̲at</a> zs <a href="builtins.html#c_at" class="c-builtin">c̲at</a> zs <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;0.0)&quot;</span>
+}</pre>
+<div class="uses">Used in: <a href="libs-Net-demos-train-xor.xtl.html#v1">v1</a>, <a href="demos-net-macro-train-it.xtl.html#s0">s0</a></div>
+</div>
+<h2 class="section" id="section-6">Counting and checking</h2>
+<div class="item" id="m.p_arams-3c">
+<h3><a href="#m.p_arams-3c"><span class="c-macro">ᵐp̲arams&lt;</span></a> <span class="type">: Char -&gt; Unit -&gt; Char</span></h3>
+<div class="meta">macro &middot; <a href="libs-Net-src-Net.xtlm.src.html#L231">line 231</a></div>
+<div class="doc">
+<p>How many numbers the network of the spec on the left has to learn
+(weights and biases), worked out when the program is compiled: the
+call becomes that number. Nothing is written on the right: @.</p>
+<pre class="example"><span class="prompt">      </span><span class="c-libfunc">ⁿᵉᵗ⁼</span><span class="c-macro">u̲se&lt;</span> <a href="libs-Net-src-Net.xtlm.html" class="c-string">&quot;Net&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span><span class="c-string">&quot;2 16 relu 16 relu 3 softmax&quot;</span> <a href="libs-Net-src-Net.xtlm.html#m.p_arams-3c" class="c-macro">ⁿᵉᵗp̲arams&lt;</a> @
+371</pre>
+</div>
+<pre class="code"><span class="c-macro">ᵐp̲arams&lt;</span> ← { spec @ →
+  ws ← <a href="libs-Net-src-Net.xtlm.html#h.w_ords" class="c-libfunc">ʰw̲ords</a> spec
+  <span class="c-number">0</span> <a href="builtins.html#-3c" class="c-symbol">&lt;</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> <a href="libs-Net-src-Net.xtlm.html#h.w_rong" class="c-libfunc">ʰw̲rong</a> ws ? <span class="c-string">&quot;bad-macro-argument left&quot;</span> <a href="builtins.html#-5b-5dR_EJECT" class="c-builtin">⎕R̲EJECT</a> <a href="libs-Net-src-Net.xtlm.html#h.w_rong" class="c-libfunc">ʰw̲rong</a> ws
+  s ← <a href="libs-Net-src-Net.xtlm.html#h.s_izes" class="c-libfunc">ʰs̲izes</a> ws
+  <a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> (<span class="c-number">1</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">-1</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> s) <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">1</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> s
+}</pre>
+<div class="uses">Used in: <a href="libs-Net-demos-xor.xtl.src.html#L17">libs/Net/demos/xor.xtl:17</a>, <a href="demos-net-macro-net-macro.xtl.src.html#L30">demos/net-macro/net-macro.xtl:30</a></div>
+</div>
+<div class="item" id="m.s_hapes-3c">
+<h3><a href="#m.s_hapes-3c"><span class="c-macro">ᵐs̲hapes&lt;</span></a> <span class="type">: Char -&gt; Char -&gt; Char</span></h3>
+<div class="meta">macro &middot; <a href="libs-Net-src-Net.xtlm.src.html#L246">line 246</a></div>
+<div class="doc">
+<p>Whether the weight arrays named on the right have the shapes the
+spec on the left says (a layer from m inputs to n outputs is
+m + 1 by n: the bias is the last row): 1 or 0.</p>
+<pre class="example"><span class="prompt">      </span><span class="c-libfunc">ⁿᵉᵗ⁼</span><span class="c-macro">u̲se&lt;</span> <a href="libs-Net-src-Net.xtlm.html" class="c-string">&quot;Net&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span>w1 ← <span class="c-number">3</span> <span class="c-number">4</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.0</span></pre>
+<pre class="example"><span class="prompt">      </span>w2 ← <span class="c-number">5</span> <span class="c-number">3</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.0</span></pre>
+<pre class="example"><span class="prompt">      </span><span class="c-string">&quot;2 4 tanh 3 softmax&quot;</span> <a href="libs-Net-src-Net.xtlm.html#m.s_hapes-3c" class="c-macro">ⁿᵉᵗs̲hapes&lt;</a> <span class="c-string">&quot;w1 w2&quot;</span>
+1</pre>
+</div>
+<pre class="code"><span class="c-macro">ᵐs̲hapes&lt;</span> ← { spec weights →
+  ws ← <a href="libs-Net-src-Net.xtlm.html#h.w_ords" class="c-libfunc">ʰw̲ords</a> spec
+  ns ← <a href="libs-Net-src-Net.xtlm.html#h.w_ords" class="c-libfunc">ʰw̲ords</a> weights
+  <span class="c-number">0</span> <a href="builtins.html#-3c" class="c-symbol">&lt;</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> <a href="libs-Net-src-Net.xtlm.html#h.w_rong" class="c-libfunc">ʰw̲rong</a> ws ? <span class="c-string">&quot;bad-macro-argument left&quot;</span> <a href="builtins.html#-5b-5dR_EJECT" class="c-builtin">⎕R̲EJECT</a> <a href="libs-Net-src-Net.xtlm.html#h.w_rong" class="c-libfunc">ʰw̲rong</a> ws
+  s ← <a href="libs-Net-src-Net.xtlm.html#h.s_izes" class="c-libfunc">ʰs̲izes</a> ws
+  <span class="c-number">0</span> <a href="builtins.html#-3c" class="c-symbol">&lt;</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> ws <a href="libs-Net-src-Net.xtlm.html#h.c_ount" class="c-libfunc">ʰc̲ount</a> ns ? <span class="c-string">&quot;bad-macro-argument right&quot;</span> <a href="builtins.html#-5b-5dR_EJECT" class="c-builtin">⎕R̲EJECT</a> ws <a href="libs-Net-src-Net.xtlm.html#h.c_ount" class="c-libfunc">ʰc̲ount</a> ns
+  one ← <span class="c-quote">'</span>{ i → <span class="c-string">&quot;((s_hape &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> i <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> ns) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;) m_atch &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <span class="c-number">1</span> <a href="builtins.html#-2b" class="c-symbol">+</a> i <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> s) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> (i <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">1</span>) <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> s) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;)&quot;</span> } <a href="builtins.html#m_ap" class="c-builtin">m̲ap</a> <a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> ns
+  <a href="libs-Net-src-Net.xtlm.html#h.j_oin" class="c-libfunc">ʰj̲oin</a> <span class="c-quote">'</span>{ i → (i <a href="builtins.html#-3d" class="c-symbol">=</a> <span class="c-number">1</span>) ? <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> i <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> one◆ <span class="c-string">&quot; &amp; &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> i <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> one } <a href="builtins.html#m_ap" class="c-builtin">m̲ap</a> <a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> ns
+}</pre>
+<div class="uses">Used in: <a href="libs-Net-demos-xor.xtl.src.html#L18">libs/Net/demos/xor.xtl:18</a></div>
+</div>
+</main>
+</body>
+</html>

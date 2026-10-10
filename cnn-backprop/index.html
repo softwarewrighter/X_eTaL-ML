@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CNN Training</title>
+  
+<script type="module">
+import init, * as bindings from '/X_eTaL-ML/cnn-backprop/cnn-backprop-web-4ae4456f44cec067.js';
+const wasm = await init({ module_or_path: '/X_eTaL-ML/cnn-backprop/cnn-backprop-web-4ae4456f44cec067_bg.wasm' });
+
+
+window.wasmBindings = bindings;
+
+
+dispatchEvent(new CustomEvent("TrunkApplicationStarted", {detail: {wasm}}));
+
+</script>
+  
+  <link rel="icon" href="/X_eTaL-ML/cnn-backprop/favicon-a11bc0a2bcd81290.ico" integrity="sha384-xOjSLs9ZRBKy2hF6zlqNv+0U86E4BqZOJy7H7a4GXSVwDQMNie0D851/sRBSYI9a"/>
+  <link rel="stylesheet" href="/X_eTaL-ML/cnn-backprop/microscope-2f1fabe718956dac.css" integrity="sha384-dbc25dleJAsuQXTG1eT75dT76dN31tWSYFyZo/9Jr7qOEtOLRcZ2byPuVjmo+0gd"/>
+<link rel="modulepreload" href="/X_eTaL-ML/cnn-backprop/cnn-backprop-web-4ae4456f44cec067.js" crossorigin="anonymous" integrity="sha384-r0MV01U3jW7oH6+SHc3mTSVpzg2NZrwjlzfi8kYbWI3zl8HUbF2Y2vfaxiRRaDRY"><link rel="preload" href="/X_eTaL-ML/cnn-backprop/cnn-backprop-web-4ae4456f44cec067_bg.wasm" crossorigin="anonymous" integrity="sha384-fYkw57j9iamoUjy3XEoSSzR/IyuhAyzsskK1L+TNjDO/BNpJLN6QoqBHFhO6BWZY" as="fetch" type="application/wasm"></head>
+<body></body>
+</html>

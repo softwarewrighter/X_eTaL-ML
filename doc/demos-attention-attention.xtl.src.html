@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>demos/attention/attention.xtl - X_eTaL doc</title>
+<link rel="stylesheet" href="style.css">
+<script src="theme.js"></script>
+<script defer src="search-index.js"></script>
+<script defer src="search.js"></script>
+</head>
+<body>
+<nav class="side">
+<a class="home" href="index.html">X_eTaL doc</a>
+<input id="search" type="search" autocomplete="off" placeholder="Search: a name, or a type" title="A name (mean finds m_ean), or a type: Num a =&gt; a -&gt; a -&gt; a finds +, m_ax ...">
+<h2>Files</h2>
+<h3>demos/attention/</h3>
+<ul>
+<li><a href="demos-attention-attention.xtl.html">attention.xtl</a></li>
+</ul>
+<h3>demos/backprop/</h3>
+<ul>
+<li><a href="demos-backprop-backprop.xtl.html">backprop.xtl</a></li>
+</ul>
+<h3>demos/cnn-backprop/</h3>
+<ul>
+<li><a href="demos-cnn-backprop-cnn-backprop.xtl.html">cnn-backprop.xtl</a></li>
+</ul>
+<h3>demos/cnn-digits/</h3>
+<ul>
+<li><a href="demos-cnn-digits-cnn-digits.xtl.html">cnn-digits.xtl</a></li>
+</ul>
+<h3>demos/k-means/</h3>
+<ul>
+<li><a href="demos-k-means-k-means.xtl.html">k-means.xtl</a></li>
+</ul>
+<h3>demos/moe-router/</h3>
+<ul>
+<li><a href="demos-moe-router-moe-router.xtl.html">moe-router.xtl</a></li>
+</ul>
+<h3>demos/net-macro/</h3>
+<ul>
+<li><a href="demos-net-macro-net-macro.xtl.html">net-macro.xtl</a></li>
+<li><a href="demos-net-macro-train-it.xtl.html">train-it.xtl</a></li>
+</ul>
+<h3>demos/ternary-net/</h3>
+<ul>
+<li><a href="demos-ternary-net-ternary-net.xtl.html">ternary-net.xtl</a></li>
+</ul>
+<h3>demos/train-live/</h3>
+<ul>
+<li><a href="demos-train-live-train-live.xtl.html">train-live.xtl</a></li>
+</ul>
+<h3>libs/Learn/demos/</h3>
+<ul>
+<li><a href="libs-Learn-demos-blobs.xtl.html">blobs.xtl</a></li>
+</ul>
+<h3>libs/Learn/src/</h3>
+<ul>
+<li><a href="libs-Learn-src-Learn.xtl.html">Learn.xtl</a></li>
+</ul>
+<h3>libs/Net/demos/</h3>
+<ul>
+<li><a href="libs-Net-demos-train-xor.xtl.html">train-xor.xtl</a></li>
+<li><a href="libs-Net-demos-xor.xtl.html">xor.xtl</a></li>
+</ul>
+<h3>libs/Net/src/</h3>
+<ul>
+<li><a href="libs-Net-src-Net.xtlm.html">Net.xtlm</a></li>
+</ul>
+<h3>libs/NN/demos/</h3>
+<ul>
+<li><a href="libs-NN-demos-xor.xtl.html">xor.xtl</a></li>
+</ul>
+<h3>libs/NN/src/</h3>
+<ul>
+<li><a href="libs-NN-src-NN.xtl.html">NN.xtl</a></li>
+</ul>
+<ul>
+<li><a href="builtins.html">built-ins</a></li>
+</ul>
+<h2>On this page</h2>
+<ul>
+<li class="item"><a href="#L10">names</a></li>
+<li class="item"><a href="#L11">F</a></li>
+<li class="item"><a href="#L12">Wq</a></li>
+<li class="item"><a href="#L13">Wk</a></li>
+<li class="item"><a href="#L16"><span class="c-userfunc">ᵘs̲cores</span></a></li>
+<li class="item"><a href="#L17"><span class="c-userfunc">ᵘa̲ttend</span></a></li>
+<li class="item"><a href="#L21"><span class="c-userfunc">ᵘs̲hade</span></a></li>
+<li class="item"><a href="#L22"><span class="c-userfunc">ᵘr̲ows</span></a></li>
+<li class="item"><a href="#L23"><span class="c-userfunc">ᵘw̲ide</span></a></li>
+<li class="item"><a href="#L24"><span class="c-userfunc">ᵘh̲eader</span></a></li>
+<li class="item"><a href="#L26"><span class="c-userfunc">ᵘt̲op</span></a></li>
+<li class="item"><a href="#L32">ids</a></li>
+<li class="item"><a href="#L33">X</a></li>
+<li class="item"><a href="#L34">n</a></li>
+<li class="item"><a href="#L35">everyone</a></li>
+<li class="item"><a href="#L36">A</a></li>
+<li class="item"><a href="#L50">causal</a></li>
+<li class="item"><a href="#L57">w</a></li>
+<li class="item"><a href="#L58">B</a></li>
+</ul>
+</nav>
+<main>
+<button class="theme" title="Light or dark">theme</button>
+<section id="results"></section>
+<h1><span class="kind">source</span><a href="demos-attention-attention.xtl.html">demos/attention/attention.xtl</a></h1>
+<div class="source"><span class="line" id="L1"><a class="ln" href="#L1">1</a><span class="c-comment">⍝</span><span class="c-comment">!/usr/bin/env xetal</span></span>
+<span class="line" id="L2"><a class="ln" href="#L2">2</a><span class="c-comment">⍝</span><span class="c-comment"># Attention as array algebra: every token's query meets every token's</span></span>
+<span class="line" id="L3"><a class="ln" href="#L3">3</a><span class="c-comment">⍝</span><span class="c-comment"># key in one matrix product, S = Q K^T / sqrt d; softmax turns each row</span></span>
+<span class="line" id="L4"><a class="ln" href="#L4">4</a><span class="c-comment">⍝</span><span class="c-comment"># into weights; the output is the weighted sum of the values, Y = A V.</span></span>
+<span class="line" id="L5"><a class="ln" href="#L5">5</a><span class="c-comment">⍝</span><span class="c-comment"># One head, hand-set so that a word looks for what it can describe.</span></span>
+<span class="line" id="L6"><a class="ln" href="#L6">6</a></span>
+<span class="line" id="L7"><a class="ln" href="#L7">7</a><span class="c-libfunc">ⁿⁿ⁼</span><span class="c-macro">u̲se&lt;</span> <a href="libs-NN-src-NN.xtl.html" class="c-string">&quot;NN&quot;</a></span>
+<span class="line" id="L8"><a class="ln" href="#L8">8</a></span>
+<span class="line" id="L9"><a class="ln" href="#L9">9</a><span class="c-comment">⍝</span><span class="c-comment">## The vocabulary and the head, read from data/</span></span>
+<span class="line" id="L10"><a class="ln" href="#L10">10</a>names ← <span class="c-number">8</span> <a href="builtins.html#t_ake" class="c-builtin">t̲ake₂</a> <span class="c-number">21</span> <span class="c-number">9</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;data/words.txt&quot;</span></span>
+<span class="line" id="L11"><a class="ln" href="#L11">11</a>F ← <span class="c-number">21</span> <span class="c-number">8</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <a href="builtins.html#n_umbers" class="c-builtin">n̲umbers</a> <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;data/features.txt&quot;</span></span>
+<span class="line" id="L12"><a class="ln" href="#L12">12</a>Wq ← <span class="c-number">8</span> <span class="c-number">2</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <a href="builtins.html#n_umbers" class="c-builtin">n̲umbers</a> <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;data/wq.txt&quot;</span></span>
+<span class="line" id="L13"><a class="ln" href="#L13">13</a>Wk ← <span class="c-number">8</span> <span class="c-number">2</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <a href="builtins.html#n_umbers" class="c-builtin">n̲umbers</a> <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;data/wk.txt&quot;</span></span>
+<span class="line" id="L14"><a class="ln" href="#L14">14</a></span>
+<span class="line" id="L15"><a class="ln" href="#L15">15</a><span class="c-comment">⍝</span><span class="c-comment">## The core: attention for tokens X, where mask M allows</span></span>
+<span class="line" id="L16"><a class="ln" href="#L16">16</a><span class="c-userfunc">ᵘs̲cores</span> ← { X → ((X <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#i_nner" class="c-builtin">i̲nner</a> <a href="demos-attention-attention.xtl.html#Wq">Wq</a>) <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#i_nner" class="c-builtin">i̲nner</a> <a href="builtins.html#o_-5c" class="c-builtin">o̲\</a> X <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#i_nner" class="c-builtin">i̲nner</a> <a href="demos-attention-attention.xtl.html#Wk">Wk</a>) <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-number">2.0</span> <a href="builtins.html#-5e" class="c-symbol">^</a> <span class="c-number">0.5</span> }</span>
+<span class="line" id="L17"><a class="ln" href="#L17">17</a><span class="c-userfunc">ᵘa̲ttend</span> ← { X M → <a href="libs-NN-src-NN.xtl.html#l.s_oftmax" class="c-libfunc">ⁿⁿs̲oftmax</a> (<a href="demos-attention-attention.xtl.html#u.s_cores" class="c-userfunc">ᵘs̲cores</a> X) <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1e9</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">1.0</span> <a href="builtins.html#-2d" class="c-symbol">−</a> M }</span>
+<span class="line" id="L18"><a class="ln" href="#L18">18</a><span class="c-comment">⍝</span><span class="c-comment"> -- end of the core ---------------------------------------</span></span>
+<span class="line" id="L19"><a class="ln" href="#L19">19</a></span>
+<span class="line" id="L20"><a class="ln" href="#L20">20</a><span class="c-comment">⍝</span><span class="c-comment">## Drawing: rows labeled with their words</span></span>
+<span class="line" id="L21"><a class="ln" href="#L21">21</a><span class="c-userfunc">ᵘs̲hade</span> ← { A → (<span class="c-number">1</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> <span class="c-number">0.5</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">7.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> A) <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <span class="c-string">&quot; .:-=+*#&quot;</span> }</span>
+<span class="line" id="L22"><a class="ln" href="#L22">22</a><span class="c-userfunc">ᵘr̲ows</span> ← { ids C → (ids <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="demos-attention-attention.xtl.html#names">names</a>) <a href="builtins.html#c_at" class="c-builtin">c̲at₂</a> (((<a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> ids) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">2</span>) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-string">&quot; &quot;</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at₂</a> C }</span>
+<span class="line" id="L23"><a class="ln" href="#L23">23</a><span class="c-userfunc">ᵘw̲ide</span> ← { C → ((<span class="c-number">-1</span> <a href="builtins.html#t_ake" class="c-builtin">t̲ake</a> <a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> C) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">3</span>) <a href="builtins.html#r_eplicate" class="c-builtin">r̲eplicate₂</a> C }</span>
+<span class="line" id="L24"><a class="ln" href="#L24">24</a><span class="c-userfunc">ᵘh̲eader</span> ← { ids → <span class="c-string">&quot;          &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> (<span class="c-number">1</span> <a href="builtins.html#t_ake" class="c-builtin">t̲ake₂</a> ids <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="demos-attention-attention.xtl.html#names">names</a>) <a href="builtins.html#c_at" class="c-builtin">c̲at₂</a> ((<a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> ids) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">2</span>) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-string">&quot; &quot;</span> }</span>
+<span class="line" id="L25"><a class="ln" href="#L25">25</a><span class="c-comment">⍝</span><span class="c-comment"># The word each row looks at most, or - when no word gets half its weight.</span></span>
+<span class="line" id="L26"><a class="ln" href="#L26">26</a><span class="c-userfunc">ᵘt̲op</span> ← { ids A →</span>
+<span class="line" id="L27"><a class="ln" href="#L27">27</a>  sure ← <span class="c-number">0.5</span> <a href="builtins.html#-3c-3d" class="c-symbol">≤</a> <span class="c-builtin">'</span><a href="builtins.html#m_ax" class="c-builtin">m̲ax</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/₂</a> A</span>
+<span class="line" id="L28"><a class="ln" href="#L28">28</a>  ids <a href="demos-attention-attention.xtl.html#u.r_ows" class="c-userfunc">ᵘr̲ows</a> ((sure <a href="builtins.html#-2a" class="c-symbol">×</a> (<a href="libs-NN-src-NN.xtl.html#l.a_rgmax" class="c-libfunc">ⁿⁿa̲rgmax</a> A) <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> ids) <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">22</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#n_ot" class="c-builtin">n̲ot</a> sure) <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="demos-attention-attention.xtl.html#names">names</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">1</span> <span class="c-number">8</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-string">&quot;-       &quot;</span></span>
+<span class="line" id="L29"><a class="ln" href="#L29">29</a>}</span>
+<span class="line" id="L30"><a class="ln" href="#L30">30</a></span>
+<span class="line" id="L31"><a class="ln" href="#L31">31</a><span class="c-comment">⍝</span><span class="c-comment"># &quot;the animal did not cross the street because it was tired&quot;</span></span>
+<span class="line" id="L32"><a class="ln" href="#L32">32</a>ids ← <span class="c-number">1</span> <span class="c-number">3</span> <span class="c-number">12</span> <span class="c-number">15</span> <span class="c-number">13</span> <span class="c-number">1</span> <span class="c-number">7</span> <span class="c-number">20</span> <span class="c-number">11</span> <span class="c-number">14</span> <span class="c-number">16</span></span>
+<span class="line" id="L33"><a class="ln" href="#L33">33</a>X ← <a href="demos-attention-attention.xtl.html#ids">ids</a> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="demos-attention-attention.xtl.html#F">F</a></span>
+<span class="line" id="L34"><a class="ln" href="#L34">34</a>n ← <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> <a href="demos-attention-attention.xtl.html#ids">ids</a></span>
+<span class="line" id="L35"><a class="ln" href="#L35">35</a>everyone ← (<a href="demos-attention-attention.xtl.html#n">n</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="demos-attention-attention.xtl.html#n">n</a>) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">1.0</span></span>
+<span class="line" id="L36"><a class="ln" href="#L36">36</a>A ← <a href="demos-attention-attention.xtl.html#X">X</a> <a href="demos-attention-attention.xtl.html#u.a_ttend" class="c-userfunc">ᵘa̲ttend</a> <a href="demos-attention-attention.xtl.html#everyone">everyone</a></span>
+<span class="line" id="L37"><a class="ln" href="#L37">37</a><span class="c-comment">⍝</span><span class="c-comment"> The weights: row i is how much word i looks at each word (the</span></span>
+<span class="line" id="L38"><a class="ln" href="#L38">38</a><span class="c-comment">⍝</span><span class="c-comment"> columns are the same words, left to right).</span></span>
+<span class="line" id="L39"><a class="ln" href="#L39">39</a><a href="demos-attention-attention.xtl.html#u.h_eader" class="c-userfunc">ᵘh̲eader</a> <a href="demos-attention-attention.xtl.html#ids">ids</a></span>
+<span class="line" id="L40"><a class="ln" href="#L40">40</a><a href="demos-attention-attention.xtl.html#ids">ids</a> <a href="demos-attention-attention.xtl.html#u.r_ows" class="c-userfunc">ᵘr̲ows</a> <a href="demos-attention-attention.xtl.html#u.w_ide" class="c-userfunc">ᵘw̲ide</a> <a href="demos-attention-attention.xtl.html#u.s_hade" class="c-userfunc">ᵘs̲hade</a> <a href="demos-attention-attention.xtl.html#A">A</a></span>
+<span class="line" id="L41"><a class="ln" href="#L41">41</a><span class="c-comment">⍝</span><span class="c-comment"> What each word looks at most: tired finds the animal, it finds the</span></span>
+<span class="line" id="L42"><a class="ln" href="#L42">42</a><span class="c-comment">⍝</span><span class="c-comment"> animal; words with nothing to look for spread evenly (-).</span></span>
+<span class="line" id="L43"><a class="ln" href="#L43">43</a><a href="demos-attention-attention.xtl.html#ids">ids</a> <a href="demos-attention-attention.xtl.html#u.t_op" class="c-userfunc">ᵘt̲op</a> <a href="demos-attention-attention.xtl.html#A">A</a></span>
+<span class="line" id="L44"><a class="ln" href="#L44">44</a><span class="c-comment">⍝</span><span class="c-comment"> The output for &quot;tired&quot; (Y = A V, V = X): it has taken on the</span></span>
+<span class="line" id="L45"><a class="ln" href="#L45">45</a><span class="c-comment">⍝</span><span class="c-comment"> animal's feature (animate, the first).</span></span>
+<span class="line" id="L46"><a class="ln" href="#L46">46</a>(<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> <span class="c-number">0.5</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">100.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">11</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="demos-attention-attention.xtl.html#A">A</a> <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#i_nner" class="c-builtin">i̲nner</a> <a href="demos-attention-attention.xtl.html#X">X</a>) <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-number">100.0</span></span>
+<span class="line" id="L47"><a class="ln" href="#L47">47</a></span>
+<span class="line" id="L48"><a class="ln" href="#L48">48</a><span class="c-comment">⍝</span><span class="c-comment"># A causal mask (a word sees only itself and the words before it, as</span></span>
+<span class="line" id="L49"><a class="ln" href="#L49">49</a><span class="c-comment">⍝</span><span class="c-comment"># when generating text): &quot;it&quot; still finds the animal; &quot;the&quot; sees itself.</span></span>
+<span class="line" id="L50"><a class="ln" href="#L50">50</a>causal ← <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> (<a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <a href="demos-attention-attention.xtl.html#n">n</a>) <span class="c-symbol">'</span><a href="builtins.html#-3e-3d" class="c-symbol">≥</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> <a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <a href="demos-attention-attention.xtl.html#n">n</a></span>
+<span class="line" id="L51"><a class="ln" href="#L51">51</a><a href="demos-attention-attention.xtl.html#u.h_eader" class="c-userfunc">ᵘh̲eader</a> <a href="demos-attention-attention.xtl.html#ids">ids</a></span>
+<span class="line" id="L52"><a class="ln" href="#L52">52</a><a href="demos-attention-attention.xtl.html#ids">ids</a> <a href="demos-attention-attention.xtl.html#u.r_ows" class="c-userfunc">ᵘr̲ows</a> <a href="demos-attention-attention.xtl.html#u.w_ide" class="c-userfunc">ᵘw̲ide</a> <a href="demos-attention-attention.xtl.html#u.s_hade" class="c-userfunc">ᵘs̲hade</a> <a href="demos-attention-attention.xtl.html#X">X</a> <a href="demos-attention-attention.xtl.html#u.a_ttend" class="c-userfunc">ᵘa̲ttend</a> <a href="demos-attention-attention.xtl.html#causal">causal</a></span>
+<span class="line" id="L53"><a class="ln" href="#L53">53</a></span>
+<span class="line" id="L54"><a class="ln" href="#L54">54</a><span class="c-comment">⍝</span><span class="c-comment"># &quot;... because it was wide&quot;: wide finds the street. &quot;it&quot; still finds</span></span>
+<span class="line" id="L55"><a class="ln" href="#L55">55</a><span class="c-comment">⍝</span><span class="c-comment"># the animal: one head reads each word alone, so &quot;it&quot; cannot know yet</span></span>
+<span class="line" id="L56"><a class="ln" href="#L56">56</a><span class="c-comment">⍝</span><span class="c-comment"># which word comes after it; resolving it takes another layer.</span></span>
+<span class="line" id="L57"><a class="ln" href="#L57">57</a>w ← <span class="c-number">1</span> <span class="c-number">3</span> <span class="c-number">12</span> <span class="c-number">15</span> <span class="c-number">13</span> <span class="c-number">1</span> <span class="c-number">7</span> <span class="c-number">20</span> <span class="c-number">11</span> <span class="c-number">14</span> <span class="c-number">18</span></span>
+<span class="line" id="L58"><a class="ln" href="#L58">58</a>B ← (<a href="demos-attention-attention.xtl.html#w">w</a> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="demos-attention-attention.xtl.html#F">F</a>) <a href="demos-attention-attention.xtl.html#u.a_ttend" class="c-userfunc">ᵘa̲ttend</a> <a href="demos-attention-attention.xtl.html#everyone">everyone</a></span>
+<span class="line" id="L59"><a class="ln" href="#L59">59</a><a href="demos-attention-attention.xtl.html#w">w</a> <a href="demos-attention-attention.xtl.html#u.t_op" class="c-userfunc">ᵘt̲op</a> <a href="demos-attention-attention.xtl.html#B">B</a></span>
+</div>
+</main>
+</body>
+</html>

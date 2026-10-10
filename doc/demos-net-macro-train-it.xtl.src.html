@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>demos/net-macro/train-it.xtl - X_eTaL doc</title>
+<link rel="stylesheet" href="style.css">
+<script src="theme.js"></script>
+<script defer src="search-index.js"></script>
+<script defer src="search.js"></script>
+</head>
+<body>
+<nav class="side">
+<a class="home" href="index.html">X_eTaL doc</a>
+<input id="search" type="search" autocomplete="off" placeholder="Search: a name, or a type" title="A name (mean finds m_ean), or a type: Num a =&gt; a -&gt; a -&gt; a finds +, m_ax ...">
+<h2>Files</h2>
+<h3>demos/attention/</h3>
+<ul>
+<li><a href="demos-attention-attention.xtl.html">attention.xtl</a></li>
+</ul>
+<h3>demos/backprop/</h3>
+<ul>
+<li><a href="demos-backprop-backprop.xtl.html">backprop.xtl</a></li>
+</ul>
+<h3>demos/cnn-backprop/</h3>
+<ul>
+<li><a href="demos-cnn-backprop-cnn-backprop.xtl.html">cnn-backprop.xtl</a></li>
+</ul>
+<h3>demos/cnn-digits/</h3>
+<ul>
+<li><a href="demos-cnn-digits-cnn-digits.xtl.html">cnn-digits.xtl</a></li>
+</ul>
+<h3>demos/k-means/</h3>
+<ul>
+<li><a href="demos-k-means-k-means.xtl.html">k-means.xtl</a></li>
+</ul>
+<h3>demos/moe-router/</h3>
+<ul>
+<li><a href="demos-moe-router-moe-router.xtl.html">moe-router.xtl</a></li>
+</ul>
+<h3>demos/net-macro/</h3>
+<ul>
+<li><a href="demos-net-macro-net-macro.xtl.html">net-macro.xtl</a></li>
+<li><a href="demos-net-macro-train-it.xtl.html">train-it.xtl</a></li>
+</ul>
+<h3>demos/ternary-net/</h3>
+<ul>
+<li><a href="demos-ternary-net-ternary-net.xtl.html">ternary-net.xtl</a></li>
+</ul>
+<h3>demos/train-live/</h3>
+<ul>
+<li><a href="demos-train-live-train-live.xtl.html">train-live.xtl</a></li>
+</ul>
+<h3>libs/Learn/demos/</h3>
+<ul>
+<li><a href="libs-Learn-demos-blobs.xtl.html">blobs.xtl</a></li>
+</ul>
+<h3>libs/Learn/src/</h3>
+<ul>
+<li><a href="libs-Learn-src-Learn.xtl.html">Learn.xtl</a></li>
+</ul>
+<h3>libs/Net/demos/</h3>
+<ul>
+<li><a href="libs-Net-demos-train-xor.xtl.html">train-xor.xtl</a></li>
+<li><a href="libs-Net-demos-xor.xtl.html">xor.xtl</a></li>
+</ul>
+<h3>libs/Net/src/</h3>
+<ul>
+<li><a href="libs-Net-src-Net.xtlm.html">Net.xtlm</a></li>
+</ul>
+<h3>libs/NN/demos/</h3>
+<ul>
+<li><a href="libs-NN-demos-xor.xtl.html">xor.xtl</a></li>
+</ul>
+<h3>libs/NN/src/</h3>
+<ul>
+<li><a href="libs-NN-src-NN.xtl.html">NN.xtl</a></li>
+</ul>
+<ul>
+<li><a href="builtins.html">built-ins</a></li>
+</ul>
+<h2>On this page</h2>
+<ul>
+<li class="item"><a href="#L13">n</a></li>
+<li class="item"><a href="#L14">i</a></li>
+<li class="item"><a href="#L15">arm</a></li>
+<li class="item"><a href="#L16">t</a></li>
+<li class="item"><a href="#L17">a</a></li>
+<li class="item"><a href="#L18">X</a></li>
+<li class="item"><a href="#L19">Y</a></li>
+<li class="item"><a href="#L20">lr</a></li>
+<li class="item"><a href="#L23"><span class="c-userfunc">ᵘs̲tep</span></a></li>
+<li class="item"><a href="#L25"><span class="c-userfunc">ᵘr̲andom</span></a></li>
+<li class="item"><a href="#L26">w1</a></li>
+<li class="item"><a href="#L27">w2</a></li>
+<li class="item"><a href="#L28">w3</a></li>
+<li class="item"><a href="#L29">s0</a></li>
+<li class="item"><a href="#L30"><span class="c-userfunc">ᵘs̲tart</span></a></li>
+<li class="item"><a href="#L35">v1</a></li>
+<li class="item"><a href="#L35">v2</a></li>
+<li class="item"><a href="#L35">v3</a></li>
+<li class="item"><a href="#L36"><span class="c-userfunc">ᵘt̲rained</span></a></li>
+<li class="item"><a href="#L38"><span class="c-userfunc">ᵘr̲ound</span></a></li>
+</ul>
+</nav>
+<main>
+<button class="theme" title="Light or dark">theme</button>
+<section id="results"></section>
+<h1><span class="kind">source</span><a href="demos-net-macro-train-it.xtl.html">demos/net-macro/train-it.xtl</a></h1>
+<div class="source"><span class="line" id="L1"><a class="ln" href="#L1">1</a><span class="c-comment">⍝</span><span class="c-comment">!/usr/bin/env xetal</span></span>
+<span class="line" id="L2"><a class="ln" href="#L2">2</a><span class="c-comment">⍝</span><span class="c-comment"># Training a network from its one-line spec: the Net macro library</span></span>
+<span class="line" id="L3"><a class="ln" href="#L3">3</a><span class="c-comment">⍝</span><span class="c-comment"># writes, from &quot;2 16 relu 16 relu 3 softmax&quot;, the network's backward</span></span>
+<span class="line" id="L4"><a class="ln" href="#L4">4</a><span class="c-comment">⍝</span><span class="c-comment"># pass and an Adam step (net:t_rain&lt;) and the starting state</span></span>
+<span class="line" id="L5"><a class="ln" href="#L5">5</a><span class="c-comment">⍝</span><span class="c-comment"># (net:s_tate&lt;); p_ower repeats the step. The task is net-macro's: which</span></span>
+<span class="line" id="L6"><a class="ln" href="#L6">6</a><span class="c-comment">⍝</span><span class="c-comment"># of three spiral arms is a point on? Here the 300 training points are</span></span>
+<span class="line" id="L7"><a class="ln" href="#L7">7</a><span class="c-comment">⍝</span><span class="c-comment"># made in X_eTaL, and the weights start small and random.</span></span>
+<span class="line" id="L8"><a class="ln" href="#L8">8</a></span>
+<span class="line" id="L9"><a class="ln" href="#L9">9</a><span class="c-libfunc">ⁿⁿ⁼</span><span class="c-macro">u̲se&lt;</span> <a href="libs-NN-src-NN.xtl.html" class="c-string">&quot;NN&quot;</a></span>
+<span class="line" id="L10"><a class="ln" href="#L10">10</a><span class="c-libfunc">ⁿᵉᵗ⁼</span><span class="c-macro">u̲se&lt;</span> <a href="libs-Net-src-Net.xtlm.html" class="c-string">&quot;Net&quot;</a></span>
+<span class="line" id="L11"><a class="ln" href="#L11">11</a></span>
+<span class="line" id="L12"><a class="ln" href="#L12">12</a><span class="c-comment">⍝</span><span class="c-comment">## The spiral: 100 points on each of three arms</span></span>
+<span class="line" id="L13"><a class="ln" href="#L13">13</a>n ← <span class="c-number">300</span></span>
+<span class="line" id="L14"><a class="ln" href="#L14">14</a>i ← <a href="builtins.html#o_ffsets" class="c-builtin">o̲ffsets</a> <a href="demos-net-macro-train-it.xtl.html#n">n</a></span>
+<span class="line" id="L15"><a class="ln" href="#L15">15</a>arm ← <a href="demos-net-macro-train-it.xtl.html#i">i</a> <a href="builtins.html#d_iv" class="c-builtin">d̲iv</a> <span class="c-number">100</span></span>
+<span class="line" id="L16"><a class="ln" href="#L16">16</a>t ← (<span class="c-number">0.5</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="demos-net-macro-train-it.xtl.html#i">i</a> <a href="builtins.html#m_od" class="c-builtin">m̲od</a> <span class="c-number">100</span>) <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-number">100.0</span></span>
+<span class="line" id="L17"><a class="ln" href="#L17">17</a>a ← (<span class="c-number">2.0944</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="demos-net-macro-train-it.xtl.html#arm">arm</a>) <a href="builtins.html#-2b" class="c-symbol">+</a> (<span class="c-number">5.5</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="demos-net-macro-train-it.xtl.html#t">t</a>) <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">0.1</span> <a href="builtins.html#-2a" class="c-symbol">×</a> (<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> (<a href="builtins.html#r_oll-21" class="c-builtin">r̲oll!</a> <a href="demos-net-macro-train-it.xtl.html#n">n</a> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">1001</span>) <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">501</span>) <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-number">500.0</span></span>
+<span class="line" id="L18"><a class="ln" href="#L18">18</a>X ← <a href="builtins.html#o_-5c" class="c-builtin">o̲\</a> (<span class="c-number">2</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="demos-net-macro-train-it.xtl.html#n">n</a>) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> ((<span class="c-number">0.1</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">0.9</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="demos-net-macro-train-it.xtl.html#t">t</a>) <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#c_os" class="c-builtin">c̲os</a> <a href="demos-net-macro-train-it.xtl.html#a">a</a>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-number">0.1</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">0.9</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="demos-net-macro-train-it.xtl.html#t">t</a>) <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#s_in" class="c-builtin">s̲in</a> <a href="demos-net-macro-train-it.xtl.html#a">a</a></span>
+<span class="line" id="L19"><a class="ln" href="#L19">19</a>Y ← <span class="c-number">3</span> <a href="libs-NN-src-NN.xtl.html#l.o_neHot" class="c-libfunc">ⁿⁿo̲neHot</a> <span class="c-number">1</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="demos-net-macro-train-it.xtl.html#arm">arm</a></span>
+<span class="line" id="L20"><a class="ln" href="#L20">20</a>lr ← <span class="c-number">0.02</span></span>
+<span class="line" id="L21"><a class="ln" href="#L21">21</a></span>
+<span class="line" id="L22"><a class="ln" href="#L22">22</a><span class="c-comment">⍝</span><span class="c-comment">## The network and its training, from one spec</span></span>
+<span class="line" id="L23"><a class="ln" href="#L23">23</a><span class="c-string">&quot;u:s_tep X Y lr&quot;</span> <a href="libs-Net-src-Net.xtlm.html#m.t_rain-3c" class="c-macro">ⁿᵉᵗt̲rain&lt;</a> <span class="c-string">&quot;2 16 relu 16 relu 3 softmax&quot;</span></span>
+<details class="expansion"><summary><code><a href="libs-Net-src-Net.xtlm.html#m.t_rain-3c" class="c-macro">ⁿᵉᵗt̲rain&lt;</a></code> expands to</summary><pre class="code"><span class="c-userfunc">ᵘs̲tep</span> ← { (W1, W2, W3, M1, M2, M3, V1, V2, V3, k) →
+  A0 ← <a href="demos-net-macro-train-it.xtl.html#X">X</a>
+  A1 ← <a href="libs-NN-src-NN.xtl.html#l.r_elu" class="c-libfunc">ⁿⁿr̲elu</a> A0 <a href="libs-NN-src-NN.xtl.html#l.d_ense" class="c-libfunc">ⁿⁿd̲ense</a> W1
+  A2 ← <a href="libs-NN-src-NN.xtl.html#l.r_elu" class="c-libfunc">ⁿⁿr̲elu</a> A1 <a href="libs-NN-src-NN.xtl.html#l.d_ense" class="c-libfunc">ⁿⁿd̲ense</a> W2
+  A3 ← <a href="libs-NN-src-NN.xtl.html#l.s_oftmax" class="c-libfunc">ⁿⁿs̲oftmax</a> A2 <a href="libs-NN-src-NN.xtl.html#l.d_ense" class="c-libfunc">ⁿⁿd̲ense</a> W3
+  D3 ← (A3 <a href="builtins.html#-2d" class="c-symbol">−</a> <a href="demos-net-macro-train-it.xtl.html#Y">Y</a>) <a href="builtins.html#-2f" class="c-symbol">÷</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> <a href="demos-net-macro-train-it.xtl.html#X">X</a>
+  D2 ← (D3 <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#i_nner" class="c-builtin">i̲nner</a> <a href="builtins.html#o_-5c" class="c-builtin">o̲\</a> <span class="c-number">-1</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> W3) <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> A2 <a href="builtins.html#-3e" class="c-symbol">&gt;</a> <span class="c-number">0.0</span>
+  D1 ← (D2 <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#i_nner" class="c-builtin">i̲nner</a> <a href="builtins.html#o_-5c" class="c-builtin">o̲\</a> <span class="c-number">-1</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> W2) <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> A1 <a href="builtins.html#-3e" class="c-symbol">&gt;</a> <span class="c-number">0.0</span>
+  G1 ← (<a href="builtins.html#o_-5c" class="c-builtin">o̲\</a> A0 <a href="builtins.html#c_at" class="c-builtin">c̲at₂</a> ((<a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> A0) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">1</span>) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">1.0</span>) <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#i_nner" class="c-builtin">i̲nner</a> D1
+  G2 ← (<a href="builtins.html#o_-5c" class="c-builtin">o̲\</a> A1 <a href="builtins.html#c_at" class="c-builtin">c̲at₂</a> ((<a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> A1) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">1</span>) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">1.0</span>) <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#i_nner" class="c-builtin">i̲nner</a> D2
+  G3 ← (<a href="builtins.html#o_-5c" class="c-builtin">o̲\</a> A2 <a href="builtins.html#c_at" class="c-builtin">c̲at₂</a> ((<a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> A2) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">1</span>) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">1.0</span>) <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#i_nner" class="c-builtin">i̲nner</a> D3
+  n ← <span class="c-number">1.0</span> <a href="builtins.html#-2b" class="c-symbol">+</a> k
+  m1 ← (<span class="c-number">0.9</span> <a href="builtins.html#-2a" class="c-symbol">×</a> M1) <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">0.1</span> <a href="builtins.html#-2a" class="c-symbol">×</a> G1
+  v1 ← (<span class="c-number">0.999</span> <a href="builtins.html#-2a" class="c-symbol">×</a> V1) <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">0.001</span> <a href="builtins.html#-2a" class="c-symbol">×</a> G1 <a href="builtins.html#-2a" class="c-symbol">×</a> G1
+  m2 ← (<span class="c-number">0.9</span> <a href="builtins.html#-2a" class="c-symbol">×</a> M2) <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">0.1</span> <a href="builtins.html#-2a" class="c-symbol">×</a> G2
+  v2 ← (<span class="c-number">0.999</span> <a href="builtins.html#-2a" class="c-symbol">×</a> V2) <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">0.001</span> <a href="builtins.html#-2a" class="c-symbol">×</a> G2 <a href="builtins.html#-2a" class="c-symbol">×</a> G2
+  m3 ← (<span class="c-number">0.9</span> <a href="builtins.html#-2a" class="c-symbol">×</a> M3) <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">0.1</span> <a href="builtins.html#-2a" class="c-symbol">×</a> G3
+  v3 ← (<span class="c-number">0.999</span> <a href="builtins.html#-2a" class="c-symbol">×</a> V3) <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">0.001</span> <a href="builtins.html#-2a" class="c-symbol">×</a> G3 <a href="builtins.html#-2a" class="c-symbol">×</a> G3
+  (W1 <a href="builtins.html#-2d" class="c-symbol">−</a> <a href="demos-net-macro-train-it.xtl.html#lr">lr</a> <a href="builtins.html#-2a" class="c-symbol">×</a> (m1 <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-number">1.0</span> <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">0.9</span> <a href="builtins.html#-5e" class="c-symbol">^</a> n) <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-number">0.00000001</span> <a href="builtins.html#-2b" class="c-symbol">+</a> (v1 <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-number">1.0</span> <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">0.999</span> <a href="builtins.html#-5e" class="c-symbol">^</a> n) <a href="builtins.html#-5e" class="c-symbol">^</a> <span class="c-number">0.5</span>, W2 <a href="builtins.html#-2d" class="c-symbol">−</a> <a href="demos-net-macro-train-it.xtl.html#lr">lr</a> <a href="builtins.html#-2a" class="c-symbol">×</a> (m2 <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-number">1.0</span> <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">0.9</span> <a href="builtins.html#-5e" class="c-symbol">^</a> n) <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-number">0.00000001</span> <a href="builtins.html#-2b" class="c-symbol">+</a> (v2 <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-number">1.0</span> <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">0.999</span> <a href="builtins.html#-5e" class="c-symbol">^</a> n) <a href="builtins.html#-5e" class="c-symbol">^</a> <span class="c-number">0.5</span>, W3 <a href="builtins.html#-2d" class="c-symbol">−</a> <a href="demos-net-macro-train-it.xtl.html#lr">lr</a> <a href="builtins.html#-2a" class="c-symbol">×</a> (m3 <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-number">1.0</span> <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">0.9</span> <a href="builtins.html#-5e" class="c-symbol">^</a> n) <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-number">0.00000001</span> <a href="builtins.html#-2b" class="c-symbol">+</a> (v3 <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-number">1.0</span> <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">0.999</span> <a href="builtins.html#-5e" class="c-symbol">^</a> n) <a href="builtins.html#-5e" class="c-symbol">^</a> <span class="c-number">0.5</span>, m1, m2, m3, v1, v2, v3, n)
+}</pre></details>
+<span class="line" id="L24"><a class="ln" href="#L24">24</a><span class="c-comment">⍝</span><span class="c-comment"># Small random weights of a shape (inputs + 1 by outputs), then the state.</span></span>
+<span class="line" id="L25"><a class="ln" href="#L25">25</a><span class="c-userfunc">ᵘr̲andom</span> ← { sh → sh <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> (<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> (<a href="builtins.html#r_oll-21" class="c-builtin">r̲oll!</a> (<span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> sh) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">2001</span>) <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1001</span>) <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-number">2000.0</span> }</span>
+<span class="line" id="L26"><a class="ln" href="#L26">26</a>w1 ← <a href="demos-net-macro-train-it.xtl.html#u.r_andom" class="c-userfunc">ᵘr̲andom</a> <span class="c-number">3</span> <span class="c-number">16</span></span>
+<span class="line" id="L27"><a class="ln" href="#L27">27</a>w2 ← <a href="demos-net-macro-train-it.xtl.html#u.r_andom" class="c-userfunc">ᵘr̲andom</a> <span class="c-number">17</span> <span class="c-number">16</span></span>
+<span class="line" id="L28"><a class="ln" href="#L28">28</a>w3 ← <a href="demos-net-macro-train-it.xtl.html#u.r_andom" class="c-userfunc">ᵘr̲andom</a> <span class="c-number">17</span> <span class="c-number">3</span></span>
+<span class="line" id="L29"><a class="ln" href="#L29">29</a>s0 ← @ <a href="libs-Net-src-Net.xtlm.html#m.s_tate-3c" class="c-macro">ⁿᵉᵗs̲tate&lt;</a> <span class="c-string">&quot;w1 w2 w3&quot;</span></span>
+<details class="expansion"><summary><code><a href="libs-Net-src-Net.xtlm.html#m.s_tate-3c" class="c-macro">ⁿᵉᵗs̲tate&lt;</a></code> expands to</summary><pre class="code">((<a href="demos-net-macro-train-it.xtl.html#w1">w1</a>, <a href="demos-net-macro-train-it.xtl.html#w2">w2</a>, <a href="demos-net-macro-train-it.xtl.html#w3">w3</a>, <span class="c-number">0.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="demos-net-macro-train-it.xtl.html#w1">w1</a>, <span class="c-number">0.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="demos-net-macro-train-it.xtl.html#w2">w2</a>, <span class="c-number">0.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="demos-net-macro-train-it.xtl.html#w3">w3</a>, <span class="c-number">0.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="demos-net-macro-train-it.xtl.html#w1">w1</a>, <span class="c-number">0.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="demos-net-macro-train-it.xtl.html#w2">w2</a>, <span class="c-number">0.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="demos-net-macro-train-it.xtl.html#w3">w3</a>, <span class="c-number">0.0</span>))</pre></details>
+<span class="line" id="L30"><a class="ln" href="#L30">30</a><span class="c-userfunc">ᵘs̲tart</span> ← <span class="c-string">&quot;2 16 relu 16 relu 3 softmax&quot;</span> <a href="libs-Net-src-Net.xtlm.html#m.n_etwork-3c" class="c-macro">ⁿᵉᵗn̲etwork&lt;</a> <span class="c-string">&quot;w1 w2 w3&quot;</span></span>
+<details class="expansion"><summary><code><a href="libs-Net-src-Net.xtlm.html#m.n_etwork-3c" class="c-macro">ⁿᵉᵗn̲etwork&lt;</a></code> expands to</summary><pre class="code">({ x → <a href="libs-NN-src-NN.xtl.html#l.s_oftmax" class="c-libfunc">ⁿⁿs̲oftmax</a> (<a href="libs-NN-src-NN.xtl.html#l.r_elu" class="c-libfunc">ⁿⁿr̲elu</a> (<a href="libs-NN-src-NN.xtl.html#l.r_elu" class="c-libfunc">ⁿⁿr̲elu</a> x <a href="libs-NN-src-NN.xtl.html#l.d_ense" class="c-libfunc">ⁿⁿd̲ense</a> <a href="demos-net-macro-train-it.xtl.html#w1">w1</a>) <a href="libs-NN-src-NN.xtl.html#l.d_ense" class="c-libfunc">ⁿⁿd̲ense</a> <a href="demos-net-macro-train-it.xtl.html#w2">w2</a>) <a href="libs-NN-src-NN.xtl.html#l.d_ense" class="c-libfunc">ⁿⁿd̲ense</a> <a href="demos-net-macro-train-it.xtl.html#w3">w3</a> })</pre></details>
+<span class="line" id="L31"><a class="ln" href="#L31">31</a><span class="c-comment">⍝</span><span class="c-comment"> -- end of the core ------------------------------------------</span></span>
+<span class="line" id="L32"><a class="ln" href="#L32">32</a></span>
+<span class="line" id="L33"><a class="ln" href="#L33">33</a><span class="c-comment">⍝</span><span class="c-comment"># Four hundred steps; then the trained weights, out of the state, and</span></span>
+<span class="line" id="L34"><a class="ln" href="#L34">34</a><span class="c-comment">⍝</span><span class="c-comment"># the network on them.</span></span>
+<span class="line" id="L35"><a class="ln" href="#L35">35</a>(<a href="demos-net-macro-train-it.xtl.html#v1">v1</a>, <a href="demos-net-macro-train-it.xtl.html#v2">v2</a>, <a href="demos-net-macro-train-it.xtl.html#v3">v3</a>, _, _, _, _, _, _, _) ← <span class="c-number">400</span> <span class="c-userfunc">'</span><a href="demos-net-macro-train-it.xtl.html#u.s_tep" class="c-userfunc">ᵘs̲tep</a> <a href="builtins.html#p_ower" class="c-builtin">p̲ower</a> <a href="demos-net-macro-train-it.xtl.html#s0">s0</a></span>
+<span class="line" id="L36"><a class="ln" href="#L36">36</a><span class="c-userfunc">ᵘt̲rained</span> ← <span class="c-string">&quot;2 16 relu 16 relu 3 softmax&quot;</span> <a href="libs-Net-src-Net.xtlm.html#m.n_etwork-3c" class="c-macro">ⁿᵉᵗn̲etwork&lt;</a> <span class="c-string">&quot;v1 v2 v3&quot;</span></span>
+<details class="expansion"><summary><code><a href="libs-Net-src-Net.xtlm.html#m.n_etwork-3c" class="c-macro">ⁿᵉᵗn̲etwork&lt;</a></code> expands to</summary><pre class="code">({ x → <a href="libs-NN-src-NN.xtl.html#l.s_oftmax" class="c-libfunc">ⁿⁿs̲oftmax</a> (<a href="libs-NN-src-NN.xtl.html#l.r_elu" class="c-libfunc">ⁿⁿr̲elu</a> (<a href="libs-NN-src-NN.xtl.html#l.r_elu" class="c-libfunc">ⁿⁿr̲elu</a> x <a href="libs-NN-src-NN.xtl.html#l.d_ense" class="c-libfunc">ⁿⁿd̲ense</a> <a href="demos-net-macro-train-it.xtl.html#v1">v1</a>) <a href="libs-NN-src-NN.xtl.html#l.d_ense" class="c-libfunc">ⁿⁿd̲ense</a> <a href="demos-net-macro-train-it.xtl.html#v2">v2</a>) <a href="libs-NN-src-NN.xtl.html#l.d_ense" class="c-libfunc">ⁿⁿd̲ense</a> <a href="demos-net-macro-train-it.xtl.html#v3">v3</a> })</pre></details>
+<span class="line" id="L37"><a class="ln" href="#L37">37</a><span class="c-comment">⍝</span><span class="c-comment"># The loss and the share of the 300 points right, before and after.</span></span>
+<span class="line" id="L38"><a class="ln" href="#L38">38</a><span class="c-userfunc">ᵘr̲ound</span> ← { a → (<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> <span class="c-number">0.5</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">10000.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> a) <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-number">10000.0</span> }</span>
+<span class="line" id="L39"><a class="ln" href="#L39">39</a><a href="demos-net-macro-train-it.xtl.html#u.r_ound" class="c-userfunc">ᵘr̲ound</a> (<a href="demos-net-macro-train-it.xtl.html#Y">Y</a> <a href="libs-NN-src-NN.xtl.html#l.c_rossEntropy" class="c-libfunc">ⁿⁿc̲rossEntropy</a> <a href="demos-net-macro-train-it.xtl.html#u.s_tart" class="c-userfunc">ᵘs̲tart</a> <a href="demos-net-macro-train-it.xtl.html#X">X</a>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="demos-net-macro-train-it.xtl.html#Y">Y</a> <a href="libs-NN-src-NN.xtl.html#l.c_rossEntropy" class="c-libfunc">ⁿⁿc̲rossEntropy</a> <a href="demos-net-macro-train-it.xtl.html#u.t_rained" class="c-userfunc">ᵘt̲rained</a> <a href="demos-net-macro-train-it.xtl.html#X">X</a></span>
+<span class="line" id="L40"><a class="ln" href="#L40">40</a><a href="demos-net-macro-train-it.xtl.html#u.r_ound" class="c-userfunc">ᵘr̲ound</a> ((<span class="c-number">1</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="demos-net-macro-train-it.xtl.html#arm">arm</a>) <a href="libs-NN-src-NN.xtl.html#l.a_ccuracy" class="c-libfunc">ⁿⁿa̲ccuracy</a> <a href="demos-net-macro-train-it.xtl.html#u.s_tart" class="c-userfunc">ᵘs̲tart</a> <a href="demos-net-macro-train-it.xtl.html#X">X</a>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-number">1</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="demos-net-macro-train-it.xtl.html#arm">arm</a>) <a href="libs-NN-src-NN.xtl.html#l.a_ccuracy" class="c-libfunc">ⁿⁿa̲ccuracy</a> <a href="demos-net-macro-train-it.xtl.html#u.t_rained" class="c-userfunc">ᵘt̲rained</a> <a href="demos-net-macro-train-it.xtl.html#X">X</a></span>
+</div>
+</main>
+</body>
+</html>

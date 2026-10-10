@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>demos/net-macro/net-macro.xtl - X_eTaL doc</title>
+<link rel="stylesheet" href="style.css">
+<script src="theme.js"></script>
+<script defer src="search-index.js"></script>
+<script defer src="search.js"></script>
+</head>
+<body>
+<nav class="side">
+<a class="home" href="index.html">X_eTaL doc</a>
+<input id="search" type="search" autocomplete="off" placeholder="Search: a name, or a type" title="A name (mean finds m_ean), or a type: Num a =&gt; a -&gt; a -&gt; a finds +, m_ax ...">
+<h2>Files</h2>
+<h3>demos/attention/</h3>
+<ul>
+<li><a href="demos-attention-attention.xtl.html">attention.xtl</a></li>
+</ul>
+<h3>demos/backprop/</h3>
+<ul>
+<li><a href="demos-backprop-backprop.xtl.html">backprop.xtl</a></li>
+</ul>
+<h3>demos/cnn-backprop/</h3>
+<ul>
+<li><a href="demos-cnn-backprop-cnn-backprop.xtl.html">cnn-backprop.xtl</a></li>
+</ul>
+<h3>demos/cnn-digits/</h3>
+<ul>
+<li><a href="demos-cnn-digits-cnn-digits.xtl.html">cnn-digits.xtl</a></li>
+</ul>
+<h3>demos/k-means/</h3>
+<ul>
+<li><a href="demos-k-means-k-means.xtl.html">k-means.xtl</a></li>
+</ul>
+<h3>demos/moe-router/</h3>
+<ul>
+<li><a href="demos-moe-router-moe-router.xtl.html">moe-router.xtl</a></li>
+</ul>
+<h3>demos/net-macro/</h3>
+<ul>
+<li><a href="demos-net-macro-net-macro.xtl.html">net-macro.xtl</a></li>
+<li><a href="demos-net-macro-train-it.xtl.html">train-it.xtl</a></li>
+</ul>
+<h3>demos/ternary-net/</h3>
+<ul>
+<li><a href="demos-ternary-net-ternary-net.xtl.html">ternary-net.xtl</a></li>
+</ul>
+<h3>demos/train-live/</h3>
+<ul>
+<li><a href="demos-train-live-train-live.xtl.html">train-live.xtl</a></li>
+</ul>
+<h3>libs/Learn/demos/</h3>
+<ul>
+<li><a href="libs-Learn-demos-blobs.xtl.html">blobs.xtl</a></li>
+</ul>
+<h3>libs/Learn/src/</h3>
+<ul>
+<li><a href="libs-Learn-src-Learn.xtl.html">Learn.xtl</a></li>
+</ul>
+<h3>libs/Net/demos/</h3>
+<ul>
+<li><a href="libs-Net-demos-train-xor.xtl.html">train-xor.xtl</a></li>
+<li><a href="libs-Net-demos-xor.xtl.html">xor.xtl</a></li>
+</ul>
+<h3>libs/Net/src/</h3>
+<ul>
+<li><a href="libs-Net-src-Net.xtlm.html">Net.xtlm</a></li>
+</ul>
+<h3>libs/NN/demos/</h3>
+<ul>
+<li><a href="libs-NN-demos-xor.xtl.html">xor.xtl</a></li>
+</ul>
+<h3>libs/NN/src/</h3>
+<ul>
+<li><a href="libs-NN-src-NN.xtl.html">NN.xtl</a></li>
+</ul>
+<ul>
+<li><a href="builtins.html">built-ins</a></li>
+</ul>
+<h2>On this page</h2>
+<ul>
+<li class="item"><a href="#L13">nums</a></li>
+<li class="item"><a href="#L14">pts</a></li>
+<li class="item"><a href="#L15">xy</a></li>
+<li class="item"><a href="#L16">arm</a></li>
+<li class="item"><a href="#L23">a1</a></li>
+<li class="item"><a href="#L23"><span class="c-userfunc">ᵘl̲inear</span></a></li>
+<li class="item"><a href="#L24">b1</a></li>
+<li class="item"><a href="#L24">b2</a></li>
+<li class="item"><a href="#L24"><span class="c-userfunc">ᵘs̲mall</span></a></li>
+<li class="item"><a href="#L25">c1</a></li>
+<li class="item"><a href="#L25">c2</a></li>
+<li class="item"><a href="#L25">c3</a></li>
+<li class="item"><a href="#L25"><span class="c-userfunc">ᵘd̲eep</span></a></li>
+<li class="item"><a href="#L35">g</a></li>
+<li class="item"><a href="#L36">c</a></li>
+<li class="item"><a href="#L37">grid</a></li>
+<li class="item"><a href="#L38"><span class="c-userfunc">ᵘa̲rms</span></a></li>
+</ul>
+</nav>
+<main>
+<button class="theme" title="Light or dark">theme</button>
+<section id="results"></section>
+<h1><span class="kind">source</span><a href="demos-net-macro-net-macro.xtl.html">demos/net-macro/net-macro.xtl</a></h1>
+<div class="source"><span class="line" id="L1"><a class="ln" href="#L1">1</a><span class="c-comment">⍝</span><span class="c-comment">!/usr/bin/env xetal</span></span>
+<span class="line" id="L2"><a class="ln" href="#L2">2</a><span class="c-comment">⍝</span><span class="c-comment"># Three networks for one task (which of three spiral arms is a point</span></span>
+<span class="line" id="L3"><a class="ln" href="#L3">3</a><span class="c-comment">⍝</span><span class="c-comment"># on?), each described once, by one line: the Net macro library turns</span></span>
+<span class="line" id="L4"><a class="ln" href="#L4">4</a><span class="c-comment">⍝</span><span class="c-comment"># a spec, sizes and activations, into the loading of the weights and</span></span>
+<span class="line" id="L5"><a class="ln" href="#L5">5</a><span class="c-comment">⍝</span><span class="c-comment"># an ordinary function of NN calls before the program is compiled.</span></span>
+<span class="line" id="L6"><a class="ln" href="#L6">6</a><span class="c-comment">⍝</span><span class="c-comment"># xetal expand shows what it wrote.</span></span>
+<span class="line" id="L7"><a class="ln" href="#L7">7</a></span>
+<span class="line" id="L8"><a class="ln" href="#L8">8</a><span class="c-libfunc">ⁿⁿ⁼</span><span class="c-macro">u̲se&lt;</span> <a href="libs-NN-src-NN.xtl.html" class="c-string">&quot;NN&quot;</a></span>
+<span class="line" id="L9"><a class="ln" href="#L9">9</a><span class="c-libfunc">ⁿᵉᵗ⁼</span><span class="c-macro">u̲se&lt;</span> <a href="libs-Net-src-Net.xtlm.html" class="c-string">&quot;Net&quot;</a></span>
+<span class="line" id="L10"><a class="ln" href="#L10">10</a></span>
+<span class="line" id="L11"><a class="ln" href="#L11">11</a><span class="c-comment">⍝</span><span class="c-comment">## The data, read from data/ (just net-train)</span></span>
+<span class="line" id="L12"><a class="ln" href="#L12">12</a><span class="c-comment">⍝</span><span class="c-comment"># The test points, one per line: x, y and the arm (1, 2 or 3).</span></span>
+<span class="line" id="L13"><a class="ln" href="#L13">13</a>nums ← <a href="builtins.html#n_umbers" class="c-builtin">n̲umbers</a> <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;data/points.txt&quot;</span></span>
+<span class="line" id="L14"><a class="ln" href="#L14">14</a>pts ← <a href="builtins.html#o_-5c" class="c-builtin">o̲\</a> (((<a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> <a href="demos-net-macro-net-macro.xtl.html#nums">nums</a>) <a href="builtins.html#d_iv" class="c-builtin">d̲iv</a> <span class="c-number">3</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">3</span>) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <a href="demos-net-macro-net-macro.xtl.html#nums">nums</a></span>
+<span class="line" id="L15"><a class="ln" href="#L15">15</a>xy ← <a href="builtins.html#o_-5c" class="c-builtin">o̲\</a> <span class="c-number">2</span> <a href="builtins.html#t_ake" class="c-builtin">t̲ake</a> <a href="demos-net-macro-net-macro.xtl.html#pts">pts</a></span>
+<span class="line" id="L16"><a class="ln" href="#L16">16</a>arm ← <a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> <span class="c-number">3</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="demos-net-macro-net-macro.xtl.html#pts">pts</a></span>
+<span class="line" id="L17"><a class="ln" href="#L17">17</a></span>
+<span class="line" id="L18"><a class="ln" href="#L18">18</a><span class="c-comment">⍝</span><span class="c-comment">## The networks: each described once</span></span>
+<span class="line" id="L19"><a class="ln" href="#L19">19</a><span class="c-comment">⍝</span><span class="c-comment"># From a spec the macro writes the loading of each dense layer's</span></span>
+<span class="line" id="L20"><a class="ln" href="#L20">20</a><span class="c-comment">⍝</span><span class="c-comment"># weights (data/a1.txt, ...: inputs + 1 by outputs, the bias last; the</span></span>
+<span class="line" id="L21"><a class="ln" href="#L21">21</a><span class="c-comment">⍝</span><span class="c-comment"># program stops, naming the layer, if a file holds the wrong count)</span></span>
+<span class="line" id="L22"><a class="ln" href="#L22">22</a><span class="c-comment">⍝</span><span class="c-comment"># and the forward function.</span></span>
+<span class="line" id="L23"><a class="ln" href="#L23">23</a><span class="c-string">&quot;u:l_inear a&quot;</span> <a href="libs-Net-src-Net.xtlm.html#m.m_odel-3c" class="c-macro">ⁿᵉᵗm̲odel&lt;</a> <span class="c-string">&quot;2 3 softmax&quot;</span></span>
+<details class="expansion"><summary><code><a href="libs-Net-src-Net.xtlm.html#m.m_odel-3c" class="c-macro">ⁿᵉᵗm̲odel&lt;</a></code> expands to</summary><pre class="code">a1 ← { v → <span class="c-number">9</span> <a href="builtins.html#-3d" class="c-symbol">=</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> v ? <span class="c-number">3</span> <span class="c-number">3</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> v◆ <a href="builtins.html#-5b-5dP_ANIC" class="c-builtin">⎕P̲ANIC</a> <span class="c-string">&quot;data/a1.txt holds &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> v) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; numbers; layer 1 of \&quot;2 3 softmax\&quot; (2 inputs and a bias, 3 outputs) needs 9&quot;</span> } <a href="builtins.html#n_umbers" class="c-builtin">n̲umbers</a> <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;data/a1.txt&quot;</span>
+<span class="c-userfunc">ᵘl̲inear</span> ← { x → <a href="libs-NN-src-NN.xtl.html#l.s_oftmax" class="c-libfunc">ⁿⁿs̲oftmax</a> x <a href="libs-NN-src-NN.xtl.html#l.d_ense" class="c-libfunc">ⁿⁿd̲ense</a> <a href="demos-net-macro-net-macro.xtl.html#a1">a1</a> }</pre></details>
+<span class="line" id="L24"><a class="ln" href="#L24">24</a><span class="c-string">&quot;u:s_mall b&quot;</span> <a href="libs-Net-src-Net.xtlm.html#m.m_odel-3c" class="c-macro">ⁿᵉᵗm̲odel&lt;</a> <span class="c-string">&quot;2 4 tanh 3 softmax&quot;</span></span>
+<details class="expansion"><summary><code><a href="libs-Net-src-Net.xtlm.html#m.m_odel-3c" class="c-macro">ⁿᵉᵗm̲odel&lt;</a></code> expands to</summary><pre class="code">b1 ← { v → <span class="c-number">12</span> <a href="builtins.html#-3d" class="c-symbol">=</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> v ? <span class="c-number">3</span> <span class="c-number">4</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> v◆ <a href="builtins.html#-5b-5dP_ANIC" class="c-builtin">⎕P̲ANIC</a> <span class="c-string">&quot;data/b1.txt holds &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> v) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; numbers; layer 1 of \&quot;2 4 tanh 3 softmax\&quot; (2 inputs and a bias, 4 outputs) needs 12&quot;</span> } <a href="builtins.html#n_umbers" class="c-builtin">n̲umbers</a> <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;data/b1.txt&quot;</span>
+b2 ← { v → <span class="c-number">15</span> <a href="builtins.html#-3d" class="c-symbol">=</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> v ? <span class="c-number">5</span> <span class="c-number">3</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> v◆ <a href="builtins.html#-5b-5dP_ANIC" class="c-builtin">⎕P̲ANIC</a> <span class="c-string">&quot;data/b2.txt holds &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> v) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; numbers; layer 2 of \&quot;2 4 tanh 3 softmax\&quot; (4 inputs and a bias, 3 outputs) needs 15&quot;</span> } <a href="builtins.html#n_umbers" class="c-builtin">n̲umbers</a> <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;data/b2.txt&quot;</span>
+<span class="c-userfunc">ᵘs̲mall</span> ← { x → <a href="libs-NN-src-NN.xtl.html#l.s_oftmax" class="c-libfunc">ⁿⁿs̲oftmax</a> (<a href="libs-NN-src-NN.xtl.html#l.t_anh" class="c-libfunc">ⁿⁿt̲anh</a> x <a href="libs-NN-src-NN.xtl.html#l.d_ense" class="c-libfunc">ⁿⁿd̲ense</a> <a href="demos-net-macro-net-macro.xtl.html#b1">b1</a>) <a href="libs-NN-src-NN.xtl.html#l.d_ense" class="c-libfunc">ⁿⁿd̲ense</a> <a href="demos-net-macro-net-macro.xtl.html#b2">b2</a> }</pre></details>
+<span class="line" id="L25"><a class="ln" href="#L25">25</a><span class="c-string">&quot;u:d_eep c&quot;</span> <a href="libs-Net-src-Net.xtlm.html#m.m_odel-3c" class="c-macro">ⁿᵉᵗm̲odel&lt;</a> <span class="c-string">&quot;2 16 relu 16 relu 3 softmax&quot;</span></span>
+<details class="expansion"><summary><code><a href="libs-Net-src-Net.xtlm.html#m.m_odel-3c" class="c-macro">ⁿᵉᵗm̲odel&lt;</a></code> expands to</summary><pre class="code">c1 ← { v → <span class="c-number">48</span> <a href="builtins.html#-3d" class="c-symbol">=</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> v ? <span class="c-number">3</span> <span class="c-number">16</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> v◆ <a href="builtins.html#-5b-5dP_ANIC" class="c-builtin">⎕P̲ANIC</a> <span class="c-string">&quot;data/c1.txt holds &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> v) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; numbers; layer 1 of \&quot;2 16 relu 16 relu 3 softmax\&quot; (2 inputs and a bias, 16 outputs) needs 48&quot;</span> } <a href="builtins.html#n_umbers" class="c-builtin">n̲umbers</a> <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;data/c1.txt&quot;</span>
+c2 ← { v → <span class="c-number">272</span> <a href="builtins.html#-3d" class="c-symbol">=</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> v ? <span class="c-number">17</span> <span class="c-number">16</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> v◆ <a href="builtins.html#-5b-5dP_ANIC" class="c-builtin">⎕P̲ANIC</a> <span class="c-string">&quot;data/c2.txt holds &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> v) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; numbers; layer 2 of \&quot;2 16 relu 16 relu 3 softmax\&quot; (16 inputs and a bias, 16 outputs) needs 272&quot;</span> } <a href="builtins.html#n_umbers" class="c-builtin">n̲umbers</a> <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;data/c2.txt&quot;</span>
+c3 ← { v → <span class="c-number">51</span> <a href="builtins.html#-3d" class="c-symbol">=</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> v ? <span class="c-number">17</span> <span class="c-number">3</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> v◆ <a href="builtins.html#-5b-5dP_ANIC" class="c-builtin">⎕P̲ANIC</a> <span class="c-string">&quot;data/c3.txt holds &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> v) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; numbers; layer 3 of \&quot;2 16 relu 16 relu 3 softmax\&quot; (16 inputs and a bias, 3 outputs) needs 51&quot;</span> } <a href="builtins.html#n_umbers" class="c-builtin">n̲umbers</a> <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;data/c3.txt&quot;</span>
+<span class="c-userfunc">ᵘd̲eep</span> ← { x → <a href="libs-NN-src-NN.xtl.html#l.s_oftmax" class="c-libfunc">ⁿⁿs̲oftmax</a> (<a href="libs-NN-src-NN.xtl.html#l.r_elu" class="c-libfunc">ⁿⁿr̲elu</a> (<a href="libs-NN-src-NN.xtl.html#l.r_elu" class="c-libfunc">ⁿⁿr̲elu</a> x <a href="libs-NN-src-NN.xtl.html#l.d_ense" class="c-libfunc">ⁿⁿd̲ense</a> <a href="demos-net-macro-net-macro.xtl.html#c1">c1</a>) <a href="libs-NN-src-NN.xtl.html#l.d_ense" class="c-libfunc">ⁿⁿd̲ense</a> <a href="demos-net-macro-net-macro.xtl.html#c2">c2</a>) <a href="libs-NN-src-NN.xtl.html#l.d_ense" class="c-libfunc">ⁿⁿd̲ense</a> <a href="demos-net-macro-net-macro.xtl.html#c3">c3</a> }</pre></details>
+<span class="line" id="L26"><a class="ln" href="#L26">26</a><span class="c-comment">⍝</span><span class="c-comment"> -- end of the core --------------------------------------</span></span>
+<span class="line" id="L27"><a class="ln" href="#L27">27</a></span>
+<span class="line" id="L28"><a class="ln" href="#L28">28</a><span class="c-comment">⍝</span><span class="c-comment"> How many numbers each has to learn, counted by the macro when the</span></span>
+<span class="line" id="L29"><a class="ln" href="#L29">29</a><span class="c-comment">⍝</span><span class="c-comment"> program is compiled.</span></span>
+<span class="line" id="L30"><a class="ln" href="#L30">30</a>(<span class="c-string">&quot;2 3 softmax&quot;</span> <a href="libs-Net-src-Net.xtlm.html#m.p_arams-3c" class="c-macro">ⁿᵉᵗp̲arams&lt;</a> @) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot;2 4 tanh 3 softmax&quot;</span> <a href="libs-Net-src-Net.xtlm.html#m.p_arams-3c" class="c-macro">ⁿᵉᵗp̲arams&lt;</a> @) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;2 16 relu 16 relu 3 softmax&quot;</span> <a href="libs-Net-src-Net.xtlm.html#m.p_arams-3c" class="c-macro">ⁿᵉᵗp̲arams&lt;</a> @</span>
+<details class="expansion"><summary><code><a href="libs-Net-src-Net.xtlm.html#m.p_arams-3c" class="c-macro">ⁿᵉᵗp̲arams&lt;</a></code> expands to</summary><pre class="code">(<span class="c-number">9</span>)</pre></details>
+<details class="expansion"><summary><code><a href="libs-Net-src-Net.xtlm.html#m.p_arams-3c" class="c-macro">ⁿᵉᵗp̲arams&lt;</a></code> expands to</summary><pre class="code">(<span class="c-number">27</span>)</pre></details>
+<details class="expansion"><summary><code><a href="libs-Net-src-Net.xtlm.html#m.p_arams-3c" class="c-macro">ⁿᵉᵗp̲arams&lt;</a></code> expands to</summary><pre class="code">(<span class="c-number">371</span>)</pre></details>
+<span class="line" id="L31"><a class="ln" href="#L31">31</a><span class="c-comment">⍝</span><span class="c-comment"> The share of the 120 test points each reads right: a line cannot</span></span>
+<span class="line" id="L32"><a class="ln" href="#L32">32</a><span class="c-comment">⍝</span><span class="c-comment"> follow a spiral, a small network nearly can, the deep one does.</span></span>
+<span class="line" id="L33"><a class="ln" href="#L33">33</a>(<a href="demos-net-macro-net-macro.xtl.html#arm">arm</a> <a href="libs-NN-src-NN.xtl.html#l.a_ccuracy" class="c-libfunc">ⁿⁿa̲ccuracy</a> <a href="demos-net-macro-net-macro.xtl.html#u.l_inear" class="c-userfunc">ᵘl̲inear</a> <a href="demos-net-macro-net-macro.xtl.html#xy">xy</a>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="demos-net-macro-net-macro.xtl.html#arm">arm</a> <a href="libs-NN-src-NN.xtl.html#l.a_ccuracy" class="c-libfunc">ⁿⁿa̲ccuracy</a> <a href="demos-net-macro-net-macro.xtl.html#u.s_mall" class="c-userfunc">ᵘs̲mall</a> <a href="demos-net-macro-net-macro.xtl.html#xy">xy</a>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="demos-net-macro-net-macro.xtl.html#arm">arm</a> <a href="libs-NN-src-NN.xtl.html#l.a_ccuracy" class="c-libfunc">ⁿⁿa̲ccuracy</a> <a href="demos-net-macro-net-macro.xtl.html#u.d_eep" class="c-userfunc">ᵘd̲eep</a> <a href="demos-net-macro-net-macro.xtl.html#xy">xy</a></span>
+<span class="line" id="L34"><a class="ln" href="#L34">34</a><span class="c-comment">⍝</span><span class="c-comment"># What each decides over the square -1.1 .. 1.1 (A, B, C: the arms).</span></span>
+<span class="line" id="L35"><a class="ln" href="#L35">35</a>g ← <span class="c-number">20</span></span>
+<span class="line" id="L36"><a class="ln" href="#L36">36</a>c ← <span class="c-number">-1.1</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">2.2</span> <a href="builtins.html#-2a" class="c-symbol">×</a> (<span class="c-number">0.5</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="builtins.html#o_ffsets" class="c-builtin">o̲ffsets</a> <a href="demos-net-macro-net-macro.xtl.html#g">g</a>) <a href="builtins.html#-2f" class="c-symbol">÷</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="demos-net-macro-net-macro.xtl.html#g">g</a></span>
+<span class="line" id="L37"><a class="ln" href="#L37">37</a>grid ← <a href="builtins.html#o_-5c" class="c-builtin">o̲\</a> (<span class="c-number">2</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="demos-net-macro-net-macro.xtl.html#g">g</a> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="demos-net-macro-net-macro.xtl.html#g">g</a>) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> (<a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> (<a href="builtins.html#o_ffsets" class="c-builtin">o̲ffsets</a> <a href="demos-net-macro-net-macro.xtl.html#g">g</a>) <span class="c-builtin">'</span><a href="builtins.html#r_ight" class="c-builtin">r̲ight</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> <a href="demos-net-macro-net-macro.xtl.html#c">c</a>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> (<a href="builtins.html#r_ev" class="c-builtin">r̲ev</a> <a href="demos-net-macro-net-macro.xtl.html#c">c</a>) <span class="c-builtin">'</span><a href="builtins.html#l_eft" class="c-builtin">l̲eft</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> <a href="builtins.html#o_ffsets" class="c-builtin">o̲ffsets</a> <a href="demos-net-macro-net-macro.xtl.html#g">g</a></span>
+<span class="line" id="L38"><a class="ln" href="#L38">38</a><span class="c-userfunc">ᵘa̲rms</span> ← { y → (<a href="demos-net-macro-net-macro.xtl.html#g">g</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="demos-net-macro-net-macro.xtl.html#g">g</a>) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> (<a href="libs-NN-src-NN.xtl.html#l.a_rgmax" class="c-libfunc">ⁿⁿa̲rgmax</a> y) <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="builtins.html#-5b-5dA" class="c-builtin">⎕A</a> }</span>
+<span class="line" id="L39"><a class="ln" href="#L39">39</a><a href="demos-net-macro-net-macro.xtl.html#u.a_rms" class="c-userfunc">ᵘa̲rms</a> <a href="demos-net-macro-net-macro.xtl.html#u.l_inear" class="c-userfunc">ᵘl̲inear</a> <a href="demos-net-macro-net-macro.xtl.html#grid">grid</a></span>
+<span class="line" id="L40"><a class="ln" href="#L40">40</a><a href="demos-net-macro-net-macro.xtl.html#u.a_rms" class="c-userfunc">ᵘa̲rms</a> <a href="demos-net-macro-net-macro.xtl.html#u.s_mall" class="c-userfunc">ᵘs̲mall</a> <a href="demos-net-macro-net-macro.xtl.html#grid">grid</a></span>
+<span class="line" id="L41"><a class="ln" href="#L41">41</a><a href="demos-net-macro-net-macro.xtl.html#u.a_rms" class="c-userfunc">ᵘa̲rms</a> <a href="demos-net-macro-net-macro.xtl.html#u.d_eep" class="c-userfunc">ᵘd̲eep</a> <a href="demos-net-macro-net-macro.xtl.html#grid">grid</a></span>
+</div>
+</main>
+</body>
+</html>

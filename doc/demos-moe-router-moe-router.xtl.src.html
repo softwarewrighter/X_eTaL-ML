@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>demos/moe-router/moe-router.xtl - X_eTaL doc</title>
+<link rel="stylesheet" href="style.css">
+<script src="theme.js"></script>
+<script defer src="search-index.js"></script>
+<script defer src="search.js"></script>
+</head>
+<body>
+<nav class="side">
+<a class="home" href="index.html">X_eTaL doc</a>
+<input id="search" type="search" autocomplete="off" placeholder="Search: a name, or a type" title="A name (mean finds m_ean), or a type: Num a =&gt; a -&gt; a -&gt; a finds +, m_ax ...">
+<h2>Files</h2>
+<h3>demos/attention/</h3>
+<ul>
+<li><a href="demos-attention-attention.xtl.html">attention.xtl</a></li>
+</ul>
+<h3>demos/backprop/</h3>
+<ul>
+<li><a href="demos-backprop-backprop.xtl.html">backprop.xtl</a></li>
+</ul>
+<h3>demos/cnn-backprop/</h3>
+<ul>
+<li><a href="demos-cnn-backprop-cnn-backprop.xtl.html">cnn-backprop.xtl</a></li>
+</ul>
+<h3>demos/cnn-digits/</h3>
+<ul>
+<li><a href="demos-cnn-digits-cnn-digits.xtl.html">cnn-digits.xtl</a></li>
+</ul>
+<h3>demos/k-means/</h3>
+<ul>
+<li><a href="demos-k-means-k-means.xtl.html">k-means.xtl</a></li>
+</ul>
+<h3>demos/moe-router/</h3>
+<ul>
+<li><a href="demos-moe-router-moe-router.xtl.html">moe-router.xtl</a></li>
+</ul>
+<h3>demos/net-macro/</h3>
+<ul>
+<li><a href="demos-net-macro-net-macro.xtl.html">net-macro.xtl</a></li>
+<li><a href="demos-net-macro-train-it.xtl.html">train-it.xtl</a></li>
+</ul>
+<h3>demos/ternary-net/</h3>
+<ul>
+<li><a href="demos-ternary-net-ternary-net.xtl.html">ternary-net.xtl</a></li>
+</ul>
+<h3>demos/train-live/</h3>
+<ul>
+<li><a href="demos-train-live-train-live.xtl.html">train-live.xtl</a></li>
+</ul>
+<h3>libs/Learn/demos/</h3>
+<ul>
+<li><a href="libs-Learn-demos-blobs.xtl.html">blobs.xtl</a></li>
+</ul>
+<h3>libs/Learn/src/</h3>
+<ul>
+<li><a href="libs-Learn-src-Learn.xtl.html">Learn.xtl</a></li>
+</ul>
+<h3>libs/Net/demos/</h3>
+<ul>
+<li><a href="libs-Net-demos-train-xor.xtl.html">train-xor.xtl</a></li>
+<li><a href="libs-Net-demos-xor.xtl.html">xor.xtl</a></li>
+</ul>
+<h3>libs/Net/src/</h3>
+<ul>
+<li><a href="libs-Net-src-Net.xtlm.html">Net.xtlm</a></li>
+</ul>
+<h3>libs/NN/demos/</h3>
+<ul>
+<li><a href="libs-NN-demos-xor.xtl.html">xor.xtl</a></li>
+</ul>
+<h3>libs/NN/src/</h3>
+<ul>
+<li><a href="libs-NN-src-NN.xtl.html">NN.xtl</a></li>
+</ul>
+<ul>
+<li><a href="builtins.html">built-ins</a></li>
+</ul>
+<h2>On this page</h2>
+<ul>
+<li class="item"><a href="#L14">F</a></li>
+<li class="item"><a href="#L17">wr</a></li>
+<li class="item"><a href="#L18">wc</a></li>
+<li class="item"><a href="#L19">E</a></li>
+<li class="item"><a href="#L25">fi</a></li>
+<li class="item"><a href="#L26">ei</a></li>
+<li class="item"><a href="#L27">W</a></li>
+<li class="item"><a href="#L29"><span class="c-userfunc">ᵘs̲cores</span></a></li>
+<li class="item"><a href="#L33"><span class="c-userfunc">ᵘs̲oftmax</span></a></li>
+<li class="item"><a href="#L42"><span class="c-userfunc">ᵘt̲op2</span></a></li>
+<li class="item"><a href="#L51"><span class="c-userfunc">ᵘl̲oad</span></a></li>
+<li class="item"><a href="#L58">w0</a></li>
+<li class="item"><a href="#L59">wa</a></li>
+<li class="item"><a href="#L60">wb</a></li>
+<li class="item"><a href="#L61">k</a></li>
+<li class="item"><a href="#L62">side</a></li>
+<li class="item"><a href="#L65"><span class="c-userfunc">ᵘf̲irst</span></a></li>
+<li class="item"><a href="#L66"><span class="c-userfunc">ᵘs̲econd</span></a></li>
+<li class="item"><a href="#L67">x0</a></li>
+<li class="item"><a href="#L68">d1</a></li>
+<li class="item"><a href="#L69">d2</a></li>
+<li class="item"><a href="#L71">eps</a></li>
+<li class="item"><a href="#L72">xs</a></li>
+<li class="item"><a href="#L73">gs</a></li>
+<li class="item"><a href="#L75">c</a></li>
+<li class="item"><a href="#L76">sa</a></li>
+<li class="item"><a href="#L77">sb</a></li>
+<li class="item"><a href="#L78">xg</a></li>
+<li class="item"><a href="#L79">gg</a></li>
+<li class="item"><a href="#L83">ids</a></li>
+<li class="item"><a href="#L84">x</a></li>
+<li class="item"><a href="#L86">gates</a></li>
+<li class="item"><a href="#L89">idx</a></li>
+<li class="item"><a href="#L90">g1</a></li>
+<li class="item"><a href="#L91">first</a></li>
+<li class="item"><a href="#L92">second</a></li>
+<li class="item"><a href="#L93"><span class="c-userfunc">ᵘr̲ound</span></a></li>
+<li class="item"><a href="#L102">pair</a></li>
+<li class="item"><a href="#L106">pg</a></li>
+</ul>
+</nav>
+<main>
+<button class="theme" title="Light or dark">theme</button>
+<section id="results"></section>
+<h1><span class="kind">source</span><a href="demos-moe-router-moe-router.xtl.html">demos/moe-router/moe-router.xtl</a></h1>
+<div class="source"><span class="line" id="L1"><a class="ln" href="#L1">1</a><span class="c-comment">⍝</span><span class="c-comment">!/usr/bin/env xetal</span></span>
+<span class="line" id="L2"><a class="ln" href="#L2">2</a><span class="c-comment">⍝</span><span class="c-comment"># A mixture-of-experts router: each token of a sentence is scored</span></span>
+<span class="line" id="L3"><a class="ln" href="#L3">3</a><span class="c-comment">⍝</span><span class="c-comment"># against 16 experts by one matrix product, the scores become</span></span>
+<span class="line" id="L4"><a class="ln" href="#L4">4</a><span class="c-comment">⍝</span><span class="c-comment"># probabilities (softmax), each token keeps its two most likely</span></span>
+<span class="line" id="L5"><a class="ln" href="#L5">5</a><span class="c-comment">⍝</span><span class="c-comment"># experts (top-2), and their probabilities, renormalized, are the</span></span>
+<span class="line" id="L6"><a class="ln" href="#L6">6</a><span class="c-comment">⍝</span><span class="c-comment"># gates. The experts' load is how many tokens each one got.</span></span>
+<span class="line" id="L7"><a class="ln" href="#L7">7</a></span>
+<span class="line" id="L8"><a class="ln" href="#L8">8</a><span class="c-comment">⍝</span><span class="c-comment">## The vocabulary</span></span>
+<span class="line" id="L9"><a class="ln" href="#L9">9</a><span class="c-comment">⍝</span><span class="c-comment"># words: the a of and in to cat dog fox bird horse one two three seven ten red blue green brown runs jumps eats sees sleeps park river city home apple bread fish cheese today night morning ?</span></span>
+<span class="line" id="L10"><a class="ln" href="#L10">10</a><span class="c-comment">⍝</span><span class="c-comment"># Each word's 8 features (data/features.txt, a row per word, in the</span></span>
+<span class="line" id="L11"><a class="ln" href="#L11">11</a><span class="c-comment">⍝</span><span class="c-comment"># order above): animal, number, color, action, place,</span></span>
+<span class="line" id="L12"><a class="ln" href="#L12">12</a><span class="c-comment">⍝</span><span class="c-comment"># food, function word, time (fish is an animal and a food; eats an</span></span>
+<span class="line" id="L13"><a class="ln" href="#L13">13</a><span class="c-comment">⍝</span><span class="c-comment"># action and food; ? is any word not listed).</span></span>
+<span class="line" id="L14"><a class="ln" href="#L14">14</a>F ← <span class="c-number">37</span> <span class="c-number">8</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <a href="builtins.html#n_umbers" class="c-builtin">n̲umbers</a> <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;data/features.txt&quot;</span></span>
+<span class="line" id="L15"><a class="ln" href="#L15">15</a><span class="c-comment">⍝</span><span class="c-comment"># The embeddings: the features plus a small fixed ripple, so no two</span></span>
+<span class="line" id="L16"><a class="ln" href="#L16">16</a><span class="c-comment">⍝</span><span class="c-comment"># words are quite the same.</span></span>
+<span class="line" id="L17"><a class="ln" href="#L17">17</a>wr ← <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> (<a href="builtins.html#o_ffsets" class="c-builtin">o̲ffsets</a> <span class="c-number">37</span>) <span class="c-builtin">'</span><a href="builtins.html#l_eft" class="c-builtin">l̲eft</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> <a href="builtins.html#o_ffsets" class="c-builtin">o̲ffsets</a> <span class="c-number">8</span></span>
+<span class="line" id="L18"><a class="ln" href="#L18">18</a>wc ← <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> (<a href="builtins.html#o_ffsets" class="c-builtin">o̲ffsets</a> <span class="c-number">37</span>) <span class="c-builtin">'</span><a href="builtins.html#r_ight" class="c-builtin">r̲ight</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> <a href="builtins.html#o_ffsets" class="c-builtin">o̲ffsets</a> <span class="c-number">8</span></span>
+<span class="line" id="L19"><a class="ln" href="#L19">19</a>E ← (<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="demos-moe-router-moe-router.xtl.html#F">F</a>) <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">0.15</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#s_in" class="c-builtin">s̲in</a> (<span class="c-number">1.7</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="demos-moe-router-moe-router.xtl.html#wr">wr</a>) <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">2.3</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="demos-moe-router-moe-router.xtl.html#wc">wc</a></span>
+<span class="line" id="L20"><a class="ln" href="#L20">20</a><span class="c-comment">⍝</span><span class="c-comment">## The router weights</span></span>
+<span class="line" id="L21"><a class="ln" href="#L21">21</a><span class="c-comment">⍝</span><span class="c-comment"># 16 experts on a 4 x 4 grid: row r likes feature r</span></span>
+<span class="line" id="L22"><a class="ln" href="#L22">22</a><span class="c-comment">⍝</span><span class="c-comment"># (animal, number, color, action), column c likes</span></span>
+<span class="line" id="L23"><a class="ln" href="#L23">23</a><span class="c-comment">⍝</span><span class="c-comment"># feature 4 + c (place, food, function word, time),</span></span>
+<span class="line" id="L24"><a class="ln" href="#L24">24</a><span class="c-comment">⍝</span><span class="c-comment"># plus a small fixed ripple.</span></span>
+<span class="line" id="L25"><a class="ln" href="#L25">25</a>fi ← (<a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <span class="c-number">8</span>) <span class="c-builtin">'</span><a href="builtins.html#l_eft" class="c-builtin">l̲eft</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> <a href="builtins.html#o_ffsets" class="c-builtin">o̲ffsets</a> <span class="c-number">16</span></span>
+<span class="line" id="L26"><a class="ln" href="#L26">26</a>ei ← (<a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <span class="c-number">8</span>) <span class="c-builtin">'</span><a href="builtins.html#r_ight" class="c-builtin">r̲ight</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> <a href="builtins.html#o_ffsets" class="c-builtin">o̲ffsets</a> <span class="c-number">16</span></span>
+<span class="line" id="L27"><a class="ln" href="#L27">27</a>W ← (<span class="c-number">2.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> (<a href="demos-moe-router-moe-router.xtl.html#fi">fi</a> <a href="builtins.html#-3d" class="c-symbol">=</a> <span class="c-number">1</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="demos-moe-router-moe-router.xtl.html#ei">ei</a> <a href="builtins.html#d_iv" class="c-builtin">d̲iv</a> <span class="c-number">4</span>) <a href="builtins.html#-7c" class="c-symbol">∨</a> <a href="demos-moe-router-moe-router.xtl.html#fi">fi</a> <a href="builtins.html#-3d" class="c-symbol">=</a> <span class="c-number">5</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="demos-moe-router-moe-router.xtl.html#ei">ei</a> <a href="builtins.html#m_od" class="c-builtin">m̲od</a> <span class="c-number">4</span>) <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">0.4</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#s_in" class="c-builtin">s̲in</a> (<span class="c-number">0.9</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="demos-moe-router-moe-router.xtl.html#fi">fi</a>) <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">1.3</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="demos-moe-router-moe-router.xtl.html#ei">ei</a></span>
+<span class="line" id="L28"><a class="ln" href="#L28">28</a><span class="c-comment">⍝</span><span class="c-comment">## The scores: every token against every expert</span></span>
+<span class="line" id="L29"><a class="ln" href="#L29">29</a><span class="c-userfunc">ᵘs̲cores</span> ← { x → <span class="c-number">2.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> x <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#i_nner" class="c-builtin">i̲nner</a> <a href="demos-moe-router-moe-router.xtl.html#W">W</a> }</span>
+<span class="line" id="L30"><a class="ln" href="#L30">30</a><span class="c-comment">⍝</span><span class="c-comment">## Softmax: each row into probabilities</span></span>
+<span class="line" id="L31"><a class="ln" href="#L31">31</a><span class="c-comment">⍝</span><span class="c-comment"># Each row's largest is taken off first (the same</span></span>
+<span class="line" id="L32"><a class="ln" href="#L32">32</a><span class="c-comment">⍝</span><span class="c-comment"># result, no overflow); the row's sum divides it.</span></span>
+<span class="line" id="L33"><a class="ln" href="#L33">33</a><span class="c-userfunc">ᵘs̲oftmax</span> ← { s →</span>
+<span class="line" id="L34"><a class="ln" href="#L34">34</a>  e ← <a href="builtins.html#e_xp" class="c-builtin">e̲xp</a> s <a href="builtins.html#-2d" class="c-symbol">−</a> (<span class="c-builtin">'</span><a href="builtins.html#m_ax" class="c-builtin">m̲ax</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/₂</a> s) <span class="c-builtin">'</span><a href="builtins.html#l_eft" class="c-builtin">l̲eft</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> <a href="builtins.html#o_ffsets" class="c-builtin">o̲ffsets</a> <span class="c-number">16</span></span>
+<span class="line" id="L35"><a class="ln" href="#L35">35</a>  e <a href="builtins.html#-2f" class="c-symbol">÷</a> (<span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/₂</a> e) <span class="c-builtin">'</span><a href="builtins.html#l_eft" class="c-builtin">l̲eft</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> <a href="builtins.html#o_ffsets" class="c-builtin">o̲ffsets</a> <span class="c-number">16</span></span>
+<span class="line" id="L36"><a class="ln" href="#L36">36</a>}</span>
+<span class="line" id="L37"><a class="ln" href="#L37">37</a><span class="c-comment">⍝</span><span class="c-comment">## Top-2: the two largest of each row, as masks</span></span>
+<span class="line" id="L38"><a class="ln" href="#L38">38</a><span class="c-comment">⍝</span><span class="c-comment"># The largest of each row marks the first expert;</span></span>
+<span class="line" id="L39"><a class="ln" href="#L39">39</a><span class="c-comment">⍝</span><span class="c-comment"># taken out, the largest of what is left marks the</span></span>
+<span class="line" id="L40"><a class="ln" href="#L40">40</a><span class="c-comment">⍝</span><span class="c-comment"># second. The gates are the two probabilities over</span></span>
+<span class="line" id="L41"><a class="ln" href="#L41">41</a><span class="c-comment">⍝</span><span class="c-comment"># their sum, 0 for the other 14 experts.</span></span>
+<span class="line" id="L42"><a class="ln" href="#L42">42</a><span class="c-userfunc">ᵘt̲op2</span> ← { p →</span>
+<span class="line" id="L43"><a class="ln" href="#L43">43</a>  m1 ← <span class="c-builtin">'</span><a href="builtins.html#m_ax" class="c-builtin">m̲ax</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/₂</a> p</span>
+<span class="line" id="L44"><a class="ln" href="#L44">44</a>  s1 ← <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> p <a href="builtins.html#-3d" class="c-symbol">=</a> m1 <span class="c-builtin">'</span><a href="builtins.html#l_eft" class="c-builtin">l̲eft</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> <a href="builtins.html#o_ffsets" class="c-builtin">o̲ffsets</a> <span class="c-number">16</span></span>
+<span class="line" id="L45"><a class="ln" href="#L45">45</a>  p2 ← p <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">2.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> s1</span>
+<span class="line" id="L46"><a class="ln" href="#L46">46</a>  m2 ← <span class="c-builtin">'</span><a href="builtins.html#m_ax" class="c-builtin">m̲ax</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/₂</a> p2</span>
+<span class="line" id="L47"><a class="ln" href="#L47">47</a>  s2 ← <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> p2 <a href="builtins.html#-3d" class="c-symbol">=</a> m2 <span class="c-builtin">'</span><a href="builtins.html#l_eft" class="c-builtin">l̲eft</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> <a href="builtins.html#o_ffsets" class="c-builtin">o̲ffsets</a> <span class="c-number">16</span></span>
+<span class="line" id="L48"><a class="ln" href="#L48">48</a>  (p <a href="builtins.html#-2a" class="c-symbol">×</a> s1 <a href="builtins.html#-2b" class="c-symbol">+</a> s2) <a href="builtins.html#-2f" class="c-symbol">÷</a> (m1 <a href="builtins.html#-2b" class="c-symbol">+</a> m2) <span class="c-builtin">'</span><a href="builtins.html#l_eft" class="c-builtin">l̲eft</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> <a href="builtins.html#o_ffsets" class="c-builtin">o̲ffsets</a> <span class="c-number">16</span></span>
+<span class="line" id="L49"><a class="ln" href="#L49">49</a>}</span>
+<span class="line" id="L50"><a class="ln" href="#L50">50</a><span class="c-comment">⍝</span><span class="c-comment">## The load: how many tokens each expert got</span></span>
+<span class="line" id="L51"><a class="ln" href="#L51">51</a><span class="c-userfunc">ᵘl̲oad</span> ← { g → <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> g <a href="builtins.html#-3e" class="c-symbol">&gt;</a> <span class="c-number">0.0</span> }</span>
+<span class="line" id="L52"><a class="ln" href="#L52">52</a><span class="c-comment">⍝</span><span class="c-comment"> -- end of the core ------------------------------</span></span>
+<span class="line" id="L53"><a class="ln" href="#L53">53</a></span>
+<span class="line" id="L54"><a class="ln" href="#L54">54</a><span class="c-comment">⍝</span><span class="c-comment">## The nudge: a token pushed towards other words</span></span>
+<span class="line" id="L55"><a class="ln" href="#L55">55</a><span class="c-comment">⍝</span><span class="c-comment"># Word w0 (green) moves towards word wa (fox) by eps</span></span>
+<span class="line" id="L56"><a class="ln" href="#L56">56</a><span class="c-comment">⍝</span><span class="c-comment"># from 0 to 1.2 in k steps; the slice spans the</span></span>
+<span class="line" id="L57"><a class="ln" href="#L57">57</a><span class="c-comment">⍝</span><span class="c-comment"># directions to wa and to wb (fish), side by side.</span></span>
+<span class="line" id="L58"><a class="ln" href="#L58">58</a>w0 ← <span class="c-number">19</span></span>
+<span class="line" id="L59"><a class="ln" href="#L59">59</a>wa ← <span class="c-number">9</span></span>
+<span class="line" id="L60"><a class="ln" href="#L60">60</a>wb ← <span class="c-number">32</span></span>
+<span class="line" id="L61"><a class="ln" href="#L61">61</a>k ← <span class="c-number">61</span></span>
+<span class="line" id="L62"><a class="ln" href="#L62">62</a>side ← <span class="c-number">24</span></span>
+<span class="line" id="L63"><a class="ln" href="#L63">63</a><span class="c-comment">⍝</span><span class="c-comment">## Epsilon: where the experts change</span></span>
+<span class="line" id="L64"><a class="ln" href="#L64">64</a><span class="c-comment">⍝</span><span class="c-comment"># Each token's first and second expert, 1 to 16.</span></span>
+<span class="line" id="L65"><a class="ln" href="#L65">65</a><span class="c-userfunc">ᵘf̲irst</span> ← { g → <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/₂</a> (<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> g <a href="builtins.html#-3d" class="c-symbol">=</a> (<span class="c-builtin">'</span><a href="builtins.html#m_ax" class="c-builtin">m̲ax</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/₂</a> g) <span class="c-builtin">'</span><a href="builtins.html#l_eft" class="c-builtin">l̲eft</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> <a href="builtins.html#o_ffsets" class="c-builtin">o̲ffsets</a> <span class="c-number">16</span>) <a href="builtins.html#-2a" class="c-symbol">×</a> (<a href="builtins.html#o_ffsets" class="c-builtin">o̲ffsets</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> g) <span class="c-builtin">'</span><a href="builtins.html#r_ight" class="c-builtin">r̲ight</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <span class="c-number">16</span> }</span>
+<span class="line" id="L66"><a class="ln" href="#L66">66</a><span class="c-userfunc">ᵘs̲econd</span> ← { g → (<span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/₂</a> (<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> g <a href="builtins.html#-3e" class="c-symbol">&gt;</a> <span class="c-number">0.0</span>) <a href="builtins.html#-2a" class="c-symbol">×</a> (<a href="builtins.html#o_ffsets" class="c-builtin">o̲ffsets</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> g) <span class="c-builtin">'</span><a href="builtins.html#r_ight" class="c-builtin">r̲ight</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <span class="c-number">16</span>) <a href="builtins.html#-2d" class="c-symbol">−</a> <a href="demos-moe-router-moe-router.xtl.html#u.f_irst" class="c-userfunc">ᵘf̲irst</a> g }</span>
+<span class="line" id="L67"><a class="ln" href="#L67">67</a>x0 ← <a href="demos-moe-router-moe-router.xtl.html#w0">w0</a> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="demos-moe-router-moe-router.xtl.html#E">E</a></span>
+<span class="line" id="L68"><a class="ln" href="#L68">68</a>d1 ← (<a href="demos-moe-router-moe-router.xtl.html#wa">wa</a> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="demos-moe-router-moe-router.xtl.html#E">E</a>) <a href="builtins.html#-2d" class="c-symbol">−</a> <a href="demos-moe-router-moe-router.xtl.html#x0">x0</a></span>
+<span class="line" id="L69"><a class="ln" href="#L69">69</a>d2 ← (<a href="demos-moe-router-moe-router.xtl.html#wb">wb</a> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="demos-moe-router-moe-router.xtl.html#E">E</a>) <a href="builtins.html#-2d" class="c-symbol">−</a> <a href="demos-moe-router-moe-router.xtl.html#x0">x0</a></span>
+<span class="line" id="L70"><a class="ln" href="#L70">70</a><span class="c-comment">⍝</span><span class="c-comment"># x0 + eps d1 for every eps: one row each.</span></span>
+<span class="line" id="L71"><a class="ln" href="#L71">71</a>eps ← <span class="c-number">1.2</span> <a href="builtins.html#-2a" class="c-symbol">×</a> (<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="builtins.html#o_ffsets" class="c-builtin">o̲ffsets</a> <a href="demos-moe-router-moe-router.xtl.html#k">k</a>) <a href="builtins.html#-2f" class="c-symbol">÷</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="demos-moe-router-moe-router.xtl.html#k">k</a> <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span></span>
+<span class="line" id="L72"><a class="ln" href="#L72">72</a>xs ← (<a href="demos-moe-router-moe-router.xtl.html#eps">eps</a> <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> <a href="demos-moe-router-moe-router.xtl.html#d1">d1</a>) <a href="builtins.html#-2b" class="c-symbol">+</a> (<a href="builtins.html#o_ffsets" class="c-builtin">o̲ffsets</a> <a href="demos-moe-router-moe-router.xtl.html#k">k</a>) <span class="c-builtin">'</span><a href="builtins.html#r_ight" class="c-builtin">r̲ight</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> <a href="demos-moe-router-moe-router.xtl.html#x0">x0</a></span>
+<span class="line" id="L73"><a class="ln" href="#L73">73</a>gs ← <a href="demos-moe-router-moe-router.xtl.html#u.t_op2" class="c-userfunc">ᵘt̲op2</a> <a href="demos-moe-router-moe-router.xtl.html#u.s_oftmax" class="c-userfunc">ᵘs̲oftmax</a> <a href="demos-moe-router-moe-router.xtl.html#u.s_cores" class="c-userfunc">ᵘs̲cores</a> <a href="demos-moe-router-moe-router.xtl.html#xs">xs</a></span>
+<span class="line" id="L74"><a class="ln" href="#L74">74</a><span class="c-comment">⍝</span><span class="c-comment"># The slice: x0 + a d1 + b d2 over a grid of a and b.</span></span>
+<span class="line" id="L75"><a class="ln" href="#L75">75</a>c ← <span class="c-number">-0.25</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">1.5</span> <a href="builtins.html#-2a" class="c-symbol">×</a> (<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="builtins.html#o_ffsets" class="c-builtin">o̲ffsets</a> <a href="demos-moe-router-moe-router.xtl.html#side">side</a>) <a href="builtins.html#-2f" class="c-symbol">÷</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="demos-moe-router-moe-router.xtl.html#side">side</a> <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span></span>
+<span class="line" id="L76"><a class="ln" href="#L76">76</a>sa ← <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> (<a href="builtins.html#o_ffsets" class="c-builtin">o̲ffsets</a> <a href="demos-moe-router-moe-router.xtl.html#side">side</a>) <span class="c-builtin">'</span><a href="builtins.html#r_ight" class="c-builtin">r̲ight</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> <a href="demos-moe-router-moe-router.xtl.html#c">c</a></span>
+<span class="line" id="L77"><a class="ln" href="#L77">77</a>sb ← <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> (<a href="builtins.html#r_ev" class="c-builtin">r̲ev</a> <a href="demos-moe-router-moe-router.xtl.html#c">c</a>) <span class="c-builtin">'</span><a href="builtins.html#l_eft" class="c-builtin">l̲eft</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> <a href="builtins.html#o_ffsets" class="c-builtin">o̲ffsets</a> <a href="demos-moe-router-moe-router.xtl.html#side">side</a></span>
+<span class="line" id="L78"><a class="ln" href="#L78">78</a>xg ← (<a href="demos-moe-router-moe-router.xtl.html#sa">sa</a> <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> <a href="demos-moe-router-moe-router.xtl.html#d1">d1</a>) <a href="builtins.html#-2b" class="c-symbol">+</a> (<a href="demos-moe-router-moe-router.xtl.html#sb">sb</a> <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> <a href="demos-moe-router-moe-router.xtl.html#d2">d2</a>) <a href="builtins.html#-2b" class="c-symbol">+</a> (<a href="builtins.html#o_ffsets" class="c-builtin">o̲ffsets</a> <a href="demos-moe-router-moe-router.xtl.html#side">side</a> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="demos-moe-router-moe-router.xtl.html#side">side</a>) <span class="c-builtin">'</span><a href="builtins.html#r_ight" class="c-builtin">r̲ight</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> <a href="demos-moe-router-moe-router.xtl.html#x0">x0</a></span>
+<span class="line" id="L79"><a class="ln" href="#L79">79</a>gg ← <a href="demos-moe-router-moe-router.xtl.html#u.t_op2" class="c-userfunc">ᵘt̲op2</a> <a href="demos-moe-router-moe-router.xtl.html#u.s_oftmax" class="c-userfunc">ᵘs̲oftmax</a> <a href="demos-moe-router-moe-router.xtl.html#u.s_cores" class="c-userfunc">ᵘs̲cores</a> <a href="demos-moe-router-moe-router.xtl.html#xg">xg</a></span>
+<span class="line" id="L80"><a class="ln" href="#L80">80</a><span class="c-comment">⍝</span><span class="c-comment"> -- end of the nudge -------------------------------</span></span>
+<span class="line" id="L81"><a class="ln" href="#L81">81</a></span>
+<span class="line" id="L82"><a class="ln" href="#L82">82</a><span class="c-comment">⍝</span><span class="c-comment"># &quot;the red fox eats fish in the park&quot;: word numbers (from 1).</span></span>
+<span class="line" id="L83"><a class="ln" href="#L83">83</a>ids ← <span class="c-number">1</span> <span class="c-number">17</span> <span class="c-number">9</span> <span class="c-number">23</span> <span class="c-number">32</span> <span class="c-number">5</span> <span class="c-number">1</span> <span class="c-number">26</span></span>
+<span class="line" id="L84"><a class="ln" href="#L84">84</a>x ← <a href="demos-moe-router-moe-router.xtl.html#ids">ids</a> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="demos-moe-router-moe-router.xtl.html#E">E</a></span>
+<span class="line" id="L85"><a class="ln" href="#L85">85</a><a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> <a href="demos-moe-router-moe-router.xtl.html#x">x</a></span>
+<span class="line" id="L86"><a class="ln" href="#L86">86</a>gates ← <a href="demos-moe-router-moe-router.xtl.html#u.t_op2" class="c-userfunc">ᵘt̲op2</a> <a href="demos-moe-router-moe-router.xtl.html#u.s_oftmax" class="c-userfunc">ᵘs̲oftmax</a> <a href="demos-moe-router-moe-router.xtl.html#u.s_cores" class="c-userfunc">ᵘs̲cores</a> <a href="demos-moe-router-moe-router.xtl.html#x">x</a></span>
+<span class="line" id="L87"><a class="ln" href="#L87">87</a><span class="c-comment">⍝</span><span class="c-comment"># Each token's first and second expert (numbered 1 to 16, row by</span></span>
+<span class="line" id="L88"><a class="ln" href="#L88">88</a><span class="c-comment">⍝</span><span class="c-comment"># row on the grid) and their gates.</span></span>
+<span class="line" id="L89"><a class="ln" href="#L89">89</a>idx ← (<a href="builtins.html#o_ffsets" class="c-builtin">o̲ffsets</a> <span class="c-number">8</span>) <span class="c-builtin">'</span><a href="builtins.html#r_ight" class="c-builtin">r̲ight</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <span class="c-number">16</span></span>
+<span class="line" id="L90"><a class="ln" href="#L90">90</a>g1 ← <span class="c-builtin">'</span><a href="builtins.html#m_ax" class="c-builtin">m̲ax</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/₂</a> <a href="demos-moe-router-moe-router.xtl.html#gates">gates</a></span>
+<span class="line" id="L91"><a class="ln" href="#L91">91</a>first ← <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/₂</a> <a href="demos-moe-router-moe-router.xtl.html#idx">idx</a> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="demos-moe-router-moe-router.xtl.html#gates">gates</a> <a href="builtins.html#-3d" class="c-symbol">=</a> <a href="demos-moe-router-moe-router.xtl.html#g1">g1</a> <span class="c-builtin">'</span><a href="builtins.html#l_eft" class="c-builtin">l̲eft</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> <a href="builtins.html#o_ffsets" class="c-builtin">o̲ffsets</a> <span class="c-number">16</span></span>
+<span class="line" id="L92"><a class="ln" href="#L92">92</a>second ← (<span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/₂</a> <a href="demos-moe-router-moe-router.xtl.html#idx">idx</a> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="demos-moe-router-moe-router.xtl.html#gates">gates</a> <a href="builtins.html#-3e" class="c-symbol">&gt;</a> <span class="c-number">0.0</span>) <a href="builtins.html#-2d" class="c-symbol">−</a> <a href="demos-moe-router-moe-router.xtl.html#first">first</a></span>
+<span class="line" id="L93"><a class="ln" href="#L93">93</a><span class="c-userfunc">ᵘr̲ound</span> ← { v → (<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> <span class="c-number">0.5</span> <a href="builtins.html#-2b" class="c-symbol">+</a> v <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">1000.0</span>) <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-number">1000.0</span> }</span>
+<span class="line" id="L94"><a class="ln" href="#L94">94</a><span class="c-number">2</span> <span class="c-number">8</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <a href="demos-moe-router-moe-router.xtl.html#first">first</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="demos-moe-router-moe-router.xtl.html#second">second</a></span>
+<span class="line" id="L95"><a class="ln" href="#L95">95</a><span class="c-number">2</span> <span class="c-number">8</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> (<a href="demos-moe-router-moe-router.xtl.html#u.r_ound" class="c-userfunc">ᵘr̲ound</a> <a href="demos-moe-router-moe-router.xtl.html#g1">g1</a>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="demos-moe-router-moe-router.xtl.html#u.r_ound" class="c-userfunc">ᵘr̲ound</a> <span class="c-number">1.0</span> <a href="builtins.html#-2d" class="c-symbol">−</a> <a href="demos-moe-router-moe-router.xtl.html#g1">g1</a></span>
+<span class="line" id="L96"><a class="ln" href="#L96">96</a><span class="c-comment">⍝</span><span class="c-comment"> The load on the 4 x 4 grid of experts.</span></span>
+<span class="line" id="L97"><a class="ln" href="#L97">97</a><span class="c-number">4</span> <span class="c-number">4</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <a href="demos-moe-router-moe-router.xtl.html#u.l_oad" class="c-userfunc">ᵘl̲oad</a> <a href="demos-moe-router-moe-router.xtl.html#gates">gates</a></span>
+<span class="line" id="L98"><a class="ln" href="#L98">98</a></span>
+<span class="line" id="L99"><a class="ln" href="#L99">99</a><span class="c-comment">⍝</span><span class="c-comment"> Nudging &quot;green&quot; towards &quot;fox&quot;: the first and second experts at each</span></span>
+<span class="line" id="L100"><a class="ln" href="#L100">100</a><span class="c-comment">⍝</span><span class="c-comment"> eps, then the eps values where the pair changes.</span></span>
+<span class="line" id="L101"><a class="ln" href="#L101">101</a>(<span class="c-number">2</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="demos-moe-router-moe-router.xtl.html#k">k</a>) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> (<a href="demos-moe-router-moe-router.xtl.html#u.f_irst" class="c-userfunc">ᵘf̲irst</a> <a href="demos-moe-router-moe-router.xtl.html#gs">gs</a>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="demos-moe-router-moe-router.xtl.html#u.s_econd" class="c-userfunc">ᵘs̲econd</a> <a href="demos-moe-router-moe-router.xtl.html#gs">gs</a></span>
+<span class="line" id="L102"><a class="ln" href="#L102">102</a>pair ← (<span class="c-number">16.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="demos-moe-router-moe-router.xtl.html#u.f_irst" class="c-userfunc">ᵘf̲irst</a> <a href="demos-moe-router-moe-router.xtl.html#gs">gs</a>) <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="demos-moe-router-moe-router.xtl.html#u.s_econd" class="c-userfunc">ᵘs̲econd</a> <a href="demos-moe-router-moe-router.xtl.html#gs">gs</a></span>
+<span class="line" id="L103"><a class="ln" href="#L103">103</a><a href="demos-moe-router-moe-router.xtl.html#u.r_ound" class="c-userfunc">ᵘr̲ound</a> (<span class="c-number">1</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#w_here" class="c-builtin">w̲here</a> (<span class="c-number">1</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> <a href="demos-moe-router-moe-router.xtl.html#pair">pair</a>) <a href="builtins.html#-21-3d" class="c-symbol">≠</a> <span class="c-number">-1</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> <a href="demos-moe-router-moe-router.xtl.html#pair">pair</a>) <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="demos-moe-router-moe-router.xtl.html#eps">eps</a></span>
+<span class="line" id="L104"><a class="ln" href="#L104">104</a><span class="c-comment">⍝</span><span class="c-comment"># The slice, each point's pair as a letter: regions with straight</span></span>
+<span class="line" id="L105"><a class="ln" href="#L105">105</a><span class="c-comment">⍝</span><span class="c-comment"># edges, where two experts' scores tie.</span></span>
+<span class="line" id="L106"><a class="ln" href="#L106">106</a>pg ← (<span class="c-number">16.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="demos-moe-router-moe-router.xtl.html#u.f_irst" class="c-userfunc">ᵘf̲irst</a> <a href="demos-moe-router-moe-router.xtl.html#gg">gg</a>) <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="demos-moe-router-moe-router.xtl.html#u.s_econd" class="c-userfunc">ᵘs̲econd</a> <a href="demos-moe-router-moe-router.xtl.html#gg">gg</a></span>
+<span class="line" id="L107"><a class="ln" href="#L107">107</a>(<a href="demos-moe-router-moe-router.xtl.html#side">side</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="demos-moe-router-moe-router.xtl.html#side">side</a>) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> ((<a href="builtins.html#u_nique" class="c-builtin">u̲nique</a> <a href="demos-moe-router-moe-router.xtl.html#pg">pg</a>) <a href="builtins.html#i_ndexOf" class="c-builtin">i̲ndexOf</a> <a href="demos-moe-router-moe-router.xtl.html#pg">pg</a>) <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="builtins.html#-5b-5dA" class="c-builtin">⎕A</a></span>
+</div>
+</main>
+</body>
+</html>

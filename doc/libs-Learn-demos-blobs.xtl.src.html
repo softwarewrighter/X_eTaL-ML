@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>libs/Learn/demos/blobs.xtl - X_eTaL doc</title>
+<link rel="stylesheet" href="style.css">
+<script src="theme.js"></script>
+<script defer src="search-index.js"></script>
+<script defer src="search.js"></script>
+</head>
+<body>
+<nav class="side">
+<a class="home" href="index.html">X_eTaL doc</a>
+<input id="search" type="search" autocomplete="off" placeholder="Search: a name, or a type" title="A name (mean finds m_ean), or a type: Num a =&gt; a -&gt; a -&gt; a finds +, m_ax ...">
+<h2>Files</h2>
+<h3>demos/attention/</h3>
+<ul>
+<li><a href="demos-attention-attention.xtl.html">attention.xtl</a></li>
+</ul>
+<h3>demos/backprop/</h3>
+<ul>
+<li><a href="demos-backprop-backprop.xtl.html">backprop.xtl</a></li>
+</ul>
+<h3>demos/cnn-backprop/</h3>
+<ul>
+<li><a href="demos-cnn-backprop-cnn-backprop.xtl.html">cnn-backprop.xtl</a></li>
+</ul>
+<h3>demos/cnn-digits/</h3>
+<ul>
+<li><a href="demos-cnn-digits-cnn-digits.xtl.html">cnn-digits.xtl</a></li>
+</ul>
+<h3>demos/k-means/</h3>
+<ul>
+<li><a href="demos-k-means-k-means.xtl.html">k-means.xtl</a></li>
+</ul>
+<h3>demos/moe-router/</h3>
+<ul>
+<li><a href="demos-moe-router-moe-router.xtl.html">moe-router.xtl</a></li>
+</ul>
+<h3>demos/net-macro/</h3>
+<ul>
+<li><a href="demos-net-macro-net-macro.xtl.html">net-macro.xtl</a></li>
+<li><a href="demos-net-macro-train-it.xtl.html">train-it.xtl</a></li>
+</ul>
+<h3>demos/ternary-net/</h3>
+<ul>
+<li><a href="demos-ternary-net-ternary-net.xtl.html">ternary-net.xtl</a></li>
+</ul>
+<h3>demos/train-live/</h3>
+<ul>
+<li><a href="demos-train-live-train-live.xtl.html">train-live.xtl</a></li>
+</ul>
+<h3>libs/Learn/demos/</h3>
+<ul>
+<li><a href="libs-Learn-demos-blobs.xtl.html">blobs.xtl</a></li>
+</ul>
+<h3>libs/Learn/src/</h3>
+<ul>
+<li><a href="libs-Learn-src-Learn.xtl.html">Learn.xtl</a></li>
+</ul>
+<h3>libs/Net/demos/</h3>
+<ul>
+<li><a href="libs-Net-demos-train-xor.xtl.html">train-xor.xtl</a></li>
+<li><a href="libs-Net-demos-xor.xtl.html">xor.xtl</a></li>
+</ul>
+<h3>libs/Net/src/</h3>
+<ul>
+<li><a href="libs-Net-src-Net.xtlm.html">Net.xtlm</a></li>
+</ul>
+<h3>libs/NN/demos/</h3>
+<ul>
+<li><a href="libs-NN-demos-xor.xtl.html">xor.xtl</a></li>
+</ul>
+<h3>libs/NN/src/</h3>
+<ul>
+<li><a href="libs-NN-src-NN.xtl.html">NN.xtl</a></li>
+</ul>
+<ul>
+<li><a href="builtins.html">built-ins</a></li>
+</ul>
+<h2>On this page</h2>
+<ul>
+<li class="item"><a href="#L10">i</a></li>
+<li class="item"><a href="#L11">blob</a></li>
+<li class="item"><a href="#L12">cx</a></li>
+<li class="item"><a href="#L13">cy</a></li>
+<li class="item"><a href="#L14">X</a></li>
+<li class="item"><a href="#L16">C</a></li>
+<li class="item"><a href="#L17"><span class="c-userfunc">ᵘr̲ound</span></a></li>
+<li class="item"><a href="#L21">Q</a></li>
+<li class="item"><a href="#L23">W</a></li>
+<li class="item"><a href="#L26">mu</a></li>
+<li class="item"><a href="#L26">V</a></li>
+<li class="item"><a href="#L26">ev</a></li>
+</ul>
+</nav>
+<main>
+<button class="theme" title="Light or dark">theme</button>
+<section id="results"></section>
+<h1><span class="kind">source</span><a href="libs-Learn-demos-blobs.xtl.html">libs/Learn/demos/blobs.xtl</a></h1>
+<div class="source"><span class="line" id="L1"><a class="ln" href="#L1">1</a><span class="c-comment">⍝</span><span class="c-comment">!/usr/bin/env xetal</span></span>
+<span class="line" id="L2"><a class="ln" href="#L2">2</a><span class="c-comment">⍝</span><span class="c-comment"># Learn's four models on one set of points: three blobs of 20 (around</span></span>
+<span class="line" id="L3"><a class="ln" href="#L3">3</a><span class="c-comment">⍝</span><span class="c-comment"># 0 0, 6 6 and 0 6, a fixed ripple instead of chance). k-means finds</span></span>
+<span class="line" id="L4"><a class="ln" href="#L4">4</a><span class="c-comment">⍝</span><span class="c-comment"># them without their labels; kNN and logistic regression learn them</span></span>
+<span class="line" id="L5"><a class="ln" href="#L5">5</a><span class="c-comment">⍝</span><span class="c-comment"># from their labels; PCA finds the direction they spread along most.</span></span>
+<span class="line" id="L6"><a class="ln" href="#L6">6</a><span class="c-comment">⍝</span><span class="c-comment"># Run with &quot;just demo-lib Learn blobs&quot;.</span></span>
+<span class="line" id="L7"><a class="ln" href="#L7">7</a></span>
+<span class="line" id="L8"><a class="ln" href="#L8">8</a><span class="c-libfunc">ᵐˡ⁼</span><span class="c-macro">u̲se&lt;</span> <a href="libs-Learn-src-Learn.xtl.html" class="c-string">&quot;Learn&quot;</a></span>
+<span class="line" id="L9"><a class="ln" href="#L9">9</a></span>
+<span class="line" id="L10"><a class="ln" href="#L10">10</a>i ← <a href="builtins.html#o_ffsets" class="c-builtin">o̲ffsets</a> <span class="c-number">60</span></span>
+<span class="line" id="L11"><a class="ln" href="#L11">11</a>blob ← <span class="c-number">1</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="libs-Learn-demos-blobs.xtl.html#i">i</a> <a href="builtins.html#d_iv" class="c-builtin">d̲iv</a> <span class="c-number">20</span></span>
+<span class="line" id="L12"><a class="ln" href="#L12">12</a>cx ← (<span class="c-number">1</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="libs-Learn-demos-blobs.xtl.html#blob">blob</a> <a href="builtins.html#-3d" class="c-symbol">=</a> <span class="c-number">2</span>) <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <span class="c-number">0.0</span> <span class="c-number">6.0</span></span>
+<span class="line" id="L13"><a class="ln" href="#L13">13</a>cy ← (<span class="c-number">1</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="libs-Learn-demos-blobs.xtl.html#blob">blob</a> <a href="builtins.html#-3d" class="c-symbol">=</a> <span class="c-number">1</span>) <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <span class="c-number">6.0</span> <span class="c-number">0.0</span></span>
+<span class="line" id="L14"><a class="ln" href="#L14">14</a>X ← <a href="builtins.html#o_-5c" class="c-builtin">o̲\</a> <span class="c-number">2</span> <span class="c-number">60</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> (<a href="libs-Learn-demos-blobs.xtl.html#cx">cx</a> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">0.8</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#s_in" class="c-builtin">s̲in</a> <span class="c-number">1.3</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="libs-Learn-demos-blobs.xtl.html#i">i</a>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="libs-Learn-demos-blobs.xtl.html#cy">cy</a> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">0.8</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#c_os" class="c-builtin">c̲os</a> <span class="c-number">2.1</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="libs-Learn-demos-blobs.xtl.html#i">i</a></span>
+<span class="line" id="L15"><a class="ln" href="#L15">15</a><span class="c-comment">⍝</span><span class="c-comment"># k-means: the three centers found, and which cluster each point is in.</span></span>
+<span class="line" id="L16"><a class="ln" href="#L16">16</a>C ← (<span class="c-number">3</span>, <span class="c-number">10</span>) <a href="libs-Learn-src-Learn.xtl.html#l.k_means" class="c-libfunc">ᵐˡk̲means</a> <a href="libs-Learn-demos-blobs.xtl.html#X">X</a></span>
+<span class="line" id="L17"><a class="ln" href="#L17">17</a><span class="c-userfunc">ᵘr̲ound</span> ← { a → (<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> <span class="c-number">0.5</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">100.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> a) <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-number">100.0</span> }</span>
+<span class="line" id="L18"><a class="ln" href="#L18">18</a><a href="libs-Learn-demos-blobs.xtl.html#u.r_ound" class="c-userfunc">ᵘr̲ound</a> <a href="libs-Learn-demos-blobs.xtl.html#C">C</a></span>
+<span class="line" id="L19"><a class="ln" href="#L19">19</a><a href="libs-Learn-demos-blobs.xtl.html#C">C</a> <a href="libs-Learn-src-Learn.xtl.html#l.a_ssign" class="c-libfunc">ᵐˡa̲ssign</a> <a href="libs-Learn-demos-blobs.xtl.html#X">X</a></span>
+<span class="line" id="L20"><a class="ln" href="#L20">20</a><span class="c-comment">⍝</span><span class="c-comment"># kNN (5 neighbors) and logistic regression on four new points.</span></span>
+<span class="line" id="L21"><a class="ln" href="#L21">21</a>Q ← <span class="c-number">4</span> <span class="c-number">2</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">1.0</span> <span class="c-number">1.0</span> <span class="c-number">5.0</span> <span class="c-number">5.0</span> <span class="c-number">0.5</span> <span class="c-number">5.0</span> <span class="c-number">3.0</span> <span class="c-number">3.0</span></span>
+<span class="line" id="L22"><a class="ln" href="#L22">22</a>(<span class="c-number">5</span>, <a href="libs-Learn-demos-blobs.xtl.html#X">X</a>, <a href="libs-Learn-demos-blobs.xtl.html#blob">blob</a>) <a href="libs-Learn-src-Learn.xtl.html#l.k_nn" class="c-libfunc">ᵐˡk̲nn</a> <a href="libs-Learn-demos-blobs.xtl.html#Q">Q</a></span>
+<span class="line" id="L23"><a class="ln" href="#L23">23</a>W ← (<span class="c-number">200</span>, <span class="c-number">0.5</span>) <a href="libs-Learn-src-Learn.xtl.html#l.l_ogistic" class="c-libfunc">ᵐˡl̲ogistic</a> (<a href="libs-Learn-demos-blobs.xtl.html#X">X</a>, <a href="libs-Learn-demos-blobs.xtl.html#blob">blob</a>)</span>
+<span class="line" id="L24"><a class="ln" href="#L24">24</a><a href="libs-Learn-demos-blobs.xtl.html#W">W</a> <a href="libs-Learn-src-Learn.xtl.html#l.p_redict" class="c-libfunc">ᵐˡp̲redict</a> <a href="libs-Learn-demos-blobs.xtl.html#Q">Q</a></span>
+<span class="line" id="L25"><a class="ln" href="#L25">25</a><span class="c-comment">⍝</span><span class="c-comment"># PCA: the direction of most spread, and the share of the variance on it.</span></span>
+<span class="line" id="L26"><a class="ln" href="#L26">26</a>(<a href="libs-Learn-demos-blobs.xtl.html#mu">mu</a>, <a href="libs-Learn-demos-blobs.xtl.html#V">V</a>, <a href="libs-Learn-demos-blobs.xtl.html#ev">ev</a>) ← <span class="c-number">2</span> <a href="libs-Learn-src-Learn.xtl.html#l.p_ca" class="c-libfunc">ᵐˡp̲ca</a> <a href="libs-Learn-demos-blobs.xtl.html#X">X</a></span>
+<span class="line" id="L27"><a class="ln" href="#L27">27</a><a href="libs-Learn-demos-blobs.xtl.html#u.r_ound" class="c-userfunc">ᵘr̲ound</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> <span class="c-number">1</span> <a href="builtins.html#t_ake" class="c-builtin">t̲ake₂</a> <a href="libs-Learn-demos-blobs.xtl.html#V">V</a></span>
+<span class="line" id="L28"><a class="ln" href="#L28">28</a><a href="libs-Learn-demos-blobs.xtl.html#u.r_ound" class="c-userfunc">ᵘr̲ound</a> (<span class="c-number">1</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="libs-Learn-demos-blobs.xtl.html#ev">ev</a>) <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> <a href="libs-Learn-demos-blobs.xtl.html#ev">ev</a></span>
+</div>
+</main>
+</body>
+</html>

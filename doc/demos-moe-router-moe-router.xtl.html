@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>demos/moe-router/moe-router.xtl - X_eTaL doc</title>
+<link rel="stylesheet" href="style.css">
+<script src="theme.js"></script>
+<script defer src="search-index.js"></script>
+<script defer src="search.js"></script>
+</head>
+<body>
+<nav class="side">
+<a class="home" href="index.html">X_eTaL doc</a>
+<input id="search" type="search" autocomplete="off" placeholder="Search: a name, or a type" title="A name (mean finds m_ean), or a type: Num a =&gt; a -&gt; a -&gt; a finds +, m_ax ...">
+<h2>Files</h2>
+<h3>demos/attention/</h3>
+<ul>
+<li><a href="demos-attention-attention.xtl.html">attention.xtl</a></li>
+</ul>
+<h3>demos/backprop/</h3>
+<ul>
+<li><a href="demos-backprop-backprop.xtl.html">backprop.xtl</a></li>
+</ul>
+<h3>demos/cnn-backprop/</h3>
+<ul>
+<li><a href="demos-cnn-backprop-cnn-backprop.xtl.html">cnn-backprop.xtl</a></li>
+</ul>
+<h3>demos/cnn-digits/</h3>
+<ul>
+<li><a href="demos-cnn-digits-cnn-digits.xtl.html">cnn-digits.xtl</a></li>
+</ul>
+<h3>demos/k-means/</h3>
+<ul>
+<li><a href="demos-k-means-k-means.xtl.html">k-means.xtl</a></li>
+</ul>
+<h3>demos/moe-router/</h3>
+<ul>
+<li><a href="demos-moe-router-moe-router.xtl.html">moe-router.xtl</a></li>
+</ul>
+<h3>demos/net-macro/</h3>
+<ul>
+<li><a href="demos-net-macro-net-macro.xtl.html">net-macro.xtl</a></li>
+<li><a href="demos-net-macro-train-it.xtl.html">train-it.xtl</a></li>
+</ul>
+<h3>demos/ternary-net/</h3>
+<ul>
+<li><a href="demos-ternary-net-ternary-net.xtl.html">ternary-net.xtl</a></li>
+</ul>
+<h3>demos/train-live/</h3>
+<ul>
+<li><a href="demos-train-live-train-live.xtl.html">train-live.xtl</a></li>
+</ul>
+<h3>libs/Learn/demos/</h3>
+<ul>
+<li><a href="libs-Learn-demos-blobs.xtl.html">blobs.xtl</a></li>
+</ul>
+<h3>libs/Learn/src/</h3>
+<ul>
+<li><a href="libs-Learn-src-Learn.xtl.html">Learn.xtl</a></li>
+</ul>
+<h3>libs/Net/demos/</h3>
+<ul>
+<li><a href="libs-Net-demos-train-xor.xtl.html">train-xor.xtl</a></li>
+<li><a href="libs-Net-demos-xor.xtl.html">xor.xtl</a></li>
+</ul>
+<h3>libs/Net/src/</h3>
+<ul>
+<li><a href="libs-Net-src-Net.xtlm.html">Net.xtlm</a></li>
+</ul>
+<h3>libs/NN/demos/</h3>
+<ul>
+<li><a href="libs-NN-demos-xor.xtl.html">xor.xtl</a></li>
+</ul>
+<h3>libs/NN/src/</h3>
+<ul>
+<li><a href="libs-NN-src-NN.xtl.html">NN.xtl</a></li>
+</ul>
+<ul>
+<li><a href="builtins.html">built-ins</a></li>
+</ul>
+<h2>On this page</h2>
+<ul>
+<li><a href="#section-1">The vocabulary</a></li>
+<li class="item"><a href="#F">F</a></li>
+<li class="item"><a href="#wr">wr</a></li>
+<li class="item"><a href="#wc">wc</a></li>
+<li class="item"><a href="#E">E</a></li>
+<li><a href="#section-2">The router weights</a></li>
+<li class="item"><a href="#fi">fi</a></li>
+<li class="item"><a href="#ei">ei</a></li>
+<li class="item"><a href="#W">W</a></li>
+<li><a href="#section-3">The scores: every token against every expert</a></li>
+<li class="item"><a href="#u.s_cores"><span class="c-userfunc">ᵘs̲cores</span></a></li>
+<li><a href="#section-4">Softmax: each row into probabilities</a></li>
+<li class="item"><a href="#u.s_oftmax"><span class="c-userfunc">ᵘs̲oftmax</span></a></li>
+<li><a href="#section-5">Top-2: the two largest of each row, as masks</a></li>
+<li class="item"><a href="#u.t_op2"><span class="c-userfunc">ᵘt̲op2</span></a></li>
+<li><a href="#section-6">The load: how many tokens each expert got</a></li>
+<li class="item"><a href="#u.l_oad"><span class="c-userfunc">ᵘl̲oad</span></a></li>
+<li><a href="#section-7">The nudge: a token pushed towards other words</a></li>
+<li class="item"><a href="#w0">w0</a></li>
+<li class="item"><a href="#wa">wa</a></li>
+<li class="item"><a href="#wb">wb</a></li>
+<li class="item"><a href="#k">k</a></li>
+<li class="item"><a href="#side">side</a></li>
+<li><a href="#section-8">Epsilon: where the experts change</a></li>
+<li class="item"><a href="#u.f_irst"><span class="c-userfunc">ᵘf̲irst</span></a></li>
+<li class="item"><a href="#u.s_econd"><span class="c-userfunc">ᵘs̲econd</span></a></li>
+<li class="item"><a href="#x0">x0</a></li>
+<li class="item"><a href="#d1">d1</a></li>
+<li class="item"><a href="#d2">d2</a></li>
+<li class="item"><a href="#eps">eps</a></li>
+<li class="item"><a href="#xs">xs</a></li>
+<li class="item"><a href="#gs">gs</a></li>
+<li class="item"><a href="#c">c</a></li>
+<li class="item"><a href="#sa">sa</a></li>
+<li class="item"><a href="#sb">sb</a></li>
+<li class="item"><a href="#xg">xg</a></li>
+<li class="item"><a href="#gg">gg</a></li>
+<li class="item"><a href="#ids">ids</a></li>
+<li class="item"><a href="#x">x</a></li>
+<li class="item"><a href="#gates">gates</a></li>
+<li class="item"><a href="#idx">idx</a></li>
+<li class="item"><a href="#g1">g1</a></li>
+<li class="item"><a href="#first">first</a></li>
+<li class="item"><a href="#second">second</a></li>
+<li class="item"><a href="#u.r_ound"><span class="c-userfunc">ᵘr̲ound</span></a></li>
+<li class="item"><a href="#pair">pair</a></li>
+<li class="item"><a href="#pg">pg</a></li>
+</ul>
+</nav>
+<main>
+<button class="theme" title="Light or dark">theme</button>
+<section id="results"></section>
+<h1><span class="kind">program</span>demos/moe-router/moe-router.xtl</h1>
+<div class="doc">
+<p>A mixture-of-experts router: each token of a sentence is scored
+against 16 experts by one matrix product, the scores become
+probabilities (softmax), each token keeps its two most likely
+experts (top-2), and their probabilities, renormalized, are the
+gates. The experts' load is how many tokens each one got.</p>
+</div>
+<p class="meta"><a href="demos-moe-router-moe-router.xtl.src.html">source</a></p>
+<h2 class="section" id="section-1">The vocabulary</h2>
+<div class="item" id="F">
+<h3><a href="#F">F</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-moe-router-moe-router.xtl.src.html#L14">line 14</a></div>
+<div class="doc">
+<p>words: the a of and in to cat dog fox bird horse one two three seven ten red blue green brown runs jumps eats sees sleeps park river city home apple bread fish cheese today night morning ?
+Each word's 8 features (data/features.txt, a row per word, in the
+order above): animal, number, color, action, place,
+food, function word, time (fish is an animal and a food; eats an
+action and food; ? is any word not listed).</p>
+</div>
+<pre class="code">F ← <span class="c-number">37</span> <span class="c-number">8</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <a href="builtins.html#n_umbers" class="c-builtin">n̲umbers</a> <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;data/features.txt&quot;</span></pre>
+<div class="uses">Used in: <a href="demos-moe-router-moe-router.xtl.html#E">E</a></div>
+</div>
+<div class="item" id="wr">
+<h3><a href="#wr">wr</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-moe-router-moe-router.xtl.src.html#L17">line 17</a></div>
+<div class="doc">
+<p>The embeddings: the features plus a small fixed ripple, so no two
+words are quite the same.</p>
+</div>
+<pre class="code">wr ← <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> (<a href="builtins.html#o_ffsets" class="c-builtin">o̲ffsets</a> <span class="c-number">37</span>) <span class="c-builtin">'</span><a href="builtins.html#l_eft" class="c-builtin">l̲eft</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> <a href="builtins.html#o_ffsets" class="c-builtin">o̲ffsets</a> <span class="c-number">8</span></pre>
+<div class="uses">Used in: <a href="demos-moe-router-moe-router.xtl.html#E">E</a></div>
+</div>
+<div class="item" id="wc">
+<h3><a href="#wc">wc</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-moe-router-moe-router.xtl.src.html#L18">line 18</a></div>
+<pre class="code">wc ← <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> (<a href="builtins.html#o_ffsets" class="c-builtin">o̲ffsets</a> <span class="c-number">37</span>) <span class="c-builtin">'</span><a href="builtins.html#r_ight" class="c-builtin">r̲ight</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> <a href="builtins.html#o_ffsets" class="c-builtin">o̲ffsets</a> <span class="c-number">8</span></pre>
+<div class="uses">Used in: <a href="demos-moe-router-moe-router.xtl.html#E">E</a></div>
+</div>
+<div class="item" id="E">
+<h3><a href="#E">E</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-moe-router-moe-router.xtl.src.html#L19">line 19</a></div>
+<pre class="code">E ← (<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="demos-moe-router-moe-router.xtl.html#F">F</a>) <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">0.15</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#s_in" class="c-builtin">s̲in</a> (<span class="c-number">1.7</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="demos-moe-router-moe-router.xtl.html#wr">wr</a>) <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">2.3</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="demos-moe-router-moe-router.xtl.html#wc">wc</a></pre>
+<div class="uses">Used in: <a href="demos-moe-router-moe-router.xtl.html#x0">x0</a>, <a href="demos-moe-router-moe-router.xtl.html#d1">d1</a>, <a href="demos-moe-router-moe-router.xtl.html#d2">d2</a>, <a href="demos-moe-router-moe-router.xtl.html#x">x</a></div>
+</div>
+<h2 class="section" id="section-2">The router weights</h2>
+<div class="item" id="fi">
+<h3><a href="#fi">fi</a> <span class="type">: Int</span></h3>
+<div class="meta">value &middot; <a href="demos-moe-router-moe-router.xtl.src.html#L25">line 25</a></div>
+<div class="doc">
+<p>16 experts on a 4 x 4 grid: row r likes feature r
+(animal, number, color, action), column c likes
+feature 4 + c (place, food, function word, time),
+plus a small fixed ripple.</p>
+</div>
+<pre class="code">fi ← (<a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <span class="c-number">8</span>) <span class="c-builtin">'</span><a href="builtins.html#l_eft" class="c-builtin">l̲eft</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> <a href="builtins.html#o_ffsets" class="c-builtin">o̲ffsets</a> <span class="c-number">16</span></pre>
+<div class="uses">Used in: <a href="demos-moe-router-moe-router.xtl.html#W">W</a></div>
+</div>
+<div class="item" id="ei">
+<h3><a href="#ei">ei</a> <span class="type">: Int</span></h3>
+<div class="meta">value &middot; <a href="demos-moe-router-moe-router.xtl.src.html#L26">line 26</a></div>
+<pre class="code">ei ← (<a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <span class="c-number">8</span>) <span class="c-builtin">'</span><a href="builtins.html#r_ight" class="c-builtin">r̲ight</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> <a href="builtins.html#o_ffsets" class="c-builtin">o̲ffsets</a> <span class="c-number">16</span></pre>
+<div class="uses">Used in: <a href="demos-moe-router-moe-router.xtl.html#W">W</a></div>
+</div>
+<div class="item" id="W">
+<h3><a href="#W">W</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-moe-router-moe-router.xtl.src.html#L27">line 27</a></div>
+<pre class="code">W ← (<span class="c-number">2.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> (<a href="demos-moe-router-moe-router.xtl.html#fi">fi</a> <a href="builtins.html#-3d" class="c-symbol">=</a> <span class="c-number">1</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="demos-moe-router-moe-router.xtl.html#ei">ei</a> <a href="builtins.html#d_iv" class="c-builtin">d̲iv</a> <span class="c-number">4</span>) <a href="builtins.html#-7c" class="c-symbol">∨</a> <a href="demos-moe-router-moe-router.xtl.html#fi">fi</a> <a href="builtins.html#-3d" class="c-symbol">=</a> <span class="c-number">5</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="demos-moe-router-moe-router.xtl.html#ei">ei</a> <a href="builtins.html#m_od" class="c-builtin">m̲od</a> <span class="c-number">4</span>) <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">0.4</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#s_in" class="c-builtin">s̲in</a> (<span class="c-number">0.9</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="demos-moe-router-moe-router.xtl.html#fi">fi</a>) <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">1.3</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="demos-moe-router-moe-router.xtl.html#ei">ei</a></pre>
+<div class="uses">Used in: <a href="demos-moe-router-moe-router.xtl.html#u.s_cores"><span class="c-userfunc">ᵘs̲cores</span></a></div>
+</div>
+<h2 class="section" id="section-3">The scores: every token against every expert</h2>
+<div class="item" id="u.s_cores">
+<h3><a href="#u.s_cores"><span class="c-userfunc">ᵘs̲cores</span></a> <span class="type">: Float -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="demos-moe-router-moe-router.xtl.src.html#L29">line 29</a></div>
+<pre class="code"><span class="c-userfunc">ᵘs̲cores</span> ← { x → <span class="c-number">2.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> x <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#i_nner" class="c-builtin">i̲nner</a> <a href="demos-moe-router-moe-router.xtl.html#W">W</a> }</pre>
+<div class="uses">Used in: <a href="demos-moe-router-moe-router.xtl.html#gs">gs</a>, <a href="demos-moe-router-moe-router.xtl.html#gg">gg</a>, <a href="demos-moe-router-moe-router.xtl.html#gates">gates</a></div>
+</div>
+<h2 class="section" id="section-4">Softmax: each row into probabilities</h2>
+<div class="item" id="u.s_oftmax">
+<h3><a href="#u.s_oftmax"><span class="c-userfunc">ᵘs̲oftmax</span></a> <span class="type">: Num a =&gt; a -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="demos-moe-router-moe-router.xtl.src.html#L33">line 33</a></div>
+<div class="doc">
+<p>Each row's largest is taken off first (the same
+result, no overflow); the row's sum divides it.</p>
+</div>
+<pre class="code"><span class="c-userfunc">ᵘs̲oftmax</span> ← { s →
+  e ← <a href="builtins.html#e_xp" class="c-builtin">e̲xp</a> s <a href="builtins.html#-2d" class="c-symbol">−</a> (<span class="c-builtin">'</span><a href="builtins.html#m_ax" class="c-builtin">m̲ax</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/₂</a> s) <span class="c-builtin">'</span><a href="builtins.html#l_eft" class="c-builtin">l̲eft</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> <a href="builtins.html#o_ffsets" class="c-builtin">o̲ffsets</a> <span class="c-number">16</span>
+  e <a href="builtins.html#-2f" class="c-symbol">÷</a> (<span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/₂</a> e) <span class="c-builtin">'</span><a href="builtins.html#l_eft" class="c-builtin">l̲eft</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> <a href="builtins.html#o_ffsets" class="c-builtin">o̲ffsets</a> <span class="c-number">16</span>
+}</pre>
+<div class="uses">Used in: <a href="demos-moe-router-moe-router.xtl.html#gs">gs</a>, <a href="demos-moe-router-moe-router.xtl.html#gg">gg</a>, <a href="demos-moe-router-moe-router.xtl.html#gates">gates</a></div>
+</div>
+<h2 class="section" id="section-5">Top-2: the two largest of each row, as masks</h2>
+<div class="item" id="u.t_op2">
+<h3><a href="#u.t_op2"><span class="c-userfunc">ᵘt̲op2</span></a> <span class="type">: Float -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="demos-moe-router-moe-router.xtl.src.html#L42">line 42</a></div>
+<div class="doc">
+<p>The largest of each row marks the first expert;
+taken out, the largest of what is left marks the
+second. The gates are the two probabilities over
+their sum, 0 for the other 14 experts.</p>
+</div>
+<pre class="code"><span class="c-userfunc">ᵘt̲op2</span> ← { p →
+  m1 ← <span class="c-builtin">'</span><a href="builtins.html#m_ax" class="c-builtin">m̲ax</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/₂</a> p
+  s1 ← <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> p <a href="builtins.html#-3d" class="c-symbol">=</a> m1 <span class="c-builtin">'</span><a href="builtins.html#l_eft" class="c-builtin">l̲eft</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> <a href="builtins.html#o_ffsets" class="c-builtin">o̲ffsets</a> <span class="c-number">16</span>
+  p2 ← p <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">2.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> s1
+  m2 ← <span class="c-builtin">'</span><a href="builtins.html#m_ax" class="c-builtin">m̲ax</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/₂</a> p2
+  s2 ← <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> p2 <a href="builtins.html#-3d" class="c-symbol">=</a> m2 <span class="c-builtin">'</span><a href="builtins.html#l_eft" class="c-builtin">l̲eft</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> <a href="builtins.html#o_ffsets" class="c-builtin">o̲ffsets</a> <span class="c-number">16</span>
+  (p <a href="builtins.html#-2a" class="c-symbol">×</a> s1 <a href="builtins.html#-2b" class="c-symbol">+</a> s2) <a href="builtins.html#-2f" class="c-symbol">÷</a> (m1 <a href="builtins.html#-2b" class="c-symbol">+</a> m2) <span class="c-builtin">'</span><a href="builtins.html#l_eft" class="c-builtin">l̲eft</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> <a href="builtins.html#o_ffsets" class="c-builtin">o̲ffsets</a> <span class="c-number">16</span>
+}</pre>
+<div class="uses">Used in: <a href="demos-moe-router-moe-router.xtl.html#gs">gs</a>, <a href="demos-moe-router-moe-router.xtl.html#gg">gg</a>, <a href="demos-moe-router-moe-router.xtl.html#gates">gates</a></div>
+</div>
+<h2 class="section" id="section-6">The load: how many tokens each expert got</h2>
+<div class="item" id="u.l_oad">
+<h3><a href="#u.l_oad"><span class="c-userfunc">ᵘl̲oad</span></a> <span class="type">: Float -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="demos-moe-router-moe-router.xtl.src.html#L51">line 51</a></div>
+<pre class="code"><span class="c-userfunc">ᵘl̲oad</span> ← { g → <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> g <a href="builtins.html#-3e" class="c-symbol">&gt;</a> <span class="c-number">0.0</span> }</pre>
+<div class="uses">Used in: <a href="demos-moe-router-moe-router.xtl.src.html#L97">demos/moe-router/moe-router.xtl:97</a></div>
+</div>
+<h2 class="section" id="section-7">The nudge: a token pushed towards other words</h2>
+<div class="item" id="w0">
+<h3><a href="#w0">w0</a> <span class="type">: Int</span></h3>
+<div class="meta">value &middot; <a href="demos-moe-router-moe-router.xtl.src.html#L58">line 58</a></div>
+<div class="doc">
+<p>Word w0 (green) moves towards word wa (fox) by eps
+from 0 to 1.2 in k steps; the slice spans the
+directions to wa and to wb (fish), side by side.</p>
+</div>
+<pre class="code">w0 ← <span class="c-number">19</span></pre>
+<div class="uses">Used in: <a href="demos-moe-router-moe-router.xtl.html#x0">x0</a></div>
+</div>
+<div class="item" id="wa">
+<h3><a href="#wa">wa</a> <span class="type">: Int</span></h3>
+<div class="meta">value &middot; <a href="demos-moe-router-moe-router.xtl.src.html#L59">line 59</a></div>
+<pre class="code">wa ← <span class="c-number">9</span></pre>
+<div class="uses">Used in: <a href="demos-moe-router-moe-router.xtl.html#d1">d1</a></div>
+</div>
+<div class="item" id="wb">
+<h3><a href="#wb">wb</a> <span class="type">: Int</span></h3>
+<div class="meta">value &middot; <a href="demos-moe-router-moe-router.xtl.src.html#L60">line 60</a></div>
+<pre class="code">wb ← <span class="c-number">32</span></pre>
+<div class="uses">Used in: <a href="demos-moe-router-moe-router.xtl.html#d2">d2</a></div>
+</div>
+<div class="item" id="k">
+<h3><a href="#k">k</a> <span class="type">: Int</span></h3>
+<div class="meta">value &middot; <a href="demos-moe-router-moe-router.xtl.src.html#L61">line 61</a></div>
+<pre class="code">k ← <span class="c-number">61</span></pre>
+<div class="uses">Used in: <a href="demos-moe-router-moe-router.xtl.html#eps">eps</a>, <a href="demos-moe-router-moe-router.xtl.html#xs">xs</a>, <a href="demos-moe-router-moe-router.xtl.src.html#L101">demos/moe-router/moe-router.xtl:101</a></div>
+</div>
+<div class="item" id="side">
+<h3><a href="#side">side</a> <span class="type">: Int</span></h3>
+<div class="meta">value &middot; <a href="demos-moe-router-moe-router.xtl.src.html#L62">line 62</a></div>
+<pre class="code">side ← <span class="c-number">24</span></pre>
+<div class="uses">Used in: <a href="demos-moe-router-moe-router.xtl.html#c">c</a>, <a href="demos-moe-router-moe-router.xtl.html#sa">sa</a>, <a href="demos-moe-router-moe-router.xtl.html#sb">sb</a>, <a href="demos-moe-router-moe-router.xtl.html#xg">xg</a>, <a href="demos-moe-router-moe-router.xtl.src.html#L107">demos/moe-router/moe-router.xtl:107</a></div>
+</div>
+<h2 class="section" id="section-8">Epsilon: where the experts change</h2>
+<div class="item" id="u.f_irst">
+<h3><a href="#u.f_irst"><span class="c-userfunc">ᵘf̲irst</span></a> <span class="type">: Num a =&gt; a -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="demos-moe-router-moe-router.xtl.src.html#L65">line 65</a></div>
+<div class="doc">
+<p>Each token's first and second expert, 1 to 16.</p>
+</div>
+<pre class="code"><span class="c-userfunc">ᵘf̲irst</span> ← { g → <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/₂</a> (<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> g <a href="builtins.html#-3d" class="c-symbol">=</a> (<span class="c-builtin">'</span><a href="builtins.html#m_ax" class="c-builtin">m̲ax</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/₂</a> g) <span class="c-builtin">'</span><a href="builtins.html#l_eft" class="c-builtin">l̲eft</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> <a href="builtins.html#o_ffsets" class="c-builtin">o̲ffsets</a> <span class="c-number">16</span>) <a href="builtins.html#-2a" class="c-symbol">×</a> (<a href="builtins.html#o_ffsets" class="c-builtin">o̲ffsets</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> g) <span class="c-builtin">'</span><a href="builtins.html#r_ight" class="c-builtin">r̲ight</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <span class="c-number">16</span> }</pre>
+<div class="uses">Used in: <a href="demos-moe-router-moe-router.xtl.html#u.s_econd"><span class="c-userfunc">ᵘs̲econd</span></a>, <a href="demos-moe-router-moe-router.xtl.src.html#L101">demos/moe-router/moe-router.xtl:101</a>, <a href="demos-moe-router-moe-router.xtl.html#pair">pair</a>, <a href="demos-moe-router-moe-router.xtl.html#pg">pg</a></div>
+</div>
+<div class="item" id="u.s_econd">
+<h3><a href="#u.s_econd"><span class="c-userfunc">ᵘs̲econd</span></a> <span class="type">: Float -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="demos-moe-router-moe-router.xtl.src.html#L66">line 66</a></div>
+<pre class="code"><span class="c-userfunc">ᵘs̲econd</span> ← { g → (<span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/₂</a> (<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> g <a href="builtins.html#-3e" class="c-symbol">&gt;</a> <span class="c-number">0.0</span>) <a href="builtins.html#-2a" class="c-symbol">×</a> (<a href="builtins.html#o_ffsets" class="c-builtin">o̲ffsets</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> g) <span class="c-builtin">'</span><a href="builtins.html#r_ight" class="c-builtin">r̲ight</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <span class="c-number">16</span>) <a href="builtins.html#-2d" class="c-symbol">−</a> <a href="demos-moe-router-moe-router.xtl.html#u.f_irst" class="c-userfunc">ᵘf̲irst</a> g }</pre>
+<div class="uses">Used in: <a href="demos-moe-router-moe-router.xtl.src.html#L101">demos/moe-router/moe-router.xtl:101</a>, <a href="demos-moe-router-moe-router.xtl.html#pair">pair</a>, <a href="demos-moe-router-moe-router.xtl.html#pg">pg</a></div>
+</div>
+<div class="item" id="x0">
+<h3><a href="#x0">x0</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-moe-router-moe-router.xtl.src.html#L67">line 67</a></div>
+<pre class="code">x0 ← <a href="demos-moe-router-moe-router.xtl.html#w0">w0</a> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="demos-moe-router-moe-router.xtl.html#E">E</a></pre>
+<div class="uses">Used in: <a href="demos-moe-router-moe-router.xtl.html#d1">d1</a>, <a href="demos-moe-router-moe-router.xtl.html#d2">d2</a>, <a href="demos-moe-router-moe-router.xtl.html#xs">xs</a>, <a href="demos-moe-router-moe-router.xtl.html#xg">xg</a></div>
+</div>
+<div class="item" id="d1">
+<h3><a href="#d1">d1</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-moe-router-moe-router.xtl.src.html#L68">line 68</a></div>
+<pre class="code">d1 ← (<a href="demos-moe-router-moe-router.xtl.html#wa">wa</a> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="demos-moe-router-moe-router.xtl.html#E">E</a>) <a href="builtins.html#-2d" class="c-symbol">−</a> <a href="demos-moe-router-moe-router.xtl.html#x0">x0</a></pre>
+<div class="uses">Used in: <a href="demos-moe-router-moe-router.xtl.html#xs">xs</a>, <a href="demos-moe-router-moe-router.xtl.html#xg">xg</a></div>
+</div>
+<div class="item" id="d2">
+<h3><a href="#d2">d2</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-moe-router-moe-router.xtl.src.html#L69">line 69</a></div>
+<pre class="code">d2 ← (<a href="demos-moe-router-moe-router.xtl.html#wb">wb</a> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="demos-moe-router-moe-router.xtl.html#E">E</a>) <a href="builtins.html#-2d" class="c-symbol">−</a> <a href="demos-moe-router-moe-router.xtl.html#x0">x0</a></pre>
+<div class="uses">Used in: <a href="demos-moe-router-moe-router.xtl.html#xg">xg</a></div>
+</div>
+<div class="item" id="eps">
+<h3><a href="#eps">eps</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-moe-router-moe-router.xtl.src.html#L71">line 71</a></div>
+<div class="doc">
+<p>x0 + eps d1 for every eps: one row each.</p>
+</div>
+<pre class="code">eps ← <span class="c-number">1.2</span> <a href="builtins.html#-2a" class="c-symbol">×</a> (<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="builtins.html#o_ffsets" class="c-builtin">o̲ffsets</a> <a href="demos-moe-router-moe-router.xtl.html#k">k</a>) <a href="builtins.html#-2f" class="c-symbol">÷</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="demos-moe-router-moe-router.xtl.html#k">k</a> <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span></pre>
+<div class="uses">Used in: <a href="demos-moe-router-moe-router.xtl.html#xs">xs</a>, <a href="demos-moe-router-moe-router.xtl.src.html#L103">demos/moe-router/moe-router.xtl:103</a></div>
+</div>
+<div class="item" id="xs">
+<h3><a href="#xs">xs</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-moe-router-moe-router.xtl.src.html#L72">line 72</a></div>
+<pre class="code">xs ← (<a href="demos-moe-router-moe-router.xtl.html#eps">eps</a> <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> <a href="demos-moe-router-moe-router.xtl.html#d1">d1</a>) <a href="builtins.html#-2b" class="c-symbol">+</a> (<a href="builtins.html#o_ffsets" class="c-builtin">o̲ffsets</a> <a href="demos-moe-router-moe-router.xtl.html#k">k</a>) <span class="c-builtin">'</span><a href="builtins.html#r_ight" class="c-builtin">r̲ight</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> <a href="demos-moe-router-moe-router.xtl.html#x0">x0</a></pre>
+<div class="uses">Used in: <a href="demos-moe-router-moe-router.xtl.html#gs">gs</a></div>
+</div>
+<div class="item" id="gs">
+<h3><a href="#gs">gs</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-moe-router-moe-router.xtl.src.html#L73">line 73</a></div>
+<pre class="code">gs ← <a href="demos-moe-router-moe-router.xtl.html#u.t_op2" class="c-userfunc">ᵘt̲op2</a> <a href="demos-moe-router-moe-router.xtl.html#u.s_oftmax" class="c-userfunc">ᵘs̲oftmax</a> <a href="demos-moe-router-moe-router.xtl.html#u.s_cores" class="c-userfunc">ᵘs̲cores</a> <a href="demos-moe-router-moe-router.xtl.html#xs">xs</a></pre>
+<div class="uses">Used in: <a href="demos-moe-router-moe-router.xtl.src.html#L101">demos/moe-router/moe-router.xtl:101</a>, <a href="demos-moe-router-moe-router.xtl.html#pair">pair</a></div>
+</div>
+<div class="item" id="c">
+<h3><a href="#c">c</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-moe-router-moe-router.xtl.src.html#L75">line 75</a></div>
+<div class="doc">
+<p>The slice: x0 + a d1 + b d2 over a grid of a and b.</p>
+</div>
+<pre class="code">c ← <span class="c-number">-0.25</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">1.5</span> <a href="builtins.html#-2a" class="c-symbol">×</a> (<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="builtins.html#o_ffsets" class="c-builtin">o̲ffsets</a> <a href="demos-moe-router-moe-router.xtl.html#side">side</a>) <a href="builtins.html#-2f" class="c-symbol">÷</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="demos-moe-router-moe-router.xtl.html#side">side</a> <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span></pre>
+<div class="uses">Used in: <a href="demos-moe-router-moe-router.xtl.html#sa">sa</a>, <a href="demos-moe-router-moe-router.xtl.html#sb">sb</a></div>
+</div>
+<div class="item" id="sa">
+<h3><a href="#sa">sa</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-moe-router-moe-router.xtl.src.html#L76">line 76</a></div>
+<pre class="code">sa ← <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> (<a href="builtins.html#o_ffsets" class="c-builtin">o̲ffsets</a> <a href="demos-moe-router-moe-router.xtl.html#side">side</a>) <span class="c-builtin">'</span><a href="builtins.html#r_ight" class="c-builtin">r̲ight</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> <a href="demos-moe-router-moe-router.xtl.html#c">c</a></pre>
+<div class="uses">Used in: <a href="demos-moe-router-moe-router.xtl.html#xg">xg</a></div>
+</div>
+<div class="item" id="sb">
+<h3><a href="#sb">sb</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-moe-router-moe-router.xtl.src.html#L77">line 77</a></div>
+<pre class="code">sb ← <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> (<a href="builtins.html#r_ev" class="c-builtin">r̲ev</a> <a href="demos-moe-router-moe-router.xtl.html#c">c</a>) <span class="c-builtin">'</span><a href="builtins.html#l_eft" class="c-builtin">l̲eft</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> <a href="builtins.html#o_ffsets" class="c-builtin">o̲ffsets</a> <a href="demos-moe-router-moe-router.xtl.html#side">side</a></pre>
+<div class="uses">Used in: <a href="demos-moe-router-moe-router.xtl.html#xg">xg</a></div>
+</div>
+<div class="item" id="xg">
+<h3><a href="#xg">xg</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-moe-router-moe-router.xtl.src.html#L78">line 78</a></div>
+<pre class="code">xg ← (<a href="demos-moe-router-moe-router.xtl.html#sa">sa</a> <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> <a href="demos-moe-router-moe-router.xtl.html#d1">d1</a>) <a href="builtins.html#-2b" class="c-symbol">+</a> (<a href="demos-moe-router-moe-router.xtl.html#sb">sb</a> <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> <a href="demos-moe-router-moe-router.xtl.html#d2">d2</a>) <a href="builtins.html#-2b" class="c-symbol">+</a> (<a href="builtins.html#o_ffsets" class="c-builtin">o̲ffsets</a> <a href="demos-moe-router-moe-router.xtl.html#side">side</a> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="demos-moe-router-moe-router.xtl.html#side">side</a>) <span class="c-builtin">'</span><a href="builtins.html#r_ight" class="c-builtin">r̲ight</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> <a href="demos-moe-router-moe-router.xtl.html#x0">x0</a></pre>
+<div class="uses">Used in: <a href="demos-moe-router-moe-router.xtl.html#gg">gg</a></div>
+</div>
+<div class="item" id="gg">
+<h3><a href="#gg">gg</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-moe-router-moe-router.xtl.src.html#L79">line 79</a></div>
+<pre class="code">gg ← <a href="demos-moe-router-moe-router.xtl.html#u.t_op2" class="c-userfunc">ᵘt̲op2</a> <a href="demos-moe-router-moe-router.xtl.html#u.s_oftmax" class="c-userfunc">ᵘs̲oftmax</a> <a href="demos-moe-router-moe-router.xtl.html#u.s_cores" class="c-userfunc">ᵘs̲cores</a> <a href="demos-moe-router-moe-router.xtl.html#xg">xg</a></pre>
+<div class="uses">Used in: <a href="demos-moe-router-moe-router.xtl.html#pg">pg</a></div>
+</div>
+<div class="item" id="ids">
+<h3><a href="#ids">ids</a> <span class="type">: Int</span></h3>
+<div class="meta">value &middot; <a href="demos-moe-router-moe-router.xtl.src.html#L83">line 83</a></div>
+<div class="doc">
+<p>&quot;the red fox eats fish in the park&quot;: word numbers (from 1).</p>
+</div>
+<pre class="code">ids ← <span class="c-number">1</span> <span class="c-number">17</span> <span class="c-number">9</span> <span class="c-number">23</span> <span class="c-number">32</span> <span class="c-number">5</span> <span class="c-number">1</span> <span class="c-number">26</span></pre>
+<div class="uses">Used in: <a href="demos-moe-router-moe-router.xtl.html#x">x</a></div>
+</div>
+<div class="item" id="x">
+<h3><a href="#x">x</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-moe-router-moe-router.xtl.src.html#L84">line 84</a></div>
+<pre class="code">x ← <a href="demos-moe-router-moe-router.xtl.html#ids">ids</a> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="demos-moe-router-moe-router.xtl.html#E">E</a></pre>
+<div class="uses">Used in: <a href="demos-moe-router-moe-router.xtl.src.html#L85">demos/moe-router/moe-router.xtl:85</a>, <a href="demos-moe-router-moe-router.xtl.html#gates">gates</a></div>
+</div>
+<div class="item" id="gates">
+<h3><a href="#gates">gates</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-moe-router-moe-router.xtl.src.html#L86">line 86</a></div>
+<pre class="code">gates ← <a href="demos-moe-router-moe-router.xtl.html#u.t_op2" class="c-userfunc">ᵘt̲op2</a> <a href="demos-moe-router-moe-router.xtl.html#u.s_oftmax" class="c-userfunc">ᵘs̲oftmax</a> <a href="demos-moe-router-moe-router.xtl.html#u.s_cores" class="c-userfunc">ᵘs̲cores</a> <a href="demos-moe-router-moe-router.xtl.html#x">x</a></pre>
+<div class="uses">Used in: <a href="demos-moe-router-moe-router.xtl.html#g1">g1</a>, <a href="demos-moe-router-moe-router.xtl.html#first">first</a>, <a href="demos-moe-router-moe-router.xtl.html#second">second</a>, <a href="demos-moe-router-moe-router.xtl.src.html#L97">demos/moe-router/moe-router.xtl:97</a></div>
+</div>
+<div class="item" id="idx">
+<h3><a href="#idx">idx</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-moe-router-moe-router.xtl.src.html#L89">line 89</a></div>
+<div class="doc">
+<p>Each token's first and second expert (numbered 1 to 16, row by
+row on the grid) and their gates.</p>
+</div>
+<pre class="code">idx ← (<a href="builtins.html#o_ffsets" class="c-builtin">o̲ffsets</a> <span class="c-number">8</span>) <span class="c-builtin">'</span><a href="builtins.html#r_ight" class="c-builtin">r̲ight</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <span class="c-number">16</span></pre>
+<div class="uses">Used in: <a href="demos-moe-router-moe-router.xtl.html#first">first</a>, <a href="demos-moe-router-moe-router.xtl.html#second">second</a></div>
+</div>
+<div class="item" id="g1">
+<h3><a href="#g1">g1</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-moe-router-moe-router.xtl.src.html#L90">line 90</a></div>
+<pre class="code">g1 ← <span class="c-builtin">'</span><a href="builtins.html#m_ax" class="c-builtin">m̲ax</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/₂</a> <a href="demos-moe-router-moe-router.xtl.html#gates">gates</a></pre>
+<div class="uses">Used in: <a href="demos-moe-router-moe-router.xtl.html#first">first</a>, <a href="demos-moe-router-moe-router.xtl.src.html#L95">demos/moe-router/moe-router.xtl:95</a></div>
+</div>
+<div class="item" id="first">
+<h3><a href="#first">first</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-moe-router-moe-router.xtl.src.html#L91">line 91</a></div>
+<pre class="code">first ← <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/₂</a> <a href="demos-moe-router-moe-router.xtl.html#idx">idx</a> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="demos-moe-router-moe-router.xtl.html#gates">gates</a> <a href="builtins.html#-3d" class="c-symbol">=</a> <a href="demos-moe-router-moe-router.xtl.html#g1">g1</a> <span class="c-builtin">'</span><a href="builtins.html#l_eft" class="c-builtin">l̲eft</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> <a href="builtins.html#o_ffsets" class="c-builtin">o̲ffsets</a> <span class="c-number">16</span></pre>
+<div class="uses">Used in: <a href="demos-moe-router-moe-router.xtl.html#second">second</a>, <a href="demos-moe-router-moe-router.xtl.src.html#L94">demos/moe-router/moe-router.xtl:94</a></div>
+</div>
+<div class="item" id="second">
+<h3><a href="#second">second</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-moe-router-moe-router.xtl.src.html#L92">line 92</a></div>
+<pre class="code">second ← (<span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/₂</a> <a href="demos-moe-router-moe-router.xtl.html#idx">idx</a> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="demos-moe-router-moe-router.xtl.html#gates">gates</a> <a href="builtins.html#-3e" class="c-symbol">&gt;</a> <span class="c-number">0.0</span>) <a href="builtins.html#-2d" class="c-symbol">−</a> <a href="demos-moe-router-moe-router.xtl.html#first">first</a></pre>
+<div class="uses">Used in: <a href="demos-moe-router-moe-router.xtl.src.html#L94">demos/moe-router/moe-router.xtl:94</a></div>
+</div>
+<div class="item" id="u.r_ound">
+<h3><a href="#u.r_ound"><span class="c-userfunc">ᵘr̲ound</span></a> <span class="type">: Float -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="demos-moe-router-moe-router.xtl.src.html#L93">line 93</a></div>
+<pre class="code"><span class="c-userfunc">ᵘr̲ound</span> ← { v → (<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> <span class="c-number">0.5</span> <a href="builtins.html#-2b" class="c-symbol">+</a> v <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">1000.0</span>) <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-number">1000.0</span> }</pre>
+<div class="uses">Used in: <a href="demos-moe-router-moe-router.xtl.src.html#L95">demos/moe-router/moe-router.xtl:95</a>, <a href="demos-moe-router-moe-router.xtl.src.html#L103">demos/moe-router/moe-router.xtl:103</a></div>
+</div>
+<div class="item" id="pair">
+<h3><a href="#pair">pair</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-moe-router-moe-router.xtl.src.html#L102">line 102</a></div>
+<pre class="code">pair ← (<span class="c-number">16.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="demos-moe-router-moe-router.xtl.html#u.f_irst" class="c-userfunc">ᵘf̲irst</a> <a href="demos-moe-router-moe-router.xtl.html#gs">gs</a>) <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="demos-moe-router-moe-router.xtl.html#u.s_econd" class="c-userfunc">ᵘs̲econd</a> <a href="demos-moe-router-moe-router.xtl.html#gs">gs</a></pre>
+<div class="uses">Used in: <a href="demos-moe-router-moe-router.xtl.src.html#L103">demos/moe-router/moe-router.xtl:103</a></div>
+</div>
+<div class="item" id="pg">
+<h3><a href="#pg">pg</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-moe-router-moe-router.xtl.src.html#L106">line 106</a></div>
+<div class="doc">
+<p>The slice, each point's pair as a letter: regions with straight
+edges, where two experts' scores tie.</p>
+</div>
+<pre class="code">pg ← (<span class="c-number">16.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="demos-moe-router-moe-router.xtl.html#u.f_irst" class="c-userfunc">ᵘf̲irst</a> <a href="demos-moe-router-moe-router.xtl.html#gg">gg</a>) <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="demos-moe-router-moe-router.xtl.html#u.s_econd" class="c-userfunc">ᵘs̲econd</a> <a href="demos-moe-router-moe-router.xtl.html#gg">gg</a></pre>
+<div class="uses">Used in: <a href="demos-moe-router-moe-router.xtl.src.html#L107">demos/moe-router/moe-router.xtl:107</a></div>
+</div>
+</main>
+</body>
+</html>

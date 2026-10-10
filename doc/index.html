@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>index - X_eTaL doc</title>
+<link rel="stylesheet" href="style.css">
+<script src="theme.js"></script>
+<script defer src="search-index.js"></script>
+<script defer src="search.js"></script>
+</head>
+<body>
+<nav class="side">
+<a class="home" href="index.html">X_eTaL doc</a>
+<input id="search" type="search" autocomplete="off" placeholder="Search: a name, or a type" title="A name (mean finds m_ean), or a type: Num a =&gt; a -&gt; a -&gt; a finds +, m_ax ...">
+<h2>Files</h2>
+<h3>demos/attention/</h3>
+<ul>
+<li><a href="demos-attention-attention.xtl.html">attention.xtl</a></li>
+</ul>
+<h3>demos/backprop/</h3>
+<ul>
+<li><a href="demos-backprop-backprop.xtl.html">backprop.xtl</a></li>
+</ul>
+<h3>demos/cnn-backprop/</h3>
+<ul>
+<li><a href="demos-cnn-backprop-cnn-backprop.xtl.html">cnn-backprop.xtl</a></li>
+</ul>
+<h3>demos/cnn-digits/</h3>
+<ul>
+<li><a href="demos-cnn-digits-cnn-digits.xtl.html">cnn-digits.xtl</a></li>
+</ul>
+<h3>demos/k-means/</h3>
+<ul>
+<li><a href="demos-k-means-k-means.xtl.html">k-means.xtl</a></li>
+</ul>
+<h3>demos/moe-router/</h3>
+<ul>
+<li><a href="demos-moe-router-moe-router.xtl.html">moe-router.xtl</a></li>
+</ul>
+<h3>demos/net-macro/</h3>
+<ul>
+<li><a href="demos-net-macro-net-macro.xtl.html">net-macro.xtl</a></li>
+<li><a href="demos-net-macro-train-it.xtl.html">train-it.xtl</a></li>
+</ul>
+<h3>demos/ternary-net/</h3>
+<ul>
+<li><a href="demos-ternary-net-ternary-net.xtl.html">ternary-net.xtl</a></li>
+</ul>
+<h3>demos/train-live/</h3>
+<ul>
+<li><a href="demos-train-live-train-live.xtl.html">train-live.xtl</a></li>
+</ul>
+<h3>libs/Learn/demos/</h3>
+<ul>
+<li><a href="libs-Learn-demos-blobs.xtl.html">blobs.xtl</a></li>
+</ul>
+<h3>libs/Learn/src/</h3>
+<ul>
+<li><a href="libs-Learn-src-Learn.xtl.html">Learn.xtl</a></li>
+</ul>
+<h3>libs/Net/demos/</h3>
+<ul>
+<li><a href="libs-Net-demos-train-xor.xtl.html">train-xor.xtl</a></li>
+<li><a href="libs-Net-demos-xor.xtl.html">xor.xtl</a></li>
+</ul>
+<h3>libs/Net/src/</h3>
+<ul>
+<li><a href="libs-Net-src-Net.xtlm.html">Net.xtlm</a></li>
+</ul>
+<h3>libs/NN/demos/</h3>
+<ul>
+<li><a href="libs-NN-demos-xor.xtl.html">xor.xtl</a></li>
+</ul>
+<h3>libs/NN/src/</h3>
+<ul>
+<li><a href="libs-NN-src-NN.xtl.html">NN.xtl</a></li>
+</ul>
+<ul>
+<li><a href="builtins.html">built-ins</a></li>
+</ul>
+</nav>
+<main>
+<button class="theme" title="Light or dark">theme</button>
+<section id="results"></section>
+<h1>X_eTaL documentation</h1>
+<h2>Files</h2>
+<ul>
+<li>library <a href="libs-Learn-src-Learn.xtl.html">libs/Learn/src/Learn.xtl</a>: Learn: classic machine learning: k-means, k nearest neighbors, PCA, logistic regression</li>
+<li>library <a href="libs-NN-src-NN.xtl.html">libs/NN/src/NN.xtl</a>: NN: neural-network building blocks -- activations, softmax by row, dense layers, one-hot, loss, accuracy</li>
+<li>macro library <a href="libs-Net-src-Net.xtlm.html">libs/Net/src/Net.xtlm</a>: Net: a network written as one line -- its layer sizes and activations become ordinary NN calls</li>
+<li>program <a href="libs-Learn-demos-blobs.xtl.html">libs/Learn/demos/blobs.xtl</a>: Learn's four models on one set of points: three blobs of 20 (around
+0 0, 6 6 and 0 6, a fixed ripple instead of chance). k-means finds
+them without their labels; kNN and logistic regression learn them
+from their labels; PCA finds the direction they spread along most.
+Run with &quot;just demo-lib Learn blobs&quot;.</li>
+<li>program <a href="libs-Net-demos-train-xor.xtl.html">libs/Net/demos/train-xor.xtl</a>: XOR learned, the network and its training each written as one line:
+t_rain&lt; writes the training step (backpropagation and Adam) from the
+same spec n_etwork&lt; reads. Small random weights at the start.
+Run with &quot;just demo-lib Net train-xor&quot;; see what was written with
+&quot;just expand-lib Net train-xor&quot;.</li>
+<li>program <a href="libs-Net-demos-xor.xtl.html">libs/Net/demos/xor.xtl</a>: XOR, the network written as one line. NN's own demo builds the same
+two layers by hand; here the spec &quot;2 2 relu 2 softmax&quot; is the
+network, and xetal expand shows the function the macro wrote.
+Run with &quot;just demo-lib Net xor&quot;; see it with &quot;just expand-lib Net xor&quot;.</li>
+<li>program <a href="libs-NN-demos-xor.xtl.html">libs/NN/demos/xor.xtl</a>: XOR by a two-layer network with hand-set weights: no straight line
+separates XOR's classes, but one hidden ReLU layer does. Every layer
+is one nn:d_ense on the whole batch of four points at once.
+Run with &quot;just demo-lib NN xor&quot;.</li>
+<li>program <a href="demos-attention-attention.xtl.html">demos/attention/attention.xtl</a>: Attention as array algebra: every token's query meets every token's
+key in one matrix product, S = Q K^T / sqrt d; softmax turns each row
+into weights; the output is the weighted sum of the values, Y = A V.
+One head, hand-set so that a word looks for what it can describe.</li>
+<li>program <a href="demos-backprop-backprop.xtl.html">demos/backprop/backprop.xtl</a>: One step of training, every array shown: a small network (2 inputs,
+4 tanh units, softmax over 3 classes) on six points of a spiral. The
+forward pass, the loss, each layer's gradient as one expression, the
+step; then every gradient checked against a finite difference.</li>
+<li>program <a href="demos-cnn-backprop-cnn-backprop.xtl.html">demos/cnn-backprop/cnn-backprop.xtl</a>: Training a tiny convolutional network in X_eTaL, from random
+weights, on 600 handwritten digits: 28 x 28 -&gt; 8 filters of 3 x 3
+-&gt; ReLU -&gt; 2 x 2 max-pooling -&gt; dense -&gt; softmax, as cnn-digits
+reads them. The backward pass undoes each stage in turn: the dense
+layer, the pooling (each block's gradient to its largest item), the
+ReLU and the convolution, each a few array expressions over the
+whole batch; it is checked against finite differences. Adam moves
+the weights, 20 digits a step, and p_ower repeats the step.</li>
+<li>program <a href="demos-cnn-digits-cnn-digits.xtl.html">demos/cnn-digits/cnn-digits.xtl</a>: A tiny convolutional network reads a handwritten digit: 28 x 28 -&gt;
+8 filters of 3 x 3 -&gt; ReLU -&gt; 2 x 2 max-pooling -&gt; dense -&gt; softmax.
+The convolution is the picture's nine shifted copies times the
+filters: one matrix product. Trained offline on MNIST (97.82% of
+the 10,000 test digits right); just cnn-train writes data/.</li>
+<li>program <a href="demos-k-means-k-means.xtl.html">demos/k-means/k-means.xtl</a>: k-means, step by step: 300 points in five blobs, five centers. Each
+step gives every point the nearest center, then moves each center to
+the mean of its points (the Learn library's k_step: a few array
+expressions over all the points at once). From a poor start, five
+points of one blob, the centers travel across the plane to the
+blobs; from Learn's farthest-first start they barely need to.</li>
+<li>program <a href="demos-moe-router-moe-router.xtl.html">demos/moe-router/moe-router.xtl</a>: A mixture-of-experts router: each token of a sentence is scored
+against 16 experts by one matrix product, the scores become
+probabilities (softmax), each token keeps its two most likely
+experts (top-2), and their probabilities, renormalized, are the
+gates. The experts' load is how many tokens each one got.</li>
+<li>program <a href="demos-net-macro-net-macro.xtl.html">demos/net-macro/net-macro.xtl</a>: Three networks for one task (which of three spiral arms is a point
+on?), each described once, by one line: the Net macro library turns
+a spec, sizes and activations, into the loading of the weights and
+an ordinary function of NN calls before the program is compiled.
+xetal expand shows what it wrote.</li>
+<li>program <a href="demos-net-macro-train-it.xtl.html">demos/net-macro/train-it.xtl</a>: Training a network from its one-line spec: the Net macro library
+writes, from &quot;2 16 relu 16 relu 3 softmax&quot;, the network's backward
+pass and an Adam step (net:t_rain&lt;) and the starting state
+(net:s_tate&lt;); p_ower repeats the step. The task is net-macro's: which
+of three spiral arms is a point on? Here the 300 training points are
+made in X_eTaL, and the weights start small and random.</li>
+<li>program <a href="demos-ternary-net-ternary-net.xtl.html">demos/ternary-net/ternary-net.xtl</a>: A 1.58-bit network: a tiny classifier (which of three spiral arms a
+point is on, 2 -&gt; 16 -&gt; 16 -&gt; 3) run with its weights stored four
+ways: 32-bit and 16-bit floats (simulated by rounding), 8-bit
+integers, and ternary -1 / 0 / +1 (log2 3 = 1.58 bits each), where
+a layer is additions and subtractions of its inputs and one scale.
+The same points go through all four; the measures compare them.</li>
+<li>program <a href="demos-train-live-train-live.xtl.html">demos/train-live/train-live.xtl</a>: Training in X_eTaL: a network (2 inputs, 16 tanh units, softmax over
+3) learns which of three spiral arms a point is on. The points are
+made here; the backward pass is the backprop microscope's; Adam,
+written out, moves the weights; p_ower repeats the step.</li>
+</ul>
+<h2>Items</h2>
+<table class="items">
+<tr><th>name</th><th>kind</th><th>type</th></tr>
+<tr><td><a href="libs-Learn-src-Learn.xtl.html#h.d_ist"><span class="c-libfunc">ʰd̲ist</span></a></td><td>function</td><td><code>Float -&gt; Float -&gt; Float</code></td></tr>
+<tr><td><a href="libs-Learn-src-Learn.xtl.html#h.o_nes"><span class="c-libfunc">ʰo̲nes</span></a></td><td>function</td><td><code>Float -&gt; Float</code></td></tr>
+<tr><td><a href="libs-Learn-src-Learn.xtl.html#l.a_ssign"><span class="c-libfunc">ˡa̲ssign</span></a></td><td>function</td><td><code>Float -&gt; Float -&gt; Int</code></td></tr>
+<tr><td><a href="libs-Learn-src-Learn.xtl.html#l.k_step"><span class="c-libfunc">ˡk̲step</span></a></td><td>function</td><td><code>Float -&gt; Float -&gt; Float</code></td></tr>
+<tr><td><a href="libs-Learn-src-Learn.xtl.html#l.i_nertia"><span class="c-libfunc">ˡi̲nertia</span></a></td><td>function</td><td><code>Float -&gt; Float -&gt; Float</code></td></tr>
+<tr><td><a href="libs-Learn-src-Learn.xtl.html#l.f_arthest"><span class="c-libfunc">ˡf̲arthest</span></a></td><td>function</td><td><code>Int -&gt; Float -&gt; Float</code></td></tr>
+<tr><td><a href="libs-Learn-src-Learn.xtl.html#l.k_means"><span class="c-libfunc">ˡk̲means</span></a></td><td>function</td><td><code>(Int, Int) -&gt; Float -&gt; Float</code></td></tr>
+<tr><td><a href="libs-Learn-src-Learn.xtl.html#l.k_nn"><span class="c-libfunc">ˡk̲nn</span></a></td><td>function</td><td><code>(Int, Float, Int) -&gt; Float -&gt; Int</code></td></tr>
+<tr><td><a href="libs-Learn-src-Learn.xtl.html#l.p_ca"><span class="c-libfunc">ˡp̲ca</span></a></td><td>function</td><td><code>Int -&gt; Float -&gt; (Float, Float, Float)</code></td></tr>
+<tr><td><a href="libs-Learn-src-Learn.xtl.html#l.p_roject"><span class="c-libfunc">ˡp̲roject</span></a></td><td>function</td><td><code>(Num a, Any b) =&gt; (a, a, b) -&gt; a -&gt; a</code></td></tr>
+<tr><td><a href="libs-Learn-src-Learn.xtl.html#l.l_ogistic"><span class="c-libfunc">ˡl̲ogistic</span></a></td><td>function</td><td><code>(Int, Float) -&gt; (Float, Int) -&gt; Float</code></td></tr>
+<tr><td><a href="libs-Learn-src-Learn.xtl.html#l.p_redict"><span class="c-libfunc">ˡp̲redict</span></a></td><td>function</td><td><code>Num a =&gt; a -&gt; a -&gt; Int</code></td></tr>
+<tr><td><a href="libs-NN-src-NN.xtl.html#h.s_pread"><span class="c-libfunc">ʰs̲pread</span></a></td><td>function</td><td><code>a -&gt; b -&gt; a</code></td></tr>
+<tr><td><a href="libs-NN-src-NN.xtl.html#h.r_ows"><span class="c-libfunc">ʰr̲ows</span></a></td><td>function</td><td><code>a -&gt; a</code></td></tr>
+<tr><td><a href="libs-NN-src-NN.xtl.html#l.r_elu"><span class="c-libfunc">ˡr̲elu</span></a></td><td>function</td><td><code>Float -&gt; Float</code></td></tr>
+<tr><td><a href="libs-NN-src-NN.xtl.html#l.l_eaky"><span class="c-libfunc">ˡl̲eaky</span></a></td><td>function</td><td><code>Float -&gt; Float -&gt; Float</code></td></tr>
+<tr><td><a href="libs-NN-src-NN.xtl.html#l.s_igmoid"><span class="c-libfunc">ˡs̲igmoid</span></a></td><td>function</td><td><code>Num a =&gt; a -&gt; Float</code></td></tr>
+<tr><td><a href="libs-NN-src-NN.xtl.html#l.t_anh"><span class="c-libfunc">ˡt̲anh</span></a></td><td>function</td><td><code>Float -&gt; Float</code></td></tr>
+<tr><td><a href="libs-NN-src-NN.xtl.html#l.s_oftmax"><span class="c-libfunc">ˡs̲oftmax</span></a></td><td>function</td><td><code>Num a =&gt; a -&gt; Float</code></td></tr>
+<tr><td><a href="libs-NN-src-NN.xtl.html#l.l_ogSoftmax"><span class="c-libfunc">ˡl̲ogSoftmax</span></a></td><td>function</td><td><code>Float -&gt; Float</code></td></tr>
+<tr><td><a href="libs-NN-src-NN.xtl.html#l.d_ense"><span class="c-libfunc">ˡd̲ense</span></a></td><td>function</td><td><code>Num a =&gt; a -&gt; a -&gt; a</code></td></tr>
+<tr><td><a href="libs-NN-src-NN.xtl.html#l.a_rgmax"><span class="c-libfunc">ˡa̲rgmax</span></a></td><td>function</td><td><code>Num a =&gt; a -&gt; Int</code></td></tr>
+<tr><td><a href="libs-NN-src-NN.xtl.html#l.o_neHot"><span class="c-libfunc">ˡo̲neHot</span></a></td><td>function</td><td><code>Int -&gt; Int -&gt; Float</code></td></tr>
+<tr><td><a href="libs-NN-src-NN.xtl.html#l.c_rossEntropy"><span class="c-libfunc">ˡc̲rossEntropy</span></a></td><td>function</td><td><code>Float -&gt; Float -&gt; Float</code></td></tr>
+<tr><td><a href="libs-NN-src-NN.xtl.html#l.m_se"><span class="c-libfunc">ˡm̲se</span></a></td><td>function</td><td><code>Float -&gt; Float -&gt; Float</code></td></tr>
+<tr><td><a href="libs-NN-src-NN.xtl.html#l.a_ccuracy"><span class="c-libfunc">ˡa̲ccuracy</span></a></td><td>function</td><td><code>Num a =&gt; Int -&gt; a -&gt; Float</code></td></tr>
+<tr><td><a href="libs-Net-src-Net.xtlm.html#h.w_ords"><span class="c-libfunc">ʰw̲ords</span></a></td><td>function</td><td><code>Char -&gt; Box Char</code></td></tr>
+<tr><td><a href="libs-Net-src-Net.xtlm.html#h.j_oin"><span class="c-libfunc">ʰj̲oin</span></a></td><td>function</td><td><code>Box Char -&gt; Char</code></td></tr>
+<tr><td><a href="libs-Net-src-Net.xtlm.html#h.s_ize-3f"><span class="c-libfunc">ʰs̲ize?</span></a></td><td>function</td><td><code>Truthy a =&gt; Char -&gt; a</code></td></tr>
+<tr><td><a href="libs-Net-src-Net.xtlm.html#h.a_ct-3f"><span class="c-libfunc">ʰa̲ct?</span></a></td><td>function</td><td><code>Truthy a =&gt; Char -&gt; a</code></td></tr>
+<tr><td><a href="libs-Net-src-Net.xtlm.html#h.a_ct"><span class="c-libfunc">ʰa̲ct</span></a></td><td>function</td><td><code>Char -&gt; Char</code></td></tr>
+<tr><td><a href="libs-Net-src-Net.xtlm.html#h.s_izes"><span class="c-libfunc">ʰs̲izes</span></a></td><td>function</td><td><code>Box Char -&gt; Int</code></td></tr>
+<tr><td><a href="libs-Net-src-Net.xtlm.html#specShape">specShape</a></td><td>value</td><td><code>Char</code></td></tr>
+<tr><td><a href="libs-Net-src-Net.xtlm.html#h.w_rong"><span class="c-libfunc">ʰw̲rong</span></a></td><td>function</td><td><code>Box Char -&gt; Char</code></td></tr>
+<tr><td><a href="libs-Net-src-Net.xtlm.html#h.f_unction"><span class="c-libfunc">ʰf̲unction</span></a></td><td>function</td><td><code>Box Char -&gt; Box Char -&gt; Char</code></td></tr>
+<tr><td><a href="libs-Net-src-Net.xtlm.html#h.c_ount"><span class="c-libfunc">ʰc̲ount</span></a></td><td>function</td><td><code>Box Char -&gt; a -&gt; Char</code></td></tr>
+<tr><td><a href="libs-Net-src-Net.xtlm.html#m.n_etwork-3c"><span class="c-macro">ᵐn̲etwork&lt;</span></a></td><td>macro</td><td><code>Char -&gt; Char -&gt; Char</code></td></tr>
+<tr><td><a href="libs-Net-src-Net.xtlm.html#m.m_odel-3c"><span class="c-macro">ᵐm̲odel&lt;</span></a></td><td>macro</td><td><code>Char -&gt; Char -&gt; Char</code></td></tr>
+<tr><td><a href="libs-Net-src-Net.xtlm.html#h.a_ctFn"><span class="c-libfunc">ʰa̲ctFn</span></a></td><td>function</td><td><code>Char -&gt; Char</code></td></tr>
+<tr><td><a href="libs-Net-src-Net.xtlm.html#h.s_lope"><span class="c-libfunc">ʰs̲lope</span></a></td><td>function</td><td><code>Char -&gt; Char -&gt; Char</code></td></tr>
+<tr><td><a href="libs-Net-src-Net.xtlm.html#h.a_cts"><span class="c-libfunc">ʰa̲cts</span></a></td><td>function</td><td><code>Box Char -&gt; Box Char</code></td></tr>
+<tr><td><a href="libs-Net-src-Net.xtlm.html#h.t_xt"><span class="c-libfunc">ʰt̲xt</span></a></td><td>function</td><td><code>a -&gt; Char</code></td></tr>
+<tr><td><a href="libs-Net-src-Net.xtlm.html#h.t_uple"><span class="c-libfunc">ʰt̲uple</span></a></td><td>function</td><td><code>Char -&gt; Int -&gt; Char</code></td></tr>
+<tr><td><a href="libs-Net-src-Net.xtlm.html#h.b_ackprop"><span class="c-libfunc">ʰb̲ackprop</span></a></td><td>function</td><td><code>Box Char -&gt; Box Char -&gt; Char</code></td></tr>
+<tr><td><a href="libs-Net-src-Net.xtlm.html#h.t_rainable"><span class="c-libfunc">ʰt̲rainable</span></a></td><td>function</td><td><code>Box Char -&gt; Char</code></td></tr>
+<tr><td><a href="libs-Net-src-Net.xtlm.html#m.g_radient-3c"><span class="c-macro">ᵐg̲radient&lt;</span></a></td><td>macro</td><td><code>Char -&gt; Char -&gt; Char</code></td></tr>
+<tr><td><a href="libs-Net-src-Net.xtlm.html#m.t_rain-3c"><span class="c-macro">ᵐt̲rain&lt;</span></a></td><td>macro</td><td><code>Char -&gt; Char -&gt; Char</code></td></tr>
+<tr><td><a href="libs-Net-src-Net.xtlm.html#m.s_tate-3c"><span class="c-macro">ᵐs̲tate&lt;</span></a></td><td>macro</td><td><code>Unit -&gt; Char -&gt; Char</code></td></tr>
+<tr><td><a href="libs-Net-src-Net.xtlm.html#m.p_arams-3c"><span class="c-macro">ᵐp̲arams&lt;</span></a></td><td>macro</td><td><code>Char -&gt; Unit -&gt; Char</code></td></tr>
+<tr><td><a href="libs-Net-src-Net.xtlm.html#m.s_hapes-3c"><span class="c-macro">ᵐs̲hapes&lt;</span></a></td><td>macro</td><td><code>Char -&gt; Char -&gt; Char</code></td></tr>
+<tr><td><a href="libs-Learn-demos-blobs.xtl.html#i">i</a></td><td>value</td><td><code>Int</code></td></tr>
+<tr><td><a href="libs-Learn-demos-blobs.xtl.html#blob">blob</a></td><td>value</td><td><code>Int</code></td></tr>
+<tr><td><a href="libs-Learn-demos-blobs.xtl.html#cx">cx</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="libs-Learn-demos-blobs.xtl.html#cy">cy</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="libs-Learn-demos-blobs.xtl.html#X">X</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="libs-Learn-demos-blobs.xtl.html#C">C</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="libs-Learn-demos-blobs.xtl.html#u.r_ound"><span class="c-userfunc">ᵘr̲ound</span></a></td><td>function</td><td><code>Float -&gt; Float</code></td></tr>
+<tr><td><a href="libs-Learn-demos-blobs.xtl.html#Q">Q</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="libs-Learn-demos-blobs.xtl.html#W">W</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="libs-Learn-demos-blobs.xtl.html#mu">mu</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="libs-Learn-demos-blobs.xtl.html#V">V</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="libs-Learn-demos-blobs.xtl.html#ev">ev</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="libs-Net-demos-train-xor.xtl.html#X">X</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="libs-Net-demos-train-xor.xtl.html#y">y</a></td><td>value</td><td><code>Int</code></td></tr>
+<tr><td><a href="libs-Net-demos-train-xor.xtl.html#Y">Y</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="libs-Net-demos-train-xor.xtl.html#lr">lr</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="libs-Net-demos-train-xor.xtl.html#u.s_tep"><span class="c-userfunc">ᵘs̲tep</span></a></td><td>function</td><td><code>(Float, Float, Float, Float, Float, Float, Float) -&gt; (Float, Float, Float, Float, Float, Float, Float)</code></td></tr>
+<tr><td><a href="libs-Net-demos-train-xor.xtl.html#w1">w1</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="libs-Net-demos-train-xor.xtl.html#w2">w2</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="libs-Net-demos-train-xor.xtl.html#v1">v1</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="libs-Net-demos-train-xor.xtl.html#v2">v2</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="libs-Net-demos-train-xor.xtl.html#u.b_efore"><span class="c-userfunc">ᵘb̲efore</span></a></td><td>function</td><td><code>Float -&gt; Float</code></td></tr>
+<tr><td><a href="libs-Net-demos-train-xor.xtl.html#u.a_fter"><span class="c-userfunc">ᵘa̲fter</span></a></td><td>function</td><td><code>Float -&gt; Float</code></td></tr>
+<tr><td><a href="libs-Net-demos-xor.xtl.html#x">x</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="libs-Net-demos-xor.xtl.html#y">y</a></td><td>value</td><td><code>Int</code></td></tr>
+<tr><td><a href="libs-Net-demos-xor.xtl.html#w1">w1</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="libs-Net-demos-xor.xtl.html#w2">w2</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="libs-Net-demos-xor.xtl.html#u.x_or"><span class="c-userfunc">ᵘx̲or</span></a></td><td>function</td><td><code>Float -&gt; Float</code></td></tr>
+<tr><td><a href="libs-Net-demos-xor.xtl.html#p">p</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="libs-NN-demos-xor.xtl.html#x">x</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="libs-NN-demos-xor.xtl.html#y">y</a></td><td>value</td><td><code>Int</code></td></tr>
+<tr><td><a href="libs-NN-demos-xor.xtl.html#w1">w1</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="libs-NN-demos-xor.xtl.html#h">h</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="libs-NN-demos-xor.xtl.html#w2">w2</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="libs-NN-demos-xor.xtl.html#p">p</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="demos-attention-attention.xtl.html#names">names</a></td><td>value</td><td><code>Char</code></td></tr>
+<tr><td><a href="demos-attention-attention.xtl.html#F">F</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="demos-attention-attention.xtl.html#Wq">Wq</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="demos-attention-attention.xtl.html#Wk">Wk</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="demos-attention-attention.xtl.html#u.s_cores"><span class="c-userfunc">ᵘs̲cores</span></a></td><td>function</td><td><code>Float -&gt; Float</code></td></tr>
+<tr><td><a href="demos-attention-attention.xtl.html#u.a_ttend"><span class="c-userfunc">ᵘa̲ttend</span></a></td><td>function</td><td><code>Float -&gt; Float -&gt; Float</code></td></tr>
+<tr><td><a href="demos-attention-attention.xtl.html#u.s_hade"><span class="c-userfunc">ᵘs̲hade</span></a></td><td>function</td><td><code>Float -&gt; Char</code></td></tr>
+<tr><td><a href="demos-attention-attention.xtl.html#u.r_ows"><span class="c-userfunc">ᵘr̲ows</span></a></td><td>function</td><td><code>Int -&gt; Char -&gt; Char</code></td></tr>
+<tr><td><a href="demos-attention-attention.xtl.html#u.w_ide"><span class="c-userfunc">ᵘw̲ide</span></a></td><td>function</td><td><code>a -&gt; a</code></td></tr>
+<tr><td><a href="demos-attention-attention.xtl.html#u.h_eader"><span class="c-userfunc">ᵘh̲eader</span></a></td><td>function</td><td><code>Int -&gt; Char</code></td></tr>
+<tr><td><a href="demos-attention-attention.xtl.html#u.t_op"><span class="c-userfunc">ᵘt̲op</span></a></td><td>function</td><td><code>Int -&gt; Float -&gt; Char</code></td></tr>
+<tr><td><a href="demos-attention-attention.xtl.html#ids">ids</a></td><td>value</td><td><code>Int</code></td></tr>
+<tr><td><a href="demos-attention-attention.xtl.html#X">X</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="demos-attention-attention.xtl.html#n">n</a></td><td>value</td><td><code>Int</code></td></tr>
+<tr><td><a href="demos-attention-attention.xtl.html#everyone">everyone</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="demos-attention-attention.xtl.html#A">A</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="demos-attention-attention.xtl.html#causal">causal</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="demos-attention-attention.xtl.html#w">w</a></td><td>value</td><td><code>Int</code></td></tr>
+<tr><td><a href="demos-attention-attention.xtl.html#B">B</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="demos-backprop-backprop.xtl.html#b">b</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="demos-backprop-backprop.xtl.html#X">X</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="demos-backprop-backprop.xtl.html#Y">Y</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="demos-backprop-backprop.xtl.html#W1">W1</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="demos-backprop-backprop.xtl.html#W2">W2</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="demos-backprop-backprop.xtl.html#lr">lr</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="demos-backprop-backprop.xtl.html#H">H</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="demos-backprop-backprop.xtl.html#P">P</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="demos-backprop-backprop.xtl.html#L">L</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="demos-backprop-backprop.xtl.html#u.o_nes"><span class="c-userfunc">ᵘo̲nes</span></a></td><td>function</td><td><code>Float -&gt; Float</code></td></tr>
+<tr><td><a href="demos-backprop-backprop.xtl.html#D2">D2</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="demos-backprop-backprop.xtl.html#G2">G2</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="demos-backprop-backprop.xtl.html#D1">D1</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="demos-backprop-backprop.xtl.html#G1">G1</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="demos-backprop-backprop.xtl.html#V1">V1</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="demos-backprop-backprop.xtl.html#V2">V2</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="demos-backprop-backprop.xtl.html#u.l_oss"><span class="c-userfunc">ᵘl̲oss</span></a></td><td>function</td><td><code>Float -&gt; Float -&gt; Float</code></td></tr>
+<tr><td><a href="demos-backprop-backprop.xtl.html#u.r_ound"><span class="c-userfunc">ᵘr̲ound</span></a></td><td>function</td><td><code>Float -&gt; Float</code></td></tr>
+<tr><td><a href="demos-backprop-backprop.xtl.html#e">e</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="demos-backprop-backprop.xtl.html#u.b_ump"><span class="c-userfunc">ᵘb̲ump</span></a></td><td>function</td><td><code>a -&gt; Int -&gt; Float</code></td></tr>
+<tr><td><a href="demos-backprop-backprop.xtl.html#F1">F1</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="demos-backprop-backprop.xtl.html#F2">F2</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="demos-backprop-backprop.xtl.html#gap">gap</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="demos-cnn-backprop-cnn-backprop.xtl.html#tr">tr</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="demos-cnn-backprop-cnn-backprop.xtl.html#te">te</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="demos-cnn-backprop-cnn-backprop.xtl.html#X">X</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="demos-cnn-backprop-cnn-backprop.xtl.html#Y">Y</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="demos-cnn-backprop-cnn-backprop.xtl.html#TX">TX</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="demos-cnn-backprop-cnn-backprop.xtl.html#ty">ty</a></td><td>value</td><td><code>Int</code></td></tr>
+<tr><td><a href="demos-cnn-backprop-cnn-backprop.xtl.html#u.w_indows"><span class="c-userfunc">ᵘw̲indows</span></a></td><td>function</td><td><code>a -&gt; a</code></td></tr>
+<tr><td><a href="demos-cnn-backprop-cnn-backprop.xtl.html#u.c_onv"><span class="c-userfunc">ᵘc̲onv</span></a></td><td>function</td><td><code>Num a =&gt; (a, a) -&gt; a -&gt; a</code></td></tr>
+<tr><td><a href="demos-cnn-backprop-cnn-backprop.xtl.html#u.p_ool"><span class="c-userfunc">ᵘp̲ool</span></a></td><td>function</td><td><code>Num a =&gt; a -&gt; a</code></td></tr>
+<tr><td><a href="demos-cnn-backprop-cnn-backprop.xtl.html#u.p_robs"><span class="c-userfunc">ᵘp̲robs</span></a></td><td>function</td><td><code>(Float, Float, Float) -&gt; Float -&gt; Float</code></td></tr>
+<tr><td><a href="demos-cnn-backprop-cnn-backprop.xtl.html#u.b_locks"><span class="c-userfunc">ᵘb̲locks</span></a></td><td>function</td><td><code>a -&gt; a</code></td></tr>
+<tr><td><a href="demos-cnn-backprop-cnn-backprop.xtl.html#u.m_aps"><span class="c-userfunc">ᵘm̲aps</span></a></td><td>function</td><td><code>a -&gt; a</code></td></tr>
+<tr><td><a href="demos-cnn-backprop-cnn-backprop.xtl.html#u.g_rad"><span class="c-userfunc">ᵘg̲rad</span></a></td><td>function</td><td><code>(Float, Float, Float) -&gt; Int -&gt; (Float, Float, Float)</code></td></tr>
+<tr><td><a href="demos-cnn-backprop-cnn-backprop.xtl.html#lr">lr</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="demos-cnn-backprop-cnn-backprop.xtl.html#bs">bs</a></td><td>value</td><td><code>Int</code></td></tr>
+<tr><td><a href="demos-cnn-backprop-cnn-backprop.xtl.html#u.m_ove"><span class="c-userfunc">ᵘm̲ove</span></a></td><td>function</td><td><code>(Float, Float) -&gt; Float -&gt; Float</code></td></tr>
+<tr><td><a href="demos-cnn-backprop-cnn-backprop.xtl.html#u.s_tep"><span class="c-userfunc">ᵘs̲tep</span></a></td><td>function</td><td><code>(Float, Float, Float, Float, Float, Float, Float, Float, Float, Float) -&gt; (Float, Float, Float, Float, Float, Float, Float, Float, Float, Float)</code></td></tr>
+<tr><td><a href="demos-cnn-backprop-cnn-backprop.xtl.html#K">K</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="demos-cnn-backprop-cnn-backprop.xtl.html#B">B</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="demos-cnn-backprop-cnn-backprop.xtl.html#W">W</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="demos-cnn-backprop-cnn-backprop.xtl.html#s0">s0</a></td><td>value</td><td><code>(Float, Float, Float, Float, Float, Float, Float, Float, Float, Float)</code></td></tr>
+<tr><td><a href="demos-cnn-backprop-cnn-backprop.xtl.html#u.t_est"><span class="c-userfunc">ᵘt̲est</span></a></td><td>function</td><td><code>(Any a, Any b, Any c, Any d, Any e, Any f, Any g) =&gt; (Float, Float, Float, a, b, c, d, e, f, g) -&gt; Float</code></td></tr>
+<tr><td><a href="demos-cnn-backprop-cnn-backprop.xtl.html#u.l_oss"><span class="c-userfunc">ᵘl̲oss</span></a></td><td>function</td><td><code>(Float, Float, Float) -&gt; Int -&gt; Float</code></td></tr>
+<tr><td><a href="demos-cnn-backprop-cnn-backprop.xtl.html#e">e</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="demos-cnn-backprop-cnn-backprop.xtl.html#u.b_ump"><span class="c-userfunc">ᵘb̲ump</span></a></td><td>function</td><td><code>a -&gt; Int -&gt; Float</code></td></tr>
+<tr><td><a href="demos-cnn-backprop-cnn-backprop.xtl.html#i4">i4</a></td><td>value</td><td><code>Int</code></td></tr>
+<tr><td><a href="demos-cnn-backprop-cnn-backprop.xtl.html#GK">GK</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="demos-cnn-backprop-cnn-backprop.xtl.html#GB">GB</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="demos-cnn-backprop-cnn-backprop.xtl.html#GW">GW</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="demos-cnn-backprop-cnn-backprop.xtl.html#FK">FK</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="demos-cnn-backprop-cnn-backprop.xtl.html#FB">FB</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="demos-cnn-backprop-cnn-backprop.xtl.html#wj">wj</a></td><td>value</td><td><code>Int</code></td></tr>
+<tr><td><a href="demos-cnn-backprop-cnn-backprop.xtl.html#FW">FW</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="demos-cnn-backprop-cnn-backprop.xtl.html#gap">gap</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="demos-cnn-backprop-cnn-backprop.xtl.html#u.r_ound"><span class="c-userfunc">ᵘr̲ound</span></a></td><td>function</td><td><code>Float -&gt; Float</code></td></tr>
+<tr><td><a href="demos-cnn-backprop-cnn-backprop.xtl.html#s1">s1</a></td><td>value</td><td><code>(Float, Float, Float, Float, Float, Float, Float, Float, Float, Float)</code></td></tr>
+<tr><td><a href="demos-cnn-backprop-cnn-backprop.xtl.html#s2">s2</a></td><td>value</td><td><code>(Float, Float, Float, Float, Float, Float, Float, Float, Float, Float)</code></td></tr>
+<tr><td><a href="demos-cnn-backprop-cnn-backprop.xtl.html#K2">K2</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="demos-cnn-backprop-cnn-backprop.xtl.html#B2">B2</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="demos-cnn-backprop-cnn-backprop.xtl.html#W2">W2</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="demos-cnn-digits-cnn-digits.xtl.html#fb">fb</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="demos-cnn-digits-cnn-digits.xtl.html#k9">k9</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="demos-cnn-digits-cnn-digits.xtl.html#bc">bc</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="demos-cnn-digits-cnn-digits.xtl.html#wb">wb</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="demos-cnn-digits-cnn-digits.xtl.html#samples">samples</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="demos-cnn-digits-cnn-digits.xtl.html#u.c_onv"><span class="c-userfunc">ᵘc̲onv</span></a></td><td>function</td><td><code>Float -&gt; Float</code></td></tr>
+<tr><td><a href="demos-cnn-digits-cnn-digits.xtl.html#u.p_ool"><span class="c-userfunc">ᵘp̲ool</span></a></td><td>function</td><td><code>Num a =&gt; a -&gt; a</code></td></tr>
+<tr><td><a href="demos-cnn-digits-cnn-digits.xtl.html#u.c_lassify"><span class="c-userfunc">ᵘc̲lassify</span></a></td><td>function</td><td><code>Float -&gt; Float</code></td></tr>
+<tr><td><a href="demos-cnn-digits-cnn-digits.xtl.html#u.s_hade"><span class="c-userfunc">ᵘs̲hade</span></a></td><td>function</td><td><code>Float -&gt; Char</code></td></tr>
+<tr><td><a href="demos-cnn-digits-cnn-digits.xtl.html#u.m_aps"><span class="c-userfunc">ᵘm̲aps</span></a></td><td>function</td><td><code>Float -&gt; Char</code></td></tr>
+<tr><td><a href="demos-cnn-digits-cnn-digits.xtl.html#u.w_ide"><span class="c-userfunc">ᵘw̲ide</span></a></td><td>function</td><td><code>a -&gt; a</code></td></tr>
+<tr><td><a href="demos-cnn-digits-cnn-digits.xtl.html#u.s_ide"><span class="c-userfunc">ᵘs̲ide</span></a></td><td>function</td><td><code>Char -&gt; Char</code></td></tr>
+<tr><td><a href="demos-cnn-digits-cnn-digits.xtl.html#x">x</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="demos-cnn-digits-cnn-digits.xtl.html#c">c</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="demos-cnn-digits-cnn-digits.xtl.html#m">m</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="demos-cnn-digits-cnn-digits.xtl.html#p">p</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="demos-cnn-digits-cnn-digits.xtl.html#u.b_ars"><span class="c-userfunc">ᵘb̲ars</span></a></td><td>function</td><td><code>Float -&gt; Char</code></td></tr>
+<tr><td><a href="demos-cnn-digits-cnn-digits.xtl.html#u.r_ead"><span class="c-userfunc">ᵘr̲ead</span></a></td><td>function</td><td><code>Int -&gt; Int</code></td></tr>
+<tr><td><a href="demos-cnn-digits-cnn-digits.xtl.html#u.s_ure"><span class="c-userfunc">ᵘs̲ure</span></a></td><td>function</td><td><code>Int -&gt; Int</code></td></tr>
+<tr><td><a href="demos-cnn-digits-cnn-digits.xtl.html#expected">expected</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="demos-cnn-digits-cnn-digits.xtl.html#u.g_ap"><span class="c-userfunc">ᵘg̲ap</span></a></td><td>function</td><td><code>Int -&gt; Float</code></td></tr>
+<tr><td><a href="demos-k-means-k-means.xtl.html#n">n</a></td><td>value</td><td><code>Int</code></td></tr>
+<tr><td><a href="demos-k-means-k-means.xtl.html#i">i</a></td><td>value</td><td><code>Int</code></td></tr>
+<tr><td><a href="demos-k-means-k-means.xtl.html#b">b</a></td><td>value</td><td><code>Int</code></td></tr>
+<tr><td><a href="demos-k-means-k-means.xtl.html#cx">cx</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="demos-k-means-k-means.xtl.html#cy">cy</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="demos-k-means-k-means.xtl.html#spread">spread</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="demos-k-means-k-means.xtl.html#u.n_oise"><span class="c-userfunc">ᵘn̲oise</span></a></td><td>function</td><td><code>Int -&gt; Float</code></td></tr>
+<tr><td><a href="demos-k-means-k-means.xtl.html#X">X</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="demos-k-means-k-means.xtl.html#g">g</a></td><td>value</td><td><code>Int</code></td></tr>
+<tr><td><a href="demos-k-means-k-means.xtl.html#c">c</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="demos-k-means-k-means.xtl.html#grid">grid</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="demos-k-means-k-means.xtl.html#k">k</a></td><td>value</td><td><code>Int</code></td></tr>
+<tr><td><a href="demos-k-means-k-means.xtl.html#C0">C0</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="demos-k-means-k-means.xtl.html#F0">F0</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="demos-k-means-k-means.xtl.html#u.r_ound"><span class="c-userfunc">ᵘr̲ound</span></a></td><td>function</td><td><code>Float -&gt; Float</code></td></tr>
+<tr><td><a href="demos-k-means-k-means.xtl.html#C10">C10</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="demos-moe-router-moe-router.xtl.html#F">F</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="demos-moe-router-moe-router.xtl.html#wr">wr</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="demos-moe-router-moe-router.xtl.html#wc">wc</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="demos-moe-router-moe-router.xtl.html#E">E</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="demos-moe-router-moe-router.xtl.html#fi">fi</a></td><td>value</td><td><code>Int</code></td></tr>
+<tr><td><a href="demos-moe-router-moe-router.xtl.html#ei">ei</a></td><td>value</td><td><code>Int</code></td></tr>
+<tr><td><a href="demos-moe-router-moe-router.xtl.html#W">W</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="demos-moe-router-moe-router.xtl.html#u.s_cores"><span class="c-userfunc">ᵘs̲cores</span></a></td><td>function</td><td><code>Float -&gt; Float</code></td></tr>
+<tr><td><a href="demos-moe-router-moe-router.xtl.html#u.s_oftmax"><span class="c-userfunc">ᵘs̲oftmax</span></a></td><td>function</td><td><code>Num a =&gt; a -&gt; Float</code></td></tr>
+<tr><td><a href="demos-moe-router-moe-router.xtl.html#u.t_op2"><span class="c-userfunc">ᵘt̲op2</span></a></td><td>function</td><td><code>Float -&gt; Float</code></td></tr>
+<tr><td><a href="demos-moe-router-moe-router.xtl.html#u.l_oad"><span class="c-userfunc">ᵘl̲oad</span></a></td><td>function</td><td><code>Float -&gt; Float</code></td></tr>
+<tr><td><a href="demos-moe-router-moe-router.xtl.html#w0">w0</a></td><td>value</td><td><code>Int</code></td></tr>
+<tr><td><a href="demos-moe-router-moe-router.xtl.html#wa">wa</a></td><td>value</td><td><code>Int</code></td></tr>
+<tr><td><a href="demos-moe-router-moe-router.xtl.html#wb">wb</a></td><td>value</td><td><code>Int</code></td></tr>
+<tr><td><a href="demos-moe-router-moe-router.xtl.html#k">k</a></td><td>value</td><td><code>Int</code></td></tr>
+<tr><td><a href="demos-moe-router-moe-router.xtl.html#side">side</a></td><td>value</td><td><code>Int</code></td></tr>
+<tr><td><a href="demos-moe-router-moe-router.xtl.html#u.f_irst"><span class="c-userfunc">ᵘf̲irst</span></a></td><td>function</td><td><code>Num a =&gt; a -&gt; Float</code></td></tr>
+<tr><td><a href="demos-moe-router-moe-router.xtl.html#u.s_econd"><span class="c-userfunc">ᵘs̲econd</span></a></td><td>function</td><td><code>Float -&gt; Float</code></td></tr>
+<tr><td><a href="demos-moe-router-moe-router.xtl.html#x0">x0</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="demos-moe-router-moe-router.xtl.html#d1">d1</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="demos-moe-router-moe-router.xtl.html#d2">d2</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="demos-moe-router-moe-router.xtl.html#eps">eps</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="demos-moe-router-moe-router.xtl.html#xs">xs</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="demos-moe-router-moe-router.xtl.html#gs">gs</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="demos-moe-router-moe-router.xtl.html#c">c</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="demos-moe-router-moe-router.xtl.html#sa">sa</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="demos-moe-router-moe-router.xtl.html#sb">sb</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="demos-moe-router-moe-router.xtl.html#xg">xg</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="demos-moe-router-moe-router.xtl.html#gg">gg</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="demos-moe-router-moe-router.xtl.html#ids">ids</a></td><td>value</td><td><code>Int</code></td></tr>
+<tr><td><a href="demos-moe-router-moe-router.xtl.html#x">x</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="demos-moe-router-moe-router.xtl.html#gates">gates</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="demos-moe-router-moe-router.xtl.html#idx">idx</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="demos-moe-router-moe-router.xtl.html#g1">g1</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="demos-moe-router-moe-router.xtl.html#first">first</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="demos-moe-router-moe-router.xtl.html#second">second</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="demos-moe-router-moe-router.xtl.html#u.r_ound"><span class="c-userfunc">ᵘr̲ound</span></a></td><td>function</td><td><code>Float -&gt; Float</code></td></tr>
+<tr><td><a href="demos-moe-router-moe-router.xtl.html#pair">pair</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="demos-moe-router-moe-router.xtl.html#pg">pg</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="demos-net-macro-net-macro.xtl.html#nums">nums</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="demos-net-macro-net-macro.xtl.html#pts">pts</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="demos-net-macro-net-macro.xtl.html#xy">xy</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="demos-net-macro-net-macro.xtl.html#arm">arm</a></td><td>value</td><td><code>Int</code></td></tr>
+<tr><td><a href="demos-net-macro-net-macro.xtl.html#a1">a1</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="demos-net-macro-net-macro.xtl.html#u.l_inear"><span class="c-userfunc">ᵘl̲inear</span></a></td><td>function</td><td><code>Float -&gt; Float</code></td></tr>
+<tr><td><a href="demos-net-macro-net-macro.xtl.html#b1">b1</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="demos-net-macro-net-macro.xtl.html#b2">b2</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="demos-net-macro-net-macro.xtl.html#u.s_mall"><span class="c-userfunc">ᵘs̲mall</span></a></td><td>function</td><td><code>Float -&gt; Float</code></td></tr>
+<tr><td><a href="demos-net-macro-net-macro.xtl.html#c1">c1</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="demos-net-macro-net-macro.xtl.html#c2">c2</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="demos-net-macro-net-macro.xtl.html#c3">c3</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="demos-net-macro-net-macro.xtl.html#u.d_eep"><span class="c-userfunc">ᵘd̲eep</span></a></td><td>function</td><td><code>Float -&gt; Float</code></td></tr>
+<tr><td><a href="demos-net-macro-net-macro.xtl.html#g">g</a></td><td>value</td><td><code>Int</code></td></tr>
+<tr><td><a href="demos-net-macro-net-macro.xtl.html#c">c</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="demos-net-macro-net-macro.xtl.html#grid">grid</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="demos-net-macro-net-macro.xtl.html#u.a_rms"><span class="c-userfunc">ᵘa̲rms</span></a></td><td>function</td><td><code>Num a =&gt; a -&gt; Char</code></td></tr>
+<tr><td><a href="demos-net-macro-train-it.xtl.html#n">n</a></td><td>value</td><td><code>Int</code></td></tr>
+<tr><td><a href="demos-net-macro-train-it.xtl.html#i">i</a></td><td>value</td><td><code>Int</code></td></tr>
+<tr><td><a href="demos-net-macro-train-it.xtl.html#arm">arm</a></td><td>value</td><td><code>Int</code></td></tr>
+<tr><td><a href="demos-net-macro-train-it.xtl.html#t">t</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="demos-net-macro-train-it.xtl.html#a">a</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="demos-net-macro-train-it.xtl.html#X">X</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="demos-net-macro-train-it.xtl.html#Y">Y</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="demos-net-macro-train-it.xtl.html#lr">lr</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="demos-net-macro-train-it.xtl.html#u.s_tep"><span class="c-userfunc">ᵘs̲tep</span></a></td><td>function</td><td><code>(Float, Float, Float, Float, Float, Float, Float, Float, Float, Float) -&gt; (Float, Float, Float, Float, Float, Float, Float, Float, Float, Float)</code></td></tr>
+<tr><td><a href="demos-net-macro-train-it.xtl.html#u.r_andom"><span class="c-userfunc">ᵘr̲andom</span></a></td><td>function</td><td><code>Int -&gt; Float</code></td></tr>
+<tr><td><a href="demos-net-macro-train-it.xtl.html#w1">w1</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="demos-net-macro-train-it.xtl.html#w2">w2</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="demos-net-macro-train-it.xtl.html#w3">w3</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="demos-net-macro-train-it.xtl.html#s0">s0</a></td><td>value</td><td><code>(Float, Float, Float, Float, Float, Float, Float, Float, Float, Float)</code></td></tr>
+<tr><td><a href="demos-net-macro-train-it.xtl.html#u.s_tart"><span class="c-userfunc">ᵘs̲tart</span></a></td><td>function</td><td><code>Float -&gt; Float</code></td></tr>
+<tr><td><a href="demos-net-macro-train-it.xtl.html#v1">v1</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="demos-net-macro-train-it.xtl.html#v2">v2</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="demos-net-macro-train-it.xtl.html#v3">v3</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="demos-net-macro-train-it.xtl.html#u.t_rained"><span class="c-userfunc">ᵘt̲rained</span></a></td><td>function</td><td><code>Float -&gt; Float</code></td></tr>
+<tr><td><a href="demos-net-macro-train-it.xtl.html#u.r_ound"><span class="c-userfunc">ᵘr̲ound</span></a></td><td>function</td><td><code>Float -&gt; Float</code></td></tr>
+<tr><td><a href="demos-ternary-net-ternary-net.xtl.html#g">g</a></td><td>value</td><td><code>Int</code></td></tr>
+<tr><td><a href="demos-ternary-net-ternary-net.xtl.html#t">t</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="demos-ternary-net-ternary-net.xtl.html#fp">fp</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="demos-ternary-net-ternary-net.xtl.html#qa">qa</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="demos-ternary-net-ternary-net.xtl.html#nums">nums</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="demos-ternary-net-ternary-net.xtl.html#tp">tp</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="demos-ternary-net-ternary-net.xtl.html#px">px</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="demos-ternary-net-ternary-net.xtl.html#py">py</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="demos-ternary-net-ternary-net.xtl.html#pl">pl</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="demos-ternary-net-ternary-net.xtl.html#m">m</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="demos-ternary-net-ternary-net.xtl.html#e1">e1</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="demos-ternary-net-ternary-net.xtl.html#e2">e2</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="demos-ternary-net-ternary-net.xtl.html#u.p_ad"><span class="c-userfunc">ᵘp̲ad</span></a></td><td>function</td><td><code>Float -&gt; Float -&gt; Float</code></td></tr>
+<tr><td><a href="demos-ternary-net-ternary-net.xtl.html#c">c</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="demos-ternary-net-ternary-net.xtl.html#gx">gx</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="demos-ternary-net-ternary-net.xtl.html#gy">gy</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="demos-ternary-net-ternary-net.xtl.html#grid">grid</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="demos-ternary-net-ternary-net.xtl.html#test">test</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="demos-ternary-net-ternary-net.xtl.html#u.l_ayer"><span class="c-userfunc">ᵘl̲ayer</span></a></td><td>function</td><td><code>Num a =&gt; a -&gt; a -&gt; a</code></td></tr>
+<tr><td><a href="demos-ternary-net-ternary-net.xtl.html#u.r_elu"><span class="c-userfunc">ᵘr̲elu</span></a></td><td>function</td><td><code>Float -&gt; Float</code></td></tr>
+<tr><td><a href="demos-ternary-net-ternary-net.xtl.html#u.n_et"><span class="c-userfunc">ᵘn̲et</span></a></td><td>function</td><td><code>Float -&gt; Float -&gt; Float</code></td></tr>
+<tr><td><a href="demos-ternary-net-ternary-net.xtl.html#w">w</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="demos-ternary-net-ternary-net.xtl.html#nw">nw</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="demos-ternary-net-ternary-net.xtl.html#u.l_ayers"><span class="c-userfunc">ᵘl̲ayers</span></a></td><td>function</td><td><code>a -&gt; a</code></td></tr>
+<tr><td><a href="demos-ternary-net-ternary-net.xtl.html#u.w_ith"><span class="c-userfunc">ᵘw̲ith</span></a></td><td>function</td><td><code>a -&gt; a -&gt; a</code></td></tr>
+<tr><td><a href="demos-ternary-net-ternary-net.xtl.html#u.f_loats"><span class="c-userfunc">ᵘf̲loats</span></a></td><td>function</td><td><code>Float -&gt; Float -&gt; Float</code></td></tr>
+<tr><td><a href="demos-ternary-net-ternary-net.xtl.html#u.i_nt8"><span class="c-userfunc">ᵘi̲nt8</span></a></td><td>function</td><td><code>Float -&gt; Float</code></td></tr>
+<tr><td><a href="demos-ternary-net-ternary-net.xtl.html#u.t_ern"><span class="c-userfunc">ᵘt̲ern</span></a></td><td>function</td><td><code>Float -&gt; Float -&gt; Float</code></td></tr>
+<tr><td><a href="demos-ternary-net-ternary-net.xtl.html#q">q</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="demos-ternary-net-ternary-net.xtl.html#a">a</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="demos-ternary-net-ternary-net.xtl.html#m32">m32</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="demos-ternary-net-ternary-net.xtl.html#m16">m16</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="demos-ternary-net-ternary-net.xtl.html#m8">m8</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="demos-ternary-net-ternary-net.xtl.html#m2">m2</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="demos-ternary-net-ternary-net.xtl.html#u.a_dds"><span class="c-userfunc">ᵘa̲dds</span></a></td><td>function</td><td><code>Float -&gt; Float -&gt; Float</code></td></tr>
+<tr><td><a href="demos-ternary-net-ternary-net.xtl.html#y32">y32</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="demos-ternary-net-ternary-net.xtl.html#y16">y16</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="demos-ternary-net-ternary-net.xtl.html#y8">y8</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="demos-ternary-net-ternary-net.xtl.html#y2">y2</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="demos-ternary-net-ternary-net.xtl.html#u.a_rm"><span class="c-userfunc">ᵘa̲rm</span></a></td><td>function</td><td><code>Num a =&gt; a -&gt; Float</code></td></tr>
+<tr><td><a href="demos-ternary-net-ternary-net.xtl.html#u.m_ean"><span class="c-userfunc">ᵘm̲ean</span></a></td><td>function</td><td><code>Float -&gt; Float</code></td></tr>
+<tr><td><a href="demos-ternary-net-ternary-net.xtl.html#u.m_easures"><span class="c-userfunc">ᵘm̲easures</span></a></td><td>function</td><td><code>Float -&gt; Float -&gt; Float</code></td></tr>
+<tr><td><a href="demos-ternary-net-ternary-net.xtl.html#u.r_ound"><span class="c-userfunc">ᵘr̲ound</span></a></td><td>function</td><td><code>Float -&gt; Float</code></td></tr>
+<tr><td><a href="demos-train-live-train-live.xtl.html#n">n</a></td><td>value</td><td><code>Int</code></td></tr>
+<tr><td><a href="demos-train-live-train-live.xtl.html#i">i</a></td><td>value</td><td><code>Int</code></td></tr>
+<tr><td><a href="demos-train-live-train-live.xtl.html#arm">arm</a></td><td>value</td><td><code>Int</code></td></tr>
+<tr><td><a href="demos-train-live-train-live.xtl.html#t">t</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="demos-train-live-train-live.xtl.html#a">a</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="demos-train-live-train-live.xtl.html#X">X</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="demos-train-live-train-live.xtl.html#Y">Y</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="demos-train-live-train-live.xtl.html#u.o_nes"><span class="c-userfunc">ᵘo̲nes</span></a></td><td>function</td><td><code>Float -&gt; Float</code></td></tr>
+<tr><td><a href="demos-train-live-train-live.xtl.html#u.f_orward"><span class="c-userfunc">ᵘf̲orward</span></a></td><td>function</td><td><code>Float -&gt; Float -&gt; Float</code></td></tr>
+<tr><td><a href="demos-train-live-train-live.xtl.html#u.g_rad"><span class="c-userfunc">ᵘg̲rad</span></a></td><td>function</td><td><code>Float -&gt; Float -&gt; (Float, Float)</code></td></tr>
+<tr><td><a href="demos-train-live-train-live.xtl.html#lr">lr</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="demos-train-live-train-live.xtl.html#u.m_ove"><span class="c-userfunc">ᵘm̲ove</span></a></td><td>function</td><td><code>(Float, Float) -&gt; Float -&gt; Float</code></td></tr>
+<tr><td><a href="demos-train-live-train-live.xtl.html#u.a_dam"><span class="c-userfunc">ᵘa̲dam</span></a></td><td>function</td><td><code>(Float, Float, Float, Float, Float, Float, Float) -&gt; (Float, Float, Float, Float, Float, Float, Float)</code></td></tr>
+<tr><td><a href="demos-train-live-train-live.xtl.html#w0">w0</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="demos-train-live-train-live.xtl.html#W1">W1</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="demos-train-live-train-live.xtl.html#W2">W2</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="demos-train-live-train-live.xtl.html#s0">s0</a></td><td>value</td><td><code>(Float, Float, Float, Float, Float, Float, Float)</code></td></tr>
+<tr><td><a href="demos-train-live-train-live.xtl.html#u.l_oss"><span class="c-userfunc">ᵘl̲oss</span></a></td><td>function</td><td><code>(Any a, Any b, Any c, Any d, Any e) =&gt; (Float, Float, a, b, c, d, e) -&gt; Float</code></td></tr>
+<tr><td><a href="demos-train-live-train-live.xtl.html#u.r_ight"><span class="c-userfunc">ᵘr̲ight</span></a></td><td>function</td><td><code>(Any a, Any b, Any c, Any d, Any e) =&gt; (Float, Float, a, b, c, d, e) -&gt; Float</code></td></tr>
+<tr><td><a href="demos-train-live-train-live.xtl.html#s1">s1</a></td><td>value</td><td><code>(Float, Float, Float, Float, Float, Float, Float)</code></td></tr>
+<tr><td><a href="demos-train-live-train-live.xtl.html#s2">s2</a></td><td>value</td><td><code>(Float, Float, Float, Float, Float, Float, Float)</code></td></tr>
+<tr><td><a href="demos-train-live-train-live.xtl.html#u.r_ound"><span class="c-userfunc">ᵘr̲ound</span></a></td><td>function</td><td><code>Float -&gt; Float</code></td></tr>
+</table>
+</main>
+</body>
+</html>

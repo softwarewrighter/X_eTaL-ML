@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>demos/cnn-digits/cnn-digits.xtl - X_eTaL doc</title>
+<link rel="stylesheet" href="style.css">
+<script src="theme.js"></script>
+<script defer src="search-index.js"></script>
+<script defer src="search.js"></script>
+</head>
+<body>
+<nav class="side">
+<a class="home" href="index.html">X_eTaL doc</a>
+<input id="search" type="search" autocomplete="off" placeholder="Search: a name, or a type" title="A name (mean finds m_ean), or a type: Num a =&gt; a -&gt; a -&gt; a finds +, m_ax ...">
+<h2>Files</h2>
+<h3>demos/attention/</h3>
+<ul>
+<li><a href="demos-attention-attention.xtl.html">attention.xtl</a></li>
+</ul>
+<h3>demos/backprop/</h3>
+<ul>
+<li><a href="demos-backprop-backprop.xtl.html">backprop.xtl</a></li>
+</ul>
+<h3>demos/cnn-backprop/</h3>
+<ul>
+<li><a href="demos-cnn-backprop-cnn-backprop.xtl.html">cnn-backprop.xtl</a></li>
+</ul>
+<h3>demos/cnn-digits/</h3>
+<ul>
+<li><a href="demos-cnn-digits-cnn-digits.xtl.html">cnn-digits.xtl</a></li>
+</ul>
+<h3>demos/k-means/</h3>
+<ul>
+<li><a href="demos-k-means-k-means.xtl.html">k-means.xtl</a></li>
+</ul>
+<h3>demos/moe-router/</h3>
+<ul>
+<li><a href="demos-moe-router-moe-router.xtl.html">moe-router.xtl</a></li>
+</ul>
+<h3>demos/net-macro/</h3>
+<ul>
+<li><a href="demos-net-macro-net-macro.xtl.html">net-macro.xtl</a></li>
+<li><a href="demos-net-macro-train-it.xtl.html">train-it.xtl</a></li>
+</ul>
+<h3>demos/ternary-net/</h3>
+<ul>
+<li><a href="demos-ternary-net-ternary-net.xtl.html">ternary-net.xtl</a></li>
+</ul>
+<h3>demos/train-live/</h3>
+<ul>
+<li><a href="demos-train-live-train-live.xtl.html">train-live.xtl</a></li>
+</ul>
+<h3>libs/Learn/demos/</h3>
+<ul>
+<li><a href="libs-Learn-demos-blobs.xtl.html">blobs.xtl</a></li>
+</ul>
+<h3>libs/Learn/src/</h3>
+<ul>
+<li><a href="libs-Learn-src-Learn.xtl.html">Learn.xtl</a></li>
+</ul>
+<h3>libs/Net/demos/</h3>
+<ul>
+<li><a href="libs-Net-demos-train-xor.xtl.html">train-xor.xtl</a></li>
+<li><a href="libs-Net-demos-xor.xtl.html">xor.xtl</a></li>
+</ul>
+<h3>libs/Net/src/</h3>
+<ul>
+<li><a href="libs-Net-src-Net.xtlm.html">Net.xtlm</a></li>
+</ul>
+<h3>libs/NN/demos/</h3>
+<ul>
+<li><a href="libs-NN-demos-xor.xtl.html">xor.xtl</a></li>
+</ul>
+<h3>libs/NN/src/</h3>
+<ul>
+<li><a href="libs-NN-src-NN.xtl.html">NN.xtl</a></li>
+</ul>
+<ul>
+<li><a href="builtins.html">built-ins</a></li>
+</ul>
+<h2>On this page</h2>
+<ul>
+<li class="item"><a href="#L11">fb</a></li>
+<li class="item"><a href="#L12">k9</a></li>
+<li class="item"><a href="#L13">bc</a></li>
+<li class="item"><a href="#L14">wb</a></li>
+<li class="item"><a href="#L15">samples</a></li>
+<li class="item"><a href="#L18"><span class="c-userfunc">ᵘc̲onv</span></a></li>
+<li class="item"><a href="#L22"><span class="c-userfunc">ᵘp̲ool</span></a></li>
+<li class="item"><a href="#L23"><span class="c-userfunc">ᵘc̲lassify</span></a></li>
+<li class="item"><a href="#L27"><span class="c-userfunc">ᵘs̲hade</span></a></li>
+<li class="item"><a href="#L29"><span class="c-userfunc">ᵘm̲aps</span></a></li>
+<li class="item"><a href="#L37"><span class="c-userfunc">ᵘw̲ide</span></a></li>
+<li class="item"><a href="#L38"><span class="c-userfunc">ᵘs̲ide</span></a></li>
+<li class="item"><a href="#L44">x</a></li>
+<li class="item"><a href="#L49">c</a></li>
+<li class="item"><a href="#L53">m</a></li>
+<li class="item"><a href="#L57">p</a></li>
+<li class="item"><a href="#L58"><span class="c-userfunc">ᵘb̲ars</span></a></li>
+<li class="item"><a href="#L62"><span class="c-userfunc">ᵘr̲ead</span></a></li>
+<li class="item"><a href="#L63"><span class="c-userfunc">ᵘs̲ure</span></a></li>
+<li class="item"><a href="#L67">expected</a></li>
+<li class="item"><a href="#L68"><span class="c-userfunc">ᵘg̲ap</span></a></li>
+</ul>
+</nav>
+<main>
+<button class="theme" title="Light or dark">theme</button>
+<section id="results"></section>
+<h1><span class="kind">source</span><a href="demos-cnn-digits-cnn-digits.xtl.html">demos/cnn-digits/cnn-digits.xtl</a></h1>
+<div class="source"><span class="line" id="L1"><a class="ln" href="#L1">1</a><span class="c-comment">⍝</span><span class="c-comment">!/usr/bin/env xetal</span></span>
+<span class="line" id="L2"><a class="ln" href="#L2">2</a><span class="c-comment">⍝</span><span class="c-comment"># A tiny convolutional network reads a handwritten digit: 28 x 28 -&gt;</span></span>
+<span class="line" id="L3"><a class="ln" href="#L3">3</a><span class="c-comment">⍝</span><span class="c-comment"># 8 filters of 3 x 3 -&gt; ReLU -&gt; 2 x 2 max-pooling -&gt; dense -&gt; softmax.</span></span>
+<span class="line" id="L4"><a class="ln" href="#L4">4</a><span class="c-comment">⍝</span><span class="c-comment"># The convolution is the picture's nine shifted copies times the</span></span>
+<span class="line" id="L5"><a class="ln" href="#L5">5</a><span class="c-comment">⍝</span><span class="c-comment"># filters: one matrix product. Trained offline on MNIST (97.82% of</span></span>
+<span class="line" id="L6"><a class="ln" href="#L6">6</a><span class="c-comment">⍝</span><span class="c-comment"># the 10,000 test digits right); just cnn-train writes data/.</span></span>
+<span class="line" id="L7"><a class="ln" href="#L7">7</a></span>
+<span class="line" id="L8"><a class="ln" href="#L8">8</a><span class="c-libfunc">ⁿⁿ⁼</span><span class="c-macro">u̲se&lt;</span> <a href="libs-NN-src-NN.xtl.html" class="c-string">&quot;NN&quot;</a></span>
+<span class="line" id="L9"><a class="ln" href="#L9">9</a></span>
+<span class="line" id="L10"><a class="ln" href="#L10">10</a><span class="c-comment">⍝</span><span class="c-comment">## The network, read from data/</span></span>
+<span class="line" id="L11"><a class="ln" href="#L11">11</a>fb ← <span class="c-number">8</span> <span class="c-number">10</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <a href="builtins.html#n_umbers" class="c-builtin">n̲umbers</a> <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;data/filters.txt&quot;</span></span>
+<span class="line" id="L12"><a class="ln" href="#L12">12</a>k9 ← <span class="c-number">9</span> <a href="builtins.html#t_ake" class="c-builtin">t̲ake₂</a> <a href="demos-cnn-digits-cnn-digits.xtl.html#fb">fb</a>                         <span class="c-comment">⍝</span><span class="c-comment"> 8 filters, 3 x 3 each as 9</span></span>
+<span class="line" id="L13"><a class="ln" href="#L13">13</a>bc ← <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> <span class="c-number">-1</span> <a href="builtins.html#t_ake" class="c-builtin">t̲ake₂</a> <a href="demos-cnn-digits-cnn-digits.xtl.html#fb">fb</a>                  <span class="c-comment">⍝</span><span class="c-comment"> their biases</span></span>
+<span class="line" id="L14"><a class="ln" href="#L14">14</a>wb ← <span class="c-number">1353</span> <span class="c-number">10</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <a href="builtins.html#n_umbers" class="c-builtin">n̲umbers</a> <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;data/dense.txt&quot;</span></span>
+<span class="line" id="L15"><a class="ln" href="#L15">15</a>samples ← <span class="c-number">10</span> <span class="c-number">28</span> <span class="c-number">28</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <a href="builtins.html#n_umbers" class="c-builtin">n̲umbers</a> <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;data/samples.txt&quot;</span></span>
+<span class="line" id="L16"><a class="ln" href="#L16">16</a></span>
+<span class="line" id="L17"><a class="ln" href="#L17">17</a><span class="c-comment">⍝</span><span class="c-comment">## The core: every stage one array expression</span></span>
+<span class="line" id="L18"><a class="ln" href="#L18">18</a><span class="c-userfunc">ᵘc̲onv</span> ← { x →</span>
+<span class="line" id="L19"><a class="ln" href="#L19">19</a>  v ← <span class="c-number">1</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop₄</a> <span class="c-number">-1</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop₄</a> <span class="c-number">1</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop₃</a> <span class="c-number">-1</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop₃</a> <span class="c-number">-1</span> <span class="c-number">0</span> <span class="c-number">1</span> <a href="builtins.html#o_-2d" class="c-builtin">o̲-₂</a> <span class="c-number">-1</span> <span class="c-number">0</span> <span class="c-number">1</span> <a href="builtins.html#o_-2d" class="c-builtin">o̲-₂</a> x</span>
+<span class="line" id="L20"><a class="ln" href="#L20">20</a>  <span class="c-number">8</span> <span class="c-number">26</span> <span class="c-number">26</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> (<a href="demos-cnn-digits-cnn-digits.xtl.html#k9">k9</a> <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#i_nner" class="c-builtin">i̲nner</a> <span class="c-number">9</span> <span class="c-number">676</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> v) <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="demos-cnn-digits-cnn-digits.xtl.html#bc">bc</a> <span class="c-builtin">'</span><a href="builtins.html#l_eft" class="c-builtin">l̲eft</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> <a href="builtins.html#o_ffsets" class="c-builtin">o̲ffsets</a> <span class="c-number">676</span></span>
+<span class="line" id="L21"><a class="ln" href="#L21">21</a>}</span>
+<span class="line" id="L22"><a class="ln" href="#L22">22</a><span class="c-userfunc">ᵘp̲ool</span> ← { x → <span class="c-builtin">'</span><a href="builtins.html#m_ax" class="c-builtin">m̲ax</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/₃₅</a> <span class="c-number">8</span> <span class="c-number">13</span> <span class="c-number">2</span> <span class="c-number">13</span> <span class="c-number">2</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> x }</span>
+<span class="line" id="L23"><a class="ln" href="#L23">23</a><span class="c-userfunc">ᵘc̲lassify</span> ← { x → <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> <a href="libs-NN-src-NN.xtl.html#l.s_oftmax" class="c-libfunc">ⁿⁿs̲oftmax</a> (<span class="c-number">1</span> <span class="c-number">1352</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> <a href="demos-cnn-digits-cnn-digits.xtl.html#u.p_ool" class="c-userfunc">ᵘp̲ool</a> <a href="libs-NN-src-NN.xtl.html#l.r_elu" class="c-libfunc">ⁿⁿr̲elu</a> <a href="demos-cnn-digits-cnn-digits.xtl.html#u.c_onv" class="c-userfunc">ᵘc̲onv</a> x) <a href="libs-NN-src-NN.xtl.html#l.d_ense" class="c-libfunc">ⁿⁿd̲ense</a> <a href="demos-cnn-digits-cnn-digits.xtl.html#wb">wb</a> }</span>
+<span class="line" id="L24"><a class="ln" href="#L24">24</a><span class="c-comment">⍝</span><span class="c-comment"> -- end of the core -------------------------------------</span></span>
+<span class="line" id="L25"><a class="ln" href="#L25">25</a></span>
+<span class="line" id="L26"><a class="ln" href="#L26">26</a><span class="c-comment">⍝</span><span class="c-comment">## Drawing: values as shades, maps side by side</span></span>
+<span class="line" id="L27"><a class="ln" href="#L27">27</a><span class="c-userfunc">ᵘs̲hade</span> ← { m → (<span class="c-number">1</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> <span class="c-number">0</span> <a href="builtins.html#m_ax" class="c-builtin">m̲ax</a> <span class="c-number">7</span> <a href="builtins.html#m_in" class="c-builtin">m̲in</a> <span class="c-number">8.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> m) <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <span class="c-string">&quot; .:-=+*#&quot;</span> }</span>
+<span class="line" id="L28"><a class="ln" href="#L28">28</a><span class="c-comment">⍝</span><span class="c-comment"># Each of n maps scaled from its own smallest to largest value, then shaded.</span></span>
+<span class="line" id="L29"><a class="ln" href="#L29">29</a><span class="c-userfunc">ᵘm̲aps</span> ← { m →</span>
+<span class="line" id="L30"><a class="ln" href="#L30">30</a>  n ← <span class="c-number">1</span> <a href="builtins.html#t_ake" class="c-builtin">t̲ake</a> <a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> m</span>
+<span class="line" id="L31"><a class="ln" href="#L31">31</a>  e ← <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> <span class="c-number">1</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> <a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> m</span>
+<span class="line" id="L32"><a class="ln" href="#L32">32</a>  f ← (n <a href="builtins.html#c_at" class="c-builtin">c̲at</a> e) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> m</span>
+<span class="line" id="L33"><a class="ln" href="#L33">33</a>  lo ← (n <a href="builtins.html#c_at" class="c-builtin">c̲at</a> e) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> (n <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> e) <a href="builtins.html#r_eplicate" class="c-builtin">r̲eplicate</a> <span class="c-builtin">'</span><a href="builtins.html#m_in" class="c-builtin">m̲in</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/₂</a> f</span>
+<span class="line" id="L34"><a class="ln" href="#L34">34</a>  hi ← (n <a href="builtins.html#c_at" class="c-builtin">c̲at</a> e) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> (n <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> e) <a href="builtins.html#r_eplicate" class="c-builtin">r̲eplicate</a> <span class="c-builtin">'</span><a href="builtins.html#m_ax" class="c-builtin">m̲ax</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/₂</a> f</span>
+<span class="line" id="L35"><a class="ln" href="#L35">35</a>  <a href="demos-cnn-digits-cnn-digits.xtl.html#u.s_hade" class="c-userfunc">ᵘs̲hade</a> (<a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> m) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> (f <a href="builtins.html#-2d" class="c-symbol">−</a> lo) <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-number">0.000001</span> <a href="builtins.html#m_ax" class="c-builtin">m̲ax</a> hi <a href="builtins.html#-2d" class="c-symbol">−</a> lo</span>
+<span class="line" id="L36"><a class="ln" href="#L36">36</a>}</span>
+<span class="line" id="L37"><a class="ln" href="#L37">37</a><span class="c-userfunc">ᵘw̲ide</span> ← { c → ((<span class="c-number">-1</span> <a href="builtins.html#t_ake" class="c-builtin">t̲ake</a> <a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> c) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">2</span>) <a href="builtins.html#r_eplicate" class="c-builtin">r̲eplicate₂</a> c }</span>
+<span class="line" id="L38"><a class="ln" href="#L38">38</a><span class="c-userfunc">ᵘs̲ide</span> ← { c →</span>
+<span class="line" id="L39"><a class="ln" href="#L39">39</a>  g ← c <a href="builtins.html#c_at" class="c-builtin">c̲at₃</a> ((<span class="c-number">2</span> <a href="builtins.html#t_ake" class="c-builtin">t̲ake</a> <a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> c) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">2</span>) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-string">&quot; &quot;</span></span>
+<span class="line" id="L40"><a class="ln" href="#L40">40</a>  ((<span class="c-number">1</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <span class="c-number">1</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> <a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> g) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> <span class="c-number">1</span> <span class="c-number">0</span> <span class="c-number">1</span> <a href="builtins.html#r_eplicate" class="c-builtin">r̲eplicate</a> <a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> g) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">2</span> <span class="c-number">1</span> <span class="c-number">3</span> <a href="builtins.html#t_ranspose" class="c-builtin">t̲ranspose</a> g</span>
+<span class="line" id="L41"><a class="ln" href="#L41">41</a>}</span>
+<span class="line" id="L42"><a class="ln" href="#L42">42</a></span>
+<span class="line" id="L43"><a class="ln" href="#L43">43</a><span class="c-comment">⍝</span><span class="c-comment"># A test digit: a 7.</span></span>
+<span class="line" id="L44"><a class="ln" href="#L44">44</a>x ← <span class="c-number">8</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="demos-cnn-digits-cnn-digits.xtl.html#samples">samples</a></span>
+<span class="line" id="L45"><a class="ln" href="#L45">45</a><a href="demos-cnn-digits-cnn-digits.xtl.html#u.w_ide" class="c-userfunc">ᵘw̲ide</a> <span class="c-number">28</span> <span class="c-number">28</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <a href="demos-cnn-digits-cnn-digits.xtl.html#u.s_hade" class="c-userfunc">ᵘs̲hade</a> <a href="demos-cnn-digits-cnn-digits.xtl.html#x">x</a></span>
+<span class="line" id="L46"><a class="ln" href="#L46">46</a><span class="c-comment">⍝</span><span class="c-comment"> The 8 filters (3 x 3), from most negative to most positive.</span></span>
+<span class="line" id="L47"><a class="ln" href="#L47">47</a><a href="demos-cnn-digits-cnn-digits.xtl.html#u.s_ide" class="c-userfunc">ᵘs̲ide</a> (<span class="c-number">1</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> <span class="c-number">0</span> <a href="builtins.html#m_ax" class="c-builtin">m̲ax</a> <span class="c-number">4</span> <a href="builtins.html#m_in" class="c-builtin">m̲in</a> <span class="c-number">2.5</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">2.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">8</span> <span class="c-number">3</span> <span class="c-number">3</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <a href="demos-cnn-digits-cnn-digits.xtl.html#k9">k9</a>) <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <span class="c-string">&quot;=-.+#&quot;</span></span>
+<span class="line" id="L48"><a class="ln" href="#L48">48</a><span class="c-comment">⍝</span><span class="c-comment"># Convolution and ReLU: 8 maps of 26 x 26, what each filter finds.</span></span>
+<span class="line" id="L49"><a class="ln" href="#L49">49</a>c ← <a href="libs-NN-src-NN.xtl.html#l.r_elu" class="c-libfunc">ⁿⁿr̲elu</a> <a href="demos-cnn-digits-cnn-digits.xtl.html#u.c_onv" class="c-userfunc">ᵘc̲onv</a> <a href="demos-cnn-digits-cnn-digits.xtl.html#x">x</a></span>
+<span class="line" id="L50"><a class="ln" href="#L50">50</a><a href="demos-cnn-digits-cnn-digits.xtl.html#u.s_ide" class="c-userfunc">ᵘs̲ide</a> <a href="demos-cnn-digits-cnn-digits.xtl.html#u.m_aps" class="c-userfunc">ᵘm̲aps</a> <span class="c-number">4</span> <a href="builtins.html#t_ake" class="c-builtin">t̲ake</a> <a href="demos-cnn-digits-cnn-digits.xtl.html#c">c</a></span>
+<span class="line" id="L51"><a class="ln" href="#L51">51</a><a href="demos-cnn-digits-cnn-digits.xtl.html#u.s_ide" class="c-userfunc">ᵘs̲ide</a> <a href="demos-cnn-digits-cnn-digits.xtl.html#u.m_aps" class="c-userfunc">ᵘm̲aps</a> <span class="c-number">4</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> <a href="demos-cnn-digits-cnn-digits.xtl.html#c">c</a></span>
+<span class="line" id="L52"><a class="ln" href="#L52">52</a><span class="c-comment">⍝</span><span class="c-comment"># Max-pooling: 8 maps of 13 x 13 (drawn twice as wide).</span></span>
+<span class="line" id="L53"><a class="ln" href="#L53">53</a>m ← <a href="demos-cnn-digits-cnn-digits.xtl.html#u.p_ool" class="c-userfunc">ᵘp̲ool</a> <a href="demos-cnn-digits-cnn-digits.xtl.html#c">c</a></span>
+<span class="line" id="L54"><a class="ln" href="#L54">54</a><a href="demos-cnn-digits-cnn-digits.xtl.html#u.w_ide" class="c-userfunc">ᵘw̲ide</a> <a href="demos-cnn-digits-cnn-digits.xtl.html#u.s_ide" class="c-userfunc">ᵘs̲ide</a> <a href="demos-cnn-digits-cnn-digits.xtl.html#u.m_aps" class="c-userfunc">ᵘm̲aps</a> <span class="c-number">4</span> <a href="builtins.html#t_ake" class="c-builtin">t̲ake</a> <a href="demos-cnn-digits-cnn-digits.xtl.html#m">m</a></span>
+<span class="line" id="L55"><a class="ln" href="#L55">55</a><a href="demos-cnn-digits-cnn-digits.xtl.html#u.w_ide" class="c-userfunc">ᵘw̲ide</a> <a href="demos-cnn-digits-cnn-digits.xtl.html#u.s_ide" class="c-userfunc">ᵘs̲ide</a> <a href="demos-cnn-digits-cnn-digits.xtl.html#u.m_aps" class="c-userfunc">ᵘm̲aps</a> <span class="c-number">4</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> <a href="demos-cnn-digits-cnn-digits.xtl.html#m">m</a></span>
+<span class="line" id="L56"><a class="ln" href="#L56">56</a><span class="c-comment">⍝</span><span class="c-comment"># The ten probabilities, as bars: the network reads a 7.</span></span>
+<span class="line" id="L57"><a class="ln" href="#L57">57</a>p ← <a href="demos-cnn-digits-cnn-digits.xtl.html#u.c_lassify" class="c-userfunc">ᵘc̲lassify</a> <a href="demos-cnn-digits-cnn-digits.xtl.html#x">x</a></span>
+<span class="line" id="L58"><a class="ln" href="#L58">58</a><span class="c-userfunc">ᵘb̲ars</span> ← { p → (<span class="c-number">1</span> <a href="builtins.html#-2b" class="c-symbol">+</a> (<a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> <span class="c-number">0.5</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">50.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> p) <span class="c-symbol">'</span><a href="builtins.html#-3e" class="c-symbol">&gt;</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> <a href="builtins.html#o_ffsets" class="c-builtin">o̲ffsets</a> <span class="c-number">50</span>) <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <span class="c-string">&quot; #&quot;</span> }</span>
+<span class="line" id="L59"><a class="ln" href="#L59">59</a>(<span class="c-number">10</span> <span class="c-number">1</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <a href="builtins.html#-5b-5dD" class="c-builtin">⎕D</a>) <a href="builtins.html#c_at" class="c-builtin">c̲at₂</a> (<span class="c-number">10</span> <span class="c-number">2</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-string">&quot; &quot;</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at₂</a> <a href="demos-cnn-digits-cnn-digits.xtl.html#u.b_ars" class="c-userfunc">ᵘb̲ars</a> <a href="demos-cnn-digits-cnn-digits.xtl.html#p">p</a></span>
+<span class="line" id="L60"><a class="ln" href="#L60">60</a><a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> <span class="c-number">0.5</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">100.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="demos-cnn-digits-cnn-digits.xtl.html#p">p</a></span>
+<span class="line" id="L61"><a class="ln" href="#L61">61</a><span class="c-comment">⍝</span><span class="c-comment"># The ten test digits (0 to 9): what the network reads, how sure (%).</span></span>
+<span class="line" id="L62"><a class="ln" href="#L62">62</a><span class="c-userfunc">ᵘr̲ead</span> ← { i → (<a href="libs-NN-src-NN.xtl.html#l.a_rgmax" class="c-libfunc">ⁿⁿa̲rgmax</a> <a href="demos-cnn-digits-cnn-digits.xtl.html#u.c_lassify" class="c-userfunc">ᵘc̲lassify</a> i <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="demos-cnn-digits-cnn-digits.xtl.html#samples">samples</a>) <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span> }</span>
+<span class="line" id="L63"><a class="ln" href="#L63">63</a><span class="c-userfunc">ᵘs̲ure</span> ← { i → <a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> <span class="c-number">0.5</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">100.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-builtin">'</span><a href="builtins.html#m_ax" class="c-builtin">m̲ax</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> <a href="demos-cnn-digits-cnn-digits.xtl.html#u.c_lassify" class="c-userfunc">ᵘc̲lassify</a> i <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="demos-cnn-digits-cnn-digits.xtl.html#samples">samples</a> }</span>
+<span class="line" id="L64"><a class="ln" href="#L64">64</a><span class="c-userfunc">'</span><a href="demos-cnn-digits-cnn-digits.xtl.html#u.r_ead" class="c-userfunc">ᵘr̲ead</a> <a href="builtins.html#e_ach" class="c-builtin">e̲ach</a> <a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <span class="c-number">10</span></span>
+<span class="line" id="L65"><a class="ln" href="#L65">65</a><span class="c-userfunc">'</span><a href="demos-cnn-digits-cnn-digits.xtl.html#u.s_ure" class="c-userfunc">ᵘs̲ure</a> <a href="builtins.html#e_ach" class="c-builtin">e̲ach</a> <a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <span class="c-number">10</span></span>
+<span class="line" id="L66"><a class="ln" href="#L66">66</a><span class="c-comment">⍝</span><span class="c-comment"># The same probabilities as the trainer's Rust forward pass, for all ten?</span></span>
+<span class="line" id="L67"><a class="ln" href="#L67">67</a>expected ← <span class="c-number">10</span> <span class="c-number">10</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <a href="builtins.html#n_umbers" class="c-builtin">n̲umbers</a> <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;data/expected.txt&quot;</span></span>
+<span class="line" id="L68"><a class="ln" href="#L68">68</a><span class="c-userfunc">ᵘg̲ap</span> ← { i → <span class="c-builtin">'</span><a href="builtins.html#m_ax" class="c-builtin">m̲ax</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> <a href="builtins.html#a_bs" class="c-builtin">a̲bs</a> (<a href="demos-cnn-digits-cnn-digits.xtl.html#u.c_lassify" class="c-userfunc">ᵘc̲lassify</a> i <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="demos-cnn-digits-cnn-digits.xtl.html#samples">samples</a>) <a href="builtins.html#-2d" class="c-symbol">−</a> i <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="demos-cnn-digits-cnn-digits.xtl.html#expected">expected</a> }</span>
+<span class="line" id="L69"><a class="ln" href="#L69">69</a><span class="c-number">1e-9</span> <a href="builtins.html#-3e" class="c-symbol">&gt;</a> <span class="c-builtin">'</span><a href="builtins.html#m_ax" class="c-builtin">m̲ax</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> <span class="c-userfunc">'</span><a href="demos-cnn-digits-cnn-digits.xtl.html#u.g_ap" class="c-userfunc">ᵘg̲ap</a> <a href="builtins.html#e_ach" class="c-builtin">e̲ach</a> <a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <span class="c-number">10</span></span>
+</div>
+</main>
+</body>
+</html>

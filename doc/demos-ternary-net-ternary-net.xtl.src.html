@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>demos/ternary-net/ternary-net.xtl - X_eTaL doc</title>
+<link rel="stylesheet" href="style.css">
+<script src="theme.js"></script>
+<script defer src="search-index.js"></script>
+<script defer src="search.js"></script>
+</head>
+<body>
+<nav class="side">
+<a class="home" href="index.html">X_eTaL doc</a>
+<input id="search" type="search" autocomplete="off" placeholder="Search: a name, or a type" title="A name (mean finds m_ean), or a type: Num a =&gt; a -&gt; a -&gt; a finds +, m_ax ...">
+<h2>Files</h2>
+<h3>demos/attention/</h3>
+<ul>
+<li><a href="demos-attention-attention.xtl.html">attention.xtl</a></li>
+</ul>
+<h3>demos/backprop/</h3>
+<ul>
+<li><a href="demos-backprop-backprop.xtl.html">backprop.xtl</a></li>
+</ul>
+<h3>demos/cnn-backprop/</h3>
+<ul>
+<li><a href="demos-cnn-backprop-cnn-backprop.xtl.html">cnn-backprop.xtl</a></li>
+</ul>
+<h3>demos/cnn-digits/</h3>
+<ul>
+<li><a href="demos-cnn-digits-cnn-digits.xtl.html">cnn-digits.xtl</a></li>
+</ul>
+<h3>demos/k-means/</h3>
+<ul>
+<li><a href="demos-k-means-k-means.xtl.html">k-means.xtl</a></li>
+</ul>
+<h3>demos/moe-router/</h3>
+<ul>
+<li><a href="demos-moe-router-moe-router.xtl.html">moe-router.xtl</a></li>
+</ul>
+<h3>demos/net-macro/</h3>
+<ul>
+<li><a href="demos-net-macro-net-macro.xtl.html">net-macro.xtl</a></li>
+<li><a href="demos-net-macro-train-it.xtl.html">train-it.xtl</a></li>
+</ul>
+<h3>demos/ternary-net/</h3>
+<ul>
+<li><a href="demos-ternary-net-ternary-net.xtl.html">ternary-net.xtl</a></li>
+</ul>
+<h3>demos/train-live/</h3>
+<ul>
+<li><a href="demos-train-live-train-live.xtl.html">train-live.xtl</a></li>
+</ul>
+<h3>libs/Learn/demos/</h3>
+<ul>
+<li><a href="libs-Learn-demos-blobs.xtl.html">blobs.xtl</a></li>
+</ul>
+<h3>libs/Learn/src/</h3>
+<ul>
+<li><a href="libs-Learn-src-Learn.xtl.html">Learn.xtl</a></li>
+</ul>
+<h3>libs/Net/demos/</h3>
+<ul>
+<li><a href="libs-Net-demos-train-xor.xtl.html">train-xor.xtl</a></li>
+<li><a href="libs-Net-demos-xor.xtl.html">xor.xtl</a></li>
+</ul>
+<h3>libs/Net/src/</h3>
+<ul>
+<li><a href="libs-Net-src-Net.xtlm.html">Net.xtlm</a></li>
+</ul>
+<h3>libs/NN/demos/</h3>
+<ul>
+<li><a href="libs-NN-demos-xor.xtl.html">xor.xtl</a></li>
+</ul>
+<h3>libs/NN/src/</h3>
+<ul>
+<li><a href="libs-NN-src-NN.xtl.html">NN.xtl</a></li>
+</ul>
+<ul>
+<li><a href="builtins.html">built-ins</a></li>
+</ul>
+<h2>On this page</h2>
+<ul>
+<li class="item"><a href="#L11">g</a></li>
+<li class="item"><a href="#L12">t</a></li>
+<li class="item"><a href="#L18">fp</a></li>
+<li class="item"><a href="#L19">qa</a></li>
+<li class="item"><a href="#L21">nums</a></li>
+<li class="item"><a href="#L22">tp</a></li>
+<li class="item"><a href="#L23">px</a></li>
+<li class="item"><a href="#L24">py</a></li>
+<li class="item"><a href="#L25">pl</a></li>
+<li class="item"><a href="#L28">m</a></li>
+<li class="item"><a href="#L32">e1</a></li>
+<li class="item"><a href="#L33">e2</a></li>
+<li class="item"><a href="#L34"><span class="c-userfunc">ᵘp̲ad</span></a></li>
+<li class="item"><a href="#L36">c</a></li>
+<li class="item"><a href="#L37">gx</a></li>
+<li class="item"><a href="#L38">gy</a></li>
+<li class="item"><a href="#L39">grid</a></li>
+<li class="item"><a href="#L40">test</a></li>
+<li class="item"><a href="#L43"><span class="c-userfunc">ᵘl̲ayer</span></a></li>
+<li class="item"><a href="#L44"><span class="c-userfunc">ᵘr̲elu</span></a></li>
+<li class="item"><a href="#L45"><span class="c-userfunc">ᵘn̲et</span></a></li>
+<li class="item"><a href="#L53">w</a></li>
+<li class="item"><a href="#L54">nw</a></li>
+<li class="item"><a href="#L55"><span class="c-userfunc">ᵘl̲ayers</span></a></li>
+<li class="item"><a href="#L56"><span class="c-userfunc">ᵘw̲ith</span></a></li>
+<li class="item"><a href="#L58"><span class="c-userfunc">ᵘf̲loats</span></a></li>
+<li class="item"><a href="#L63"><span class="c-userfunc">ᵘi̲nt8</span></a></li>
+<li class="item"><a href="#L69"><span class="c-userfunc">ᵘt̲ern</span></a></li>
+<li class="item"><a href="#L73">q</a></li>
+<li class="item"><a href="#L74">a</a></li>
+<li class="item"><a href="#L75">m32</a></li>
+<li class="item"><a href="#L76">m16</a></li>
+<li class="item"><a href="#L77">m8</a></li>
+<li class="item"><a href="#L78">m2</a></li>
+<li class="item"><a href="#L82"><span class="c-userfunc">ᵘa̲dds</span></a></li>
+<li class="item"><a href="#L84">y32</a></li>
+<li class="item"><a href="#L85">y16</a></li>
+<li class="item"><a href="#L86">y8</a></li>
+<li class="item"><a href="#L87">y2</a></li>
+<li class="item"><a href="#L90"><span class="c-userfunc">ᵘa̲rm</span></a></li>
+<li class="item"><a href="#L91"><span class="c-userfunc">ᵘm̲ean</span></a></li>
+<li class="item"><a href="#L94"><span class="c-userfunc">ᵘm̲easures</span></a></li>
+<li class="item"><a href="#L102"><span class="c-userfunc">ᵘr̲ound</span></a></li>
+</ul>
+</nav>
+<main>
+<button class="theme" title="Light or dark">theme</button>
+<section id="results"></section>
+<h1><span class="kind">source</span><a href="demos-ternary-net-ternary-net.xtl.html">demos/ternary-net/ternary-net.xtl</a></h1>
+<div class="source"><span class="line" id="L1"><a class="ln" href="#L1">1</a><span class="c-comment">⍝</span><span class="c-comment">!/usr/bin/env xetal</span></span>
+<span class="line" id="L2"><a class="ln" href="#L2">2</a><span class="c-comment">⍝</span><span class="c-comment"># A 1.58-bit network: a tiny classifier (which of three spiral arms a</span></span>
+<span class="line" id="L3"><a class="ln" href="#L3">3</a><span class="c-comment">⍝</span><span class="c-comment"># point is on, 2 -&gt; 16 -&gt; 16 -&gt; 3) run with its weights stored four</span></span>
+<span class="line" id="L4"><a class="ln" href="#L4">4</a><span class="c-comment">⍝</span><span class="c-comment"># ways: 32-bit and 16-bit floats (simulated by rounding), 8-bit</span></span>
+<span class="line" id="L5"><a class="ln" href="#L5">5</a><span class="c-comment">⍝</span><span class="c-comment"># integers, and ternary -1 / 0 / +1 (log2 3 = 1.58 bits each), where</span></span>
+<span class="line" id="L6"><a class="ln" href="#L6">6</a><span class="c-comment">⍝</span><span class="c-comment"># a layer is additions and subtractions of its inputs and one scale.</span></span>
+<span class="line" id="L7"><a class="ln" href="#L7">7</a><span class="c-comment">⍝</span><span class="c-comment"># The same points go through all four; the measures compare them.</span></span>
+<span class="line" id="L8"><a class="ln" href="#L8">8</a></span>
+<span class="line" id="L9"><a class="ln" href="#L9">9</a><span class="c-comment">⍝</span><span class="c-comment"># The map's side (g by g points) and the ternary threshold (a weight</span></span>
+<span class="line" id="L10"><a class="ln" href="#L10">10</a><span class="c-comment">⍝</span><span class="c-comment"># is kept as +1 or -1 when its size passes t times the layer's mean).</span></span>
+<span class="line" id="L11"><a class="ln" href="#L11">11</a>g ← <span class="c-number">12</span></span>
+<span class="line" id="L12"><a class="ln" href="#L12">12</a>t ← <span class="c-number">0.5</span></span>
+<span class="line" id="L13"><a class="ln" href="#L13">13</a></span>
+<span class="line" id="L14"><a class="ln" href="#L14">14</a><span class="c-comment">⍝</span><span class="c-comment">## The weights, read from data/ (just ternary-train)</span></span>
+<span class="line" id="L15"><a class="ln" href="#L15">15</a><span class="c-comment">⍝</span><span class="c-comment"># fp: trained in full precision; qa: fine-tuned for ternary</span></span>
+<span class="line" id="L16"><a class="ln" href="#L16">16</a><span class="c-comment">⍝</span><span class="c-comment"># weights. Each is 17 x 3 x 16: for each row (16 inputs, padded</span></span>
+<span class="line" id="L17"><a class="ln" href="#L17">17</a><span class="c-comment">⍝</span><span class="c-comment"># with 0, then the bias), layer and output (padded with 0).</span></span>
+<span class="line" id="L18"><a class="ln" href="#L18">18</a>fp ← <span class="c-number">17</span> <span class="c-number">3</span> <span class="c-number">16</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <a href="builtins.html#n_umbers" class="c-builtin">n̲umbers</a> <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;data/fp.txt&quot;</span></span>
+<span class="line" id="L19"><a class="ln" href="#L19">19</a>qa ← <span class="c-number">17</span> <span class="c-number">3</span> <span class="c-number">16</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <a href="builtins.html#n_umbers" class="c-builtin">n̲umbers</a> <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;data/qa.txt&quot;</span></span>
+<span class="line" id="L20"><a class="ln" href="#L20">20</a><span class="c-comment">⍝</span><span class="c-comment"># The test points, one per line: x, y and the arm (1, 2 or 3).</span></span>
+<span class="line" id="L21"><a class="ln" href="#L21">21</a>nums ← <a href="builtins.html#n_umbers" class="c-builtin">n̲umbers</a> <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;data/test.txt&quot;</span></span>
+<span class="line" id="L22"><a class="ln" href="#L22">22</a>tp ← <a href="builtins.html#o_-5c" class="c-builtin">o̲\</a> (((<a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> <a href="demos-ternary-net-ternary-net.xtl.html#nums">nums</a>) <a href="builtins.html#d_iv" class="c-builtin">d̲iv</a> <span class="c-number">3</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">3</span>) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <a href="demos-ternary-net-ternary-net.xtl.html#nums">nums</a></span>
+<span class="line" id="L23"><a class="ln" href="#L23">23</a>px ← <span class="c-number">1</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="demos-ternary-net-ternary-net.xtl.html#tp">tp</a></span>
+<span class="line" id="L24"><a class="ln" href="#L24">24</a>py ← <span class="c-number">2</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="demos-ternary-net-ternary-net.xtl.html#tp">tp</a></span>
+<span class="line" id="L25"><a class="ln" href="#L25">25</a>pl ← <span class="c-number">3</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="demos-ternary-net-ternary-net.xtl.html#tp">tp</a></span>
+<span class="line" id="L26"><a class="ln" href="#L26">26</a><span class="c-comment">⍝</span><span class="c-comment"> -- end of the weights ----------------------------------------------</span></span>
+<span class="line" id="L27"><a class="ln" href="#L27">27</a></span>
+<span class="line" id="L28"><a class="ln" href="#L28">28</a>m ← <a href="demos-ternary-net-ternary-net.xtl.html#qa">qa</a></span>
+<span class="line" id="L29"><a class="ln" href="#L29">29</a><span class="c-comment">⍝</span><span class="c-comment">## The inputs: points padded to 16 numbers</span></span>
+<span class="line" id="L30"><a class="ln" href="#L30">30</a><span class="c-comment">⍝</span><span class="c-comment"># Each point (x, y) becomes x e1 + y e2: a row of 16 with the rest 0,</span></span>
+<span class="line" id="L31"><a class="ln" href="#L31">31</a><span class="c-comment">⍝</span><span class="c-comment"># so every layer is the same 16 wide.</span></span>
+<span class="line" id="L32"><a class="ln" href="#L32">32</a>e1 ← <span class="c-number">16</span> <a href="builtins.html#t_ake" class="c-builtin">t̲ake</a> <span class="c-number">1.0</span></span>
+<span class="line" id="L33"><a class="ln" href="#L33">33</a>e2 ← <span class="c-number">16</span> <a href="builtins.html#t_ake" class="c-builtin">t̲ake</a> <span class="c-number">0.0</span> <span class="c-number">1.0</span></span>
+<span class="line" id="L34"><a class="ln" href="#L34">34</a><span class="c-userfunc">ᵘp̲ad</span> ← { x y → (x <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> <a href="demos-ternary-net-ternary-net.xtl.html#e1">e1</a>) <a href="builtins.html#-2b" class="c-symbol">+</a> y <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> <a href="demos-ternary-net-ternary-net.xtl.html#e2">e2</a> }</span>
+<span class="line" id="L35"><a class="ln" href="#L35">35</a><span class="c-comment">⍝</span><span class="c-comment"># The map: g by g points over -1.1 .. 1.1, row by row, y downwards.</span></span>
+<span class="line" id="L36"><a class="ln" href="#L36">36</a>c ← <span class="c-number">-1.1</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">2.2</span> <a href="builtins.html#-2a" class="c-symbol">×</a> (<span class="c-number">0.5</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="builtins.html#o_ffsets" class="c-builtin">o̲ffsets</a> <a href="demos-ternary-net-ternary-net.xtl.html#g">g</a>) <a href="builtins.html#-2f" class="c-symbol">÷</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="demos-ternary-net-ternary-net.xtl.html#g">g</a></span>
+<span class="line" id="L37"><a class="ln" href="#L37">37</a>gx ← <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> (<a href="builtins.html#o_ffsets" class="c-builtin">o̲ffsets</a> <a href="demos-ternary-net-ternary-net.xtl.html#g">g</a>) <span class="c-builtin">'</span><a href="builtins.html#r_ight" class="c-builtin">r̲ight</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> <a href="demos-ternary-net-ternary-net.xtl.html#c">c</a></span>
+<span class="line" id="L38"><a class="ln" href="#L38">38</a>gy ← <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> (<a href="builtins.html#r_ev" class="c-builtin">r̲ev</a> <a href="demos-ternary-net-ternary-net.xtl.html#c">c</a>) <span class="c-builtin">'</span><a href="builtins.html#l_eft" class="c-builtin">l̲eft</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> <a href="builtins.html#o_ffsets" class="c-builtin">o̲ffsets</a> <a href="demos-ternary-net-ternary-net.xtl.html#g">g</a></span>
+<span class="line" id="L39"><a class="ln" href="#L39">39</a>grid ← <a href="demos-ternary-net-ternary-net.xtl.html#gx">gx</a> <a href="demos-ternary-net-ternary-net.xtl.html#u.p_ad" class="c-userfunc">ᵘp̲ad</a> <a href="demos-ternary-net-ternary-net.xtl.html#gy">gy</a></span>
+<span class="line" id="L40"><a class="ln" href="#L40">40</a>test ← <a href="demos-ternary-net-ternary-net.xtl.html#px">px</a> <a href="demos-ternary-net-ternary-net.xtl.html#u.p_ad" class="c-userfunc">ᵘp̲ad</a> <a href="demos-ternary-net-ternary-net.xtl.html#py">py</a></span>
+<span class="line" id="L41"><a class="ln" href="#L41">41</a><span class="c-comment">⍝</span><span class="c-comment">## The network: three layers of one array</span></span>
+<span class="line" id="L42"><a class="ln" href="#L42">42</a><span class="c-comment">⍝</span><span class="c-comment"># A layer plane p (17 x 16): 16 rows of weights, then the biases.</span></span>
+<span class="line" id="L43"><a class="ln" href="#L43">43</a><span class="c-userfunc">ᵘl̲ayer</span> ← { x p → (x <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#i_nner" class="c-builtin">i̲nner</a> <span class="c-number">16</span> <a href="builtins.html#t_ake" class="c-builtin">t̲ake</a> p) <a href="builtins.html#-2b" class="c-symbol">+</a> (<a href="builtins.html#o_ffsets" class="c-builtin">o̲ffsets</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> x) <span class="c-builtin">'</span><a href="builtins.html#r_ight" class="c-builtin">r̲ight</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> <span class="c-number">-1</span> <a href="builtins.html#t_ake" class="c-builtin">t̲ake</a> p }</span>
+<span class="line" id="L44"><a class="ln" href="#L44">44</a><span class="c-userfunc">ᵘr̲elu</span> ← { x → <span class="c-number">0.0</span> <a href="builtins.html#m_ax" class="c-builtin">m̲ax</a> x }</span>
+<span class="line" id="L45"><a class="ln" href="#L45">45</a><span class="c-userfunc">ᵘn̲et</span> ← { x k →</span>
+<span class="line" id="L46"><a class="ln" href="#L46">46</a>  h1 ← <a href="demos-ternary-net-ternary-net.xtl.html#u.r_elu" class="c-userfunc">ᵘr̲elu</a> x <a href="demos-ternary-net-ternary-net.xtl.html#u.l_ayer" class="c-userfunc">ᵘl̲ayer</a> <span class="c-number">1</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect₂</a> k</span>
+<span class="line" id="L47"><a class="ln" href="#L47">47</a>  h2 ← <a href="demos-ternary-net-ternary-net.xtl.html#u.r_elu" class="c-userfunc">ᵘr̲elu</a> h1 <a href="demos-ternary-net-ternary-net.xtl.html#u.l_ayer" class="c-userfunc">ᵘl̲ayer</a> <span class="c-number">2</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect₂</a> k</span>
+<span class="line" id="L48"><a class="ln" href="#L48">48</a>  <span class="c-number">3</span> <a href="builtins.html#t_ake" class="c-builtin">t̲ake₂</a> h2 <a href="demos-ternary-net-ternary-net.xtl.html#u.l_ayer" class="c-userfunc">ᵘl̲ayer</a> <span class="c-number">3</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect₂</a> k</span>
+<span class="line" id="L49"><a class="ln" href="#L49">49</a>}</span>
+<span class="line" id="L50"><a class="ln" href="#L50">50</a><span class="c-comment">⍝</span><span class="c-comment">## The formats: the weights rounded four ways</span></span>
+<span class="line" id="L51"><a class="ln" href="#L51">51</a><span class="c-comment">⍝</span><span class="c-comment"># w is 16 x 3 x 16 (input, layer, output); a value per layer is</span></span>
+<span class="line" id="L52"><a class="ln" href="#L52">52</a><span class="c-comment">⍝</span><span class="c-comment"># spread back over its layer; the biases stay as they are.</span></span>
+<span class="line" id="L53"><a class="ln" href="#L53">53</a>w ← <span class="c-number">16</span> <a href="builtins.html#t_ake" class="c-builtin">t̲ake</a> <a href="demos-ternary-net-ternary-net.xtl.html#m">m</a></span>
+<span class="line" id="L54"><a class="ln" href="#L54">54</a>nw ← <span class="c-number">32.0</span> <span class="c-number">256.0</span> <span class="c-number">48.0</span></span>
+<span class="line" id="L55"><a class="ln" href="#L55">55</a><span class="c-userfunc">ᵘl̲ayers</span> ← { v → (<a href="builtins.html#o_ffsets" class="c-builtin">o̲ffsets</a> <span class="c-number">16</span>) <span class="c-builtin">'</span><a href="builtins.html#r_ight" class="c-builtin">r̲ight</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> v <span class="c-builtin">'</span><a href="builtins.html#l_eft" class="c-builtin">l̲eft</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> <a href="builtins.html#o_ffsets" class="c-builtin">o̲ffsets</a> <span class="c-number">16</span> }</span>
+<span class="line" id="L56"><a class="ln" href="#L56">56</a><span class="c-userfunc">ᵘw̲ith</span> ← { q k → q <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">-1</span> <a href="builtins.html#t_ake" class="c-builtin">t̲ake</a> k }</span>
+<span class="line" id="L57"><a class="ln" href="#L57">57</a><span class="c-comment">⍝</span><span class="c-comment"># Floats: keep b bits after the leading one (23 for FP32, 10 FP16).</span></span>
+<span class="line" id="L58"><a class="ln" href="#L58">58</a><span class="c-userfunc">ᵘf̲loats</span> ← { b x →</span>
+<span class="line" id="L59"><a class="ln" href="#L59">59</a>  s ← <span class="c-number">2.0</span> <a href="builtins.html#-5e" class="c-symbol">^</a> (<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> (<a href="builtins.html#l_og" class="c-builtin">l̲og</a> <span class="c-number">0.000000001</span> <a href="builtins.html#m_ax" class="c-builtin">m̲ax</a> <a href="builtins.html#a_bs" class="c-builtin">a̲bs</a> x) <a href="builtins.html#-2f" class="c-symbol">÷</a> <a href="builtins.html#l_og" class="c-builtin">l̲og</a> <span class="c-number">2.0</span>) <a href="builtins.html#-2d" class="c-symbol">−</a> b</span>
+<span class="line" id="L60"><a class="ln" href="#L60">60</a>  s <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> <span class="c-number">0.5</span> <a href="builtins.html#-2b" class="c-symbol">+</a> x <a href="builtins.html#-2f" class="c-symbol">÷</a> s</span>
+<span class="line" id="L61"><a class="ln" href="#L61">61</a>}</span>
+<span class="line" id="L62"><a class="ln" href="#L62">62</a><span class="c-comment">⍝</span><span class="c-comment"># INT8: each layer's largest weight becomes 127.</span></span>
+<span class="line" id="L63"><a class="ln" href="#L63">63</a><span class="c-userfunc">ᵘi̲nt8</span> ← { x →</span>
+<span class="line" id="L64"><a class="ln" href="#L64">64</a>  s ← <a href="demos-ternary-net-ternary-net.xtl.html#u.l_ayers" class="c-userfunc">ᵘl̲ayers</a> (<span class="c-builtin">'</span><a href="builtins.html#m_ax" class="c-builtin">m̲ax</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/₁₃</a> <a href="builtins.html#a_bs" class="c-builtin">a̲bs</a> x) <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-number">127.0</span></span>
+<span class="line" id="L65"><a class="ln" href="#L65">65</a>  s <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> <span class="c-number">0.5</span> <a href="builtins.html#-2b" class="c-symbol">+</a> x <a href="builtins.html#-2f" class="c-symbol">÷</a> s</span>
+<span class="line" id="L66"><a class="ln" href="#L66">66</a>}</span>
+<span class="line" id="L67"><a class="ln" href="#L67">67</a><span class="c-comment">⍝</span><span class="c-comment"># Ternary: +1 or -1 where the size passes t times the layer's mean</span></span>
+<span class="line" id="L68"><a class="ln" href="#L68">68</a><span class="c-comment">⍝</span><span class="c-comment"># size, else 0; the scale a is the mean size of the kept weights.</span></span>
+<span class="line" id="L69"><a class="ln" href="#L69">69</a><span class="c-userfunc">ᵘt̲ern</span> ← { k x →</span>
+<span class="line" id="L70"><a class="ln" href="#L70">70</a>  s ← k <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="demos-ternary-net-ternary-net.xtl.html#u.l_ayers" class="c-userfunc">ᵘl̲ayers</a> (<span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/₁₃</a> <a href="builtins.html#a_bs" class="c-builtin">a̲bs</a> x) <a href="builtins.html#-2f" class="c-symbol">÷</a> <a href="demos-ternary-net-ternary-net.xtl.html#nw">nw</a></span>
+<span class="line" id="L71"><a class="ln" href="#L71">71</a>  (<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> x <a href="builtins.html#-3e" class="c-symbol">&gt;</a> s) <a href="builtins.html#-2d" class="c-symbol">−</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> x <a href="builtins.html#-3c" class="c-symbol">&lt;</a> <a href="builtins.html#n_eg" class="c-builtin">n̲eg</a> s</span>
+<span class="line" id="L72"><a class="ln" href="#L72">72</a>}</span>
+<span class="line" id="L73"><a class="ln" href="#L73">73</a>q ← <a href="demos-ternary-net-ternary-net.xtl.html#t">t</a> <a href="demos-ternary-net-ternary-net.xtl.html#u.t_ern" class="c-userfunc">ᵘt̲ern</a> <a href="demos-ternary-net-ternary-net.xtl.html#w">w</a></span>
+<span class="line" id="L74"><a class="ln" href="#L74">74</a>a ← <a href="demos-ternary-net-ternary-net.xtl.html#u.l_ayers" class="c-userfunc">ᵘl̲ayers</a> (<span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/₁₃</a> (<a href="builtins.html#a_bs" class="c-builtin">a̲bs</a> <a href="demos-ternary-net-ternary-net.xtl.html#w">w</a>) <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#a_bs" class="c-builtin">a̲bs</a> <a href="demos-ternary-net-ternary-net.xtl.html#q">q</a>) <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-number">1.0</span> <a href="builtins.html#m_ax" class="c-builtin">m̲ax</a> <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/₁₃</a> <a href="builtins.html#a_bs" class="c-builtin">a̲bs</a> <a href="demos-ternary-net-ternary-net.xtl.html#q">q</a></span>
+<span class="line" id="L75"><a class="ln" href="#L75">75</a>m32 ← (<span class="c-number">23.0</span> <a href="demos-ternary-net-ternary-net.xtl.html#u.f_loats" class="c-userfunc">ᵘf̲loats</a> <a href="demos-ternary-net-ternary-net.xtl.html#w">w</a>) <a href="demos-ternary-net-ternary-net.xtl.html#u.w_ith" class="c-userfunc">ᵘw̲ith</a> <a href="demos-ternary-net-ternary-net.xtl.html#m">m</a></span>
+<span class="line" id="L76"><a class="ln" href="#L76">76</a>m16 ← (<span class="c-number">10.0</span> <a href="demos-ternary-net-ternary-net.xtl.html#u.f_loats" class="c-userfunc">ᵘf̲loats</a> <a href="demos-ternary-net-ternary-net.xtl.html#w">w</a>) <a href="demos-ternary-net-ternary-net.xtl.html#u.w_ith" class="c-userfunc">ᵘw̲ith</a> <a href="demos-ternary-net-ternary-net.xtl.html#m">m</a></span>
+<span class="line" id="L77"><a class="ln" href="#L77">77</a>m8 ← (<a href="demos-ternary-net-ternary-net.xtl.html#u.i_nt8" class="c-userfunc">ᵘi̲nt8</a> <a href="demos-ternary-net-ternary-net.xtl.html#w">w</a>) <a href="demos-ternary-net-ternary-net.xtl.html#u.w_ith" class="c-userfunc">ᵘw̲ith</a> <a href="demos-ternary-net-ternary-net.xtl.html#m">m</a></span>
+<span class="line" id="L78"><a class="ln" href="#L78">78</a>m2 ← (<a href="demos-ternary-net-ternary-net.xtl.html#a">a</a> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="demos-ternary-net-ternary-net.xtl.html#q">q</a>) <a href="demos-ternary-net-ternary-net.xtl.html#u.w_ith" class="c-userfunc">ᵘw̲ith</a> <a href="demos-ternary-net-ternary-net.xtl.html#m">m</a></span>
+<span class="line" id="L79"><a class="ln" href="#L79">79</a><span class="c-comment">⍝</span><span class="c-comment">## Additions only: a ternary layer for one input h</span></span>
+<span class="line" id="L80"><a class="ln" href="#L80">80</a><span class="c-comment">⍝</span><span class="c-comment"># Sum the inputs where the weight is +1, subtract those where it is</span></span>
+<span class="line" id="L81"><a class="ln" href="#L81">81</a><span class="c-comment">⍝</span><span class="c-comment"># -1, then one multiply by the layer's scale.</span></span>
+<span class="line" id="L82"><a class="ln" href="#L82">82</a><span class="c-userfunc">ᵘa̲dds</span> ← { h k → (<span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> (h <span class="c-builtin">'</span><a href="builtins.html#l_eft" class="c-builtin">l̲eft</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> <a href="builtins.html#o_ffsets" class="c-builtin">o̲ffsets</a> <span class="c-number">16</span>) <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> k <a href="builtins.html#-3d" class="c-symbol">=</a> <span class="c-number">1.0</span>) <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> (h <span class="c-builtin">'</span><a href="builtins.html#l_eft" class="c-builtin">l̲eft</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> <a href="builtins.html#o_ffsets" class="c-builtin">o̲ffsets</a> <span class="c-number">16</span>) <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> k <a href="builtins.html#-3d" class="c-symbol">=</a> <span class="c-number">-1.0</span> }</span>
+<span class="line" id="L83"><a class="ln" href="#L83">83</a><span class="c-comment">⍝</span><span class="c-comment">## The maps: every map point through each format</span></span>
+<span class="line" id="L84"><a class="ln" href="#L84">84</a>y32 ← <a href="demos-ternary-net-ternary-net.xtl.html#grid">grid</a> <a href="demos-ternary-net-ternary-net.xtl.html#u.n_et" class="c-userfunc">ᵘn̲et</a> <a href="demos-ternary-net-ternary-net.xtl.html#m32">m32</a></span>
+<span class="line" id="L85"><a class="ln" href="#L85">85</a>y16 ← <a href="demos-ternary-net-ternary-net.xtl.html#grid">grid</a> <a href="demos-ternary-net-ternary-net.xtl.html#u.n_et" class="c-userfunc">ᵘn̲et</a> <a href="demos-ternary-net-ternary-net.xtl.html#m16">m16</a></span>
+<span class="line" id="L86"><a class="ln" href="#L86">86</a>y8 ← <a href="demos-ternary-net-ternary-net.xtl.html#grid">grid</a> <a href="demos-ternary-net-ternary-net.xtl.html#u.n_et" class="c-userfunc">ᵘn̲et</a> <a href="demos-ternary-net-ternary-net.xtl.html#m8">m8</a></span>
+<span class="line" id="L87"><a class="ln" href="#L87">87</a>y2 ← <a href="demos-ternary-net-ternary-net.xtl.html#grid">grid</a> <a href="demos-ternary-net-ternary-net.xtl.html#u.n_et" class="c-userfunc">ᵘn̲et</a> <a href="demos-ternary-net-ternary-net.xtl.html#m2">m2</a></span>
+<span class="line" id="L88"><a class="ln" href="#L88">88</a><span class="c-comment">⍝</span><span class="c-comment">## The measures</span></span>
+<span class="line" id="L89"><a class="ln" href="#L89">89</a><span class="c-comment">⍝</span><span class="c-comment"># The arm each point is given (the largest of its three outputs).</span></span>
+<span class="line" id="L90"><a class="ln" href="#L90">90</a><span class="c-userfunc">ᵘa̲rm</span> ← { y → <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/₂</a> (<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> y <a href="builtins.html#-3d" class="c-symbol">=</a> (<span class="c-builtin">'</span><a href="builtins.html#m_ax" class="c-builtin">m̲ax</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/₂</a> y) <span class="c-builtin">'</span><a href="builtins.html#l_eft" class="c-builtin">l̲eft</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> <a href="builtins.html#o_ffsets" class="c-builtin">o̲ffsets</a> <span class="c-number">3</span>) <a href="builtins.html#-2a" class="c-symbol">×</a> (<a href="builtins.html#o_ffsets" class="c-builtin">o̲ffsets</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> y) <span class="c-builtin">'</span><a href="builtins.html#r_ight" class="c-builtin">r̲ight</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> <span class="c-number">1.0</span> <span class="c-number">2.0</span> <span class="c-number">3.0</span> }</span>
+<span class="line" id="L91"><a class="ln" href="#L91">91</a><span class="c-userfunc">ᵘm̲ean</span> ← { x → (<span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> x) <a href="builtins.html#-2f" class="c-symbol">÷</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> x }</span>
+<span class="line" id="L92"><a class="ln" href="#L92">92</a><span class="c-comment">⍝</span><span class="c-comment"># For a format's weights k and its map y: accuracy on the test</span></span>
+<span class="line" id="L93"><a class="ln" href="#L93">93</a><span class="c-comment">⍝</span><span class="c-comment"># points, agreement with FP32 over the map, mean output error.</span></span>
+<span class="line" id="L94"><a class="ln" href="#L94">94</a><span class="c-userfunc">ᵘm̲easures</span> ← { k y →</span>
+<span class="line" id="L95"><a class="ln" href="#L95">95</a>  acc ← <a href="demos-ternary-net-ternary-net.xtl.html#u.m_ean" class="c-userfunc">ᵘm̲ean</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="demos-ternary-net-ternary-net.xtl.html#pl">pl</a> <a href="builtins.html#-3d" class="c-symbol">=</a> <a href="demos-ternary-net-ternary-net.xtl.html#u.a_rm" class="c-userfunc">ᵘa̲rm</a> <a href="demos-ternary-net-ternary-net.xtl.html#test">test</a> <a href="demos-ternary-net-ternary-net.xtl.html#u.n_et" class="c-userfunc">ᵘn̲et</a> k</span>
+<span class="line" id="L96"><a class="ln" href="#L96">96</a>  agree ← <a href="demos-ternary-net-ternary-net.xtl.html#u.m_ean" class="c-userfunc">ᵘm̲ean</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> (<a href="demos-ternary-net-ternary-net.xtl.html#u.a_rm" class="c-userfunc">ᵘa̲rm</a> y) <a href="builtins.html#-3d" class="c-symbol">=</a> <a href="demos-ternary-net-ternary-net.xtl.html#u.a_rm" class="c-userfunc">ᵘa̲rm</a> <a href="demos-ternary-net-ternary-net.xtl.html#y32">y32</a></span>
+<span class="line" id="L97"><a class="ln" href="#L97">97</a>  err ← <a href="demos-ternary-net-ternary-net.xtl.html#u.m_ean" class="c-userfunc">ᵘm̲ean</a> <a href="builtins.html#a_bs" class="c-builtin">a̲bs</a> y <a href="builtins.html#-2d" class="c-symbol">−</a> <a href="demos-ternary-net-ternary-net.xtl.html#y32">y32</a></span>
+<span class="line" id="L98"><a class="ln" href="#L98">98</a>  acc <a href="builtins.html#c_at" class="c-builtin">c̲at</a> agree <a href="builtins.html#c_at" class="c-builtin">c̲at</a> err</span>
+<span class="line" id="L99"><a class="ln" href="#L99">99</a>}</span>
+<span class="line" id="L100"><a class="ln" href="#L100">100</a><span class="c-comment">⍝</span><span class="c-comment"> -- end of the core ------------------------------------</span></span>
+<span class="line" id="L101"><a class="ln" href="#L101">101</a></span>
+<span class="line" id="L102"><a class="ln" href="#L102">102</a><span class="c-userfunc">ᵘr̲ound</span> ← { x → (<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> <span class="c-number">0.5</span> <a href="builtins.html#-2b" class="c-symbol">+</a> x <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">1000.0</span>) <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-number">1000.0</span> }</span>
+<span class="line" id="L103"><a class="ln" href="#L103">103</a><span class="c-comment">⍝</span><span class="c-comment"> The layer-2 weights as ternary glyphs: - 0 +.</span></span>
+<span class="line" id="L104"><a class="ln" href="#L104">104</a>(<span class="c-number">1</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> <span class="c-number">1.0</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">2</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect₂</a> <a href="demos-ternary-net-ternary-net.xtl.html#q">q</a>) <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <span class="c-string">&quot;-.+&quot;</span></span>
+<span class="line" id="L105"><a class="ln" href="#L105">105</a><span class="c-comment">⍝</span><span class="c-comment"> Accuracy on the test points, agreement with FP32 over the map, and</span></span>
+<span class="line" id="L106"><a class="ln" href="#L106">106</a><span class="c-comment">⍝</span><span class="c-comment"> the mean output error, for FP32, FP16, INT8 and ternary.</span></span>
+<span class="line" id="L107"><a class="ln" href="#L107">107</a><a href="demos-ternary-net-ternary-net.xtl.html#u.r_ound" class="c-userfunc">ᵘr̲ound</a> (<a href="demos-ternary-net-ternary-net.xtl.html#m32">m32</a> <a href="demos-ternary-net-ternary-net.xtl.html#u.m_easures" class="c-userfunc">ᵘm̲easures</a> <a href="demos-ternary-net-ternary-net.xtl.html#y32">y32</a>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="demos-ternary-net-ternary-net.xtl.html#m16">m16</a> <a href="demos-ternary-net-ternary-net.xtl.html#u.m_easures" class="c-userfunc">ᵘm̲easures</a> <a href="demos-ternary-net-ternary-net.xtl.html#y16">y16</a>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="demos-ternary-net-ternary-net.xtl.html#m8">m8</a> <a href="demos-ternary-net-ternary-net.xtl.html#u.m_easures" class="c-userfunc">ᵘm̲easures</a> <a href="demos-ternary-net-ternary-net.xtl.html#y8">y8</a>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="demos-ternary-net-ternary-net.xtl.html#m2">m2</a> <a href="demos-ternary-net-ternary-net.xtl.html#u.m_easures" class="c-userfunc">ᵘm̲easures</a> <a href="demos-ternary-net-ternary-net.xtl.html#y2">y2</a></span>
+<span class="line" id="L108"><a class="ln" href="#L108">108</a><span class="c-comment">⍝</span><span class="c-comment"> Weight storage in bits, and the adds the ternary layers need (the</span></span>
+<span class="line" id="L109"><a class="ln" href="#L109">109</a><span class="c-comment">⍝</span><span class="c-comment"> kept weights) against the 336 multiply-adds of the others.</span></span>
+<span class="line" id="L110"><a class="ln" href="#L110">110</a>(<span class="c-number">32</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">336</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-number">16</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">336</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-number">8</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">336</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="demos-ternary-net-ternary-net.xtl.html#u.r_ound" class="c-userfunc">ᵘr̲ound</a> <span class="c-number">336.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> (<a href="builtins.html#l_og" class="c-builtin">l̲og</a> <span class="c-number">3.0</span>) <a href="builtins.html#-2f" class="c-symbol">÷</a> <a href="builtins.html#l_og" class="c-builtin">l̲og</a> <span class="c-number">2.0</span></span>
+<span class="line" id="L111"><a class="ln" href="#L111">111</a><span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> <a href="builtins.html#a_bs" class="c-builtin">a̲bs</a> <a href="demos-ternary-net-ternary-net.xtl.html#q">q</a></span>
+<span class="line" id="L112"><a class="ln" href="#L112">112</a><span class="c-comment">⍝</span><span class="c-comment"> The map's arms, FP32 and then ternary.</span></span>
+<span class="line" id="L113"><a class="ln" href="#L113">113</a>(<a href="demos-ternary-net-ternary-net.xtl.html#g">g</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="demos-ternary-net-ternary-net.xtl.html#g">g</a>) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> (<a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> <a href="demos-ternary-net-ternary-net.xtl.html#u.a_rm" class="c-userfunc">ᵘa̲rm</a> <a href="demos-ternary-net-ternary-net.xtl.html#y32">y32</a>) <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="builtins.html#-5b-5dA" class="c-builtin">⎕A</a></span>
+<span class="line" id="L114"><a class="ln" href="#L114">114</a>(<a href="demos-ternary-net-ternary-net.xtl.html#g">g</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="demos-ternary-net-ternary-net.xtl.html#g">g</a>) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> (<a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> <a href="demos-ternary-net-ternary-net.xtl.html#u.a_rm" class="c-userfunc">ᵘa̲rm</a> <a href="demos-ternary-net-ternary-net.xtl.html#y2">y2</a>) <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="builtins.html#-5b-5dA" class="c-builtin">⎕A</a></span>
+</div>
+</main>
+</body>
+</html>

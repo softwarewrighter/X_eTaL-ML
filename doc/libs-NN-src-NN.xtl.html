@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>libs/NN/src/NN.xtl - X_eTaL doc</title>
+<link rel="stylesheet" href="style.css">
+<script src="theme.js"></script>
+<script defer src="search-index.js"></script>
+<script defer src="search.js"></script>
+</head>
+<body>
+<nav class="side">
+<a class="home" href="index.html">X_eTaL doc</a>
+<input id="search" type="search" autocomplete="off" placeholder="Search: a name, or a type" title="A name (mean finds m_ean), or a type: Num a =&gt; a -&gt; a -&gt; a finds +, m_ax ...">
+<h2>Files</h2>
+<h3>demos/attention/</h3>
+<ul>
+<li><a href="demos-attention-attention.xtl.html">attention.xtl</a></li>
+</ul>
+<h3>demos/backprop/</h3>
+<ul>
+<li><a href="demos-backprop-backprop.xtl.html">backprop.xtl</a></li>
+</ul>
+<h3>demos/cnn-backprop/</h3>
+<ul>
+<li><a href="demos-cnn-backprop-cnn-backprop.xtl.html">cnn-backprop.xtl</a></li>
+</ul>
+<h3>demos/cnn-digits/</h3>
+<ul>
+<li><a href="demos-cnn-digits-cnn-digits.xtl.html">cnn-digits.xtl</a></li>
+</ul>
+<h3>demos/k-means/</h3>
+<ul>
+<li><a href="demos-k-means-k-means.xtl.html">k-means.xtl</a></li>
+</ul>
+<h3>demos/moe-router/</h3>
+<ul>
+<li><a href="demos-moe-router-moe-router.xtl.html">moe-router.xtl</a></li>
+</ul>
+<h3>demos/net-macro/</h3>
+<ul>
+<li><a href="demos-net-macro-net-macro.xtl.html">net-macro.xtl</a></li>
+<li><a href="demos-net-macro-train-it.xtl.html">train-it.xtl</a></li>
+</ul>
+<h3>demos/ternary-net/</h3>
+<ul>
+<li><a href="demos-ternary-net-ternary-net.xtl.html">ternary-net.xtl</a></li>
+</ul>
+<h3>demos/train-live/</h3>
+<ul>
+<li><a href="demos-train-live-train-live.xtl.html">train-live.xtl</a></li>
+</ul>
+<h3>libs/Learn/demos/</h3>
+<ul>
+<li><a href="libs-Learn-demos-blobs.xtl.html">blobs.xtl</a></li>
+</ul>
+<h3>libs/Learn/src/</h3>
+<ul>
+<li><a href="libs-Learn-src-Learn.xtl.html">Learn.xtl</a></li>
+</ul>
+<h3>libs/Net/demos/</h3>
+<ul>
+<li><a href="libs-Net-demos-train-xor.xtl.html">train-xor.xtl</a></li>
+<li><a href="libs-Net-demos-xor.xtl.html">xor.xtl</a></li>
+</ul>
+<h3>libs/Net/src/</h3>
+<ul>
+<li><a href="libs-Net-src-Net.xtlm.html">Net.xtlm</a></li>
+</ul>
+<h3>libs/NN/demos/</h3>
+<ul>
+<li><a href="libs-NN-demos-xor.xtl.html">xor.xtl</a></li>
+</ul>
+<h3>libs/NN/src/</h3>
+<ul>
+<li><a href="libs-NN-src-NN.xtl.html">NN.xtl</a></li>
+</ul>
+<ul>
+<li><a href="builtins.html">built-ins</a></li>
+</ul>
+<h2>On this page</h2>
+<ul>
+<li><a href="#section-1">Helpers (private)</a></li>
+<li class="item"><a href="#h.s_pread"><span class="c-libfunc">ʰs̲pread</span></a></li>
+<li class="item"><a href="#h.r_ows"><span class="c-libfunc">ʰr̲ows</span></a></li>
+<li><a href="#section-2">Activations</a></li>
+<li class="item"><a href="#l.r_elu"><span class="c-libfunc">ˡr̲elu</span></a></li>
+<li class="item"><a href="#l.l_eaky"><span class="c-libfunc">ˡl̲eaky</span></a></li>
+<li class="item"><a href="#l.s_igmoid"><span class="c-libfunc">ˡs̲igmoid</span></a></li>
+<li class="item"><a href="#l.t_anh"><span class="c-libfunc">ˡt̲anh</span></a></li>
+<li><a href="#section-3">Softmax and argmax: along the last axis</a></li>
+<li class="item"><a href="#l.s_oftmax"><span class="c-libfunc">ˡs̲oftmax</span></a></li>
+<li class="item"><a href="#l.l_ogSoftmax"><span class="c-libfunc">ˡl̲ogSoftmax</span></a></li>
+<li><a href="#section-4">Layers</a></li>
+<li class="item"><a href="#l.d_ense"><span class="c-libfunc">ˡd̲ense</span></a></li>
+<li><a href="#section-5">Labels</a></li>
+<li class="item"><a href="#l.a_rgmax"><span class="c-libfunc">ˡa̲rgmax</span></a></li>
+<li class="item"><a href="#l.o_neHot"><span class="c-libfunc">ˡo̲neHot</span></a></li>
+<li><a href="#section-6">Loss and accuracy</a></li>
+<li class="item"><a href="#l.c_rossEntropy"><span class="c-libfunc">ˡc̲rossEntropy</span></a></li>
+<li class="item"><a href="#l.m_se"><span class="c-libfunc">ˡm̲se</span></a></li>
+<li class="item"><a href="#l.a_ccuracy"><span class="c-libfunc">ˡa̲ccuracy</span></a></li>
+</ul>
+</nav>
+<main>
+<button class="theme" title="Light or dark">theme</button>
+<section id="results"></section>
+<h1><span class="kind">library</span>libs/NN/src/NN.xtl</h1>
+<div class="doc">
+<p>NN: neural-network building blocks -- activations, softmax by row, dense layers, one-hot, loss, accuracy</p>
+<p>Import it with an alias of your choice: &quot;nn:&quot; u_se&lt; &quot;NN&quot;.
+Put libs/NN/src on XETAL_PATH (&quot;just path&quot;); the reference is libs/NN/docs.
+Names with l: are exported; the others are private to this file.</p>
+<p>A batch is a matrix, one example per row; a layer's weights are a
+matrix with one row per input and one column per output, and its
+bias is one more row at the bottom (so a layer is one array, and
+<code>x <span class="c-libfunc">ⁿⁿd̲ense</span> wb</code> takes two arguments). Activations work item by item
+on any shape. Softmax, log-softmax and argmax work along the last
+axis of any array: a vector is one example, a matrix one per row, a
+rank-3 array a batch of sequences.</p>
+</div>
+<p class="meta"><a href="libs-NN-src-NN.xtl.src.html">source</a></p>
+<h2 class="section" id="section-1">Helpers (private)</h2>
+<div class="item" id="h.s_pread">
+<h3><a href="#h.s_pread"><span class="c-libfunc">ʰs̲pread</span></a> <span class="type">: a -&gt; b -&gt; a</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="libs-NN-src-NN.xtl.src.html#L18">line 18</a></div>
+<div class="doc">
+<p>The row values r (one per row of m) spread across m's columns.</p>
+</div>
+<pre class="code"><span class="c-libfunc">ʰs̲pread</span> ← { r m → <a href="builtins.html#o_-5c" class="c-builtin">o̲\</a> ((<span class="c-number">-1</span> <a href="builtins.html#t_ake" class="c-builtin">t̲ake</a> <a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> m) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> r) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> r }</pre>
+<div class="uses">Used in: <a href="libs-NN-src-NN.xtl.html#l.s_oftmax"><span class="c-libfunc">ˡs̲oftmax</span></a>, <a href="libs-NN-src-NN.xtl.html#l.l_ogSoftmax"><span class="c-libfunc">ˡl̲ogSoftmax</span></a>, <a href="libs-NN-src-NN.xtl.html#l.a_rgmax"><span class="c-libfunc">ˡa̲rgmax</span></a></div>
+</div>
+<div class="item" id="h.r_ows">
+<h3><a href="#h.r_ows"><span class="c-libfunc">ʰr̲ows</span></a> <span class="type">: a -&gt; a</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="libs-NN-src-NN.xtl.src.html#L21">line 21</a></div>
+<div class="doc">
+<p>m as a matrix of its last-axis rows (a vector becomes one row).</p>
+</div>
+<pre class="code"><span class="c-libfunc">ʰr̲ows</span> ← { m → ((<span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> <span class="c-number">-1</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> <a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> m) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">-1</span> <a href="builtins.html#t_ake" class="c-builtin">t̲ake</a> <a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> m) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> m }</pre>
+<div class="uses">Used in: <a href="libs-NN-src-NN.xtl.html#l.s_oftmax"><span class="c-libfunc">ˡs̲oftmax</span></a>, <a href="libs-NN-src-NN.xtl.html#l.l_ogSoftmax"><span class="c-libfunc">ˡl̲ogSoftmax</span></a>, <a href="libs-NN-src-NN.xtl.html#l.a_rgmax"><span class="c-libfunc">ˡa̲rgmax</span></a></div>
+</div>
+<h2 class="section" id="section-2">Activations</h2>
+<div class="item" id="l.r_elu">
+<h3><a href="#l.r_elu"><span class="c-libfunc">ˡr̲elu</span></a> <span class="type">: Float -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="libs-NN-src-NN.xtl.src.html#L29">line 29</a></div>
+<div class="doc">
+<p><code><span class="c-builtin">r̲elu</span> x</code>: max(x, 0), item by item.</p>
+<pre class="example"><span class="prompt">      </span><span class="c-libfunc">ⁿⁿ⁼</span><span class="c-macro">u̲se&lt;</span> <a href="libs-NN-src-NN.xtl.html" class="c-string">&quot;NN&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span><a href="libs-NN-src-NN.xtl.html#l.r_elu" class="c-libfunc">ⁿⁿr̲elu</a> <span class="c-number">-1.5</span> <span class="c-number">0.0</span> <span class="c-number">2.0</span>
+0.0 0.0 2.0</pre>
+</div>
+<pre class="code"><span class="c-libfunc">ˡr̲elu</span> ← { x → x <a href="builtins.html#m_ax" class="c-builtin">m̲ax</a> <span class="c-number">0.0</span> }</pre>
+<div class="uses">Used in: <a href="libs-Net-demos-xor.xtl.html#u.x_or"><span class="c-userfunc">ᵘx̲or</span></a>, <a href="libs-NN-demos-xor.xtl.html#h">h</a>, <a href="demos-cnn-backprop-cnn-backprop.xtl.html#u.p_robs"><span class="c-userfunc">ᵘp̲robs</span></a>, <a href="demos-cnn-backprop-cnn-backprop.xtl.html#u.g_rad"><span class="c-userfunc">ᵘg̲rad</span></a>, <a href="demos-cnn-digits-cnn-digits.xtl.html#u.c_lassify"><span class="c-userfunc">ᵘc̲lassify</span></a>, <a href="demos-cnn-digits-cnn-digits.xtl.html#c">c</a>, <a href="demos-net-macro-net-macro.xtl.html#c1">c1</a>, <a href="demos-net-macro-train-it.xtl.html#u.s_tep"><span class="c-userfunc">ᵘs̲tep</span></a>, <a href="demos-net-macro-train-it.xtl.html#u.s_tart"><span class="c-userfunc">ᵘs̲tart</span></a>, <a href="demos-net-macro-train-it.xtl.html#u.t_rained"><span class="c-userfunc">ᵘt̲rained</span></a></div>
+</div>
+<div class="item" id="l.l_eaky">
+<h3><a href="#l.l_eaky"><span class="c-libfunc">ˡl̲eaky</span></a> <span class="type">: Float -&gt; Float -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="libs-NN-src-NN.xtl.src.html#L35">line 35</a></div>
+<div class="doc">
+<p><code>a <span class="c-builtin">l̲eaky</span> x</code>: leaky ReLU, x where positive and a times x elsewhere.</p>
+<pre class="example"><span class="prompt">      </span><span class="c-libfunc">ⁿⁿ⁼</span><span class="c-macro">u̲se&lt;</span> <a href="libs-NN-src-NN.xtl.html" class="c-string">&quot;NN&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span><span class="c-number">0.1</span> <a href="libs-NN-src-NN.xtl.html#l.l_eaky" class="c-libfunc">ⁿⁿl̲eaky</a> <span class="c-number">-2.0</span> <span class="c-number">3.0</span>
+-0.2 3.0</pre>
+</div>
+<pre class="code"><span class="c-libfunc">ˡl̲eaky</span> ← { a x → (x <a href="builtins.html#m_ax" class="c-builtin">m̲ax</a> <span class="c-number">0.0</span>) <a href="builtins.html#-2b" class="c-symbol">+</a> a <a href="builtins.html#-2a" class="c-symbol">×</a> x <a href="builtins.html#m_in" class="c-builtin">m̲in</a> <span class="c-number">0.0</span> }</pre>
+</div>
+<div class="item" id="l.s_igmoid">
+<h3><a href="#l.s_igmoid"><span class="c-libfunc">ˡs̲igmoid</span></a> <span class="type">: Num a =&gt; a -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="libs-NN-src-NN.xtl.src.html#L41">line 41</a></div>
+<div class="doc">
+<p><code><span class="c-builtin">s̲igmoid</span> x</code>: 1 / (1 + e^-x), item by item.</p>
+<pre class="example"><span class="prompt">      </span><span class="c-libfunc">ⁿⁿ⁼</span><span class="c-macro">u̲se&lt;</span> <a href="libs-NN-src-NN.xtl.html" class="c-string">&quot;NN&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span><a href="libs-NN-src-NN.xtl.html#l.s_igmoid" class="c-libfunc">ⁿⁿs̲igmoid</a> <span class="c-number">0.0</span> <span class="c-number">2.0</span>
+0.5 0.8807970779778823</pre>
+</div>
+<pre class="code"><span class="c-libfunc">ˡs̲igmoid</span> ← { x → <span class="c-number">1.0</span> <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-number">1.0</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#e_xp" class="c-builtin">e̲xp</a> <a href="builtins.html#n_eg" class="c-builtin">n̲eg</a> x }</pre>
+<div class="uses">Used in: <a href="libs-NN-src-NN.xtl.html#l.t_anh"><span class="c-libfunc">ˡt̲anh</span></a></div>
+</div>
+<div class="item" id="l.t_anh">
+<h3><a href="#l.t_anh"><span class="c-libfunc">ˡt̲anh</span></a> <span class="type">: Float -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="libs-NN-src-NN.xtl.src.html#L47">line 47</a></div>
+<div class="doc">
+<p><code><span class="c-builtin">t̲anh</span> x</code>: the hyperbolic tangent, as 2 s_igmoid(2x) - 1.</p>
+<pre class="example"><span class="prompt">      </span><span class="c-libfunc">ⁿⁿ⁼</span><span class="c-macro">u̲se&lt;</span> <a href="libs-NN-src-NN.xtl.html" class="c-string">&quot;NN&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span><a href="libs-NN-src-NN.xtl.html#l.t_anh" class="c-libfunc">ⁿⁿt̲anh</a> <span class="c-number">0.0</span>
+0.0</pre>
+</div>
+<pre class="code"><span class="c-libfunc">ˡt̲anh</span> ← { x → (<span class="c-number">2.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="libs-NN-src-NN.xtl.html#l.s_igmoid" class="c-libfunc">ˡs̲igmoid</a> <span class="c-number">2.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> x) <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1.0</span> }</pre>
+<div class="uses">Used in: <a href="libs-Net-demos-train-xor.xtl.html#u.s_tep"><span class="c-userfunc">ᵘs̲tep</span></a>, <a href="libs-Net-demos-train-xor.xtl.html#u.b_efore"><span class="c-userfunc">ᵘb̲efore</span></a>, <a href="libs-Net-demos-train-xor.xtl.html#u.a_fter"><span class="c-userfunc">ᵘa̲fter</span></a>, <a href="demos-backprop-backprop.xtl.html#H">H</a>, <a href="demos-backprop-backprop.xtl.html#u.l_oss"><span class="c-userfunc">ᵘl̲oss</span></a>, <a href="demos-net-macro-net-macro.xtl.html#b1">b1</a>, <a href="demos-train-live-train-live.xtl.html#u.f_orward"><span class="c-userfunc">ᵘf̲orward</span></a>, <a href="demos-train-live-train-live.xtl.html#u.g_rad"><span class="c-userfunc">ᵘg̲rad</span></a></div>
+</div>
+<h2 class="section" id="section-3">Softmax and argmax: along the last axis</h2>
+<div class="item" id="l.s_oftmax">
+<h3><a href="#l.s_oftmax"><span class="c-libfunc">ˡs̲oftmax</span></a> <span class="type">: Num a =&gt; a -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="libs-NN-src-NN.xtl.src.html#L56">line 56</a></div>
+<div class="doc">
+<p><code><span class="c-builtin">s̲oftmax</span> m</code>: each row into probabilities; the row's largest is taken
+off first (the same result, no overflow), the row's sum divides.</p>
+<pre class="example"><span class="prompt">      </span><span class="c-libfunc">ⁿⁿ⁼</span><span class="c-macro">u̲se&lt;</span> <a href="libs-NN-src-NN.xtl.html" class="c-string">&quot;NN&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span><a href="libs-NN-src-NN.xtl.html#l.s_oftmax" class="c-libfunc">ⁿⁿs̲oftmax</a> <span class="c-number">1.0</span> <span class="c-number">2.0</span> <span class="c-number">3.0</span>
+0.09003057317038046 0.24472847105479764 0.6652409557748218</pre>
+</div>
+<pre class="code"><span class="c-libfunc">ˡs̲oftmax</span> ← { a →
+  m ← <a href="libs-NN-src-NN.xtl.html#h.r_ows" class="c-libfunc">ʰr̲ows</a> a
+  e ← <a href="builtins.html#e_xp" class="c-builtin">e̲xp</a> m <a href="builtins.html#-2d" class="c-symbol">−</a> (<span class="c-builtin">'</span><a href="builtins.html#m_ax" class="c-builtin">m̲ax</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/₂</a> m) <a href="libs-NN-src-NN.xtl.html#h.s_pread" class="c-libfunc">ʰs̲pread</a> m
+  (<a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> a) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> e <a href="builtins.html#-2f" class="c-symbol">÷</a> (<span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/₂</a> e) <a href="libs-NN-src-NN.xtl.html#h.s_pread" class="c-libfunc">ʰs̲pread</a> e
+}</pre>
+<div class="uses">Used in: <a href="libs-Learn-src-Learn.xtl.html#l.l_ogistic"><span class="c-libfunc">ˡl̲ogistic</span></a>, <a href="libs-Learn-src-Learn.xtl.html#l.p_redict"><span class="c-libfunc">ˡp̲redict</span></a>, <a href="libs-Net-demos-train-xor.xtl.html#u.s_tep"><span class="c-userfunc">ᵘs̲tep</span></a>, <a href="libs-Net-demos-train-xor.xtl.html#u.b_efore"><span class="c-userfunc">ᵘb̲efore</span></a>, <a href="libs-Net-demos-train-xor.xtl.html#u.a_fter"><span class="c-userfunc">ᵘa̲fter</span></a>, <a href="libs-Net-demos-xor.xtl.html#u.x_or"><span class="c-userfunc">ᵘx̲or</span></a>, <a href="libs-NN-demos-xor.xtl.html#p">p</a>, <a href="demos-attention-attention.xtl.html#u.a_ttend"><span class="c-userfunc">ᵘa̲ttend</span></a>, <a href="demos-backprop-backprop.xtl.html#P">P</a>, <a href="demos-backprop-backprop.xtl.html#u.l_oss"><span class="c-userfunc">ᵘl̲oss</span></a>, <a href="demos-cnn-backprop-cnn-backprop.xtl.html#u.p_robs"><span class="c-userfunc">ᵘp̲robs</span></a>, <a href="demos-cnn-backprop-cnn-backprop.xtl.html#u.g_rad"><span class="c-userfunc">ᵘg̲rad</span></a>, <a href="demos-cnn-digits-cnn-digits.xtl.html#u.c_lassify"><span class="c-userfunc">ᵘc̲lassify</span></a>, <a href="demos-net-macro-net-macro.xtl.html#a1">a1</a>, <a href="demos-net-macro-net-macro.xtl.html#b1">b1</a>, <a href="demos-net-macro-net-macro.xtl.html#c1">c1</a>, <a href="demos-net-macro-train-it.xtl.html#u.s_tep"><span class="c-userfunc">ᵘs̲tep</span></a>, <a href="demos-net-macro-train-it.xtl.html#u.s_tart"><span class="c-userfunc">ᵘs̲tart</span></a>, <a href="demos-net-macro-train-it.xtl.html#u.t_rained"><span class="c-userfunc">ᵘt̲rained</span></a>, <a href="demos-train-live-train-live.xtl.html#u.f_orward"><span class="c-userfunc">ᵘf̲orward</span></a>, <a href="demos-train-live-train-live.xtl.html#u.g_rad"><span class="c-userfunc">ᵘg̲rad</span></a></div>
+</div>
+<div class="item" id="l.l_ogSoftmax">
+<h3><a href="#l.l_ogSoftmax"><span class="c-libfunc">ˡl̲ogSoftmax</span></a> <span class="type">: Float -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="libs-NN-src-NN.xtl.src.html#L63">line 63</a></div>
+<div class="doc">
+<p><code><span class="c-builtin">l̲ogSoftmax</span> m</code>: the logarithm of each row's softmax, computed stably.</p>
+</div>
+<pre class="code"><span class="c-libfunc">ˡl̲ogSoftmax</span> ← { a →
+  m ← <a href="libs-NN-src-NN.xtl.html#h.r_ows" class="c-libfunc">ʰr̲ows</a> a
+  z ← m <a href="builtins.html#-2d" class="c-symbol">−</a> (<span class="c-builtin">'</span><a href="builtins.html#m_ax" class="c-builtin">m̲ax</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/₂</a> m) <a href="libs-NN-src-NN.xtl.html#h.s_pread" class="c-libfunc">ʰs̲pread</a> m
+  (<a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> a) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> z <a href="builtins.html#-2d" class="c-symbol">−</a> (<a href="builtins.html#l_og" class="c-builtin">l̲og</a> <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/₂</a> <a href="builtins.html#e_xp" class="c-builtin">e̲xp</a> z) <a href="libs-NN-src-NN.xtl.html#h.s_pread" class="c-libfunc">ʰs̲pread</a> z
+}</pre>
+</div>
+<h2 class="section" id="section-4">Layers</h2>
+<div class="item" id="l.d_ense">
+<h3><a href="#l.d_ense"><span class="c-libfunc">ˡd̲ense</span></a> <span class="type">: Num a =&gt; a -&gt; a -&gt; a</span></h3>
+<div class="meta">function &middot; <a href="libs-NN-src-NN.xtl.src.html#L77">line 77</a></div>
+<div class="doc">
+<p><code>x <span class="c-builtin">d̲ense</span> wb</code>: the layer x W + b for a batch x (one row each) and wb,
+the weights W with the bias b as one more row at the bottom.</p>
+<pre class="example"><span class="prompt">      </span><span class="c-libfunc">ⁿⁿ⁼</span><span class="c-macro">u̲se&lt;</span> <a href="libs-NN-src-NN.xtl.html" class="c-string">&quot;NN&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span>(<span class="c-number">2</span> <span class="c-number">2</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">1.0</span> <span class="c-number">2.0</span> <span class="c-number">3.0</span> <span class="c-number">4.0</span>) <a href="libs-NN-src-NN.xtl.html#l.d_ense" class="c-libfunc">ⁿⁿd̲ense</a> <span class="c-number">3</span> <span class="c-number">2</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">1.0</span> <span class="c-number">0.0</span> <span class="c-number">0.0</span> <span class="c-number">2.0</span> <span class="c-number">10.0</span> <span class="c-number">20.0</span>
+11.0 24.0
+13.0 28.0</pre>
+</div>
+<pre class="code"><span class="c-libfunc">ˡd̲ense</span> ← { x wb →
+  (x <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#i_nner" class="c-builtin">i̲nner</a> <span class="c-number">-1</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> wb) <a href="builtins.html#-2b" class="c-symbol">+</a> (<a href="builtins.html#o_ffsets" class="c-builtin">o̲ffsets</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> x) <span class="c-builtin">'</span><a href="builtins.html#r_ight" class="c-builtin">r̲ight</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> <span class="c-number">-1</span> <a href="builtins.html#t_ake" class="c-builtin">t̲ake</a> wb
+}</pre>
+<div class="uses">Used in: <a href="libs-Learn-src-Learn.xtl.html#l.l_ogistic"><span class="c-libfunc">ˡl̲ogistic</span></a>, <a href="libs-Learn-src-Learn.xtl.html#l.p_redict"><span class="c-libfunc">ˡp̲redict</span></a>, <a href="libs-Net-demos-train-xor.xtl.html#u.s_tep"><span class="c-userfunc">ᵘs̲tep</span></a>, <a href="libs-Net-demos-train-xor.xtl.html#u.b_efore"><span class="c-userfunc">ᵘb̲efore</span></a>, <a href="libs-Net-demos-train-xor.xtl.html#u.a_fter"><span class="c-userfunc">ᵘa̲fter</span></a>, <a href="libs-Net-demos-xor.xtl.html#u.x_or"><span class="c-userfunc">ᵘx̲or</span></a>, <a href="libs-NN-demos-xor.xtl.html#h">h</a>, <a href="libs-NN-demos-xor.xtl.html#p">p</a>, <a href="demos-backprop-backprop.xtl.html#H">H</a>, <a href="demos-backprop-backprop.xtl.html#P">P</a>, <a href="demos-backprop-backprop.xtl.html#u.l_oss"><span class="c-userfunc">ᵘl̲oss</span></a>, <a href="demos-cnn-backprop-cnn-backprop.xtl.html#u.p_robs"><span class="c-userfunc">ᵘp̲robs</span></a>, <a href="demos-cnn-backprop-cnn-backprop.xtl.html#u.g_rad"><span class="c-userfunc">ᵘg̲rad</span></a>, <a href="demos-cnn-digits-cnn-digits.xtl.html#u.c_lassify"><span class="c-userfunc">ᵘc̲lassify</span></a>, <a href="demos-net-macro-net-macro.xtl.html#a1">a1</a>, <a href="demos-net-macro-net-macro.xtl.html#b1">b1</a>, <a href="demos-net-macro-net-macro.xtl.html#c1">c1</a>, <a href="demos-net-macro-train-it.xtl.html#u.s_tep"><span class="c-userfunc">ᵘs̲tep</span></a>, <a href="demos-net-macro-train-it.xtl.html#u.s_tart"><span class="c-userfunc">ᵘs̲tart</span></a>, <a href="demos-net-macro-train-it.xtl.html#u.t_rained"><span class="c-userfunc">ᵘt̲rained</span></a>, <a href="demos-train-live-train-live.xtl.html#u.f_orward"><span class="c-userfunc">ᵘf̲orward</span></a>, <a href="demos-train-live-train-live.xtl.html#u.g_rad"><span class="c-userfunc">ᵘg̲rad</span></a></div>
+</div>
+<h2 class="section" id="section-5">Labels</h2>
+<div class="item" id="l.a_rgmax">
+<h3><a href="#l.a_rgmax"><span class="c-libfunc">ˡa̲rgmax</span></a> <span class="type">: Num a =&gt; a -&gt; Int</span></h3>
+<div class="meta">function &middot; <a href="libs-NN-src-NN.xtl.src.html#L88">line 88</a></div>
+<div class="doc">
+<p><code><span class="c-builtin">a̲rgmax</span> a</code>: for each row (along the last axis), the position (from
+1) of its largest item (the first, on a tie); a vector gives one Int.</p>
+<pre class="example"><span class="prompt">      </span><span class="c-libfunc">ⁿⁿ⁼</span><span class="c-macro">u̲se&lt;</span> <a href="libs-NN-src-NN.xtl.html" class="c-string">&quot;NN&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span><a href="libs-NN-src-NN.xtl.html#l.a_rgmax" class="c-libfunc">ⁿⁿa̲rgmax</a> <span class="c-number">2</span> <span class="c-number">3</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">1.0</span> <span class="c-number">2.0</span> <span class="c-number">3.0</span> <span class="c-number">-1.0</span> <span class="c-number">0.0</span> <span class="c-number">5.0</span>
+3 3</pre>
+</div>
+<pre class="code"><span class="c-libfunc">ˡa̲rgmax</span> ← { a →
+  m ← <a href="libs-NN-src-NN.xtl.html#h.r_ows" class="c-libfunc">ʰr̲ows</a> a
+  n ← <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> <span class="c-number">-1</span> <a href="builtins.html#t_ake" class="c-builtin">t̲ake</a> <a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> m
+  hit ← <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> m <a href="builtins.html#-3d" class="c-symbol">=</a> (<span class="c-builtin">'</span><a href="builtins.html#m_ax" class="c-builtin">m̲ax</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/₂</a> m) <a href="libs-NN-src-NN.xtl.html#h.s_pread" class="c-libfunc">ʰs̲pread</a> m
+  (<span class="c-number">-1</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> <a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> a) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> <span class="c-builtin">'</span><a href="builtins.html#m_in" class="c-builtin">m̲in</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/₂</a> (hit <a href="builtins.html#-2a" class="c-symbol">×</a> (<a href="builtins.html#o_ffsets" class="c-builtin">o̲ffsets</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> m) <span class="c-builtin">'</span><a href="builtins.html#r_ight" class="c-builtin">r̲ight</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> n) <a href="builtins.html#-2b" class="c-symbol">+</a> (<span class="c-number">1.0</span> <a href="builtins.html#-2d" class="c-symbol">−</a> hit) <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> n <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">1</span>
+}</pre>
+<div class="uses">Used in: <a href="libs-Learn-src-Learn.xtl.html#l.a_ssign"><span class="c-libfunc">ˡa̲ssign</span></a>, <a href="libs-Learn-src-Learn.xtl.html#l.f_arthest"><span class="c-libfunc">ˡf̲arthest</span></a>, <a href="libs-Learn-src-Learn.xtl.html#l.k_nn"><span class="c-libfunc">ˡk̲nn</span></a>, <a href="libs-Learn-src-Learn.xtl.html#l.p_redict"><span class="c-libfunc">ˡp̲redict</span></a>, <a href="libs-NN-src-NN.xtl.html#l.a_ccuracy"><span class="c-libfunc">ˡa̲ccuracy</span></a>, <a href="libs-Net-demos-train-xor.xtl.src.html#L23">libs/Net/demos/train-xor.xtl:23</a>, <a href="libs-Net-demos-xor.xtl.src.html#L23">libs/Net/demos/xor.xtl:23</a>, <a href="libs-NN-demos-xor.xtl.src.html#L21">libs/NN/demos/xor.xtl:21</a>, <a href="demos-attention-attention.xtl.html#u.t_op"><span class="c-userfunc">ᵘt̲op</span></a>, <a href="demos-cnn-backprop-cnn-backprop.xtl.src.html#L117">demos/cnn-backprop/cnn-backprop.xtl:117</a>, <a href="demos-cnn-digits-cnn-digits.xtl.html#u.r_ead"><span class="c-userfunc">ᵘr̲ead</span></a>, <a href="demos-net-macro-net-macro.xtl.html#u.a_rms"><span class="c-userfunc">ᵘa̲rms</span></a></div>
+</div>
+<div class="item" id="l.o_neHot">
+<h3><a href="#l.o_neHot"><span class="c-libfunc">ˡo̲neHot</span></a> <span class="type">: Int -&gt; Int -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="libs-NN-src-NN.xtl.src.html#L101">line 101</a></div>
+<div class="doc">
+<p><code>k <span class="c-builtin">o̲neHot</span> y</code>: the labels y (1 to k) as rows of k Floats, 1.0 at the label.</p>
+<pre class="example"><span class="prompt">      </span><span class="c-libfunc">ⁿⁿ⁼</span><span class="c-macro">u̲se&lt;</span> <a href="libs-NN-src-NN.xtl.html" class="c-string">&quot;NN&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span><span class="c-number">3</span> <a href="libs-NN-src-NN.xtl.html#l.o_neHot" class="c-libfunc">ⁿⁿo̲neHot</a> <span class="c-number">2</span> <span class="c-number">1</span> <span class="c-number">3</span>
+0.0 1.0 0.0
+1.0 0.0 0.0
+0.0 0.0 1.0</pre>
+</div>
+<pre class="code"><span class="c-libfunc">ˡo̲neHot</span> ← { k y → <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> y <span class="c-symbol">'</span><a href="builtins.html#-3d" class="c-symbol">=</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> <a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> k }</pre>
+<div class="uses">Used in: <a href="libs-Learn-src-Learn.xtl.html#l.k_step"><span class="c-libfunc">ˡk̲step</span></a>, <a href="libs-Learn-src-Learn.xtl.html#l.k_nn"><span class="c-libfunc">ˡk̲nn</span></a>, <a href="libs-Learn-src-Learn.xtl.html#l.l_ogistic"><span class="c-libfunc">ˡl̲ogistic</span></a>, <a href="libs-Net-demos-train-xor.xtl.html#Y">Y</a>, <a href="libs-NN-demos-xor.xtl.src.html#L23">libs/NN/demos/xor.xtl:23</a>, <a href="demos-backprop-backprop.xtl.html#Y">Y</a>, <a href="demos-cnn-backprop-cnn-backprop.xtl.html#Y">Y</a>, <a href="demos-cnn-backprop-cnn-backprop.xtl.html#u.t_est"><span class="c-userfunc">ᵘt̲est</span></a>, <a href="demos-net-macro-train-it.xtl.html#Y">Y</a>, <a href="demos-train-live-train-live.xtl.html#Y">Y</a></div>
+</div>
+<h2 class="section" id="section-6">Loss and accuracy</h2>
+<div class="item" id="l.c_rossEntropy">
+<h3><a href="#l.c_rossEntropy"><span class="c-libfunc">ˡc̲rossEntropy</span></a> <span class="type">: Float -&gt; Float -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="libs-NN-src-NN.xtl.src.html#L111">line 111</a></div>
+<div class="doc">
+<p><code>y <span class="c-builtin">c̲rossEntropy</span> p</code>: the mean over rows of -sum(y log p), for one-hot
+(or probability) rows y and predicted probabilities p; p is clamped
+at 1e-12 first, so a probability of 0 costs 27.6, not a log error.</p>
+<pre class="example"><span class="prompt">      </span><span class="c-libfunc">ⁿⁿ⁼</span><span class="c-macro">u̲se&lt;</span> <a href="libs-NN-src-NN.xtl.html" class="c-string">&quot;NN&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span>(<span class="c-number">2</span> <a href="libs-NN-src-NN.xtl.html#l.o_neHot" class="c-libfunc">ⁿⁿo̲neHot</a> <span class="c-number">1</span> <span class="c-number">2</span>) <a href="libs-NN-src-NN.xtl.html#l.c_rossEntropy" class="c-libfunc">ⁿⁿc̲rossEntropy</a> <span class="c-number">2</span> <span class="c-number">2</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.9</span> <span class="c-number">0.1</span> <span class="c-number">0.2</span> <span class="c-number">0.8</span>
+0.164252033486018</pre>
+</div>
+<pre class="code"><span class="c-libfunc">ˡc̲rossEntropy</span> ← { y p → (<span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/₂</a> <a href="builtins.html#n_eg" class="c-builtin">n̲eg</a> y <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#l_og" class="c-builtin">l̲og</a> p <a href="builtins.html#m_ax" class="c-builtin">m̲ax</a> <span class="c-number">1e-12</span>) <a href="builtins.html#-2f" class="c-symbol">÷</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> p }</pre>
+<div class="uses">Used in: <a href="libs-Net-demos-train-xor.xtl.src.html#L22">libs/Net/demos/train-xor.xtl:22</a>, <a href="libs-NN-demos-xor.xtl.src.html#L23">libs/NN/demos/xor.xtl:23</a>, <a href="demos-backprop-backprop.xtl.html#L">L</a>, <a href="demos-backprop-backprop.xtl.html#u.l_oss"><span class="c-userfunc">ᵘl̲oss</span></a>, <a href="demos-cnn-backprop-cnn-backprop.xtl.html#u.t_est"><span class="c-userfunc">ᵘt̲est</span></a>, <a href="demos-cnn-backprop-cnn-backprop.xtl.html#u.l_oss"><span class="c-userfunc">ᵘl̲oss</span></a>, <a href="demos-net-macro-train-it.xtl.src.html#L39">demos/net-macro/train-it.xtl:39</a>, <a href="demos-train-live-train-live.xtl.html#u.l_oss"><span class="c-userfunc">ᵘl̲oss</span></a></div>
+</div>
+<div class="item" id="l.m_se">
+<h3><a href="#l.m_se"><span class="c-libfunc">ˡm̲se</span></a> <span class="type">: Float -&gt; Float -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="libs-NN-src-NN.xtl.src.html#L117">line 117</a></div>
+<div class="doc">
+<p><code>y <span class="c-builtin">m̲se</span> p</code>: the mean squared error over every item.</p>
+<pre class="example"><span class="prompt">      </span><span class="c-libfunc">ⁿⁿ⁼</span><span class="c-macro">u̲se&lt;</span> <a href="libs-NN-src-NN.xtl.html" class="c-string">&quot;NN&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span><span class="c-number">1.0</span> <span class="c-number">2.0</span> <a href="libs-NN-src-NN.xtl.html#l.m_se" class="c-libfunc">ⁿⁿm̲se</a> <span class="c-number">1.0</span> <span class="c-number">4.0</span>
+2.0</pre>
+</div>
+<pre class="code"><span class="c-libfunc">ˡm̲se</span> ← { y p → (<span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> (y <a href="builtins.html#-2d" class="c-symbol">−</a> p) <a href="builtins.html#-5e" class="c-symbol">^</a> <span class="c-number">2</span>) <a href="builtins.html#-2f" class="c-symbol">÷</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> p }</pre>
+</div>
+<div class="item" id="l.a_ccuracy">
+<h3><a href="#l.a_ccuracy"><span class="c-libfunc">ˡa̲ccuracy</span></a> <span class="type">: Num a =&gt; Int -&gt; a -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="libs-NN-src-NN.xtl.src.html#L123">line 123</a></div>
+<div class="doc">
+<p><code>y <span class="c-builtin">a̲ccuracy</span> p</code>: the fraction of rows of p whose argmax is the label y.</p>
+<pre class="example"><span class="prompt">      </span><span class="c-libfunc">ⁿⁿ⁼</span><span class="c-macro">u̲se&lt;</span> <a href="libs-NN-src-NN.xtl.html" class="c-string">&quot;NN&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span><span class="c-number">3</span> <span class="c-number">2</span> <a href="libs-NN-src-NN.xtl.html#l.a_ccuracy" class="c-libfunc">ⁿⁿa̲ccuracy</a> <span class="c-number">2</span> <span class="c-number">3</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">1.0</span> <span class="c-number">2.0</span> <span class="c-number">3.0</span> <span class="c-number">-1.0</span> <span class="c-number">0.0</span> <span class="c-number">5.0</span>
+0.5</pre>
+</div>
+<pre class="code"><span class="c-libfunc">ˡa̲ccuracy</span> ← { y p → (<span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> y <a href="builtins.html#-3d" class="c-symbol">=</a> <a href="libs-NN-src-NN.xtl.html#l.a_rgmax" class="c-libfunc">ˡa̲rgmax</a> p) <a href="builtins.html#-2f" class="c-symbol">÷</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> y }</pre>
+<div class="uses">Used in: <a href="libs-Net-demos-train-xor.xtl.src.html#L24">libs/Net/demos/train-xor.xtl:24</a>, <a href="libs-Net-demos-xor.xtl.src.html#L24">libs/Net/demos/xor.xtl:24</a>, <a href="libs-NN-demos-xor.xtl.src.html#L22">libs/NN/demos/xor.xtl:22</a>, <a href="demos-cnn-backprop-cnn-backprop.xtl.html#u.t_est"><span class="c-userfunc">ᵘt̲est</span></a>, <a href="demos-net-macro-net-macro.xtl.src.html#L33">demos/net-macro/net-macro.xtl:33</a>, <a href="demos-net-macro-train-it.xtl.src.html#L40">demos/net-macro/train-it.xtl:40</a>, <a href="demos-train-live-train-live.xtl.html#u.r_ight"><span class="c-userfunc">ᵘr̲ight</span></a></div>
+</div>
+</main>
+</body>
+</html>

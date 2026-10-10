@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>libs/NN/demos/xor.xtl - X_eTaL doc</title>
+<link rel="stylesheet" href="style.css">
+<script src="theme.js"></script>
+<script defer src="search-index.js"></script>
+<script defer src="search.js"></script>
+</head>
+<body>
+<nav class="side">
+<a class="home" href="index.html">X_eTaL doc</a>
+<input id="search" type="search" autocomplete="off" placeholder="Search: a name, or a type" title="A name (mean finds m_ean), or a type: Num a =&gt; a -&gt; a -&gt; a finds +, m_ax ...">
+<h2>Files</h2>
+<h3>demos/attention/</h3>
+<ul>
+<li><a href="demos-attention-attention.xtl.html">attention.xtl</a></li>
+</ul>
+<h3>demos/backprop/</h3>
+<ul>
+<li><a href="demos-backprop-backprop.xtl.html">backprop.xtl</a></li>
+</ul>
+<h3>demos/cnn-backprop/</h3>
+<ul>
+<li><a href="demos-cnn-backprop-cnn-backprop.xtl.html">cnn-backprop.xtl</a></li>
+</ul>
+<h3>demos/cnn-digits/</h3>
+<ul>
+<li><a href="demos-cnn-digits-cnn-digits.xtl.html">cnn-digits.xtl</a></li>
+</ul>
+<h3>demos/k-means/</h3>
+<ul>
+<li><a href="demos-k-means-k-means.xtl.html">k-means.xtl</a></li>
+</ul>
+<h3>demos/moe-router/</h3>
+<ul>
+<li><a href="demos-moe-router-moe-router.xtl.html">moe-router.xtl</a></li>
+</ul>
+<h3>demos/net-macro/</h3>
+<ul>
+<li><a href="demos-net-macro-net-macro.xtl.html">net-macro.xtl</a></li>
+<li><a href="demos-net-macro-train-it.xtl.html">train-it.xtl</a></li>
+</ul>
+<h3>demos/ternary-net/</h3>
+<ul>
+<li><a href="demos-ternary-net-ternary-net.xtl.html">ternary-net.xtl</a></li>
+</ul>
+<h3>demos/train-live/</h3>
+<ul>
+<li><a href="demos-train-live-train-live.xtl.html">train-live.xtl</a></li>
+</ul>
+<h3>libs/Learn/demos/</h3>
+<ul>
+<li><a href="libs-Learn-demos-blobs.xtl.html">blobs.xtl</a></li>
+</ul>
+<h3>libs/Learn/src/</h3>
+<ul>
+<li><a href="libs-Learn-src-Learn.xtl.html">Learn.xtl</a></li>
+</ul>
+<h3>libs/Net/demos/</h3>
+<ul>
+<li><a href="libs-Net-demos-train-xor.xtl.html">train-xor.xtl</a></li>
+<li><a href="libs-Net-demos-xor.xtl.html">xor.xtl</a></li>
+</ul>
+<h3>libs/Net/src/</h3>
+<ul>
+<li><a href="libs-Net-src-Net.xtlm.html">Net.xtlm</a></li>
+</ul>
+<h3>libs/NN/demos/</h3>
+<ul>
+<li><a href="libs-NN-demos-xor.xtl.html">xor.xtl</a></li>
+</ul>
+<h3>libs/NN/src/</h3>
+<ul>
+<li><a href="libs-NN-src-NN.xtl.html">NN.xtl</a></li>
+</ul>
+<ul>
+<li><a href="builtins.html">built-ins</a></li>
+</ul>
+<h2>On this page</h2>
+<ul>
+<li class="item"><a href="#L9">x</a></li>
+<li class="item"><a href="#L10">y</a></li>
+<li class="item"><a href="#L13">w1</a></li>
+<li class="item"><a href="#L14">h</a></li>
+<li class="item"><a href="#L17">w2</a></li>
+<li class="item"><a href="#L18">p</a></li>
+</ul>
+</nav>
+<main>
+<button class="theme" title="Light or dark">theme</button>
+<section id="results"></section>
+<h1><span class="kind">source</span><a href="libs-NN-demos-xor.xtl.html">libs/NN/demos/xor.xtl</a></h1>
+<div class="source"><span class="line" id="L1"><a class="ln" href="#L1">1</a><span class="c-comment">⍝</span><span class="c-comment">!/usr/bin/env xetal</span></span>
+<span class="line" id="L2"><a class="ln" href="#L2">2</a><span class="c-comment">⍝</span><span class="c-comment"># XOR by a two-layer network with hand-set weights: no straight line</span></span>
+<span class="line" id="L3"><a class="ln" href="#L3">3</a><span class="c-comment">⍝</span><span class="c-comment"># separates XOR's classes, but one hidden ReLU layer does. Every layer</span></span>
+<span class="line" id="L4"><a class="ln" href="#L4">4</a><span class="c-comment">⍝</span><span class="c-comment"># is one nn:d_ense on the whole batch of four points at once.</span></span>
+<span class="line" id="L5"><a class="ln" href="#L5">5</a><span class="c-comment">⍝</span><span class="c-comment"># Run with &quot;just demo-lib NN xor&quot;.</span></span>
+<span class="line" id="L6"><a class="ln" href="#L6">6</a></span>
+<span class="line" id="L7"><a class="ln" href="#L7">7</a><span class="c-libfunc">ⁿⁿ⁼</span><span class="c-macro">u̲se&lt;</span> <a href="libs-NN-src-NN.xtl.html" class="c-string">&quot;NN&quot;</a></span>
+<span class="line" id="L8"><a class="ln" href="#L8">8</a><span class="c-comment">⍝</span><span class="c-comment"># The four points, one per row, and their classes (1: same, 2: differ).</span></span>
+<span class="line" id="L9"><a class="ln" href="#L9">9</a>x ← <span class="c-number">4</span> <span class="c-number">2</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.0</span> <span class="c-number">0.0</span> <span class="c-number">0.0</span> <span class="c-number">1.0</span> <span class="c-number">1.0</span> <span class="c-number">0.0</span> <span class="c-number">1.0</span> <span class="c-number">1.0</span></span>
+<span class="line" id="L10"><a class="ln" href="#L10">10</a>y ← <span class="c-number">1</span> <span class="c-number">2</span> <span class="c-number">2</span> <span class="c-number">1</span></span>
+<span class="line" id="L11"><a class="ln" href="#L11">11</a><span class="c-comment">⍝</span><span class="c-comment"># Hidden layer: h1 = relu(a + b), h2 = relu(a + b - 1); the last row</span></span>
+<span class="line" id="L12"><a class="ln" href="#L12">12</a><span class="c-comment">⍝</span><span class="c-comment"># of each weight array is its bias.</span></span>
+<span class="line" id="L13"><a class="ln" href="#L13">13</a>w1 ← <span class="c-number">3</span> <span class="c-number">2</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">1.0</span> <span class="c-number">1.0</span> <span class="c-number">1.0</span> <span class="c-number">1.0</span> <span class="c-number">0.0</span> <span class="c-number">-1.0</span></span>
+<span class="line" id="L14"><a class="ln" href="#L14">14</a>h ← <a href="libs-NN-src-NN.xtl.html#l.r_elu" class="c-libfunc">ⁿⁿr̲elu</a> <a href="libs-NN-demos-xor.xtl.html#x">x</a> <a href="libs-NN-src-NN.xtl.html#l.d_ense" class="c-libfunc">ⁿⁿd̲ense</a> <a href="libs-NN-demos-xor.xtl.html#w1">w1</a></span>
+<span class="line" id="L15"><a class="ln" href="#L15">15</a><a href="libs-NN-demos-xor.xtl.html#h">h</a></span>
+<span class="line" id="L16"><a class="ln" href="#L16">16</a><span class="c-comment">⍝</span><span class="c-comment"># Output layer: class 2's score is 4 h1 - 8 h2 - 2, class 1's is 0.</span></span>
+<span class="line" id="L17"><a class="ln" href="#L17">17</a>w2 ← <span class="c-number">3</span> <span class="c-number">2</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.0</span> <span class="c-number">4.0</span> <span class="c-number">0.0</span> <span class="c-number">-8.0</span> <span class="c-number">0.0</span> <span class="c-number">-2.0</span></span>
+<span class="line" id="L18"><a class="ln" href="#L18">18</a>p ← <a href="libs-NN-src-NN.xtl.html#l.s_oftmax" class="c-libfunc">ⁿⁿs̲oftmax</a> <a href="libs-NN-demos-xor.xtl.html#h">h</a> <a href="libs-NN-src-NN.xtl.html#l.d_ense" class="c-libfunc">ⁿⁿd̲ense</a> <a href="libs-NN-demos-xor.xtl.html#w2">w2</a></span>
+<span class="line" id="L19"><a class="ln" href="#L19">19</a><a href="libs-NN-demos-xor.xtl.html#p">p</a></span>
+<span class="line" id="L20"><a class="ln" href="#L20">20</a><span class="c-comment">⍝</span><span class="c-comment"> The predicted classes, the accuracy and the loss.</span></span>
+<span class="line" id="L21"><a class="ln" href="#L21">21</a><a href="libs-NN-src-NN.xtl.html#l.a_rgmax" class="c-libfunc">ⁿⁿa̲rgmax</a> <a href="libs-NN-demos-xor.xtl.html#p">p</a></span>
+<span class="line" id="L22"><a class="ln" href="#L22">22</a><a href="libs-NN-demos-xor.xtl.html#y">y</a> <a href="libs-NN-src-NN.xtl.html#l.a_ccuracy" class="c-libfunc">ⁿⁿa̲ccuracy</a> <a href="libs-NN-demos-xor.xtl.html#p">p</a></span>
+<span class="line" id="L23"><a class="ln" href="#L23">23</a>(<span class="c-number">2</span> <a href="libs-NN-src-NN.xtl.html#l.o_neHot" class="c-libfunc">ⁿⁿo̲neHot</a> <a href="libs-NN-demos-xor.xtl.html#y">y</a>) <a href="libs-NN-src-NN.xtl.html#l.c_rossEntropy" class="c-libfunc">ⁿⁿc̲rossEntropy</a> <a href="libs-NN-demos-xor.xtl.html#p">p</a></span>
+</div>
+</main>
+</body>
+</html>

@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>X_eTaL ML: run the demos yourself</title>
+<link rel="icon" href="../favicon.ico">
+<style>
+:root { --bg:#fbfaf7; --fg:#1d1d1f; --muted:#5f6368; --card:#ffffff; --line:#e3e0d8;
+  --accent:#2457c5; --chip:#eef2fb; --live:#1f7a3a; --draft:#9a6200; --deferred:#8a8a8a;
+  --t-builtin:#1c5fd4; --t-user:#2b8a3e; --t-num:#9c6500; --t-sym:#0b7285; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg:#141518; --fg:#e8e6e3; --muted:#a0a4ab; --card:#1d1f23; --line:#30333a;
+  --accent:#8fb0ff; --chip:#262b36; --live:#5fcf7f; --draft:#e0a84a; --deferred:#8d9097;
+  --t-builtin:#8fb0ff; --t-user:#8ce99a; --t-num:#ffd43b; --t-sym:#66d9e8; } }
+:root[data-theme="dark"] { --bg:#141518; --fg:#e8e6e3; --muted:#a0a4ab; --card:#1d1f23;
+  --line:#30333a; --accent:#8fb0ff; --chip:#262b36; --live:#5fcf7f; --draft:#e0a84a; --deferred:#8d9097;
+  --t-builtin:#8fb0ff; --t-user:#8ce99a; --t-num:#ffd43b; --t-sym:#66d9e8; }
+* { box-sizing: border-box; }
+body { margin:0; background:var(--bg); color:var(--fg);
+  font: 16px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; }
+main, footer { max-width: 980px; margin: 0 auto; padding: 0 16px; }
+header { padding: 48px 0 24px; }
+h1 { font-size: 2rem; margin: 0 0 8px; letter-spacing: -0.01em; }
+.lede { color: var(--muted); max-width: 46rem; margin: 0; }
+.lede a, footer a { color: var(--accent); }
+.grid { display:grid; grid-template-columns: repeat(auto-fill, minmax(400px, 1fr)); gap:16px; padding: 8px 0 40px; }
+.card { background:var(--card); border:1px solid var(--line); border-radius:12px; padding:18px;
+  display:flex; flex-direction:column; gap:10px; }
+.card h2 { font-size:1.15rem; margin:0; }
+.shot img { width:100%; aspect-ratio: 13 / 9; object-fit: cover; object-position: top; border-radius:8px; border:1px solid var(--line); display:block; }
+.card p { margin:0; color:var(--muted); }
+.status { font-size:.8rem; font-weight:600; }
+.status.live { color:var(--live); } .status.draft { color:var(--draft); } .status.deferred { color:var(--deferred); }
+.chips { display:flex; flex-wrap:wrap; gap:6px; }
+.chip { background:var(--chip); border-radius:999px; padding:2px 10px; font-size:.8rem; }
+.links { margin-top:auto; display:flex; gap:16px; font-weight:600; }
+.links a { color:var(--accent); text-decoration:none; }
+.links a:hover { text-decoration:underline; }
+.empty { color:var(--muted); padding: 24px 0 48px; }
+footer { border-top:1px solid var(--line); padding-top:16px; padding-bottom:32px; color:var(--muted); font-size:.85rem; }
+footer .sep { margin: 0 8px; }
+.brand { display:flex; align-items:center; gap:16px; margin-bottom: 8px; }
+.brand h1 { margin: 0; }
+.logo { height: 60px; width: auto; border-radius: 8px; }
+.brand h1.ml { color: #ff7a00; font-weight: 800; }
+code { font-family: ui-monospace, "JuliaMono", Menlo, monospace; }
+pre { background:var(--card); border:1px solid var(--line); border-radius:8px; padding:12px 14px;
+  overflow-x:auto; font: 14px/1.5 ui-monospace, Menlo, monospace; }
+.rec { background:var(--card); border:1px solid var(--line); border-radius:12px; padding:18px; margin: 0 0 24px; }
+.rec h2 { margin:0 0 6px; font-size:1.2rem; } .rec p { margin:0 0 12px; color:var(--muted); }
+.rec img { width:100%; height:auto; border-radius:8px; display:block; background:#282a36; }
+.howto h2 { font-size:1.2rem; margin: 8px 0; }
+.card pre.xtl { margin:0; padding:8px 10px; font-size:.8rem; white-space:pre-wrap; overflow-wrap:anywhere; }
+.card p.why { font-size:.9rem; }
+.c-builtin { color: var(--t-builtin); } .c-userfunc, .c-libfunc, .c-macro { color: var(--t-user); }
+.c-number { color: var(--t-num); } .c-symbol { color: var(--t-sym); } .c-comment { color: var(--muted); font-style: italic; }
+/* the catalog's table of contents: a sidebar at the top left, above the cards on a phone */
+.with-toc { display: grid; grid-template-columns: 200px minmax(0, 1fr); gap: 28px; max-width: 1240px; margin: 0 auto; padding: 0 16px; }
+.with-toc main { max-width: none; margin: 0; padding: 0; }
+nav.toc { position: sticky; top: 16px; align-self: start; padding-top: 24px; font-size: .92rem; }
+nav.toc h2 { font-size: 1rem; margin: 0 0 8px; }
+nav.toc h3 { font-size: .8rem; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); margin: 14px 0 4px; }
+nav.toc ul { list-style: none; padding: 0; margin: 0; }
+nav.toc li { margin: 3px 0; }
+nav.toc a { color: var(--accent); text-decoration: none; }
+nav.toc a:hover { text-decoration: underline; }
+@media (max-width: 760px) { .with-toc { grid-template-columns: 1fr; gap: 0; } nav.toc { position: static; padding-top: 12px; } }
+.start { max-width: 46rem; margin: 14px 0 0; padding: 0; list-style: none; color: var(--muted); }
+.start li { margin: 6px 0; } .start b { color: var(--fg); } .start a { color: var(--accent); }
+</style>
+</head>
+<body>
+<div class="plain">
+
+<main>
+<header>
+<div class="brand"><a href="../"><img class="logo" src="../xetal-logo-orange.png" alt="X_eTaL logo"></a><h1>Run the demos yourself</h1></div>
+<p class="lede">Every one of the <a href="../">ML demos</a> also runs at the command line, by the
+X_eTaL commit <a href="https://github.com/softwarewrighter/X_eTaL-ML">the repository</a> pins: each statement of the program, drawn as
+X_eTaL renders it, then its result. A demo that runs only at the command line is shown recorded
+below; the interactive ones are live in the browser.</p>
+</header>
+<section class="howto">
+<h2>From a clone</h2>
+<p class="lede">You need Rust (stable), git and <a href="https://github.com/casey/just">just</a>. The
+repository pins the X_eTaL commit it is known to work with
+(<a href="https://github.com/softwarewrighter/X_eTaL/commit/f7f9821b9b76b5bd265d47aa1c0f29f280f6a150">f7f9821</a>); <code>just xetal</code> fetches and builds
+exactly that one, so nothing else is installed.</p>
+<pre>git clone https://github.com/softwarewrighter/X_eTaL-ML
+cd X_eTaL-ML
+just xetal               # fetch and build the pinned X_eTaL (once, a few minutes)
+just demos               # the demos
+just tour cnn-digits     # a demo, paced: each statement, then its result
+just run cnn-digits      # just the results
+just show cnn-digits     # every statement, unclipped
+just serve cnn-digits    # its page, at http://127.0.0.1:8435/
+just bench               # how fast the ML workloads run</pre>
+</section>
+
+<p class="lede">Every demo has a live page now (<a href="../">the catalog</a>), so none is shown recorded; each one still runs at the command line as above.</p>
+</main>
+</div>
+<footer>
+<span>Copyright (c) 2026 Michael A Wright</span><span class="sep">&middot;</span>
+<span>MIT License</span><span class="sep">&middot;</span>
+<a href="https://github.com/softwarewrighter/X_eTaL-ML" target="_blank">Repository</a><span class="sep">&middot;</span>
+<a href="../doc/">Cross-reference</a><span class="sep">&middot;</span>
+<span>X_eTaL <a href="https://github.com/softwarewrighter/X_eTaL/commit/f7f9821b9b76b5bd265d47aa1c0f29f280f6a150" target="_blank">f7f9821</a></span><span class="sep">&middot;</span>
+<span>build (host max, sha 0f49049, 20261010T163308)</span>
+</footer>
+</body>
+</html>

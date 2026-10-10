@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>demos/cnn-backprop/cnn-backprop.xtl - X_eTaL doc</title>
+<link rel="stylesheet" href="style.css">
+<script src="theme.js"></script>
+<script defer src="search-index.js"></script>
+<script defer src="search.js"></script>
+</head>
+<body>
+<nav class="side">
+<a class="home" href="index.html">X_eTaL doc</a>
+<input id="search" type="search" autocomplete="off" placeholder="Search: a name, or a type" title="A name (mean finds m_ean), or a type: Num a =&gt; a -&gt; a -&gt; a finds +, m_ax ...">
+<h2>Files</h2>
+<h3>demos/attention/</h3>
+<ul>
+<li><a href="demos-attention-attention.xtl.html">attention.xtl</a></li>
+</ul>
+<h3>demos/backprop/</h3>
+<ul>
+<li><a href="demos-backprop-backprop.xtl.html">backprop.xtl</a></li>
+</ul>
+<h3>demos/cnn-backprop/</h3>
+<ul>
+<li><a href="demos-cnn-backprop-cnn-backprop.xtl.html">cnn-backprop.xtl</a></li>
+</ul>
+<h3>demos/cnn-digits/</h3>
+<ul>
+<li><a href="demos-cnn-digits-cnn-digits.xtl.html">cnn-digits.xtl</a></li>
+</ul>
+<h3>demos/k-means/</h3>
+<ul>
+<li><a href="demos-k-means-k-means.xtl.html">k-means.xtl</a></li>
+</ul>
+<h3>demos/moe-router/</h3>
+<ul>
+<li><a href="demos-moe-router-moe-router.xtl.html">moe-router.xtl</a></li>
+</ul>
+<h3>demos/net-macro/</h3>
+<ul>
+<li><a href="demos-net-macro-net-macro.xtl.html">net-macro.xtl</a></li>
+<li><a href="demos-net-macro-train-it.xtl.html">train-it.xtl</a></li>
+</ul>
+<h3>demos/ternary-net/</h3>
+<ul>
+<li><a href="demos-ternary-net-ternary-net.xtl.html">ternary-net.xtl</a></li>
+</ul>
+<h3>demos/train-live/</h3>
+<ul>
+<li><a href="demos-train-live-train-live.xtl.html">train-live.xtl</a></li>
+</ul>
+<h3>libs/Learn/demos/</h3>
+<ul>
+<li><a href="libs-Learn-demos-blobs.xtl.html">blobs.xtl</a></li>
+</ul>
+<h3>libs/Learn/src/</h3>
+<ul>
+<li><a href="libs-Learn-src-Learn.xtl.html">Learn.xtl</a></li>
+</ul>
+<h3>libs/Net/demos/</h3>
+<ul>
+<li><a href="libs-Net-demos-train-xor.xtl.html">train-xor.xtl</a></li>
+<li><a href="libs-Net-demos-xor.xtl.html">xor.xtl</a></li>
+</ul>
+<h3>libs/Net/src/</h3>
+<ul>
+<li><a href="libs-Net-src-Net.xtlm.html">Net.xtlm</a></li>
+</ul>
+<h3>libs/NN/demos/</h3>
+<ul>
+<li><a href="libs-NN-demos-xor.xtl.html">xor.xtl</a></li>
+</ul>
+<h3>libs/NN/src/</h3>
+<ul>
+<li><a href="libs-NN-src-NN.xtl.html">NN.xtl</a></li>
+</ul>
+<ul>
+<li><a href="builtins.html">built-ins</a></li>
+</ul>
+<h2>On this page</h2>
+<ul>
+<li><a href="#section-1">The digits, read from data/ (just cnn-backprop-data)</a></li>
+<li class="item"><a href="#tr">tr</a></li>
+<li class="item"><a href="#te">te</a></li>
+<li class="item"><a href="#X">X</a></li>
+<li class="item"><a href="#Y">Y</a></li>
+<li class="item"><a href="#TX">TX</a></li>
+<li class="item"><a href="#ty">ty</a></li>
+<li><a href="#section-2">Forward: the network of cnn-digits, for a batch x of n digits</a></li>
+<li class="item"><a href="#u.w_indows"><span class="c-userfunc">ᵘw̲indows</span></a></li>
+<li class="item"><a href="#u.c_onv"><span class="c-userfunc">ᵘc̲onv</span></a></li>
+<li class="item"><a href="#u.p_ool"><span class="c-userfunc">ᵘp̲ool</span></a></li>
+<li class="item"><a href="#u.p_robs"><span class="c-userfunc">ᵘp̲robs</span></a></li>
+<li><a href="#section-3">Backward: each stage undone, in reverse</a></li>
+<li class="item"><a href="#u.b_locks"><span class="c-userfunc">ᵘb̲locks</span></a></li>
+<li class="item"><a href="#u.m_aps"><span class="c-userfunc">ᵘm̲aps</span></a></li>
+<li class="item"><a href="#u.g_rad"><span class="c-userfunc">ᵘg̲rad</span></a></li>
+<li><a href="#section-4">Adam, on a state of (K, B, W, their averages, the step count)</a></li>
+<li class="item"><a href="#lr">lr</a></li>
+<li class="item"><a href="#bs">bs</a></li>
+<li class="item"><a href="#u.m_ove"><span class="c-userfunc">ᵘm̲ove</span></a></li>
+<li class="item"><a href="#u.s_tep"><span class="c-userfunc">ᵘs̲tep</span></a></li>
+<li class="item"><a href="#K">K</a></li>
+<li class="item"><a href="#B">B</a></li>
+<li class="item"><a href="#W">W</a></li>
+<li class="item"><a href="#s0">s0</a></li>
+<li class="item"><a href="#u.t_est"><span class="c-userfunc">ᵘt̲est</span></a></li>
+<li><a href="#section-5">The check: every gradient against a finite difference</a></li>
+<li class="item"><a href="#u.l_oss"><span class="c-userfunc">ᵘl̲oss</span></a></li>
+<li class="item"><a href="#e">e</a></li>
+<li class="item"><a href="#u.b_ump"><span class="c-userfunc">ᵘb̲ump</span></a></li>
+<li class="item"><a href="#i4">i4</a></li>
+<li class="item"><a href="#GK">GK</a></li>
+<li class="item"><a href="#GB">GB</a></li>
+<li class="item"><a href="#GW">GW</a></li>
+<li class="item"><a href="#FK">FK</a></li>
+<li class="item"><a href="#FB">FB</a></li>
+<li class="item"><a href="#wj">wj</a></li>
+<li class="item"><a href="#FW">FW</a></li>
+<li class="item"><a href="#gap">gap</a></li>
+<li><a href="#section-6">Training</a></li>
+<li class="item"><a href="#u.r_ound"><span class="c-userfunc">ᵘr̲ound</span></a></li>
+<li class="item"><a href="#s1">s1</a></li>
+<li class="item"><a href="#s2">s2</a></li>
+<li class="item"><a href="#K2">K2</a></li>
+<li class="item"><a href="#B2">B2</a></li>
+<li class="item"><a href="#W2">W2</a></li>
+</ul>
+</nav>
+<main>
+<button class="theme" title="Light or dark">theme</button>
+<section id="results"></section>
+<h1><span class="kind">program</span>demos/cnn-backprop/cnn-backprop.xtl</h1>
+<div class="doc">
+<p>Training a tiny convolutional network in X_eTaL, from random
+weights, on 600 handwritten digits: 28 x 28 -&gt; 8 filters of 3 x 3
+-&gt; ReLU -&gt; 2 x 2 max-pooling -&gt; dense -&gt; softmax, as cnn-digits
+reads them. The backward pass undoes each stage in turn: the dense
+layer, the pooling (each block's gradient to its largest item), the
+ReLU and the convolution, each a few array expressions over the
+whole batch; it is checked against finite differences. Adam moves
+the weights, 20 digits a step, and p_ower repeats the step.</p>
+</div>
+<p class="meta"><a href="demos-cnn-backprop-cnn-backprop.xtl.src.html">source</a> &middot; imports <code><span class="c-error">nn:</span></code> <a href="libs-NN-src-NN.xtl.html">libs/NN/src/NN.xtl</a></p>
+<h2 class="section" id="section-1">The digits, read from data/ (just cnn-backprop-data)</h2>
+<div class="item" id="tr">
+<h3><a href="#tr">tr</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-cnn-backprop-cnn-backprop.xtl.src.html#L15">line 15</a></div>
+<div class="doc">
+<p>600 digits to train on, 200 to test with: each a label, then 784 pixels.</p>
+</div>
+<pre class="code">tr ← <span class="c-number">600</span> <span class="c-number">785</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <a href="builtins.html#n_umbers" class="c-builtin">n̲umbers</a> <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;data/train.txt&quot;</span></pre>
+<div class="uses">Used in: <a href="demos-cnn-backprop-cnn-backprop.xtl.html#X">X</a>, <a href="demos-cnn-backprop-cnn-backprop.xtl.html#Y">Y</a></div>
+</div>
+<div class="item" id="te">
+<h3><a href="#te">te</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-cnn-backprop-cnn-backprop.xtl.src.html#L16">line 16</a></div>
+<pre class="code">te ← <span class="c-number">200</span> <span class="c-number">785</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <a href="builtins.html#n_umbers" class="c-builtin">n̲umbers</a> <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;data/test.txt&quot;</span></pre>
+<div class="uses">Used in: <a href="demos-cnn-backprop-cnn-backprop.xtl.html#TX">TX</a>, <a href="demos-cnn-backprop-cnn-backprop.xtl.html#ty">ty</a></div>
+</div>
+<div class="item" id="X">
+<h3><a href="#X">X</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-cnn-backprop-cnn-backprop.xtl.src.html#L18">line 18</a></div>
+<div class="doc">
+<p>The pictures, 0.0 to 1.0, and the labels one-hot (digit d is class d + 1).</p>
+</div>
+<pre class="code">X ← <span class="c-number">600</span> <span class="c-number">28</span> <span class="c-number">28</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> (<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <span class="c-number">1</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop₂</a> <a href="demos-cnn-backprop-cnn-backprop.xtl.html#tr">tr</a>) <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-number">255.0</span></pre>
+<div class="uses">Used in: <a href="demos-cnn-backprop-cnn-backprop.xtl.html#u.g_rad"><span class="c-userfunc">ᵘg̲rad</span></a>, <a href="demos-cnn-backprop-cnn-backprop.xtl.html#u.l_oss"><span class="c-userfunc">ᵘl̲oss</span></a></div>
+</div>
+<div class="item" id="Y">
+<h3><a href="#Y">Y</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-cnn-backprop-cnn-backprop.xtl.src.html#L19">line 19</a></div>
+<pre class="code">Y ← <span class="c-number">10</span> <a href="libs-NN-src-NN.xtl.html#l.o_neHot" class="c-libfunc">ⁿⁿo̲neHot</a> <span class="c-number">1</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> <span class="c-number">1</span> <a href="builtins.html#t_ake" class="c-builtin">t̲ake₂</a> <a href="demos-cnn-backprop-cnn-backprop.xtl.html#tr">tr</a></pre>
+<div class="uses">Used in: <a href="demos-cnn-backprop-cnn-backprop.xtl.html#u.g_rad"><span class="c-userfunc">ᵘg̲rad</span></a>, <a href="demos-cnn-backprop-cnn-backprop.xtl.html#u.l_oss"><span class="c-userfunc">ᵘl̲oss</span></a></div>
+</div>
+<div class="item" id="TX">
+<h3><a href="#TX">TX</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-cnn-backprop-cnn-backprop.xtl.src.html#L20">line 20</a></div>
+<pre class="code">TX ← <span class="c-number">200</span> <span class="c-number">28</span> <span class="c-number">28</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> (<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <span class="c-number">1</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop₂</a> <a href="demos-cnn-backprop-cnn-backprop.xtl.html#te">te</a>) <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-number">255.0</span></pre>
+<div class="uses">Used in: <a href="demos-cnn-backprop-cnn-backprop.xtl.html#u.t_est"><span class="c-userfunc">ᵘt̲est</span></a>, <a href="demos-cnn-backprop-cnn-backprop.xtl.src.html#L117">demos/cnn-backprop/cnn-backprop.xtl:117</a></div>
+</div>
+<div class="item" id="ty">
+<h3><a href="#ty">ty</a> <span class="type">: Int</span></h3>
+<div class="meta">value &middot; <a href="demos-cnn-backprop-cnn-backprop.xtl.src.html#L21">line 21</a></div>
+<pre class="code">ty ← <span class="c-number">1</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> <span class="c-number">1</span> <a href="builtins.html#t_ake" class="c-builtin">t̲ake₂</a> <a href="demos-cnn-backprop-cnn-backprop.xtl.html#te">te</a></pre>
+<div class="uses">Used in: <a href="demos-cnn-backprop-cnn-backprop.xtl.html#u.t_est"><span class="c-userfunc">ᵘt̲est</span></a>, <a href="demos-cnn-backprop-cnn-backprop.xtl.src.html#L118">demos/cnn-backprop/cnn-backprop.xtl:118</a></div>
+</div>
+<h2 class="section" id="section-2">Forward: the network of cnn-digits, for a batch x of n digits</h2>
+<div class="item" id="u.w_indows">
+<h3><a href="#u.w_indows"><span class="c-userfunc">ᵘw̲indows</span></a> <span class="type">: a -&gt; a</span></h3>
+<div class="meta">function &middot; <a href="demos-cnn-backprop-cnn-backprop.xtl.src.html#L25">line 25</a></div>
+<div class="doc">
+<p>Every 3 x 3 window of every digit: 9 rows, a column per digit and position.</p>
+</div>
+<pre class="code"><span class="c-userfunc">ᵘw̲indows</span> ← { x → (<span class="c-number">9</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">676</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> x) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">1</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop₅</a> <span class="c-number">-1</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop₅</a> <span class="c-number">1</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop₄</a> <span class="c-number">-1</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop₄</a> <span class="c-number">-1</span> <span class="c-number">0</span> <span class="c-number">1</span> <a href="builtins.html#o_-2d" class="c-builtin">o̲-₃</a> <span class="c-number">-1</span> <span class="c-number">0</span> <span class="c-number">1</span> <a href="builtins.html#o_-2d" class="c-builtin">o̲-₃</a> x }</pre>
+<div class="uses">Used in: <a href="demos-cnn-backprop-cnn-backprop.xtl.html#u.p_robs"><span class="c-userfunc">ᵘp̲robs</span></a>, <a href="demos-cnn-backprop-cnn-backprop.xtl.html#u.g_rad"><span class="c-userfunc">ᵘg̲rad</span></a></div>
+</div>
+<div class="item" id="u.c_onv">
+<h3><a href="#u.c_onv"><span class="c-userfunc">ᵘc̲onv</span></a> <span class="type">: Num a =&gt; (a, a) -&gt; a -&gt; a</span></h3>
+<div class="meta">function &middot; <a href="demos-cnn-backprop-cnn-backprop.xtl.src.html#L27">line 27</a></div>
+<div class="doc">
+<p>The 8 filters K (8 x 9) and their biases B over every window: n x 8 x 26 x 26.</p>
+</div>
+<pre class="code"><span class="c-userfunc">ᵘc̲onv</span> ← { (<a href="demos-cnn-backprop-cnn-backprop.xtl.html#K">K</a>, <a href="demos-cnn-backprop-cnn-backprop.xtl.html#B">B</a>) V → n ← (<a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> V) <a href="builtins.html#d_iv" class="c-builtin">d̲iv</a> <span class="c-number">6084</span>◆ (n <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">8</span> <span class="c-number">26</span> <span class="c-number">26</span>) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">2</span> <span class="c-number">1</span> <span class="c-number">3</span> <a href="builtins.html#t_ranspose" class="c-builtin">t̲ranspose</a> (<span class="c-number">8</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> n <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">676</span>) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> (<a href="demos-cnn-backprop-cnn-backprop.xtl.html#K">K</a> <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#i_nner" class="c-builtin">i̲nner</a> V) <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="demos-cnn-backprop-cnn-backprop.xtl.html#B">B</a> <span class="c-builtin">'</span><a href="builtins.html#l_eft" class="c-builtin">l̲eft</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> <a href="builtins.html#o_ffsets" class="c-builtin">o̲ffsets</a> n <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">676</span> }</pre>
+<div class="uses">Used in: <a href="demos-cnn-backprop-cnn-backprop.xtl.html#u.p_robs"><span class="c-userfunc">ᵘp̲robs</span></a>, <a href="demos-cnn-backprop-cnn-backprop.xtl.html#u.g_rad"><span class="c-userfunc">ᵘg̲rad</span></a></div>
+</div>
+<div class="item" id="u.p_ool">
+<h3><a href="#u.p_ool"><span class="c-userfunc">ᵘp̲ool</span></a> <span class="type">: Num a =&gt; a -&gt; a</span></h3>
+<div class="meta">function &middot; <a href="demos-cnn-backprop-cnn-backprop.xtl.src.html#L29">line 29</a></div>
+<div class="doc">
+<p>The largest of each 2 x 2 block: n x 8 x 13 x 13.</p>
+</div>
+<pre class="code"><span class="c-userfunc">ᵘp̲ool</span> ← { a → <span class="c-builtin">'</span><a href="builtins.html#m_ax" class="c-builtin">m̲ax</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/₄₆</a> ((<a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> a) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">8</span> <span class="c-number">13</span> <span class="c-number">2</span> <span class="c-number">13</span> <span class="c-number">2</span>) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> a }</pre>
+<div class="uses">Used in: <a href="demos-cnn-backprop-cnn-backprop.xtl.html#u.p_robs"><span class="c-userfunc">ᵘp̲robs</span></a>, <a href="demos-cnn-backprop-cnn-backprop.xtl.html#u.g_rad"><span class="c-userfunc">ᵘg̲rad</span></a></div>
+</div>
+<div class="item" id="u.p_robs">
+<h3><a href="#u.p_robs"><span class="c-userfunc">ᵘp̲robs</span></a> <span class="type">: (Float, Float, Float) -&gt; Float -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="demos-cnn-backprop-cnn-backprop.xtl.src.html#L31">line 31</a></div>
+<div class="doc">
+<p>Each digit's probabilities for 0 to 9.</p>
+</div>
+<pre class="code"><span class="c-userfunc">ᵘp̲robs</span> ← { (<a href="demos-cnn-backprop-cnn-backprop.xtl.html#K">K</a>, <a href="demos-cnn-backprop-cnn-backprop.xtl.html#B">B</a>, <a href="demos-cnn-backprop-cnn-backprop.xtl.html#W">W</a>) x → <a href="libs-NN-src-NN.xtl.html#l.s_oftmax" class="c-libfunc">ⁿⁿs̲oftmax</a> (((<a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> x) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">1352</span>) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <a href="demos-cnn-backprop-cnn-backprop.xtl.html#u.p_ool" class="c-userfunc">ᵘp̲ool</a> <a href="libs-NN-src-NN.xtl.html#l.r_elu" class="c-libfunc">ⁿⁿr̲elu</a> (<a href="demos-cnn-backprop-cnn-backprop.xtl.html#K">K</a>, <a href="demos-cnn-backprop-cnn-backprop.xtl.html#B">B</a>) <a href="demos-cnn-backprop-cnn-backprop.xtl.html#u.c_onv" class="c-userfunc">ᵘc̲onv</a> <a href="demos-cnn-backprop-cnn-backprop.xtl.html#u.w_indows" class="c-userfunc">ᵘw̲indows</a> x) <a href="libs-NN-src-NN.xtl.html#l.d_ense" class="c-libfunc">ⁿⁿd̲ense</a> <a href="demos-cnn-backprop-cnn-backprop.xtl.html#W">W</a> }</pre>
+<div class="uses">Used in: <a href="demos-cnn-backprop-cnn-backprop.xtl.html#u.t_est"><span class="c-userfunc">ᵘt̲est</span></a>, <a href="demos-cnn-backprop-cnn-backprop.xtl.html#u.l_oss"><span class="c-userfunc">ᵘl̲oss</span></a>, <a href="demos-cnn-backprop-cnn-backprop.xtl.src.html#L117">demos/cnn-backprop/cnn-backprop.xtl:117</a></div>
+</div>
+<h2 class="section" id="section-3">Backward: each stage undone, in reverse</h2>
+<div class="item" id="u.b_locks">
+<h3><a href="#u.b_locks"><span class="c-userfunc">ᵘb̲locks</span></a> <span class="type">: a -&gt; a</span></h3>
+<div class="meta">function &middot; <a href="demos-cnn-backprop-cnn-backprop.xtl.src.html#L35">line 35</a></div>
+<div class="doc">
+<p>Each 2 x 2 block of the maps as a last axis of 4 (n x 8 x 13 x 13 x 4), and back.</p>
+</div>
+<pre class="code"><span class="c-userfunc">ᵘb̲locks</span> ← { a → ((<span class="c-number">2</span> <a href="builtins.html#t_ake" class="c-builtin">t̲ake</a> <a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> a) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">13</span> <span class="c-number">13</span> <span class="c-number">4</span>) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">1</span> <span class="c-number">2</span> <span class="c-number">3</span> <span class="c-number">5</span> <span class="c-number">4</span> <span class="c-number">6</span> <a href="builtins.html#t_ranspose" class="c-builtin">t̲ranspose</a> ((<span class="c-number">2</span> <a href="builtins.html#t_ake" class="c-builtin">t̲ake</a> <a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> a) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">13</span> <span class="c-number">2</span> <span class="c-number">13</span> <span class="c-number">2</span>) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> a }</pre>
+<div class="uses">Used in: <a href="demos-cnn-backprop-cnn-backprop.xtl.html#u.g_rad"><span class="c-userfunc">ᵘg̲rad</span></a></div>
+</div>
+<div class="item" id="u.m_aps">
+<h3><a href="#u.m_aps"><span class="c-userfunc">ᵘm̲aps</span></a> <span class="type">: a -&gt; a</span></h3>
+<div class="meta">function &middot; <a href="demos-cnn-backprop-cnn-backprop.xtl.src.html#L36">line 36</a></div>
+<pre class="code"><span class="c-userfunc">ᵘm̲aps</span> ← { r → ((<span class="c-number">2</span> <a href="builtins.html#t_ake" class="c-builtin">t̲ake</a> <a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> r) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">26</span> <span class="c-number">26</span>) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">1</span> <span class="c-number">2</span> <span class="c-number">3</span> <span class="c-number">5</span> <span class="c-number">4</span> <span class="c-number">6</span> <a href="builtins.html#t_ranspose" class="c-builtin">t̲ranspose</a> ((<span class="c-number">2</span> <a href="builtins.html#t_ake" class="c-builtin">t̲ake</a> <a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> r) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">13</span> <span class="c-number">13</span> <span class="c-number">2</span> <span class="c-number">2</span>) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> r }</pre>
+<div class="uses">Used in: <a href="demos-cnn-backprop-cnn-backprop.xtl.html#u.g_rad"><span class="c-userfunc">ᵘg̲rad</span></a></div>
+</div>
+<div class="item" id="u.g_rad">
+<h3><a href="#u.g_rad"><span class="c-userfunc">ᵘg̲rad</span></a> <span class="type">: (Float, Float, Float) -&gt; Int -&gt; (Float, Float, Float)</span></h3>
+<div class="meta">function &middot; <a href="demos-cnn-backprop-cnn-backprop.xtl.src.html#L38">line 38</a></div>
+<div class="doc">
+<p>The gradients of the loss by K, B and W, for the digits numbered i.</p>
+</div>
+<pre class="code"><span class="c-userfunc">ᵘg̲rad</span> ← { (<a href="demos-cnn-backprop-cnn-backprop.xtl.html#K">K</a>, <a href="demos-cnn-backprop-cnn-backprop.xtl.html#B">B</a>, <a href="demos-cnn-backprop-cnn-backprop.xtl.html#W">W</a>) i →
+  x ← i <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="demos-cnn-backprop-cnn-backprop.xtl.html#X">X</a>
+  y ← i <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="demos-cnn-backprop-cnn-backprop.xtl.html#Y">Y</a>
+  n ← <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> x
+  V ← <a href="demos-cnn-backprop-cnn-backprop.xtl.html#u.w_indows" class="c-userfunc">ᵘw̲indows</a> x
+  C ← (<a href="demos-cnn-backprop-cnn-backprop.xtl.html#K">K</a>, <a href="demos-cnn-backprop-cnn-backprop.xtl.html#B">B</a>) <a href="demos-cnn-backprop-cnn-backprop.xtl.html#u.c_onv" class="c-userfunc">ᵘc̲onv</a> V
+  A ← <a href="libs-NN-src-NN.xtl.html#l.r_elu" class="c-libfunc">ⁿⁿr̲elu</a> C
+  Q ← <a href="demos-cnn-backprop-cnn-backprop.xtl.html#u.p_ool" class="c-userfunc">ᵘp̲ool</a> A
+  F ← (n <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">1352</span>) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> Q
+  P ← <a href="libs-NN-src-NN.xtl.html#l.s_oftmax" class="c-libfunc">ⁿⁿs̲oftmax</a> F <a href="libs-NN-src-NN.xtl.html#l.d_ense" class="c-libfunc">ⁿⁿd̲ense</a> <a href="demos-cnn-backprop-cnn-backprop.xtl.html#W">W</a>
+  D3 ← (P <a href="builtins.html#-2d" class="c-symbol">−</a> y) <a href="builtins.html#-2f" class="c-symbol">÷</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> n
+  GW ← (<a href="builtins.html#o_-5c" class="c-builtin">o̲\</a> F <a href="builtins.html#c_at" class="c-builtin">c̲at₂</a> ((n <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">1</span>) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">1.0</span>)) <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#i_nner" class="c-builtin">i̲nner</a> D3
+  DQ ← (n <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">8</span> <span class="c-number">13</span> <span class="c-number">13</span>) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> D3 <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#i_nner" class="c-builtin">i̲nner</a> <a href="builtins.html#o_-5c" class="c-builtin">o̲\</a> <span class="c-number">-1</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> <a href="demos-cnn-backprop-cnn-backprop.xtl.html#W">W</a>
+  R ← <a href="demos-cnn-backprop-cnn-backprop.xtl.html#u.b_locks" class="c-userfunc">ᵘb̲locks</a> A
+  hit ← <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> R <a href="builtins.html#-3d" class="c-symbol">=</a> (<a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> R) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> (<a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> Q) <span class="c-builtin">'</span><a href="builtins.html#l_eft" class="c-builtin">l̲eft</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> <span class="c-number">1</span> <span class="c-number">2</span> <span class="c-number">3</span> <span class="c-number">4</span>
+  first ← hit <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <span class="c-number">1.0</span> <a href="builtins.html#-3d" class="c-symbol">=</a> <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#s_-5c" class="c-builtin">s̲\₅</a> hit
+  DC ← (<a href="demos-cnn-backprop-cnn-backprop.xtl.html#u.m_aps" class="c-userfunc">ᵘm̲aps</a> first <a href="builtins.html#-2a" class="c-symbol">×</a> (<a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> R) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> (<a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> DQ) <span class="c-builtin">'</span><a href="builtins.html#l_eft" class="c-builtin">l̲eft</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> <span class="c-number">1</span> <span class="c-number">2</span> <span class="c-number">3</span> <span class="c-number">4</span>) <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> C <a href="builtins.html#-3e" class="c-symbol">&gt;</a> <span class="c-number">0.0</span>
+  DM ← (<span class="c-number">8</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> n <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">676</span>) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">2</span> <span class="c-number">1</span> <span class="c-number">3</span> <a href="builtins.html#t_ranspose" class="c-builtin">t̲ranspose</a> (n <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">8</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">676</span>) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> DC
+  (DM <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#i_nner" class="c-builtin">i̲nner</a> <a href="builtins.html#o_-5c" class="c-builtin">o̲\</a> V, <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/₂</a> DM, GW)
+}</pre>
+<div class="uses">Used in: <a href="demos-cnn-backprop-cnn-backprop.xtl.html#u.s_tep"><span class="c-userfunc">ᵘs̲tep</span></a>, <a href="demos-cnn-backprop-cnn-backprop.xtl.html#GK">GK</a></div>
+</div>
+<h2 class="section" id="section-4">Adam, on a state of (K, B, W, their averages, the step count)</h2>
+<div class="item" id="lr">
+<h3><a href="#lr">lr</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-cnn-backprop-cnn-backprop.xtl.src.html#L61">line 61</a></div>
+<div class="doc">
+<p>The learning rate and the digits per step.</p>
+</div>
+<pre class="code">lr ← <span class="c-number">0.01</span></pre>
+<div class="uses">Used in: <a href="demos-cnn-backprop-cnn-backprop.xtl.html#u.s_tep"><span class="c-userfunc">ᵘs̲tep</span></a></div>
+</div>
+<div class="item" id="bs">
+<h3><a href="#bs">bs</a> <span class="type">: Int</span></h3>
+<div class="meta">value &middot; <a href="demos-cnn-backprop-cnn-backprop.xtl.src.html#L62">line 62</a></div>
+<pre class="code">bs ← <span class="c-number">20</span></pre>
+<div class="uses">Used in: <a href="demos-cnn-backprop-cnn-backprop.xtl.html#u.s_tep"><span class="c-userfunc">ᵘs̲tep</span></a></div>
+</div>
+<div class="item" id="u.m_ove">
+<h3><a href="#u.m_ove"><span class="c-userfunc">ᵘm̲ove</span></a> <span class="type">: (Float, Float) -&gt; Float -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="demos-cnn-backprop-cnn-backprop.xtl.src.html#L64">line 64</a></div>
+<div class="doc">
+<p>How far Adam moves a weight array, from its averages (m, v) at step t.</p>
+</div>
+<pre class="code"><span class="c-userfunc">ᵘm̲ove</span> ← { (m, v) t → (m <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-number">1.0</span> <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">0.9</span> <a href="builtins.html#-5e" class="c-symbol">^</a> t) <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-number">0.00000001</span> <a href="builtins.html#-2b" class="c-symbol">+</a> (v <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-number">1.0</span> <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">0.999</span> <a href="builtins.html#-5e" class="c-symbol">^</a> t) <a href="builtins.html#-5e" class="c-symbol">^</a> <span class="c-number">0.5</span> }</pre>
+<div class="uses">Used in: <a href="demos-cnn-backprop-cnn-backprop.xtl.html#u.s_tep"><span class="c-userfunc">ᵘs̲tep</span></a></div>
+</div>
+<div class="item" id="u.s_tep">
+<h3><a href="#u.s_tep"><span class="c-userfunc">ᵘs̲tep</span></a> <span class="type">: (Float, Float, Float, Float, Float, Float, Float, Float, Float, Float) -&gt; (Float, Float, Float, Float, Float, Float, Float, Float, Float, Float)</span></h3>
+<div class="meta">function &middot; <a href="demos-cnn-backprop-cnn-backprop.xtl.src.html#L66">line 66</a></div>
+<div class="doc">
+<p>One step, on the next 20 training digits (30 steps go through all 600).</p>
+</div>
+<pre class="code"><span class="c-userfunc">ᵘs̲tep</span> ← { (<a href="demos-cnn-backprop-cnn-backprop.xtl.html#K">K</a>, <a href="demos-cnn-backprop-cnn-backprop.xtl.html#B">B</a>, <a href="demos-cnn-backprop-cnn-backprop.xtl.html#W">W</a>, MK, MB, MW, VK, VB, VW, t) →
+  i ← (<a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <a href="demos-cnn-backprop-cnn-backprop.xtl.html#bs">bs</a>) <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="demos-cnn-backprop-cnn-backprop.xtl.html#bs">bs</a> <a href="builtins.html#-2a" class="c-symbol">×</a> (<a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> t) <a href="builtins.html#m_od" class="c-builtin">m̲od</a> <span class="c-number">600</span> <a href="builtins.html#d_iv" class="c-builtin">d̲iv</a> <a href="demos-cnn-backprop-cnn-backprop.xtl.html#bs">bs</a>
+  n ← <span class="c-number">1.0</span> <a href="builtins.html#-2b" class="c-symbol">+</a> t
+  (<a href="demos-cnn-backprop-cnn-backprop.xtl.html#GK">GK</a>, <a href="demos-cnn-backprop-cnn-backprop.xtl.html#GB">GB</a>, <a href="demos-cnn-backprop-cnn-backprop.xtl.html#GW">GW</a>) ← (<a href="demos-cnn-backprop-cnn-backprop.xtl.html#K">K</a>, <a href="demos-cnn-backprop-cnn-backprop.xtl.html#B">B</a>, <a href="demos-cnn-backprop-cnn-backprop.xtl.html#W">W</a>) <a href="demos-cnn-backprop-cnn-backprop.xtl.html#u.g_rad" class="c-userfunc">ᵘg̲rad</a> i
+  mk ← (<span class="c-number">0.9</span> <a href="builtins.html#-2a" class="c-symbol">×</a> MK) <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">0.1</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="demos-cnn-backprop-cnn-backprop.xtl.html#GK">GK</a>
+  mb ← (<span class="c-number">0.9</span> <a href="builtins.html#-2a" class="c-symbol">×</a> MB) <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">0.1</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="demos-cnn-backprop-cnn-backprop.xtl.html#GB">GB</a>
+  mw ← (<span class="c-number">0.9</span> <a href="builtins.html#-2a" class="c-symbol">×</a> MW) <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">0.1</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="demos-cnn-backprop-cnn-backprop.xtl.html#GW">GW</a>
+  vk ← (<span class="c-number">0.999</span> <a href="builtins.html#-2a" class="c-symbol">×</a> VK) <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">0.001</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="demos-cnn-backprop-cnn-backprop.xtl.html#GK">GK</a> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="demos-cnn-backprop-cnn-backprop.xtl.html#GK">GK</a>
+  vb ← (<span class="c-number">0.999</span> <a href="builtins.html#-2a" class="c-symbol">×</a> VB) <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">0.001</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="demos-cnn-backprop-cnn-backprop.xtl.html#GB">GB</a> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="demos-cnn-backprop-cnn-backprop.xtl.html#GB">GB</a>
+  vw ← (<span class="c-number">0.999</span> <a href="builtins.html#-2a" class="c-symbol">×</a> VW) <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">0.001</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="demos-cnn-backprop-cnn-backprop.xtl.html#GW">GW</a> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="demos-cnn-backprop-cnn-backprop.xtl.html#GW">GW</a>
+  (<a href="demos-cnn-backprop-cnn-backprop.xtl.html#K">K</a> <a href="builtins.html#-2d" class="c-symbol">−</a> <a href="demos-cnn-backprop-cnn-backprop.xtl.html#lr">lr</a> <a href="builtins.html#-2a" class="c-symbol">×</a> (mk, vk) <a href="demos-cnn-backprop-cnn-backprop.xtl.html#u.m_ove" class="c-userfunc">ᵘm̲ove</a> n, <a href="demos-cnn-backprop-cnn-backprop.xtl.html#B">B</a> <a href="builtins.html#-2d" class="c-symbol">−</a> <a href="demos-cnn-backprop-cnn-backprop.xtl.html#lr">lr</a> <a href="builtins.html#-2a" class="c-symbol">×</a> (mb, vb) <a href="demos-cnn-backprop-cnn-backprop.xtl.html#u.m_ove" class="c-userfunc">ᵘm̲ove</a> n, <a href="demos-cnn-backprop-cnn-backprop.xtl.html#W">W</a> <a href="builtins.html#-2d" class="c-symbol">−</a> <a href="demos-cnn-backprop-cnn-backprop.xtl.html#lr">lr</a> <a href="builtins.html#-2a" class="c-symbol">×</a> (mw, vw) <a href="demos-cnn-backprop-cnn-backprop.xtl.html#u.m_ove" class="c-userfunc">ᵘm̲ove</a> n, mk, mb, mw, vk, vb, vw, n)
+}</pre>
+<div class="uses">Used in: <a href="demos-cnn-backprop-cnn-backprop.xtl.html#s1">s1</a>, <a href="demos-cnn-backprop-cnn-backprop.xtl.html#s2">s2</a></div>
+</div>
+<div class="item" id="K">
+<h3><a href="#K">K</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-cnn-backprop-cnn-backprop.xtl.src.html#L81">line 81</a></div>
+<div class="doc">
+<p>The starting state: small random filters and dense weights; the
+filters' biases a little above 0, so that ReLU starts off its kink
+(a blank window's output is then 0.01, not exactly 0).</p>
+</div>
+<pre class="code">K ← <span class="c-number">0.8</span> <a href="builtins.html#-2a" class="c-symbol">×</a> (<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> (<span class="c-number">8</span> <span class="c-number">9</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <a href="builtins.html#r_oll-21" class="c-builtin">r̲oll!</a> <span class="c-number">72</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">2001</span>) <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1001</span>) <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-number">1000.0</span></pre>
+<div class="uses">Used in: <a href="demos-cnn-backprop-cnn-backprop.xtl.html#u.c_onv"><span class="c-userfunc">ᵘc̲onv</span></a>, <a href="demos-cnn-backprop-cnn-backprop.xtl.html#u.p_robs"><span class="c-userfunc">ᵘp̲robs</span></a>, <a href="demos-cnn-backprop-cnn-backprop.xtl.html#u.g_rad"><span class="c-userfunc">ᵘg̲rad</span></a>, <a href="demos-cnn-backprop-cnn-backprop.xtl.html#u.s_tep"><span class="c-userfunc">ᵘs̲tep</span></a>, <a href="demos-cnn-backprop-cnn-backprop.xtl.html#s0">s0</a>, <a href="demos-cnn-backprop-cnn-backprop.xtl.html#u.t_est"><span class="c-userfunc">ᵘt̲est</span></a>, <a href="demos-cnn-backprop-cnn-backprop.xtl.html#u.l_oss"><span class="c-userfunc">ᵘl̲oss</span></a>, <a href="demos-cnn-backprop-cnn-backprop.xtl.html#GK">GK</a>, <a href="demos-cnn-backprop-cnn-backprop.xtl.html#FK">FK</a>, <a href="demos-cnn-backprop-cnn-backprop.xtl.html#FB">FB</a>, <a href="demos-cnn-backprop-cnn-backprop.xtl.html#FW">FW</a></div>
+</div>
+<div class="item" id="B">
+<h3><a href="#B">B</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-cnn-backprop-cnn-backprop.xtl.src.html#L82">line 82</a></div>
+<pre class="code">B ← <span class="c-number">8</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.01</span></pre>
+<div class="uses">Used in: <a href="demos-cnn-backprop-cnn-backprop.xtl.html#u.c_onv"><span class="c-userfunc">ᵘc̲onv</span></a>, <a href="demos-cnn-backprop-cnn-backprop.xtl.html#u.p_robs"><span class="c-userfunc">ᵘp̲robs</span></a>, <a href="demos-cnn-backprop-cnn-backprop.xtl.html#u.g_rad"><span class="c-userfunc">ᵘg̲rad</span></a>, <a href="demos-cnn-backprop-cnn-backprop.xtl.html#u.s_tep"><span class="c-userfunc">ᵘs̲tep</span></a>, <a href="demos-cnn-backprop-cnn-backprop.xtl.html#s0">s0</a>, <a href="demos-cnn-backprop-cnn-backprop.xtl.html#u.t_est"><span class="c-userfunc">ᵘt̲est</span></a>, <a href="demos-cnn-backprop-cnn-backprop.xtl.html#u.l_oss"><span class="c-userfunc">ᵘl̲oss</span></a>, <a href="demos-cnn-backprop-cnn-backprop.xtl.html#GK">GK</a>, <a href="demos-cnn-backprop-cnn-backprop.xtl.html#FK">FK</a>, <a href="demos-cnn-backprop-cnn-backprop.xtl.html#FB">FB</a>, <a href="demos-cnn-backprop-cnn-backprop.xtl.html#FW">FW</a></div>
+</div>
+<div class="item" id="W">
+<h3><a href="#W">W</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-cnn-backprop-cnn-backprop.xtl.src.html#L83">line 83</a></div>
+<pre class="code">W ← <span class="c-number">0.05</span> <a href="builtins.html#-2a" class="c-symbol">×</a> (<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> (<span class="c-number">1353</span> <span class="c-number">10</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <a href="builtins.html#r_oll-21" class="c-builtin">r̲oll!</a> <span class="c-number">13530</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">2001</span>) <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1001</span>) <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-number">1000.0</span></pre>
+<div class="uses">Used in: <a href="demos-cnn-backprop-cnn-backprop.xtl.html#u.p_robs"><span class="c-userfunc">ᵘp̲robs</span></a>, <a href="demos-cnn-backprop-cnn-backprop.xtl.html#u.g_rad"><span class="c-userfunc">ᵘg̲rad</span></a>, <a href="demos-cnn-backprop-cnn-backprop.xtl.html#u.s_tep"><span class="c-userfunc">ᵘs̲tep</span></a>, <a href="demos-cnn-backprop-cnn-backprop.xtl.html#s0">s0</a>, <a href="demos-cnn-backprop-cnn-backprop.xtl.html#u.t_est"><span class="c-userfunc">ᵘt̲est</span></a>, <a href="demos-cnn-backprop-cnn-backprop.xtl.html#u.l_oss"><span class="c-userfunc">ᵘl̲oss</span></a>, <a href="demos-cnn-backprop-cnn-backprop.xtl.html#GK">GK</a>, <a href="demos-cnn-backprop-cnn-backprop.xtl.html#FK">FK</a>, <a href="demos-cnn-backprop-cnn-backprop.xtl.html#FB">FB</a>, <a href="demos-cnn-backprop-cnn-backprop.xtl.html#FW">FW</a></div>
+</div>
+<div class="item" id="s0">
+<h3><a href="#s0">s0</a> <span class="type">: (Float, Float, Float, Float, Float, Float, Float, Float, Float, Float)</span></h3>
+<div class="meta">value &middot; <a href="demos-cnn-backprop-cnn-backprop.xtl.src.html#L84">line 84</a></div>
+<pre class="code">s0 ← (<a href="demos-cnn-backprop-cnn-backprop.xtl.html#K">K</a>, <a href="demos-cnn-backprop-cnn-backprop.xtl.html#B">B</a>, <a href="demos-cnn-backprop-cnn-backprop.xtl.html#W">W</a>, <span class="c-number">0.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="demos-cnn-backprop-cnn-backprop.xtl.html#K">K</a>, <span class="c-number">0.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="demos-cnn-backprop-cnn-backprop.xtl.html#B">B</a>, <span class="c-number">0.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="demos-cnn-backprop-cnn-backprop.xtl.html#W">W</a>, <span class="c-number">0.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="demos-cnn-backprop-cnn-backprop.xtl.html#K">K</a>, <span class="c-number">0.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="demos-cnn-backprop-cnn-backprop.xtl.html#B">B</a>, <span class="c-number">0.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="demos-cnn-backprop-cnn-backprop.xtl.html#W">W</a>, <span class="c-number">0.0</span>)</pre>
+<div class="uses">Used in: <a href="demos-cnn-backprop-cnn-backprop.xtl.html#s1">s1</a>, <a href="demos-cnn-backprop-cnn-backprop.xtl.src.html#L114">demos/cnn-backprop/cnn-backprop.xtl:114</a></div>
+</div>
+<div class="item" id="u.t_est">
+<h3><a href="#u.t_est"><span class="c-userfunc">ᵘt̲est</span></a> <span class="type">: (Any a, Any b, Any c, Any d, Any e, Any f, Any g) =&gt; (Float, Float, Float, a, b, c, d, e, f, g) -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="demos-cnn-backprop-cnn-backprop.xtl.src.html#L86">line 86</a></div>
+<div class="doc">
+<p>The loss and the share right on the 200 test digits.</p>
+</div>
+<pre class="code"><span class="c-userfunc">ᵘt̲est</span> ← { (<a href="demos-cnn-backprop-cnn-backprop.xtl.html#K">K</a>, <a href="demos-cnn-backprop-cnn-backprop.xtl.html#B">B</a>, <a href="demos-cnn-backprop-cnn-backprop.xtl.html#W">W</a>, _, _, _, _, _, _, _) →
+  p ← (<a href="demos-cnn-backprop-cnn-backprop.xtl.html#K">K</a>, <a href="demos-cnn-backprop-cnn-backprop.xtl.html#B">B</a>, <a href="demos-cnn-backprop-cnn-backprop.xtl.html#W">W</a>) <a href="demos-cnn-backprop-cnn-backprop.xtl.html#u.p_robs" class="c-userfunc">ᵘp̲robs</a> <a href="demos-cnn-backprop-cnn-backprop.xtl.html#TX">TX</a>
+  ((<span class="c-number">10</span> <a href="libs-NN-src-NN.xtl.html#l.o_neHot" class="c-libfunc">ⁿⁿo̲neHot</a> <a href="demos-cnn-backprop-cnn-backprop.xtl.html#ty">ty</a>) <a href="libs-NN-src-NN.xtl.html#l.c_rossEntropy" class="c-libfunc">ⁿⁿc̲rossEntropy</a> p) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="demos-cnn-backprop-cnn-backprop.xtl.html#ty">ty</a> <a href="libs-NN-src-NN.xtl.html#l.a_ccuracy" class="c-libfunc">ⁿⁿa̲ccuracy</a> p
+}</pre>
+<div class="uses">Used in: <a href="demos-cnn-backprop-cnn-backprop.xtl.src.html#L114">demos/cnn-backprop/cnn-backprop.xtl:114</a></div>
+</div>
+<h2 class="section" id="section-5">The check: every gradient against a finite difference</h2>
+<div class="item" id="u.l_oss">
+<h3><a href="#u.l_oss"><span class="c-userfunc">ᵘl̲oss</span></a> <span class="type">: (Float, Float, Float) -&gt; Int -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="demos-cnn-backprop-cnn-backprop.xtl.src.html#L94">line 94</a></div>
+<div class="doc">
+<p>The loss on digits i, and e at item j of an array shaped as w.</p>
+</div>
+<pre class="code"><span class="c-userfunc">ᵘl̲oss</span> ← { (<a href="demos-cnn-backprop-cnn-backprop.xtl.html#K">K</a>, <a href="demos-cnn-backprop-cnn-backprop.xtl.html#B">B</a>, <a href="demos-cnn-backprop-cnn-backprop.xtl.html#W">W</a>) i → (i <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="demos-cnn-backprop-cnn-backprop.xtl.html#Y">Y</a>) <a href="libs-NN-src-NN.xtl.html#l.c_rossEntropy" class="c-libfunc">ⁿⁿc̲rossEntropy</a> (<a href="demos-cnn-backprop-cnn-backprop.xtl.html#K">K</a>, <a href="demos-cnn-backprop-cnn-backprop.xtl.html#B">B</a>, <a href="demos-cnn-backprop-cnn-backprop.xtl.html#W">W</a>) <a href="demos-cnn-backprop-cnn-backprop.xtl.html#u.p_robs" class="c-userfunc">ᵘp̲robs</a> i <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="demos-cnn-backprop-cnn-backprop.xtl.html#X">X</a> }</pre>
+<div class="uses">Used in: <a href="demos-cnn-backprop-cnn-backprop.xtl.html#FK">FK</a>, <a href="demos-cnn-backprop-cnn-backprop.xtl.html#FB">FB</a>, <a href="demos-cnn-backprop-cnn-backprop.xtl.html#FW">FW</a></div>
+</div>
+<div class="item" id="e">
+<h3><a href="#e">e</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-cnn-backprop-cnn-backprop.xtl.src.html#L95">line 95</a></div>
+<pre class="code">e ← <span class="c-number">0.00001</span></pre>
+<div class="uses">Used in: <a href="demos-cnn-backprop-cnn-backprop.xtl.html#u.b_ump"><span class="c-userfunc">ᵘb̲ump</span></a>, <a href="demos-cnn-backprop-cnn-backprop.xtl.html#FK">FK</a>, <a href="demos-cnn-backprop-cnn-backprop.xtl.html#FB">FB</a>, <a href="demos-cnn-backprop-cnn-backprop.xtl.html#FW">FW</a></div>
+</div>
+<div class="item" id="u.b_ump">
+<h3><a href="#u.b_ump"><span class="c-userfunc">ᵘb̲ump</span></a> <span class="type">: a -&gt; Int -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="demos-cnn-backprop-cnn-backprop.xtl.src.html#L96">line 96</a></div>
+<pre class="code"><span class="c-userfunc">ᵘb̲ump</span> ← { w j → <a href="demos-cnn-backprop-cnn-backprop.xtl.html#e">e</a> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> (<a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> w) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> j <a href="builtins.html#-3d" class="c-symbol">=</a> <a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> w }</pre>
+<div class="uses">Used in: <a href="demos-cnn-backprop-cnn-backprop.xtl.html#FK">FK</a>, <a href="demos-cnn-backprop-cnn-backprop.xtl.html#FB">FB</a>, <a href="demos-cnn-backprop-cnn-backprop.xtl.html#FW">FW</a></div>
+</div>
+<div class="item" id="i4">
+<h3><a href="#i4">i4</a> <span class="type">: Int</span></h3>
+<div class="meta">value &middot; <a href="demos-cnn-backprop-cnn-backprop.xtl.src.html#L98">line 98</a></div>
+<div class="doc">
+<p>On four digits: the first filter's 9 weights, the 8 biases, 6 dense weights.</p>
+</div>
+<pre class="code">i4 ← <span class="c-number">1</span> <span class="c-number">2</span> <span class="c-number">3</span> <span class="c-number">4</span></pre>
+<div class="uses">Used in: <a href="demos-cnn-backprop-cnn-backprop.xtl.html#GK">GK</a>, <a href="demos-cnn-backprop-cnn-backprop.xtl.html#FK">FK</a>, <a href="demos-cnn-backprop-cnn-backprop.xtl.html#FB">FB</a>, <a href="demos-cnn-backprop-cnn-backprop.xtl.html#FW">FW</a></div>
+</div>
+<div class="item" id="GK">
+<h3><a href="#GK">GK</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-cnn-backprop-cnn-backprop.xtl.src.html#L99">line 99</a></div>
+<pre class="code">(<a href="demos-cnn-backprop-cnn-backprop.xtl.html#GK">GK</a>, <a href="demos-cnn-backprop-cnn-backprop.xtl.html#GB">GB</a>, <a href="demos-cnn-backprop-cnn-backprop.xtl.html#GW">GW</a>) ← (<a href="demos-cnn-backprop-cnn-backprop.xtl.html#K">K</a>, <a href="demos-cnn-backprop-cnn-backprop.xtl.html#B">B</a>, <a href="demos-cnn-backprop-cnn-backprop.xtl.html#W">W</a>) <a href="demos-cnn-backprop-cnn-backprop.xtl.html#u.g_rad" class="c-userfunc">ᵘg̲rad</a> <a href="demos-cnn-backprop-cnn-backprop.xtl.html#i4">i4</a></pre>
+<div class="uses">Used in: <a href="demos-cnn-backprop-cnn-backprop.xtl.html#u.s_tep"><span class="c-userfunc">ᵘs̲tep</span></a>, <a href="demos-cnn-backprop-cnn-backprop.xtl.html#GK">GK</a>, <a href="demos-cnn-backprop-cnn-backprop.xtl.html#gap">gap</a></div>
+</div>
+<div class="item" id="GB">
+<h3><a href="#GB">GB</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-cnn-backprop-cnn-backprop.xtl.src.html#L99">line 99</a></div>
+<pre class="code">(<a href="demos-cnn-backprop-cnn-backprop.xtl.html#GK">GK</a>, <a href="demos-cnn-backprop-cnn-backprop.xtl.html#GB">GB</a>, <a href="demos-cnn-backprop-cnn-backprop.xtl.html#GW">GW</a>) ← (<a href="demos-cnn-backprop-cnn-backprop.xtl.html#K">K</a>, <a href="demos-cnn-backprop-cnn-backprop.xtl.html#B">B</a>, <a href="demos-cnn-backprop-cnn-backprop.xtl.html#W">W</a>) <a href="demos-cnn-backprop-cnn-backprop.xtl.html#u.g_rad" class="c-userfunc">ᵘg̲rad</a> <a href="demos-cnn-backprop-cnn-backprop.xtl.html#i4">i4</a></pre>
+<div class="uses">Used in: <a href="demos-cnn-backprop-cnn-backprop.xtl.html#u.s_tep"><span class="c-userfunc">ᵘs̲tep</span></a>, <a href="demos-cnn-backprop-cnn-backprop.xtl.html#GK">GK</a>, <a href="demos-cnn-backprop-cnn-backprop.xtl.html#gap">gap</a></div>
+</div>
+<div class="item" id="GW">
+<h3><a href="#GW">GW</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-cnn-backprop-cnn-backprop.xtl.src.html#L99">line 99</a></div>
+<pre class="code">(<a href="demos-cnn-backprop-cnn-backprop.xtl.html#GK">GK</a>, <a href="demos-cnn-backprop-cnn-backprop.xtl.html#GB">GB</a>, <a href="demos-cnn-backprop-cnn-backprop.xtl.html#GW">GW</a>) ← (<a href="demos-cnn-backprop-cnn-backprop.xtl.html#K">K</a>, <a href="demos-cnn-backprop-cnn-backprop.xtl.html#B">B</a>, <a href="demos-cnn-backprop-cnn-backprop.xtl.html#W">W</a>) <a href="demos-cnn-backprop-cnn-backprop.xtl.html#u.g_rad" class="c-userfunc">ᵘg̲rad</a> <a href="demos-cnn-backprop-cnn-backprop.xtl.html#i4">i4</a></pre>
+<div class="uses">Used in: <a href="demos-cnn-backprop-cnn-backprop.xtl.html#u.s_tep"><span class="c-userfunc">ᵘs̲tep</span></a>, <a href="demos-cnn-backprop-cnn-backprop.xtl.html#GK">GK</a>, <a href="demos-cnn-backprop-cnn-backprop.xtl.html#gap">gap</a></div>
+</div>
+<div class="item" id="FK">
+<h3><a href="#FK">FK</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-cnn-backprop-cnn-backprop.xtl.src.html#L100">line 100</a></div>
+<pre class="code">FK ← <span class="c-quote">'</span>{ j → (((<a href="demos-cnn-backprop-cnn-backprop.xtl.html#K">K</a> <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="demos-cnn-backprop-cnn-backprop.xtl.html#K">K</a> <a href="demos-cnn-backprop-cnn-backprop.xtl.html#u.b_ump" class="c-userfunc">ᵘb̲ump</a> j, <a href="demos-cnn-backprop-cnn-backprop.xtl.html#B">B</a>, <a href="demos-cnn-backprop-cnn-backprop.xtl.html#W">W</a>) <a href="demos-cnn-backprop-cnn-backprop.xtl.html#u.l_oss" class="c-userfunc">ᵘl̲oss</a> <a href="demos-cnn-backprop-cnn-backprop.xtl.html#i4">i4</a>) <a href="builtins.html#-2d" class="c-symbol">−</a> (<a href="demos-cnn-backprop-cnn-backprop.xtl.html#K">K</a> <a href="builtins.html#-2d" class="c-symbol">−</a> <a href="demos-cnn-backprop-cnn-backprop.xtl.html#K">K</a> <a href="demos-cnn-backprop-cnn-backprop.xtl.html#u.b_ump" class="c-userfunc">ᵘb̲ump</a> j, <a href="demos-cnn-backprop-cnn-backprop.xtl.html#B">B</a>, <a href="demos-cnn-backprop-cnn-backprop.xtl.html#W">W</a>) <a href="demos-cnn-backprop-cnn-backprop.xtl.html#u.l_oss" class="c-userfunc">ᵘl̲oss</a> <a href="demos-cnn-backprop-cnn-backprop.xtl.html#i4">i4</a>) <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-number">2.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="demos-cnn-backprop-cnn-backprop.xtl.html#e">e</a> } <a href="builtins.html#e_ach" class="c-builtin">e̲ach</a> <a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <span class="c-number">9</span></pre>
+<div class="uses">Used in: <a href="demos-cnn-backprop-cnn-backprop.xtl.html#gap">gap</a></div>
+</div>
+<div class="item" id="FB">
+<h3><a href="#FB">FB</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-cnn-backprop-cnn-backprop.xtl.src.html#L101">line 101</a></div>
+<pre class="code">FB ← <span class="c-quote">'</span>{ j → (((<a href="demos-cnn-backprop-cnn-backprop.xtl.html#K">K</a>, <a href="demos-cnn-backprop-cnn-backprop.xtl.html#B">B</a> <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="demos-cnn-backprop-cnn-backprop.xtl.html#B">B</a> <a href="demos-cnn-backprop-cnn-backprop.xtl.html#u.b_ump" class="c-userfunc">ᵘb̲ump</a> j, <a href="demos-cnn-backprop-cnn-backprop.xtl.html#W">W</a>) <a href="demos-cnn-backprop-cnn-backprop.xtl.html#u.l_oss" class="c-userfunc">ᵘl̲oss</a> <a href="demos-cnn-backprop-cnn-backprop.xtl.html#i4">i4</a>) <a href="builtins.html#-2d" class="c-symbol">−</a> (<a href="demos-cnn-backprop-cnn-backprop.xtl.html#K">K</a>, <a href="demos-cnn-backprop-cnn-backprop.xtl.html#B">B</a> <a href="builtins.html#-2d" class="c-symbol">−</a> <a href="demos-cnn-backprop-cnn-backprop.xtl.html#B">B</a> <a href="demos-cnn-backprop-cnn-backprop.xtl.html#u.b_ump" class="c-userfunc">ᵘb̲ump</a> j, <a href="demos-cnn-backprop-cnn-backprop.xtl.html#W">W</a>) <a href="demos-cnn-backprop-cnn-backprop.xtl.html#u.l_oss" class="c-userfunc">ᵘl̲oss</a> <a href="demos-cnn-backprop-cnn-backprop.xtl.html#i4">i4</a>) <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-number">2.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="demos-cnn-backprop-cnn-backprop.xtl.html#e">e</a> } <a href="builtins.html#e_ach" class="c-builtin">e̲ach</a> <a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <span class="c-number">8</span></pre>
+<div class="uses">Used in: <a href="demos-cnn-backprop-cnn-backprop.xtl.html#gap">gap</a></div>
+</div>
+<div class="item" id="wj">
+<h3><a href="#wj">wj</a> <span class="type">: Int</span></h3>
+<div class="meta">value &middot; <a href="demos-cnn-backprop-cnn-backprop.xtl.src.html#L102">line 102</a></div>
+<pre class="code">wj ← <span class="c-number">1</span> <span class="c-number">77</span> <span class="c-number">500</span> <span class="c-number">6000</span> <span class="c-number">13521</span> <span class="c-number">13530</span></pre>
+<div class="uses">Used in: <a href="demos-cnn-backprop-cnn-backprop.xtl.html#FW">FW</a>, <a href="demos-cnn-backprop-cnn-backprop.xtl.html#gap">gap</a></div>
+</div>
+<div class="item" id="FW">
+<h3><a href="#FW">FW</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-cnn-backprop-cnn-backprop.xtl.src.html#L103">line 103</a></div>
+<pre class="code">FW ← <span class="c-quote">'</span>{ j → (((<a href="demos-cnn-backprop-cnn-backprop.xtl.html#K">K</a>, <a href="demos-cnn-backprop-cnn-backprop.xtl.html#B">B</a>, <a href="demos-cnn-backprop-cnn-backprop.xtl.html#W">W</a> <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="demos-cnn-backprop-cnn-backprop.xtl.html#W">W</a> <a href="demos-cnn-backprop-cnn-backprop.xtl.html#u.b_ump" class="c-userfunc">ᵘb̲ump</a> j) <a href="demos-cnn-backprop-cnn-backprop.xtl.html#u.l_oss" class="c-userfunc">ᵘl̲oss</a> <a href="demos-cnn-backprop-cnn-backprop.xtl.html#i4">i4</a>) <a href="builtins.html#-2d" class="c-symbol">−</a> (<a href="demos-cnn-backprop-cnn-backprop.xtl.html#K">K</a>, <a href="demos-cnn-backprop-cnn-backprop.xtl.html#B">B</a>, <a href="demos-cnn-backprop-cnn-backprop.xtl.html#W">W</a> <a href="builtins.html#-2d" class="c-symbol">−</a> <a href="demos-cnn-backprop-cnn-backprop.xtl.html#W">W</a> <a href="demos-cnn-backprop-cnn-backprop.xtl.html#u.b_ump" class="c-userfunc">ᵘb̲ump</a> j) <a href="demos-cnn-backprop-cnn-backprop.xtl.html#u.l_oss" class="c-userfunc">ᵘl̲oss</a> <a href="demos-cnn-backprop-cnn-backprop.xtl.html#i4">i4</a>) <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-number">2.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="demos-cnn-backprop-cnn-backprop.xtl.html#e">e</a> } <a href="builtins.html#e_ach" class="c-builtin">e̲ach</a> <a href="demos-cnn-backprop-cnn-backprop.xtl.html#wj">wj</a></pre>
+<div class="uses">Used in: <a href="demos-cnn-backprop-cnn-backprop.xtl.html#gap">gap</a></div>
+</div>
+<div class="item" id="gap">
+<h3><a href="#gap">gap</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-cnn-backprop-cnn-backprop.xtl.src.html#L104">line 104</a></div>
+<pre class="code">gap ← (<span class="c-builtin">'</span><a href="builtins.html#m_ax" class="c-builtin">m̲ax</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> <a href="builtins.html#a_bs" class="c-builtin">a̲bs</a> (<span class="c-number">9</span> <a href="builtins.html#t_ake" class="c-builtin">t̲ake</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> <a href="demos-cnn-backprop-cnn-backprop.xtl.html#GK">GK</a>) <a href="builtins.html#-2d" class="c-symbol">−</a> <a href="demos-cnn-backprop-cnn-backprop.xtl.html#FK">FK</a>) <a href="builtins.html#m_ax" class="c-builtin">m̲ax</a> (<span class="c-builtin">'</span><a href="builtins.html#m_ax" class="c-builtin">m̲ax</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> <a href="builtins.html#a_bs" class="c-builtin">a̲bs</a> <a href="demos-cnn-backprop-cnn-backprop.xtl.html#GB">GB</a> <a href="builtins.html#-2d" class="c-symbol">−</a> <a href="demos-cnn-backprop-cnn-backprop.xtl.html#FB">FB</a>) <a href="builtins.html#m_ax" class="c-builtin">m̲ax</a> <span class="c-builtin">'</span><a href="builtins.html#m_ax" class="c-builtin">m̲ax</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> <a href="builtins.html#a_bs" class="c-builtin">a̲bs</a> (<a href="demos-cnn-backprop-cnn-backprop.xtl.html#wj">wj</a> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> <a href="demos-cnn-backprop-cnn-backprop.xtl.html#GW">GW</a>) <a href="builtins.html#-2d" class="c-symbol">−</a> <a href="demos-cnn-backprop-cnn-backprop.xtl.html#FW">FW</a></pre>
+<div class="uses">Used in: <a href="demos-cnn-backprop-cnn-backprop.xtl.src.html#L105">demos/cnn-backprop/cnn-backprop.xtl:105</a></div>
+</div>
+<h2 class="section" id="section-6">Training</h2>
+<div class="item" id="u.r_ound">
+<h3><a href="#u.r_ound"><span class="c-userfunc">ᵘr̲ound</span></a> <span class="type">: Float -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="demos-cnn-backprop-cnn-backprop.xtl.src.html#L111">line 111</a></div>
+<div class="doc">
+<p>The test loss and share right: at the start, after 10 steps (200
+digits), after 40 (800: each training digit seen about once and a
+third).</p>
+</div>
+<pre class="code"><span class="c-userfunc">ᵘr̲ound</span> ← { a → (<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> <span class="c-number">0.5</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">1000.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> a) <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-number">1000.0</span> }</pre>
+<div class="uses">Used in: <a href="demos-cnn-backprop-cnn-backprop.xtl.src.html#L114">demos/cnn-backprop/cnn-backprop.xtl:114</a></div>
+</div>
+<div class="item" id="s1">
+<h3><a href="#s1">s1</a> <span class="type">: (Float, Float, Float, Float, Float, Float, Float, Float, Float, Float)</span></h3>
+<div class="meta">value &middot; <a href="demos-cnn-backprop-cnn-backprop.xtl.src.html#L112">line 112</a></div>
+<pre class="code">s1 ← <span class="c-number">10</span> <span class="c-userfunc">'</span><a href="demos-cnn-backprop-cnn-backprop.xtl.html#u.s_tep" class="c-userfunc">ᵘs̲tep</a> <a href="builtins.html#p_ower" class="c-builtin">p̲ower</a> <a href="demos-cnn-backprop-cnn-backprop.xtl.html#s0">s0</a></pre>
+<div class="uses">Used in: <a href="demos-cnn-backprop-cnn-backprop.xtl.html#s2">s2</a>, <a href="demos-cnn-backprop-cnn-backprop.xtl.src.html#L114">demos/cnn-backprop/cnn-backprop.xtl:114</a></div>
+</div>
+<div class="item" id="s2">
+<h3><a href="#s2">s2</a> <span class="type">: (Float, Float, Float, Float, Float, Float, Float, Float, Float, Float)</span></h3>
+<div class="meta">value &middot; <a href="demos-cnn-backprop-cnn-backprop.xtl.src.html#L113">line 113</a></div>
+<pre class="code">s2 ← <span class="c-number">30</span> <span class="c-userfunc">'</span><a href="demos-cnn-backprop-cnn-backprop.xtl.html#u.s_tep" class="c-userfunc">ᵘs̲tep</a> <a href="builtins.html#p_ower" class="c-builtin">p̲ower</a> <a href="demos-cnn-backprop-cnn-backprop.xtl.html#s1">s1</a></pre>
+<div class="uses">Used in: <a href="demos-cnn-backprop-cnn-backprop.xtl.src.html#L114">demos/cnn-backprop/cnn-backprop.xtl:114</a>, <a href="demos-cnn-backprop-cnn-backprop.xtl.html#K2">K2</a></div>
+</div>
+<div class="item" id="K2">
+<h3><a href="#K2">K2</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-cnn-backprop-cnn-backprop.xtl.src.html#L116">line 116</a></div>
+<div class="doc">
+<p>The first 20 test digits as the trained network reads them, and their labels.</p>
+</div>
+<pre class="code">(<a href="demos-cnn-backprop-cnn-backprop.xtl.html#K2">K2</a>, <a href="demos-cnn-backprop-cnn-backprop.xtl.html#B2">B2</a>, <a href="demos-cnn-backprop-cnn-backprop.xtl.html#W2">W2</a>, _, _, _, _, _, _, _) ← <a href="demos-cnn-backprop-cnn-backprop.xtl.html#s2">s2</a></pre>
+<div class="uses">Used in: <a href="demos-cnn-backprop-cnn-backprop.xtl.html#K2">K2</a>, <a href="demos-cnn-backprop-cnn-backprop.xtl.src.html#L117">demos/cnn-backprop/cnn-backprop.xtl:117</a></div>
+</div>
+<div class="item" id="B2">
+<h3><a href="#B2">B2</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-cnn-backprop-cnn-backprop.xtl.src.html#L116">line 116</a></div>
+<div class="doc">
+<p>The first 20 test digits as the trained network reads them, and their labels.</p>
+</div>
+<pre class="code">(<a href="demos-cnn-backprop-cnn-backprop.xtl.html#K2">K2</a>, <a href="demos-cnn-backprop-cnn-backprop.xtl.html#B2">B2</a>, <a href="demos-cnn-backprop-cnn-backprop.xtl.html#W2">W2</a>, _, _, _, _, _, _, _) ← <a href="demos-cnn-backprop-cnn-backprop.xtl.html#s2">s2</a></pre>
+<div class="uses">Used in: <a href="demos-cnn-backprop-cnn-backprop.xtl.html#K2">K2</a>, <a href="demos-cnn-backprop-cnn-backprop.xtl.src.html#L117">demos/cnn-backprop/cnn-backprop.xtl:117</a></div>
+</div>
+<div class="item" id="W2">
+<h3><a href="#W2">W2</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-cnn-backprop-cnn-backprop.xtl.src.html#L116">line 116</a></div>
+<div class="doc">
+<p>The first 20 test digits as the trained network reads them, and their labels.</p>
+</div>
+<pre class="code">(<a href="demos-cnn-backprop-cnn-backprop.xtl.html#K2">K2</a>, <a href="demos-cnn-backprop-cnn-backprop.xtl.html#B2">B2</a>, <a href="demos-cnn-backprop-cnn-backprop.xtl.html#W2">W2</a>, _, _, _, _, _, _, _) ← <a href="demos-cnn-backprop-cnn-backprop.xtl.html#s2">s2</a></pre>
+<div class="uses">Used in: <a href="demos-cnn-backprop-cnn-backprop.xtl.html#K2">K2</a>, <a href="demos-cnn-backprop-cnn-backprop.xtl.src.html#L117">demos/cnn-backprop/cnn-backprop.xtl:117</a></div>
+</div>
+</main>
+</body>
+</html>

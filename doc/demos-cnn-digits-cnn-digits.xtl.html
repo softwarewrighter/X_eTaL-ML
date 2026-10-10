@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>demos/cnn-digits/cnn-digits.xtl - X_eTaL doc</title>
+<link rel="stylesheet" href="style.css">
+<script src="theme.js"></script>
+<script defer src="search-index.js"></script>
+<script defer src="search.js"></script>
+</head>
+<body>
+<nav class="side">
+<a class="home" href="index.html">X_eTaL doc</a>
+<input id="search" type="search" autocomplete="off" placeholder="Search: a name, or a type" title="A name (mean finds m_ean), or a type: Num a =&gt; a -&gt; a -&gt; a finds +, m_ax ...">
+<h2>Files</h2>
+<h3>demos/attention/</h3>
+<ul>
+<li><a href="demos-attention-attention.xtl.html">attention.xtl</a></li>
+</ul>
+<h3>demos/backprop/</h3>
+<ul>
+<li><a href="demos-backprop-backprop.xtl.html">backprop.xtl</a></li>
+</ul>
+<h3>demos/cnn-backprop/</h3>
+<ul>
+<li><a href="demos-cnn-backprop-cnn-backprop.xtl.html">cnn-backprop.xtl</a></li>
+</ul>
+<h3>demos/cnn-digits/</h3>
+<ul>
+<li><a href="demos-cnn-digits-cnn-digits.xtl.html">cnn-digits.xtl</a></li>
+</ul>
+<h3>demos/k-means/</h3>
+<ul>
+<li><a href="demos-k-means-k-means.xtl.html">k-means.xtl</a></li>
+</ul>
+<h3>demos/moe-router/</h3>
+<ul>
+<li><a href="demos-moe-router-moe-router.xtl.html">moe-router.xtl</a></li>
+</ul>
+<h3>demos/net-macro/</h3>
+<ul>
+<li><a href="demos-net-macro-net-macro.xtl.html">net-macro.xtl</a></li>
+<li><a href="demos-net-macro-train-it.xtl.html">train-it.xtl</a></li>
+</ul>
+<h3>demos/ternary-net/</h3>
+<ul>
+<li><a href="demos-ternary-net-ternary-net.xtl.html">ternary-net.xtl</a></li>
+</ul>
+<h3>demos/train-live/</h3>
+<ul>
+<li><a href="demos-train-live-train-live.xtl.html">train-live.xtl</a></li>
+</ul>
+<h3>libs/Learn/demos/</h3>
+<ul>
+<li><a href="libs-Learn-demos-blobs.xtl.html">blobs.xtl</a></li>
+</ul>
+<h3>libs/Learn/src/</h3>
+<ul>
+<li><a href="libs-Learn-src-Learn.xtl.html">Learn.xtl</a></li>
+</ul>
+<h3>libs/Net/demos/</h3>
+<ul>
+<li><a href="libs-Net-demos-train-xor.xtl.html">train-xor.xtl</a></li>
+<li><a href="libs-Net-demos-xor.xtl.html">xor.xtl</a></li>
+</ul>
+<h3>libs/Net/src/</h3>
+<ul>
+<li><a href="libs-Net-src-Net.xtlm.html">Net.xtlm</a></li>
+</ul>
+<h3>libs/NN/demos/</h3>
+<ul>
+<li><a href="libs-NN-demos-xor.xtl.html">xor.xtl</a></li>
+</ul>
+<h3>libs/NN/src/</h3>
+<ul>
+<li><a href="libs-NN-src-NN.xtl.html">NN.xtl</a></li>
+</ul>
+<ul>
+<li><a href="builtins.html">built-ins</a></li>
+</ul>
+<h2>On this page</h2>
+<ul>
+<li><a href="#section-1">The network, read from data/</a></li>
+<li class="item"><a href="#fb">fb</a></li>
+<li class="item"><a href="#k9">k9</a></li>
+<li class="item"><a href="#bc">bc</a></li>
+<li class="item"><a href="#wb">wb</a></li>
+<li class="item"><a href="#samples">samples</a></li>
+<li><a href="#section-2">The core: every stage one array expression</a></li>
+<li class="item"><a href="#u.c_onv"><span class="c-userfunc">ᵘc̲onv</span></a></li>
+<li class="item"><a href="#u.p_ool"><span class="c-userfunc">ᵘp̲ool</span></a></li>
+<li class="item"><a href="#u.c_lassify"><span class="c-userfunc">ᵘc̲lassify</span></a></li>
+<li><a href="#section-3">Drawing: values as shades, maps side by side</a></li>
+<li class="item"><a href="#u.s_hade"><span class="c-userfunc">ᵘs̲hade</span></a></li>
+<li class="item"><a href="#u.m_aps"><span class="c-userfunc">ᵘm̲aps</span></a></li>
+<li class="item"><a href="#u.w_ide"><span class="c-userfunc">ᵘw̲ide</span></a></li>
+<li class="item"><a href="#u.s_ide"><span class="c-userfunc">ᵘs̲ide</span></a></li>
+<li class="item"><a href="#x">x</a></li>
+<li class="item"><a href="#c">c</a></li>
+<li class="item"><a href="#m">m</a></li>
+<li class="item"><a href="#p">p</a></li>
+<li class="item"><a href="#u.b_ars"><span class="c-userfunc">ᵘb̲ars</span></a></li>
+<li class="item"><a href="#u.r_ead"><span class="c-userfunc">ᵘr̲ead</span></a></li>
+<li class="item"><a href="#u.s_ure"><span class="c-userfunc">ᵘs̲ure</span></a></li>
+<li class="item"><a href="#expected">expected</a></li>
+<li class="item"><a href="#u.g_ap"><span class="c-userfunc">ᵘg̲ap</span></a></li>
+</ul>
+</nav>
+<main>
+<button class="theme" title="Light or dark">theme</button>
+<section id="results"></section>
+<h1><span class="kind">program</span>demos/cnn-digits/cnn-digits.xtl</h1>
+<div class="doc">
+<p>A tiny convolutional network reads a handwritten digit: 28 x 28 -&gt;
+8 filters of 3 x 3 -&gt; ReLU -&gt; 2 x 2 max-pooling -&gt; dense -&gt; softmax.
+The convolution is the picture's nine shifted copies times the
+filters: one matrix product. Trained offline on MNIST (97.82% of
+the 10,000 test digits right); just cnn-train writes data/.</p>
+</div>
+<p class="meta"><a href="demos-cnn-digits-cnn-digits.xtl.src.html">source</a> &middot; imports <code><span class="c-error">nn:</span></code> <a href="libs-NN-src-NN.xtl.html">libs/NN/src/NN.xtl</a></p>
+<h2 class="section" id="section-1">The network, read from data/</h2>
+<div class="item" id="fb">
+<h3><a href="#fb">fb</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-cnn-digits-cnn-digits.xtl.src.html#L11">line 11</a></div>
+<pre class="code">fb ← <span class="c-number">8</span> <span class="c-number">10</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <a href="builtins.html#n_umbers" class="c-builtin">n̲umbers</a> <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;data/filters.txt&quot;</span></pre>
+<div class="uses">Used in: <a href="demos-cnn-digits-cnn-digits.xtl.html#k9">k9</a>, <a href="demos-cnn-digits-cnn-digits.xtl.html#bc">bc</a></div>
+</div>
+<div class="item" id="k9">
+<h3><a href="#k9">k9</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-cnn-digits-cnn-digits.xtl.src.html#L12">line 12</a></div>
+<pre class="code">k9 ← <span class="c-number">9</span> <a href="builtins.html#t_ake" class="c-builtin">t̲ake₂</a> <a href="demos-cnn-digits-cnn-digits.xtl.html#fb">fb</a>                         <span class="c-comment">⍝</span><span class="c-comment"> 8 filters, 3 x 3 each as 9</span></pre>
+<div class="uses">Used in: <a href="demos-cnn-digits-cnn-digits.xtl.html#u.c_onv"><span class="c-userfunc">ᵘc̲onv</span></a>, <a href="demos-cnn-digits-cnn-digits.xtl.src.html#L47">demos/cnn-digits/cnn-digits.xtl:47</a></div>
+</div>
+<div class="item" id="bc">
+<h3><a href="#bc">bc</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-cnn-digits-cnn-digits.xtl.src.html#L13">line 13</a></div>
+<pre class="code">bc ← <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> <span class="c-number">-1</span> <a href="builtins.html#t_ake" class="c-builtin">t̲ake₂</a> <a href="demos-cnn-digits-cnn-digits.xtl.html#fb">fb</a>                  <span class="c-comment">⍝</span><span class="c-comment"> their biases</span></pre>
+<div class="uses">Used in: <a href="demos-cnn-digits-cnn-digits.xtl.html#u.c_onv"><span class="c-userfunc">ᵘc̲onv</span></a></div>
+</div>
+<div class="item" id="wb">
+<h3><a href="#wb">wb</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-cnn-digits-cnn-digits.xtl.src.html#L14">line 14</a></div>
+<pre class="code">wb ← <span class="c-number">1353</span> <span class="c-number">10</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <a href="builtins.html#n_umbers" class="c-builtin">n̲umbers</a> <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;data/dense.txt&quot;</span></pre>
+<div class="uses">Used in: <a href="demos-cnn-digits-cnn-digits.xtl.html#u.c_lassify"><span class="c-userfunc">ᵘc̲lassify</span></a></div>
+</div>
+<div class="item" id="samples">
+<h3><a href="#samples">samples</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-cnn-digits-cnn-digits.xtl.src.html#L15">line 15</a></div>
+<pre class="code">samples ← <span class="c-number">10</span> <span class="c-number">28</span> <span class="c-number">28</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <a href="builtins.html#n_umbers" class="c-builtin">n̲umbers</a> <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;data/samples.txt&quot;</span></pre>
+<div class="uses">Used in: <a href="demos-cnn-digits-cnn-digits.xtl.html#x">x</a>, <a href="demos-cnn-digits-cnn-digits.xtl.html#u.r_ead"><span class="c-userfunc">ᵘr̲ead</span></a>, <a href="demos-cnn-digits-cnn-digits.xtl.html#u.s_ure"><span class="c-userfunc">ᵘs̲ure</span></a>, <a href="demos-cnn-digits-cnn-digits.xtl.html#u.g_ap"><span class="c-userfunc">ᵘg̲ap</span></a></div>
+</div>
+<h2 class="section" id="section-2">The core: every stage one array expression</h2>
+<div class="item" id="u.c_onv">
+<h3><a href="#u.c_onv"><span class="c-userfunc">ᵘc̲onv</span></a> <span class="type">: Float -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="demos-cnn-digits-cnn-digits.xtl.src.html#L18">line 18</a></div>
+<pre class="code"><span class="c-userfunc">ᵘc̲onv</span> ← { x →
+  v ← <span class="c-number">1</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop₄</a> <span class="c-number">-1</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop₄</a> <span class="c-number">1</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop₃</a> <span class="c-number">-1</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop₃</a> <span class="c-number">-1</span> <span class="c-number">0</span> <span class="c-number">1</span> <a href="builtins.html#o_-2d" class="c-builtin">o̲-₂</a> <span class="c-number">-1</span> <span class="c-number">0</span> <span class="c-number">1</span> <a href="builtins.html#o_-2d" class="c-builtin">o̲-₂</a> x
+  <span class="c-number">8</span> <span class="c-number">26</span> <span class="c-number">26</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> (<a href="demos-cnn-digits-cnn-digits.xtl.html#k9">k9</a> <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#i_nner" class="c-builtin">i̲nner</a> <span class="c-number">9</span> <span class="c-number">676</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> v) <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="demos-cnn-digits-cnn-digits.xtl.html#bc">bc</a> <span class="c-builtin">'</span><a href="builtins.html#l_eft" class="c-builtin">l̲eft</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> <a href="builtins.html#o_ffsets" class="c-builtin">o̲ffsets</a> <span class="c-number">676</span>
+}</pre>
+<div class="uses">Used in: <a href="demos-cnn-digits-cnn-digits.xtl.html#u.c_lassify"><span class="c-userfunc">ᵘc̲lassify</span></a>, <a href="demos-cnn-digits-cnn-digits.xtl.html#c">c</a></div>
+</div>
+<div class="item" id="u.p_ool">
+<h3><a href="#u.p_ool"><span class="c-userfunc">ᵘp̲ool</span></a> <span class="type">: Num a =&gt; a -&gt; a</span></h3>
+<div class="meta">function &middot; <a href="demos-cnn-digits-cnn-digits.xtl.src.html#L22">line 22</a></div>
+<pre class="code"><span class="c-userfunc">ᵘp̲ool</span> ← { x → <span class="c-builtin">'</span><a href="builtins.html#m_ax" class="c-builtin">m̲ax</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/₃₅</a> <span class="c-number">8</span> <span class="c-number">13</span> <span class="c-number">2</span> <span class="c-number">13</span> <span class="c-number">2</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> x }</pre>
+<div class="uses">Used in: <a href="demos-cnn-digits-cnn-digits.xtl.html#u.c_lassify"><span class="c-userfunc">ᵘc̲lassify</span></a>, <a href="demos-cnn-digits-cnn-digits.xtl.html#m">m</a></div>
+</div>
+<div class="item" id="u.c_lassify">
+<h3><a href="#u.c_lassify"><span class="c-userfunc">ᵘc̲lassify</span></a> <span class="type">: Float -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="demos-cnn-digits-cnn-digits.xtl.src.html#L23">line 23</a></div>
+<pre class="code"><span class="c-userfunc">ᵘc̲lassify</span> ← { x → <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> <a href="libs-NN-src-NN.xtl.html#l.s_oftmax" class="c-libfunc">ⁿⁿs̲oftmax</a> (<span class="c-number">1</span> <span class="c-number">1352</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> <a href="demos-cnn-digits-cnn-digits.xtl.html#u.p_ool" class="c-userfunc">ᵘp̲ool</a> <a href="libs-NN-src-NN.xtl.html#l.r_elu" class="c-libfunc">ⁿⁿr̲elu</a> <a href="demos-cnn-digits-cnn-digits.xtl.html#u.c_onv" class="c-userfunc">ᵘc̲onv</a> x) <a href="libs-NN-src-NN.xtl.html#l.d_ense" class="c-libfunc">ⁿⁿd̲ense</a> <a href="demos-cnn-digits-cnn-digits.xtl.html#wb">wb</a> }</pre>
+<div class="uses">Used in: <a href="demos-cnn-digits-cnn-digits.xtl.html#p">p</a>, <a href="demos-cnn-digits-cnn-digits.xtl.html#u.r_ead"><span class="c-userfunc">ᵘr̲ead</span></a>, <a href="demos-cnn-digits-cnn-digits.xtl.html#u.s_ure"><span class="c-userfunc">ᵘs̲ure</span></a>, <a href="demos-cnn-digits-cnn-digits.xtl.html#u.g_ap"><span class="c-userfunc">ᵘg̲ap</span></a></div>
+</div>
+<h2 class="section" id="section-3">Drawing: values as shades, maps side by side</h2>
+<div class="item" id="u.s_hade">
+<h3><a href="#u.s_hade"><span class="c-userfunc">ᵘs̲hade</span></a> <span class="type">: Float -&gt; Char</span></h3>
+<div class="meta">function &middot; <a href="demos-cnn-digits-cnn-digits.xtl.src.html#L27">line 27</a></div>
+<pre class="code"><span class="c-userfunc">ᵘs̲hade</span> ← { m → (<span class="c-number">1</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> <span class="c-number">0</span> <a href="builtins.html#m_ax" class="c-builtin">m̲ax</a> <span class="c-number">7</span> <a href="builtins.html#m_in" class="c-builtin">m̲in</a> <span class="c-number">8.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> m) <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <span class="c-string">&quot; .:-=+*#&quot;</span> }</pre>
+<div class="uses">Used in: <a href="demos-cnn-digits-cnn-digits.xtl.html#u.m_aps"><span class="c-userfunc">ᵘm̲aps</span></a>, <a href="demos-cnn-digits-cnn-digits.xtl.src.html#L45">demos/cnn-digits/cnn-digits.xtl:45</a></div>
+</div>
+<div class="item" id="u.m_aps">
+<h3><a href="#u.m_aps"><span class="c-userfunc">ᵘm̲aps</span></a> <span class="type">: Float -&gt; Char</span></h3>
+<div class="meta">function &middot; <a href="demos-cnn-digits-cnn-digits.xtl.src.html#L29">line 29</a></div>
+<div class="doc">
+<p>Each of n maps scaled from its own smallest to largest value, then shaded.</p>
+</div>
+<pre class="code"><span class="c-userfunc">ᵘm̲aps</span> ← { m →
+  n ← <span class="c-number">1</span> <a href="builtins.html#t_ake" class="c-builtin">t̲ake</a> <a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> m
+  e ← <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> <span class="c-number">1</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> <a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> m
+  f ← (n <a href="builtins.html#c_at" class="c-builtin">c̲at</a> e) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> m
+  lo ← (n <a href="builtins.html#c_at" class="c-builtin">c̲at</a> e) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> (n <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> e) <a href="builtins.html#r_eplicate" class="c-builtin">r̲eplicate</a> <span class="c-builtin">'</span><a href="builtins.html#m_in" class="c-builtin">m̲in</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/₂</a> f
+  hi ← (n <a href="builtins.html#c_at" class="c-builtin">c̲at</a> e) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> (n <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> e) <a href="builtins.html#r_eplicate" class="c-builtin">r̲eplicate</a> <span class="c-builtin">'</span><a href="builtins.html#m_ax" class="c-builtin">m̲ax</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/₂</a> f
+  <a href="demos-cnn-digits-cnn-digits.xtl.html#u.s_hade" class="c-userfunc">ᵘs̲hade</a> (<a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> m) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> (f <a href="builtins.html#-2d" class="c-symbol">−</a> lo) <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-number">0.000001</span> <a href="builtins.html#m_ax" class="c-builtin">m̲ax</a> hi <a href="builtins.html#-2d" class="c-symbol">−</a> lo
+}</pre>
+<div class="uses">Used in: <a href="demos-cnn-digits-cnn-digits.xtl.src.html#L50">demos/cnn-digits/cnn-digits.xtl:50</a>, <a href="demos-cnn-digits-cnn-digits.xtl.src.html#L51">demos/cnn-digits/cnn-digits.xtl:51</a>, <a href="demos-cnn-digits-cnn-digits.xtl.src.html#L54">demos/cnn-digits/cnn-digits.xtl:54</a>, <a href="demos-cnn-digits-cnn-digits.xtl.src.html#L55">demos/cnn-digits/cnn-digits.xtl:55</a></div>
+</div>
+<div class="item" id="u.w_ide">
+<h3><a href="#u.w_ide"><span class="c-userfunc">ᵘw̲ide</span></a> <span class="type">: a -&gt; a</span></h3>
+<div class="meta">function &middot; <a href="demos-cnn-digits-cnn-digits.xtl.src.html#L37">line 37</a></div>
+<pre class="code"><span class="c-userfunc">ᵘw̲ide</span> ← { c → ((<span class="c-number">-1</span> <a href="builtins.html#t_ake" class="c-builtin">t̲ake</a> <a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> c) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">2</span>) <a href="builtins.html#r_eplicate" class="c-builtin">r̲eplicate₂</a> c }</pre>
+<div class="uses">Used in: <a href="demos-cnn-digits-cnn-digits.xtl.src.html#L45">demos/cnn-digits/cnn-digits.xtl:45</a>, <a href="demos-cnn-digits-cnn-digits.xtl.src.html#L54">demos/cnn-digits/cnn-digits.xtl:54</a>, <a href="demos-cnn-digits-cnn-digits.xtl.src.html#L55">demos/cnn-digits/cnn-digits.xtl:55</a></div>
+</div>
+<div class="item" id="u.s_ide">
+<h3><a href="#u.s_ide"><span class="c-userfunc">ᵘs̲ide</span></a> <span class="type">: Char -&gt; Char</span></h3>
+<div class="meta">function &middot; <a href="demos-cnn-digits-cnn-digits.xtl.src.html#L38">line 38</a></div>
+<pre class="code"><span class="c-userfunc">ᵘs̲ide</span> ← { c →
+  g ← c <a href="builtins.html#c_at" class="c-builtin">c̲at₃</a> ((<span class="c-number">2</span> <a href="builtins.html#t_ake" class="c-builtin">t̲ake</a> <a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> c) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">2</span>) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-string">&quot; &quot;</span>
+  ((<span class="c-number">1</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <span class="c-number">1</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> <a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> g) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> <span class="c-number">1</span> <span class="c-number">0</span> <span class="c-number">1</span> <a href="builtins.html#r_eplicate" class="c-builtin">r̲eplicate</a> <a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> g) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">2</span> <span class="c-number">1</span> <span class="c-number">3</span> <a href="builtins.html#t_ranspose" class="c-builtin">t̲ranspose</a> g
+}</pre>
+<div class="uses">Used in: <a href="demos-cnn-digits-cnn-digits.xtl.src.html#L47">demos/cnn-digits/cnn-digits.xtl:47</a>, <a href="demos-cnn-digits-cnn-digits.xtl.src.html#L50">demos/cnn-digits/cnn-digits.xtl:50</a>, <a href="demos-cnn-digits-cnn-digits.xtl.src.html#L51">demos/cnn-digits/cnn-digits.xtl:51</a>, <a href="demos-cnn-digits-cnn-digits.xtl.src.html#L54">demos/cnn-digits/cnn-digits.xtl:54</a>, <a href="demos-cnn-digits-cnn-digits.xtl.src.html#L55">demos/cnn-digits/cnn-digits.xtl:55</a></div>
+</div>
+<div class="item" id="x">
+<h3><a href="#x">x</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-cnn-digits-cnn-digits.xtl.src.html#L44">line 44</a></div>
+<div class="doc">
+<p>A test digit: a 7.</p>
+</div>
+<pre class="code">x ← <span class="c-number">8</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="demos-cnn-digits-cnn-digits.xtl.html#samples">samples</a></pre>
+<div class="uses">Used in: <a href="demos-cnn-digits-cnn-digits.xtl.src.html#L45">demos/cnn-digits/cnn-digits.xtl:45</a>, <a href="demos-cnn-digits-cnn-digits.xtl.html#c">c</a>, <a href="demos-cnn-digits-cnn-digits.xtl.html#p">p</a></div>
+</div>
+<div class="item" id="c">
+<h3><a href="#c">c</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-cnn-digits-cnn-digits.xtl.src.html#L49">line 49</a></div>
+<div class="doc">
+<p>Convolution and ReLU: 8 maps of 26 x 26, what each filter finds.</p>
+</div>
+<pre class="code">c ← <a href="libs-NN-src-NN.xtl.html#l.r_elu" class="c-libfunc">ⁿⁿr̲elu</a> <a href="demos-cnn-digits-cnn-digits.xtl.html#u.c_onv" class="c-userfunc">ᵘc̲onv</a> <a href="demos-cnn-digits-cnn-digits.xtl.html#x">x</a></pre>
+<div class="uses">Used in: <a href="demos-cnn-digits-cnn-digits.xtl.src.html#L50">demos/cnn-digits/cnn-digits.xtl:50</a>, <a href="demos-cnn-digits-cnn-digits.xtl.src.html#L51">demos/cnn-digits/cnn-digits.xtl:51</a>, <a href="demos-cnn-digits-cnn-digits.xtl.html#m">m</a></div>
+</div>
+<div class="item" id="m">
+<h3><a href="#m">m</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-cnn-digits-cnn-digits.xtl.src.html#L53">line 53</a></div>
+<div class="doc">
+<p>Max-pooling: 8 maps of 13 x 13 (drawn twice as wide).</p>
+</div>
+<pre class="code">m ← <a href="demos-cnn-digits-cnn-digits.xtl.html#u.p_ool" class="c-userfunc">ᵘp̲ool</a> <a href="demos-cnn-digits-cnn-digits.xtl.html#c">c</a></pre>
+<div class="uses">Used in: <a href="demos-cnn-digits-cnn-digits.xtl.src.html#L54">demos/cnn-digits/cnn-digits.xtl:54</a>, <a href="demos-cnn-digits-cnn-digits.xtl.src.html#L55">demos/cnn-digits/cnn-digits.xtl:55</a></div>
+</div>
+<div class="item" id="p">
+<h3><a href="#p">p</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-cnn-digits-cnn-digits.xtl.src.html#L57">line 57</a></div>
+<div class="doc">
+<p>The ten probabilities, as bars: the network reads a 7.</p>
+</div>
+<pre class="code">p ← <a href="demos-cnn-digits-cnn-digits.xtl.html#u.c_lassify" class="c-userfunc">ᵘc̲lassify</a> <a href="demos-cnn-digits-cnn-digits.xtl.html#x">x</a></pre>
+<div class="uses">Used in: <a href="demos-cnn-digits-cnn-digits.xtl.src.html#L59">demos/cnn-digits/cnn-digits.xtl:59</a>, <a href="demos-cnn-digits-cnn-digits.xtl.src.html#L60">demos/cnn-digits/cnn-digits.xtl:60</a></div>
+</div>
+<div class="item" id="u.b_ars">
+<h3><a href="#u.b_ars"><span class="c-userfunc">ᵘb̲ars</span></a> <span class="type">: Float -&gt; Char</span></h3>
+<div class="meta">function &middot; <a href="demos-cnn-digits-cnn-digits.xtl.src.html#L58">line 58</a></div>
+<pre class="code"><span class="c-userfunc">ᵘb̲ars</span> ← { p → (<span class="c-number">1</span> <a href="builtins.html#-2b" class="c-symbol">+</a> (<a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> <span class="c-number">0.5</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">50.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> p) <span class="c-symbol">'</span><a href="builtins.html#-3e" class="c-symbol">&gt;</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> <a href="builtins.html#o_ffsets" class="c-builtin">o̲ffsets</a> <span class="c-number">50</span>) <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <span class="c-string">&quot; #&quot;</span> }</pre>
+<div class="uses">Used in: <a href="demos-cnn-digits-cnn-digits.xtl.src.html#L59">demos/cnn-digits/cnn-digits.xtl:59</a></div>
+</div>
+<div class="item" id="u.r_ead">
+<h3><a href="#u.r_ead"><span class="c-userfunc">ᵘr̲ead</span></a> <span class="type">: Int -&gt; Int</span></h3>
+<div class="meta">function &middot; <a href="demos-cnn-digits-cnn-digits.xtl.src.html#L62">line 62</a></div>
+<div class="doc">
+<p>The ten test digits (0 to 9): what the network reads, how sure (%).</p>
+</div>
+<pre class="code"><span class="c-userfunc">ᵘr̲ead</span> ← { i → (<a href="libs-NN-src-NN.xtl.html#l.a_rgmax" class="c-libfunc">ⁿⁿa̲rgmax</a> <a href="demos-cnn-digits-cnn-digits.xtl.html#u.c_lassify" class="c-userfunc">ᵘc̲lassify</a> i <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="demos-cnn-digits-cnn-digits.xtl.html#samples">samples</a>) <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span> }</pre>
+<div class="uses">Used in: <a href="demos-cnn-digits-cnn-digits.xtl.src.html#L64">demos/cnn-digits/cnn-digits.xtl:64</a></div>
+</div>
+<div class="item" id="u.s_ure">
+<h3><a href="#u.s_ure"><span class="c-userfunc">ᵘs̲ure</span></a> <span class="type">: Int -&gt; Int</span></h3>
+<div class="meta">function &middot; <a href="demos-cnn-digits-cnn-digits.xtl.src.html#L63">line 63</a></div>
+<pre class="code"><span class="c-userfunc">ᵘs̲ure</span> ← { i → <a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> <span class="c-number">0.5</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">100.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-builtin">'</span><a href="builtins.html#m_ax" class="c-builtin">m̲ax</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> <a href="demos-cnn-digits-cnn-digits.xtl.html#u.c_lassify" class="c-userfunc">ᵘc̲lassify</a> i <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="demos-cnn-digits-cnn-digits.xtl.html#samples">samples</a> }</pre>
+<div class="uses">Used in: <a href="demos-cnn-digits-cnn-digits.xtl.src.html#L65">demos/cnn-digits/cnn-digits.xtl:65</a></div>
+</div>
+<div class="item" id="expected">
+<h3><a href="#expected">expected</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-cnn-digits-cnn-digits.xtl.src.html#L67">line 67</a></div>
+<div class="doc">
+<p>The same probabilities as the trainer's Rust forward pass, for all ten?</p>
+</div>
+<pre class="code">expected ← <span class="c-number">10</span> <span class="c-number">10</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <a href="builtins.html#n_umbers" class="c-builtin">n̲umbers</a> <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;data/expected.txt&quot;</span></pre>
+<div class="uses">Used in: <a href="demos-cnn-digits-cnn-digits.xtl.html#u.g_ap"><span class="c-userfunc">ᵘg̲ap</span></a></div>
+</div>
+<div class="item" id="u.g_ap">
+<h3><a href="#u.g_ap"><span class="c-userfunc">ᵘg̲ap</span></a> <span class="type">: Int -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="demos-cnn-digits-cnn-digits.xtl.src.html#L68">line 68</a></div>
+<pre class="code"><span class="c-userfunc">ᵘg̲ap</span> ← { i → <span class="c-builtin">'</span><a href="builtins.html#m_ax" class="c-builtin">m̲ax</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> <a href="builtins.html#a_bs" class="c-builtin">a̲bs</a> (<a href="demos-cnn-digits-cnn-digits.xtl.html#u.c_lassify" class="c-userfunc">ᵘc̲lassify</a> i <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="demos-cnn-digits-cnn-digits.xtl.html#samples">samples</a>) <a href="builtins.html#-2d" class="c-symbol">−</a> i <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="demos-cnn-digits-cnn-digits.xtl.html#expected">expected</a> }</pre>
+<div class="uses">Used in: <a href="demos-cnn-digits-cnn-digits.xtl.src.html#L69">demos/cnn-digits/cnn-digits.xtl:69</a></div>
+</div>
+</main>
+</body>
+</html>

@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>demos/attention/attention.xtl - X_eTaL doc</title>
+<link rel="stylesheet" href="style.css">
+<script src="theme.js"></script>
+<script defer src="search-index.js"></script>
+<script defer src="search.js"></script>
+</head>
+<body>
+<nav class="side">
+<a class="home" href="index.html">X_eTaL doc</a>
+<input id="search" type="search" autocomplete="off" placeholder="Search: a name, or a type" title="A name (mean finds m_ean), or a type: Num a =&gt; a -&gt; a -&gt; a finds +, m_ax ...">
+<h2>Files</h2>
+<h3>demos/attention/</h3>
+<ul>
+<li><a href="demos-attention-attention.xtl.html">attention.xtl</a></li>
+</ul>
+<h3>demos/backprop/</h3>
+<ul>
+<li><a href="demos-backprop-backprop.xtl.html">backprop.xtl</a></li>
+</ul>
+<h3>demos/cnn-backprop/</h3>
+<ul>
+<li><a href="demos-cnn-backprop-cnn-backprop.xtl.html">cnn-backprop.xtl</a></li>
+</ul>
+<h3>demos/cnn-digits/</h3>
+<ul>
+<li><a href="demos-cnn-digits-cnn-digits.xtl.html">cnn-digits.xtl</a></li>
+</ul>
+<h3>demos/k-means/</h3>
+<ul>
+<li><a href="demos-k-means-k-means.xtl.html">k-means.xtl</a></li>
+</ul>
+<h3>demos/moe-router/</h3>
+<ul>
+<li><a href="demos-moe-router-moe-router.xtl.html">moe-router.xtl</a></li>
+</ul>
+<h3>demos/net-macro/</h3>
+<ul>
+<li><a href="demos-net-macro-net-macro.xtl.html">net-macro.xtl</a></li>
+<li><a href="demos-net-macro-train-it.xtl.html">train-it.xtl</a></li>
+</ul>
+<h3>demos/ternary-net/</h3>
+<ul>
+<li><a href="demos-ternary-net-ternary-net.xtl.html">ternary-net.xtl</a></li>
+</ul>
+<h3>demos/train-live/</h3>
+<ul>
+<li><a href="demos-train-live-train-live.xtl.html">train-live.xtl</a></li>
+</ul>
+<h3>libs/Learn/demos/</h3>
+<ul>
+<li><a href="libs-Learn-demos-blobs.xtl.html">blobs.xtl</a></li>
+</ul>
+<h3>libs/Learn/src/</h3>
+<ul>
+<li><a href="libs-Learn-src-Learn.xtl.html">Learn.xtl</a></li>
+</ul>
+<h3>libs/Net/demos/</h3>
+<ul>
+<li><a href="libs-Net-demos-train-xor.xtl.html">train-xor.xtl</a></li>
+<li><a href="libs-Net-demos-xor.xtl.html">xor.xtl</a></li>
+</ul>
+<h3>libs/Net/src/</h3>
+<ul>
+<li><a href="libs-Net-src-Net.xtlm.html">Net.xtlm</a></li>
+</ul>
+<h3>libs/NN/demos/</h3>
+<ul>
+<li><a href="libs-NN-demos-xor.xtl.html">xor.xtl</a></li>
+</ul>
+<h3>libs/NN/src/</h3>
+<ul>
+<li><a href="libs-NN-src-NN.xtl.html">NN.xtl</a></li>
+</ul>
+<ul>
+<li><a href="builtins.html">built-ins</a></li>
+</ul>
+<h2>On this page</h2>
+<ul>
+<li><a href="#section-1">The vocabulary and the head, read from data/</a></li>
+<li class="item"><a href="#names">names</a></li>
+<li class="item"><a href="#F">F</a></li>
+<li class="item"><a href="#Wq">Wq</a></li>
+<li class="item"><a href="#Wk">Wk</a></li>
+<li><a href="#section-2">The core: attention for tokens X, where mask M allows</a></li>
+<li class="item"><a href="#u.s_cores"><span class="c-userfunc">ᵘs̲cores</span></a></li>
+<li class="item"><a href="#u.a_ttend"><span class="c-userfunc">ᵘa̲ttend</span></a></li>
+<li><a href="#section-3">Drawing: rows labeled with their words</a></li>
+<li class="item"><a href="#u.s_hade"><span class="c-userfunc">ᵘs̲hade</span></a></li>
+<li class="item"><a href="#u.r_ows"><span class="c-userfunc">ᵘr̲ows</span></a></li>
+<li class="item"><a href="#u.w_ide"><span class="c-userfunc">ᵘw̲ide</span></a></li>
+<li class="item"><a href="#u.h_eader"><span class="c-userfunc">ᵘh̲eader</span></a></li>
+<li class="item"><a href="#u.t_op"><span class="c-userfunc">ᵘt̲op</span></a></li>
+<li class="item"><a href="#ids">ids</a></li>
+<li class="item"><a href="#X">X</a></li>
+<li class="item"><a href="#n">n</a></li>
+<li class="item"><a href="#everyone">everyone</a></li>
+<li class="item"><a href="#A">A</a></li>
+<li class="item"><a href="#causal">causal</a></li>
+<li class="item"><a href="#w">w</a></li>
+<li class="item"><a href="#B">B</a></li>
+</ul>
+</nav>
+<main>
+<button class="theme" title="Light or dark">theme</button>
+<section id="results"></section>
+<h1><span class="kind">program</span>demos/attention/attention.xtl</h1>
+<div class="doc">
+<p>Attention as array algebra: every token's query meets every token's
+key in one matrix product, S = Q K^T / sqrt d; softmax turns each row
+into weights; the output is the weighted sum of the values, Y = A V.
+One head, hand-set so that a word looks for what it can describe.</p>
+</div>
+<p class="meta"><a href="demos-attention-attention.xtl.src.html">source</a> &middot; imports <code><span class="c-error">nn:</span></code> <a href="libs-NN-src-NN.xtl.html">libs/NN/src/NN.xtl</a></p>
+<h2 class="section" id="section-1">The vocabulary and the head, read from data/</h2>
+<div class="item" id="names">
+<h3><a href="#names">names</a> <span class="type">: Char</span></h3>
+<div class="meta">value &middot; <a href="demos-attention-attention.xtl.src.html#L10">line 10</a></div>
+<pre class="code">names ← <span class="c-number">8</span> <a href="builtins.html#t_ake" class="c-builtin">t̲ake₂</a> <span class="c-number">21</span> <span class="c-number">9</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;data/words.txt&quot;</span></pre>
+<div class="uses">Used in: <a href="demos-attention-attention.xtl.html#u.r_ows"><span class="c-userfunc">ᵘr̲ows</span></a>, <a href="demos-attention-attention.xtl.html#u.h_eader"><span class="c-userfunc">ᵘh̲eader</span></a>, <a href="demos-attention-attention.xtl.html#u.t_op"><span class="c-userfunc">ᵘt̲op</span></a></div>
+</div>
+<div class="item" id="F">
+<h3><a href="#F">F</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-attention-attention.xtl.src.html#L11">line 11</a></div>
+<pre class="code">F ← <span class="c-number">21</span> <span class="c-number">8</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <a href="builtins.html#n_umbers" class="c-builtin">n̲umbers</a> <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;data/features.txt&quot;</span></pre>
+<div class="uses">Used in: <a href="demos-attention-attention.xtl.html#X">X</a>, <a href="demos-attention-attention.xtl.html#B">B</a></div>
+</div>
+<div class="item" id="Wq">
+<h3><a href="#Wq">Wq</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-attention-attention.xtl.src.html#L12">line 12</a></div>
+<pre class="code">Wq ← <span class="c-number">8</span> <span class="c-number">2</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <a href="builtins.html#n_umbers" class="c-builtin">n̲umbers</a> <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;data/wq.txt&quot;</span></pre>
+<div class="uses">Used in: <a href="demos-attention-attention.xtl.html#u.s_cores"><span class="c-userfunc">ᵘs̲cores</span></a></div>
+</div>
+<div class="item" id="Wk">
+<h3><a href="#Wk">Wk</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-attention-attention.xtl.src.html#L13">line 13</a></div>
+<pre class="code">Wk ← <span class="c-number">8</span> <span class="c-number">2</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <a href="builtins.html#n_umbers" class="c-builtin">n̲umbers</a> <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;data/wk.txt&quot;</span></pre>
+<div class="uses">Used in: <a href="demos-attention-attention.xtl.html#u.s_cores"><span class="c-userfunc">ᵘs̲cores</span></a></div>
+</div>
+<h2 class="section" id="section-2">The core: attention for tokens X, where mask M allows</h2>
+<div class="item" id="u.s_cores">
+<h3><a href="#u.s_cores"><span class="c-userfunc">ᵘs̲cores</span></a> <span class="type">: Float -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="demos-attention-attention.xtl.src.html#L16">line 16</a></div>
+<pre class="code"><span class="c-userfunc">ᵘs̲cores</span> ← { X → ((X <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#i_nner" class="c-builtin">i̲nner</a> <a href="demos-attention-attention.xtl.html#Wq">Wq</a>) <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#i_nner" class="c-builtin">i̲nner</a> <a href="builtins.html#o_-5c" class="c-builtin">o̲\</a> X <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#i_nner" class="c-builtin">i̲nner</a> <a href="demos-attention-attention.xtl.html#Wk">Wk</a>) <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-number">2.0</span> <a href="builtins.html#-5e" class="c-symbol">^</a> <span class="c-number">0.5</span> }</pre>
+<div class="uses">Used in: <a href="demos-attention-attention.xtl.html#u.a_ttend"><span class="c-userfunc">ᵘa̲ttend</span></a></div>
+</div>
+<div class="item" id="u.a_ttend">
+<h3><a href="#u.a_ttend"><span class="c-userfunc">ᵘa̲ttend</span></a> <span class="type">: Float -&gt; Float -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="demos-attention-attention.xtl.src.html#L17">line 17</a></div>
+<pre class="code"><span class="c-userfunc">ᵘa̲ttend</span> ← { X M → <a href="libs-NN-src-NN.xtl.html#l.s_oftmax" class="c-libfunc">ⁿⁿs̲oftmax</a> (<a href="demos-attention-attention.xtl.html#u.s_cores" class="c-userfunc">ᵘs̲cores</a> X) <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1e9</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">1.0</span> <a href="builtins.html#-2d" class="c-symbol">−</a> M }</pre>
+<div class="uses">Used in: <a href="demos-attention-attention.xtl.html#A">A</a>, <a href="demos-attention-attention.xtl.src.html#L52">demos/attention/attention.xtl:52</a>, <a href="demos-attention-attention.xtl.html#B">B</a></div>
+</div>
+<h2 class="section" id="section-3">Drawing: rows labeled with their words</h2>
+<div class="item" id="u.s_hade">
+<h3><a href="#u.s_hade"><span class="c-userfunc">ᵘs̲hade</span></a> <span class="type">: Float -&gt; Char</span></h3>
+<div class="meta">function &middot; <a href="demos-attention-attention.xtl.src.html#L21">line 21</a></div>
+<pre class="code"><span class="c-userfunc">ᵘs̲hade</span> ← { A → (<span class="c-number">1</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> <span class="c-number">0.5</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">7.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> A) <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <span class="c-string">&quot; .:-=+*#&quot;</span> }</pre>
+<div class="uses">Used in: <a href="demos-attention-attention.xtl.src.html#L40">demos/attention/attention.xtl:40</a>, <a href="demos-attention-attention.xtl.src.html#L52">demos/attention/attention.xtl:52</a></div>
+</div>
+<div class="item" id="u.r_ows">
+<h3><a href="#u.r_ows"><span class="c-userfunc">ᵘr̲ows</span></a> <span class="type">: Int -&gt; Char -&gt; Char</span></h3>
+<div class="meta">function &middot; <a href="demos-attention-attention.xtl.src.html#L22">line 22</a></div>
+<pre class="code"><span class="c-userfunc">ᵘr̲ows</span> ← { ids C → (ids <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="demos-attention-attention.xtl.html#names">names</a>) <a href="builtins.html#c_at" class="c-builtin">c̲at₂</a> (((<a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> ids) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">2</span>) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-string">&quot; &quot;</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at₂</a> C }</pre>
+<div class="uses">Used in: <a href="demos-attention-attention.xtl.html#u.t_op"><span class="c-userfunc">ᵘt̲op</span></a>, <a href="demos-attention-attention.xtl.src.html#L40">demos/attention/attention.xtl:40</a>, <a href="demos-attention-attention.xtl.src.html#L52">demos/attention/attention.xtl:52</a></div>
+</div>
+<div class="item" id="u.w_ide">
+<h3><a href="#u.w_ide"><span class="c-userfunc">ᵘw̲ide</span></a> <span class="type">: a -&gt; a</span></h3>
+<div class="meta">function &middot; <a href="demos-attention-attention.xtl.src.html#L23">line 23</a></div>
+<pre class="code"><span class="c-userfunc">ᵘw̲ide</span> ← { C → ((<span class="c-number">-1</span> <a href="builtins.html#t_ake" class="c-builtin">t̲ake</a> <a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> C) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">3</span>) <a href="builtins.html#r_eplicate" class="c-builtin">r̲eplicate₂</a> C }</pre>
+<div class="uses">Used in: <a href="demos-attention-attention.xtl.src.html#L40">demos/attention/attention.xtl:40</a>, <a href="demos-attention-attention.xtl.src.html#L52">demos/attention/attention.xtl:52</a></div>
+</div>
+<div class="item" id="u.h_eader">
+<h3><a href="#u.h_eader"><span class="c-userfunc">ᵘh̲eader</span></a> <span class="type">: Int -&gt; Char</span></h3>
+<div class="meta">function &middot; <a href="demos-attention-attention.xtl.src.html#L24">line 24</a></div>
+<pre class="code"><span class="c-userfunc">ᵘh̲eader</span> ← { ids → <span class="c-string">&quot;          &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> (<span class="c-number">1</span> <a href="builtins.html#t_ake" class="c-builtin">t̲ake₂</a> ids <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="demos-attention-attention.xtl.html#names">names</a>) <a href="builtins.html#c_at" class="c-builtin">c̲at₂</a> ((<a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> ids) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">2</span>) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-string">&quot; &quot;</span> }</pre>
+<div class="uses">Used in: <a href="demos-attention-attention.xtl.src.html#L39">demos/attention/attention.xtl:39</a>, <a href="demos-attention-attention.xtl.src.html#L51">demos/attention/attention.xtl:51</a></div>
+</div>
+<div class="item" id="u.t_op">
+<h3><a href="#u.t_op"><span class="c-userfunc">ᵘt̲op</span></a> <span class="type">: Int -&gt; Float -&gt; Char</span></h3>
+<div class="meta">function &middot; <a href="demos-attention-attention.xtl.src.html#L26">line 26</a></div>
+<div class="doc">
+<p>The word each row looks at most, or - when no word gets half its weight.</p>
+</div>
+<pre class="code"><span class="c-userfunc">ᵘt̲op</span> ← { ids A →
+  sure ← <span class="c-number">0.5</span> <a href="builtins.html#-3c-3d" class="c-symbol">≤</a> <span class="c-builtin">'</span><a href="builtins.html#m_ax" class="c-builtin">m̲ax</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/₂</a> A
+  ids <a href="demos-attention-attention.xtl.html#u.r_ows" class="c-userfunc">ᵘr̲ows</a> ((sure <a href="builtins.html#-2a" class="c-symbol">×</a> (<a href="libs-NN-src-NN.xtl.html#l.a_rgmax" class="c-libfunc">ⁿⁿa̲rgmax</a> A) <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> ids) <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">22</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#n_ot" class="c-builtin">n̲ot</a> sure) <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="demos-attention-attention.xtl.html#names">names</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">1</span> <span class="c-number">8</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-string">&quot;-       &quot;</span>
+}</pre>
+<div class="uses">Used in: <a href="demos-attention-attention.xtl.src.html#L43">demos/attention/attention.xtl:43</a>, <a href="demos-attention-attention.xtl.src.html#L59">demos/attention/attention.xtl:59</a></div>
+</div>
+<div class="item" id="ids">
+<h3><a href="#ids">ids</a> <span class="type">: Int</span></h3>
+<div class="meta">value &middot; <a href="demos-attention-attention.xtl.src.html#L32">line 32</a></div>
+<div class="doc">
+<p>&quot;the animal did not cross the street because it was tired&quot;</p>
+</div>
+<pre class="code">ids ← <span class="c-number">1</span> <span class="c-number">3</span> <span class="c-number">12</span> <span class="c-number">15</span> <span class="c-number">13</span> <span class="c-number">1</span> <span class="c-number">7</span> <span class="c-number">20</span> <span class="c-number">11</span> <span class="c-number">14</span> <span class="c-number">16</span></pre>
+<div class="uses">Used in: <a href="demos-attention-attention.xtl.html#X">X</a>, <a href="demos-attention-attention.xtl.html#n">n</a>, <a href="demos-attention-attention.xtl.src.html#L39">demos/attention/attention.xtl:39</a>, <a href="demos-attention-attention.xtl.src.html#L40">demos/attention/attention.xtl:40</a>, <a href="demos-attention-attention.xtl.src.html#L43">demos/attention/attention.xtl:43</a>, <a href="demos-attention-attention.xtl.src.html#L51">demos/attention/attention.xtl:51</a>, <a href="demos-attention-attention.xtl.src.html#L52">demos/attention/attention.xtl:52</a></div>
+</div>
+<div class="item" id="X">
+<h3><a href="#X">X</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-attention-attention.xtl.src.html#L33">line 33</a></div>
+<pre class="code">X ← <a href="demos-attention-attention.xtl.html#ids">ids</a> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="demos-attention-attention.xtl.html#F">F</a></pre>
+<div class="uses">Used in: <a href="demos-attention-attention.xtl.html#A">A</a>, <a href="demos-attention-attention.xtl.src.html#L46">demos/attention/attention.xtl:46</a>, <a href="demos-attention-attention.xtl.src.html#L52">demos/attention/attention.xtl:52</a></div>
+</div>
+<div class="item" id="n">
+<h3><a href="#n">n</a> <span class="type">: Int</span></h3>
+<div class="meta">value &middot; <a href="demos-attention-attention.xtl.src.html#L34">line 34</a></div>
+<pre class="code">n ← <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> <a href="demos-attention-attention.xtl.html#ids">ids</a></pre>
+<div class="uses">Used in: <a href="demos-attention-attention.xtl.html#everyone">everyone</a>, <a href="demos-attention-attention.xtl.html#causal">causal</a></div>
+</div>
+<div class="item" id="everyone">
+<h3><a href="#everyone">everyone</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-attention-attention.xtl.src.html#L35">line 35</a></div>
+<pre class="code">everyone ← (<a href="demos-attention-attention.xtl.html#n">n</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="demos-attention-attention.xtl.html#n">n</a>) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">1.0</span></pre>
+<div class="uses">Used in: <a href="demos-attention-attention.xtl.html#A">A</a>, <a href="demos-attention-attention.xtl.html#B">B</a></div>
+</div>
+<div class="item" id="A">
+<h3><a href="#A">A</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-attention-attention.xtl.src.html#L36">line 36</a></div>
+<pre class="code">A ← <a href="demos-attention-attention.xtl.html#X">X</a> <a href="demos-attention-attention.xtl.html#u.a_ttend" class="c-userfunc">ᵘa̲ttend</a> <a href="demos-attention-attention.xtl.html#everyone">everyone</a></pre>
+<div class="uses">Used in: <a href="demos-attention-attention.xtl.src.html#L40">demos/attention/attention.xtl:40</a>, <a href="demos-attention-attention.xtl.src.html#L43">demos/attention/attention.xtl:43</a>, <a href="demos-attention-attention.xtl.src.html#L46">demos/attention/attention.xtl:46</a></div>
+</div>
+<div class="item" id="causal">
+<h3><a href="#causal">causal</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-attention-attention.xtl.src.html#L50">line 50</a></div>
+<div class="doc">
+<p>A causal mask (a word sees only itself and the words before it, as
+when generating text): &quot;it&quot; still finds the animal; &quot;the&quot; sees itself.</p>
+</div>
+<pre class="code">causal ← <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> (<a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <a href="demos-attention-attention.xtl.html#n">n</a>) <span class="c-symbol">'</span><a href="builtins.html#-3e-3d" class="c-symbol">≥</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> <a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <a href="demos-attention-attention.xtl.html#n">n</a></pre>
+<div class="uses">Used in: <a href="demos-attention-attention.xtl.src.html#L52">demos/attention/attention.xtl:52</a></div>
+</div>
+<div class="item" id="w">
+<h3><a href="#w">w</a> <span class="type">: Int</span></h3>
+<div class="meta">value &middot; <a href="demos-attention-attention.xtl.src.html#L57">line 57</a></div>
+<div class="doc">
+<p>&quot;... because it was wide&quot;: wide finds the street. &quot;it&quot; still finds
+the animal: one head reads each word alone, so &quot;it&quot; cannot know yet
+which word comes after it; resolving it takes another layer.</p>
+</div>
+<pre class="code">w ← <span class="c-number">1</span> <span class="c-number">3</span> <span class="c-number">12</span> <span class="c-number">15</span> <span class="c-number">13</span> <span class="c-number">1</span> <span class="c-number">7</span> <span class="c-number">20</span> <span class="c-number">11</span> <span class="c-number">14</span> <span class="c-number">18</span></pre>
+<div class="uses">Used in: <a href="demos-attention-attention.xtl.html#B">B</a>, <a href="demos-attention-attention.xtl.src.html#L59">demos/attention/attention.xtl:59</a></div>
+</div>
+<div class="item" id="B">
+<h3><a href="#B">B</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-attention-attention.xtl.src.html#L58">line 58</a></div>
+<pre class="code">B ← (<a href="demos-attention-attention.xtl.html#w">w</a> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="demos-attention-attention.xtl.html#F">F</a>) <a href="demos-attention-attention.xtl.html#u.a_ttend" class="c-userfunc">ᵘa̲ttend</a> <a href="demos-attention-attention.xtl.html#everyone">everyone</a></pre>
+<div class="uses">Used in: <a href="demos-attention-attention.xtl.src.html#L59">demos/attention/attention.xtl:59</a></div>
+</div>
+</main>
+</body>
+</html>
