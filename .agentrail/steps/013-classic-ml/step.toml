@@ -1,9 +1,10 @@
 number = 13
 slug = "classic-ml"
-status = "in-progress"
+status = "completed"
 description = "training step 5: a fit/pred library after APLearn's list (k-means, kNN, PCA, ..."
 role = "production"
 context_files = []
 created_at = "2026-10-07T10:20:42"
+completed_at = "2026-10-09T17:00:16"
 task_type = "lib"
-commits = []
+commits = ["1a766b4f7d9e2e01922a03a461538b449bf31751"]

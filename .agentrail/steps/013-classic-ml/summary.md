@@ -1,0 +1,1 @@
+Learn library (k-means, kNN, PCA, logistic regression) with doc examples, checks, demo; live k-means demo

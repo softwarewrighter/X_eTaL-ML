@@ -1,0 +1,11 @@
+{
+  "task_type": "lib",
+  "state": {
+    "number": 13,
+    "step": "classic-ml"
+  },
+  "action": "library, tests, demo program, web app, browser check, screenshot, gate",
+  "result": "success",
+  "reward": 1,
+  "timestamp": "2026-10-09T17:00:16"
+}
