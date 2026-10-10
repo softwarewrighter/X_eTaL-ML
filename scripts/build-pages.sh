@@ -36,6 +36,6 @@ for d in "$root"/pages/*/; do
   printf '%s\n' ${keep[@]+"${keep[@]}"} | grep -qx "$s" || { echo "removing pages/$s/"; rm -rf "$d"; }
 done
 "$root/scripts/doc-site.sh"
-cp "$root/images/modern-xetal-logo.jpg" "$root/images/favicon.ico" "$root/pages/"
+cp "$root/images/xetal-logo-orange.png" "$root/images/favicon.ico" "$root/pages/"
 "$root/scripts/build-catalog.py"
 echo "pages/ built; just publish puts it live (after committing your changes)."

@@ -1,8 +1,7 @@
-# X_eTaL ML
-
-<p align="center">
-  <img src="images/modern-xetal-logo.jpg" alt="X_eTaL: eXperimental Extensible Typed Array Language" width="480">
-</p>
+<h1>
+  <img src="images/xetal-logo-orange.png" alt="X_eTaL logo" height="60" align="absmiddle">
+  <img src="images/x-etal-ml-title.svg" alt="X_eTaL ML" height="40" align="absmiddle">
+</h1>
 
 <p align="center">
   <b><a href="https://softwarewrighter.github.io/X_eTaL-ML/">The live ML demos</a></b>

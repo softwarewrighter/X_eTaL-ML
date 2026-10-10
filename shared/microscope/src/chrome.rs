@@ -11,7 +11,7 @@ pub const REPO: &str = "https://github.com/softwarewrighter/X_eTaL-ML";
 pub fn header(title: &str, lede: &str) -> Html {
     html! { <>
         <div class="brand">
-            <a href="../" title="All demos"><img class="logo" src="modern-xetal-logo.jpg" alt="X_eTaL" /></a>
+            <a href="../" title="All demos"><img class="logo" src="xetal-logo-orange.png" alt="X_eTaL" /></a>
             <h1>{title}</h1>
         </div>
         <p class="lede">{lede}</p>

@@ -72,7 +72,8 @@ footer {{ border-top:1px solid var(--line); padding-top:16px; padding-bottom:32p
 footer .sep {{ margin: 0 8px; }}
 .brand {{ display:flex; align-items:center; gap:16px; margin-bottom: 8px; }}
 .brand h1 {{ margin: 0; }}
-.logo {{ height: 56px; width: auto; border-radius: 8px; }}
+.logo {{ height: 60px; width: auto; border-radius: 8px; }}
+.brand h1.ml {{ color: #ff7a00; font-weight: 800; }}
 code {{ font-family: ui-monospace, "JuliaMono", Menlo, monospace; }}
 pre {{ background:var(--card); border:1px solid var(--line); border-radius:8px; padding:12px 14px;
   overflow-x:auto; font: 14px/1.5 ui-monospace, Menlo, monospace; }}
@@ -108,7 +109,7 @@ pre {{ background:var(--card); border:1px solid var(--line); border-radius:8px; 
 """
 
 
-CATALOG_HEADER = """<div class="brand"><img class="logo" src="modern-xetal-logo.jpg" alt="X_eTaL"><h1>ML</h1></div>
+CATALOG_HEADER = """<div class="brand"><img class="logo" src="xetal-logo-orange.png" alt="X_eTaL logo"><h1 class="ml">X_eTaL ML</h1></div>
 <p class="lede">Machine learning in <a href="{xetal}">X_eTaL</a>, a typed array language:
 small models you can watch think.</p>
 <ul class="start">
@@ -131,7 +132,7 @@ X_eTaL draws it, every name linked to where it is defined and used, into the NN 
 libraries and the built-ins.</li>
 </ul>"""
 
-RECORDED_HEADER = """<div class="brand"><a href="../"><img class="logo" src="../modern-xetal-logo.jpg" alt="X_eTaL"></a><h1>Run the demos yourself</h1></div>
+RECORDED_HEADER = """<div class="brand"><a href="../"><img class="logo" src="../xetal-logo-orange.png" alt="X_eTaL logo"></a><h1>Run the demos yourself</h1></div>
 <p class="lede">Every one of the <a href="../">ML demos</a> also runs at the command line, by the
 X_eTaL commit <a href="{repo}">the repository</a> pins: each statement of the program, drawn as
 X_eTaL renders it, then its result. A demo that runs only at the command line is shown recorded

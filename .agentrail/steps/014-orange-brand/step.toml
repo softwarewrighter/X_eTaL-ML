@@ -1,6 +1,6 @@
 number = 14
 slug = "orange-brand"
-status = "pending"
+status = "in-progress"
 description = "the user's ask, 2026-10-09: ML's color changes from blue to orange: the favic..."
 role = "production"
 context_files = []

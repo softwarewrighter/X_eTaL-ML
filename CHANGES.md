@@ -13,6 +13,10 @@ refresh of the vendored X_eTaL.
 
 ## 2026-10-09
 
+- 18:40 `chore` Saga step orange-brand completed.
+- 18:30 `fix` Learn's checks and blobs demo wrote shapes as `(2 c_at 60)`; now `2 60` (number literals form a strand). The gate checks only committed files, so it caught them after the classic-ml commit.
+- 18:35 `docs` ML is orange (the user's request): the favicon recolored from blue to orange (its design kept); X_eTaL's orange logo (images/xetal-logo-orange.png) heads the README, the catalog, the recorded page and every demo page, 60 px high, its aspect kept; the heading is the logo then "X_eTaL ML" in bright orange (#FF7A00; in the README an SVG title, images/x-etal-ml-title.svg, since GitHub drops CSS). The old logo removed; every demo's screenshot retaken.
+
 - 17:10 `chore` Saga step classic-ml completed.
 - 17:05 `demo` k-means, live (https://softwarewrighter.github.io/X_eTaL-ML/k-means/): 300 points in five blobs made in X_eTaL, k-means a step at a time with the map of nearest centers, the points, the centers and their paths, and Plot's chart of the inertia; from a poor start (the first k points) three centers crowd one blob and it settles at 50.17, from farthest-first at 1.897; k from 2 to 8. Learn's k_step quoted on the page. Tests: each step equals k-means in Rust; the poor start settles more than ten times worse; every name bound once in what it runs.
 - 17:00 `lib` Learn (`ml:`): classic machine learning after APLearn's list, each a fit and a predict on whole arrays, every iterative fit a step repeated by `p_ower`, nothing by chance: k-means (`a_ssign`, `k_step`, `i_nertia`, farthest-first `f_arthest`, `k_means`), k nearest neighbors (`k_nn`: a vote, the nearest taken and masked k times, as X_eTaL has no grade along a row: ask M4), PCA (`p_ca`: power iteration with deflation, `(mu, V, ev)`; `p_roject`), logistic regression (`l_ogistic` by gradient descent on a softmax, `p_redict`). 8 doc examples, 12 property checks, basics and a blobs demo, types pinned. Step orange-brand inserted next.
