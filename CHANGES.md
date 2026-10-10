@@ -13,6 +13,9 @@ refresh of the vendored X_eTaL.
 
 ## 2026-10-09
 
+- 23:55 `chore` Saga step catalog-toc completed.
+- 23:50 `docs` The catalog has a table of contents (the user's request), a sticky sidebar at the top left as X_eTaL-games' site does: every demo alphabetized by title, each linking to its card, then "Run them yourself", the cross-reference and the repository; above the cards on a phone.
+
 - 23:20 `chore` Saga step xetal-091 completed.
 - 23:15 `vendor` X_eTaL pinned at f7f9821 (its step 091: a name is bound once in its scope, `_ :=` discards, `[]E_X` in sessions; the yellow logo) and X_eTaL-libraries at 746e666 (its violet logo). Every baseline unchanged, step bound-once having made the repository clean; bench-check 2 to 13% faster.
 - 23:00 `plan` Saga training archived (its five steps and eight inserted ones done); saga post-launch begun: xetal-091, catalog-toc (the user's ask: the catalog's sidebar), quant, conv, attention-lib, norm-sample, micro-gpt, embedding-explorer, optim, lib-site, research.

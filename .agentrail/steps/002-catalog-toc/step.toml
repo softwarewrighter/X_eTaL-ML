@@ -1,6 +1,6 @@
 number = 2
 slug = "catalog-toc"
-status = "pending"
+status = "in-progress"
 description = "the user's ask, 2026-10-09: the live catalog (the demos page) gets a table of..."
 role = "production"
 context_files = []

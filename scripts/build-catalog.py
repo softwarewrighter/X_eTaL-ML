@@ -85,17 +85,31 @@ pre {{ background:var(--card); border:1px solid var(--line); border-radius:8px; 
 .card p.why {{ font-size:.9rem; }}
 .c-builtin {{ color: var(--t-builtin); }} .c-userfunc, .c-libfunc, .c-macro {{ color: var(--t-user); }}
 .c-number {{ color: var(--t-num); }} .c-symbol {{ color: var(--t-sym); }} .c-comment {{ color: var(--muted); font-style: italic; }}
+/* the catalog's table of contents: a sidebar at the top left, above the cards on a phone */
+.with-toc {{ display: grid; grid-template-columns: 200px minmax(0, 1fr); gap: 28px; max-width: 1240px; margin: 0 auto; padding: 0 16px; }}
+.with-toc main {{ max-width: none; margin: 0; padding: 0; }}
+nav.toc {{ position: sticky; top: 16px; align-self: start; padding-top: 24px; font-size: .92rem; }}
+nav.toc h2 {{ font-size: 1rem; margin: 0 0 8px; }}
+nav.toc h3 {{ font-size: .8rem; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); margin: 14px 0 4px; }}
+nav.toc ul {{ list-style: none; padding: 0; margin: 0; }}
+nav.toc li {{ margin: 3px 0; }}
+nav.toc a {{ color: var(--accent); text-decoration: none; }}
+nav.toc a:hover {{ text-decoration: underline; }}
+@media (max-width: 760px) {{ .with-toc {{ grid-template-columns: 1fr; gap: 0; }} nav.toc {{ position: static; padding-top: 12px; }} }}
 .start {{ max-width: 46rem; margin: 14px 0 0; padding: 0; list-style: none; color: var(--muted); }}
 .start li {{ margin: 6px 0; }} .start b {{ color: var(--fg); }} .start a {{ color: var(--accent); }}
 </style>
 </head>
 <body>
+<div class="{layout}">
+{toc}
 <main>
 <header>
 {header}
 </header>
 {body}
 </main>
+</div>
 <footer>
 <span>Copyright (c) 2026 Michael A Wright</span><span class="sep">&middot;</span>
 <span>MIT License</span><span class="sep">&middot;</span>
@@ -211,6 +225,18 @@ def git(*args):
     return r.stdout.strip() or "unknown"
 
 
+def toc(demos):
+    """The table of contents: every demo, alphabetical by title, linking
+    to its card; then the other pages."""
+    inside = sorted(demos, key=lambda m: m["title"].lower())
+    items = "".join(f'<li><a href="#{html.escape(m["slug"])}">{html.escape(m["title"])}</a></li>' for m in inside)
+    more = ('<li><a href="recorded/">Run them yourself</a></li>'
+            '<li><a href="doc/">The cross-reference</a></li>'
+            f'<li><a href="{REPO}">The repository</a></li>')
+    return (f'<nav class="toc" aria-label="Demos"><h2>Demos</h2><ul>{items}</ul>'
+            f'<h3>More</h3><ul>{more}</ul></nav>')
+
+
 def main():
     out = Path(sys.argv[1]) if len(sys.argv) > 1 else ROOT / "pages" / "index.html"
     demos = json.loads(subprocess.run([str(ROOT / "scripts" / "demos.py"), "json"],
@@ -224,7 +250,8 @@ def main():
     common = dict(repo=REPO, xetal=XETAL, commit=git("rev-parse", "--short", "HEAD"),
                   xsha=xsha, xshort=xsha[:7], host=socket.gethostname().split(".")[0],
                   stamp=datetime.datetime.now(datetime.timezone.utc).strftime("%Y%m%dT%H%M%S"))
-    out.write_text(PAGE.format(body=body, title="X_eTaL ML", up="",
+    out.write_text(PAGE.format(body=body, title="X_eTaL ML", up="", layout="with-toc" if demos else "plain",
+                               toc=toc(demos) if demos else "",
                                header=CATALOG_HEADER.format(**common), **common))
     rec = out.parent / "recorded"
     shutil.rmtree(rec, ignore_errors=True)
@@ -235,7 +262,7 @@ def main():
     rbody = HOWTO.format(**common) + "\n" + "\n".join(recording(m) for m in recorded)
     if not recorded:
         rbody += '\n<p class="lede">Every demo has a live page now (<a href="../">the catalog</a>), so none is shown recorded; each one still runs at the command line as above.</p>'
-    (rec / "index.html").write_text(PAGE.format(body=rbody, title="X_eTaL ML: run the demos yourself", up="../",
+    (rec / "index.html").write_text(PAGE.format(body=rbody, title="X_eTaL ML: run the demos yourself", up="../", layout="plain", toc="",
                                                 header=RECORDED_HEADER.format(**common), **common))
     print(f"catalog: {out} ({len(demos)} demo(s)), {rec}/ ({len(recorded)} recorded)")
 
