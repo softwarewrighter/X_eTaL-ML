@@ -11,7 +11,7 @@ i := o_ffsets 60
 blob := 1 + i d_iv 20
 cx := (1 + blob = 2) s_elect 0.0 6.0
 cy := (1 + blob = 1) s_elect 6.0 0.0
-X := o_\ (2 c_at 60) r_eshape (cx + 0.8 * s_in 1.3 * f_loat i) c_at cy + 0.8 * c_os 2.1 * f_loat i
+X := o_\ 2 60 r_eshape (cx + 0.8 * s_in 1.3 * f_loat i) c_at cy + 0.8 * c_os 2.1 * f_loat i
 ## k-means: the three centers found, and which cluster each point is in.
 C := (3, 10) ml:k_means X
 u:r_ound := { a -> (f_loat f_loor 0.5 + 100.0 * a) / 100.0 }
