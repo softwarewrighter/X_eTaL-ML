@@ -1,0 +1,47 @@
+#!/usr/bin/env xetal
+## Learn's properties, checked with Check, on data made here: three
+## blobs (around 0 0, 6 6 and 0 6, 20 points each, a fixed ripple, no
+## chance) and points along a known direction.
+
+"ml:" u_se< "Learn"
+"nn:" u_se< "NN"
+"k:" u_se< "Check"
+
+### The data
+i := o_ffsets 60
+blob := 1 + i d_iv 20
+cx := (1 + blob = 2) s_elect 0.0 6.0
+cy := (1 + blob = 1) s_elect 6.0 0.0
+X := o_\ (2 c_at 60) r_eshape (cx + 0.8 * s_in 1.3 * f_loat i) c_at cy + 0.8 * c_os 2.1 * f_loat i
+true := 3 2 r_eshape 0.0 0.0 6.0 6.0 0.0 6.0
+
+### k-means
+C0 := 3 ml:f_arthest X
+C1 := X ml:k_step C0
+C2 := X ml:k_step C1
+C := (3, 10) ml:k_means X
+## Each true center's nearest found center, and how far.
+near := '{ j -> 'm_in r_/ '+ r_/_2 (C - (s_hape C) r_eshape j s_elect true) ^ 2 } e_ach 1 2 3
+c1 := "k-means finds the three blobs' centers" k:t_est k:t_rue 0.1 > 'm_ax r_/ near
+c2 := "a step never raises the inertia" k:t_est k:t_rue ((C1 ml:i_nertia X) <= C0 ml:i_nertia X) & (C2 ml:i_nertia X) <= C1 ml:i_nertia X
+c3 := "farthest-first starts in three different blobs" k:t_est 1 2 3 k:i_s s_ort (C0 ml:a_ssign true)
+c4 := "each blob is one cluster" k:t_est 3 k:i_s t_ally u_nique C ml:a_ssign X
+
+### k nearest neighbors
+c5 := "with k = 1 the training points get their own labels" k:t_est blob k:i_s (1, X, blob) ml:k_nn X
+c6 := "with k = 5 a point between blobs goes to the nearer" k:t_est 2 k:i_s f_irst (5, X, blob) ml:k_nn 1 2 r_eshape 4.5 4.0
+
+### PCA
+t := f_loat o_ffsets 50
+P := o_\ (2 c_at 50) r_eshape ((0.6 * t) + 0.05 * s_in t) c_at (0.8 * t) - 0.05 * c_os 1.7 * t
+(mu, V, ev) := 2 ml:p_ca P
+c7 := "the first direction is the line the points lie along" k:t_est k:t_rue 0.001 > 'm_ax r_/ a_bs 0.6 0.8 - r_avel 1 t_ake_2 V
+c8 := "the directions are unit length and at right angles, to 1e-9" k:t_est k:t_rue 1e-9 > 'm_ax r_/ r_avel a_bs (2 2 r_eshape 1.0 0.0 0.0 1.0) - (o_\ V) '+ '* i_nner V
+c9 := "the variances come largest first, the first nearly all" k:t_est k:t_rue ((1 s_elect ev) > 100.0 * 2 s_elect ev)
+c10 := "the mean projects to the origin" k:t_est 0.0 0.0 k:n_ear r_avel (mu, V, ev) ml:p_roject 1 2 r_eshape mu
+
+### Logistic regression
+W := (200, 0.5) ml:l_ogistic (X, blob)
+c11 := "logistic regression reads the three blobs right" k:t_est blob k:i_s W ml:p_redict X
+c12 := "its weights: a row per column and the bias, a column per label" k:t_est 3 3 k:i_s s_hape W
+k:r_eport c1 k:a_nd c2 k:a_nd c3 k:a_nd c4 k:a_nd c5 k:a_nd c6 k:a_nd c7 k:a_nd c8 k:a_nd c9 k:a_nd c10 k:a_nd c11 k:a_nd c12

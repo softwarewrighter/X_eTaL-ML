@@ -1,0 +1,28 @@
+#!/usr/bin/env xetal
+## Learn's four models on one set of points: three blobs of 20 (around
+## 0 0, 6 6 and 0 6, a fixed ripple instead of chance). k-means finds
+## them without their labels; kNN and logistic regression learn them
+## from their labels; PCA finds the direction they spread along most.
+## Run with "just demo-lib Learn blobs".
+
+"ml:" u_se< "Learn"
+
+i := o_ffsets 60
+blob := 1 + i d_iv 20
+cx := (1 + blob = 2) s_elect 0.0 6.0
+cy := (1 + blob = 1) s_elect 6.0 0.0
+X := o_\ (2 c_at 60) r_eshape (cx + 0.8 * s_in 1.3 * f_loat i) c_at cy + 0.8 * c_os 2.1 * f_loat i
+## k-means: the three centers found, and which cluster each point is in.
+C := (3, 10) ml:k_means X
+u:r_ound := { a -> (f_loat f_loor 0.5 + 100.0 * a) / 100.0 }
+u:r_ound C
+C ml:a_ssign X
+## kNN (5 neighbors) and logistic regression on four new points.
+Q := 4 2 r_eshape 1.0 1.0 5.0 5.0 0.5 5.0 3.0 3.0
+(5, X, blob) ml:k_nn Q
+W := (200, 0.5) ml:l_ogistic (X, blob)
+W ml:p_redict Q
+## PCA: the direction of most spread, and the share of the variance on it.
+(mu, V, ev) := 2 ml:p_ca X
+u:r_ound r_avel 1 t_ake_2 V
+u:r_ound (1 s_elect ev) / '+ r_/ ev

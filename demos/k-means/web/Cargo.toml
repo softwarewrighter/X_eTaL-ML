@@ -1,0 +1,16 @@
+[package]
+name = "k-means-web"
+description = "k-means in the browser: X_eTaL moves five centers to the means of their points, step by step, from a poor start or a good one"
+version = "0.1.0"
+edition = "2021"
+license = "MIT"
+publish = false
+
+[dependencies]
+microscope = { path = "../../../shared/microscope" }
+yew = { version = "0.21", features = ["csr"] }
+gloo-timers = "0.3"
+web-sys = { version = "0.3", features = ["HtmlInputElement", "HtmlSelectElement"] }
+console_error_panic_hook = "0.1"
+
+[workspace]

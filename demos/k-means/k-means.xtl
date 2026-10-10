@@ -1,0 +1,43 @@
+#!/usr/bin/env xetal
+## k-means, step by step: 300 points in five blobs, five centers. Each
+## step gives every point the nearest center, then moves each center to
+## the mean of its points (the Learn library's k_step: a few array
+## expressions over all the points at once). From a poor start, five
+## points of one blob, the centers travel across the plane to the
+## blobs; from Learn's farthest-first start they barely need to.
+
+"ml:" u_se< "Learn"
+
+### The points: five blobs of 60, each its own center and spread
+n := 300
+i := o_ffsets n
+b := 1 + i d_iv 60
+cx := b s_elect -0.6 0.5 0.0 -0.5 0.6
+cy := b s_elect 0.5 0.6 -0.05 -0.6 -0.5
+spread := b s_elect 0.12 0.16 0.1 0.2 0.08
+## A little noise, the sum of two draws (so it bunches toward the middle).
+u:n_oise := { m -> (f_loat (r_oll! m r_eshape 1001) + (r_oll! m r_eshape 1001) - 1002) / 1000.0 }
+X := o_\ (2 c_at n) r_eshape (cx + spread * u:n_oise n) c_at cy + spread * u:n_oise n
+
+### The map: a grid of g x g points over the square -1 .. 1
+g := 40
+c := -1.0 + 2.0 * (0.5 + f_loat o_ffsets g) / f_loat g
+grid := o_\ (2 c_at g * g) r_eshape (r_avel (o_ffsets g) 'r_ight t_able c) c_at r_avel (r_ev c) 'l_eft t_able o_ffsets g
+# -- end of the core ------------------------------------------
+
+### Two starts, the same steps
+k := 5
+## A poor start: the first five points, all in the first blob.
+C0 := k t_ake X
+## Learn's start: the first point, then each time the farthest from those so far.
+F0 := k ml:f_arthest X
+## The inertia (the sum of squared distances to the nearest center)
+## after 0 to 10 steps, from each start: it never rises.
+u:r_ound := { a -> (f_loat f_loor 0.5 + 1000.0 * a) / 1000.0 }
+u:r_ound '{ j -> (j '{ C -> X ml:k_step C } p_ower C0) ml:i_nertia X } e_ach o_ffsets 11
+u:r_ound '{ j -> (j '{ C -> X ml:k_step C } p_ower F0) ml:i_nertia X } e_ach o_ffsets 11
+## The centers after 10 steps from the poor start, one per row.
+C10 := 10 '{ C -> X ml:k_step C } p_ower C0
+u:r_ound C10
+## Which center each point of the map is nearest (A to E).
+(g c_at g) r_eshape (C10 ml:a_ssign grid) s_elect []A

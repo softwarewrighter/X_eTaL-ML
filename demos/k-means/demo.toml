@@ -1,0 +1,11 @@
+# One demo's description: read by scripts/demos.py for the tests, the
+# README's demo list and the live catalog (pages/index.html).
+slug = "k-means"            # the directory name, demos/<slug>/
+title = "k-means"
+summary = "Clustering without labels, step by step: 300 points in five blobs, every point given its nearest center, each center moved to the mean of its points. From a poor start three centers crowd one blob and k-means settles there; from a farthest-first start they find all five. Change k and the start."
+concepts = ["k-means", "one-hot as a matrix", "p_ower", "the Learn library"]        # the X_eTaL ideas it shows
+status = "live"             # draft | live | deferred
+order = 45                  # position in the catalog (lower first)
+needs = []                   # asks in docs/xetal-asks.md it waits on or works around
+line = "(((o_\\ O) '+ '* i_nner X) + C * f_loat n = 0.0) / 1.0 m_ax n"
+why = "A whole step's new centers at once: O is each point's nearest center as one-hot rows, so O's columns times the points sum each cluster's points; divided by each cluster's count, a center with no points kept where it was."

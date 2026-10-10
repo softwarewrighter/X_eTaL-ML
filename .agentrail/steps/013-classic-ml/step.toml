@@ -1,6 +1,6 @@
 number = 13
 slug = "classic-ml"
-status = "pending"
+status = "in-progress"
 description = "training step 5: a fit/pred library after APLearn's list (k-means, kNN, PCA, ..."
 role = "production"
 context_files = []

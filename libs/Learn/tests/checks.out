@@ -1,0 +1,13 @@
+ok: k-means finds the three blobs' centers
+ok: a step never raises the inertia
+ok: farthest-first starts in three different blobs
+ok: each blob is one cluster
+ok: with k = 1 the training points get their own labels
+ok: with k = 5 a point between blobs goes to the nearer
+ok: the first direction is the line the points lie along
+ok: the directions are unit length and at right angles, to 1e-9
+ok: the variances come largest first, the first nearly all
+ok: the mean projects to the origin
+ok: logistic regression reads the three blobs right
+ok: its weights: a row per column and the bias, a column per label
+12 checks, all passed

@@ -1,0 +1,10 @@
+l:a_ssign : Float -> Float -> Int
+l:k_step : Float -> Float -> Float
+l:i_nertia : Float -> Float -> Float
+l:f_arthest : Int -> Float -> Float
+l:k_means : (Int, Int) -> Float -> Float
+l:k_nn : (Int, Float, Int) -> Float -> Int
+l:p_ca : Int -> Float -> (Float, Float, Float)
+l:p_roject : (Num a, Any b) => (a, a, b) -> a -> a
+l:l_ogistic : (Int, Float) -> (Float, Int) -> Float
+l:p_redict : Num a => a -> a -> Int

@@ -73,7 +73,7 @@ an error before the forward pass, not a wrong number after it.
 
 ## Demos
 
-All eight run live in your browser and at the command line.
+All nine run live in your browser and at the command line.
 [Start with the Tiny CNN](https://softwarewrighter.github.io/X_eTaL-ML/cnn-digits/):
 draw a digit and watch a network read it.
 
@@ -86,6 +86,7 @@ draw a digit and watch a network read it.
 | [Attention microscope](demos/attention/README.md) ([live](https://softwarewrighter.github.io/X_eTaL-ML/attention/)) | one head of attention on your sentence: scores, weights, a causal mask; "tired" finds the animal, "wide" the street | `(Q '+ '* i_nner o_\ K) / 2.0 ^ 0.5`: every query against every key |
 | [MoE routing microscope](demos/moe-router/README.md) ([live](https://softwarewrighter.github.io/X_eTaL-ML/moe-router/)) | a sentence's tokens routed to their top-2 of 16 experts; nudge a token and see where the experts switch | `u:t_op2 u:s_oftmax u:s_cores x`: scores, softmax and top-2 for all tokens |
 | [Network macro](demos/net-macro/README.md) ([live](https://softwarewrighter.github.io/X_eTaL-ML/net-macro/)) | a network written as one line; the function the macro wrote for it; three networks on a spiral; type a spec of your own and train it in the browser | `"u:d_eep c" net:m_odel< "2 16 relu 16 relu 3 softmax"`: a macro call that becomes the weights' loading and the forward function |
+| [k-means](demos/k-means/README.md) ([live](https://softwarewrighter.github.io/X_eTaL-ML/k-means/)) | clustering without labels, step by step: five blobs, the centers moving to their points' means; a poor start settles wrong, farthest-first finds all five | `(((o_\ O) '+ '* i_nner X) + C * f_loat n = 0.0) / 1.0 m_ax n`: every center's new place at once |
 | [1.58-bit network](demos/ternary-net/README.md) ([live](https://softwarewrighter.github.io/X_eTaL-ML/ternary-net/)) | one classifier with FP32, FP16, INT8 and ternary weights compared; a ternary layer as additions | `(f_loat x > s) - f_loat x < n_eg s`: a layer's weights to -1, 0, +1 |
 
 Every page shows all the code it runs, beside the arrays that code
@@ -116,6 +117,7 @@ just serve cnn-digits    # its page, at http://127.0.0.1:8435/
 | Library | Alias | What |
 | ------- | ----- | ---- |
 | [NN](libs/NN/docs/README.md) | `nn:` | activations, softmax by row (any rank), dense layers, argmax, one-hot, loss, accuracy |
+| [Learn](libs/Learn/docs/README.md) | `ml:` | classic machine learning after APLearn's list, each a fit and a predict: k-means (`(k, n) ml:k_means X`), k nearest neighbors, PCA (`(mu, V, ev) := 2 ml:p_ca X`), logistic regression |
 | [Net](libs/Net/docs/README.md) | `net:` | a macro library: `"u:n_et w" net:m_odel< "784 128 relu 10 softmax"` becomes the weights' loading, checked, and an ordinary function of NN calls, shown by `xetal expand`; `"u:s_tep X Y lr" net:t_rain< "2 4 tanh 2 softmax"` writes the network's backprop and an Adam step |
 
 The demos import it (`"nn:" u_se< "NN"`), at the command line and in
@@ -129,8 +131,8 @@ imports).
 
 | | Today |
 | - | ----- |
-| Demos | 8, all live, each with command-line and browser tests; three of them train in X_eTaL, a CNN among them |
-| Libraries | NN (12 functions, typed, tested); Net (6 macros, every expansion pinned; written gradients checked against finite differences); every item documented, 28 doc examples run by the gate |
+| Demos | 9, all live, each with command-line and browser tests; three of them train in X_eTaL, a CNN among them; one clusters (k-means) |
+| Libraries | NN (12 functions, typed, tested); Net (6 macros, every expansion pinned; written gradients checked against finite differences); Learn (10 functions: k-means, kNN, PCA, logistic regression; k-means checked against Rust, all by their properties); every item documented, 36 doc examples run by the gate |
 | X_eTaL | pinned at X_eTaL main d284a8c, after v0.1.0: tuples with patterns (the training state is one), `h:` private names, the doc site by directory (`XETAL_COMMIT`, `just xetal-version`); X_eTaL-libraries at 69bb369 (Plot's charts, every library documented) |
 | Speed | measured and guarded (`just bench-check`, [`docs/speed.md`](docs/speed.md)); the CNN's whole program runs in a third of a second |
 | Waiting on X_eTaL | a grade per row, arrays in and out of the browser engine, `e_ach` returning arrays ([`docs/xetal-asks.md`](docs/xetal-asks.md)) |

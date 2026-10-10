@@ -1,0 +1,26 @@
+#!/usr/bin/env xetal
+## Learn: each model's answers on small data, pinned.
+
+"ml:" u_se< "Learn"
+
+### Six points in two groups
+X := 6 2 r_eshape 0.0 0.0 1.0 0.0 0.0 1.0 9.0 9.0 10.0 9.0 9.0 10.0
+y := 1 1 1 2 2 2
+## k-means: the start, one step, the clusters, the inertia.
+C0 := 2 ml:f_arthest X
+C0
+C1 := X ml:k_step C0
+C1
+C1 ml:a_ssign X
+C1 ml:i_nertia X
+(2, 5) ml:k_means X
+## Nearest neighbors for two new points.
+(3, X, y) ml:k_nn 2 2 r_eshape 2.0 2.0 8.0 8.0
+## PCA: the mean, the directions, the variances.
+(mu, V, ev) := 2 ml:p_ca X
+mu
+V
+ev
+## Logistic regression: the labels it gives the six points.
+W := (100, 0.5) ml:l_ogistic (X, y)
+W ml:p_redict X

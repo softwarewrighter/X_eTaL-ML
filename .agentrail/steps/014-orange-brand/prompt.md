@@ -1,0 +1,1 @@
+the user's ask, 2026-10-09: ML's color changes from blue to orange: the favicon orange; an orange logo from ../X_eTaL/images at the top of the README and of the live catalog and pages, about 3 rows by 15 columns (its aspect ratio kept); the heading the orange logo then "X_eTaL ML" in bright orange

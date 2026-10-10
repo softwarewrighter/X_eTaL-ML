@@ -1,0 +1,3 @@
+command = "scripts/browser-check.sh k-means"
+exit_code = 0
+desc = "k-means: the built page run in headless Chrome shows X_eTaL's results"

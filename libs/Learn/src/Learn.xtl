@@ -1,0 +1,115 @@
+## Learn: classic machine learning: k-means, k nearest neighbors, PCA, logistic regression
+##
+## Import it with an alias of your choice: "ml:" u_se< "Learn".
+## Put libs/Learn/src on XETAL_PATH ("just path"); the reference is libs/Learn/docs.
+## Names with l: are exported; h: names are private to this file.
+##
+## After APLearn's list (k-means, kNN, PCA, logistic regression), each
+## a fit and a predict: the data X is a matrix, one example per row;
+## labels count from 1. Every model is whole-array arithmetic, and an
+## iterative fit is a step repeated by p_ower.
+
+"nn:" u_se< "NN"
+
+### Helpers (private)
+
+## The squared distance between every row of A (n x d) and every row of B (k x d): n x k.
+h:d_ist := { A B -> (('+ r_/_2 A * A) '+ t_able '+ r_/_2 B * B) - 2.0 * A '+ '* i_nner o_\ B }
+
+## X with a column of 1s on the right (for a bias row).
+h:o_nes := { X -> X c_at_2 ((t_ally X) c_at 1) r_eshape 1.0 }
+
+### k-means: clusters by their centers
+
+## `C a_ssign X`: the nearest of the centers C (one per row) for each row of X, from 1.
+## >> "ml:" u_se< "Learn"
+## >> (2 2 r_eshape 0.0 0.0 10.0 10.0) ml:a_ssign 3 2 r_eshape 1.0 0.0 9.0 9.0 0.0 2.0
+## 1 2 1
+l:a_ssign := { C X -> nn:a_rgmax n_eg X h:d_ist C }
+
+## `X k_step C`: one step of k-means (Lloyd's): each center moved to
+## the mean of the rows of X nearest it; a center no row is nearest
+## stays where it is. Repeat it with p_ower.
+## >> "ml:" u_se< "Learn"
+## >> X := 4 2 r_eshape 0.0 0.0 0.0 2.0 10.0 10.0 10.0 12.0
+## >> X ml:k_step 2 2 r_eshape 1.0 1.0 9.0 9.0
+##  0.0  1.0
+## 10.0 11.0
+l:k_step := { X C ->
+  O := (t_ally C) nn:o_neHot C l:a_ssign X
+  n := ('+ r_/_1 O) 'l_eft t_able o_ffsets 2 s_elect s_hape X
+  (((o_\ O) '+ '* i_nner X) + C * f_loat n = 0.0) / 1.0 m_ax n
+}
+
+## `C i_nertia X`: the sum of each row's squared distance to its nearest center.
+l:i_nertia := { C X -> '+ r_/ 'm_in r_/_2 X h:d_ist C }
+
+## `k f_arthest X`: k starting centers, chosen without chance: the
+## first row, then each time the row farthest from the centers so far.
+l:f_arthest := { k X ->
+  d := 2 s_elect s_hape X
+  (k - 1) '{ C -> C c_at_1 (1 c_at d) r_eshape (nn:a_rgmax 'm_in r_/_2 X h:d_ist C) s_elect X } p_ower 1 t_ake X
+}
+
+## `(k, n) k_means X`: k centers after n steps from the farthest-first start.
+l:k_means := { (k, n) X -> n '{ C -> X l:k_step C } p_ower k l:f_arthest X }
+
+### k nearest neighbors: a vote
+
+## `(k, X, y) k_nn Q`: for each row of Q, the label most of its k
+## nearest rows of X have (y: X's labels, from 1); on a tie the
+## smallest label. The neighbors are found nearest first, each masked
+## once taken (X_eTaL has no grade along a row yet).
+## >> "ml:" u_se< "Learn"
+## >> X := 4 1 r_eshape 0.0 1.0 10.0 11.0
+## >> (3, X, 1 1 2 2) ml:k_nn 2 1 r_eshape 0.5 10.5
+## 1 2
+l:k_nn := { (k, X, y) Q ->
+  c := 'm_ax r_/ y
+  D := Q h:d_ist X
+  (_, V) := k '{ (d, v) ->
+    j := nn:a_rgmax n_eg d
+    (d + 1e300 * f_loat j '= t_able r_ange t_ally X, v + c nn:o_neHot j s_elect y)
+  } p_ower (D, ((t_ally Q) c_at c) r_eshape 0.0)
+  nn:a_rgmax V
+}
+
+### PCA: the directions of most variance
+
+## `n p_ca X`: the mean of X's rows, the first n principal directions
+## (a column each, unit length) and the variance along each: (mu, V,
+## ev). Power iteration on the covariance, each direction then taken
+## out of it (deflation); a direction's sign makes its items sum
+## positive.
+l:p_ca := { n X ->
+  d := 2 s_elect s_hape X
+  mu := ('+ r_/_1 X) / f_loat t_ally X
+  Z := X - (s_hape X) r_eshape mu
+  S0 := ((o_\ Z) '+ '* i_nner Z) / f_loat t_ally X
+  u0 := 1.0 + 0.1 * f_loat o_ffsets d
+  (_, V, ev, _) := n '{ (S, V, ev, i) ->
+    v := 200 '{ u -> w := S '+ '* i_nner u; w / ('+ r_/ w * w) ^ 0.5 } p_ower u0
+    v1 := v * 1.0 - 2.0 * f_loat 0.0 > '+ r_/ v
+    lam := '+ r_/ v1 * S '+ '* i_nner v1
+    (S - lam * v1 '* t_able v1, V + v1 '* t_able f_loat i = r_ange n, ev + lam * f_loat i = r_ange n, i + 1)
+  } p_ower (S0, (d c_at n) r_eshape 0.0, n r_eshape 0.0, 1)
+  (mu, V, ev)
+}
+
+## `(mu, V, ev) p_roject X`: each row of X in the principal directions: n columns.
+l:p_roject := { (mu, V, _) X -> (X - (s_hape X) r_eshape mu) '+ '* i_nner V }
+
+### Logistic regression: classes by a softmax
+
+## `(n, lr) l_ogistic (X, y)`: the weights of a softmax over X's
+## columns (a row per column, the bias the last row; one column per
+## label), after n steps of gradient descent on the cross-entropy at
+## rate lr, from zeros.
+l:l_ogistic := { (n, lr) (X, y) ->
+  Y := ('m_ax r_/ y) nn:o_neHot y
+  G := o_\ h:o_nes X
+  n '{ W -> W - lr * (G '+ '* i_nner (nn:s_oftmax X nn:d_ense W) - Y) / f_loat t_ally X } p_ower ((1 + 2 s_elect s_hape X) c_at 2 s_elect s_hape Y) r_eshape 0.0
+}
+
+## `W p_redict X`: the label (from 1) the weights W give each row of X.
+l:p_redict := { W X -> nn:a_rgmax nn:s_oftmax X nn:d_ense W }

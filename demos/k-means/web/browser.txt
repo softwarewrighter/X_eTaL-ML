@@ -1,0 +1,4 @@
+# Text the page shows only after X_eTaL has run (scripts/browser-check.sh).
+The points and the centers:
+The inertia:
+A step, in the Learn library:
