@@ -1,0 +1,3 @@
+command = "scripts/browser-check.sh embedding-explorer"
+exit_code = 0
+desc = "embedding-explorer: the built page run in headless Chrome shows X_eTaL's results"

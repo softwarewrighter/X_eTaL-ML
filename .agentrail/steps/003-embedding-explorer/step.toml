@@ -1,6 +1,6 @@
-number = 8
+number = 3
 slug = "embedding-explorer"
-status = "pending"
+status = "in-progress"
 description = "the Embed library (em:) and an embedding explorer: 64-dimensional embeddings ..."
 role = "production"
 context_files = []

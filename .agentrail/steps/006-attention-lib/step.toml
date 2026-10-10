@@ -1,4 +1,4 @@
-number = 5
+number = 6
 slug = "attention-lib"
 status = "pending"
 description = "the Attention library (at:): scaled dot-product attention, causal masks, a he..."

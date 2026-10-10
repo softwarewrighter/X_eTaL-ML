@@ -232,3 +232,9 @@ canvas.pic.digits { width: 100%; aspect-ratio: 579 / 28; }
 .reads { display: grid; grid-template-columns: repeat(20, 1fr); gap: 0; text-align: center; font: 600 .9rem ui-monospace, monospace; margin-top: 4px; }
 .reads .right { color: #2b8a3e; }
 .reads .wrong { color: #c92a2a; }
+
+/* embedding-explorer: the cloud of words */
+svg.cloud { max-width: 560px; background: var(--card, #fff); border: 1px solid var(--line); border-radius: 8px; touch-action: none; cursor: grab; user-select: none; }
+svg.cloud .word { cursor: pointer; }
+svg.cloud .word text { font-family: ui-sans-serif, system-ui, sans-serif; }
+svg.cloud .word.near text { font-weight: 700; }

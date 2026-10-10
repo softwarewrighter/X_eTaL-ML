@@ -1,4 +1,4 @@
-number = 3
+number = 4
 slug = "quant"
 status = "pending"
 description = "the Quant library (qz:): FP16, INT8 and ternary quantization and the ternary ..."

@@ -1,0 +1,43 @@
+#!/usr/bin/env xetal
+## Word embeddings from counts, and a 3-D look at them: 4,000 short
+## sentences over 70 words, each word's embedding a row of 64 numbers
+## made from which words occur near it (the Embed library: counts,
+## PPMI, a fixed projection). Words used alike point alike: the
+## animals together, the foods, the colors, the numbers, the places.
+## Learn's PCA turns the 64 dimensions into the 3 that spread the
+## words most, for a cloud to look at.
+
+"em:" u_se< "Embed"
+"ml:" u_se< "Learn"
+"t:" u_se< "Strings"
+
+### The corpus, read from data/ (just embedding-data)
+## The words, one a line, and the sentences as word numbers, each ended by 0.
+words := t:l_ines []N_GET "data/words.txt"
+ids := f_loor n_umbers []N_GET "data/ids.txt"
+v := t_ally words
+
+### The embeddings
+## How often each word occurs within 2 words of each other, then PPMI.
+C := (v, 2) em:c_ooccur ids
+P := em:p_pmi C
+## 64 numbers a word, each row unit length.
+E := em:u_nit 64 em:p_roject P
+## The 3 directions that spread the words most.
+(mu, V, ev) := 3 ml:p_ca E
+xyz := (mu, V, ev) ml:p_roject E
+# -- end of the core ----------------------------------------
+
+### What it shows
+u:r_ound := { a -> (f_loat f_loor 0.5 + 1000.0 * a) / 1000.0 }
+## A word's number, and its 5 nearest words by cosine in 64 dimensions.
+u:n_umber := { w -> f_irst w_here '{ x -> w m_atch d_isclose x } e_ach words }
+u:n_ear := { w -> w c_at ": " c_at " " t:j_oin '{ j -> d_isclose j s_elect words } m_ap (E, 5) em:n_earest u:n_umber w }
+u:n_ear "cat"
+u:n_ear "apple"
+u:n_ear "red"
+u:n_ear "three"
+u:n_ear "park"
+## The share of the words' variance the 3 directions keep.
+Z := E - (s_hape E) r_eshape mu
+u:r_ound ('+ r_/ ev) / ('+ r_/ r_avel Z * Z) / f_loat v

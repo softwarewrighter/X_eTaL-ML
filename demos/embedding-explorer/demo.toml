@@ -1,0 +1,11 @@
+# One demo's description: read by scripts/demos.py for the tests, the
+# README's demo list and the live catalog (pages/index.html).
+slug = "embedding-explorer"            # the directory name, demos/<slug>/
+title = "Embedding explorer"
+summary = "Word embeddings made from counts, in X_eTaL: 4,000 short sentences over 70 words, each word's embedding 64 numbers from which words occur near it. Turn the cloud in 3-D (Learn's PCA) and click a word for its nearest: the animals, foods, colors, numbers and places gather, and k-means finds them without being told."
+concepts = ["embeddings", "co-occurrence", "PPMI", "PCA", "sorting to count"]        # the X_eTaL ideas it shows
+status = "live"             # draft | live | deferred
+order = 47                  # position in the catalog (lower first)
+needs = []                   # asks in docs/xetal-asks.md it waits on or works around
+line = "E := em:u_nit 64 em:p_roject em:p_pmi (v, 2) em:c_ooccur ids"
+why = "A whole embedding table in one line read right to left: count which words occur near which, weight the counts by how much more often than chance, project every row to 64 numbers, scale to length 1. No loop over words or sentences."

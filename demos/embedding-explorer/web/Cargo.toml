@@ -1,0 +1,16 @@
+[package]
+name = "embedding-explorer-web"
+description = "An embedding explorer: word embeddings made from counts in X_eTaL, turned in 3-D, each word's nearest shown"
+version = "0.1.0"
+edition = "2021"
+license = "MIT"
+publish = false
+
+[dependencies]
+microscope = { path = "../../../shared/microscope" }
+yew = { version = "0.21", features = ["csr"] }
+gloo-timers = "0.3"
+web-sys = { version = "0.3", features = ["HtmlInputElement", "HtmlSelectElement", "PointerEvent", "Element"] }
+console_error_panic_hook = "0.1"
+
+[workspace]

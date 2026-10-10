@@ -261,6 +261,7 @@ archived), ahead of the launch, which the user postponed further:
 | - | --------- | -------- |
 | 0 | xetal-091 | DONE: X_eTaL pinned at f7f9821 (its step 091: each name bound once, `_ :=`, `[]E_X` in sessions), X_eTaL-libraries at 746e666; every baseline unchanged (step bound-once had made the repository clean); bench-check 2-13% faster |
 | 0b | catalog-toc | DONE: the user's ask: the catalog's table of contents, a sticky sidebar at the top left as X_eTaL-games' site has it: the demos alphabetized by title, each linking to its card, then the recorded page, the cross-reference and the repository; above the cards on a phone (under 760 px) |
+| 0c | embedding-explorer | DONE, moved first (the user's choice, 2026-10-10: a new demo sooner): libs/Embed (`em:`: `c_ounts` by sorting, `c_ooccur`, `p_pmi`, `p_roject` (random indexing, signs from a hash), `u_nit`, `c_osines`, `n_earest`), 3 doc examples, 7 property checks, a pets demo; demos/embedding-explorer, live: 4,000 generated sentences over 70 words (train/, habits within kinds), 64-number embeddings, Learn's PCA to a 3-D cloud to drag or spin, k-means' clusters as colors, a word's 5 nearest on click; measured how many sentences are enough (about 1,600) |
 | 1 | quant | the Quant library (`qz:`); ternary-net moved onto it, baselines unchanged |
 | 2 | conv | Conv (`cv:`); cnn-digits moved onto it |
 | 3 | attention-lib | Attention (`at:`); the attention demo keeps its lesson |

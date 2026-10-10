@@ -1,0 +1,7 @@
+l:c_ounts : Int -> Int -> Int
+l:c_ooccur : (Int, Int) -> Int -> Int
+l:p_pmi : Num a => a -> Float
+l:p_roject : Int -> Float -> Float
+l:u_nit : Float -> Float
+l:c_osines : Float -> Int -> Float
+l:n_earest : (Float, Int) -> Int -> Int

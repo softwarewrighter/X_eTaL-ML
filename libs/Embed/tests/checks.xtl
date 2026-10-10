@@ -1,0 +1,25 @@
+#!/usr/bin/env xetal
+## Embed's properties, checked with Check, on a corpus made here: two
+## kinds of word (1 to 5 and 6 to 10) in sentences of three of a kind.
+
+"em:" u_se< "Embed"
+"k:" u_se< "Check"
+
+i := o_ffsets 600
+## Sentence s holds three words of one kind in a row (starting at
+## word s of the five, cycling); a 0 ends each.
+s := i d_iv 4
+kind := 5 * s m_od 2
+w := 1 + kind + ((i m_od 4) + s) m_od 5
+ids := w * 3 > i m_od 4
+C := (10, 2) em:c_ooccur ids
+P := em:p_pmi C
+E := em:u_nit 32 em:p_roject P
+c1 := "the counts are symmetric" k:t_est C k:i_s o_\ C
+c2 := "c_ounts counts every key once" k:t_est 600 k:i_s '+ r_/ 10 em:c_ounts 1 + i m_od 10
+c3 := "PPMI is never below 0, and 0 where the count is" k:t_est k:t_rue (0.0 <= 'm_in r_/ r_avel P) & '& r_/ r_avel (C > 0) | P = 0.0
+c4 := "the projection is the same every run" k:t_est (8 em:p_roject P) k:i_s 8 em:p_roject P
+c5 := "rows come out length 1" k:t_est (10 r_eshape 1.0) k:n_ear '+ r_/_2 E * E
+c6 := "a word's nearest are of its kind" k:t_est 2 3 4 5 k:i_s s_ort (E, 4) em:n_earest 1
+c7 := "and the other kind's too" k:t_est 6 7 8 9 k:i_s s_ort (E, 4) em:n_earest 10
+k:r_eport c1 k:a_nd c2 k:a_nd c3 k:a_nd c4 k:a_nd c5 k:a_nd c6 k:a_nd c7

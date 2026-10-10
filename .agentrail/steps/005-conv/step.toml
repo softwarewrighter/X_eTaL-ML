@@ -1,4 +1,4 @@
-number = 4
+number = 5
 slug = "conv"
 status = "pending"
 description = "the Conv library (cv:): 3 x 3 windows of a batch, convolution as one matrix p..."

@@ -1,0 +1,8 @@
+ok: the counts are symmetric
+ok: c_ounts counts every key once
+ok: PPMI is never below 0, and 0 where the count is
+ok: the projection is the same every run
+ok: rows come out length 1
+ok: a word's nearest are of its kind
+ok: and the other kind's too
+7 checks, all passed

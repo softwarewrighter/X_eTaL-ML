@@ -1,4 +1,4 @@
-number = 7
+number = 8
 slug = "micro-gpt"
 status = "pending"
 description = "a tiny GPT's inference in X_eTaL on weights trained offline (a train/ program..."

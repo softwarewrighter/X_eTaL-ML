@@ -1,0 +1,3 @@
+command = '"$XETAL" run --seed 1 --draw "$XETAL_DRAW" embedding-explorer.xtl'
+exit_code = 0
+desc = "embedding-explorer: embedding-explorer.xtl run by the pinned xetal CLI"

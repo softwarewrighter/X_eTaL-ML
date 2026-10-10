@@ -1,0 +1,11 @@
+[package]
+name = "embedding-explorer-train"
+description = "Writes the embedding explorer's corpus: sentences from templates over six kinds of words, as word ids"
+version = "0.1.0"
+edition = "2021"
+license = "MIT"
+publish = false
+
+[dependencies]
+
+[workspace]

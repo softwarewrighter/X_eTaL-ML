@@ -1,0 +1,25 @@
+#!/usr/bin/env xetal
+## Embed on a corpus small enough to read: twelve sentences about pets
+## and food. Run with "just demo-lib Embed pets".
+
+"em:" u_se< "Embed"
+
+## Words: 1 the, 2 cat, 3 dog, 4 eats, 5 fish, 6 meat, 7 sleeps, 8 runs.
+## Each pet with each food and each action, so the two keep the same
+## company. Sentences as word numbers, each ended by 0.
+ids := 1 2 4 5 0 1 2 4 6 0 1 3 4 5 0 1 3 4 6 0 1 2 7 0 1 2 8 0 1 3 7 0 1 3 8 0 2 4 5 0 3 4 6 0 2 8 0 3 7 0
+C := (8, 2) em:c_ooccur ids
+## Who keeps whose company: the counts, then weighted.
+C
+P := em:p_pmi C
+(f_loat f_loor 0.5 + 100.0 * P) / 100.0
+## cat's 3 nearest (by cosine of the PPMI rows): the, eats, dog. In a
+## dozen sentences "the" and "eats" keep company with every pet, so
+## they look like the cat as much as the dog does. Repeating the same
+## sentences would change nothing (PPMI is a ratio); more varied ones
+## would: on the embedding explorer's corpus a word's nearest is of
+## its own kind for 33% of words at 12 sentences, 91% at 200 and 90%
+## from 1,600 on (its README has the table).
+(P, 3) em:n_earest 2
+## fish's 3 nearest: meat, the other food, first.
+(P, 3) em:n_earest 5

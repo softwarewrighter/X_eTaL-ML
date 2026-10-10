@@ -1,4 +1,4 @@
-number = 6
+number = 7
 slug = "norm-sample"
 status = "pending"
 description = "Norm (nm:: layer norm, RMS norm) and Sample (sm:: temperature, top-k, greedy)..."

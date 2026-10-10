@@ -77,6 +77,10 @@ ternary-train:
 net-train:
     cargo run --release -q --manifest-path demos/net-macro/train/Cargo.toml
 
+# Write the embedding explorer's corpus (4,000 sentences from templates, a fixed seed) into its data/
+embedding-data:
+    cargo run --release -q --manifest-path demos/embedding-explorer/train/Cargo.toml
+
 # Fetch MNIST into work/mnist/ and write the cnn-backprop demo's digits (600 to train on, 200 to test) into its data/
 cnn-backprop-data:
     scripts/mnist.sh

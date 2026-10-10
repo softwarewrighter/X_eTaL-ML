@@ -11,6 +11,13 @@ planning and reordering, `release` milestone release, `chore`
 agentrail bookkeeping (step complete, saga archive), `vendor` a
 refresh of the vendored X_eTaL.
 
+## 2026-10-10
+
+- 15:40 `chore` Saga step embedding-explorer completed.
+- 15:35 `demo` Embedding explorer, live (https://softwarewrighter.github.io/X_eTaL-ML/embedding-explorer/): word embeddings made from counts in X_eTaL: 4,000 generated sentences over 70 words (animals, foods, colors, numbers, places, actions, each word with habits), each word 64 numbers from which words occur near it; Learn's PCA turns them into a 3-D cloud to drag or spin, colored by the clusters k-means finds; click a word for its 5 nearest (cat: lion, dog, bird, fox, sheep). How many sentences are enough, measured: a word's nearest is of its kind for 33% of words at 12 sentences, 91% at 200, 90% from 1,600 on; repeating sentences changes nothing.
+- 15:30 `lib` Embed (`em:`): word embeddings from counts: `c_ounts` (by sorting, then run lengths), `c_ooccur` (a word-by-word table within a window, within sentences), `p_pmi`, `p_roject` (random indexing: a fixed +1/-1 matrix, signs from a hash), `u_nit`, `c_osines`, `n_earest`. 3 doc examples, 7 property checks, basics and a pets demo; types pinned. Uses Lists' `r_aze` from X_eTaL-libraries.
+- 13:30 `plan` embedding-explorer moved ahead of quant (the user's choice: a new demo sooner).
+
 ## 2026-10-09
 
 - 23:55 `chore` Saga step catalog-toc completed.

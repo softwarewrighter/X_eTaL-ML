@@ -1,0 +1,2 @@
+command = "../../../scripts/xt type ../src/Embed.xtl"
+exit_code = 0
