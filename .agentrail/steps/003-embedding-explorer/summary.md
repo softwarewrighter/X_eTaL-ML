@@ -1,0 +1,1 @@
+Embed library and live embedding explorer; measured corpus size vs neighbor quality (about 1,600 sentences enough)
