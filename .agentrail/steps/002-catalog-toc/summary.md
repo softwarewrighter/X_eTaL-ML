@@ -1,0 +1,1 @@
+catalog sidebar TOC, demos alphabetized, plus more links
