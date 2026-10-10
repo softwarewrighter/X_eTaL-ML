@@ -1,0 +1,8 @@
+number = 1
+slug = "xetal-091"
+status = "in-progress"
+description = "pin X_eTaL past its step 091 (names bound once, landed 2026-10-09; the reposi..."
+role = "production"
+context_files = []
+created_at = "2026-10-09T22:51:10"
+commits = []

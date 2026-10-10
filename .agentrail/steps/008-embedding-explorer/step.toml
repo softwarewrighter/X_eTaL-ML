@@ -1,0 +1,8 @@
+number = 8
+slug = "embedding-explorer"
+status = "pending"
+description = "the Embed library (em:) and an embedding explorer: 64-dimensional embeddings ..."
+role = "production"
+context_files = []
+created_at = "2026-10-09T22:51:11"
+commits = []

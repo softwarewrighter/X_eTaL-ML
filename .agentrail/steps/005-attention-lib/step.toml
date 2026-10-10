@@ -1,0 +1,8 @@
+number = 5
+slug = "attention-lib"
+status = "pending"
+description = "the Attention library (at:): scaled dot-product attention, causal masks, a he..."
+role = "production"
+context_files = []
+created_at = "2026-10-09T22:51:10"
+commits = []

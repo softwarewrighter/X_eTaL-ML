@@ -1,0 +1,8 @@
+number = 3
+slug = "quant"
+status = "pending"
+description = "the Quant library (qz:): FP16, INT8 and ternary quantization and the ternary ..."
+role = "production"
+context_files = []
+created_at = "2026-10-09T22:51:10"
+commits = []

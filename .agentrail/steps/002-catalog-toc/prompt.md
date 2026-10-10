@@ -1,0 +1,1 @@
+the user's ask, 2026-10-09: the live catalog (the demos page) gets a table of contents as a sidebar at the top left, the demos' links in alphabetical order, as X_eTaL-games' site has it (https://softwarewrighter.github.io/X_eTaL-games/); on a phone it folds above the cards

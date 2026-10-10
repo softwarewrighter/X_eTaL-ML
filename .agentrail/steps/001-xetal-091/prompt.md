@@ -1,0 +1,1 @@
+pin X_eTaL past its step 091 (names bound once, landed 2026-10-09; the repository is already clean, step bound-once) and X_eTaL-libraries at its latest; every baseline re-run, bench-check; asks that landed recorded

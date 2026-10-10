@@ -132,7 +132,7 @@ imports).
 | - | ----- |
 | Demos | 9, all live, each with command-line and browser tests; three of them train in X_eTaL, a CNN among them; one clusters (k-means) |
 | Libraries | NN (12 functions, typed, tested); Net (6 macros, every expansion pinned; written gradients checked against finite differences); Learn (10 functions: k-means, kNN, PCA, logistic regression; k-means checked against Rust, all by their properties); every item documented, 36 doc examples run by the gate |
-| X_eTaL | pinned at X_eTaL main d284a8c, after v0.1.0: tuples with patterns (the training state is one), `h:` private names, the doc site by directory (`XETAL_COMMIT`, `just xetal-version`); X_eTaL-libraries at 69bb369 (Plot's charts, every library documented) |
+| X_eTaL | pinned at X_eTaL main f7f9821, after v0.1.0: tuples with patterns (the training state is one), `h:` private names, each name bound once (checked here too, `just check-rebind`), the doc site by directory (`XETAL_COMMIT`, `just xetal-version`); X_eTaL-libraries at 746e666 (Plot's charts, every library documented) |
 | Speed | measured and guarded (`just bench-check`, [`docs/speed.md`](docs/speed.md)); the CNN's whole program runs in a third of a second |
 | Waiting on X_eTaL | a grade per row, arrays in and out of the browser engine, `e_ach` returning arrays ([`docs/xetal-asks.md`](docs/xetal-asks.md)) |
 | Later | more libraries (quantization, convolution, attention, sampling), a tiny GPT, an embedding explorer, training in X_eTaL ([`docs/plan.md`](docs/plan.md)) |

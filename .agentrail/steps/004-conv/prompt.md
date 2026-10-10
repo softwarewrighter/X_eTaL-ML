@@ -1,0 +1,1 @@
+the Conv library (cv:): 3 x 3 windows of a batch, convolution as one matrix product, max-pooling and its backward pass (each block's first largest); cnn-digits and cnn-backprop moved onto it, baselines unchanged

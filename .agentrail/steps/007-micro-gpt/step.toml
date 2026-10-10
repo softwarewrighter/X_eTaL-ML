@@ -1,0 +1,8 @@
+number = 7
+slug = "micro-gpt"
+status = "pending"
+description = "a tiny GPT's inference in X_eTaL on weights trained offline (a train/ program..."
+role = "production"
+context_files = []
+created_at = "2026-10-09T22:51:10"
+commits = []

@@ -1,0 +1,8 @@
+number = 4
+slug = "conv"
+status = "pending"
+description = "the Conv library (cv:): 3 x 3 windows of a batch, convolution as one matrix p..."
+role = "production"
+context_files = []
+created_at = "2026-10-09T22:51:10"
+commits = []

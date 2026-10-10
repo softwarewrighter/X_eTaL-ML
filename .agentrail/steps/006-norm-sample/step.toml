@@ -1,0 +1,8 @@
+number = 6
+slug = "norm-sample"
+status = "pending"
+description = "Norm (nm:: layer norm, RMS norm) and Sample (sm:: temperature, top-k, greedy)..."
+role = "production"
+context_files = []
+created_at = "2026-10-09T22:51:10"
+commits = []

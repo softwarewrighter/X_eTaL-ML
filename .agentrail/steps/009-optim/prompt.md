@@ -1,0 +1,1 @@
+the Optim library (op:): Adam and SGD as steps on a tuple state; Net's t_rain< and the demos' hand-written Adam moved onto it where that keeps the lesson

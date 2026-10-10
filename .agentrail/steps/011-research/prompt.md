@@ -1,0 +1,1 @@
+the deferred research demos: a tiny world model, a learned denoiser (diffusion), as far as X_eTaL's speed allows

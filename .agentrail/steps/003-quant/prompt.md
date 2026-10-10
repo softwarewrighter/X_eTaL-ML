@@ -1,0 +1,1 @@
+the Quant library (qz:): FP16, INT8 and ternary quantization and the ternary layer as additions, typed, documented (## and ###, ## >> examples), tested; ternary-net moved onto it with its baselines unchanged

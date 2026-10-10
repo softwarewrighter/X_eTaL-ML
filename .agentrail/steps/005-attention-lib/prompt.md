@@ -1,0 +1,1 @@
+the Attention library (at:): scaled dot-product attention, causal masks, a head; the attention demo moved onto it, its lesson kept

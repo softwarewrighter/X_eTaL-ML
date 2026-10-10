@@ -13,6 +13,10 @@ refresh of the vendored X_eTaL.
 
 ## 2026-10-09
 
+- 23:20 `chore` Saga step xetal-091 completed.
+- 23:15 `vendor` X_eTaL pinned at f7f9821 (its step 091: a name is bound once in its scope, `_ :=` discards, `[]E_X` in sessions; the yellow logo) and X_eTaL-libraries at 746e666 (its violet logo). Every baseline unchanged, step bound-once having made the repository clean; bench-check 2 to 13% faster.
+- 23:00 `plan` Saga training archived (its five steps and eight inserted ones done); saga post-launch begun: xetal-091, catalog-toc (the user's ask: the catalog's sidebar), quant, conv, attention-lib, norm-sample, micro-gpt, embedding-explorer, optim, lib-site, research.
+
 - 18:40 `chore` Saga step orange-brand completed.
 - 18:30 `fix` Learn's checks and blobs demo wrote shapes as `(2 c_at 60)`; now `2 60` (number literals form a strand). The gate checks only committed files, so it caught them after the classic-ml commit.
 - 18:35 `docs` ML is orange (the user's request): the favicon recolored from blue to orange (its design kept); X_eTaL's orange logo (images/xetal-logo-orange.png) heads the README, the catalog, the recorded page and every demo page, 60 px high, its aspect kept; the heading is the logo then "X_eTaL ML" in bright orange (#FF7A00; in the README an SVG title, images/x-etal-ml-title.svg, since GitHub drops CSS). The old logo removed; every demo's screenshot retaken.

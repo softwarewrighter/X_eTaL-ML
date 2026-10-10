@@ -254,10 +254,13 @@ synthetic shapes is a later stretch).
 ## Saga 5 -- post-launch
 
 The follow-up stream after the launch (research4: material for after
-the announcement), in this order:
+the announcement), in this order. Begun 2026-10-09 (saga training
+archived), ahead of the launch, which the user postponed further:
 
 | # | Step slug | Delivers |
 | - | --------- | -------- |
+| 0 | xetal-091 | DONE: X_eTaL pinned at f7f9821 (its step 091: each name bound once, `_ :=`, `[]E_X` in sessions), X_eTaL-libraries at 746e666; every baseline unchanged (step bound-once had made the repository clean); bench-check 2-13% faster |
+| 0b | catalog-toc | inserted: the user's ask: the catalog's table of contents, a sidebar at the top left, the demos alphabetized, as X_eTaL-games' site |
 | 1 | quant | the Quant library (`qz:`); ternary-net moved onto it, baselines unchanged |
 | 2 | conv | Conv (`cv:`); cnn-digits moved onto it |
 | 3 | attention-lib | Attention (`at:`); the attention demo keeps its lesson |

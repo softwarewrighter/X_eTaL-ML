@@ -1,0 +1,8 @@
+number = 11
+slug = "research"
+status = "pending"
+description = "the deferred research demos: a tiny world model, a learned denoiser (diffusio..."
+role = "production"
+context_files = []
+created_at = "2026-10-09T22:51:11"
+commits = []

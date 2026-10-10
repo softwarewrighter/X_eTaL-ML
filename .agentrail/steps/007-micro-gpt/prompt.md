@@ -1,0 +1,1 @@
+a tiny GPT's inference in X_eTaL on weights trained offline (a train/ program), generating text live in the browser

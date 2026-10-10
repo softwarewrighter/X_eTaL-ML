@@ -1,0 +1,8 @@
+number = 9
+slug = "optim"
+status = "pending"
+description = "the Optim library (op:): Adam and SGD as steps on a tuple state; Net's t_rain..."
+role = "production"
+context_files = []
+created_at = "2026-10-09T22:51:11"
+commits = []

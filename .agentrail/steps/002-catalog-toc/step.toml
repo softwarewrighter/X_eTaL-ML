@@ -1,0 +1,8 @@
+number = 2
+slug = "catalog-toc"
+status = "pending"
+description = "the user's ask, 2026-10-09: the live catalog (the demos page) gets a table of..."
+role = "production"
+context_files = []
+created_at = "2026-10-09T23:10:21"
+commits = []
