@@ -1,8 +1,9 @@
 number = 14
 slug = "orange-brand"
-status = "in-progress"
+status = "completed"
 description = "the user's ask, 2026-10-09: ML's color changes from blue to orange: the favic..."
 role = "production"
 context_files = []
 created_at = "2026-10-09T16:32:32"
-commits = []
+completed_at = "2026-10-09T19:02:18"
+commits = ["14403837922fa57a9a24f7972e32d2efd041c93f"]
