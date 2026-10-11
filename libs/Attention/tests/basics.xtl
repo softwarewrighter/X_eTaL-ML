@@ -1,0 +1,17 @@
+#!/usr/bin/env xetal
+## Attention: each function's answers on three tokens, pinned.
+
+"at:" u_se< "Attention"
+
+X := 3 2 r_eshape 1.0 0.0 0.0 1.0 1.0 1.0
+Wq := 2 2 r_eshape 1.0 0.0 0.0 1.0
+Wk := 2 2 r_eshape 2.0 0.0 0.0 2.0
+Wv := 2 1 r_eshape 1.0 -1.0
+S := (Wq, Wk) at:s_cores X
+S
+(at:a_ll 3) at:w_eights S
+(at:c_ausal 3) at:w_eights S
+(Wq, Wk, Wv) at:h_ead (X, at:c_ausal 3)
+## The reference page's examples.
+at:c_ausal 3
+(at:c_ausal 2) at:w_eights 2 2 r_eshape 0.0 5.0 1.0 1.0

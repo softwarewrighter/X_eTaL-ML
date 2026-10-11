@@ -118,6 +118,7 @@ just serve cnn-digits    # its page, at http://127.0.0.1:8435/
 | ------- | ----- | ---- |
 | [NN](libs/NN/docs/README.md) | `nn:` | activations, softmax by row (any rank), dense layers, argmax, one-hot, loss, accuracy |
 | [Quant](libs/Quant/docs/README.md) | `qz:` | weights in fewer bits: float rounding (FP32, FP16, bfloat16), symmetric integers, ternary codes and their scale, a ternary layer as additions |
+| [Attention](libs/Attention/docs/README.md) | `at:` | attention as three array expressions: scaled dot-product scores, masked softmax weights, causal masks, a head |
 | [Conv](libs/Conv/docs/README.md) | `cv:` | convolution for a batch of pictures: 3 x 3 windows, filters as one matrix product, max-pooling, and their backward passes |
 | [Embed](libs/Embed/docs/README.md) | `em:` | word embeddings from counts: co-occurrence (counted by sorting), PPMI, a fixed projection, cosine neighbors |
 | [Learn](libs/Learn/docs/README.md) | `ml:` | classic machine learning after APLearn's list, each a fit and a predict: k-means (`(k, n) ml:k_means X`), k nearest neighbors, PCA (`(mu, V, ev) := 2 ml:p_ca X`), logistic regression |
@@ -135,7 +136,7 @@ imports).
 | | Today |
 | - | ----- |
 | Demos | 10, all live, each with command-line and browser tests; three of them train in X_eTaL, a CNN among them; one clusters (k-means), one explores embeddings |
-| Libraries | NN (12 functions, typed, tested); Net (6 macros, every expansion pinned; written gradients checked against finite differences); Learn (10 functions: k-means, kNN, PCA, logistic regression; k-means checked against Rust, all by their properties); Embed (7 functions: counts, PPMI, projection, neighbors); Quant (7 functions: float, integer and ternary formats, additions); Conv (5 functions: windows, convolution, pooling, their gradients); every item documented, 57 doc examples run by the gate |
+| Libraries | NN (12 functions, typed, tested); Net (6 macros, every expansion pinned; written gradients checked against finite differences); Learn (10 functions: k-means, kNN, PCA, logistic regression; k-means checked against Rust, all by their properties); Embed (7 functions: counts, PPMI, projection, neighbors); Quant (7 functions: float, integer and ternary formats, additions); Conv (5 functions: windows, convolution, pooling, their gradients); Attention (5 functions: scores, weights, masks, a head); every item documented, 64 doc examples run by the gate |
 | X_eTaL | pinned at X_eTaL main f7f9821, after v0.1.0: tuples with patterns (the training state is one), `h:` private names, each name bound once (checked here too, `just check-rebind`), the doc site by directory (`XETAL_COMMIT`, `just xetal-version`); X_eTaL-libraries at 746e666 (Plot's charts, every library documented) |
 | Speed | measured and guarded (`just bench-check`, [`docs/speed.md`](docs/speed.md)); the CNN's whole program runs in a third of a second |
 | Waiting on X_eTaL | a grade per row, arrays in and out of the browser engine, `e_ach` returning arrays ([`docs/xetal-asks.md`](docs/xetal-asks.md)) |

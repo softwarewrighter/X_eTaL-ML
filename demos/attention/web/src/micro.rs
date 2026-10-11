@@ -53,8 +53,8 @@ pub fn tokens(sentence: &str) -> Vec<(String, usize)> {
 pub fn tail(ids: &[usize], causal: bool) -> String {
     let ids: Vec<String> = ids.iter().map(|i| i.to_string()).collect();
     let mask = match causal {
-        true => "M := f_loat (r_ange n) '>= t_able r_ange n",
-        false => "M := (n c_at n) r_eshape 1.0",
+        true => "M := at:c_ausal n",
+        false => "M := at:a_ll n",
     };
     format!(
         "ids := {}\nX := ids s_elect F\nn := t_ally ids\n{mask}\n\

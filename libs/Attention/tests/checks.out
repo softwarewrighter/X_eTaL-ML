@@ -1,0 +1,8 @@
+ok: each row of weights sums to 1
+ok: under the causal mask, too
+ok: a masked place gets 0
+ok: the first token sees only itself
+ok: the scores are Q K^T over the square root of 3
+ok: a head is the weights times the values
+ok: reordered tokens, reordered outputs
+7 checks, all passed

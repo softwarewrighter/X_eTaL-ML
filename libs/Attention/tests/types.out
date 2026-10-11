@@ -1,0 +1,5 @@
+l:s_cores : (Float, Float) -> Float -> Float
+l:w_eights : Float -> Float -> Float
+l:c_ausal : Int -> Float
+l:a_ll : Int -> Float
+l:h_ead : (Float, Float, Float) -> (Float, Float) -> Float

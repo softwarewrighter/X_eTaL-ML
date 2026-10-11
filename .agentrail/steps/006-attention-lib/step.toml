@@ -1,6 +1,6 @@
 number = 6
 slug = "attention-lib"
-status = "pending"
+status = "in-progress"
 description = "the Attention library (at:): scaled dot-product attention, causal masks, a he..."
 role = "production"
 context_files = []

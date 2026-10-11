@@ -1,0 +1,24 @@
+#!/usr/bin/env xetal
+## Attention's properties, checked with Check, on six tokens of four
+## features and a head of width 3, by a fixed ripple (no chance).
+
+"at:" u_se< "Attention"
+"k:" u_se< "Check"
+
+X := 6 4 r_eshape s_in 0.7 * f_loat r_ange 24
+Wq := 4 3 r_eshape c_os 1.1 * f_loat r_ange 12
+Wk := 4 3 r_eshape s_in 1.9 * f_loat r_ange 12
+Wv := 4 2 r_eshape c_os 0.3 * f_loat r_ange 8
+S := (Wq, Wk) at:s_cores X
+A := (at:a_ll 6) at:w_eights S
+C := (at:c_ausal 6) at:w_eights S
+c1 := "each row of weights sums to 1" k:t_est (6 r_eshape 1.0) k:n_ear '+ r_/_2 A
+c2 := "under the causal mask, too" k:t_est (6 r_eshape 1.0) k:n_ear '+ r_/_2 C
+c3 := "a masked place gets 0" k:t_est 0.0 k:n_ear '+ r_/ r_avel C * 1.0 - at:c_ausal 6
+c4 := "the first token sees only itself" k:t_est 1.0 0.0 0.0 0.0 0.0 0.0 k:n_ear 1 s_elect C
+c5 := "the scores are Q K^T over the square root of 3" k:t_est S k:n_ear ((X '+ '* i_nner Wq) '+ '* i_nner o_\ X '+ '* i_nner Wk) / 3.0 ^ 0.5
+c6 := "a head is the weights times the values" k:t_est (C '+ '* i_nner X '+ '* i_nner Wv) k:n_ear (Wq, Wk, Wv) at:h_ead (X, at:c_ausal 6)
+## Reordering the tokens reorders a head's output the same way (no mask).
+p := 4 1 6 2 5 3
+c7 := "reordered tokens, reordered outputs" k:t_est (p s_elect (Wq, Wk, Wv) at:h_ead (X, at:a_ll 6)) k:n_ear (Wq, Wk, Wv) at:h_ead (p s_elect X, at:a_ll 6)
+k:r_eport c1 k:a_nd c2 k:a_nd c3 k:a_nd c4 k:a_nd c5 k:a_nd c6 k:a_nd c7

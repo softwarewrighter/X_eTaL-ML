@@ -13,8 +13,12 @@ Wq := 8 2 r_eshape n_umbers []N_GET "data/wq.txt"
 Wk := 8 2 r_eshape n_umbers []N_GET "data/wk.txt"
 
 ### The core: attention for tokens X, where mask M allows
-u:s_cores := { X -> ((X '+ '* i_nner Wq) '+ '* i_nner o_\ X '+ '* i_nner Wk) / 2.0 ^ 0.5 }
-u:a_ttend := { X M -> nn:s_oftmax (u:s_cores X) - 1e9 * 1.0 - M }
+"at:" u_se< "Attention"
+## Every query against every key: Attention's s_cores, (X Wq) times
+## (X Wk) transposed, over the square root of 2 (the keys' length).
+u:s_cores := { X -> (Wq, Wk) at:s_cores X }
+## Each row into weights (softmax), where the mask allows.
+u:a_ttend := { X M -> M at:w_eights u:s_cores X }
 # -- end of the core ---------------------------------------
 
 ### Drawing: rows labeled with their words
@@ -32,7 +36,7 @@ u:t_op := { ids A ->
 ids := 1 3 12 15 13 1 7 20 11 14 16
 X := ids s_elect F
 n := t_ally ids
-everyone := (n c_at n) r_eshape 1.0
+everyone := at:a_ll n
 A := X u:a_ttend everyone
 # The weights: row i is how much word i looks at each word (the
 # columns are the same words, left to right).
@@ -47,7 +51,7 @@ ids u:t_op A
 
 ## A causal mask (a word sees only itself and the words before it, as
 ## when generating text): "it" still finds the animal; "the" sees itself.
-causal := f_loat (r_ange n) '>= t_able r_ange n
+causal := at:c_ausal n
 u:h_eader ids
 ids u:r_ows u:w_ide u:s_hade X u:a_ttend causal
 

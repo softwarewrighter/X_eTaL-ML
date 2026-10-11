@@ -30,8 +30,16 @@ just test-demo attention # its CLI and browser baselines and the web app's tests
 Attention is two lines:
 
 ```
-u:s_cores := { X -> ((X '+ '* i_nner Wq) '+ '* i_nner o_\ X '+ '* i_nner Wk) / 2.0 ^ 0.5 }
-u:a_ttend := { X M -> nn:s_oftmax (u:s_cores X) - 1e9 * 1.0 - M }
+u:s_cores := { X -> (Wq, Wk) at:s_cores X }
+u:a_ttend := { X M -> M at:w_eights u:s_cores X }
+```
+
+on the [Attention](../../libs/Attention/docs/README.md) library, whose
+two lines are the whole of it:
+
+```
+l:s_cores := { (Wq, Wk) X -> ((X '+ '* i_nner Wq) '+ '* i_nner o_\ X '+ '* i_nner Wk) / (f_loat 2 s_elect s_hape Wq) ^ 0.5 }
+l:w_eights := { M S -> nn:s_oftmax S - 1e9 * 1.0 - M }
 ```
 
 Read right to left:
@@ -42,7 +50,7 @@ Read right to left:
   S = Q K^T, n x n, divided by the square root of the 2 dimensions.
 - The mask M has 1 where a word may look. Subtracting 1e9 where it is
   0 makes those scores vanish in the softmax: the causal mask
-  `f_loat (r_ange n) '>= t_able r_ange n` lets each word see only itself
+  `at:c_ausal n` (`f_loat (r_ange n) '>= t_able r_ange n`) lets each word see only itself
   and the words before it, as when a model generates text.
 - `nn:s_oftmax` (the [NN library](../../libs/NN/docs/README.md)) turns
   each row into weights that add up to 1, and the output is

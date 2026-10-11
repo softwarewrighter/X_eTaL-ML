@@ -1,0 +1,53 @@
+## Attention: scaled dot-product scores, masked softmax weights, causal masks, a head
+##
+## Import it with an alias of your choice: "at:" u_se< "Attention".
+## Put libs/Attention/src on XETAL_PATH ("just path"); the reference is libs/Attention/docs.
+## Names with l: are exported; h: names are private to this file.
+##
+## Tokens X are a matrix, one token per row. A head's projections are
+## matrices with a row per feature of X: Wq and Wk give queries and keys
+## of d numbers each, Wv the values. A mask is n x n: 1 where a token
+## may look at another, 0 where not. Attention is three array
+## expressions: S = Q K^T / sqrt d, A = softmax of each row of S,
+## Y = A V.
+
+"nn:" u_se< "NN"
+
+### Scores and weights
+
+## `(Wq, Wk) s_cores X`: every token's query against every token's key,
+## over the square root of their length: n x n.
+## >> "at:" u_se< "Attention"
+## >> X := 2 2 r_eshape 1.0 0.0 0.0 1.0
+## >> (2 2 r_eshape 1.0 0.0 0.0 1.0, 2 2 r_eshape 2.0 0.0 0.0 2.0) at:s_cores X
+## 1.414213562373095               0.0
+##               0.0 1.414213562373095
+l:s_cores := { (Wq, Wk) X -> ((X '+ '* i_nner Wq) '+ '* i_nner o_\ X '+ '* i_nner Wk) / (f_loat 2 s_elect s_hape Wq) ^ 0.5 }
+
+## `M w_eights S`: each row of the scores S into weights summing to 1
+## (softmax), where the mask M allows; a masked place gets 0.
+## >> "at:" u_se< "Attention"
+## >> (at:c_ausal 2) at:w_eights 2 2 r_eshape 0.0 5.0 1.0 1.0
+## 1.0 0.0
+## 0.5 0.5
+l:w_eights := { M S -> nn:s_oftmax S - 1e9 * 1.0 - M }
+
+### Masks
+
+## `c_ausal n`: each token sees itself and the tokens before it.
+## >> "at:" u_se< "Attention"
+## >> at:c_ausal 3
+## 1.0 0.0 0.0
+## 1.0 1.0 0.0
+## 1.0 1.0 1.0
+l:c_ausal := { n -> f_loat (r_ange n) '>= t_able r_ange n }
+
+## `a_ll n`: every token sees every token.
+l:a_ll := { n -> (n c_at n) r_eshape 1.0 }
+
+### A head
+
+## `(Wq, Wk, Wv) h_ead (X, M)`: one head of attention: the weights of
+## the scores under the mask, times the values X Wv: n x the values'
+## width.
+l:h_ead := { (Wq, Wk, Wv) (X, M) -> (M l:w_eights (Wq, Wk) l:s_cores X) '+ '* i_nner X '+ '* i_nner Wv }

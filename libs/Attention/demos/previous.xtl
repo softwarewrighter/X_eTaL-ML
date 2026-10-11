@@ -1,0 +1,19 @@
+#!/usr/bin/env xetal
+## A head that looks one token back: each token's key says where it is,
+## each query asks for the place before its own, so under the causal
+## mask every token takes on its predecessor's value. Run with "just
+## demo-lib Attention previous".
+
+"at:" u_se< "Attention"
+
+## Five tokens, each with a one-hot place (5 numbers) and a value.
+n := 5
+P := (r_ange n) '= t_able r_ange n
+X := f_loat P
+## Queries ask for the place before (the place matrix shifted), keys
+## are the places; both sharpened by 10 so the softmax picks one.
+Wq := 10.0 * f_loat (r_ange n) '= t_able 1 + r_ange n
+Wk := 10.0 * X
+Wv := (n c_at 1) r_eshape 10.0 20.0 30.0 40.0 50.0
+## Each token's output: its predecessor's value (the first has none and keeps its own).
+(f_loat f_loor 0.5 + 10.0 * r_avel (Wq, Wk, Wv) at:h_ead (X, at:c_ausal n)) / 10.0
