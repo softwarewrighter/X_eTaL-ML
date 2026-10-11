@@ -1,8 +1,9 @@
 number = 7
 slug = "norm-sample"
-status = "in-progress"
+status = "completed"
 description = "Norm (nm:: layer norm, RMS norm) and Sample (sm:: temperature, top-k, greedy)..."
 role = "production"
 context_files = []
 created_at = "2026-10-09T22:51:10"
-commits = []
+completed_at = "2026-10-11T16:05:22"
+commits = ["1bbd781e222e63f32f922d3c19298f6f22ec0256"]
