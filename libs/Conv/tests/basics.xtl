@@ -1,0 +1,20 @@
+#!/usr/bin/env xetal
+## Conv: each function's answers on a small batch, pinned.
+
+"cv:" u_se< "Conv"
+
+## Two 4 x 4 pictures, two filters (a vertical edge, a dot) and biases.
+x := 2 4 4 r_eshape f_loat (r_ange 32) m_od 5
+K := 2 9 r_eshape -1.0 0.0 1.0 -1.0 0.0 1.0 -1.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0
+B := 0.5 -1.0
+s_hape cv:w_indows x
+c := (K, B) cv:c_onv x
+s_hape c
+c
+cv:p_ool c
+## Back through the pooling, a gradient of 1 per block.
+c cv:u_npool (s_hape cv:p_ool c) r_eshape 1.0
+## The filters' and biases' gradients for a gradient of 1 everywhere.
+(GK, GB) := (cv:w_indows x) cv:g_rads (s_hape c) r_eshape 1.0
+GK
+GB

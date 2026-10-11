@@ -1,0 +1,36 @@
+#!/usr/bin/env xetal
+## Conv's properties, checked with Check: the convolution equals the
+## one-picture formula of the cnn-digits demo, pooling is the blocks'
+## largest, and the backward passes match finite differences.
+
+"cv:" u_se< "Conv"
+"k:" u_se< "Check"
+
+## Three 8 x 8 pictures and four filters, by a fixed ripple (no chance).
+x := 3 8 8 r_eshape s_in 0.37 * f_loat r_ange 192
+K := 4 9 r_eshape 0.5 * c_os 1.3 * f_loat r_ange 36
+B := 0.1 -0.2 0.05 0.0
+c := (K, B) cv:c_onv x
+## cnn-digits' one-picture convolution, picture by picture.
+u:o_ne := { p ->
+  v := 1 d_rop_4 -1 d_rop_4 1 d_rop_3 -1 d_rop_3 -1 0 1 o_-_2 -1 0 1 o_-_2 p
+  4 6 6 r_eshape (K '+ '* i_nner 9 36 r_eshape v) + B 'l_eft t_able o_ffsets 36
+}
+c1 := "the convolution is cnn-digits' formula, picture by picture" k:t_est (r_avel c) k:n_ear (r_avel u:o_ne 1 s_elect x) c_at (r_avel u:o_ne 2 s_elect x) c_at r_avel u:o_ne 3 s_elect x
+p := cv:p_ool c
+c2 := "pooling keeps the maps' largest value" k:t_est ('m_ax r_/ r_avel c) k:n_ear 'm_ax r_/ r_avel p
+c3 := "pooling halves each side" k:t_est 3 4 3 3 k:i_s s_hape p
+d := (s_hape p) r_eshape 1.0 + f_loat r_ange t_ally r_avel p
+u := c cv:u_npool d
+c4 := "unpooling keeps the gradient's total" k:t_est ('+ r_/ r_avel d) k:n_ear '+ r_/ r_avel u
+c5 := "unpooling puts one value in each block" k:t_est (t_ally r_avel p) k:i_s '+ r_/ r_avel u != 0.0
+## A loss of the filters: the pooled maps weighted by d, summed.
+u:l_oss := { k b -> '+ r_/ r_avel d * cv:p_ool (k, b) cv:c_onv x }
+(GK, GB) := (cv:w_indows x) cv:g_rads c cv:u_npool d
+e := 0.00001
+u:b_ump := { w j -> e * f_loat (s_hape w) r_eshape j = r_ange t_ally r_avel w }
+FK := (s_hape K) r_eshape '{ j -> (((K + K u:b_ump j) u:l_oss B) - (K - K u:b_ump j) u:l_oss B) / 2.0 * e } e_ach r_ange 36
+FB := '{ j -> ((K u:l_oss B + B u:b_ump j) - K u:l_oss B - B u:b_ump j) / 2.0 * e } e_ach r_ange 4
+c6 := "the filters' gradient matches finite differences" k:t_est k:t_rue 0.000001 > 'm_ax r_/ r_avel a_bs GK - FK
+c7 := "the biases' gradient matches finite differences" k:t_est k:t_rue 0.000001 > 'm_ax r_/ a_bs GB - FB
+k:r_eport c1 k:a_nd c2 k:a_nd c3 k:a_nd c4 k:a_nd c5 k:a_nd c6 k:a_nd c7

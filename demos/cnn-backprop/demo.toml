@@ -7,5 +7,5 @@ concepts = ["training", "backpropagation", "convolution", "max-pooling", "tuples
 status = "live"             # draft | live | deferred
 order = 17                  # position in the catalog (lower first)
 needs = []                   # asks in docs/xetal-asks.md it waits on or works around
-line = "GK := DM '+ '* i_nner o_\\ V"
-why = "The filters' gradient over a whole batch is one matrix product: what came back to every position of every map, times the transposed 3 x 3 windows of every digit, the same windows the convolution used going forward."
+line = "DC := (A cv:u_npool DQ) * f_loat C > 0.0"
+why = "Back through max-pooling and ReLU for a whole batch at once: each 2 x 2 block's gradient goes to its first largest item, and only where the convolution's output was positive; then one matrix product with the same windows gives every filter's gradient."

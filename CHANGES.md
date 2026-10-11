@@ -11,6 +11,11 @@ planning and reordering, `release` milestone release, `chore`
 agentrail bookkeeping (step complete, saga archive), `vendor` a
 refresh of the vendored X_eTaL.
 
+## 2026-10-11
+
+- 10:40 `chore` Saga step conv completed.
+- 10:35 `lib` Conv (`cv:`): convolution for a batch of pictures of any size: `w_indows` (every 3 x 3 window as rows), `c_onv` (filters and biases as a pair, one matrix product), `p_ool` (2 x 2), `u_npool` (the gradient to each block's first largest item), `g_rads` (the filters' and biases' gradients). 6 doc examples, 7 property checks (equal to the Tiny CNN's one-picture formula; both gradients against finite differences), an edges demo. `refactor` CNN training uses it (output byte for byte unchanged; its card's line is now its unpooling); the Tiny CNN keeps its own written-out convolution, its lesson.
+
 ## 2026-10-10
 
 - 17:40 `docs` The embedding explorer's screenshot (its catalog card and README), left out of its commit.

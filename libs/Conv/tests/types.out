@@ -1,0 +1,5 @@
+l:w_indows : a -> a
+l:c_onv : Num a => (a, a) -> a -> a
+l:p_ool : Num a => a -> a
+l:u_npool : Num a => a -> Float -> Float
+l:g_rads : Num a => a -> a -> (a, a)

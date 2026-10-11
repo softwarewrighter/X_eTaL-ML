@@ -1,0 +1,19 @@
+#!/usr/bin/env xetal
+## Conv on one small picture: a square, two edge filters, ReLU and
+## pooling, drawn. Run with "just demo-lib Conv edges".
+
+"cv:" u_se< "Conv"
+
+## A 10 x 10 picture: a bright square on dark.
+r := (o_ffsets 10) 'l_eft t_able o_ffsets 10
+cc := (o_ffsets 10) 'r_ight t_able o_ffsets 10
+x := 1 10 10 r_eshape f_loat (r > 2) & (r < 7) & (cc > 2) & cc < 7
+## Two filters: left-to-right brightening (a left edge), and top-to-bottom.
+K := 2 9 r_eshape -1.0 0.0 1.0 -1.0 0.0 1.0 -1.0 0.0 1.0 -1.0 -1.0 -1.0 0.0 0.0 0.0 1.0 1.0 1.0
+u:s_hade := { m -> (1 + f_loor 0 m_ax 3 m_in m) s_elect " .:#" }
+## The picture, then each filter's map after ReLU (8 x 8), then pooled (4 x 4).
+u:s_hade 3.0 * 10 10 r_eshape x
+m := 0.0 m_ax (K, 0.0 0.0) cv:c_onv x
+u:s_hade 8 8 r_eshape 1 s_elect_2 m
+u:s_hade 8 8 r_eshape 2 s_elect_2 m
+u:s_hade 4 4 r_eshape 1 s_elect_2 cv:p_ool m

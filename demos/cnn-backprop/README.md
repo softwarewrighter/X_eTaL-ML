@@ -31,10 +31,11 @@ just test-demo cnn-backprop    # its CLI and browser baselines and the web app's
 
 ## The program
 
-`cnn-backprop.xtl`. Forward, for a batch x of n digits: every 3 x 3
-window of every digit as 9 rows (`u:w_indows`, the picture's nine
-shifted copies), the filters over all of them as one matrix product
-(`u:c_onv`), ReLU, the largest of each 2 x 2 block (`u:p_ool`), then
+`cnn-backprop.xtl`, on the [Conv](../../libs/Conv/docs/README.md)
+library. Forward, for a batch x of n digits: every 3 x 3 window of
+every digit as 9 rows (`cv:w_indows`, the picture's nine shifted
+copies), the filters over all of them as one matrix product
+(`cv:c_onv`), ReLU, the largest of each 2 x 2 block (`cv:p_ool`), then
 the dense layer and softmax. Backward, each stage undone in reverse
 (`u:g_rad`):
 
@@ -42,21 +43,19 @@ the dense layer and softmax. Backward, each stage undone in reverse
 D3 := (P - y) / f_loat n                                    # softmax with cross-entropy
 GW := (o_\ F c_at_2 ((n c_at 1) r_eshape 1.0)) '+ '* i_nner D3   # the dense layer's gradient
 DQ := (n c_at 8 13 13) r_eshape D3 '+ '* i_nner o_\ -1 d_rop W  # back through it
-R := u:b_locks A                                            # each 2 x 2 block as a last axis of 4
-hit := f_loat R = (s_hape R) r_eshape (r_avel Q) 'l_eft t_able 1 2 3 4
-first := hit * f_loat 1.0 = '+ s_\_5 hit                    # the block's first largest item
-DC := (u:m_aps first * ...) * f_loat C > 0.0                # unpooled, back through ReLU
-DM := (8 c_at n * 676) r_eshape 2 1 3 t_ranspose (n c_at 8 c_at 676) r_eshape DC
-(DM '+ '* i_nner o_\ V, '+ r_/_2 DM, GW)                    # the filters', the biases', the dense layer's
+DC := (A cv:u_npool DQ) * f_loat C > 0.0                    # back through the pooling, then ReLU
+(GK, GB) := V cv:g_rads DC                                  # the filters' and the biases'
 ```
 
 The pooling sends each block's gradient to its largest item, and to
 the first one only when several tie: MNIST's saturated strokes make
 equal maxima common, and the loss moves with one of them, not all.
-The filters' gradient uses the same windows V as the forward pass,
-transposed: what came back to each position, times the window that
-produced it, summed over every position of every digit in one matrix
-product.
+Conv does it by putting each block on a last axis of 4, marking the
+items equal to the block's largest, and keeping the first mark by a
+running sum (`'+ s_\_5`). The filters' gradient uses the same windows
+V as the forward pass, transposed: what came back to each position,
+times the window that produced it, summed over every position of
+every digit in one matrix product.
 
 The training state is a tuple, `(K, B, W, MK, MB, MW, VK, VB, VW, t)`
 (the filters, their biases, the dense weights, Adam's two averages of

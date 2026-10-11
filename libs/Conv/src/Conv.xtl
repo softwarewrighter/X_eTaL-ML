@@ -1,0 +1,83 @@
+## Conv: convolution for a batch of pictures: 3 x 3 windows, filters as one matrix product, max-pooling, and their backward passes
+##
+## Import it with an alias of your choice: "cv:" u_se< "Conv".
+## Put libs/Conv/src on XETAL_PATH ("just path"); the reference is libs/Conv/docs.
+## Names with l: are exported; h: names are private to this file.
+##
+## A batch is n pictures of h x w (n x h x w); a picture alone is a
+## batch of one. Filters K are f rows of 9 (a 3 x 3 filter row by row)
+## with biases B (f); maps are n x f x (h - 2) x (w - 2) (valid
+## convolution), pooled by 2 x 2 blocks to half each side.
+
+### Forward
+
+## `w_indows x`: every 3 x 3 window of every picture as 9 rows, a
+## column per picture and place (the picture's nine shifted copies).
+## >> "cv:" u_se< "Conv"
+## >> cv:w_indows 1 3 3 r_eshape f_loat r_ange 9
+## 1.0
+## 2.0
+## 3.0
+## 4.0
+## 5.0
+## 6.0
+## 7.0
+## 8.0
+## 9.0
+l:w_indows := { x ->
+  places := ((2 s_elect s_hape x) - 2) * (3 s_elect s_hape x) - 2
+  (9 c_at places * t_ally x) r_eshape 1 d_rop_5 -1 d_rop_5 1 d_rop_4 -1 d_rop_4 -1 0 1 o_-_3 -1 0 1 o_-_3 x
+}
+
+## `(K, B) c_onv x`: each filter over every window of every picture,
+## plus its bias: one matrix product for the whole batch.
+l:c_onv := { (K, B) x ->
+  n := t_ally x
+  h := (2 s_elect s_hape x) - 2
+  w := (3 s_elect s_hape x) - 2
+  f := t_ally K
+  (n c_at f c_at h c_at w) r_eshape 2 1 3 t_ranspose (f c_at n c_at h * w) r_eshape (K '+ '* i_nner l:w_indows x) + B 'l_eft t_able o_ffsets n * h * w
+}
+
+## `p_ool a`: the largest of each 2 x 2 block of the maps a (n x f x h x w): n x f x h/2 x w/2.
+## >> "cv:" u_se< "Conv"
+## >> cv:p_ool 1 1 2 4 r_eshape 1.0 5.0 2.0 2.0 3.0 4.0 2.0 2.0
+## 5.0 2.0
+l:p_ool := { a -> 'm_ax r_/_46 ((2 t_ake s_hape a) c_at ((3 s_elect s_hape a) d_iv 2) c_at 2 c_at ((4 s_elect s_hape a) d_iv 2) c_at 2) r_eshape a }
+
+### Backward
+
+## Each 2 x 2 block of the maps as a last axis of 4, and back.
+h:b_locks := { a ->
+  s := s_hape a
+  ((2 t_ake s) c_at ((3 s_elect s) d_iv 2) c_at ((4 s_elect s) d_iv 2) c_at 4) r_eshape 1 2 3 5 4 6 t_ranspose ((2 t_ake s) c_at ((3 s_elect s) d_iv 2) c_at 2 c_at ((4 s_elect s) d_iv 2) c_at 2) r_eshape a
+}
+h:m_aps := { r ->
+  s := s_hape r
+  ((2 t_ake s) c_at (2 * 3 s_elect s) c_at 2 * 4 s_elect s) r_eshape 1 2 3 5 4 6 t_ranspose ((4 t_ake s) c_at 2 2) r_eshape r
+}
+
+## `a u_npool d`: the gradient d of the pooled maps sent back through
+## the pooling of the maps a: each block's to its largest item, the
+## first of them when several tie (MNIST's saturated strokes make ties
+## common, and the loss moves with one item, not all).
+## >> "cv:" u_se< "Conv"
+## >> (1 1 2 4 r_eshape 1.0 5.0 2.0 2.0 3.0 4.0 2.0 2.0) cv:u_npool 1 1 1 2 r_eshape 10.0 20.0
+## 0.0 10.0 20.0 0.0
+## 0.0  0.0  0.0 0.0
+l:u_npool := { a d ->
+  R := h:b_locks a
+  hit := f_loat R = (s_hape R) r_eshape (r_avel l:p_ool a) 'l_eft t_able 1 2 3 4
+  first := hit * f_loat 1.0 = '+ s_\_5 hit
+  h:m_aps first * (s_hape R) r_eshape (r_avel d) 'l_eft t_able 1 2 3 4
+}
+
+## `V g_rads D`: the filters' and the biases' gradients, from the
+## windows V the convolution used and the gradient D of its maps (n x f
+## x h x w): what came back to each place, times the window there,
+## summed over every place of every picture: (GK, GB).
+l:g_rads := { V D ->
+  s := s_hape D
+  DM := ((2 s_elect s) c_at ('* r_/ s) d_iv 2 s_elect s) r_eshape 2 1 3 t_ranspose ((2 t_ake s) c_at (3 s_elect s) * 4 s_elect s) r_eshape D
+  (DM '+ '* i_nner o_\ V, '+ r_/_2 DM)
+}

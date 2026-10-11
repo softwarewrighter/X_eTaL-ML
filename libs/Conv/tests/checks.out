@@ -1,0 +1,8 @@
+ok: the convolution is cnn-digits' formula, picture by picture
+ok: pooling keeps the maps' largest value
+ok: pooling halves each side
+ok: unpooling keeps the gradient's total
+ok: unpooling puts one value in each block
+ok: the filters' gradient matches finite differences
+ok: the biases' gradient matches finite differences
+7 checks, all passed
