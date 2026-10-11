@@ -13,6 +13,7 @@ refresh of the vendored X_eTaL.
 
 ## 2026-10-10
 
+- 17:40 `docs` The embedding explorer's screenshot (its catalog card and README), left out of its commit.
 - 17:30 `chore` Saga step quant completed.
 - 17:25 `lib` Quant (`qz:`): weights in fewer bits, simulated as Float: `f_loats` (FP32, FP16, bfloat16 as b bits after the leading one), `s_nap` (to the nearest step), `i_nt` (symmetric b-bit integers), `c_ut` and `t_ernary` (-1, 0, +1 codes at a threshold), `s_cale` (a ternary layer's one multiply), `a_dds` (a ternary layer by additions alone). A step or threshold is a number or an array shaped as the weights (per layer, per row). 12 doc examples, 8 property checks, a formats demo (one matrix five ways: FP16 moves a layer's output 0.0003, ternary 0.56). `refactor` The 1.58-bit network demo uses it: its per-layer steps and thresholds stay in the program, the rounding is Quant's; output byte for byte unchanged.
 

@@ -13,6 +13,8 @@ Live: [Embedding explorer](https://softwarewrighter.github.io/X_eTaL-ML/embeddin
 colors are the clusters k-means finds in the 64 numbers, not told the
 kinds).
 
+[![Embedding explorer: the live page](screenshot.png)](https://softwarewrighter.github.io/X_eTaL-ML/embedding-explorer/)
+
 ## Run it
 
 From a clone of this repository (Rust, git and `just`):
