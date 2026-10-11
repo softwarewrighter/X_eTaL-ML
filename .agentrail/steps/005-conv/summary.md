@@ -1,0 +1,1 @@
+Conv library; cnn-backprop moved onto it (output identical); cnn-digits keeps its lesson, Conv tested equal to it
