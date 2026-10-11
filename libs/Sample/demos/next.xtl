@@ -1,0 +1,20 @@
+#!/usr/bin/env xetal
+## Choosing the next word from a model's scores over six words: the
+## greedy choice, the probabilities at three temperatures, top-2, and
+## twenty draws (r_oll!, seeded). Run with "just demo-lib Sample next".
+
+"sm:" u_se< "Sample"
+
+## Scores for: cat dog fox bird the runs
+s := 2.0 1.6 0.4 0.2 -1.0 -2.0
+sm:g_reedy 1 6 r_eshape s
+u:r_ound := { a -> (f_loat f_loor 0.5 + 100.0 * a) / 100.0 }
+## Cooler is surer; hotter, more even.
+u:r_ound 0.5 sm:p_robs s
+u:r_ound 1.0 sm:p_robs s
+u:r_ound 2.0 sm:p_robs s
+## Only the two likeliest, renormalized.
+u:r_ound 2 sm:t_op 1.0 sm:p_robs s
+## Twenty draws at temperature 1 (the uniform numbers from r_oll!).
+u := (f_loat r_oll! 20 r_eshape 1000) / 1000.0
+u sm:d_raw 20 6 r_eshape 1.0 sm:p_robs s

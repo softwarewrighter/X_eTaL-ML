@@ -1,0 +1,21 @@
+#!/usr/bin/env xetal
+## Sample's properties, checked with Check, on scores over ten tokens.
+
+"sm:" u_se< "Sample"
+"k:" u_se< "Check"
+
+s := 3 10 r_eshape 2.0 * s_in 1.3 * f_loat r_ange 30
+u:c_lose := { a b -> k:t_rue 0.000001 > 'm_ax r_/ r_avel a_bs a - b }
+p := 1.0 sm:p_robs s
+c1 := "probabilities sum to 1 a row" k:t_est (3 r_eshape 1.0) u:c_lose '+ r_/_2 p
+c2 := "a low temperature is the greedy choice" k:t_est (sm:g_reedy s) k:i_s sm:g_reedy 0.01 sm:p_robs s
+c3 := "a high temperature is nearly even" k:t_est k:t_rue 0.11 > 'm_ax r_/ r_avel 100.0 sm:p_robs s
+c4 := "top-1 is the greedy token, for sure" k:t_est (sm:g_reedy s) k:i_s sm:g_reedy 1 sm:t_op p
+c5 := "top-3 keeps three a row, summing to 1" k:t_est (3 r_eshape 3) k:i_s '+ r_/_2 0.0 < 3 sm:t_op p
+c6 := "and they sum to 1" k:t_est (3 r_eshape 1.0) u:c_lose '+ r_/_2 3 sm:t_op p
+## Drawing by evenly spread uniform numbers gives each token its share.
+q := 0.1 0.2 0.3 0.4
+u := (0.5 + f_loat o_ffsets 1000) / 1000.0
+d := u sm:d_raw 1000 4 r_eshape q
+c7 := "evenly spread draws give each token its share" k:t_est 100 200 300 400 k:i_s '{ j -> '+ r_/ d = j } e_ach 1 2 3 4
+k:r_eport c1 k:a_nd c2 k:a_nd c3 k:a_nd c4 k:a_nd c5 k:a_nd c6 k:a_nd c7

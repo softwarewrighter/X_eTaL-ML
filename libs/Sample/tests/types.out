@@ -1,0 +1,4 @@
+l:g_reedy : Num a => a -> Int
+l:p_robs : Num a => a -> a -> Float
+l:t_op : Int -> Float -> Float
+l:d_raw : (Num a, Num b, Truthy b) => a -> a -> b

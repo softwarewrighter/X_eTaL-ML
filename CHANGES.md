@@ -13,6 +13,9 @@ refresh of the vendored X_eTaL.
 
 ## 2026-10-11
 
+- 14:30 `chore` Saga step norm-sample completed.
+- 14:25 `lib` Norm (`nm:`): `s_tandard`, `l_ayer` (with a gain and a bias as a pair), `r_ms`; eps 0.00001 so a constant row gives 0. Sample (`sm:`): `g_reedy`, `p_robs` at a temperature, `t_op` (each row's k likeliest, renormalized; the k-th largest found by repeated masked maxima, as X_eTaL has no grade along a row: ask M4), `d_raw` (a token per row by uniform numbers the caller gives: no chance inside, the same numbers the same tokens). 14 doc examples, 13 property checks (Norm's means and variances, scale invariance; Sample's sums, temperature's limits, evenly spread draws giving each token its share exactly), a demo each.
+
 - 12:30 `chore` Saga step attention-lib completed.
 - 12:25 `lib` Attention (`at:`): `s_cores` (every query against every key over the square root of their length), `w_eights` (each row into weights under a mask), `c_ausal` and `a_ll` (masks), `h_ead` (the weighted values). 7 doc examples, 7 property checks, a demo of a head that looks one token back. `refactor` The attention demo uses it, its `u:s_cores` and `u:a_ttend` now one call each (the README shows the library's two lines); output byte for byte unchanged.
 

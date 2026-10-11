@@ -1,0 +1,8 @@
+ok: probabilities sum to 1 a row
+ok: a low temperature is the greedy choice
+ok: a high temperature is nearly even
+ok: top-1 is the greedy token, for sure
+ok: top-3 keeps three a row, summing to 1
+ok: and they sum to 1
+ok: evenly spread draws give each token its share
+7 checks, all passed

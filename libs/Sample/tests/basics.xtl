@@ -1,0 +1,16 @@
+#!/usr/bin/env xetal
+## Sample: each function's answers on two rows of scores, pinned.
+
+"sm:" u_se< "Sample"
+
+s := 2 4 r_eshape 1.0 3.0 2.0 0.0 0.0 0.0 5.0 0.0
+sm:g_reedy s
+p := 1.0 sm:p_robs s
+p
+0.5 sm:p_robs s
+2 sm:t_op p
+0.2 0.9 sm:d_raw p
+## The reference page's examples.
+sm:g_reedy 2 3 r_eshape 0.1 2.0 0.5 3.0 0.0 1.0
+2 sm:t_op 0.1 0.5 0.15 0.25
+0.1 0.7 sm:d_raw 2 3 r_eshape 0.2 0.3 0.5 0.2 0.3 0.5

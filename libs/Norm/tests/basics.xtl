@@ -1,0 +1,11 @@
+#!/usr/bin/env xetal
+## Norm: each function's answers on two rows, pinned.
+
+"nm:" u_se< "Norm"
+
+m := 2 4 r_eshape 1.0 2.0 3.0 6.0 10.0 10.0 10.0 14.0
+nm:s_tandard m
+(1.0 1.0 2.0 2.0, 0.0 0.0 0.0 1.0) nm:l_ayer m
+1.0 1.0 1.0 1.0 nm:r_ms m
+## The reference page's example.
+(2.0 2.0, 1.0 1.0) nm:l_ayer 1 2 r_eshape 3.0 5.0

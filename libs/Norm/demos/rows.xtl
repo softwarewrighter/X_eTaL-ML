@@ -1,0 +1,15 @@
+#!/usr/bin/env xetal
+## Two rows on very different scales, made alike by layer norm and by
+## RMS norm. Run with "just demo-lib Norm rows".
+
+"nm:" u_se< "Norm"
+
+m := 2 4 r_eshape 0.01 0.02 0.03 0.06 100.0 200.0 300.0 600.0
+u:r_ound := { a -> (f_loat f_loor 0.5 + 1000.0 * a) / 1000.0 }
+## Layer norm: nearly the same row twice (a row's scale does not
+## matter), but not quite: the small row's variance (0.00035) is not
+## large next to eps (0.00001), which keeps a constant row from dividing
+## by 0; the large row's is.
+u:r_ound (4 r_eshape 1.0, 4 r_eshape 0.0) nm:l_ayer m
+## RMS norm: likewise, and not centered.
+u:r_ound (4 r_eshape 1.0) nm:r_ms m

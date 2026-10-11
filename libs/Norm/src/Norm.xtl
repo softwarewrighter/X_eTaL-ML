@@ -1,0 +1,47 @@
+## Norm: normalizing each row: layer norm and RMS norm, with a gain and a bias
+##
+## Import it with an alias of your choice: "nm:" u_se< "Norm".
+## Put libs/Norm/src on XETAL_PATH ("just path"); the reference is libs/Norm/docs.
+## Names with l: are exported; h: names are private to this file.
+##
+## Rows are examples (or tokens); each is normalized along its own
+## numbers. A gain and a bias have one number per column and travel as
+## a pair, (g, b); eps (0.00001) keeps a constant row from dividing by
+## 0, so results are a hair from the exact ones (-0.99999 for -1).
+
+eps := 0.00001
+
+### Helpers (private)
+
+## A value per row spread across that row's columns.
+h:s_pread := { v m -> v 'l_eft t_able o_ffsets 2 s_elect s_hape m }
+
+### Normalizing
+
+## `s_tandard m`: each row less its mean, over its standard deviation
+## (population): mean 0 and variance 1 a row.
+## >> "nm:" u_se< "Norm"
+## >> nm:s_tandard 1 4 r_eshape 1.0 2.0 3.0 6.0
+## -1.0690434404458735 -0.5345217202229368 0.0 1.6035651606688102
+l:s_tandard := { m ->
+  n := f_loat 2 s_elect s_hape m
+  c := m - (('+ r_/_2 m) / n) h:s_pread m
+  c / ((eps + ('+ r_/_2 c * c) / n) ^ 0.5) h:s_pread m
+}
+
+## `(g, b) l_ayer m`: layer norm: each row standardized, then times the
+## gain g plus the bias b (a number per column).
+## >> "nm:" u_se< "Norm"
+## >> (2.0 2.0, 1.0 1.0) nm:l_ayer 1 2 r_eshape 3.0 5.0
+## -0.9999900000749995 2.9999900000749995
+l:l_ayer := { (g, b) m -> (((s_hape m) r_eshape g) * l:s_tandard m) + (s_hape m) r_eshape b }
+
+## `g r_ms m`: RMS norm: each row over the square root of its mean
+## square, times the gain g (no centering, no bias).
+## >> "nm:" u_se< "Norm"
+## >> 1.0 1.0 nm:r_ms 1 2 r_eshape 3.0 4.0
+## 0.8485277980128058 1.1313703973504077
+l:r_ms := { g m ->
+  n := f_loat 2 s_elect s_hape m
+  ((s_hape m) r_eshape g) * m / ((eps + ('+ r_/_2 m * m) / n) ^ 0.5) h:s_pread m
+}

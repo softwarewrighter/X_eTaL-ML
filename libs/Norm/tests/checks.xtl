@@ -1,0 +1,17 @@
+#!/usr/bin/env xetal
+## Norm's properties, checked with Check, on five rows of eight.
+
+"nm:" u_se< "Norm"
+"k:" u_se< "Check"
+
+m := 5 8 r_eshape 3.0 * s_in 0.9 * f_loat r_ange 40
+u:c_lose := { a b -> k:t_rue 0.0001 > 'm_ax r_/ r_avel a_bs a - b }
+z := nm:s_tandard m
+c1 := "standardized rows have mean 0" k:t_est (5 r_eshape 0.0) u:c_lose ('+ r_/_2 z) / 8.0
+c2 := "and variance 1" k:t_est (5 r_eshape 1.0) u:c_lose ('+ r_/_2 z * z) / 8.0
+c3 := "a row's scale and shift do not matter" k:t_est z u:c_lose nm:s_tandard 2.0 + 3.0 * m
+c4 := "layer norm with gain 1 and bias 0 is standardizing" k:t_est z u:c_lose (8 r_eshape 1.0, 8 r_eshape 0.0) nm:l_ayer m
+r := (8 r_eshape 1.0) nm:r_ms m
+c5 := "RMS-normed rows have mean square 1" k:t_est (5 r_eshape 1.0) u:c_lose ('+ r_/_2 r * r) / 8.0
+c6 := "a constant row becomes 0, not a division by 0" k:t_est (4 r_eshape 0.0) u:c_lose r_avel nm:s_tandard 1 4 r_eshape 7.0
+k:r_eport c1 k:a_nd c2 k:a_nd c3 k:a_nd c4 k:a_nd c5 k:a_nd c6

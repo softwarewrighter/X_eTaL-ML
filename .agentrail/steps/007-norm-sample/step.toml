@@ -1,6 +1,6 @@
 number = 7
 slug = "norm-sample"
-status = "pending"
+status = "in-progress"
 description = "Norm (nm:: layer norm, RMS norm) and Sample (sm:: temperature, top-k, greedy)..."
 role = "production"
 context_files = []

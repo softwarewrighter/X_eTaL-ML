@@ -1,0 +1,7 @@
+ok: standardized rows have mean 0
+ok: and variance 1
+ok: a row's scale and shift do not matter
+ok: layer norm with gain 1 and bias 0 is standardizing
+ok: RMS-normed rows have mean square 1
+ok: a constant row becomes 0, not a division by 0
+6 checks, all passed
