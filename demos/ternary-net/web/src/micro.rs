@@ -160,7 +160,7 @@ pub fn program_point(s: &Setup) -> String {
     let (x, y) = s.point;
     format!(
         "{}pt := (1 r_eshape {}) u:p_ad 1 r_eshape {}\nh1 := u:r_elu pt u:l_ayer 1 s_elect_2 m2\n\
-         r_avel h1\nr_avel (f_irst h1) u:a_dds 2 s_elect_2 q\nr_avel h1 u:l_ayer 2 s_elect_2 m2\nr_avel f_irst -1 t_ake 2 s_elect_2 m2\n\
+         r_avel h1\nr_avel (f_irst h1) qz:a_dds 2 s_elect_2 q\nr_avel h1 u:l_ayer 2 s_elect_2 m2\nr_avel f_irst -1 t_ake 2 s_elect_2 m2\n\
          r_avel (pt u:n_et m32) c_at (pt u:n_et m16) c_at (pt u:n_et m8) c_at pt u:n_et m2\n",
         head(s),
         lit(x),

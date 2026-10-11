@@ -30,17 +30,17 @@ threshold, the point you pick) as run:
 u:l_ayer := { x p -> (x '+ '* i_nner 16 t_ake p) + (o_ffsets t_ally x) 'r_ight t_able f_irst -1 t_ake p }
 u:r_elu := { x -> 0.0 m_ax x }
 u:n_et := { x k ->
-  h := u:r_elu x u:l_ayer 1 s_elect_2 k
-  h := u:r_elu h u:l_ayer 2 s_elect_2 k
-  3 t_ake_2 h u:l_ayer 3 s_elect_2 k
+  h1 := u:r_elu x u:l_ayer 1 s_elect_2 k
+  h2 := u:r_elu h1 u:l_ayer 2 s_elect_2 k
+  3 t_ake_2 h2 u:l_ayer 3 s_elect_2 k
 }
-u:t_ern := { k x ->
-  s := k * u:l_ayers ('+ r_/_13 a_bs x) / nw
-  (f_loat x > s) - f_loat x < n_eg s
-}
-q := t u:t_ern w
+s8 := u:l_ayers ('m_ax r_/_13 a_bs w) / 127.0
+q := (t * u:l_ayers ('+ r_/_13 a_bs w) / nw) qz:c_ut w
 a := u:l_ayers ('+ r_/_13 (a_bs w) * a_bs q) / 1.0 m_ax '+ r_/_13 a_bs q
-u:a_dds := { h k -> ('+ r_/ (h 'l_eft t_able o_ffsets 16) * f_loat k = 1.0) - '+ r_/ (h 'l_eft t_able o_ffsets 16) * f_loat k = -1.0 }
+m32 := (23.0 qz:f_loats w) u:w_ith m
+m16 := (10.0 qz:f_loats w) u:w_ith m
+m8 := (s8 qz:s_nap w) u:w_ith m
+m2 := (a * q) u:w_ith m
 ```
 
 ## How it works
@@ -50,15 +50,17 @@ u:a_dds := { h k -> ('+ r_/ (h 'l_eft t_able o_ffsets 16) * f_loat k = 1.0) - '+
 | the model | `fp`, `qa` | 17 3 16 | for each row (16 inputs, padded with 0, then the bias), layer and output: the whole network as one array |
 | inputs | `grid`, `test` | points 16 | each point (x, y) as a row of 16: `x e1 + y e2` |
 | the network | `u:n_et` | points 3 | three layers, each a matrix product plus the biases, ReLU between |
-| FP32, FP16 | `u:f_loats` | 16 3 16 | each weight rounded to 23 or 10 bits after its leading one |
-| INT8 | `u:i_nt8` | 16 3 16 | each layer scaled so its largest weight is 127, rounded |
-| ternary | `q`, `a` | 16 3 16 | +1 or -1 where a weight's size passes t times its layer's mean size, else 0; a scale per layer |
-| additions | `u:a_dds` | 16 | for one input vector, the sum of the inputs under +1 minus those under -1 |
+| FP32, FP16 | `qz:f_loats` | 16 3 16 | each weight rounded to 23 or 10 bits after its leading one ([Quant](../../libs/Quant/docs/README.md)) |
+| INT8 | `s8`, `qz:s_nap` | 16 3 16 | each layer's step so its largest weight is 127 steps; every weight rounded to its layer's step |
+| ternary | `q` (`qz:c_ut`), `a` | 16 3 16 | +1 or -1 where a weight's size passes t times its layer's mean size, else 0; a scale per layer |
+| additions | `qz:a_dds` | 16 | for one input vector, the sum of the inputs under +1 minus those under -1 |
 | measures | `u:m_easures` | 3 | accuracy on the test points, agreement with FP32 over the map, mean output error |
 
 Per-layer values (a mean, a largest weight) are reduced over axes 1
 and 3 at once (`r_/_13`) and spread back over the layer
-(`u:l_ayers`). The biases stay in full precision in every format.
+(`u:l_ayers`); the rounding itself is the [Quant](../../libs/Quant/docs/README.md)
+library's, which takes a step or a threshold per layer as an array.
+The biases stay in full precision in every format.
 
 The weights are trained offline by `train/` (a small Rust program with
 no dependencies: Adam, softmax cross-entropy, 300 points; then 3000

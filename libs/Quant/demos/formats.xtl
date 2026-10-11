@@ -1,0 +1,18 @@
+#!/usr/bin/env xetal
+## One weight matrix stored five ways, and how far each moves a layer's
+## output. Run with "just demo-lib Quant formats".
+
+"qz:" u_se< "Quant"
+
+## A 16 x 16 weight matrix and an input, by a fixed ripple (no chance).
+W := 16 16 r_eshape 0.4 * s_in 2.3 * f_loat r_ange 256
+x := c_os 0.9 * f_loat r_ange 16
+y := x '+ '* i_nner W
+## Each format's weights, and the largest change in the layer's output.
+u:e_rr := { V -> 'm_ax r_/ a_bs y - x '+ '* i_nner V }
+q := 0.7 qz:t_ernary W
+u:r_ound := { a -> (f_loat f_loor 0.5 + 1000000.0 * a) / 1000000.0 }
+## FP16, bfloat16, INT8, INT4, ternary (times its one scale).
+u:r_ound (u:e_rr 10.0 qz:f_loats W) c_at (u:e_rr 7.0 qz:f_loats W) c_at (u:e_rr 8 qz:i_nt W) c_at (u:e_rr 4 qz:i_nt W) c_at u:e_rr (W qz:s_cale q) * q
+## The ternary layer by additions only, then its one multiply: the same output.
+u:r_ound ((W qz:s_cale q) * x qz:a_dds q) - x '+ '* i_nner (W qz:s_cale q) * q

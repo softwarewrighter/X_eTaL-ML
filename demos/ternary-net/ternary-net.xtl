@@ -48,38 +48,29 @@ u:n_et := { x k ->
   3 t_ake_2 h2 u:l_ayer 3 s_elect_2 k
 }
 ### The formats: the weights rounded four ways
+"qz:" u_se< "Quant"
 ## w is 16 x 3 x 16 (input, layer, output); a value per layer is
 ## spread back over its layer; the biases stay as they are.
 w := 16 t_ake m
 nw := 32.0 256.0 48.0
 u:l_ayers := { v -> (o_ffsets 16) 'r_ight t_able v 'l_eft t_able o_ffsets 16 }
 u:w_ith := { q k -> q c_at -1 t_ake k }
-## Floats: keep b bits after the leading one (23 for FP32, 10 FP16).
-u:f_loats := { b x ->
-  s := 2.0 ^ (f_loat f_loor (l_og 0.000000001 m_ax a_bs x) / l_og 2.0) - b
-  s * f_loat f_loor 0.5 + x / s
-}
-## INT8: each layer's largest weight becomes 127.
-u:i_nt8 := { x ->
-  s := u:l_ayers ('m_ax r_/_13 a_bs x) / 127.0
-  s * f_loat f_loor 0.5 + x / s
-}
+## Floats: Quant's f_loats keeps b bits after the leading one (23 for FP32, 10 FP16).
+## INT8: each layer's largest weight becomes 127 steps, and Quant's
+## s_nap rounds every weight to its layer's step.
+s8 := u:l_ayers ('m_ax r_/_13 a_bs w) / 127.0
 ## Ternary: +1 or -1 where the size passes t times the layer's mean
-## size, else 0; the scale a is the mean size of the kept weights.
-u:t_ern := { k x ->
-  s := k * u:l_ayers ('+ r_/_13 a_bs x) / nw
-  (f_loat x > s) - f_loat x < n_eg s
-}
-q := t u:t_ern w
+## size, else 0 (Quant's c_ut); the scale a is the mean size of the
+## kept weights.
+q := (t * u:l_ayers ('+ r_/_13 a_bs w) / nw) qz:c_ut w
 a := u:l_ayers ('+ r_/_13 (a_bs w) * a_bs q) / 1.0 m_ax '+ r_/_13 a_bs q
-m32 := (23.0 u:f_loats w) u:w_ith m
-m16 := (10.0 u:f_loats w) u:w_ith m
-m8 := (u:i_nt8 w) u:w_ith m
+m32 := (23.0 qz:f_loats w) u:w_ith m
+m16 := (10.0 qz:f_loats w) u:w_ith m
+m8 := (s8 qz:s_nap w) u:w_ith m
 m2 := (a * q) u:w_ith m
 ### Additions only: a ternary layer for one input h
-## Sum the inputs where the weight is +1, subtract those where it is
-## -1, then one multiply by the layer's scale.
-u:a_dds := { h k -> ('+ r_/ (h 'l_eft t_able o_ffsets 16) * f_loat k = 1.0) - '+ r_/ (h 'l_eft t_able o_ffsets 16) * f_loat k = -1.0 }
+## Quant's a_dds: sum the inputs where the weight is +1, subtract those
+## where it is -1, then one multiply by the layer's scale.
 ### The maps: every map point through each format
 y32 := grid u:n_et m32
 y16 := grid u:n_et m16

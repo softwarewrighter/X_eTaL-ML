@@ -1,0 +1,9 @@
+ok: FP32's rounding changes a number by at most 2^-24 of it
+ok: FP16's by at most 2^-11 of it
+ok: s_nap moves a number at most half a step
+ok: INT8 keeps 255 levels at most
+ok: INT8 is off by at most half its step
+ok: ternary codes are -1, 0 and +1
+ok: the scale is the mean size of the kept numbers
+ok: a_dds equals h times the ternary weights
+8 checks, all passed

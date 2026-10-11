@@ -1,0 +1,22 @@
+#!/usr/bin/env xetal
+## Quant's properties, checked with Check, on 200 numbers spread over
+## -2 .. 2 by a fixed ripple (no chance).
+
+"qz:" u_se< "Quant"
+"k:" u_se< "Check"
+
+x := 2.0 * s_in 1.7 * f_loat r_ange 200
+u:w_orst := { a -> 'm_ax r_/ r_avel a_bs a }
+c1 := "FP32's rounding changes a number by at most 2^-24 of it" k:t_est k:t_rue (u:w_orst (x - 23.0 qz:f_loats x) / a_bs x) <= 2.0 ^ -24.0
+c2 := "FP16's by at most 2^-11 of it" k:t_est k:t_rue (u:w_orst (x - 10.0 qz:f_loats x) / a_bs x) <= 2.0 ^ -11.0
+c3 := "s_nap moves a number at most half a step" k:t_est k:t_rue 0.125000001 >= u:w_orst x - 0.25 qz:s_nap x
+c4 := "INT8 keeps 255 levels at most" k:t_est k:t_rue 255 >= t_ally u_nique 8 qz:i_nt x
+c5 := "INT8 is off by at most half its step" k:t_est k:t_rue (0.5000001 * (u:w_orst x) / 127.0) >= u:w_orst x - 8 qz:i_nt x
+q := 0.7 qz:t_ernary x
+c6 := "ternary codes are -1, 0 and +1" k:t_est -1.0 0.0 1.0 k:i_s s_ort u_nique q
+c7 := "the scale is the mean size of the kept numbers" k:t_est ((('+ r_/ (a_bs x) * a_bs q)) / '+ r_/ a_bs q) k:n_ear x qz:s_cale q
+## a_dds is the matrix product with ternary weights, without multiplying.
+W := 20 10 r_eshape q
+h := 1.0 + 0.1 * f_loat r_ange 20
+c8 := "a_dds equals h times the ternary weights" k:t_est (h '+ '* i_nner W) k:n_ear h qz:a_dds W
+k:r_eport c1 k:a_nd c2 k:a_nd c3 k:a_nd c4 k:a_nd c5 k:a_nd c6 k:a_nd c7 k:a_nd c8

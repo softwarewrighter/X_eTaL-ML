@@ -8,7 +8,7 @@ fn close(a: f64, b: f64, tol: f64) -> bool {
 #[test]
 fn the_page_runs_the_command_line_programs_sections() {
     assert!(weights().contains("qa := ") && weights().contains("pl := "));
-    assert!(core().contains("u:n_et := { x k ->") && core().contains("u:t_ern := { k x ->"));
+    assert!(core().contains("u:n_et := { x k ->") && core().contains("q := (t * u:l_ayers") && core().contains("\"qz:\" u_se< \"Quant\""));
     assert!(SOURCE.contains(weights()) && SOURCE.contains(core()));
 }
 

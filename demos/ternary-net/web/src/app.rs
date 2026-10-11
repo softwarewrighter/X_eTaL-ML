@@ -34,8 +34,8 @@ fn stage_chip(m: &UseReducerHandle<Model>, s: Stage) -> Html {
     let (name, src, dims, meaning): (&str, &str, Vec<usize>, &str) = match s {
         Stage::Inputs => ("inputs", "grid", vec![n, 16], "every map point as a row of 16: x, y, then 0s"),
         Stage::Network => ("network", "grid u:n_et m32", vec![n, 3], "three outputs per point, one per arm"),
-        Stage::Formats => ("formats", "t u:t_ern w", vec![16, 3, 16], "the ternary weights: input, layer, output"),
-        Stage::Additions => ("additions", "h u:a_dds k", vec![16], "layer 2's outputs before the scale: sums and differences of inputs"),
+        Stage::Formats => ("formats", "s qz:c_ut w", vec![16, 3, 16], "the ternary weights: input, layer, output"),
+        Stage::Additions => ("additions", "h qz:a_dds q", vec![16], "layer 2's outputs before the scale: sums and differences of inputs"),
         Stage::Maps => ("maps", "y32 ; y16 ; y8 ; y2", vec![n, 3], "each format's outputs over the map"),
         Stage::Measures => ("measures", "k u:m_easures y", vec![3], "accuracy, agreement with FP32, mean output error"),
     };
@@ -137,7 +137,7 @@ fn weights(model: &UseReducerHandle<Model>, t: &Ternary) -> Html {
     let body = html! { <div class="glyphrow">
         { glyphs(model, t, 0, 2, 16) }{ glyphs(model, t, 1, 16, 16) }{ glyphs(model, t, 2, 16, 3) }
     </div> };
-    panel("The ternary weights:", "q := t u:t_ern w",
+    panel("The ternary weights:", "q := s qz:c_ut w",
         "Each layer's weights become +1, 0 or \u{2212}1: kept where the size passes t times the layer's mean size, and one scale per layer (the mean size of the kept ones). Click a column of layer 2 to follow that output.",
         model.focus == Stage::Formats, body)
 }
@@ -156,12 +156,12 @@ fn additions(model: &UseReducerHandle<Model>, t: &Ternary, p: &Point) -> Html {
     let body = html! { <>
         <p class="calc">{format!("The point ({}, {}): layer 1 gives 16 numbers ", num(x), num(y))}{code("h1")}{"; output "}{j + 1}{" of layer 2 adds those where its column has + and subtracts those with \u{2212}:"}</p>
         <p class="terms">{ for terms }</p>
-        <p class="calc">{"+ terms "}{code(&num(plus))}{", \u{2212} terms "}{code(&num(minus))}{": "}{code("(f_irst h1) u:a_dds 2 s_elect_2 q")}{" = "}{code(&num(p.adds[j]))}</p>
+        <p class="calc">{"+ terms "}{code(&num(plus))}{", \u{2212} terms "}{code(&num(minus))}{": "}{code("(f_irst h1) qz:a_dds 2 s_elect_2 q")}{" = "}{code(&num(p.adds[j]))}</p>
         <p class="calc">{"then one multiply by the scale, plus the bias: "}{code(&line)}{" = "}{code(&num(t.scales[1] * p.adds[j] + p.b2[j]))}</p>
         <p class="calc">{"the matrix product gives the same: "}{code("h1 u:l_ayer 2 s_elect_2 m2")}{" = "}{code(&num(p.pre[j]))}</p>
         { for ((plus - minus - p.adds[j]).abs() > 1e-9).then(|| html! { <p class="error">{"the page's sum differs from X_eTaL's"}</p> }) }
     </> };
-    panel("Additions only:", "u:a_dds", "No multiplications inside a ternary layer: each output is a sum of some inputs minus a sum of others.", model.focus == Stage::Additions, body)
+    panel("Additions only:", "qz:a_dds", "No multiplications inside a ternary layer: each output is a sum of some inputs minus a sum of others.", model.focus == Stage::Additions, body)
 }
 
 fn outputs(model: &UseReducerHandle<Model>, p: &Point) -> Html {

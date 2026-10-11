@@ -49,8 +49,8 @@ pub fn range(src: &str, stage: Stage) -> Range {
     match stage {
         Stage::Inputs => between(src, "e1 := ", "test := "),
         Stage::Network => between(src, "u:l_ayer := ", "  3 t_ake_2"),
-        Stage::Formats => between(src, "u:f_loats := ", "m2 := "),
-        Stage::Additions => between(src, "u:a_dds := ", "u:a_dds := "),
+        Stage::Formats => between(src, "s8 := ", "m2 := "),
+        Stage::Additions => between(src, "r_avel (f_irst h1) qz:a_dds", "r_avel (f_irst h1) qz:a_dds"),
         Stage::Maps => between(src, "y32 := grid", "y8 := grid"),
         Stage::Measures => between(src, "u:m_easures := { k y ->", "  acc c_at agree c_at err"),
     }

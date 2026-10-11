@@ -1,0 +1,7 @@
+l:f_loats : Float -> Float -> Float
+l:s_nap : Float -> Float -> Float
+l:i_nt : Num a => a -> Float -> Float
+l:c_ut : Num a => a -> a -> Float
+l:t_ernary : Float -> Float -> Float
+l:s_cale : Float -> Float -> Float
+l:a_dds : Float -> Float -> Float
