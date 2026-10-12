@@ -1,0 +1,1 @@
+asks synced with X_eTaL's ledger; M15/M16 detailed and ready to take; check-asks in the gate

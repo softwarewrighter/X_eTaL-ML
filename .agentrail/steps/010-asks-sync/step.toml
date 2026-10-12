@@ -1,8 +1,9 @@
 number = 10
 slug = "asks-sync"
-status = "in-progress"
+status = "completed"
 description = "the user's go, 2026-10-12: docs/xetal-asks.md in step with X_eTaL's ledger (...."
 role = "production"
 context_files = []
 created_at = "2026-10-12T07:22:15"
-commits = []
+completed_at = "2026-10-12T07:39:25"
+commits = ["86269c6fe8efa2e23f165a6ef4b38e2c993feb57"]
