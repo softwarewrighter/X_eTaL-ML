@@ -1,6 +1,6 @@
 number = 11
 slug = "optim"
-status = "pending"
+status = "in-progress"
 description = "the Optim library (op:): Adam and SGD as steps on a tuple state; Net's t_rain..."
 role = "production"
 context_files = []

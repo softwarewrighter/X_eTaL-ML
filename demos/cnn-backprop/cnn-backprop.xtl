@@ -49,23 +49,20 @@ u:g_rad := { (K, B, W) i ->
 }
 
 ### Adam, on a state of (K, B, W, their averages, the step count)
+"op:" u_se< "Optim"
 ## The learning rate and the digits per step.
 lr := 0.01
 bs := 20
-## How far Adam moves a weight array, from its averages (m, v) at step t.
-u:m_ove := { (m, v) t -> (m / 1.0 - 0.9 ^ t) / 0.00000001 + (v / 1.0 - 0.999 ^ t) ^ 0.5 }
-## One step, on the next 20 training digits (30 steps go through all 600).
+## One step, on the next 20 training digits (30 steps go through all
+## 600): the Optim library's Adam on each of K, B and W.
 u:s_tep := { (K, B, W, MK, MB, MW, VK, VB, VW, t) ->
   i := (r_ange bs) + bs * (f_loor t) m_od 600 d_iv bs
   n := 1.0 + t
   (GK, GB, GW) := (K, B, W) u:g_rad i
-  mk := (0.9 * MK) + 0.1 * GK
-  mb := (0.9 * MB) + 0.1 * GB
-  mw := (0.9 * MW) + 0.1 * GW
-  vk := (0.999 * VK) + 0.001 * GK * GK
-  vb := (0.999 * VB) + 0.001 * GB * GB
-  vw := (0.999 * VW) + 0.001 * GW * GW
-  (K - lr * (mk, vk) u:m_ove n, B - lr * (mb, vb) u:m_ove n, W - lr * (mw, vw) u:m_ove n, mk, mb, mw, vk, vb, vw, n)
+  (k, mk, vk) := (lr, n) op:a_dam (K, MK, VK, GK)
+  (b, mb, vb) := (lr, n) op:a_dam (B, MB, VB, GB)
+  (w, mw, vw) := (lr, n) op:a_dam (W, MW, VW, GW)
+  (k, b, w, mk, mb, mw, vk, vb, vw, n)
 }
 ## The starting state: small random filters and dense weights; the
 ## filters' biases a little above 0, so that ReLU starts off its kink

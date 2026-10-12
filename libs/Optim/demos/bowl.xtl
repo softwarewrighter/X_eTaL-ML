@@ -1,0 +1,21 @@
+#!/usr/bin/env xetal
+## Gradient descent and Adam on a long narrow bowl, where the two
+## directions want very different step sizes. Run with "just demo-lib
+## Optim bowl".
+
+"op:" u_se< "Optim"
+
+## The bowl: x^2 / 1000 + y^2, its bottom at 0 0; the gradient (x/500, 2y).
+u:g_rad := { w -> (0.002 * 1 s_elect w) c_at 2.0 * 2 s_elect w }
+u:h_eight := { w -> ((1 s_elect w) ^ 2.0) / 1000.0 + (2 s_elect w) ^ 2.0 }
+start := 10.0 1.0
+u:r_ound := { a -> (f_loat f_loor 0.5 + 1000.0 * a) / 1000.0 }
+## Gradient descent at 0.9 (near the most the steep direction allows):
+## after 100 steps the shallow direction has gone only from 10 to 8.35
+## (where it is, then the height).
+sg := 100 '{ w -> 0.9 op:s_gd (w, u:g_rad w) } p_ower start
+u:r_ound sg c_at u:h_eight sg
+## Adam at 0.1 scales each direction by its own gradients' size, so the
+## shallow one moves too: to 2.24, the height 14 times lower.
+(ad, _, _, _) := 100 '{ (w, m, v, t) -> (w2, m2, v2) := (0.1, t + 1.0) op:a_dam (w, m, v, u:g_rad w); (w2, m2, v2, t + 1.0) } p_ower (start, 0.0 0.0, 0.0 0.0, 0.0)
+u:r_ound ad c_at u:h_eight ad

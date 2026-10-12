@@ -1,0 +1,17 @@
+#!/usr/bin/env xetal
+## Optim: each step's answers, pinned.
+
+"op:" u_se< "Optim"
+
+0.5 op:s_gd (1.0 2.0, 0.2 -0.4)
+## Two Adam steps on two weights, the gradients 0.5 -2.0 then 0.4 -1.0.
+s1 := (0.1, 1.0) op:a_dam (1.0 1.0, 0.0 0.0, 0.0 0.0, 0.5 -2.0)
+(w1, m1, v1) := s1
+w1
+m1
+v1
+(w2, m2, v2) := (0.1, 2.0) op:a_dam (w1, m1, v1, 0.4 -1.0)
+w2
+## The reference page's example.
+(w, m, v) := (0.1, 1.0) op:a_dam (1.0 1.0, 0.0 0.0, 0.0 0.0, 0.5 -2.0)
+w

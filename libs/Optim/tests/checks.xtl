@@ -1,0 +1,31 @@
+#!/usr/bin/env xetal
+## Optim's properties, checked with Check.
+
+"op:" u_se< "Optim"
+"k:" u_se< "Check"
+
+## Adam as train-live writes it out, for comparison.
+u:m_ove := { (m, v) t -> (m / 1.0 - 0.9 ^ t) / 0.00000001 + (v / 1.0 - 0.999 ^ t) ^ 0.5 }
+u:h_and := { (w, m, v, g) t ->
+  m2 := (0.9 * m) + 0.1 * g
+  v2 := (0.999 * v) + 0.001 * g * g
+  (w - 0.02 * (m2, v2) u:m_ove t, m2, v2)
+}
+w0 := 3 2 r_eshape 0.3 -0.2 0.5 0.1 -0.4 0.25
+g := 3 2 r_eshape 0.05 -0.1 0.2 0.0 -0.3 0.15
+(a1, am, av) := (0.02, 1.0) op:a_dam (w0, 0.0 * w0, 0.0 * w0, g)
+(b1, bm, bv) := (w0, 0.0 * w0, 0.0 * w0, g) u:h_and 1.0
+(a2, _, _) := (0.02, 2.0) op:a_dam (a1, am, av, 0.5 * g)
+(b2, _, _) := (b1, bm, bv, 0.5 * g) u:h_and 2.0
+c1 := "Adam is train-live's written-out step, exactly" k:t_est (r_avel a1) k:i_s r_avel b1
+c2 := "and the next one" k:t_est (r_avel a2) k:i_s r_avel b2
+(c3a, _, _) := (0.02, 0.9, 0.999, 1.0) op:a_damWith (w0, 0.0 * w0, 0.0 * w0, g)
+c3 := "a_damWith at 0.9 and 0.999 is a_dam" k:t_est (r_avel a1) k:n_ear r_avel c3a
+## Both find the bottom of a bowl, (w - target)^2 summed: its gradient is 2 (w - target).
+target := 1.0 -2.0 0.5
+u:b_owl := { w -> '+ r_/ (w - target) * w - target }
+sg := 50 '{ w -> 0.1 op:s_gd (w, 2.0 * w - target) } p_ower 0.0 0.0 0.0
+(ad, _, _, _) := 300 '{ (w, m, v, t) -> (w2, m2, v2) := (0.05, t + 1.0) op:a_dam (w, m, v, 2.0 * w - target); (w2, m2, v2, t + 1.0) } p_ower (0.0 0.0 0.0, 0.0 0.0 0.0, 0.0 0.0 0.0, 0.0)
+c4 := "gradient descent reaches the bottom" k:t_est k:t_rue 0.0001 > 'm_ax r_/ a_bs sg - target
+c5 := "so does Adam, near enough" k:t_est k:t_rue 0.001 > u:b_owl ad
+k:r_eport c1 k:a_nd c2 k:a_nd c3 k:a_nd c4 k:a_nd c5

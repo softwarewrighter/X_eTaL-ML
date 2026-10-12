@@ -13,6 +13,9 @@ refresh of the vendored X_eTaL.
 
 ## 2026-10-12
 
+- 11:20 `chore` Saga step optim completed.
+- 11:15 `lib` Optim (`op:`): optimizers as steps on tuples: `s_gd` (`lr op:s_gd (w, g)`), `a_dam` (`(lr, t) op:a_dam (w, m, v, g)` gives `(w, m, v)`), `a_damWith` (its own decay rates). Exactly the written-out Adam of Training live (tested over two steps). 5 doc examples, 5 property checks, a narrow-bowl demo (in 100 steps gradient descent moves the shallow direction from 10 to 8.35, Adam to 2.24). `refactor` CNN training's step uses it for its filters, biases and dense weights; output byte for byte unchanged. Training live and Net's `t_rain<` keep Adam written out: it is their lesson.
+
 - 09:40 `chore` Saga step asks-sync completed.
 - 09:35 `docs` The asks in step with X_eTaL's ledger (the user's go): statuses are X_eTaL's word (M4 per-row grade, M10 arrays from `e_ach` and M12 shapes in types declined, with their reasons, their workarounds now permanent unless those decisions change; M5 planned; M6 partly landed; M11 and M14 new); M15 (a doc site's title) and M16 (the matrix product's speed) detailed and marked not yet taken, with entries ready for X_eTaL's asks.toml. `test` `scripts/check-asks.py` (self-tested; in the gate; `just check-asks`) checks every ask against the pinned ledger. CLAUDE.md rule 5.
 
