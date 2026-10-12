@@ -108,6 +108,10 @@ pages:
 doc:
     scripts/doc-site.sh
 
+# Check docs/xetal-asks.md against X_eTaL's ledger at the pin: the same states, or marked not yet taken; the gate runs it
+check-asks:
+    scripts/py scripts/check-asks.py
+
 # Check that every name is bound once in its scope (X_eTaL lang-choices M1): programs, libraries, macro expansions; the gate runs it
 check-rebind:
     scripts/py scripts/check-rebind.py

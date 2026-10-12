@@ -329,7 +329,10 @@ Read before working:
    files under `work/xetal/`.
 5. Missing X_eTaL features and X_eTaL bugs go in `docs/xetal-asks.md`
    (status, kind, demos and libraries, why, minimal repro,
-   workaround). Do not fix X_eTaL from this repo and do not hide a
+   workaround). The status is X_eTaL's word from its ledger
+   (`work/xetal/docs/asks.toml`), or "not yet taken" until the ask is
+   added there (the section "To take to X_eTaL" holds it ready);
+   `just check-asks` (in the gate) keeps the two in step. Do not fix X_eTaL from this repo and do not hide a
    workaround: name it in the ask and on the demo's or library's page.
 5a. Use a helpful library from X_eTaL-libraries rather than
    re-writing it: it is pinned like X_eTaL (`XETAL_LIBRARIES_COMMIT`,

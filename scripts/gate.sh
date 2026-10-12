@@ -22,6 +22,9 @@ echo "ok: shared/microscope"
 "$root/scripts/test-libs.sh"
 "$root/scripts/doc-test.sh"
 "$root/scripts/py" "$root/scripts/check-examples.py"
+# Our asks in step with X_eTaL's ledger at the pin.
+"$root/scripts/py" "$root/scripts/check-asks.py" --self-test
+"$root/scripts/py" "$root/scripts/check-asks.py"
 # Each name bound once in its scope (X_eTaL lang-choices M1).
 "$root/scripts/py" "$root/scripts/check-rebind.py" --self-test
 "$root/scripts/py" "$root/scripts/check-rebind.py"

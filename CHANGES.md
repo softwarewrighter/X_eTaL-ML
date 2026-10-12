@@ -11,6 +11,11 @@ planning and reordering, `release` milestone release, `chore`
 agentrail bookkeeping (step complete, saga archive), `vendor` a
 refresh of the vendored X_eTaL.
 
+## 2026-10-12
+
+- 09:40 `chore` Saga step asks-sync completed.
+- 09:35 `docs` The asks in step with X_eTaL's ledger (the user's go): statuses are X_eTaL's word (M4 per-row grade, M10 arrays from `e_ach` and M12 shapes in types declined, with their reasons, their workarounds now permanent unless those decisions change; M5 planned; M6 partly landed; M11 and M14 new); M15 (a doc site's title) and M16 (the matrix product's speed) detailed and marked not yet taken, with entries ready for X_eTaL's asks.toml. `test` `scripts/check-asks.py` (self-tested; in the gate; `just check-asks`) checks every ask against the pinned ledger. CLAUDE.md rule 5.
+
 ## 2026-10-11
 
 - 19:50 `chore` Saga step micro-gpt completed.
