@@ -1,0 +1,16 @@
+[package]
+name = "micro-gpt-web"
+description = "A tiny GPT in the browser: microgpt's 4,192 weights run by X_eTaL, inventing names a letter at a time"
+version = "0.1.0"
+edition = "2021"
+license = "MIT"
+publish = false
+
+[dependencies]
+microscope = { path = "../../../shared/microscope" }
+yew = { version = "0.21", features = ["csr"] }
+js-sys = "0.3"
+web-sys = { version = "0.3", features = ["HtmlInputElement", "HtmlSelectElement"] }
+console_error_panic_hook = "0.1"
+
+[workspace]

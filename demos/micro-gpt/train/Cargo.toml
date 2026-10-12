@@ -1,0 +1,11 @@
+[package]
+name = "micro-gpt-train"
+description = "Trains the micro-gpt demo's tiny GPT (microgpt: 1 layer, 16 wide, 4 heads) on baby names and writes its weights into data/"
+version = "0.1.0"
+edition = "2021"
+license = "MIT"
+publish = false
+
+[dependencies]
+
+[workspace]

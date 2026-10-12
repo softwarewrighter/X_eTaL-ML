@@ -1,0 +1,77 @@
+#!/usr/bin/env xetal
+## A tiny GPT in X_eTaL: Karpathy's microgpt (1 layer, 16 numbers wide,
+## 4 attention heads, 4,192 weights), trained offline on 32,033 baby
+## names, inventing new ones a letter at a time. The forward pass reads
+## a whole name at once under a causal mask, on the Norm, Attention and
+## Sample libraries; it gives the same scores as the Rust model it was
+## trained in.
+
+"nn:" u_se< "NN"
+"nm:" u_se< "Norm"
+"at:" u_se< "Attention"
+"sm:" u_se< "Sample"
+"t:" u_se< "Strings"
+
+### The model, read from data/ (just micro-gpt-data)
+## The letters, then the token 27 that starts and ends a name.
+chars := -1 d_rop []N_GET "data/chars.txt"
+v := 1 + t_ally chars
+## Each matrix a row per output, as the model keeps them.
+wte := (v c_at 16) r_eshape n_umbers []N_GET "data/wte.txt"
+wpe := 16 16 r_eshape n_umbers []N_GET "data/wpe.txt"
+lm := (v c_at 16) r_eshape n_umbers []N_GET "data/lm_head.txt"
+Wq := 16 16 r_eshape n_umbers []N_GET "data/wq.txt"
+Wk := 16 16 r_eshape n_umbers []N_GET "data/wk.txt"
+Wv := 16 16 r_eshape n_umbers []N_GET "data/wv.txt"
+Wo := 16 16 r_eshape n_umbers []N_GET "data/wo.txt"
+fc1 := 64 16 r_eshape n_umbers []N_GET "data/fc1.txt"
+fc2 := 16 64 r_eshape n_umbers []N_GET "data/fc2.txt"
+
+### The forward pass: scores for what comes after each token
+## RMS norm without a gain (microgpt's).
+u:r_ms := { x -> (16 r_eshape 1.0) nm:r_ms x }
+## x times a matrix kept a row per output.
+u:l_inear := { x W -> x '+ '* i_nner o_\ W }
+## Attention head j (of 4): rows 4j-3 .. 4j of the projections.
+u:h_ead := { j hM ->
+  r := (4 * j - 1) + r_ange 4
+  (o_\ r s_elect Wq, o_\ r s_elect Wk, o_\ r s_elect Wv) at:h_ead hM
+}
+## Every position's scores over the 27 tokens, for the tokens ids.
+u:g_pt := { ids ->
+  n := t_ally ids
+  x0 := u:r_ms (ids s_elect wte) + (r_ange n) s_elect wpe
+  hM := (u:r_ms x0, at:c_ausal n)
+  heads := (1 u:h_ead hM) c_at_2 (2 u:h_ead hM) c_at_2 (3 u:h_ead hM) c_at_2 4 u:h_ead hM
+  x1 := x0 + heads u:l_inear Wo
+  x2 := x1 + (0.0 m_ax (u:r_ms x1) u:l_inear fc1) u:l_inear fc2
+  x2 u:l_inear lm
+}
+
+### Generating: a letter at a time
+## From the tokens s (the start token, then any letters given), up to 16
+## tokens in all, each drawn at temperature t by the uniform numbers u
+## (one per letter); a name ends at token 27.
+u:n_ame := { (t, s) u ->
+  (ids, _) := (16 - t_ally s) '{ (ids, done) ->
+    done ? (ids, done)
+    p := t sm:p_robs (t_ally ids) s_elect u:g_pt ids
+    tok := f_irst (1 r_eshape (t_ally ids) s_elect u) sm:d_raw (1 c_at t_ally p) r_eshape p
+    (ids c_at tok, tok = v)
+  } p_ower (s, 0 = 1)
+  ((ids < v) r_eplicate ids) s_elect chars
+}
+# -- end of the core ------------------------------------------
+
+### The check
+## The scores for the start token then "emma", position by position,
+## equal the Rust model's (data/expected.txt, written by the trainer).
+expected := 5 27 r_eshape n_umbers []N_GET "data/expected.txt"
+e := chars i_ndexOf "emma"
+1e-9 > 'm_ax r_/ r_avel a_bs expected - u:g_pt v c_at e
+
+### Twenty names at temperature 0.5 (microgpt's), the uniform numbers from r_oll! (seeded)
+U := (f_loat r_oll! 20 16 r_eshape 100000) / 100000.0
+" " t:j_oin '{ i -> (0.5, 1 r_eshape v) u:n_ame i s_elect U } m_ap r_ange 20
+## Five more that start with "ma".
+" " t:j_oin '{ i -> (0.5, v c_at chars i_ndexOf "ma") u:n_ame i s_elect U } m_ap 1 + r_ange 5

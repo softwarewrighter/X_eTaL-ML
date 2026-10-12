@@ -72,7 +72,7 @@ an error before the forward pass, not a wrong number after it.
 
 ## Demos
 
-All ten run live in your browser and at the command line.
+All eleven run live in your browser and at the command line.
 [Start with the Tiny CNN](https://softwarewrighter.github.io/X_eTaL-ML/cnn-digits/):
 draw a digit and watch a network read it.
 
@@ -82,6 +82,7 @@ draw a digit and watch a network read it.
 | [Backprop microscope](demos/backprop/README.md) ([live](https://softwarewrighter.github.io/X_eTaL-ML/backprop/)) | one training step with every array shown: forward, loss, each layer's gradient, the step; every gradient checked by nudging its weight; take steps and watch the loss fall | `(o_\ u:o_nes X) '+ '* i_nner D1`: a layer's gradient, one matrix product |
 | [CNN training](demos/cnn-backprop/README.md) ([live](https://softwarewrighter.github.io/X_eTaL-ML/cnn-backprop/)) | X_eTaL trains a tiny CNN from random weights on 600 handwritten digits in your browser: the backward pass through softmax, dense, max-pooling, ReLU and the convolution, checked by finite differences; the filters form and the test digits come to be read right | `DC := (A cv:u_npool DQ) * f_loat C > 0.0`: back through pooling and ReLU, a whole batch at once |
 | [Training live](demos/train-live/README.md) ([live](https://softwarewrighter.github.io/X_eTaL-ML/train-live/)) | X_eTaL trains a small network on a spiral in your browser; the decision regions bend to follow it as the loss falls | `s := 25 'u:a_dam p_ower s`: Adam's step, iterated |
+| [Tiny GPT](demos/micro-gpt/README.md) ([live](https://softwarewrighter.github.io/X_eTaL-ML/micro-gpt/)) | Karpathy's microgpt (4,192 weights, trained on baby names) inventing names a letter at a time in your browser; the next-letter probabilities and each head's attention for any name | `x1 := x0 + heads u:l_inear Wo`: four heads over the whole name at once, joined, added back |
 | [Attention microscope](demos/attention/README.md) ([live](https://softwarewrighter.github.io/X_eTaL-ML/attention/)) | one head of attention on your sentence: scores, weights, a causal mask; "tired" finds the animal, "wide" the street | `(Q '+ '* i_nner o_\ K) / 2.0 ^ 0.5`: every query against every key |
 | [MoE routing microscope](demos/moe-router/README.md) ([live](https://softwarewrighter.github.io/X_eTaL-ML/moe-router/)) | a sentence's tokens routed to their top-2 of 16 experts; nudge a token and see where the experts switch | `u:t_op2 u:s_oftmax u:s_cores x`: scores, softmax and top-2 for all tokens |
 | [Network macro](demos/net-macro/README.md) ([live](https://softwarewrighter.github.io/X_eTaL-ML/net-macro/)) | a network written as one line; the function the macro wrote for it; three networks on a spiral; type a spec of your own and train it in the browser | `"u:d_eep c" net:m_odel< "2 16 relu 16 relu 3 softmax"`: a macro call that becomes the weights' loading and the forward function |
@@ -137,7 +138,7 @@ imports).
 
 | | Today |
 | - | ----- |
-| Demos | 10, all live, each with command-line and browser tests; three of them train in X_eTaL, a CNN among them; one clusters (k-means), one explores embeddings |
+| Demos | 11, all live, each with command-line and browser tests; three of them train in X_eTaL, a CNN among them; one clusters (k-means), one explores embeddings, one is a tiny GPT |
 | Libraries | NN (12 functions, typed, tested); Net (6 macros, every expansion pinned; written gradients checked against finite differences); Learn (10 functions: k-means, kNN, PCA, logistic regression; k-means checked against Rust, all by their properties); Embed (7 functions: counts, PPMI, projection, neighbors); Quant (7 functions: float, integer and ternary formats, additions); Conv (5 functions: windows, convolution, pooling, their gradients); Attention (5 functions: scores, weights, masks, a head); Norm (3) and Sample (4) for the tiny GPT; every item documented, 78 doc examples run by the gate |
 | X_eTaL | pinned at X_eTaL main f7f9821, after v0.1.0: tuples with patterns (the training state is one), `h:` private names, each name bound once (checked here too, `just check-rebind`), the doc site by directory (`XETAL_COMMIT`, `just xetal-version`); X_eTaL-libraries at 746e666 (Plot's charts, every library documented) |
 | Speed | measured and guarded (`just bench-check`, [`docs/speed.md`](docs/speed.md)); the CNN's whole program runs in a third of a second |

@@ -1,6 +1,6 @@
 number = 9
 slug = "micro-gpt"
-status = "pending"
+status = "in-progress"
 description = "a tiny GPT's inference in X_eTaL on weights trained offline (a train/ program..."
 role = "production"
 context_files = []

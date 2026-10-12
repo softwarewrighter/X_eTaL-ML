@@ -77,6 +77,11 @@ ternary-train:
 net-train:
     cargo run --release -q --manifest-path demos/net-macro/train/Cargo.toml
 
+# Fetch the baby names (makemore, pinned) into work/ and train the micro-gpt demo's tiny GPT, writing its weights into data/
+micro-gpt-data:
+    @[ -s work/names.txt ] || curl -fsSL -o work/names.txt https://raw.githubusercontent.com/karpathy/makemore/988aa59/names.txt
+    cargo run --release -q --manifest-path demos/micro-gpt/train/Cargo.toml
+
 # Write the embedding explorer's corpus (4,000 sentences from templates, a fixed seed) into its data/
 embedding-data:
     cargo run --release -q --manifest-path demos/embedding-explorer/train/Cargo.toml

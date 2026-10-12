@@ -1,0 +1,11 @@
+# One demo's description: read by scripts/demos.py for the tests, the
+# README's demo list and the live catalog (pages/index.html).
+slug = "micro-gpt"            # the directory name, demos/<slug>/
+title = "Tiny GPT"
+summary = "Karpathy's microgpt in X_eTaL: one transformer layer, 16 numbers wide, 4 attention heads, 4,192 weights trained on 32,033 baby names, inventing new names a letter at a time in your browser. Set the temperature and the first letters; look into a name: the five likeliest next letters at each step, and where each head looks."
+concepts = ["transformer", "attention heads", "RMS norm", "sampling", "causal mask"]        # the X_eTaL ideas it shows
+status = "live"             # draft | live | deferred
+order = 22                  # position in the catalog (lower first)
+needs = []                   # asks in docs/xetal-asks.md it waits on or works around
+line = "x1 := x0 + heads u:l_inear Wo"
+why = "The whole name goes through attention at once: every position's four heads computed together under a causal mask, joined and projected, then added back to what came in. The same scores microgpt computes one token at a time with its cache."

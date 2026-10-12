@@ -13,6 +13,9 @@ refresh of the vendored X_eTaL.
 
 ## 2026-10-11
 
+- 19:50 `chore` Saga step micro-gpt completed.
+- 19:45 `demo` Tiny GPT, live (https://softwarewrighter.github.io/X_eTaL-ML/micro-gpt/): Karpathy's microgpt (1 transformer layer, 16 wide, 4 heads, 4,192 weights) in X_eTaL, inventing baby names a letter at a time. train/ (adapted from microgpt-rs, MIT, the same author: the same model, 1,000 Adam steps and seed) trains it in 2 seconds on makemore's 32,033 names (fetched into work/ by `just micro-gpt-data`) and writes data/; the forward pass is X_eTaL on Norm, Attention and Sample, the whole name at once under a causal mask, equal to the Rust model's scores to 1e-9 (the program checks it). The page: ten names per click (the browser's randomness as Sample's uniform numbers), the temperature, starting letters; for a name, the five likeliest next letters at each step and where each of the four heads looks. Tests: the same numbers give the same names; names start with the letters given; probabilities and causal attention rows sum to 1.
+
 - 17:30 `chore` Saga step uv-python completed.
 - 17:25 `build` Python only through uv (the user's rule): `scripts/py` runs the repository's `.venv`, made on first use by `uv venv --managed-python` with Python 3.12 (`.python-version`); every script call, `python3 -c` and `python3 -m http.server` in the recipes and scripts goes through it, and the `.py` files' shebangs use `uv run` with a managed Python, so the system's Python is never used. Prompted by a Homebrew upgrade that unlinked `python3` and left the system's 3.9 (no `tomllib`), which broke the pages build. README requirements (uv), CLAUDE.md rule 8a, `.venv` gitignored.
 
