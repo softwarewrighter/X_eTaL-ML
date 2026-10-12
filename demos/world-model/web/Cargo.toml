@@ -1,0 +1,16 @@
+[package]
+name = "world-model-web"
+description = "A tiny world model in the browser: X_eTaL predicts a bouncing ball's next frame from the last three, then dreams on its own predictions"
+version = "0.1.0"
+edition = "2021"
+license = "MIT"
+publish = false
+
+[dependencies]
+microscope = { path = "../../../shared/microscope" }
+yew = { version = "0.21", features = ["csr"] }
+gloo-timers = "0.3"
+web-sys = { version = "0.3", features = ["HtmlInputElement", "HtmlSelectElement"] }
+console_error_panic_hook = "0.1"
+
+[workspace]

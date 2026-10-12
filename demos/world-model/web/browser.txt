@@ -1,0 +1,3 @@
+# Text the page shows only after X_eTaL has run (scripts/browser-check.sh).
+the ball at (
+a state it never saw

@@ -82,6 +82,10 @@ micro-gpt-data:
     @[ -s work/names.txt ] || curl -fsSL -o work/names.txt https://raw.githubusercontent.com/karpathy/makemore/988aa59/names.txt
     cargo run --release -q --manifest-path demos/micro-gpt/train/Cargo.toml
 
+# Train the world-model demo's network (1,936 states of a bouncing ball, a fifth held out; 25 s) and write its weights into data/
+world-model-data:
+    cargo run --release -q --manifest-path demos/world-model/train/Cargo.toml
+
 # Write the embedding explorer's corpus (4,000 sentences from templates, a fixed seed) into its data/
 embedding-data:
     cargo run --release -q --manifest-path demos/embedding-explorer/train/Cargo.toml

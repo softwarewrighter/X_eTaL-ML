@@ -1,0 +1,11 @@
+[package]
+name = "world-model-train"
+description = "Trains the world-model demo's network (three 12 x 12 frames of a bouncing ball in, the next frame out) and writes its weights into data/"
+version = "0.1.0"
+edition = "2021"
+license = "MIT"
+publish = false
+
+[dependencies]
+
+[workspace]

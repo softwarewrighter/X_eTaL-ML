@@ -1,0 +1,91 @@
+#!/usr/bin/env xetal
+## A tiny world model: a network that has watched a ball bounce in a box
+## predicts the next frame from the last three. The world is a 2 x 2
+## ball in a 12 x 12 box, moving 1 or 2 cells a step on each axis and
+## bouncing off the walls: 1,936 states in all. The network (432 pixels
+## in, 64 ReLU units, 144 pixels out) was trained offline on four fifths
+## of them (train/); the other fifth it never saw. Here it predicts the
+## next frame of every state at once, as one batch, then dreams: fed
+## its own predictions, it plays the ball forward on its own.
+
+"nn:" u_se< "NN"
+
+### The world
+## One step of the states s (rows of x y vx vy): move, and bounce off a
+## wall at 0 or 10 (the ball is 2 wide in a box of 12).
+u:s_tep := { s ->
+  P := 2 t_ake o_\ s
+  V := -2 t_ake o_\ s
+  n := P + V
+  lo := n < 0
+  hi := n > 10
+  o_\ (n + ((n_eg 2 * n) * lo) + (20 - 2 * n) * hi) c_at V * 1 - 2 * lo + hi
+}
+## 1.0 where a ball's corner is at the place or one before it (D is -1 or 0).
+u:i_n := { D -> f_loat (D <= 0) * D >= -1 }
+## The frames of the balls at xy (rows of x y), one row of 144 pixels each.
+u:f_rames := { xy ->
+  c := o_ffsets 144
+  (u:i_n (2 s_elect o_\ xy) '- t_able c d_iv 12) * u:i_n (1 s_elect o_\ xy) '- t_able c m_od 12
+}
+## The window of the states s: their frame and the next two, side by
+## side (432 pixels a row), then the frame after them.
+u:w_indow := { s ->
+  s1 := u:s_tep s
+  s2 := u:s_tep s1
+  s3 := u:s_tep s2
+  ((u:f_rames 2 t_ake_2 s) c_at_2 (u:f_rames 2 t_ake_2 s1) c_at_2 u:f_rames 2 t_ake_2 s2, u:f_rames 2 t_ake_2 s3)
+}
+
+### The network, read from data/ (just world-model-data)
+## Each layer's weights with its bias as one more row, as NN's d_ense takes them.
+wb1 := 433 64 r_eshape (n_umbers []N_GET "data/w1.txt") c_at n_umbers []N_GET "data/b1.txt"
+wb2 := 65 144 r_eshape (n_umbers []N_GET "data/w2.txt") c_at n_umbers []N_GET "data/b2.txt"
+## Each window's next frame, a probability per pixel.
+u:p_redict := { X -> nn:s_igmoid (nn:r_elu X nn:d_ense wb1) nn:d_ense wb2 }
+## How many rows of P are the frames T exactly: every pixel on the right side of one half.
+u:e_xact := { P T -> f_loor '+ r_/ 'm_in r_/_2 f_loat (P > 0.5) = T > 0.5 }
+## The likeliest place for the ball in a predicted frame p: the 2 x 2
+## block with the most probability, as x y.
+u:p_lace := { p ->
+  M := 12 12 r_eshape p
+  S := (11 t_ake 11 t_ake_2 M) + (11 t_ake 11 t_ake_2 1 d_rop M) + (11 t_ake 11 t_ake_2 1 d_rop_2 M) + 11 t_ake 11 t_ake_2 1 d_rop 1 d_rop_2 M
+  k := (r_avel S) i_ndexOf 'm_ax r_/ r_avel S
+  1 2 r_eshape ((k - 1) m_od 11) c_at (k - 1) d_iv 11
+}
+# -- end of the core ------------------------------------------
+
+### Every state at once
+i := o_ffsets 1936
+all := o_\ 4 1936 r_eshape (i d_iv 176) c_at ((i d_iv 16) m_od 11) c_at ((1 + (i d_iv 4) m_od 4) s_elect -2 -1 1 2) c_at (1 + i m_od 4) s_elect -2 -1 1 2
+held := 387 4 r_eshape f_loor n_umbers []N_GET "data/held-out.txt"
+(X, T) := u:w_indow all
+(Xh, Th) := u:w_indow held
+# The same pixels as the trainer's Rust model, for one window.
+(x1, _) := u:w_indow 1 4 r_eshape 3 7 2 -1
+1e-6 > 'm_ax r_/ r_avel a_bs (u:p_redict x1) - 1 144 r_eshape n_umbers []N_GET "data/expected.txt"
+# Next frames predicted exactly: of all 1,936 states, and of the 387 it never saw.
+(u:p_redict X) u:e_xact T
+(u:p_redict Xh) u:e_xact Th
+
+### One it never saw
+# Three frames, the true next one, and the network's (# above one half, + above a tenth).
+s := 1 4 r_eshape 1 s_elect held
+(xs, ts) := u:w_indow s
+p := u:p_redict xs
+12 12 r_eshape (1 + f_loor r_avel ts) s_elect ".#"
+12 12 r_eshape (1 + (p > 0.5) + p > 0.1) s_elect ".+#"
+
+### Dreaming
+## Fed its own predictions: each step keeps only the likeliest place
+## for the ball and moves the window on.
+# Twelve steps on from the window xs: where the dreamed ball is, and the true one.
+(_, dream) := 12 '{ (w, xys) ->
+  xy := u:p_lace u:p_redict w
+  ((144 d_rop_2 w) c_at_2 u:f_rames xy, xys c_at xy)
+} p_ower (xs, 0 2 r_eshape 0)
+(_, truth) := 12 '{ (t, xys) -> (u:s_tep t, xys c_at 2 t_ake_2 t) } p_ower (u:s_tep u:s_tep u:s_tep s, 0 2 r_eshape 0)
+o_\ dream
+o_\ truth
+# Steps where the dream has the ball where it really is.
+'+ r_/ 'm_in r_/_2 dream = truth

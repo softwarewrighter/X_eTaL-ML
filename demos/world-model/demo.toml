@@ -1,0 +1,11 @@
+# One demo's description: read by scripts/demos.py for the tests, the
+# README's demo list and the live catalog (pages/index.html).
+slug = "world-model"            # the directory name, demos/<slug>/
+title = "World model"
+summary = "A tiny world model: a network that has watched a 2 x 2 ball bounce in a 12 x 12 box predicts the next frame from the last three, 432 pixels in and 144 out, trained offline on four fifths of the world's 1,936 states. It gets 1,897 next frames exactly, 348 of the 387 it never saw. Place the ball, pick its speed, and let it dream: fed its own predictions, it plays the ball forward, bounces included."
+concepts = ["world model", "next-frame prediction", "a batch through dense layers", "dreaming on its own output"]        # the X_eTaL ideas it shows
+status = "live"             # draft | live | deferred
+order = 50                  # position in the catalog (lower first)
+needs = []                   # asks in docs/xetal-asks.md it waits on or works around
+line = "u:p_redict := { X -> nn:s_igmoid (nn:r_elu X nn:d_ense wb1) nn:d_ense wb2 }"
+why = "The whole world at once: X is 1,936 windows, one row per state, three frames side by side; two dense layers give every state's next frame together, a probability per pixel, and one count says how many are exactly right."
