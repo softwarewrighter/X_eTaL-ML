@@ -1,0 +1,1 @@
+Python only via uv venv (scripts/py, .python-version 3.12, managed python); all calls routed; gate passes with system python3 left at 3.9
