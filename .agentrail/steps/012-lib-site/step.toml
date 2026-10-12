@@ -1,8 +1,9 @@
 number = 12
 slug = "lib-site"
-status = "in-progress"
+status = "completed"
 description = "the libraries on the live site, as X_eTaL-libraries' own site does: each libr..."
 role = "production"
 context_files = []
 created_at = "2026-10-09T22:51:11"
-commits = []
+completed_at = "2026-10-12T09:34:46"
+commits = ["f004ef5f10609be7e5c8fcf6ce872b25ddcdd7b4"]

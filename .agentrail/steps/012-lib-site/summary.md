@@ -1,0 +1,1 @@
+site/: the libraries' own live site at /libs/ (landing in four groups, reference pages, types, runnable and editable demos, Net expansions); cargo tests, gate and check-live browser checks; linked from catalog and demo footers; saga renamed libraries-and-demos; .py scripts run only through the uv venv
