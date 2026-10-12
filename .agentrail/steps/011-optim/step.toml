@@ -1,8 +1,9 @@
 number = 11
 slug = "optim"
-status = "in-progress"
+status = "completed"
 description = "the Optim library (op:): Adam and SGD as steps on a tuple state; Net's t_rain..."
 role = "production"
 context_files = []
 created_at = "2026-10-09T22:51:11"
-commits = []
+completed_at = "2026-10-12T08:39:15"
+commits = ["2594ff7c664d0b81d829e8b53d8b13edc658015c"]

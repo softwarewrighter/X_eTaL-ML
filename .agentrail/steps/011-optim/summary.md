@@ -1,0 +1,1 @@
+Optim library (s_gd, a_dam, a_damWith); cnn-backprop on it, output identical
