@@ -1,8 +1,9 @@
 number = 9
 slug = "micro-gpt"
-status = "in-progress"
+status = "completed"
 description = "a tiny GPT's inference in X_eTaL on weights trained offline (a train/ program..."
 role = "production"
 context_files = []
 created_at = "2026-10-09T22:51:10"
-commits = []
+completed_at = "2026-10-11T19:37:43"
+commits = ["d5fd1de7a2b0c0121077a761ab25ad6c0373f9db"]

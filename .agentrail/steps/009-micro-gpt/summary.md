@@ -1,0 +1,1 @@
+Tiny GPT live: microgpt trained offline (adapted microgpt-rs), X_eTaL forward on Norm/Attention/Sample equal to Rust to 1e-9, names generated live with browser randomness
