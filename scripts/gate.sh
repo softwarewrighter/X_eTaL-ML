@@ -43,7 +43,7 @@ fi
 # American spellings only (the checker checks itself first).
 "$root/scripts/py" "$root/scripts/check-spelling.py" --self-test
 "$root/scripts/py" "$root/scripts/check-spelling.py"
-md=(README.md CHANGES.md docs/plan.md docs/xetal-asks.md docs/speed.md shared/microscope/README.md)
+md=(README.md CHANGES.md docs/plan.md docs/xetal-asks.md docs/gpu-asks.md docs/speed.md shared/microscope/README.md)
 for f in demos/*/README.md libs/*/README.md libs/*/docs/README.md; do [ -e "$f" ] && md+=("$f"); done
 for f in "${md[@]}"; do sw-markdown-checker -f "$f" >/dev/null || { sw-markdown-checker -f "$f"; exit 1; }; done
 echo "gate: ok"

@@ -1,0 +1,8 @@
+number = 14
+slug = "gpu-results"
+status = "pending"
+description = "the user's direction, 2026-10-12: once X_eTaL-gpu has run X_eTaL-ML's batch m..."
+role = "production"
+context_files = []
+created_at = "2026-10-12T10:21:18"
+commits = []

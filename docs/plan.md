@@ -273,7 +273,36 @@ until there is enough progress across all the X_eTaL repositories:
 | 6 | embed, embedding-explorer | Embed (`em:`); PCA from 64 dimensions to a rotatable 3-D cloud (PCA may come with saga 4's classic-ml) |
 | 7 | optim | DONE: libs/Optim (`op:`): `s_gd`, `a_dam` (`(lr, t) op:a_dam (w, m, v, g)`), `a_damWith` (its own decay rates); exactly train-live's written-out Adam (tested); 5 doc examples, 5 property checks, a narrow-bowl demo (gradient descent 10 to 8.35, Adam to 2.24 in 100 steps). CNN training moved onto it, output byte for byte unchanged; train-live and Net's `t_rain<` keep Adam written out, their lesson |
 | 8 | lib-site | DONE: site/, the libraries' own live site at /libs/, adapted from X_eTaL-libraries' site (Yew, trunk): a landing page with the libraries in four groups (networks, transformers, pictures and weights, classic machine learning), each library's reference page, its types and its demos to run and edit in the browser (Net's macros expanded beside them); `cargo test` runs every library demo through the browser engine against its baseline and every library's pinned types; built by `just pages`, checked in the browser by the gate and `just check-live` (site/browser.txt); linked from the catalog (lede, table of contents, footer) and every demo page's footer. The `.py` scripts lost their `uv run` shebangs and executable bit: Python runs only as `scripts/py`, the uv venv (the user's rule, again) |
-| 9 | world-model, diffusion | the deferred research demos (training speed, a learned denoiser) |
+| 9 | world-model, diffusion | the deferred research demos (training speed, a learned denoiser); each with a batch run for X_eTaL-gpu (rows 1 and 3 of "Combined with X_eTaL-gpu" below) |
+| 10 | gpu-results | when X_eTaL-gpu has run rows 1 to 3 on its devices: its table linked from docs/speed.md, the asks in gpu-asks.md updated |
+
+### Combined with X_eTaL-gpu (2026-10-12)
+
+The user's direction: the ML work tested, measured and shown on real
+GPUs through X_eTaL-gpu (OpenCL; Apple silicon now, the Arch
+machine's NVIDIA cards later). Only at the command line: the pages
+run X_eTaL as WebAssembly, which cannot reach OpenCL. This repo
+writes no GPU code; it gives each model as a batch X_eTaL program,
+its weights in `data/` and its expected outputs, and X_eTaL-gpu runs
+it on its devices (asks in [`gpu-asks.md`](gpu-asks.md)). The first
+three need only operations its IR already has (inputs, constants,
+elementwise maps with `max`, `exp`, `div`, reductions along an axis,
+matrix products, `take`, `drop`, `ravel`, `table`, `select`):
+
+| # | Workload | Here | On the GPU, it shows |
+| - | -------- | ---- | -------------------- |
+| 1 | world-model: 432 -> 64 ReLU -> 144 sigmoid, all 1,936 states of its world as one batch | step research: its program prints the number of next frames predicted exactly | the same Int on the evaluator and on every device; the batch's time, the device's and the bridge's (X_eTaL-gpu's saga 4 tiny-nn, made here) |
+| 2 | the benchmarks: `bench/dense.xtl`, `inner-wide.xtl`, `softmax.xtl` | as they are (docs/speed.md) | a GPU column beside the evaluator's: M1 Max and M3 Pro, then each NVIDIA card |
+| 3 | the learned denoiser: the same kind of network, 20 steps from noise, 256 pictures at once, the noise passed in | step research: a batch run with given noise, its pictures and a summary number | about 20 calls, not one: what each call's fixed cost does to a loop |
+
+Later, once X_eTaL-gpu's IR has transpose (ask GA2) and the
+convolution's windows (GA3): ternary-net and moe-router (top-k by
+masks), cnn-digits on the 10,000 MNIST test digits, micro-gpt and
+the Attention library, then cnn-backprop's training. The tolerance:
+the same decision always; numbers within 1e-5 in f32 (Apple's OpenCL
+has no 64-bit floats), within 1e-9 in f64 against the trainers' Rust
+models on cards with fp64. The results come back as X_eTaL-gpu's
+table, linked from docs/speed.md (step gpu-results).
 
 ## Cross-cutting
 
