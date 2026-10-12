@@ -6,12 +6,14 @@
 # (text the page only shows once X_eTaL has run and printed its
 # arrays). Prints one line per check, the same each run, so reg-rs can
 # keep it as a baseline (browser-<slug> in the demo's reg/).
+# The slug libs is the libraries' site (pages/libs/, site/browser.txt).
 #   scripts/browser-check.sh SLUG
 set -euo pipefail
 root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 slug="${1:?usage: browser-check.sh SLUG}"
 want="$root/demos/$slug/web/browser.txt"
-[ -f "$want" ] || { echo "browser-check: no demos/$slug/web/browser.txt" >&2; exit 1; }
+[ "$slug" = libs ] && want="$root/site/browser.txt"
+[ -f "$want" ] || { echo "browser-check: no $want" >&2; exit 1; }
 "$root/scripts/browser-dom.sh" "$slug" | "$root/scripts/py" -c '
 import html, re, sys
 dom = sys.stdin.read()

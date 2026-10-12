@@ -1,4 +1,4 @@
-#!/usr/bin/env -S uv run --quiet --no-project --managed-python --python 3.12 python
+# Run with scripts/py (the uv venv .venv), never a system python.
 """Check docs/xetal-asks.md against X_eTaL's own ledger of asks (its
 docs/asks.toml, read from the pinned copy in work/xetal): every ask in
 our table must be in the ledger for X_eTaL-ML with the same state, or

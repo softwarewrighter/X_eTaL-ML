@@ -1,6 +1,6 @@
 number = 12
 slug = "lib-site"
-status = "pending"
+status = "in-progress"
 description = "the libraries on the live site, as X_eTaL-libraries' own site does: each libr..."
 role = "production"
 context_files = []

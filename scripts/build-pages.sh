@@ -4,6 +4,7 @@
 # commit, which GitHub Pages serves (nothing is built on GitHub).
 #   - every demo with a web app (demos/<slug>/web/) is built with trunk
 #     into pages/<slug>/, served under /X_eTaL-ML/<slug>/;
+#   - pages/libs/, the libraries' site (site/, trunk);
 #   - pages/doc/, the cross-reference (scripts/doc-site.sh);
 #   - pages/index.html, the catalog, from every demo.toml.
 # A demo removed from demos/ loses its pages/<slug>/.
@@ -15,7 +16,7 @@ base="/X_eTaL-ML"
 "$root/scripts/xetal.sh" >/dev/null   # the web apps build on work/xetal
 mkdir -p "$root/pages"
 touch "$root/pages/.nojekyll"
-keep=()
+keep=(libs)
 while IFS= read -r slug; do
   [ -n "$slug" ] || continue
   web="$root/demos/$slug/web"
@@ -35,6 +36,9 @@ for d in "$root"/pages/*/; do
   s="$(basename "$d")"
   printf '%s\n' ${keep[@]+"${keep[@]}"} | grep -qx "$s" || { echo "removing pages/$s/"; rm -rf "$d"; }
 done
+echo "==> trunk build site (the libraries)"
+(cd "$root/site" && trunk build --release --public-url "$base/libs/" --dist "$root/target/pages-dist/libs")
+rsync -a --delete "$root/target/pages-dist/libs/" "$root/pages/libs/"
 "$root/scripts/doc-site.sh"
 cp "$root/images/xetal-logo-orange.png" "$root/images/favicon.ico" "$root/pages/"
 "$root/scripts/py" "$root/scripts/build-catalog.py"

@@ -15,10 +15,17 @@ cd "$root"
 (cd "$root/shared/microscope" && cargo test -q >/dev/null 2>&1 && cargo check -q --target wasm32-unknown-unknown) \
   || { (cd "$root/shared/microscope" && cargo test -q); echo "FAIL: shared/microscope"; exit 1; }
 echo "ok: shared/microscope"
+# The libraries' site (site/): every library demo runs as its baseline recorded.
+(cd "$root/site" && cargo test -q >/dev/null 2>&1 && cargo check -q --target wasm32-unknown-unknown) \
+  || { (cd "$root/site" && cargo test -q); echo "FAIL: site"; exit 1; }
+echo "ok: site"
 # The site built fresh (not tracked; just publish publishes it), so the
 # browser checks below run against this checkout's pages.
 "$root/scripts/build-pages.sh" >/dev/null
 "$root/scripts/test-demos.sh"
+# The libraries' site in a real browser (site/browser.txt).
+"$root/scripts/browser-check.sh" libs >/dev/null || { "$root/scripts/browser-check.sh" libs; echo "FAIL: pages/libs"; exit 1; }
+echo "ok: pages/libs in the browser"
 "$root/scripts/test-libs.sh"
 "$root/scripts/doc-test.sh"
 "$root/scripts/py" "$root/scripts/check-examples.py"

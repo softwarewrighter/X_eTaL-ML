@@ -1,4 +1,4 @@
-#!/usr/bin/env -S uv run --quiet --no-project --managed-python --python 3.12 python
+# Run with scripts/py (the uv venv .venv), never a system python.
 """The demos' descriptions (demos/<slug>/demo.toml).
 
   scripts/demos.py list     # the slugs, in catalog order

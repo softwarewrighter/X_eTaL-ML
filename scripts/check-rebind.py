@@ -1,4 +1,4 @@
-#!/usr/bin/env -S uv run --quiet --no-project --managed-python --python 3.12 python
+# Run with scripts/py (the uv venv .venv), never a system python.
 """Check that every name is bound once in its scope (X_eTaL lang-choices
 M1, changed 2026-10-08): binding a name again in the same scope -- a
 file's top level, or a lambda's body together with its parameters -- is

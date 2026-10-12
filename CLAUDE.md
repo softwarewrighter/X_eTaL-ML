@@ -382,7 +382,8 @@ Read before working:
    version in `.python-version`; every script, `-c` and `-m` call goes
    through it, and packages, if ever needed, go in with `uv pip`.
    Never the system `python3` or a bare Homebrew one, not even as a
-   shim. The `.py` files' shebangs use `uv run` with a managed Python.
+   shim. The `.py` files have no shebang and are not executable, so
+   they run only as `scripts/py scripts/X.py`.
 9. The live site is built locally into `pages/` (`just pages`; the
    gate builds it too), which is NOT tracked on main: `just publish`
    makes it the single commit of the `gh-pages` branch, which GitHub

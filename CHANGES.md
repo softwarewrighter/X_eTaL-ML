@@ -13,6 +13,7 @@ refresh of the vendored X_eTaL.
 
 ## 2026-10-12
 
+- 12:30 `feat` The libraries' own live site, /libs/ (site/, adapted from X_eTaL-libraries' site): the ten libraries in four groups, each one's reference page, pinned types and demos to run and edit in the browser, Net's expansions beside them. `test` site/'s `cargo test` runs every library demo through the browser engine against its baseline and checks every library's types; the gate and `just check-live` load /libs/ in Chrome (site/browser.txt). `docs` Linked from the catalog's lede, table of contents and footer and from every demo page's footer. `plan` Saga 5 renamed "libraries and demos" (the launch postponed). `build` The `.py` scripts have no shebang and are not executable: Python runs only through `scripts/py`, the uv venv.
 - 11:20 `chore` Saga step optim completed.
 - 11:15 `lib` Optim (`op:`): optimizers as steps on tuples: `s_gd` (`lr op:s_gd (w, g)`), `a_dam` (`(lr, t) op:a_dam (w, m, v, g)` gives `(w, m, v)`), `a_damWith` (its own decay rates). Exactly the written-out Adam of Training live (tested over two steps). 5 doc examples, 5 property checks, a narrow-bowl demo (in 100 steps gradient descent moves the shallow direction from 10 to 8.35, Adam to 2.24). `refactor` CNN training's step uses it for its filters, biases and dense weights; output byte for byte unchanged. Training live and Net's `t_rain<` keep Adam written out: it is their lesson.
 

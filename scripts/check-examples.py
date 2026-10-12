@@ -1,4 +1,4 @@
-#!/usr/bin/env -S uv run --quiet --no-project --managed-python --python 3.12 python
+# Run with scripts/py (the uv venv .venv), never a system python.
 """Every example on a library's page is recorded output.
 
 In libs/<Name>/docs/README.md, a code block holding session lines (an

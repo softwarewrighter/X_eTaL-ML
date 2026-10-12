@@ -1,4 +1,4 @@
-#!/usr/bin/env -S uv run --quiet --no-project --managed-python --python 3.12 python
+# Run with scripts/py (the uv venv .venv), never a system python.
 """The libraries: each its own directory, libs/<Name>/.
 
   libs/<Name>/README.md        a short overview

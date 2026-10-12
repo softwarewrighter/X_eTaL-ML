@@ -66,6 +66,7 @@ pub fn footer() -> Html {
             <span>{ "MIT License" }</span>{ sep() }
             <a href={REPO} target="_blank">{ "Repository" }</a>{ sep() }
             <a href="../">{ "All demos" }</a>{ sep() }
+            <a href="../libs/">{ "Libraries" }</a>{ sep() }
             <a href="../doc/">{ "Cross-reference" }</a>{ sep() }
             <span>{ format!("X_eTaL {}", env!("XETAL_SHA")) }</span>{ sep() }
             <span>{ format!("build (host {}, sha {}, {})", env!("BUILD_HOST"), env!("BUILD_SHA"), env!("BUILD_TIMESTAMP")) }</span>

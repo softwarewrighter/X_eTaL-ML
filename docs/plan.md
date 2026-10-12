@@ -94,12 +94,12 @@ pages/                   the built live site (not tracked; just publish)
 | moe-router | tokens routed to their top-2 of 16 experts; nudge a token and watch the experts switch | matrix product, softmax, top-k by masks | X_eTaL-demos (live) | 1 |
 | cnn-digits | draw a digit; conv, ReLU, pool, dense, softmax, every stage visible | windows by rotation, reshape, inner product | X_eTaL-demos (weights done, page planned) | 1 (CLI), 2 (page) |
 | attention | Q, K, V, S = Q K^T / sqrt d, softmax heatmap, rows meeting columns; a causal mask | matrix product, transpose, softmax | X_eTaL-demos (deferred there: transpose, now landed) | 2 |
-| embedding-explorer | 64-dimensional embeddings projected to a rotatable 3-D cloud by PCA | covariance, power iteration, transpose | X_eTaL-demos (deferred there) | 4 (post-launch) |
-| gradient-descent | a tiny model trained in X_eTaL itself: the loss surface, the path, the update as one expression | outer product, reduce, iteration | new | 4 (post-launch) |
-| micro-gpt | microgpt's forward pass (embedding, RMSNorm, attention, MLP) on weights trained offline; sample names | everything above | microgpt-mlpl (port) | 4 (post-launch) |
+| embedding-explorer | 64-dimensional embeddings projected to a rotatable 3-D cloud by PCA | covariance, power iteration, transpose | X_eTaL-demos (deferred there) | 5 |
+| gradient-descent | a tiny model trained in X_eTaL itself: the loss surface, the path, the update as one expression | outer product, reduce, iteration | new | 5 |
+| micro-gpt | microgpt's forward pass (embedding, RMSNorm, attention, MLP) on weights trained offline; sample names | everything above | microgpt-mlpl (port) | 5 |
 | net-macro | a network written as `"..." net:n_etwork<` and its expansion beside it; three networks on a spiral; any spec typed | `.xtlm` macros, `xetal expand` | new | 3 (live) |
-| world-model | a ball's next frame predicted from the last three | recurrence, prediction | X_eTaL-demos (deferred) | 4 (post-launch) |
-| diffusion | noise to image, step by step | tensor transforms, iteration | X_eTaL-demos (deferred) | 4 (post-launch) |
+| world-model | a ball's next frame predicted from the last three | recurrence, prediction | X_eTaL-demos (deferred) | 5 |
+| diffusion | noise to image, step by step | tensor transforms, iteration | X_eTaL-demos (deferred) | 5 |
 
 ## The libraries
 
@@ -109,13 +109,13 @@ alias is the importer's choice.
 | Library | Alias | What | Taken from | Saga |
 | ------- | ----- | ---- | ---------- | ---- |
 | NN | `nn:` | activations (ReLU, leaky ReLU, sigmoid, tanh), softmax and log-softmax by row, a dense layer, argmax by row, one-hot, cross-entropy, accuracy | ternary-net, moe-router, cnn-digits | 1 |
-| Quant | `qz:` | FP16 rounding, INT8 symmetric quantize and dequantize, ternary (BitNet b1.58 absmean) weights, storage bits, quantization error | ternary-net | 4 (post-launch) |
-| Conv | `cv:` | windows by rotation, 2-D convolution of several filters, max- and average-pooling by reshape, padding | cnn-digits, X_eTaL-demos image-pipeline | 4 (post-launch) |
-| Attention | `at:` | scaled dot-product attention, causal mask, masked softmax, heads split and merged | research (attention) | 4 (post-launch; the attention demo keeps its definitions) |
-| Norm | `nm:` | layer norm, RMSNorm, standardize columns, batch statistics | microgpt | 4 (post-launch) |
-| Embed | `em:` | centering, covariance, power iteration for the top components, PCA projection, cosine similarity, nearest neighbors | research (embedding explorer) | 4 (post-launch) |
-| Sample | `sm:` | temperature, top-k and top-p filtering, sampling from a distribution with `r_oll` | microgpt | 4 (post-launch) |
-| Optim | `op:` | hand-derived gradients for linear and logistic regression and a dense layer, SGD and momentum steps, a training loop by `p_ower` | new | 4 (post-launch) |
+| Quant | `qz:` | FP16 rounding, INT8 symmetric quantize and dequantize, ternary (BitNet b1.58 absmean) weights, storage bits, quantization error | ternary-net | 5 |
+| Conv | `cv:` | windows by rotation, 2-D convolution of several filters, max- and average-pooling by reshape, padding | cnn-digits, X_eTaL-demos image-pipeline | 5 |
+| Attention | `at:` | scaled dot-product attention, causal mask, masked softmax, heads split and merged | research (attention) | 5 (the attention demo keeps its definitions) |
+| Norm | `nm:` | layer norm, RMSNorm, standardize columns, batch statistics | microgpt | 5 |
+| Embed | `em:` | centering, covariance, power iteration for the top components, PCA projection, cosine similarity, nearest neighbors | research (embedding explorer) | 5 |
+| Sample | `sm:` | temperature, top-k and top-p filtering, sampling from a distribution with `r_oll` | microgpt | 5 |
+| Optim | `op:` | hand-derived gradients for linear and logistic regression and a dense layer, SGD and momentum steps, a training loop by `p_ower` | new | 5 |
 | Net (`.xtlm`) | `net:` | `"784 128 relu 10 softmax" net:n_etwork<` -> a forward function built from `nn:` calls; `net:p_arams<`, `net:s_hapes<` | research3.txt | 3 |
 
 ## Saga 1 -- foundation  [DONE, archived]
@@ -251,11 +251,12 @@ Left out for now: MENACE (it fits X_eTaL-games, and X_eTaL ships
 TTTML, which learns tic-tac-toe by self-play); a U-Net (a tiny one on
 synthetic shapes is a later stretch).
 
-## Saga 5 -- post-launch
+## Saga 5 -- libraries and demos
 
-The follow-up stream after the launch (research4: material for after
-the announcement), in this order. Begun 2026-10-09 (saga training
-archived), ahead of the launch, which the user postponed further:
+The libraries the demos were written ahead of, the demos built on
+them, and the research demos (from research4). Begun 2026-10-09 as
+"post-launch"; renamed 2026-10-12, the user having postponed the launch
+until there is enough progress across all the X_eTaL repositories:
 
 | # | Step slug | Delivers |
 | - | --------- | -------- |
@@ -266,12 +267,12 @@ archived), ahead of the launch, which the user postponed further:
 | 2 | conv | DONE: libs/Conv (`cv:`): `w_indows`, `c_onv` (`(K, B) cv:c_onv x`), `p_ool`, `u_npool` (to each block's first largest), `g_rads`; any batch and picture size; 6 doc examples, 7 property checks (equal to cnn-digits' one-picture formula, gradients against finite differences), an edges demo. cnn-backprop moved onto it, output byte for byte unchanged. cnn-digits keeps its own one-picture convolution: it is the catalog's first lesson, the convolution written out as one expression; Conv is tested equal to it |
 | 3 | attention-lib | DONE: libs/Attention (`at:`): `s_cores` (`(Wq, Wk) at:s_cores X`), `w_eights` (masked softmax), `c_ausal`, `a_ll`, `h_ead` (`(Wq, Wk, Wv) at:h_ead (X, M)`); 7 doc examples, 7 property checks (rows sum to 1, masks, the head as weights times values, reordering), a previous-token demo. The attention demo keeps its two lines, now through the library (its README shows the library's two lines too); output byte for byte unchanged |
 | 4 | norm, sample | DONE: libs/Norm (`nm:`: `s_tandard`, `l_ayer` with `(g, b)`, `r_ms`) and libs/Sample (`sm:`: `g_reedy`, `p_robs` at a temperature, `t_op` k (repeated masked max: ask M4), `d_raw` by uniform numbers the caller gives, no chance inside); 14 doc examples, 13 property checks, a demo each |
-| 4b | uv-python | DONE: the user's rule: Python only through a uv venv: `scripts/py` (the repository's `.venv`, `uv venv --managed-python`, Python 3.12 from `.python-version`, made on first use); every script call, `python3 -c` and `python3 -m http.server` through it; the `.py` shebangs `uv run` with a managed Python; `.venv` gitignored; README requirements, CLAUDE.md rule 8a. Prompted by a Homebrew upgrade that unlinked `python3` and left the system's 3.9 (no `tomllib`) in its place |
+| 4b | uv-python | DONE: the user's rule: Python only through a uv venv: `scripts/py` (the repository's `.venv`, `uv venv --managed-python`, Python 3.12 from `.python-version`, made on first use); every script call, `python3 -c` and `python3 -m http.server` through it; the `.py` shebangs `uv run` with a managed Python (removed in lib-site); `.venv` gitignored; README requirements, CLAUDE.md rule 8a. Prompted by a Homebrew upgrade that unlinked `python3` and left the system's 3.9 (no `tomllib`) in its place |
 | 5 | micro-gpt | DONE: demos/micro-gpt, live: Karpathy's microgpt (1 layer, 16 wide, 4 heads, 4,192 weights) trained offline by train/ (adapted from microgpt-rs, same model, training and seed; makemore's names fetched into work/) in 2 s; its forward pass in X_eTaL on Norm, Attention and Sample, the whole name under a causal mask, equal to the Rust model's scores to 1e-9; names generated by `p_ower` with uniform numbers from the caller (r_oll! at the command line, the browser's randomness on the page); the page: ten names, temperature, starting letters, a name's next-letter probabilities and its four heads' attention |
 | 5b | asks-sync | DONE: docs/xetal-asks.md in step with X_eTaL's ledger: M4, M10, M12 declined (their workarounds now permanent unless the user decides a per-row grade or a mix), M5 planned, M6 partly landed, M11 and M14 new; M15 and M16 detailed, in order, marked not yet taken with entries ready for X_eTaL's asks.toml; `scripts/check-asks.py` (self-tested, in the gate, `just check-asks`) checks every ask against the pinned ledger; CLAUDE.md rule 5 |
 | 6 | embed, embedding-explorer | Embed (`em:`); PCA from 64 dimensions to a rotatable 3-D cloud (PCA may come with saga 4's classic-ml) |
 | 7 | optim | DONE: libs/Optim (`op:`): `s_gd`, `a_dam` (`(lr, t) op:a_dam (w, m, v, g)`), `a_damWith` (its own decay rates); exactly train-live's written-out Adam (tested); 5 doc examples, 5 property checks, a narrow-bowl demo (gradient descent 10 to 8.35, Adam to 2.24 in 100 steps). CNN training moved onto it, output byte for byte unchanged; train-live and Net's `t_rain<` keep Adam written out, their lesson |
-| 8 | lib-site | the libraries in the live site, as X_eTaL-libraries' site |
+| 8 | lib-site | DONE: site/, the libraries' own live site at /libs/, adapted from X_eTaL-libraries' site (Yew, trunk): a landing page with the libraries in four groups (networks, transformers, pictures and weights, classic machine learning), each library's reference page, its types and its demos to run and edit in the browser (Net's macros expanded beside them); `cargo test` runs every library demo through the browser engine against its baseline and every library's pinned types; built by `just pages`, checked in the browser by the gate and `just check-live` (site/browser.txt); linked from the catalog (lede, table of contents, footer) and every demo page's footer. The `.py` scripts lost their `uv run` shebangs and executable bit: Python runs only as `scripts/py`, the uv venv (the user's rule, again) |
 | 9 | world-model, diffusion | the deferred research demos (training speed, a learned denoiser) |
 
 ## Cross-cutting

@@ -1,4 +1,4 @@
-#!/usr/bin/env -S uv run --quiet --no-project --managed-python --python 3.12 python
+# Run with scripts/py (the uv venv .venv), never a system python.
 """Write pages/index.html, the live catalog of the ML demos, and
 pages/recorded/index.html, the demos recorded at the command line.
 
@@ -114,6 +114,7 @@ nav.toc a:hover {{ text-decoration: underline; }}
 <span>Copyright (c) 2026 Michael A Wright</span><span class="sep">&middot;</span>
 <span>MIT License</span><span class="sep">&middot;</span>
 <a href="{repo}" target="_blank">Repository</a><span class="sep">&middot;</span>
+<a href="{up}libs/">Libraries</a><span class="sep">&middot;</span>
 <a href="{up}doc/">Cross-reference</a><span class="sep">&middot;</span>
 <span>X_eTaL <a href="{xetal}/commit/{xsha}" target="_blank">{xshort}</a></span><span class="sep">&middot;</span>
 <span>build (host {host}, sha {commit}, {stamp})</span>
@@ -140,6 +141,9 @@ it. Then <a href="recorded/">run the demos yourself</a>, or see more X_eTaL:
 <a href="https://softwarewrighter.github.io/X_eTaL-games/">games</a>,
 <a href="https://softwarewrighter.github.io/X_eTaL-libraries/">libraries</a>,
 <a href="https://softwarewrighter.github.io/X_eTaL-extensions/">extensions</a>.</li>
+<li><b>The libraries.</b> <a href="libs/">The ML libraries</a> the demos are built from
+(networks, transformers, convolution, quantization, classic learning), each with its reference
+and demos you can edit and run.</li>
 <li><b>Read the code.</b> <a href="doc/">The cross-reference</a> (made by <code>xetal doc</code>):
 every demo program and library here, its documentation and sections, its source drawn as
 X_eTaL draws it, every name linked to where it is defined and used, into the NN and Net
@@ -231,6 +235,7 @@ def toc(demos):
     inside = sorted(demos, key=lambda m: m["title"].lower())
     items = "".join(f'<li><a href="#{html.escape(m["slug"])}">{html.escape(m["title"])}</a></li>' for m in inside)
     more = ('<li><a href="recorded/">Run them yourself</a></li>'
+            '<li><a href="libs/">The libraries</a></li>'
             '<li><a href="doc/">The cross-reference</a></li>'
             f'<li><a href="{REPO}">The repository</a></li>')
     return (f'<nav class="toc" aria-label="Demos"><h2>Demos</h2><ul>{items}</ul>'
@@ -239,7 +244,7 @@ def toc(demos):
 
 def main():
     out = Path(sys.argv[1]) if len(sys.argv) > 1 else ROOT / "pages" / "index.html"
-    demos = json.loads(subprocess.run([str(ROOT / "scripts" / "demos.py"), "json"],
+    demos = json.loads(subprocess.run([sys.executable, str(ROOT / "scripts" / "demos.py"), "json"],
                                       capture_output=True, text=True, check=True).stdout)
     xsha = (ROOT / "XETAL_COMMIT").read_text().strip()
     if demos:

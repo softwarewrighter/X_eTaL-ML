@@ -1,0 +1,7 @@
+# Text the libraries' site (pages/libs/) shows once its WebAssembly has
+# loaded the libraries (scripts/browser-check.sh libs).
+10 machine-learning libraries written in X_eTaL itself
+Networks
+Transformers
+Pictures and weights
+Classic machine learning
