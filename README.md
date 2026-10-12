@@ -146,9 +146,13 @@ imports).
 
 ## Build
 
-Requirements: Rust (stable), git, and
-[`just`](https://github.com/casey/just). The first `just xetal` needs
-the network (it clones X_eTaL).
+Requirements: Rust (stable), git,
+[`just`](https://github.com/casey/just) and
+[`uv`](https://docs.astral.sh/uv/). The scripts' Python is a
+uv-managed virtual environment, `.venv` (Python 3.12, from
+`.python-version`), made by `scripts/py` on first use; the system's
+Python is never used. The first `just xetal` needs the network (it
+clones X_eTaL).
 
 ```bash
 just                # list the recipes

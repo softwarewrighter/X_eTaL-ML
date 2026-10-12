@@ -374,6 +374,12 @@ Read before working:
    never committed. Ported code is reimplemented and cited (plan A8).
 8. `just` is the entry point (recipes call `scripts/*.sh`). New tasks
    get a recipe.
+8a. Python only through uv (the user's rule): `scripts/py` runs the
+   repository's `.venv`, made by `uv venv --managed-python` at the
+   version in `.python-version`; every script, `-c` and `-m` call goes
+   through it, and packages, if ever needed, go in with `uv pip`.
+   Never the system `python3` or a bare Homebrew one, not even as a
+   shim. The `.py` files' shebangs use `uv run` with a managed Python.
 9. The live site is built locally into `pages/` (`just pages`; the
    gate builds it too), which is NOT tracked on main: `just publish`
    makes it the single commit of the `gh-pages` branch, which GitHub

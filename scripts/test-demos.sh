@@ -16,10 +16,10 @@
 #   scripts/test-demos.sh [SLUG...]
 set -euo pipefail
 root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-"$root/scripts/demos.py" check
+"$root/scripts/py" "$root/scripts/demos.py" check
 xetal="$("$root/scripts/xetal.sh")"
 if [ $# -gt 0 ]; then slugs=("$@"); else
-  slugs=(); while IFS= read -r s; do [ -n "$s" ] && slugs+=("$s"); done < <("$root/scripts/demos.py" list)
+  slugs=(); while IFS= read -r s; do [ -n "$s" ] && slugs+=("$s"); done < <("$root/scripts/py" "$root/scripts/demos.py" list)
 fi
 command -v reg-rs >/dev/null || { echo "test: reg-rs not found on PATH" >&2; exit 127; }
 # Each demo's reg-rs baselines live in its own reg/: cli-NAME runs
@@ -40,8 +40,8 @@ bless() {
   local dir="$1" data="$2" name="$3" cmd="$4" desc="$5"
   mkdir -p "$data"
   if [ -f "$data/$name.rgt" ]; then
-    cmd="$(python3 -c 'import sys, tomllib; print(tomllib.load(open(sys.argv[1], "rb"))["command"])' "$data/$name.rgt")"
-    desc="$(python3 -c 'import sys, tomllib; print(tomllib.load(open(sys.argv[1], "rb")).get("desc", ""))' "$data/$name.rgt")"
+    cmd="$("$root/scripts/py" -c 'import sys, tomllib; print(tomllib.load(open(sys.argv[1], "rb"))["command"])' "$data/$name.rgt")"
+    desc="$("$root/scripts/py" -c 'import sys, tomllib; print(tomllib.load(open(sys.argv[1], "rb")).get("desc", ""))' "$data/$name.rgt")"
     rm -f "$data/$name".*
   fi
   (cd "$dir" && REG_RS_DATA_DIR="$data" reg-rs create -t "$name" -c "$cmd" --desc "$desc" >/dev/null)

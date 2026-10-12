@@ -17,10 +17,10 @@ if [ -n "${XETAL_LIVE:-}" ]; then
   trap 'rm -rf "$tmp"' EXIT
 else
   [ -f "$root/pages/$slug/index.html" ] || { echo "browser-dom: no pages/$slug (just pages)" >&2; exit 1; }
-  port="$(python3 -c 'import socket; s=socket.socket(); s.bind(("127.0.0.1", 0)); print(s.getsockname()[1])')"
+  port="$("$root/scripts/py" -c 'import socket; s=socket.socket(); s.bind(("127.0.0.1", 0)); print(s.getsockname()[1])')"
   tmp="$(mktemp -d)"
   site="$tmp/site"; mkdir -p "$site"; ln -s "$root/pages" "$site/X_eTaL-ML"
-  python3 -m http.server "$port" --bind 127.0.0.1 --directory "$site" >/dev/null 2>&1 &
+  "$root/scripts/py" -m http.server "$port" --bind 127.0.0.1 --directory "$site" >/dev/null 2>&1 &
   server=$!
   cleanup() { kill "$server" 2>/dev/null || true; wait "$server" 2>/dev/null || true; rm -rf "$tmp"; }
   trap cleanup EXIT

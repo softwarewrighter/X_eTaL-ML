@@ -11,7 +11,7 @@
 set -euo pipefail
 root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 base="/X_eTaL-ML"
-"$root/scripts/demos.py" check
+"$root/scripts/py" "$root/scripts/demos.py" check
 "$root/scripts/xetal.sh" >/dev/null   # the web apps build on work/xetal
 mkdir -p "$root/pages"
 touch "$root/pages/.nojekyll"
@@ -28,7 +28,7 @@ while IFS= read -r slug; do
   rsync -a --delete "$dist/" "$root/pages/$slug/"
   # The catalog card's picture, when the demo has one (just screenshots).
   if [ -f "$root/demos/$slug/screenshot.png" ]; then cp "$root/demos/$slug/screenshot.png" "$root/pages/$slug/"; fi
-done < <("$root/scripts/demos.py" list)
+done < <("$root/scripts/py" "$root/scripts/demos.py" list)
 # Drop pages/<slug>/ of demos that no longer have a web app.
 for d in "$root"/pages/*/; do
   [ -d "$d" ] || continue
@@ -37,5 +37,5 @@ for d in "$root"/pages/*/; do
 done
 "$root/scripts/doc-site.sh"
 cp "$root/images/xetal-logo-orange.png" "$root/images/favicon.ico" "$root/pages/"
-"$root/scripts/build-catalog.py"
+"$root/scripts/py" "$root/scripts/build-catalog.py"
 echo "pages/ built; just publish puts it live (after committing your changes)."

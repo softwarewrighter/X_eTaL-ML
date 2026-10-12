@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env -S uv run --quiet --no-project --managed-python --python 3.12 python
 """The demos' descriptions (demos/<slug>/demo.toml).
 
   scripts/demos.py list     # the slugs, in catalog order

@@ -13,6 +13,9 @@ refresh of the vendored X_eTaL.
 
 ## 2026-10-11
 
+- 17:30 `chore` Saga step uv-python completed.
+- 17:25 `build` Python only through uv (the user's rule): `scripts/py` runs the repository's `.venv`, made on first use by `uv venv --managed-python` with Python 3.12 (`.python-version`); every script call, `python3 -c` and `python3 -m http.server` in the recipes and scripts goes through it, and the `.py` files' shebangs use `uv run` with a managed Python, so the system's Python is never used. Prompted by a Homebrew upgrade that unlinked `python3` and left the system's 3.9 (no `tomllib`), which broke the pages build. README requirements (uv), CLAUDE.md rule 8a, `.venv` gitignored.
+
 - 14:30 `chore` Saga step norm-sample completed.
 - 14:25 `lib` Norm (`nm:`): `s_tandard`, `l_ayer` (with a gain and a bias as a pair), `r_ms`; eps 0.00001 so a constant row gives 0. Sample (`sm:`): `g_reedy`, `p_robs` at a temperature, `t_op` (each row's k likeliest, renormalized; the k-th largest found by repeated masked maxima, as X_eTaL has no grade along a row: ask M4), `d_raw` (a token per row by uniform numbers the caller gives: no chance inside, the same numbers the same tokens). 14 doc examples, 13 property checks (Norm's means and variances, scale invariance; Sample's sums, temperature's limits, evenly spread draws giving each token its share exactly), a demo each.
 

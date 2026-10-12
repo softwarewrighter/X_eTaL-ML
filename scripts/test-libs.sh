@@ -12,7 +12,7 @@
 # that is gone, fails; so does any FAIL line (a failed Check) in a
 # baseline's output, unless the program says "# shows failures".
 # XETAL_BLESS=1 creates missing baselines and rebases the rest (review
-# the diff!). scripts/libs.py check runs first.
+# the diff!). scripts/py scripts/libs.py check runs first.
 # XETAL_LIBS_ROOT overrides the repository root (scripts/selftest-libs.sh).
 #   scripts/test-libs.sh [Name...]
 set -euo pipefail
@@ -21,9 +21,9 @@ base="${XETAL_LIBS_ROOT:-$root}"
 command -v reg-rs >/dev/null || { echo "test-libs: reg-rs not found on PATH" >&2; exit 127; }
 "$root/scripts/xetal.sh" >/dev/null
 bless="${XETAL_BLESS:-}"
-[ "$bless" = 1 ] || "$root/scripts/libs.py" check
+[ "$bless" = 1 ] || "$root/scripts/py" "$root/scripts/libs.py" check
 if [ $# -gt 0 ]; then names=("$@"); else
-  names=(); while IFS= read -r s; do [ -n "$s" ] && names+=("$s"); done < <("$root/scripts/libs.py" list)
+  names=(); while IFS= read -r s; do [ -n "$s" ] && names+=("$s"); done < <("$root/scripts/py" "$root/scripts/libs.py" list)
 fi
 xt="$root/scripts/xt"
 fail=0; n=0
@@ -47,7 +47,7 @@ for name in ${names[@]+"${names[@]}"}; do
   for w in "${wanted[@]}"; do
     IFS='|' read -r t cmd prog <<<"$w"
     # The command as stored: the repository's scripts by a path relative to tests/.
-    rel="$(python3 -c 'import os,sys; print(os.path.relpath(sys.argv[1]))' "$xt")"
+    rel="$("$root/scripts/py" -c 'import os,sys; print(os.path.relpath(sys.argv[1]))' "$xt")"
     cmd="${cmd//$xt/$rel}"
     if [ ! -f "$t.rgt" ]; then
       if [ "$bless" = 1 ]; then rm -f "$t".tdb*; reg-rs create -t "$t" -c "$cmd" >/dev/null; echo "created: $name/$t"

@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+# Run this repository's Python: the uv-managed virtual environment
+# .venv, made on first use by `uv venv` with a uv-managed interpreter of
+# the version in .python-version. Never the system's python3. The
+# scripts use the standard library only; a package, if one is ever
+# needed, goes in with `uv pip install --python .venv`.
+#   scripts/py SCRIPT.py [ARGS...]     scripts/py -c CODE     scripts/py -m MODULE
+set -euo pipefail
+root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+venv="$root/.venv"
+if [ ! -x "$venv/bin/python" ]; then
+  command -v uv >/dev/null || { echo "py: this repository runs Python through uv (https://docs.astral.sh/uv/): install uv" >&2; exit 1; }
+  uv venv --quiet --managed-python --python "$(tr -d '[:space:]' < "$root/.python-version")" "$venv" >&2
+fi
+exec "$venv/bin/python" "$@"

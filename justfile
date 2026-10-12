@@ -35,7 +35,7 @@ check-xetal:
 
 # The demos, in catalog order
 demos:
-    @scripts/demos.py list
+    @scripts/py scripts/demos.py list
 
 # Start a demo sub-project from demos/_template: just new-demo attention "Attention microscope"
 new-demo slug title:
@@ -55,7 +55,7 @@ expand slug file="":
 
 # A demo as a paced notebook: each statement, then its result; long lines clipped, data runs collapsed
 tour slug:
-    @scripts/tour.py "$1"
+    @scripts/py scripts/tour.py "$1"
 
 # Record demos at the command line (VHS tapes, demos/<slug>/<slug>.tape) as animated WebP: just record moe-router
 record *slugs:
@@ -105,7 +105,7 @@ doc:
 
 # Check that every name is bound once in its scope (X_eTaL lang-choices M1): programs, libraries, macro expansions; the gate runs it
 check-rebind:
-    scripts/check-rebind.py
+    scripts/py scripts/check-rebind.py
 
 # Run every ## >> example in the libraries' doc comments (xetal doc --test); the gate runs it
 doc-test:
@@ -133,11 +133,11 @@ screenshots *slugs:
 
 # The libraries: name, recommended alias, what it is
 libs:
-    @scripts/libs.py table | column -t -s "$(printf '\t')"
+    @scripts/py scripts/libs.py table | column -t -s "$(printf '\t')"
 
 # The directories to put on XETAL_PATH: export XETAL_PATH="$(just path)"
 path:
-    @scripts/libs.py path
+    @scripts/py scripts/libs.py path
 
 # Start a library from templates/Library: just new-lib NN nn: "neural network layers"
 new-lib name alias summary:

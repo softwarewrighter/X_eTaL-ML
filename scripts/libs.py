@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env -S uv run --quiet --no-project --managed-python --python 3.12 python
 """The libraries: each its own directory, libs/<Name>/.
 
   libs/<Name>/README.md        a short overview

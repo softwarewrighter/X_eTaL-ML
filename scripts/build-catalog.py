@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env -S uv run --quiet --no-project --managed-python --python 3.12 python
 """Write pages/index.html, the live catalog of the ML demos, and
 pages/recorded/index.html, the demos recorded at the command line.
 

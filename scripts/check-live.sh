@@ -27,5 +27,5 @@ while IFS= read -r slug; do
   else
     echo "FAIL: $base/$slug/"; printf '%s\n' "$out"; fail=1
   fi
-done < <(scripts/demos.py list)
+done < <(scripts/py scripts/demos.py list)
 [ $fail = 0 ] && echo "check-live: ok" || { echo "check-live: FAILURES"; exit 1; }

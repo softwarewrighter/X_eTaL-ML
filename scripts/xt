@@ -13,7 +13,7 @@ root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 xetal="$root/target/xetal/release/xetal"
 libs="${XETAL_LIBS_ROOT:-$root}"
 [ -x "$xetal" ] || xetal="$("$root/scripts/xetal.sh")"
-XETAL_PATH="$(python3 - "$libs" "$root" <<'PY'
+XETAL_PATH="$("$root/scripts/py" - "$libs" "$root" <<'PY'
 import os, sys
 from pathlib import Path
 root = Path(sys.argv[1])
@@ -27,7 +27,7 @@ PY
 export XETAL_PATH
 # Pictures ([]S_HOW) go to work/draw/ (git-ignored), named relative to
 # the current directory so a baseline's "drawn ..." line is stable.
-draw="$(python3 -c 'import os,sys; print(os.path.relpath(sys.argv[1]))' "$root/work/draw")"
+draw="$("$root/scripts/py" -c 'import os,sys; print(os.path.relpath(sys.argv[1]))' "$root/work/draw")"
 mkdir -p "$root/work/draw"
 if [ "${1:-}" = run ]; then shift; exec "$xetal" run --seed 1 --ascii --draw "$draw" "$@"; fi
 exec "$xetal" "$@"

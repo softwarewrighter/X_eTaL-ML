@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env -S uv run --quiet --no-project --managed-python --python 3.12 python
 """A demo as a paced notebook, for reading at a terminal or recording.
 
 Runs `scripts/run-demo.sh --echo SLUG` (each statement drawn, then its

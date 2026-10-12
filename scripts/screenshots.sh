@@ -9,7 +9,7 @@ root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 chrome="${CHROME:-/Applications/Google Chrome.app/Contents/MacOS/Google Chrome}"
 [ -x "$chrome" ] || { echo "screenshots: no Chrome at $chrome (set CHROME)" >&2; exit 1; }
 # A free port, so a stale server elsewhere can never answer instead.
-port="$(python3 -c 'import socket; s=socket.socket(); s.bind(("127.0.0.1", 0)); print(s.getsockname()[1])')"
+port="$("$root/scripts/py" -c 'import socket; s=socket.socket(); s.bind(("127.0.0.1", 0)); print(s.getsockname()[1])')"
 "$root/scripts/serve-pages.sh" "$port" >/dev/null 2>&1 &
 server=$!
 trap 'kill $server 2>/dev/null || true' EXIT
@@ -17,7 +17,7 @@ trap 'kill $server 2>/dev/null || true' EXIT
 for _ in $(seq 1 50); do kill -0 "$server" 2>/dev/null && curl -s -o /dev/null "http://127.0.0.1:$port/X_eTaL-ML/" && break; sleep 0.1; done
 kill -0 "$server" 2>/dev/null || { echo "screenshots: could not serve pages/ on port $port (in use?)" >&2; exit 1; }
 if [ $# -gt 0 ]; then slugs=("$@"); else
-  slugs=(); while IFS= read -r s; do [ -n "$s" ] && slugs+=("$s"); done < <("$root/scripts/demos.py" list)
+  slugs=(); while IFS= read -r s; do [ -n "$s" ] && slugs+=("$s"); done < <("$root/scripts/py" "$root/scripts/demos.py" list)
 fi
 tmp="$(mktemp -d)"
 for slug in "${slugs[@]}"; do

@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env -S uv run --quiet --no-project --managed-python --python 3.12 python
 """American spellings only: scan this repository's docs and sources for
 British spellings and fail if any are found (the gate runs it).
 

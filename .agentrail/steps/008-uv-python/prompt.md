@@ -1,0 +1,1 @@
+the user's direction, 2026-10-11: Python only through a uv venv (uv venv, uv pip), never the system python3: scripts/py runs the repo's .venv (uv venv --managed-python at .python-version's version, made on first use); every script call, python3 -c and python3 -m http.server go through it; the .py shebangs use uv run with a managed Python; .venv gitignored; docs

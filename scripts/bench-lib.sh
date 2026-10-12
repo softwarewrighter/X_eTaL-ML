@@ -10,7 +10,7 @@ programs=()
 for p in "$root"/bench/*.xtl; do programs+=("bench/$(basename "$p")"); done
 while IFS= read -r s; do
   [ -n "$s" ] && [ -f "$root/demos/$s/$s.xtl" ] && programs+=("demos/$s/$s.xtl")
-done < <("$root/scripts/demos.py" list)
+done < <("$root/scripts/py" "$root/scripts/demos.py" list)
 
 best() {
   local p="$1" dir file best="" t start end
@@ -18,9 +18,9 @@ best() {
   local path
   path="$(cd "$root" && ls -d libs/*/src work/libs/*/src 2>/dev/null | sed "s#^#$root/#" | paste -sd: -)"
   for _ in $(seq "$runs"); do
-    start=$(python3 -c 'import time; print(time.monotonic_ns())')
+    start=$("$root/scripts/py" -c 'import time; print(time.monotonic_ns())')
     (cd "$dir" && XETAL_PATH="$path" "$xetal" run --seed 1 "$file" > /dev/null 2>&1)
-    end=$(python3 -c 'import time; print(time.monotonic_ns())')
+    end=$("$root/scripts/py" -c 'import time; print(time.monotonic_ns())')
     t=$(( (end - start) / 1000000 ))
     if [ -z "$best" ] || [ "$t" -lt "$best" ]; then best=$t; fi
   done

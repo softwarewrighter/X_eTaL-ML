@@ -12,7 +12,7 @@ root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 slug="${1:?usage: browser-check.sh SLUG}"
 want="$root/demos/$slug/web/browser.txt"
 [ -f "$want" ] || { echo "browser-check: no demos/$slug/web/browser.txt" >&2; exit 1; }
-"$root/scripts/browser-dom.sh" "$slug" | python3 -c '
+"$root/scripts/browser-dom.sh" "$slug" | "$root/scripts/py" -c '
 import html, re, sys
 dom = sys.stdin.read()
 want = [l.rstrip("\n") for l in open(sys.argv[1]) if l.strip() and not l.startswith("#")]
