@@ -20,7 +20,7 @@ GPUs".
 
 | # | Status | For | Ask | Models | Meanwhile |
 | - | ------ | --- | --- | ------ | --------- |
-| GA1 | in progress there (saga gpu-models: ml-bench and world-model done 2026-10-12 on the M1 Max and the RTX 5060 Ti, `XETAL_ML_COMMIT` fac586c; the denoiser queued, its step denoiser) | X_eTaL-gpu | Pin X_eTaL-ML (an `XETAL_ML_COMMIT`, as this repo pins X_eTaL) and run its batch models from it: their programs, `data/` weights and expected outputs, the same decisions on every device, timed | world-model, the benchmarks, the denoiser (plan rows 1 to 3) | the denoiser's batch run waits on its re-pin past 1eded2a (`demos/diffusion/`, 2026-10-12) |
+| GA1 | in progress there (saga gpu-models: ml-bench and world-model done 2026-10-12 on the M1 Max and the RTX 5060 Ti, `XETAL_ML_COMMIT` fac586c; the denoiser queued, its step denoiser) | X_eTaL-gpu | Pin X_eTaL-ML (an `XETAL_ML_COMMIT`, as this repo pins X_eTaL) and run its batch models from it: their programs, `data/` weights and expected outputs, the same decisions on every device, timed | world-model, the benchmarks, the denoiser (plan rows 1 to 3); since 2026-10-13 cnn-digits' and micro-gpt's batch programs (rows 4 and 5: `demos/cnn-digits/batch.xtl`, `demos/micro-gpt/batch.xtl`) | the denoiser's and the two batch programs' runs wait on its re-pin (`demos/diffusion/` since 1eded2a, 2026-10-12; the batch programs since step gpu-batches, 2026-10-13) |
 | GA2 | landed 2026-10-12 (X_eTaL-gpu's step transpose: `transpose` in the IR, a gather or tiles; Accel `s_cores` and `w_eightGrad` checked on both cards) | X_eTaL-gpu | `transpose` in its IR | attention scores (`Q K^T`: micro-gpt, the Attention library), every backward pass (cnn-backprop, train-live) | none needed |
 | GA3 | landed 2026-10-12 (its step windows: rotate, drop along an axis and reshape in the IR; Conv's `w_indows` expression runs as six gathers, no im2col) | X_eTaL-gpu | The convolution's windows in its IR: `reshape` and rotation along an axis, or one windows operation (im2col) | cnn-digits, cnn-backprop, the Conv library | none needed |
 | GA4 | filed there (X-1) | X_eTaL-extensions | A newer X_eTaL inside `xetal-x` than v0.1.0: our libraries use `h:` helpers (NN) and tuples (Optim, the training state), which v0.1.0 lacks, so they cannot run under the bridge | every model through the Gpu facade | the GPU run is a separate program on the IR twin; the evaluator's run is the reference |
@@ -163,6 +163,17 @@ the programs stand:
   row 1 intended;
 - the benchmarks: in the subset as they are (`e_ach` over a lambda
   of arrays repeats the work; NN's `s_oftmax`);
+- cnn-digits' batch (`batch.xtl`, 2026-10-13): `u:r_ead` is one
+  function of arrays (Conv's `w_indows` by rotations, drops and a
+  reshape, `c_onv` as one product, `p_ool` by a reshape and a
+  reduction, NN's `d_ense` and `a_rgmax`), the rows 4 case of the
+  plan; the count against the labels stays in the evaluator;
+- micro-gpt's batch (`batch.xtl`, 2026-10-13): `u:g_pt` as the demo
+  has it (the embedding lookup by `s_elect`, Norm's `r_ms`,
+  Attention's `h_ead` with `o_\`, `c_at_2` of the four heads), called
+  once per name by `p_ower` over the totals; the heads' `c_at_2` is
+  GA7's again, and the causal mask is an argument the evaluator
+  makes;
 - the denoiser: `u:c_lean` joins the pixels and the level's one-hot
   with `c_at_2` and NN's `o_neHot` (`'= t_able r_ange`), and
   `u:s_tep` takes the schedule's roots with `^ 0.5`; none of the

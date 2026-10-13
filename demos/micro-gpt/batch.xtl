@@ -1,0 +1,72 @@
+#!/usr/bin/env xetal
+## The tiny GPT over a batch of names: the first 1,000 names of its
+## training file (makemore's names.txt) scored by the forward pass of
+## micro-gpt.xtl, a name per call under its causal mask; the mean loss
+## per token (the cross-entropy the trainer reports) and how many next
+## letters it predicts right, both as the trainer's Rust model gives
+## them. The batch run for a GPU (docs/gpu-asks.md): a thousand calls
+## of one forward pass, the token ids all that goes in.
+
+"nn:" u_se< "NN"
+"nm:" u_se< "Norm"
+"at:" u_se< "Attention"
+
+### The model, read from data/ (just micro-gpt-data), as micro-gpt.xtl reads it
+chars := -1 d_rop []N_GET "data/chars.txt"
+v := 1 + t_ally chars
+wte := (v c_at 16) r_eshape n_umbers []N_GET "data/wte.txt"
+wpe := 16 16 r_eshape n_umbers []N_GET "data/wpe.txt"
+lm := (v c_at 16) r_eshape n_umbers []N_GET "data/lm_head.txt"
+Wq := 16 16 r_eshape n_umbers []N_GET "data/wq.txt"
+Wk := 16 16 r_eshape n_umbers []N_GET "data/wk.txt"
+Wv := 16 16 r_eshape n_umbers []N_GET "data/wv.txt"
+Wo := 16 16 r_eshape n_umbers []N_GET "data/wo.txt"
+fc1 := 64 16 r_eshape n_umbers []N_GET "data/fc1.txt"
+fc2 := 16 64 r_eshape n_umbers []N_GET "data/fc2.txt"
+
+### The forward pass, as micro-gpt.xtl has it
+## RMS norm without a gain (microgpt's).
+u:r_ms := { x -> (16 r_eshape 1.0) nm:r_ms x }
+## x times a matrix kept a row per output.
+u:l_inear := { x W -> x '+ '* i_nner o_\ W }
+## Attention head j (of 4): rows 4j-3 .. 4j of the projections.
+u:h_ead := { j hM ->
+  r := (4 * j - 1) + r_ange 4
+  (o_\ r s_elect Wq, o_\ r s_elect Wk, o_\ r s_elect Wv) at:h_ead hM
+}
+## Every position's scores over the 27 tokens, for the tokens ids.
+u:g_pt := { ids ->
+  n := t_ally ids
+  x0 := u:r_ms (ids s_elect wte) + (r_ange n) s_elect wpe
+  hM := (u:r_ms x0, at:c_ausal n)
+  heads := (1 u:h_ead hM) c_at_2 (2 u:h_ead hM) c_at_2 (3 u:h_ead hM) c_at_2 4 u:h_ead hM
+  x1 := x0 + heads u:l_inear Wo
+  x2 := x1 + (0.0 m_ax (u:r_ms x1) u:l_inear fc1) u:l_inear fc2
+  x2 u:l_inear lm
+}
+
+### A name's score
+## The names as rows of 17 tokens: the start token, the letters, the
+## end token (numbered from 1), then zeros.
+names := 1000 17 r_eshape f_loor n_umbers []N_GET "data/names.txt"
+## For a name's row r: the scores at every token but the last, the
+## tokens that follow as the targets; the sum of -log of each target's
+## probability, the targets predicted right (the likeliest, the first
+## on a tie) and the tokens scored.
+u:s_core := { r ->
+  ids := ('+ r_/ r > 0) t_ake r
+  S := u:g_pt -1 d_rop ids
+  t := 1 d_rop ids
+  ('+ r_/ r_avel (v nn:o_neHot t) * n_eg l_og nn:s_oftmax S) c_at (f_loat '+ r_/ (nn:a_rgmax S) = t) c_at f_loat t_ally t
+}
+# -- end of the core ------------------------------------------
+
+### The thousand names: the mean loss per token, the next letters right; the Rust model's numbers
+## The scores summed over the names, one call each.
+(totals, _) := 1000 '{ (T, i) -> (T + u:s_core i s_elect names, i + 1) } p_ower (0.0 0.0 0.0, 1)
+mean := (1 s_elect totals) / 3 s_elect totals
+(f_loat f_loor 0.5 + 10000.0 * mean) / 10000.0
+f_loor 2 3 s_elect totals
+expected := n_umbers []N_GET "data/names-loss.txt"
+1e-9 > a_bs mean - 1 s_elect expected
+(f_loor 2 s_elect totals) = f_loor 2 s_elect expected

@@ -26,6 +26,7 @@ just run micro-gpt         # the check against the Rust model, twenty names, fiv
 just serve micro-gpt       # the web app at http://127.0.0.1:8435/
 just test-demo micro-gpt   # its CLI and browser baselines and the web app's tests
 just micro-gpt-data        # fetch the names and train again (2 seconds)
+just run micro-gpt batch.xtl  # the first 1,000 names scored: the mean loss, the next letters right (about 3.5 s)
 ```
 
 ## The program
@@ -69,11 +70,39 @@ invents new names.
    soren kicen larian kalin chican.
 3. Five starting with "ma": maaea maria maryn maris maria.
 
+## The batch: 1,000 names scored
+
+`batch.xtl` scores the first 1,000 names of the training file with
+the same forward pass (its head is micro-gpt.xtl's), a name per
+call under its causal mask, and sums each name's score: the mean
+loss per token over the 7,000 tokens (2.2496, the cross-entropy the
+trainer reports) and how many next letters it predicts right
+(2,098), both the trainer's Rust model's numbers (the program checks
+them: the loss to 1e-9, the count exactly). A name's score:
+
+```
+u:s_core := { r ->
+  ids := ('+ r_/ r > 0) t_ake r
+  S := u:g_pt -1 d_rop ids
+  t := 1 d_rop ids
+  ('+ r_/ r_avel (v nn:o_neHot t) * n_eg l_og nn:s_oftmax S) c_at (f_loat '+ r_/ (nn:a_rgmax S) = t) c_at f_loat t_ally t
+}
+```
+
+It is the batch run for a GPU
+([`docs/gpu-asks.md`](../../docs/gpu-asks.md)): a thousand calls of
+one forward pass, the token ids all that goes in; the decision is
+the count of next letters right. About 3.5 s in the evaluator.
+
 ## The data
 
 `data/`: the letters and the weights, each matrix a row per output, as
-microgpt keeps them, and `expected.txt` (the Rust model's scores for
-"emma"). Written by `train/` (`just micro-gpt-data`), adapted from
+microgpt keeps them, `expected.txt` (the Rust model's scores for
+"emma"), and for `batch.xtl` `names.txt` (the first 1,000 names as
+rows of 17 token ids: the start token, the letters, the end token,
+numbered from 1, then zeros) and `names-loss.txt` (the Rust model's
+mean loss per token on them and its count of next letters right).
+Written by `train/` (`just micro-gpt-data`), adapted from
 [microgpt-rs](https://github.com/softwarewrighter/microgpt-rs) (MIT,
 the same author): the same model, training (1,000 steps of Adam, one
 name a step) and seed, with a `main` that writes `data/`. The names are

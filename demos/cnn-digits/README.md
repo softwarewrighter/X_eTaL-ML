@@ -17,6 +17,7 @@ just tour cnn-digits     # each statement, then its result, paced
 just show cnn-digits     # the same as a notebook, unclipped
 just serve cnn-digits        # the web app at http://127.0.0.1:8435/
 just test-demo cnn-digits    # its CLI and browser baselines and the web app's tests
+just run cnn-digits batch.xtl  # the first 1,000 test digits as one batch: how many read right (about 9 s)
 ```
 
 Live: [Tiny CNN](https://softwarewrighter.github.io/X_eTaL-ML/cnn-digits/)
@@ -75,9 +76,29 @@ its own smallest to largest value and picks a shade with `s_elect`,
 reshape), and the bars are one comparison table,
 `counts '> t_able o_ffsets 50`.
 
+## The batch: 1,000 digits at once
+
+`batch.xtl` reads the first 1,000 MNIST test digits as one batch
+through the [Conv](../../libs/Conv/docs/README.md) library (every
+picture's windows, one product for the batch, the pooling), then the
+dense layer, and counts how many it reads right: 971, the count the
+trainer's Rust forward pass gives from the same rounded pixels (the
+program checks it). The reader is one function of arrays:
+
+```
+u:r_ead := { X ->
+  (nn:a_rgmax (((t_ally X) c_at 1352) r_eshape cv:p_ool nn:r_elu (9 t_ake_2 fb, r_avel -1 t_ake_2 fb) cv:c_onv X) nn:d_ense wb) - 1
+}
+```
+
+It is the batch run for a GPU
+([`docs/gpu-asks.md`](../../docs/gpu-asks.md)): the decision is the
+count, the same everywhere. About 9 s in the evaluator, most of it
+the windows (6 million numbers) and their product.
+
 ## The data
 
-`data/` holds what the program reads with `n_umbers []N_GET`:
+`data/` holds what the programs read with `n_umbers []N_GET`:
 
 | File | What |
 | ---- | ---- |
@@ -85,6 +106,9 @@ reshape), and the bars are one comparison table,
 | `dense.txt` | 1352 lines of 10 weights (one per pooled value, filter by filter, row by row), then the 10 biases (the layout `nn:d_ense` takes) |
 | `samples.txt` | ten MNIST test digits (the first of each class), 28 lines of 28 pixels each, 0 to 1 |
 | `expected.txt` | the trainer's probabilities for the ten samples, for the final check |
+| `test-digits.txt` | the first 1,000 MNIST test digits for `batch.xtl`, 28 lines of 28 pixels each, as whole percents (0 to 100) |
+| `test-labels.txt` | their labels, 0 to 9 |
+| `test-right.txt` | how many of them the trainer's Rust forward pass reads right from those rounded pixels (971) |
 
 They are written by `train/`, a small Rust program with no
 dependencies: it trains the network on the 60,000 MNIST training

@@ -1,0 +1,32 @@
+#!/usr/bin/env xetal
+## The digit reader over a batch: the first 1,000 MNIST test digits as
+## one batch through the Conv library (the windows of every picture,
+## one product for the batch, the pooling), then the dense layer; how
+## many digits it reads right, the count the trainer's Rust forward
+## pass gives from the same pixels. The batch run for a GPU
+## (docs/gpu-asks.md); cnn-digits.xtl is the lesson, a picture at a time.
+
+"nn:" u_se< "NN"
+"cv:" u_se< "Conv"
+
+### The network, read from data/ (as cnn-digits.xtl reads it)
+fb := 8 10 r_eshape n_umbers []N_GET "data/filters.txt"
+wb := 1353 10 r_eshape n_umbers []N_GET "data/dense.txt"
+
+### The batch: the test digits, their pixels as whole percents, and their labels
+X := (1000 28 28 r_eshape n_umbers []N_GET "data/test-digits.txt") / 100.0
+labels := f_loor n_umbers []N_GET "data/test-labels.txt"
+
+### The reader
+## The digit, 0 to 9, the network reads in each picture of a batch X:
+## the filters over every window, ReLU, 2 x 2 pooling, the dense layer,
+## the likeliest output. One function of arrays, the part a GPU takes.
+u:r_ead := { X ->
+  (nn:a_rgmax (((t_ally X) c_at 1352) r_eshape cv:p_ool nn:r_elu (9 t_ake_2 fb, r_avel -1 t_ake_2 fb) cv:c_onv X) nn:d_ense wb) - 1
+}
+# -- end of the core ------------------------------------------
+
+### How many of the 1,000 it reads right, and that the Rust model counts the same
+right := f_loor '+ r_/ f_loat (u:r_ead X) = labels
+right
+right = f_loor n_umbers []N_GET "data/test-right.txt"

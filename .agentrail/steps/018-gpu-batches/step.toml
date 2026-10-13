@@ -1,0 +1,8 @@
+number = 18
+slug = "gpu-batches"
+status = "in-progress"
+description = "the user's go, 2026-10-13: batch programs for the later GPU workloads (docs/p..."
+role = "production"
+context_files = []
+created_at = "2026-10-13T10:59:26"
+commits = []

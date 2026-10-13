@@ -235,4 +235,19 @@ fn main() {
     }
     eprintln!("test accuracy {:.2}% ({} of 10,000); wrote data/filters.txt, dense.txt, samples.txt, expected.txt", acc * 100.0, (acc * 10000.0).round());
 
+    // The batch program's data (batch.xtl): the first 1,000 test digits
+    // with their pixels as whole percents, their labels, and how many of
+    // them this (Rust) forward pass reads right from those rounded pixels.
+    let digits: Vec<f64> = tx[..1000].iter().flat_map(|x| x.iter().map(|v| (v * 100.0).round())).collect();
+    let labels: Vec<f64> = ty[..1000].iter().map(|&y| y as f64).collect();
+    let right = digits.chunks(784).zip(&ty).filter(|(x, &y)| net.predict(&x.iter().map(|v| v / 100.0).collect::<Vec<_>>()) == y).count();
+    for (file, text) in [("test-digits.txt", ints(&digits, 28)), ("test-labels.txt", ints(&labels, 50)), ("test-right.txt", format!("{right}\n"))] {
+        std::fs::write(format!("{dir}/{file}"), text).expect("write data/");
+    }
+    eprintln!("the first 1,000 test digits: {right} read right; wrote data/test-digits.txt, test-labels.txt, test-right.txt");
+}
+
+/// Whole numbers, `per` to a line.
+fn ints(v: &[f64], per: usize) -> String {
+    v.chunks(per).map(|c| c.iter().map(|&x| (x as i64).to_string()).collect::<Vec<_>>().join(" ") + "\n").collect()
 }

@@ -459,5 +459,41 @@ fn main() {
     std::fs::write(format!("{data}/expected.txt"), rows).expect("expected.txt");
     drop((keys, values));
     tape.truncate(num_params);
-    eprintln!("wrote {data}/: chars, the weights, expected.txt");
+
+    // The batch program's data (batch.xtl): the first 1,000 names of the
+    // file as rows of token ids (the start token, the letters, the end
+    // token, numbered from 1 as X_eTaL selects them, then zeros to 17),
+    // the mean loss per token this (Rust) forward pass gives them, and
+    // how many next tokens it predicts right (the likeliest, the first
+    // on a tie).
+    let first: Vec<&str> = text.lines().map(str::trim).filter(|l| !l.is_empty()).take(1000).collect();
+    let (mut rows, mut total, mut count, mut right) = (String::new(), 0.0, 0usize, 0usize);
+    for name in &first {
+        let mut tokens = vec![bos];
+        tokens.extend(name.chars().map(|c| stoi[&c]));
+        tokens.push(bos);
+        let n = BLOCK_SIZE.min(tokens.len() - 1);
+        let mut keys: KvCache = vec![Vec::new(); N_LAYER];
+        let mut values: KvCache = vec![Vec::new(); N_LAYER];
+        for pos in 0..n {
+            let probs: Vec<f64> = softmax(&gpt(&sd, tokens[pos], pos, &mut keys, &mut values)).iter().map(|p| p.data()).collect();
+            total -= probs[tokens[pos + 1]].ln();
+            count += 1;
+            let mut best = 0;
+            for j in 1..probs.len() {
+                if probs[j] > probs[best] {
+                    best = j;
+                }
+            }
+            right += (best == tokens[pos + 1]) as usize;
+        }
+        drop((keys, values));
+        tape.truncate(num_params);
+        let mut ids: Vec<String> = tokens.iter().map(|t| (t + 1).to_string()).collect();
+        ids.resize(17, "0".into());
+        rows += &(ids.join(" ") + "\n");
+    }
+    std::fs::write(format!("{data}/names.txt"), rows).expect("names.txt");
+    std::fs::write(format!("{data}/names-loss.txt"), format!("{:?} {right}\n", total / count as f64)).expect("names-loss.txt");
+    eprintln!("wrote {data}/: chars, the weights, expected.txt; the first {} names ({count} tokens): mean loss {:.4}, {right} next tokens right (names.txt, names-loss.txt)", first.len(), total / count as f64);
 }

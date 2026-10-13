@@ -99,7 +99,7 @@ cnn-backprop-data:
     scripts/mnist.sh
     cargo run --release -q --manifest-path demos/cnn-backprop/train/Cargo.toml
 
-# Fetch MNIST into work/mnist/, train the cnn-digits demo's network and write its weights into cnn-digits.xtl (then just bless cnn-digits)
+# Fetch MNIST into work/mnist/, train the cnn-digits demo's network and write its weights, samples and the batch program's test digits into its data/
 cnn-train:
     scripts/mnist.sh
     cargo run --release -q --manifest-path demos/cnn-digits/train/Cargo.toml

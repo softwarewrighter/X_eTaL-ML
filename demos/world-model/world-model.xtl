@@ -77,8 +77,8 @@ p := u:p_redict xs
 12 12 r_eshape (1 + (p > 0.5) + p > 0.1) s_elect ".+#"
 
 ### Dreaming
-## Fed its own predictions: each step keeps only the likeliest place
-## for the ball and moves the window on.
+# Fed its own predictions: each step keeps only the likeliest place
+# for the ball and moves the window on.
 # Twelve steps on from the window xs: where the dreamed ball is, and the true one.
 (_, dream) := 12 '{ (w, xys) ->
   xy := u:p_lace u:p_redict w

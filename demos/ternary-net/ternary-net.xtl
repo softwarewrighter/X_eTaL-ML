@@ -69,8 +69,8 @@ m16 := (10.0 qz:f_loats w) u:w_ith m
 m8 := (s8 qz:s_nap w) u:w_ith m
 m2 := (a * q) u:w_ith m
 ### Additions only: a ternary layer for one input h
-## Quant's a_dds: sum the inputs where the weight is +1, subtract those
-## where it is -1, then one multiply by the layer's scale.
+# Quant's a_dds: sum the inputs where the weight is +1, subtract those
+# where it is -1, then one multiply by the layer's scale.
 ### The maps: every map point through each format
 y32 := grid u:n_et m32
 y16 := grid u:n_et m16
