@@ -1,0 +1,1 @@
+X_eTaL-gpu's f32 finding applied: Sample's t_op and Learn's k_nn take items out by a finite shift (1 + the data's range), not 1e300; every output unchanged (library baselines, 87 doc examples, demo baselines). Attention's 1e9 stays (within f32). Library pages, gpu-asks 'Found there' rule, plan.
