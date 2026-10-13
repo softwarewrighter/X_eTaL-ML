@@ -38,11 +38,13 @@ l:p_robs := { t s -> nn:s_oftmax s / t }
 l:t_op := { k p ->
   m := ((t_ally r_avel p) d_iv -1 t_ake s_hape p) c_at -1 t_ake s_hape p
   rows := m r_eshape p
-  ## Each row's k-th largest: its largest taken and masked out, k times
-  ## (X_eTaL has no grade along a row yet).
+  ## Each row's k-th largest: its largest taken and shifted below the
+  ## rest, k times (X_eTaL has no grade along a row yet). The shift is
+  ## finite, 1 + the range of the values, so it runs in 32-bit floats
+  ## too (a huge constant is infinity there, and 0 times it NaN).
   (_, kth) := k '{ (q, t) ->
     top := 'm_ax r_/_2 q
-    (q - 1e300 * f_loat q >= top h:s_pread q, top)
+    (q - (1.0 + ('m_ax r_/ r_avel q) - 'm_in r_/ r_avel q) * f_loat q >= top h:s_pread q, top)
   } p_ower (rows, (1 t_ake m) r_eshape 0.0)
   kept := rows * f_loat rows >= kth h:s_pread rows
   (s_hape p) r_eshape kept / ('+ r_/_2 kept) h:s_pread kept

@@ -1,0 +1,8 @@
+number = 19
+slug = "finite-shift"
+status = "in-progress"
+description = "X_eTaL-gpu's finding, 2026-10-13 (its agent, lowering Accel's top-k, which co..."
+role = "production"
+context_files = []
+created_at = "2026-10-13T12:04:27"
+commits = []

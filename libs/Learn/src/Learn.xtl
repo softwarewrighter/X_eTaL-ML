@@ -58,8 +58,10 @@ l:k_means := { (k, n) X -> n '{ C -> X l:k_step C } p_ower k l:f_arthest X }
 
 ## `(k, X, y) k_nn Q`: for each row of Q, the label most of its k
 ## nearest rows of X have (y: X's labels, from 1); on a tie the
-## smallest label. The neighbors are found nearest first, each masked
-## once taken (X_eTaL has no grade along a row yet).
+## smallest label. The neighbors are found nearest first, each shifted
+## beyond the rest once taken (X_eTaL has no grade along a row yet); the
+## shift is finite, 1 + the largest distance, so it runs in 32-bit
+## floats too.
 ## >> "ml:" u_se< "Learn"
 ## >> X := 4 1 r_eshape 0.0 1.0 10.0 11.0
 ## >> (3, X, 1 1 2 2) ml:k_nn 2 1 r_eshape 0.5 10.5
@@ -69,7 +71,7 @@ l:k_nn := { (k, X, y) Q ->
   D := Q h:d_ist X
   (_, V) := k '{ (d, v) ->
     j := nn:a_rgmax n_eg d
-    (d + 1e300 * f_loat j '= t_able r_ange t_ally X, v + c nn:o_neHot j s_elect y)
+    (d + (1.0 + 'm_ax r_/ r_avel d) * f_loat j '= t_able r_ange t_ally X, v + c nn:o_neHot j s_elect y)
   } p_ower (D, ((t_ally Q) c_at c) r_eshape 0.0)
   nn:a_rgmax V
 }

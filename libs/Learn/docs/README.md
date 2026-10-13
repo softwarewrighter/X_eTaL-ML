@@ -90,9 +90,11 @@ library's `## >>` examples are run by `just doc-test`.
 
 ## Limits
 
-- kNN finds the k nearest by taking the nearest and masking it, k
-  times: X_eTaL has no grade along a row yet (ask M4 in
-  [`docs/xetal-asks.md`](../../../docs/xetal-asks.md)).
+- kNN finds the k nearest by taking the nearest and shifting it
+  beyond the rest, k times: X_eTaL has no grade along a row yet (ask
+  M4 in [`docs/xetal-asks.md`](../../../docs/xetal-asks.md)). The
+  shift is finite (1 + the largest distance), not a huge constant, so
+  the function runs in 32-bit floats too, as on a GPU.
 - PCA uses power iteration (200 steps a direction) with deflation:
   accurate for directions whose variances differ; two nearly equal
   variances give a direction somewhere in their plane.

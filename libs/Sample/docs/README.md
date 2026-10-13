@@ -59,8 +59,12 @@ each token its share exactly.
 ## Limits
 
 - `t_op` finds each row's k-th largest by taking the largest and
-  masking it, k times: X_eTaL has no grade along a row yet (ask M4 in
-  [`docs/xetal-asks.md`](../../../docs/xetal-asks.md)).
+  shifting it below the rest, k times: X_eTaL has no grade along a
+  row yet (ask M4 in [`docs/xetal-asks.md`](../../../docs/xetal-asks.md)).
+  The shift is finite (1 + the range of the values), not a huge
+  constant, so the function runs in 32-bit floats too, as on a GPU
+  (X_eTaL-gpu's finding, 2026-10-13: 1e300 is infinity there, and 0
+  times it NaN).
 
 ## Provenance
 

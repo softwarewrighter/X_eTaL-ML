@@ -194,3 +194,17 @@ the page's tests and the baselines are unchanged byte for byte. So
 the denoiser's accelerated function is `u:n_et`, called ten times
 per batch with the joined input bound each time (110 numbers per
 picture); the ask stands so the join can move over too.
+
+### Found there: no huge constants (32-bit floats)
+
+X_eTaL-gpu, lowering Accel's top-k (a copy of Sample's `t_op`),
+2026-10-13: subtracting 1e300 to take a row's largest out is
+infinity in a GPU's f32, and inf times 0 is NaN, so the row comes
+back wrong on the device while the CPU's f64 hides it; its runtime
+now refuses any Float beyond float's range at upload. Done here
+(step finite-shift): Sample's `t_op` shifts a taken item by 1 + the
+range of the values and Learn's `k_nn` by 1 + the largest distance,
+both finite, every output unchanged; Attention's `w_eights`
+subtracts 1e9 on the mask, within f32 (exp of it is 0, no NaN), and
+stays. The rule for new code: a mask's shift is a finite function
+of the data, never a constant beyond 3e38.
