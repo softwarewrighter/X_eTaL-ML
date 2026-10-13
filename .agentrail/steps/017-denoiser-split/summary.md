@@ -1,0 +1,1 @@
+The denoiser's network split out as u:n_et, one function of arrays in the subset X_eTaL-gpu lowers; u:c_lean the join around it; the schedule's roots as vectors ra, rb taken once. Output byte for byte unchanged (baselines and page tests pass unchanged). README, gpu-asks GA7 (done meanwhile), plan.

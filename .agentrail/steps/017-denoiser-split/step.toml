@@ -1,8 +1,9 @@
 number = 17
 slug = "denoiser-split"
-status = "in-progress"
+status = "completed"
 description = "the user's go, 2026-10-13 (gpu-asks GA7's meanwhile): the denoiser's network ..."
 role = "production"
 context_files = []
 created_at = "2026-10-13T10:15:23"
-commits = []
+completed_at = "2026-10-13T10:37:08"
+commits = ["65567f93a5afa1b3164a28f8cefeb8f1e544c344"]
