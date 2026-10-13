@@ -70,6 +70,19 @@ RTX 5060 Ti. The tables: its `docs/ml-results.md` and
 (row 3, `demos/diffusion/`, committed 2026-10-12 at 1eded2a) is
 queued there as step denoiser, after a re-pin.
 
+Its step gpu-pipeline (queued 2026-10-13: pinned f32 input buffers,
+non-blocking transfers, the batch axis chunked and run on streams
+with events, `explain` of the stages, `--repeat` for sustained items
+per second; the world model measured first, against OpenBLAS and
+Accelerate) needs nothing new from here: the batch is an input and
+how it is cut is the schedule's. The world model offers a stream of
+independent batches of any size (its core generates the windows;
+the weights resident); the denoiser offers ten dependent stages per
+batch, so a stream of batches pipelines stage by stage (batch k at
+step t while batch k+1 is at step t-1). Both keep their decision
+whatever the chunking: the counts, and the same pictures from the
+same noise.
+
 ### GA2, GA3: operations the larger models need (landed)
 
 The IR had inputs, constants, elementwise maps, reductions along an

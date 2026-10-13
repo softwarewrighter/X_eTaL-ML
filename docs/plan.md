@@ -276,6 +276,7 @@ until there is enough progress across all the X_eTaL repositories:
 | 9 | world-model, diffusion | DONE. world-model: demos/world-model, live: a 2 x 2 ball bouncing in a 12 x 12 box (1,936 states, the world written in X_eTaL: `u:s_tep` moves and bounces every state at once), a 432-64-144 network trained offline (train/: Adam with weight decay 0.2, a fifth of the states held out by a seeded shuffle; without decay it memorized: 7 in 10 unseen, with it 9 in 10); the program runs all 1,936 states as one batch (8.5 s, the GPU candidate: row 1 below) and counts the next frames predicted exactly (1,897; 348 of the 387 unseen), checks one window against the Rust model to 1e-6, and dreams twelve steps on its own predictions (`u:p_lace`, the likeliest 2 x 2 block), on track for all twelve; the page: place the ball, pick its speed, a state it never saw, dream step by step, the predicted frame as probabilities with the true ball outlined, the dreamed ball against the true one. diffusion: demos/diffusion, live: 10 x 10 pictures of a disk, a hollow square or a cross; a denoiser (110 in: the pixels and the level one-hot, 256 ReLU, 100 sigmoid) trained offline (train/: pictures made fresh per batch, a cosine schedule of ten levels, 40,000 Adam steps, 2.5 min); DDIM sampling in X_eTaL (`u:s_tep` over a tuple by `p_ower`, no new noise, so the same noise gives the same pictures), the trainer's starting noise reproduced to 1e-6; 128 pictures at once at the command line (6.3 s, the GPU candidate: row 3 below), 97 of them a shape's worth of pixels; the page: eight pictures from the browser's noise, every level as a strip, one large, the same noise again. Disks and crosses come out clean, hollow squares often as bars: a dense denoiser has no notion of neighbors (a convolutional one is a later step) |
 | 10 | gpu-results | DONE (2026-10-13): X_eTaL-gpu pinned fac586c and ran rows 1 and 2 on the Apple M1 Max and the RTX 5060 Ti (2026-10-12; its `docs/ml-results.md`, `docs/rtx5060-ml-results.md`): the world model's counts 1,897 and 348 the same on the evaluator, its interpreter, both cards in f32 and through the `xetal-x` facade; the benchmarks within a relative 1e-5; the kernels a fraction of a millisecond, compiling and the text bridge the cost; a kept session runs the batch in 2.5 ms on the M1 Max against NumPy's 1.3 ms (the gap closes as the batch grows). Summarized in docs/speed.md, "On GPUs", with the links; gpu-asks.md: GA2 and GA3 landed there (transpose; rotate, drop, reshape for Conv's windows), GA5's input half (binary file binding, 13 ms against 460 ms), GA6's G3 declined by X_eTaL (per-shape specialization instead). Row 3, the denoiser, is queued there after its re-pin past 1eded2a |
 | 11 | gpu-source | DONE (2026-10-13, the user's note): X_eTaL-gpu builds the lowering itself (its A4b; `xetal-gpu run FILE.xtl`, the macro `gp:a_ccel<`, its step models-from-source for our world model and benchmarks from their own `.xtl`). gpu-asks.md: GA6 in progress there, the subset it lowers and where each program stands (the world model's `u:p_redict` and `u:e_xact` and the benchmarks fit; the denoiser's `c_at_2`, NN's `o_neHot` and `^` do not); GA7 filed (those three in the subset; meanwhile the joined input bound per call, or `u:c_lean` split here on request). The results paragraph above |
+| 12 | gpu-pipeline-note | DONE (2026-10-13, the user's note): X_eTaL-gpu queued gpu-pipeline (pinned f32 buffers, non-blocking transfers, the batch axis chunked on streams with events, `explain` of the stages, `--repeat` for sustained items per second; the world model its first measurement). Recorded above and in gpu-asks.md what our workloads offer it: the world model a stream of independent batches (chunking), the denoiser ten dependent stages per batch, a stream of batches pipelined stage by stage (parallel stages); no program here changes for it |
 
 ### Combined with X_eTaL-gpu (2026-10-12)
 
@@ -335,6 +336,24 @@ the benchmarks fit; the denoiser's `c_at_2`, `o_neHot` and `^` do
 not: ask GA7, or `u:c_lean` split here on request). The later
 workloads above follow the same rule when their batch programs are
 written.
+
+Also queued there the same day (its step gpu-pipeline; the user:
+throughput over response time): pinned f32 input buffers and
+non-blocking transfers, the batch axis chunked and run on streams
+with events from the IR's dependencies (chunk i uploads while chunk
+i-1 computes and i-2 downloads), `explain` showing the stages, and
+`--repeat` reporting sustained items per second, measured first on
+the world model against OpenBLAS and Accelerate. What our two batch
+workloads offer that: the world model is a stream of independent
+batches (any number of states; its core generates the windows, and
+the weights stay resident), the plain case for chunking; the
+denoiser is ten dependent stages per batch (step t needs step t-1's
+pictures), so within one batch only the chunks overlap, but a stream
+of batches pipelines stage by stage (batch k at step t while batch
+k+1 is at step t-1), the case for parallel stages; both keep their
+decision (the counts; the same pictures) whatever the chunking. A
+program here need not change for it: the batch is an input, and
+how it is cut is the schedule's.
 
 ## Cross-cutting
 
