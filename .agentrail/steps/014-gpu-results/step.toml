@@ -1,8 +1,9 @@
 number = 14
 slug = "gpu-results"
-status = "in-progress"
+status = "completed"
 description = "the user's direction, 2026-10-12: once X_eTaL-gpu has run X_eTaL-ML's batch m..."
 role = "production"
 context_files = []
 created_at = "2026-10-12T10:21:18"
-commits = []
+completed_at = "2026-10-13T08:18:01"
+commits = ["974fd8507b6ea96a3bc5ebe25488e622983fd85c"]
