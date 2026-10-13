@@ -1,0 +1,1 @@
+Batch programs for GPU rows 4 and 5: cnn-digits/batch.xtl (1,000 test digits through Conv, 971 right = the Rust count, 9 s) and micro-gpt/batch.xtl (1,000 names scored, mean loss 2.2496 to 1e-9, 2,098/7,000 next letters right, 3.5 s); data from the trainers (weights unchanged); cli-batch baselines; READMEs, plan, gpu-asks GA1; two doc-site warnings fixed.
