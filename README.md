@@ -148,7 +148,7 @@ imports).
 | X_eTaL | pinned at X_eTaL main f7f9821, after v0.1.0: tuples with patterns (the training state is one), `h:` private names, each name bound once (checked here too, `just check-rebind`), the doc site by directory (`XETAL_COMMIT`, `just xetal-version`); X_eTaL-libraries at 746e666 (Plot's charts, every library documented) |
 | Speed | measured and guarded (`just bench-check`, [`docs/speed.md`](docs/speed.md)); the CNN's whole program runs in a third of a second |
 | Waiting on X_eTaL | a grade per row, arrays in and out of the browser engine, `e_ach` returning arrays ([`docs/xetal-asks.md`](docs/xetal-asks.md)) |
-| On GPUs | through [X_eTaL-gpu](https://github.com/softwarewrighter/X_eTaL-gpu) (OpenCL), at the command line: the world model's 1,936-state batch and the benchmarks run on an Apple M1 Max and an RTX 5060 Ti with the same results as X_eTaL (the kernels under a millisecond; the text bridge is the cost), the denoiser next ([`docs/speed.md`](docs/speed.md), [`docs/gpu-asks.md`](docs/gpu-asks.md)) |
+| On GPUs | through [X_eTaL-gpu](https://github.com/softwarewrighter/X_eTaL-gpu) (OpenCL), at the command line: the world model's 1,936-state batch and the benchmarks run on an Apple M1 Max and an RTX 5060 Ti with the same results as X_eTaL (the kernels under a millisecond; the text bridge is the cost), the denoiser next; X_eTaL-gpu is moving to lowering the programs from their own `.xtl`, so a model's accelerated part is one function of arrays ([`docs/speed.md`](docs/speed.md), [`docs/gpu-asks.md`](docs/gpu-asks.md)) |
 | Later | the batch models on GPUs with X_eTaL-gpu; a convolutional denoiser ([`docs/plan.md`](docs/plan.md)) |
 
 ## Build

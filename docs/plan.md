@@ -275,6 +275,7 @@ until there is enough progress across all the X_eTaL repositories:
 | 8 | lib-site | DONE: site/, the libraries' own live site at /libs/, adapted from X_eTaL-libraries' site (Yew, trunk): a landing page with the libraries in four groups (networks, transformers, pictures and weights, classic machine learning), each library's reference page, its types and its demos to run and edit in the browser (Net's macros expanded beside them); `cargo test` runs every library demo through the browser engine against its baseline and every library's pinned types; built by `just pages`, checked in the browser by the gate and `just check-live` (site/browser.txt); linked from the catalog (lede, table of contents, footer) and every demo page's footer. The `.py` scripts lost their `uv run` shebangs and executable bit: Python runs only as `scripts/py`, the uv venv (the user's rule, again) |
 | 9 | world-model, diffusion | DONE. world-model: demos/world-model, live: a 2 x 2 ball bouncing in a 12 x 12 box (1,936 states, the world written in X_eTaL: `u:s_tep` moves and bounces every state at once), a 432-64-144 network trained offline (train/: Adam with weight decay 0.2, a fifth of the states held out by a seeded shuffle; without decay it memorized: 7 in 10 unseen, with it 9 in 10); the program runs all 1,936 states as one batch (8.5 s, the GPU candidate: row 1 below) and counts the next frames predicted exactly (1,897; 348 of the 387 unseen), checks one window against the Rust model to 1e-6, and dreams twelve steps on its own predictions (`u:p_lace`, the likeliest 2 x 2 block), on track for all twelve; the page: place the ball, pick its speed, a state it never saw, dream step by step, the predicted frame as probabilities with the true ball outlined, the dreamed ball against the true one. diffusion: demos/diffusion, live: 10 x 10 pictures of a disk, a hollow square or a cross; a denoiser (110 in: the pixels and the level one-hot, 256 ReLU, 100 sigmoid) trained offline (train/: pictures made fresh per batch, a cosine schedule of ten levels, 40,000 Adam steps, 2.5 min); DDIM sampling in X_eTaL (`u:s_tep` over a tuple by `p_ower`, no new noise, so the same noise gives the same pictures), the trainer's starting noise reproduced to 1e-6; 128 pictures at once at the command line (6.3 s, the GPU candidate: row 3 below), 97 of them a shape's worth of pixels; the page: eight pictures from the browser's noise, every level as a strip, one large, the same noise again. Disks and crosses come out clean, hollow squares often as bars: a dense denoiser has no notion of neighbors (a convolutional one is a later step) |
 | 10 | gpu-results | DONE (2026-10-13): X_eTaL-gpu pinned fac586c and ran rows 1 and 2 on the Apple M1 Max and the RTX 5060 Ti (2026-10-12; its `docs/ml-results.md`, `docs/rtx5060-ml-results.md`): the world model's counts 1,897 and 348 the same on the evaluator, its interpreter, both cards in f32 and through the `xetal-x` facade; the benchmarks within a relative 1e-5; the kernels a fraction of a millisecond, compiling and the text bridge the cost; a kept session runs the batch in 2.5 ms on the M1 Max against NumPy's 1.3 ms (the gap closes as the batch grows). Summarized in docs/speed.md, "On GPUs", with the links; gpu-asks.md: GA2 and GA3 landed there (transpose; rotate, drop, reshape for Conv's windows), GA5's input half (binary file binding, 13 ms against 460 ms), GA6's G3 declined by X_eTaL (per-shape specialization instead). Row 3, the denoiser, is queued there after its re-pin past 1eded2a |
+| 11 | gpu-source | DONE (2026-10-13, the user's note): X_eTaL-gpu builds the lowering itself (its A4b; `xetal-gpu run FILE.xtl`, the macro `gp:a_ccel<`, its step models-from-source for our world model and benchmarks from their own `.xtl`). gpu-asks.md: GA6 in progress there, the subset it lowers and where each program stands (the world model's `u:p_redict` and `u:e_xact` and the benchmarks fit; the denoiser's `c_at_2`, NN's `o_neHot` and `^` do not); GA7 filed (those three in the subset; meanwhile the joined input bound per call, or `u:c_lean` split here on request). The results paragraph above |
 
 ### Combined with X_eTaL-gpu (2026-10-12)
 
@@ -317,6 +318,23 @@ a batch program each (cnn-digits runs one digit, micro-gpt one name:
 a batch over the MNIST test set and over many names would be new
 programs, a candidate step), and on the bridge (GA4, GA5) for the
 models whose libraries use `h:` and tuples. Row 3 is queued there.
+
+Since 2026-10-13 (the user's note; step gpu-source) X_eTaL-gpu
+builds the lowering itself, provisionally (its A4b: X_eTaL source
+to its IR through the pinned X_eTaL's crates; `xetal-gpu run
+FILE.xtl` evaluates a program's statements by the pinned xetal up
+to the accelerated function; a macro `gp:a_ccel<` hands a
+function's text to its extension), and its step models-from-source
+runs this repository's world model and benchmarks from their own
+`.xtl`, the generated twins deleted. So what a model needs here is
+one function of arrays in the subset it lowers, the rest (loops,
+tuples, choices, printing) left to the evaluator:
+[`gpu-asks.md`](gpu-asks.md) lists the subset and where each of our
+programs stands (the world model's `u:p_redict` and `u:e_xact` and
+the benchmarks fit; the denoiser's `c_at_2`, `o_neHot` and `^` do
+not: ask GA7, or `u:c_lean` split here on request). The later
+workloads above follow the same rule when their batch programs are
+written.
 
 ## Cross-cutting
 

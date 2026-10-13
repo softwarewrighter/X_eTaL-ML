@@ -1,0 +1,8 @@
+number = 15
+slug = "gpu-source"
+status = "in-progress"
+description = "the user's note, 2026-10-13: X_eTaL-gpu now builds the lowering itself (its A..."
+role = "production"
+context_files = []
+created_at = "2026-10-13T08:21:34"
+commits = []
