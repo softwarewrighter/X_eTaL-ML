@@ -57,3 +57,46 @@ cell, a regression X_eTaL's Saga 30 took on (ask M3). X_eTaL v0.1.0
 fixed it: the matrix product and `t_able` are 4 to 6 times faster, and
 so are the demos built on them. The baseline in `bench/baseline/` is
 now the v0.1.0 one, so `just bench-check` guards these times.
+
+## On GPUs: X_eTaL-gpu's results
+
+[X_eTaL-gpu](https://github.com/softwarewrighter/X_eTaL-gpu) pins
+this repository (`XETAL_ML_COMMIT`, fac586c as of 2026-10-12) and
+runs its batch programs (plan.md, "Combined with X_eTaL-gpu") as
+programs of its accelerator IR on its devices, beside the pinned
+X_eTaL as the reference (ask GA1 in
+[`gpu-asks.md`](gpu-asks.md)). Its tables, one per card, each column
+compared with the evaluator on the same host:
+
+- [`docs/ml-results.md`](https://github.com/softwarewrighter/X_eTaL-gpu/blob/main/docs/ml-results.md):
+  the Apple M1 Max;
+- [`docs/rtx5060-ml-results.md`](https://github.com/softwarewrighter/X_eTaL-gpu/blob/main/docs/rtx5060-ml-results.md):
+  the NVIDIA GeForce RTX 5060 Ti in the Arch Linux machine;
+- its README, "Results by GPU": the world model through a kept
+  session against NumPy's BLAS on the same host, and binary binding.
+
+What came back, as of X_eTaL-gpu 7c85c7c (2026-10-13):
+
+| Workload | The decision | Numbers | Apple M1 Max | RTX 5060 Ti |
+| -------- | ------------ | ------- | ------------ | ----------- |
+| 1: world-model, all 1,936 states and the 387 held out | 1,897 and 348 exact on the evaluator, its interpreter, both cards in f32, and through the `xetal-x` facade | the counts are Ints: the same everywhere | kernels 0.10 ms, launches 8 ms, the process 99 ms; binding the batch as text 220 ms | kernels 0.24 ms, launches 0.5 ms, the process 317 ms; binding as text 458 ms, as a binary file 13 ms |
+| 2: `bench/dense.xtl` | 40394.999999997555 | largest difference 2.4e-9 | kernels 0.007 ms (the evaluator 114 ms) | kernels 0.07 ms (the evaluator 212 ms) |
+| 2: `bench/inner-wide.xtl` | 1014.2999999999904 | 0.0025 (relative 2.5e-6) | kernels 0.63 ms (57 ms) | kernels 1.15 ms (117 ms) |
+| 2: `bench/softmax.xtl` | 10000.000000000902 | 0.001 (relative 1e-7) | kernels 0.05 ms (171 ms) | kernels 0.50 ms (371 ms) |
+| 3: the denoiser, 128 pictures in ten steps | queued there (its step denoiser), once it re-pins this repository past 1eded2a | | | |
+
+The tolerance held: the same decision on every device, and the
+benchmarks' numbers within a relative 1e-5 in f32 (both cards ran
+the f32 schedule; the 1e-9 f64 tolerance has not been exercised
+yet). The kernels take a fraction of a millisecond everywhere; what
+costs is around them: compiling the kernels on every run (about 70
+ms on the M1 Max, 160 ms on the RTX), and the bridge, which carries
+arrays as text (the world model's 836,352 inputs: a quarter to half
+a second; ask GA5, whose input half landed there as binary files).
+Against tuned CPU code the picture is honest: the world model
+through a kept session, its weights resident, runs the 1,936-state
+batch in 2.5 ms on the M1 Max against NumPy's 1.3 ms, and in 3.0 ms
+on the RTX against 1.9 ms; neither card beats BLAS on a model this
+small, and the gap closes as the batch grows (8,192 states: 0.85 and
+0.82 of NumPy's time). A model with more work per uploaded byte is
+where a GPU starts to pay, which the later workloads are for.

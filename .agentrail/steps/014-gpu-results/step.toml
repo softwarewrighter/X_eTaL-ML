@@ -1,6 +1,6 @@
 number = 14
 slug = "gpu-results"
-status = "pending"
+status = "in-progress"
 description = "the user's direction, 2026-10-12: once X_eTaL-gpu has run X_eTaL-ML's batch m..."
 role = "production"
 context_files = []

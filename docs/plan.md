@@ -274,7 +274,7 @@ until there is enough progress across all the X_eTaL repositories:
 | 7 | optim | DONE: libs/Optim (`op:`): `s_gd`, `a_dam` (`(lr, t) op:a_dam (w, m, v, g)`), `a_damWith` (its own decay rates); exactly train-live's written-out Adam (tested); 5 doc examples, 5 property checks, a narrow-bowl demo (gradient descent 10 to 8.35, Adam to 2.24 in 100 steps). CNN training moved onto it, output byte for byte unchanged; train-live and Net's `t_rain<` keep Adam written out, their lesson |
 | 8 | lib-site | DONE: site/, the libraries' own live site at /libs/, adapted from X_eTaL-libraries' site (Yew, trunk): a landing page with the libraries in four groups (networks, transformers, pictures and weights, classic machine learning), each library's reference page, its types and its demos to run and edit in the browser (Net's macros expanded beside them); `cargo test` runs every library demo through the browser engine against its baseline and every library's pinned types; built by `just pages`, checked in the browser by the gate and `just check-live` (site/browser.txt); linked from the catalog (lede, table of contents, footer) and every demo page's footer. The `.py` scripts lost their `uv run` shebangs and executable bit: Python runs only as `scripts/py`, the uv venv (the user's rule, again) |
 | 9 | world-model, diffusion | DONE. world-model: demos/world-model, live: a 2 x 2 ball bouncing in a 12 x 12 box (1,936 states, the world written in X_eTaL: `u:s_tep` moves and bounces every state at once), a 432-64-144 network trained offline (train/: Adam with weight decay 0.2, a fifth of the states held out by a seeded shuffle; without decay it memorized: 7 in 10 unseen, with it 9 in 10); the program runs all 1,936 states as one batch (8.5 s, the GPU candidate: row 1 below) and counts the next frames predicted exactly (1,897; 348 of the 387 unseen), checks one window against the Rust model to 1e-6, and dreams twelve steps on its own predictions (`u:p_lace`, the likeliest 2 x 2 block), on track for all twelve; the page: place the ball, pick its speed, a state it never saw, dream step by step, the predicted frame as probabilities with the true ball outlined, the dreamed ball against the true one. diffusion: demos/diffusion, live: 10 x 10 pictures of a disk, a hollow square or a cross; a denoiser (110 in: the pixels and the level one-hot, 256 ReLU, 100 sigmoid) trained offline (train/: pictures made fresh per batch, a cosine schedule of ten levels, 40,000 Adam steps, 2.5 min); DDIM sampling in X_eTaL (`u:s_tep` over a tuple by `p_ower`, no new noise, so the same noise gives the same pictures), the trainer's starting noise reproduced to 1e-6; 128 pictures at once at the command line (6.3 s, the GPU candidate: row 3 below), 97 of them a shape's worth of pixels; the page: eight pictures from the browser's noise, every level as a strip, one large, the same noise again. Disks and crosses come out clean, hollow squares often as bars: a dense denoiser has no notion of neighbors (a convolutional one is a later step) |
-| 10 | gpu-results | when X_eTaL-gpu has run rows 1 to 3 on its devices: its table linked from docs/speed.md, the asks in gpu-asks.md updated |
+| 10 | gpu-results | DONE (2026-10-13): X_eTaL-gpu pinned fac586c and ran rows 1 and 2 on the Apple M1 Max and the RTX 5060 Ti (2026-10-12; its `docs/ml-results.md`, `docs/rtx5060-ml-results.md`): the world model's counts 1,897 and 348 the same on the evaluator, its interpreter, both cards in f32 and through the `xetal-x` facade; the benchmarks within a relative 1e-5; the kernels a fraction of a millisecond, compiling and the text bridge the cost; a kept session runs the batch in 2.5 ms on the M1 Max against NumPy's 1.3 ms (the gap closes as the batch grows). Summarized in docs/speed.md, "On GPUs", with the links; gpu-asks.md: GA2 and GA3 landed there (transpose; rotate, drop, reshape for Conv's windows), GA5's input half (binary file binding, 13 ms against 460 ms), GA6's G3 declined by X_eTaL (per-shape specialization instead). Row 3, the denoiser, is queued there after its re-pin past 1eded2a |
 
 ### Combined with X_eTaL-gpu (2026-10-12)
 
@@ -303,6 +303,20 @@ the same decision always; numbers within 1e-5 in f32 (Apple's OpenCL
 has no 64-bit floats), within 1e-9 in f64 against the trainers' Rust
 models on cards with fp64. The results come back as X_eTaL-gpu's
 table, linked from docs/speed.md (step gpu-results).
+
+Results (2026-10-13, step gpu-results; the tables linked from
+[`speed.md`](speed.md), "On GPUs"): rows 1 and 2 ran on the Apple
+M1 Max and the RTX 5060 Ti, with the same decisions and the numbers
+within the tolerance (f32 on both; f64 not yet exercised). The
+kernels take a fraction of a millisecond; compiling them on every
+run and the text bridge are the cost, and a kept session with the
+weights resident does not beat the host's BLAS on a model this
+small. GA2 and GA3 landed there the same day, so the later
+workloads above no longer wait on the IR; what they wait on here is
+a batch program each (cnn-digits runs one digit, micro-gpt one name:
+a batch over the MNIST test set and over many names would be new
+programs, a candidate step), and on the bridge (GA4, GA5) for the
+models whose libraries use `h:` and tuples. Row 3 is queued there.
 
 ## Cross-cutting
 
