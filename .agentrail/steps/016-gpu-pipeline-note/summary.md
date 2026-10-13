@@ -1,0 +1,1 @@
+X_eTaL-gpu's queued gpu-pipeline step (overlapped transfers, chunked batch axis on streams, parallel stages, sustained throughput) recorded in plan.md and gpu-asks.md with what our workloads offer it: the world model a stream of independent batches, the denoiser ten dependent stages per batch pipelined across batches; no program here changes. Docs only.
