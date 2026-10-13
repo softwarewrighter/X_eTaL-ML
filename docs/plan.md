@@ -277,6 +277,7 @@ until there is enough progress across all the X_eTaL repositories:
 | 10 | gpu-results | DONE (2026-10-13): X_eTaL-gpu pinned fac586c and ran rows 1 and 2 on the Apple M1 Max and the RTX 5060 Ti (2026-10-12; its `docs/ml-results.md`, `docs/rtx5060-ml-results.md`): the world model's counts 1,897 and 348 the same on the evaluator, its interpreter, both cards in f32 and through the `xetal-x` facade; the benchmarks within a relative 1e-5; the kernels a fraction of a millisecond, compiling and the text bridge the cost; a kept session runs the batch in 2.5 ms on the M1 Max against NumPy's 1.3 ms (the gap closes as the batch grows). Summarized in docs/speed.md, "On GPUs", with the links; gpu-asks.md: GA2 and GA3 landed there (transpose; rotate, drop, reshape for Conv's windows), GA5's input half (binary file binding, 13 ms against 460 ms), GA6's G3 declined by X_eTaL (per-shape specialization instead). Row 3, the denoiser, is queued there after its re-pin past 1eded2a |
 | 11 | gpu-source | DONE (2026-10-13, the user's note): X_eTaL-gpu builds the lowering itself (its A4b; `xetal-gpu run FILE.xtl`, the macro `gp:a_ccel<`, its step models-from-source for our world model and benchmarks from their own `.xtl`). gpu-asks.md: GA6 in progress there, the subset it lowers and where each program stands (the world model's `u:p_redict` and `u:e_xact` and the benchmarks fit; the denoiser's `c_at_2`, NN's `o_neHot` and `^` do not); GA7 filed (those three in the subset; meanwhile the joined input bound per call, or `u:c_lean` split here on request). The results paragraph above |
 | 12 | gpu-pipeline-note | DONE (2026-10-13, the user's note): X_eTaL-gpu queued gpu-pipeline (pinned f32 buffers, non-blocking transfers, the batch axis chunked on streams with events, `explain` of the stages, `--repeat` for sustained items per second; the world model its first measurement). Recorded above and in gpu-asks.md what our workloads offer it: the world model a stream of independent batches (chunking), the denoiser ten dependent stages per batch, a stream of batches pipelined stage by stage (parallel stages); no program here changes for it |
+| 13 | denoiser-split | DONE (2026-10-13, the user's go; GA7's meanwhile): the denoiser's network is `u:n_et`, the two dense layers over the joined input, one function of arrays in the subset X_eTaL-gpu lowers; `u:c_lean` is the join around it (`c_at_2`, NN's `o_neHot`), the evaluator's; the schedule's roots taken once as the vectors `ra`, `rb`, so `u:s_tep` only selects from them. Output byte for byte unchanged (the CLI and browser baselines and the page's tests pass as they were); the demo's README quotes the new shape |
 
 ### Combined with X_eTaL-gpu (2026-10-12)
 
@@ -332,8 +333,9 @@ one function of arrays in the subset it lowers, the rest (loops,
 tuples, choices, printing) left to the evaluator:
 [`gpu-asks.md`](gpu-asks.md) lists the subset and where each of our
 programs stands (the world model's `u:p_redict` and `u:e_xact` and
-the benchmarks fit; the denoiser's `c_at_2`, `o_neHot` and `^` do
-not: ask GA7, or `u:c_lean` split here on request). The later
+the benchmarks fit; the denoiser's `c_at_2`, `o_neHot` and `^` did
+not: ask GA7, and the denoiser's network split out as `u:n_et`, one
+function of arrays in the subset, step denoiser-split). The later
 workloads above follow the same rule when their batch programs are
 written.
 

@@ -14,23 +14,27 @@
 ## The kept share of the picture at each level 0 to 10 (1.0 clean,
 ## 0.001 all noise); the noisy picture is sqrt ab x + sqrt (1 - ab) e.
 ab := 0.001 m_ax (c_os ((p_i @) / 2.0) * (f_loat o_ffsets 11) / 10.0) ^ 2.0
+## The roots the steps mix with, taken once: of the kept share and of the noise's.
+ra := ab ^ 0.5
+rb := (1.0 - ab) ^ 0.5
 
 ### The denoiser, read from data/ (just diffusion-data)
 ## Each layer's weights with its bias as one more row, as NN's d_ense takes them.
 wb1 := 111 256 r_eshape (n_umbers []N_GET "data/w1.txt") c_at n_umbers []N_GET "data/b1.txt"
 wb2 := 257 100 r_eshape (n_umbers []N_GET "data/w2.txt") c_at n_umbers []N_GET "data/b2.txt"
+## The network: two dense layers over the joined input J (a row per
+## picture: its 100 pixels, then the level as a one-hot), the clean
+## pictures it sees in -1 .. 1. One function of arrays, the part a GPU
+## takes (docs/gpu-asks.md).
+u:n_et := { J -> (2.0 * nn:s_igmoid (nn:r_elu J nn:d_ense wb1) nn:d_ense wb2) - 1.0 }
 ## The clean pictures the denoiser sees in the noisy pictures X (a row
 ## each) at level t: the level joins the pixels as a one-hot.
-u:c_lean := { t X ->
-  (2.0 * nn:s_igmoid (nn:r_elu (X c_at_2 10 nn:o_neHot (t_ally X) r_eshape t) nn:d_ense wb1) nn:d_ense wb2) - 1.0
-}
+u:c_lean := { t X -> u:n_et X c_at_2 10 nn:o_neHot (t_ally X) r_eshape t }
 ## One step down from level t: the clean pictures C it sees, the noise
 ## that would make X of them, and the pictures one level cleaner.
 u:s_tep := { (X, t) ->
   C := t u:c_lean X
-  a := (1 + t) s_elect ab
-  b := t s_elect ab
-  (((b ^ 0.5) * C) + ((1.0 - b) ^ 0.5) * (X - (a ^ 0.5) * C) / (1.0 - a) ^ 0.5, t - 1)
+  (((t s_elect ra) * C) + (t s_elect rb) * (X - ((1 + t) s_elect ra) * C) / (1 + t) s_elect rb, t - 1)
 }
 ## Ten steps from the pictures of noise E: at level 0 what is left is
 ## the last clean picture seen.

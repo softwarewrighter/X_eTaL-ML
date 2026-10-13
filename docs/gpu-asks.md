@@ -26,7 +26,7 @@ GPUs".
 | GA4 | filed there (X-1) | X_eTaL-extensions | A newer X_eTaL inside `xetal-x` than v0.1.0: our libraries use `h:` helpers (NN) and tuples (Optim, the training state), which v0.1.0 lacks, so they cannot run under the bridge | every model through the Gpu facade | the GPU run is a separate program on the IR twin; the evaluator's run is the reference |
 | GA5 | filed there (G8, G5); the input half landed in X_eTaL-gpu 2026-10-12 (binary file binding: its CLI `pack` and `--bind w=@file`, the facade's `gp:b_indFile`; the world model's batch bound in 13 ms against 460 ms as text on the RTX) | X_eTaL-extensions, X_eTaL | Arrays across the bridge in binary, not as text: X_eTaL-gpu measured 401 ms for a million Floats out and back | world-model's batch (1,936 x 432 = 836,352 inputs, about a third of a second as text), the denoiser (20 calls) | inputs as binary files; outputs still cross as text, so batches as large as possible, the bridge's time reported apart from the device's |
 | GA6 | in progress there, provisionally (X_eTaL-gpu's A4b, 2026-10-13: G1 and G2 stayed unplanned in X_eTaL and G3 was declined, so it builds the lowering itself, from X_eTaL source through the pinned X_eTaL's own crates; its steps core-to-xir, run-from-source, accel-macro, models-from-source) | X_eTaL-gpu now; X_eTaL in the end (its G11: a crate API for source to Core) | The accelerator IR, the lowering from X_eTaL's Core to it, and shapes known statically | every model | until models-from-source lands: the twins `scripts/ml-bench.py` writes from the models' definitions, checked against the evaluator's output |
-| GA7 | not yet taken | X_eTaL-gpu | In the lowering's subset: `c_at` and `c_at_2` of arrays (it has `c_at` on shapes), the outer product of any comparison (`'= t_able`, NN's `o_neHot`), and `^` with a scalar | the denoiser's `u:c_lean` (the pixels beside the level's one-hot: `X c_at_2 10 nn:o_neHot (t_ally X) r_eshape t`) and its `u:s_tep` (the schedule's roots `b ^ 0.5`); every model that joins its inputs | the joined input made by the evaluator and bound per call, the roots taken once (`ab ^ 0.5` is a vector of eleven); or the demo's `u:c_lean` split so the network takes the joined input |
+| GA7 | not yet taken | X_eTaL-gpu | In the lowering's subset: `c_at` and `c_at_2` of arrays (it has `c_at` on shapes), the outer product of any comparison (`'= t_able`, NN's `o_neHot`), and `^` with a scalar | the denoiser's join (the pixels beside the level's one-hot: `X c_at_2 10 nn:o_neHot (t_ally X) r_eshape t`); every model that joins its inputs | done here (2026-10-13, step denoiser-split): the denoiser's network is `u:n_et`, one function of arrays over the joined input, in the subset as it is; the join is in `u:c_lean` around it, the evaluator's; the schedule's roots are the vectors `ra` and `rb`, taken once, so `u:s_tep` only selects from them. Output byte for byte unchanged. The ask stands for the join itself to move over |
 
 ## Details
 
@@ -171,8 +171,15 @@ the programs stand:
   pictures, which is what the plan's row 3 wants to measure.
 
 GA7 asks for `c_at` and `c_at_2` of arrays, the outer product of any
-comparison and `^` with a scalar in the subset. Meanwhile either the
-evaluator joins the input and binds it per call and takes the
-eleven roots once (`sab := ab ^ 0.5`), or the demo's `u:c_lean` is
-split so the network takes the joined input (a small change here,
-on request, with the page's shown program following).
+comparison and `^` with a scalar in the subset. Meanwhile (done
+here on 2026-10-13, step denoiser-split, the user's go) the demo's
+`u:c_lean` is split: `u:n_et` is the two dense layers over the joined
+input J, one function of arrays in the subset as it is, and
+`u:c_lean` is the join around it (`u:n_et X c_at_2 10 nn:o_neHot
+(t_ally X) r_eshape t`), the evaluator's; the schedule's roots are
+taken once as the vectors `ra := ab ^ 0.5` and `rb := (1.0 - ab) ^
+0.5`, so `u:s_tep` only selects from them. The program's output,
+the page's tests and the baselines are unchanged byte for byte. So
+the denoiser's accelerated function is `u:n_et`, called ten times
+per batch with the joined input bound each time (110 numbers per
+picture); the ask stands so the join can move over too.

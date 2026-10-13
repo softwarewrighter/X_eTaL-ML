@@ -1,0 +1,8 @@
+number = 17
+slug = "denoiser-split"
+status = "in-progress"
+description = "the user's go, 2026-10-13 (gpu-asks GA7's meanwhile): the denoiser's network ..."
+role = "production"
+context_files = []
+created_at = "2026-10-13T10:15:23"
+commits = []

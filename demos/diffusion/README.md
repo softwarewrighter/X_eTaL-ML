@@ -35,29 +35,38 @@ vector:
 
 ```
 ab := 0.001 m_ax (c_os ((p_i @) / 2.0) * (f_loat o_ffsets 11) / 10.0) ^ 2.0
+ra := ab ^ 0.5
+rb := (1.0 - ab) ^ 0.5
 ```
 
 The denoiser is two dense layers of the
 [NN](../../libs/NN/docs/README.md) library (110 in: the pixels and
 the level as a one-hot; 256 ReLU units; 100 sigmoid outputs, the
-clean picture's probability per pixel, mapped to -1 .. 1). One step
-down from level t, for all the pictures X at once:
+clean picture's probability per pixel, mapped to -1 .. 1). The
+network is one function of arrays over the joined input, the part a
+GPU takes as it is ([`docs/gpu-asks.md`](../../docs/gpu-asks.md)),
+and the join is outside it:
+
+```
+u:n_et := { J -> (2.0 * nn:s_igmoid (nn:r_elu J nn:d_ense wb1) nn:d_ense wb2) - 1.0 }
+u:c_lean := { t X -> u:n_et X c_at_2 10 nn:o_neHot (t_ally X) r_eshape t }
+```
+
+One step down from level t, for all the pictures X at once:
 
 ```
 u:s_tep := { (X, t) ->
   C := t u:c_lean X
-  a := (1 + t) s_elect ab
-  b := t s_elect ab
-  (((b ^ 0.5) * C) + ((1.0 - b) ^ 0.5) * (X - (a ^ 0.5) * C) / (1.0 - a) ^ 0.5, t - 1)
+  (((t s_elect ra) * C) + (t s_elect rb) * (X - ((1 + t) s_elect ra) * C) / (1 + t) s_elect rb, t - 1)
 }
 u:s_ample := { E -> (X, _) := 10 'u:s_tep p_ower (E, 10); X }
 ```
 
-C is what the network sees; `(X - sqrt a C) / sqrt (1 - a)` is the
+C is what the network sees; `(X - ra C) / rb` at level t + 1 is the
 noise that would make X of it; the next picture mixes C and that
-noise at the next level's shares. Ten steps by `p_ower` over the
-tuple (the pictures, the level). At level 0 the share is 1.0, so what
-is left is the last clean picture seen.
+noise at level t's roots. Ten steps by `p_ower` over the tuple (the
+pictures, the level). At level 0 the share is 1.0, so what is left
+is the last clean picture seen.
 
 The command line makes 128 pictures of Gaussian noise by Box-Muller
 from `r_oll!` (seeded), checks that the trainer's starting noise
