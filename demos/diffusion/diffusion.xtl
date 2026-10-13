@@ -1,0 +1,61 @@
+#!/usr/bin/env xetal
+## A learned denoiser: pictures from noise, step by step. The pictures
+## are 10 x 10, one of three shapes (a disk, a hollow square, a cross)
+## at some place, a pixel -1 off or 1 on. A small network (train/) was
+## trained to see the clean picture in a noisy one at ten levels of
+## noise. Sampling runs it backward: from a picture of pure noise, each
+## step predicts the clean picture, infers the noise that must have
+## been added, and steps down one level (DDIM, no new noise), so the
+## picture that comes out depends only on the noise that went in.
+
+"nn:" u_se< "NN"
+
+### The schedule
+## The kept share of the picture at each level 0 to 10 (1.0 clean,
+## 0.001 all noise); the noisy picture is sqrt ab x + sqrt (1 - ab) e.
+ab := 0.001 m_ax (c_os ((p_i @) / 2.0) * (f_loat o_ffsets 11) / 10.0) ^ 2.0
+
+### The denoiser, read from data/ (just diffusion-data)
+## Each layer's weights with its bias as one more row, as NN's d_ense takes them.
+wb1 := 111 256 r_eshape (n_umbers []N_GET "data/w1.txt") c_at n_umbers []N_GET "data/b1.txt"
+wb2 := 257 100 r_eshape (n_umbers []N_GET "data/w2.txt") c_at n_umbers []N_GET "data/b2.txt"
+## The clean pictures the denoiser sees in the noisy pictures X (a row
+## each) at level t: the level joins the pixels as a one-hot.
+u:c_lean := { t X ->
+  (2.0 * nn:s_igmoid (nn:r_elu (X c_at_2 10 nn:o_neHot (t_ally X) r_eshape t) nn:d_ense wb1) nn:d_ense wb2) - 1.0
+}
+## One step down from level t: the clean pictures C it sees, the noise
+## that would make X of them, and the pictures one level cleaner.
+u:s_tep := { (X, t) ->
+  C := t u:c_lean X
+  a := (1 + t) s_elect ab
+  b := t s_elect ab
+  (((b ^ 0.5) * C) + ((1.0 - b) ^ 0.5) * (X - (a ^ 0.5) * C) / (1.0 - a) ^ 0.5, t - 1)
+}
+## Ten steps from the pictures of noise E: at level 0 what is left is
+## the last clean picture seen.
+u:s_ample := { E -> (X, _) := 10 'u:s_tep p_ower (E, 10); X }
+# -- end of the core ------------------------------------------
+
+### Pictures from noise
+## n Gaussian numbers by Box-Muller from r_oll!
+u:g_auss := { n ->
+  u1 := (1.0 + f_loat r_oll! n r_eshape 999999) / 1000000.0
+  u2 := (f_loat r_oll! n r_eshape 1000000) / 1000000.0
+  ((n_eg 2.0 * l_og u1) ^ 0.5) * c_os (2.0 * p_i @) * u2
+}
+# The same picture as the trainer's Rust sampler, from its starting noise.
+e := 1 100 r_eshape n_umbers []N_GET "data/noise.txt"
+1e-6 > 'm_ax r_/ r_avel a_bs (u:s_ample e) - 1 100 r_eshape n_umbers []N_GET "data/expected.txt"
+# 128 pictures at once (the slow part: ten steps of two dense layers over all of them).
+F := u:s_ample 128 100 r_eshape u:g_auss 12800
+# Four of them, # on.
+40 10 r_eshape (1 + (4 t_ake F) > 0.0) s_elect ".#"
+# How many of the 128 have between 8 and 40 pixels on, as every shape does.
+on := '+ r_/_2 f_loat F > 0.0
+'+ r_/ f_loat (on >= 8.0) * on <= 40.0
+
+### One picture, level by level
+## The noisy picture at each level from 10 down to 0, # above zero.
+(_, _, L) := 10 '{ (X, t, L) -> (X1, t1) := u:s_tep (X, t); (X1, t1, L c_at X1) } p_ower (e, 10, e)
+110 10 r_eshape (1 + L > 0.0) s_elect ".#"

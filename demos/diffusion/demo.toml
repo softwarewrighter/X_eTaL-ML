@@ -1,0 +1,11 @@
+# One demo's description: read by scripts/demos.py for the tests, the
+# README's demo list and the live catalog (pages/index.html).
+slug = "diffusion"            # the directory name, demos/<slug>/
+title = "Learned denoiser"
+summary = "Pictures from noise, step by step: a small network trained to see the clean picture in a noisy one at ten levels of noise, run backward from pure noise (DDIM: no new noise, so the same noise always gives the same picture). Eight 10 x 10 pictures at a time, every level of the way shown; the shapes it learned are a disk, a hollow square and a cross."
+concepts = ["diffusion", "a learned denoiser", "a noise schedule", "DDIM sampling", "p_ower over a tuple"]        # the X_eTaL ideas it shows
+status = "live"             # draft | live | deferred
+order = 52                  # position in the catalog (lower first)
+needs = []                   # asks in docs/xetal-asks.md it waits on or works around
+line = "(((b ^ 0.5) * C) + ((1.0 - b) ^ 0.5) * (X - (a ^ 0.5) * C) / (1.0 - a) ^ 0.5, t - 1)"
+why = "One denoising step for all the pictures at once: C is what the network sees in the noisy pictures X at level t; the noise that would make X of it is inferred and mixed back at the next level's share. Ten of these, by p_ower over the tuple, turn noise into shapes."

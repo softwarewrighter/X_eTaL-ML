@@ -86,6 +86,10 @@ micro-gpt-data:
 world-model-data:
     cargo run --release -q --manifest-path demos/world-model/train/Cargo.toml
 
+# Train the diffusion demo's denoiser (10 x 10 pictures of three shapes, ten noise levels; about 2.5 min) and write its weights into data/
+diffusion-data:
+    cargo run --release -q --manifest-path demos/diffusion/train/Cargo.toml
+
 # Write the embedding explorer's corpus (4,000 sentences from templates, a fixed seed) into its data/
 embedding-data:
     cargo run --release -q --manifest-path demos/embedding-explorer/train/Cargo.toml

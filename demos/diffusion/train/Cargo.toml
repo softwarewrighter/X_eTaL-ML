@@ -1,0 +1,11 @@
+[package]
+name = "diffusion-train"
+description = "Trains the diffusion demo's denoiser (10 x 10 pictures of three shapes, ten noise levels) and writes its weights into data/"
+version = "0.1.0"
+edition = "2021"
+license = "MIT"
+publish = false
+
+[dependencies]
+
+[workspace]

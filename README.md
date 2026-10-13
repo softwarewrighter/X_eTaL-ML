@@ -72,7 +72,7 @@ an error before the forward pass, not a wrong number after it.
 
 ## Demos
 
-All twelve run live in your browser and at the command line.
+All thirteen run live in your browser and at the command line.
 [Start with the Tiny CNN](https://softwarewrighter.github.io/X_eTaL-ML/cnn-digits/):
 draw a digit and watch a network read it.
 
@@ -89,6 +89,7 @@ draw a digit and watch a network read it.
 | [Embedding explorer](demos/embedding-explorer/README.md) ([live](https://softwarewrighter.github.io/X_eTaL-ML/embedding-explorer/)) | word embeddings made from counts in X_eTaL, turned in 3-D: animals, foods, colors, numbers and places gather; click a word for its nearest | `E := em:u_nit 64 em:p_roject em:p_pmi (v, 2) em:c_ooccur ids`: a whole embedding table, one line |
 | [k-means](demos/k-means/README.md) ([live](https://softwarewrighter.github.io/X_eTaL-ML/k-means/)) | clustering without labels, step by step: five blobs, the centers moving to their points' means; a poor start settles wrong, farthest-first finds all five | `(((o_\ O) '+ '* i_nner X) + C * f_loat n = 0.0) / 1.0 m_ax n`: every center's new place at once |
 | [World model](demos/world-model/README.md) ([live](https://softwarewrighter.github.io/X_eTaL-ML/world-model/)) | a network that watched a ball bounce predicts the next frame from the last three; 1,897 of 1,936 exact, 348 of the 387 it never saw; let it dream and it plays the ball forward, bounces included | `nn:s_igmoid (nn:r_elu X nn:d_ense wb1) nn:d_ense wb2`: every state's next frame at once |
+| [Learned denoiser](demos/diffusion/README.md) ([live](https://softwarewrighter.github.io/X_eTaL-ML/diffusion/)) | pictures from noise in ten steps: a network trained to see the clean picture in a noisy one, run backward; eight at a time, every level shown; the same noise gives the same pictures | `(((b ^ 0.5) * C) + ((1.0 - b) ^ 0.5) * (X - (a ^ 0.5) * C) / (1.0 - a) ^ 0.5, t - 1)`: one step down for all the pictures |
 | [1.58-bit network](demos/ternary-net/README.md) ([live](https://softwarewrighter.github.io/X_eTaL-ML/ternary-net/)) | one classifier with FP32, FP16, INT8 and ternary weights compared; a ternary layer as additions | `(f_loat x > s) - f_loat x < n_eg s`: a layer's weights to -1, 0, +1 |
 
 Every page shows all the code it runs, beside the arrays that code
@@ -142,13 +143,13 @@ imports).
 
 | | Today |
 | - | ----- |
-| Demos | 12, all live, each with command-line and browser tests; three of them train in X_eTaL, a CNN among them; one clusters (k-means), one explores embeddings, one is a tiny GPT, one a tiny world model that dreams |
+| Demos | 13, all live, each with command-line and browser tests; three of them train in X_eTaL, a CNN among them; one clusters (k-means), one explores embeddings, one is a tiny GPT, one a tiny world model that dreams, one a learned denoiser drawing shapes from noise |
 | Libraries | NN (12 functions, typed, tested); Net (6 macros, every expansion pinned; written gradients checked against finite differences); Learn (10 functions: k-means, kNN, PCA, logistic regression; k-means checked against Rust, all by their properties); Embed (7 functions: counts, PPMI, projection, neighbors); Quant (7 functions: float, integer and ternary formats, additions); Conv (5 functions: windows, convolution, pooling, their gradients); Attention (5 functions: scores, weights, masks, a head); Norm (3) and Sample (4) for the tiny GPT; Optim (3: gradient descent, Adam); every item documented, 83 doc examples run by the gate |
 | X_eTaL | pinned at X_eTaL main f7f9821, after v0.1.0: tuples with patterns (the training state is one), `h:` private names, each name bound once (checked here too, `just check-rebind`), the doc site by directory (`XETAL_COMMIT`, `just xetal-version`); X_eTaL-libraries at 746e666 (Plot's charts, every library documented) |
 | Speed | measured and guarded (`just bench-check`, [`docs/speed.md`](docs/speed.md)); the CNN's whole program runs in a third of a second |
 | Waiting on X_eTaL | a grade per row, arrays in and out of the browser engine, `e_ach` returning arrays ([`docs/xetal-asks.md`](docs/xetal-asks.md)) |
 | On GPUs | through [X_eTaL-gpu](https://github.com/softwarewrighter/X_eTaL-gpu) (OpenCL; Apple silicon now, NVIDIA cards later): the world model's batch, the benchmarks and the denoiser first, at the command line ([`docs/gpu-asks.md`](docs/gpu-asks.md)) |
-| Later | the learned denoiser, then the batch models on GPUs with X_eTaL-gpu ([`docs/plan.md`](docs/plan.md)) |
+| Later | the batch models on GPUs with X_eTaL-gpu; a convolutional denoiser ([`docs/plan.md`](docs/plan.md)) |
 
 ## Build
 
