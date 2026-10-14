@@ -9,8 +9,10 @@ use microscope::run::{lit, numbers, output_with, section};
 pub const SOURCE: &str = include_str!("../../diffusion.xtl");
 
 /// The weights, as the page's X_eTaL finds them.
-pub const DATA: [(&str, &str); 4] = [
+pub const DATA: [(&str, &str); 6] = [
+    ("data/filters.txt", include_str!("../../data/filters.txt")),
     ("data/w1.txt", include_str!("../../data/w1.txt")),
+    ("data/wh.txt", include_str!("../../data/wh.txt")),
     ("data/b1.txt", include_str!("../../data/b1.txt")),
     ("data/w2.txt", include_str!("../../data/w2.txt")),
     ("data/b2.txt", include_str!("../../data/b2.txt")),

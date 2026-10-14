@@ -193,7 +193,14 @@ taken once as the vectors `ra := ab ^ 0.5` and `rb := (1.0 - ab) ^
 the page's tests and the baselines are unchanged byte for byte. So
 the denoiser's accelerated function is `u:n_et`, called ten times
 per batch with the joined input bound each time (110 numbers per
-picture); the ask stands so the join can move over too.
+picture); the ask stands so the join can move over too. Since step
+conv-denoiser (2026-10-14) `u:n_et` is a 3 x 3 convolution (Conv's
+`w_indows` and `c_onv`: rotations, drops, a reshape and one product,
+GA3's operations) with ReLU, then the dense layers, the level's
+one-hot through its own weights (`'+ '* i_nner`, no join inside);
+still one function of arrays, and row 3 is now a convolutional
+workload: 6 million window numbers and a product per batch of 128,
+ten times.
 
 ### Found there: no huge constants (32-bit floats)
 

@@ -1,0 +1,8 @@
+number = 20
+slug = "conv-denoiser"
+status = "in-progress"
+description = "the user's go, 2026-10-13: the learned denoiser on the Conv library (the demo..."
+role = "production"
+context_files = []
+created_at = "2026-10-13T13:21:02"
+commits = []

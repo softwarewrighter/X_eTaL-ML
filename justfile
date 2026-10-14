@@ -86,7 +86,7 @@ micro-gpt-data:
 world-model-data:
     cargo run --release -q --manifest-path demos/world-model/train/Cargo.toml
 
-# Train the diffusion demo's denoiser (10 x 10 pictures of three shapes, ten noise levels; about 2.5 min) and write its weights into data/
+# Train the diffusion demo's convolutional denoiser (10 x 10 pictures of three shapes, ten noise levels; about 7 min, eight threads) and write its weights into data/
 diffusion-data:
     cargo run --release -q --manifest-path demos/diffusion/train/Cargo.toml
 

@@ -1,14 +1,15 @@
 #!/usr/bin/env xetal
 ## A learned denoiser: pictures from noise, step by step. The pictures
 ## are 10 x 10, one of three shapes (a disk, a hollow square, a cross)
-## at some place, a pixel -1 off or 1 on. A small network (train/) was
-## trained to see the clean picture in a noisy one at ten levels of
-## noise. Sampling runs it backward: from a picture of pure noise, each
-## step predicts the clean picture, infers the noise that must have
-## been added, and steps down one level (DDIM, no new noise), so the
-## picture that comes out depends only on the noise that went in.
+## at some place, a pixel -1 off or 1 on. A small convolutional network
+## (train/) was trained to see the clean picture in a noisy one at ten
+## levels of noise. Sampling runs it backward: from a picture of pure
+## noise, each step predicts the clean picture, infers the noise that
+## must have been added, and steps down one level (DDIM, no new noise),
+## so the picture that comes out depends only on the noise that went in.
 
 "nn:" u_se< "NN"
+"cv:" u_se< "Conv"
 
 ### The schedule
 ## The kept share of the picture at each level 0 to 10 (1.0 clean,
@@ -19,14 +20,26 @@ ra := ab ^ 0.5
 rb := (1.0 - ab) ^ 0.5
 
 ### The denoiser, read from data/ (just diffusion-data)
-## Each layer's weights with its bias as one more row, as NN's d_ense takes them.
-wb1 := 111 256 r_eshape (n_umbers []N_GET "data/w1.txt") c_at n_umbers []N_GET "data/b1.txt"
+## The 8 filters, 3 x 3 each as a row of 9 with its bias last (as Conv takes them).
+kb := 8 10 r_eshape n_umbers []N_GET "data/filters.txt"
+## The dense layers, each with its bias as one more row, as NN's d_ense
+## takes them: the first over the 512 features, and the level's own
+## weights wh (a row per level) added to it.
+wb1 := 513 256 r_eshape (n_umbers []N_GET "data/w1.txt") c_at n_umbers []N_GET "data/b1.txt"
+wh := 10 256 r_eshape n_umbers []N_GET "data/wh.txt"
 wb2 := 257 100 r_eshape (n_umbers []N_GET "data/w2.txt") c_at n_umbers []N_GET "data/b2.txt"
-## The network: two dense layers over the joined input J (a row per
-## picture: its 100 pixels, then the level as a one-hot), the clean
-## pictures it sees in -1 .. 1. One function of arrays, the part a GPU
-## takes (docs/gpu-asks.md).
-u:n_et := { J -> (2.0 * nn:s_igmoid (nn:r_elu J nn:d_ense wb1) nn:d_ense wb2) - 1.0 }
+## The network over the joined input J (a row per picture: its 100
+## pixels, then the level as a one-hot): the picture's 3 x 3 windows
+## through the 8 filters (valid, so 8 maps of 8 x 8) with ReLU, the 512
+## features through a dense layer with the level's weights added and
+## ReLU, and the output layer; the clean pictures it sees in -1 .. 1.
+## One function of arrays, the part a GPU takes (docs/gpu-asks.md).
+u:n_et := { J ->
+  X := ((t_ally J) c_at 10 10) r_eshape 100 t_ake_2 J
+  V := ((t_ally J) c_at 512) r_eshape nn:r_elu (9 t_ake_2 kb, r_avel -1 t_ake_2 kb) cv:c_onv X
+  A := nn:r_elu (V nn:d_ense wb1) + (-10 t_ake_2 J) '+ '* i_nner wh
+  (2.0 * nn:s_igmoid A nn:d_ense wb2) - 1.0
+}
 ## The clean pictures the denoiser sees in the noisy pictures X (a row
 ## each) at level t: the level joins the pixels as a one-hot.
 u:c_lean := { t X -> u:n_et X c_at_2 10 nn:o_neHot (t_ally X) r_eshape t }

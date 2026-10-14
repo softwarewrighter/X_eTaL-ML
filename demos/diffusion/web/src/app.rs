@@ -52,7 +52,7 @@ pub fn app() -> Html {
                             <p class="calc">{ format!("pixels on in the eight shapes: {}", counts.join(", ")) }</p>
                             <div class="padbox"><Canvas rows={JH} cols={JW} rgba={Rc::new(journey(j, model.pick))} onclick={pick} class="pad" /></div>
                         </> }) }
-                        { panel("One picture, level by level:", "C := t u:c_lean X", "The picked picture at every level, large. A disk, a hollow square or a cross should be there by the end; where it is not, the denoiser was torn between two shapes, and a dense network has no notion of neighboring pixels to settle it.", false, html! { <>
+                        { panel("One picture, level by level:", "C := t u:c_lean X", "The picked picture at every level, large. A disk, a hollow square or a cross should be there by the end; where it is not, the denoiser was torn between two shapes and averaged them. Its convolution sees each pixel's neighbors, which the earlier dense denoiser could not, so squares come out as squares more often.", false, html! { <>
                             <p class="calc">{ format!("picture {}: {this} pixels on", model.pick + 1) }</p>
                             <div class="padbox"><Canvas rows={BH} cols={BW} rgba={Rc::new(large(j, model.pick))} class="pad" /></div>
                         </> }) }
@@ -72,7 +72,7 @@ pub fn app() -> Html {
     html! {
         <>
         <header>
-            { header("Learned denoiser", "Pictures from noise, step by step: a small network trained to see the clean picture in a noisy one, at ten levels of noise, run backward from pure noise. Eight pictures at a time, every level of the way shown; the shapes it learned are a disk, a hollow square and a cross.") }
+            { header("Learned denoiser", "Pictures from noise, step by step: a small convolutional network trained to see the clean picture in a noisy one, at ten levels of noise, run backward from pure noise. Eight pictures at a time, every level of the way shown; the shapes it learned are a disk, a hollow square and a cross.") }
             { controls(&model) }
             { notice(&model.notice) }
         </header>
