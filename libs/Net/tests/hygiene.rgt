@@ -1,0 +1,2 @@
+command = "../../../scripts/xt run hygiene.xtl"
+exit_code = 0

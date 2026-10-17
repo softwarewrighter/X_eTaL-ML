@@ -108,10 +108,21 @@ fn store() {
 }
 
 /// The lines of an expanded program that a model's call became: its
-/// weight arrays' loading and the function `name`.
+/// weight arrays' loading and the function `name`, each statement
+/// whole (`xetal expand` lays a long one out over several lines: the
+/// continuation lines are indented, and a block ends at its `}`).
 fn written(expansion: &str, name: &str, weights: &str) -> String {
     let mine = |l: &str| l.starts_with(&format!("u:{name} := ")) || weights.split_whitespace().any(|w| l.starts_with(&format!("{w} := ")));
-    expansion.lines().filter(|l| mine(l)).collect::<Vec<_>>().join("\n")
+    let mut keep = false;
+    let lines: Vec<&str> = expansion
+        .lines()
+        .filter(|l| {
+            let continued = l.starts_with(' ') || l.starts_with('}');
+            keep = mine(l) || (keep && continued);
+            keep
+        })
+        .collect();
+    lines.join("\n")
 }
 
 pub fn run(n: &Network) -> Result<Trained, String> {

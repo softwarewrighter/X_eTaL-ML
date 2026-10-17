@@ -562,6 +562,14 @@ dependencies = [
 ]
 
 [[package]]
+name = "xetal-bang"
+version = "0.1.0"
+dependencies = [
+ "xetal-base",
+ "xetal-ir",
+]
+
+[[package]]
 name = "xetal-base"
 version = "0.1.0"
 
@@ -578,6 +586,14 @@ name = "xetal-clock"
 version = "0.1.0"
 dependencies = [
  "chrono",
+]
+
+[[package]]
+name = "xetal-complexity"
+version = "0.1.0"
+dependencies = [
+ "xetal-base",
+ "xetal-ir",
 ]
 
 [[package]]
@@ -641,6 +657,7 @@ dependencies = [
  "xetal-base",
  "xetal-lex",
  "xetal-mapped",
+ "xetal-reflow",
 ]
 
 [[package]]
@@ -649,6 +666,15 @@ version = "0.1.0"
 dependencies = [
  "xetal-base",
  "xetal-ir",
+ "xetal-syntax",
+]
+
+[[package]]
+name = "xetal-fmt"
+version = "0.1.0"
+dependencies = [
+ "xetal-base",
+ "xetal-lex",
  "xetal-syntax",
 ]
 
@@ -714,9 +740,23 @@ version = "0.1.0"
 name = "xetal-lint"
 version = "0.1.0"
 dependencies = [
+ "xetal-bang",
  "xetal-base",
  "xetal-catalog",
+ "xetal-complexity",
  "xetal-ir",
+]
+
+[[package]]
+name = "xetal-linter"
+version = "0.1.0"
+dependencies = [
+ "xetal-base",
+ "xetal-ir",
+ "xetal-lint",
+ "xetal-program",
+ "xetal-sources",
+ "xetal-typed",
 ]
 
 [[package]]
@@ -780,6 +820,7 @@ dependencies = [
  "xetal-eval",
  "xetal-grid",
  "xetal-lint",
+ "xetal-linter",
  "xetal-macro",
  "xetal-program",
  "xetal-step",
@@ -833,6 +874,7 @@ dependencies = [
  "xetal-base",
  "xetal-core",
  "xetal-eval",
+ "xetal-grid",
  "xetal-lex",
  "xetal-macro",
  "xetal-sources",
@@ -861,11 +903,21 @@ dependencies = [
 ]
 
 [[package]]
+name = "xetal-reflow"
+version = "0.1.0"
+dependencies = [
+ "xetal-base",
+ "xetal-lex",
+ "xetal-mapped",
+]
+
+[[package]]
 name = "xetal-render"
 version = "0.1.0"
 dependencies = [
  "xetal-base",
  "xetal-core",
+ "xetal-fmt",
  "xetal-lex",
  "xetal-syntax",
 ]
@@ -1007,6 +1059,15 @@ name = "xetal-ty"
 version = "0.1.0"
 dependencies = [
  "xetal-base",
+]
+
+[[package]]
+name = "xetal-typed"
+version = "0.1.0"
+dependencies = [
+ "xetal-base",
+ "xetal-ir",
+ "xetal-types",
 ]
 
 [[package]]

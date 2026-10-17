@@ -1,0 +1,5 @@
+ok: the forward function reads the caller's x
+ok: the gradient by n and k
+ok: three steps counted, the caller's n and k untouched
+ok: the step moves the weights
+4 checks, all passed

@@ -10,38 +10,38 @@ w1 := 4 5 r_eshape 0.5 -1.0 0.25 2.0 0.0 -0.5 1.0 1.5 -2.0 0.1 0.2 0.3 -0.4
 w2 := 6 4 r_eshape 1.0 -1.0 0.5 0.5 -0.25 2.0 0.0 0.1 0.7
 w3 := 5 3 r_eshape 0.2 -0.6 0.9 -0.1 0.4
 v1 := 4 3 r_eshape 0.8 -0.3 0.5 0.1 -0.9
-u:g_a := { (W1, W2, W3) ->
-  A0 := X
-  A1 := nn:r_elu A0 nn:d_ense W1
-  A2 := nn:s_igmoid A1 nn:d_ense W2
-  A3 := nn:s_oftmax A2 nn:d_ense W3
-  D3 := (A3 - Y) / f_loat t_ally X
-  D2 := (D3 '+ '* i_nner o_\ -1 d_rop W3) * A2 * 1.0 - A2
-  D1 := (D2 '+ '* i_nner o_\ -1 d_rop W2) * f_loat A1 > 0.0
-  G1 := (o_\ A0 c_at_2 ((t_ally A0) c_at 1) r_eshape 1.0) '+ '* i_nner D1
-  G2 := (o_\ A1 c_at_2 ((t_ally A1) c_at 1) r_eshape 1.0) '+ '* i_nner D2
-  G3 := (o_\ A2 c_at_2 ((t_ally A2) c_at 1) r_eshape 1.0) '+ '* i_nner D3
-  (G1, G2, G3)
+u:g_a := { (g1:W1, g2:W2, g3:W3) ->
+  g4:A0 := X
+  g5:A1 := nn:r_elu g4:A0 nn:d_ense g1:W1
+  g6:A2 := nn:s_igmoid g5:A1 nn:d_ense g2:W2
+  g7:A3 := nn:s_oftmax g6:A2 nn:d_ense g3:W3
+  g10:D3 := (g7:A3 - Y) / f_loat t_ally X
+  g9:D2 := (g10:D3 '+ '* i_nner o_\ -1 d_rop g3:W3) * g6:A2 * 1.0 - g6:A2
+  g8:D1 := (g9:D2 '+ '* i_nner o_\ -1 d_rop g2:W2) * f_loat g5:A1 > 0.0
+  g11:G1 := (o_\ g4:A0 c_at_2 ((t_ally g4:A0) c_at 1) r_eshape 1.0) '+ '* i_nner g8:D1
+  g12:G2 := (o_\ g5:A1 c_at_2 ((t_ally g5:A1) c_at 1) r_eshape 1.0) '+ '* i_nner g9:D2
+  g13:G3 := (o_\ g6:A2 c_at_2 ((t_ally g6:A2) c_at 1) r_eshape 1.0) '+ '* i_nner g10:D3
+  (g11:G1, g12:G2, g13:G3)
 }
-u:g_b := { (W1, W2, W3) ->
-  A0 := X
-  A1 := nn:t_anh A0 nn:d_ense W1
-  A2 := A1 nn:d_ense W2
-  A3 := nn:s_oftmax A2 nn:d_ense W3
-  D3 := (A3 - Y) / f_loat t_ally X
-  D2 := (D3 '+ '* i_nner o_\ -1 d_rop W3)
-  D1 := (D2 '+ '* i_nner o_\ -1 d_rop W2) * 1.0 - A1 * A1
-  G1 := (o_\ A0 c_at_2 ((t_ally A0) c_at 1) r_eshape 1.0) '+ '* i_nner D1
-  G2 := (o_\ A1 c_at_2 ((t_ally A1) c_at 1) r_eshape 1.0) '+ '* i_nner D2
-  G3 := (o_\ A2 c_at_2 ((t_ally A2) c_at 1) r_eshape 1.0) '+ '* i_nner D3
-  (G1, G2, G3)
+u:g_b := { (g14:W1, g15:W2, g16:W3) ->
+  g17:A0 := X
+  g18:A1 := nn:t_anh g17:A0 nn:d_ense g14:W1
+  g19:A2 := g18:A1 nn:d_ense g15:W2
+  g20:A3 := nn:s_oftmax g19:A2 nn:d_ense g16:W3
+  g23:D3 := (g20:A3 - Y) / f_loat t_ally X
+  g22:D2 := (g23:D3 '+ '* i_nner o_\ -1 d_rop g16:W3)
+  g21:D1 := (g22:D2 '+ '* i_nner o_\ -1 d_rop g15:W2) * 1.0 - g18:A1 * g18:A1
+  g24:G1 := (o_\ g17:A0 c_at_2 ((t_ally g17:A0) c_at 1) r_eshape 1.0) '+ '* i_nner g21:D1
+  g25:G2 := (o_\ g18:A1 c_at_2 ((t_ally g18:A1) c_at 1) r_eshape 1.0) '+ '* i_nner g22:D2
+  g26:G3 := (o_\ g19:A2 c_at_2 ((t_ally g19:A2) c_at 1) r_eshape 1.0) '+ '* i_nner g23:D3
+  (g24:G1, g25:G2, g26:G3)
 }
-u:g_c := { W1 ->
-  A0 := X
-  A1 := nn:s_oftmax A0 nn:d_ense W1
-  D1 := (A1 - Y) / f_loat t_ally X
-  G1 := (o_\ A0 c_at_2 ((t_ally A0) c_at 1) r_eshape 1.0) '+ '* i_nner D1
-  G1
+u:g_c := { g27:W1 ->
+  g28:A0 := X
+  g29:A1 := nn:s_oftmax g28:A0 nn:d_ense g27:W1
+  g30:D1 := (g29:A1 - Y) / f_loat t_ally X
+  g31:G1 := (o_\ g28:A0 c_at_2 ((t_ally g28:A0) c_at 1) r_eshape 1.0) '+ '* i_nner g30:D1
+  g31:G1
 }
 # The loss of weights w (a tuple) for each network.
 u:l_a := { (a, b, c) -> Y nn:c_rossEntropy nn:s_oftmax (nn:s_igmoid (nn:r_elu X nn:d_ense a) nn:d_ense b) nn:d_ense c }

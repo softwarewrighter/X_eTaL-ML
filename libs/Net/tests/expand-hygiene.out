@@ -1,0 +1,41 @@
+#!/usr/bin/env xetal
+# Net: the names its macros bind are fresh ([]G_ENSYM, X_eTaL MC30), so
+# a caller's names can be the ones the macros use inside: the inputs
+# named n (the step count's old name), the targets k (the state's), the
+# weights x (the forward function's parameter). Each macro-written
+# function is checked against the same network written by hand.
+"nn:" u_se< "NN"
+"net:" u_se< "Net"
+"k:" u_se< "Check"
+n := 4 2 r_eshape 0.0 0.0 0.0 1.0 1.0 0.0 1.0 1.0
+k := 2 nn:o_neHot 1 2 2 1
+x := 3 2 r_eshape 0.1 -0.2 0.3 0.4 -0.5 0.6
+u:s_tep := { (g1:W1, g2:M1, g3:V1, g4:k) ->
+  g5:A0 := n
+  g6:A1 := nn:s_oftmax g5:A0 nn:d_ense g1:W1
+  g7:D1 := (g6:A1 - k) / f_loat t_ally n
+  g8:G1 := (o_\ g5:A0 c_at_2 ((t_ally g5:A0) c_at 1) r_eshape 1.0) '+ '* i_nner g7:D1
+  g9:n := 1.0 + g4:k
+  g10:m1 := (0.9 * g2:M1) + 0.1 * g8:G1
+  g11:v1 := (0.999 * g3:V1) + 0.001 * g8:G1 * g8:G1
+  (g1:W1 - 0.02 * (g10:m1 / 1.0 - 0.9 ^ g9:n) / 0.00000001 + (g11:v1 / 1.0 - 0.999 ^ g9:n)
+    ^ 0.5, g10:m1, g11:v1, g9:n)
+}
+u:g_rad := { g12:W1 ->
+  g13:A0 := n
+  g14:A1 := nn:s_oftmax g13:A0 nn:d_ense g12:W1
+  g15:D1 := (g14:A1 - k) / f_loat t_ally n
+  g16:G1 := (o_\ g13:A0 c_at_2 ((t_ally g13:A0) c_at 1) r_eshape 1.0) '+ '* i_nner g15:D1
+  g16:G1
+}
+u:f_wd := ({ g17:x -> nn:s_oftmax g17:x nn:d_ense x })
+# By hand.
+u:h_and := { w -> nn:s_oftmax n nn:d_ense w }
+u:h_andGrad := { w -> (o_\ n c_at_2 ((t_ally n) c_at 1) r_eshape 1.0) '+ '* i_nner ((u:h_and w) - k) / f_loat t_ally n }
+(W, _, _, steps) := 3 'u:s_tep p_ower (x, 0.0 * x, 0.0 * x, 0.0)
+c1 := "the forward function reads the caller's x" k:t_est (u:f_wd n) k:n_ear u:h_and x
+c2 := "the gradient by n and k" k:t_est (u:g_rad x) k:n_ear u:h_andGrad x
+c3 := "three steps counted, the caller's n and k untouched" k:t_est (3.0 c_at 8 c_at 4) k:n_ear steps c_at f_loat (t_ally r_avel n) c_at t_ally k
+c4 := "the step moves the weights" k:t_est k:t_rue 0.0 < 'm_ax r_/ r_avel a_bs W - x
+k:r_eport c1 k:a_nd c2 k:a_nd c3 k:a_nd c4
+

@@ -59,8 +59,10 @@ fn the_macro_wrote_the_function_and_counted_the_parameters() {
     assert_eq!(deep.params, 3 * 16 + 17 * 16 + 17 * 3);
     assert!(deep.expansion.contains("u:d_eep := {"), "{}", deep.expansion);
     // The weights' loading, each checked for its count, came from the same spec.
-    assert_eq!(deep.expansion.lines().count(), 4, "{}", deep.expansion);
-    assert!(deep.expansion.contains("c2 := { v -> 272 = t_ally v ? 17 16 r_eshape v; []P_ANIC"), "{}", deep.expansion);
+    // Four statements, each laid out whole by xetal expand (a loader is four lines, the function three).
+    assert_eq!(deep.expansion.lines().count(), 3 * 4 + 3, "{}", deep.expansion);
+    assert!(deep.expansion.contains("c2 := { v ->\n  272 = t_ally v ? 17 16 r_eshape v\n  []P_ANIC"), "{}", deep.expansion);
+    assert!(deep.expansion.ends_with("nn:d_ense c3\n}"), "{}", deep.expansion);
     assert_eq!(deep.expansion.matches("nn:d_ense").count(), 3);
     assert_eq!(deep.expansion.matches("nn:r_elu").count(), 2);
     assert!(deep.expansion.contains("nn:s_oftmax") && deep.expansion.contains("nn:d_ense c3"));

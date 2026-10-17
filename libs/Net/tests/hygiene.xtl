@@ -1,0 +1,24 @@
+#!/usr/bin/env xetal
+# Net: the names its macros bind are fresh ([]G_ENSYM, X_eTaL MC30), so
+# a caller's names can be the ones the macros use inside: the inputs
+# named n (the step count's old name), the targets k (the state's), the
+# weights x (the forward function's parameter). Each macro-written
+# function is checked against the same network written by hand.
+"nn:" u_se< "NN"
+"net:" u_se< "Net"
+"k:" u_se< "Check"
+n := 4 2 r_eshape 0.0 0.0 0.0 1.0 1.0 0.0 1.0 1.0
+k := 2 nn:o_neHot 1 2 2 1
+x := 3 2 r_eshape 0.1 -0.2 0.3 0.4 -0.5 0.6
+"u:s_tep n k 0.02" net:t_rain< "2 2 softmax"
+"u:g_rad n k" net:g_radient< "2 2 softmax"
+u:f_wd := "2 2 softmax" net:n_etwork< "x"
+# By hand.
+u:h_and := { w -> nn:s_oftmax n nn:d_ense w }
+u:h_andGrad := { w -> (o_\ n c_at_2 ((t_ally n) c_at 1) r_eshape 1.0) '+ '* i_nner ((u:h_and w) - k) / f_loat t_ally n }
+(W, _, _, steps) := 3 'u:s_tep p_ower (x, 0.0 * x, 0.0 * x, 0.0)
+c1 := "the forward function reads the caller's x" k:t_est (u:f_wd n) k:n_ear u:h_and x
+c2 := "the gradient by n and k" k:t_est (u:g_rad x) k:n_ear u:h_andGrad x
+c3 := "three steps counted, the caller's n and k untouched" k:t_est (3.0 c_at 8 c_at 4) k:n_ear steps c_at f_loat (t_ally r_avel n) c_at t_ally k
+c4 := "the step moves the weights" k:t_est k:t_rue 0.0 < 'm_ax r_/ r_avel a_bs W - x
+k:r_eport c1 k:a_nd c2 k:a_nd c3 k:a_nd c4

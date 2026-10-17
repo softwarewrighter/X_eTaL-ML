@@ -37,8 +37,8 @@ list stands on its own.
 | M12 | declined | feature | Shapes in types: a matrix's type is `Float`, so code can be well-typed and shape-wrong (a spec saying 4 outputs against a 3-column weight array ran and answered); `r_eshape` repeats or cuts data silently. Asked in three sizes: a shape ascription built-in now, rank in types next, sized types as research X_eTaL declined it (T7: array types are rank-erased, shapes are checked at run time; T4: no annotations in v0) | Net (its models check at load instead), every demo | the Net macros write run-time checks that stop with an error naming the layer |
 | M13 | landed | feature | A state of several arrays for `p_ower`: tuples with destructuring, then records (first asked by X_eTaL-demos; on X_eTaL's wish list as named records). Tuples through `p_ower` landed in X_eTaL 96060b5 and patterns in d284a8c, pinned here 2026-10-08: train-live's and Net's training state is a tuple taken apart by name (step tuple-state). Boxes already carry arrays of different shapes and one element type, by position; tuples would carry mixed types, by name | train-live (Adam's state), net-train-macro | none left |
 | M14 | new | bug | `xetal_play::run` collects a run's `[]S_HOW` pictures in state shared across threads (`xetal_store::take_shown()`), so two runs at once take each other's pictures: a run can come back with none, or with another's | backprop, train-live, net-macro (their Rust tests, which cargo runs in parallel; a page runs one program at a time) | `microscope::run` runs one program at a time behind a lock |
-| M15 | not yet taken | feature | `xetal doc --out` names every site "X_eTaL doc" (the page titles, the sidebar's heading): a sibling's site cannot say whose it is; asked: a `--title` option | the cross-reference (pages/doc) | none: the catalog, the cards and the pages' footers say what the site is |
-| M16 | not yet taken | speed | The matrix product runs at about 85 ns a multiply-add: `(8 9 r_eshape ...) '+ '* i_nner 9 33800 r_eshape ...` and `(8 33800 r_eshape ...) '+ '* i_nner o_\ 9 33800 r_eshape ...` (2.4 million multiply-adds each, one with many short sums, one with few long ones) both take about 0.2 s, printed results included; the outer product `t_able` of 270,400 results takes 30 ms | cnn-backprop (the convolution and the filters' gradient are most of a step) | 600 digits and 20 a step, not more |
+| M15 | new | feature | `xetal doc --out` names every site "X_eTaL doc" (the page titles, the sidebar's heading): a sibling's site cannot say whose it is; asked: a `--title` option | the cross-reference (pages/doc) | none: the catalog, the cards and the pages' footers say what the site is |
+| M16 | new | speed | The matrix product runs at about 85 ns a multiply-add: `(8 9 r_eshape ...) '+ '* i_nner 9 33800 r_eshape ...` and `(8 33800 r_eshape ...) '+ '* i_nner o_\ 9 33800 r_eshape ...` (2.4 million multiply-adds each, one with many short sums, one with few long ones) both take about 0.2 s, printed results included; the outer product `t_able` of 270,400 results takes 30 ms | cnn-backprop (the convolution and the filters' gradient are most of a step) | 600 digits and 20 a step, not more |
 ## Details
 
 ### M1, M2: macro libraries and seeing an expansion (landed)
@@ -46,7 +46,8 @@ list stands on its own.
 X_eTaL v0.1.0 has `.xtlm` macro libraries (MC10 to MC30: a macro is a
 function from the source text left and right of its call to new
 source; hooks such as `[]R_EJECT` report a bad argument at the call;
-hygiene is automatic) and `xetal expand FILE`. `libs/Net` is built on
+hygiene is by choice: a macro's own names come from `[]G_ENSYM`, MC30)
+and `xetal expand FILE`. `libs/Net` is built on
 them: `"2 2 relu 2 softmax" net:n_etwork< "w1 w2"` becomes
 `{ x -> nn:s_oftmax (nn:r_elu x nn:d_ense w1) nn:d_ense w2 }`, and its
 tests pin every expansion.

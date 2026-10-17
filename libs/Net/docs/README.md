@@ -113,7 +113,9 @@ u:x_or := ({ g1:x -> nn:s_oftmax (nn:r_elu g1:x nn:d_ense w1) nn:d_ense w2 })
 ```
 
 The network is the function you would write by hand (`g1:x` is its
-parameter, renamed by X_eTaL so it cannot clash with a name of yours).
+parameter, a fresh name the macro asks X_eTaL for, `[]G_ENSYM`, so it
+cannot clash with a name of yours: a name a macro writes stays as
+written, X_eTaL MC30, so Net takes its own names this way).
 `../tests/checks.xtl` checks that for relu, sigmoid and tanh networks
 the macro's function gives the same numbers as the hand-written one.
 
@@ -136,8 +138,9 @@ The same spec that describes a network can train it. From
 
 Three hundred steps from small random weights: the loss falls from
 1.08 to 0.002 and all four points of XOR are read right. What the
-first line became (`just expand-lib Net train-xor`), with X_eTaL's
-hygiene renaming every name the macro binds (`g1:W1`, ...):
+first line became (`just expand-lib Net train-xor`); every name the
+macro binds is fresh (`g1:W1`, ...), so the caller's `X`, `Y` and `lr`
+may be called anything, `n` or `k` included (`../tests/hygiene.xtl`):
 
 ```
 u:s_tep := { (g1:W1, g2:W2, g3:M1, g4:M2, g5:V1, g6:V2, g7:k) ->
@@ -150,9 +153,9 @@ u:s_tep := { (g1:W1, g2:W2, g3:M1, g4:M2, g5:V1, g6:V2, g7:k) ->
   g14:G2 := (o_\ g9:A1 c_at_2 ((t_ally g9:A1) c_at 1) r_eshape 1.0) '+ '* i_nner g11:D2
   g15:n := 1.0 + g7:k
   g16:m1 := (0.9 * g3:M1) + 0.1 * g13:G1
-  g17:v1 := (0.999 * g5:V1) + 0.001 * g13:G1 * g13:G1
+  g18:v1 := (0.999 * g5:V1) + 0.001 * g13:G1 * g13:G1
   ...
-  (g1:W1 - lr * (g16:m1 / 1.0 - 0.9 ^ g15:n) / 0.00000001 + ..., ..., g16:m1, g18:m2, g17:v1, g19:v2, g15:n)
+  (g1:W1 - lr * (g16:m1 / 1.0 - 0.9 ^ g15:n) / 0.00000001 + ..., ..., g16:m1, g17:m2, g18:v1, g19:v2, g15:n)
 }
 ```
 
