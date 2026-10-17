@@ -1,8 +1,9 @@
 number = 23
 slug = "gate-affected"
-status = "in-progress"
+status = "completed"
 description = "The user, 2026-10-17 (the gate takes about 30 minutes for any change: 13 demo..."
 role = "production"
 context_files = []
 created_at = "2026-10-17T14:03:07"
-commits = []
+completed_at = "2026-10-17T16:03:14"
+commits = ["35f4e7e2e61cc3b29799745524c0259bbf3a10c1"]
