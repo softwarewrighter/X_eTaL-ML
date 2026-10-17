@@ -1,0 +1,2 @@
+command = "../../../scripts/xt run reject-it-first.xtl"
+exit_code = 1

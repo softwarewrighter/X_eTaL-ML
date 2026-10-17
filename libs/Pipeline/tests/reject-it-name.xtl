@@ -1,0 +1,5 @@
+#!/usr/bin/env xetal
+# Pipeline: it cannot be bound as a name.
+"pipe:" u_se< "Pipeline"
+x := f_loat 1 2 3 4
+@ pipe:p_ipe< "x : it |> n_eg"

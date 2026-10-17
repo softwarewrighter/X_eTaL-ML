@@ -1,0 +1,2 @@
+command = "../../../scripts/xt expand reject-two-groups.xtl"
+exit_code = 1

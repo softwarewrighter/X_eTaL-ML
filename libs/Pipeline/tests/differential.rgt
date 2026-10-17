@@ -1,0 +1,2 @@
+command = "../../../scripts/xt run differential.xtl"
+exit_code = 0

@@ -1,0 +1,2 @@
+command = "../../../scripts/xt expand reject-shape-tuple.xtl"
+exit_code = 1

@@ -45,10 +45,14 @@ fn the_catalog_has_every_library() {
 
 #[test]
 fn pages_show_xetal_rendered_not_typed() {
-    // Typed spellings that the rendered form always decorates.
+    // Typed spellings that the rendered form always decorates. A string
+    // literal's text is drawn as typed (a pipeline's stages live in one
+    // until X_eTaL's renderers decorate such arguments, ask M17), so
+    // string spans are left out of the check.
     for lib in LIBRARIES {
+        let docs = without_strings(lib.docs);
         for typed in ["u_se&lt;", "r_/", " := ", "s_elect", "t_ally"] {
-            assert!(!lib.docs.contains(typed), "{}: typed {typed:?} on its reference page", lib.name);
+            assert!(!docs.contains(typed), "{}: typed {typed:?} on its reference page", lib.name);
         }
         assert!(lib.docs.contains("class=\"c-"), "{}: nothing rendered", lib.name);
     }
@@ -102,4 +106,20 @@ fn library_macros_run_and_expand_in_the_browser_store() {
     let e = expansion(src).unwrap().unwrap();
     assert!(e.contains("371"), "{e}");
     assert!(xetal_play::run("\"net:\" u_se< \"Net\"\n\"2 bogus 3\" net:p_arams< @", 1).err.contains("not a size or an activation"));
+}
+
+/// The page without the text of its string literals (`<span class="c-string">...</span>`).
+fn without_strings(html: &str) -> String {
+    let mut out = String::new();
+    let mut rest = html;
+    while let Some(k) = rest.find("<span class=\"c-string\">") {
+        out.push_str(&rest[..k]);
+        rest = &rest[k..];
+        match rest.find("</span>") {
+            Some(e) => rest = &rest[e + "</span>".len()..],
+            None => rest = "",
+        }
+    }
+    out.push_str(rest);
+    out
 }

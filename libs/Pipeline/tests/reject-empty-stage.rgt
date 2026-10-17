@@ -1,0 +1,2 @@
+command = "../../../scripts/xt run reject-empty-stage.xtl"
+exit_code = 1

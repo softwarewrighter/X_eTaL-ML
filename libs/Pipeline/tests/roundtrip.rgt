@@ -1,0 +1,2 @@
+command = "../../../scripts/xt run roundtrip.xtl"
+exit_code = 0

@@ -1,0 +1,2 @@
+command = "../../../scripts/xt expand reject-bound-twice.xtl"
+exit_code = 1

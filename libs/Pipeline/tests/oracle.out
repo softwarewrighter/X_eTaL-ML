@@ -1,0 +1,15 @@
+14 25
+20 31
+0.09003057317038046 0.24472847105479764 0.6652409557748218
+-1.3416407864998738 -0.4472135954999579 0.4472135954999579 1.3416407864998738
+2
+2
+3.0 6.0 9.0 12.0
+ok: linear regression
+ok: stable softmax
+ok: layer norm
+ok: MLP
+ok: residual
+ok: one stage per line: the same (Int)
+ok: one stage per line: the same (Float)
+7 checks, all passed

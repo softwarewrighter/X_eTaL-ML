@@ -1,0 +1,1 @@
+error[bad-pipeline]: a shape is [extents] at the stage's end, nothing after it: [4 |> n_eg at 160..178

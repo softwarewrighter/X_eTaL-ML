@@ -1,0 +1,6 @@
+#!/usr/bin/env xetal
+# Pipeline: a shape annotation the value does not meet stops the program, naming the stage, its shape and the one expected.
+"pipe:" u_se< "Pipeline"
+x := f_loat 1 2 3 4
+n := 3
+@ pipe:p_ipe< "x |> 2 * it : y [n] |> y + 1"

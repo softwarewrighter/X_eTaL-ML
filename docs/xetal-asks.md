@@ -39,6 +39,7 @@ list stands on its own.
 | M14 | new | bug | `xetal_play::run` collects a run's `[]S_HOW` pictures in state shared across threads (`xetal_store::take_shown()`), so two runs at once take each other's pictures: a run can come back with none, or with another's | backprop, train-live, net-macro (their Rust tests, which cargo runs in parallel; a page runs one program at a time) | `microscope::run` runs one program at a time behind a lock |
 | M15 | new | feature | `xetal doc --out` names every site "X_eTaL doc" (the page titles, the sidebar's heading): a sibling's site cannot say whose it is; asked: a `--title` option | the cross-reference (pages/doc) | none: the catalog, the cards and the pages' footers say what the site is |
 | M16 | new | speed | The matrix product runs at about 85 ns a multiply-add: `(8 9 r_eshape ...) '+ '* i_nner 9 33800 r_eshape ...` and `(8 33800 r_eshape ...) '+ '* i_nner o_\ 9 33800 r_eshape ...` (2.4 million multiply-adds each, one with many short sums, one with few long ones) both take about 0.2 s, printed results included; the outer product `t_able` of 270,400 results takes 30 ms | cnn-backprop (the convolution and the filters' gradient are most of a step) | 600 digits and 20 a step, not more |
+| M17 | not yet taken | feature | A macro argument that holds X_eTaL code is drawn as typed: `xetal render --html -e '@ pipe:p_ipe< "x \|> 2 * it"'` gives one `c-string` span, so a pipeline's stages are the only code on a page not decorated (ST4 says the code a macro parses from a string stays ASCII, drawn decorated by the renderers; the renderers do not yet) | Pipeline, its page on the libraries' site | the site's test leaves string spans out of its typed-spelling check; the stages read as typed |
 ## Details
 
 ### M1, M2: macro libraries and seeing an expansion (landed)
@@ -152,24 +153,33 @@ CNN training's step on 20 digits is about 0.4 s natively and 1.6 s in
 the browser, mostly two such products; the demo uses 600 digits, not
 MNIST's 60,000. (M3 brought it from about 700 ns at abb8274.) Workaround: smaller data.
 
+### M17: a macro's code argument drawn decorated
+
+A pipeline's stages are X_eTaL written inside a string,
+`@ pipe:p_ipe< "x |> 2 * it : m |> n_eg"`, and X_eTaL ST4 says the code
+a macro parses from a string stays ASCII by convention, drawn decorated
+by the renderers. The pinned renderer draws the whole argument as one
+string: `xetal render --html -e '@ pipe:p_ipe< "x |> 2 * it"'` gives
+`<span class="c-string">"x |> 2 * it"</span>`, so on the libraries'
+site a pipeline is the one code on a page shown as typed, while the
+expansion beside it is decorated. Asked: a way for a macro library to
+say that its argument is code (a `## argument: code` line in the doc
+block, as `## binds:` declares an anaphor), which the renderers then
+draw decorated stage by stage, `|>`, ` : name` and ` [N O]` as they
+are. Workaround: none; the site's test
+(`pages_show_xetal_rendered_not_typed`) leaves string spans out.
+
 ### To take to X_eTaL
 
-M15 and M16 are filed here but not yet in X_eTaL's ledger. Entries in
-its `docs/asks.toml` form, ready to add there (this repository does
-not change X_eTaL):
+M17 is filed here but not yet in X_eTaL's ledger (M15 and M16 are
+there since 2026-10-12, as new). The entry in its `docs/asks.toml`
+form, ready to add there (this repository does not change X_eTaL):
 
 ```
 [[ask]]
-id = "M15"
+id = "M17"
 repo = "X_eTaL-ML"
-ask = "a title for a doc site: `xetal doc --out` names every site \"X_eTaL doc\""
-state = "new"
-here = ""
-
-[[ask]]
-id = "M16"
-repo = "X_eTaL-ML"
-ask = "the matrix product at about 85 ns a multiply-add, whatever its shape"
+ask = "a macro argument that holds code (a pipeline's stages) is drawn as typed; let a macro library declare it code and the renderers decorate it"
 state = "new"
 here = ""
 ```

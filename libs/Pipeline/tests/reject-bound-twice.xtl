@@ -1,0 +1,5 @@
+#!/usr/bin/env xetal
+# Pipeline: a name bound twice is refused.
+"pipe:" u_se< "Pipeline"
+x := f_loat 1 2 3 4
+@ pipe:p_ipe< "x : m |> n_eg it : m"

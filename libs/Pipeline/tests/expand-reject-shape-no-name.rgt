@@ -1,0 +1,2 @@
+command = "../../../scripts/xt expand reject-shape-no-name.xtl"
+exit_code = 1

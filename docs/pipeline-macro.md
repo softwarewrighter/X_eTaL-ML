@@ -128,9 +128,10 @@ X_eTaL has no implicit broadcasting, and the APL family agrees with it
 (J and BQN match a vector against the leading axis, NumPy against the
 trailing one: for a square matrix both give an answer, and they
 differ). Adding a bias to every row is therefore written out today
-(`(s_hape P) r_eshape b`). Build a checked helper, `a_dd_axis` (the
+(`(s_hape P) r_eshape b`). Build a checked helper, `a_ddAxis` (the
 value, the axis, the vector; the vector's length must equal that axis's
-extent, else an error naming both), and wrap it as `nn:b_ias` with a
+extent, else an error naming both; this repository's names underline
+the first letter only, as `o_neHot`, so not `a_dd_axis`), and wrap it as `nn:b_ias` with a
 documented axis convention; the channel-first CNN tensor `[O Ho Wo]`
 takes its bias on the first axis, the dense layer on the last. A
 general rank operator is deferred until several uses justify it.
@@ -173,3 +174,27 @@ What the language or the equation library should do differently goes
 in `docs/xetal-asks.md` here, as every ask does; X_eTaL's plan keeps a
 step for the pipeline macro (its 109, spatial-pipeline-macro) that
 will be closed with a pointer to this repository's commits.
+
+## As built (2026-10-17, step pipeline-macro)
+
+`libs/Pipeline/` (`"pipe:" u_se< "Pipeline"`, so the call is
+`@ pipe:p_ipe< "..."`; the `e:` of the examples above was the alias of
+the spatial library the design sat in). What the building settled:
+
+- A stage after the first may also be an **expression of names the
+  pipeline bound before it** (`e / '+ r_/ e`, `P + (s_hape P) r_eshape b`):
+  the oracle's own examples need it. A value stage (`X |> 3`) is still
+  refused: not a function, no `it`, no earlier name.
+- A quoted function or lambda stage (`'n_eg`, `'{ v -> v * 2.0 }`) is
+  applied without its quote; a derived function (`'+ r_/`) and a train
+  stay as written.
+- An `it` stage becomes a block of its own, `name := { @ -> it := <previous>; <stage> } @`
+  (a lambda `{ it -> ... }` cannot take a tuple, which a ` : (Q, K, V)`
+  stage leaves as the previous value).
+- A shape goes with one name; on a tuple it is refused (each part would
+  have its own).
+- `pipe:t_ext<` writes the pipeline back from the same reading, for the
+  round-trip test; the differential test enumerates every kind of stage
+  and their orders against plain X_eTaL.
+- The names: `Pipeline`, `pipe:`, `p_ipe<`, `t_ext<`; the bias helper
+  will be `nn:a_ddAxis` and `nn:b_ias` (step pipeline-bias).
