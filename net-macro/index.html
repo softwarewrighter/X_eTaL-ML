@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Network Macro</title>
+  
+<script type="module">
+import init, * as bindings from '/X_eTaL-ML/net-macro/net-macro-web-800f757e4a717425.js';
+const wasm = await init({ module_or_path: '/X_eTaL-ML/net-macro/net-macro-web-800f757e4a717425_bg.wasm' });
+
+
+window.wasmBindings = bindings;
+
+
+dispatchEvent(new CustomEvent("TrunkApplicationStarted", {detail: {wasm}}));
+
+</script>
+  
+  <link rel="icon" href="/X_eTaL-ML/net-macro/favicon-a11bc0a2bcd81290.ico" integrity="sha384-xOjSLs9ZRBKy2hF6zlqNv+0U86E4BqZOJy7H7a4GXSVwDQMNie0D851/sRBSYI9a"/>
+  <link rel="stylesheet" href="/X_eTaL-ML/net-macro/microscope-7cc2ddec1a115cc4.css" integrity="sha384-q1QqFgOoWc/7ZNzw0KSpwiMelhbnupHyrpcl1xP6NjHcobGBu39fTd+3nqQLkW5N"/>
+<link rel="modulepreload" href="/X_eTaL-ML/net-macro/net-macro-web-800f757e4a717425.js" crossorigin="anonymous" integrity="sha384-hLj22o1l+lhbB/JTFIrY5kwUyU72U3Su6s0ubq0gAyfT0trO45TWjFFJdxtVvjQ0"><link rel="preload" href="/X_eTaL-ML/net-macro/net-macro-web-800f757e4a717425_bg.wasm" crossorigin="anonymous" integrity="sha384-BngadXE3G8wMZFH4zIu6GyoDFUyPg4w/HgJrnEcr/t1++A+F5eMmdlBSKFlIOQ1o" as="fetch" type="application/wasm"></head>
+<body></body>
+</html>

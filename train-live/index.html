@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Training Live</title>
+  
+<script type="module">
+import init, * as bindings from '/X_eTaL-ML/train-live/train-live-web-9dfd3f0b6fc7585c.js';
+const wasm = await init({ module_or_path: '/X_eTaL-ML/train-live/train-live-web-9dfd3f0b6fc7585c_bg.wasm' });
+
+
+window.wasmBindings = bindings;
+
+
+dispatchEvent(new CustomEvent("TrunkApplicationStarted", {detail: {wasm}}));
+
+</script>
+  
+  <link rel="icon" href="/X_eTaL-ML/train-live/favicon-a11bc0a2bcd81290.ico" integrity="sha384-xOjSLs9ZRBKy2hF6zlqNv+0U86E4BqZOJy7H7a4GXSVwDQMNie0D851/sRBSYI9a"/>
+  <link rel="stylesheet" href="/X_eTaL-ML/train-live/microscope-7cc2ddec1a115cc4.css" integrity="sha384-q1QqFgOoWc/7ZNzw0KSpwiMelhbnupHyrpcl1xP6NjHcobGBu39fTd+3nqQLkW5N"/>
+<link rel="modulepreload" href="/X_eTaL-ML/train-live/train-live-web-9dfd3f0b6fc7585c.js" crossorigin="anonymous" integrity="sha384-S2qhsoRtGSxYmt+p+4awnprhlJ0G7+9oM1mCl0Hid8c+mttB3dEDCjC5BQnYFeNt"><link rel="preload" href="/X_eTaL-ML/train-live/train-live-web-9dfd3f0b6fc7585c_bg.wasm" crossorigin="anonymous" integrity="sha384-v8K8ULrMk/+qd0MLuUIrKieaRHy4gV7p/s0N+wGGeGb5lYAMJabT5n166wnoTTJ6" as="fetch" type="application/wasm"></head>
+<body></body>
+</html>
