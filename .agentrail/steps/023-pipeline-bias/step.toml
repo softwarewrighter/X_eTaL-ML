@@ -1,4 +1,4 @@
-number = 24
+number = 23
 slug = "pipeline-bias"
 status = "pending"
 description = "docs/pipeline-macro.md, the bias helper (decided with the user): nn:a_ddAxis ..."
