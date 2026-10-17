@@ -1,0 +1,8 @@
+number = 23
+slug = "pipeline-macro"
+status = "pending"
+description = "The user's go, 2026-10-17 (docs/pipeline-macro.md, X_eTaL D155, its step 109)..."
+role = "production"
+context_files = []
+created_at = "2026-10-17T09:40:41"
+commits = []

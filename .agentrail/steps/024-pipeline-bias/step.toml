@@ -1,0 +1,8 @@
+number = 24
+slug = "pipeline-bias"
+status = "pending"
+description = "docs/pipeline-macro.md, the bias helper (decided with the user): nn:a_ddAxis ..."
+role = "production"
+context_files = []
+created_at = "2026-10-17T09:40:41"
+commits = []

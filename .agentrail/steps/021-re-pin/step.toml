@@ -1,0 +1,8 @@
+number = 21
+slug = "re-pin"
+status = "in-progress"
+description = "The user's go, 2026-10-17: re-pin X_eTaL to b8a6ac3b (main: hygiene by choice..."
+role = "production"
+context_files = []
+created_at = "2026-10-17T09:40:41"
+commits = []
