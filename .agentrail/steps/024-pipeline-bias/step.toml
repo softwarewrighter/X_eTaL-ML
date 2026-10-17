@@ -1,6 +1,6 @@
 number = 24
 slug = "pipeline-bias"
-status = "pending"
+status = "in-progress"
 description = "docs/pipeline-macro.md, the bias helper (decided with the user): nn:a_ddAxis ..."
 role = "production"
 context_files = []
