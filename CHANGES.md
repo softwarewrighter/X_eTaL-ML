@@ -11,6 +11,10 @@ planning and reordering, `release` milestone release, `chore`
 agentrail bookkeeping (step complete, saga archive), `vendor` a
 refresh of the vendored X_eTaL.
 
+## 2026-10-17
+
+- 09:27 `docs` docs/pipeline-macro.md: the pipeline macro `e:p_ipe<` as decided in X_eTaL (D155), handed over to be built here: the call (`|>` stages, `it`, ` : name`, shape annotations), what it refuses, the expansion, the expected outputs from X_eTaL's oracle, the bias helper, the tests to write first, the pins to move to, and the naming rule.
+
 ## 2026-10-14
 
 - 10:39 `demo` Learned denoiser, convolutional: `u:n_et` is a 3 x 3 convolution of the noisy picture through the Conv library (8 filters, valid: 8 maps of 8 x 8) with ReLU, the 512 features through the dense layer with the level's own weights added (a row per level, so no join inside the function), and the output layer; still one function of arrays, the part a GPU takes. The trainer (std-only Rust, a fixed seed; the batch's gradients summed over eight threads in a fixed order; 100,000 steps, about 7 min) reports the held-out cross-entropy on 2,000 pictures and trains the earlier dense denoiser on request (`dense`) for the comparison: 13.36 dense against 12.77 convolutional, a quarter to a third less at the levels that decide the shape; pooling the maps first (`pool`) lost, 13.64. Hollow squares come out as squares more often; shapes come out thinner, so 85 of the 128 command-line samples reach 8 pixels on (97 before): the count is a floor, not a score. The batch takes 20 s (the windows: 6 million numbers a step); the page 1.6 s for eight pictures (0.6 s before). `test` The CLI baseline reblessed (the pictures and the count; the Rust check still 1); the page's tests pass (the sampler is the Rust one, the same noise gives the same pictures, every name bound once). `docs` The demo's README (the network, the measurements, the trainer's flags), the data recipe, README's rows, gpu-asks (row 3 a convolutional workload), plan step conv-denoiser. `chore` CHANGES line for the finite-shift completion commit (12:27).
