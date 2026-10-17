@@ -1,6 +1,6 @@
 number = 22
 slug = "pipeline-macro"
-status = "pending"
+status = "in-progress"
 description = "The user's go, 2026-10-17 (docs/pipeline-macro.md, X_eTaL D155, its step 109)..."
 role = "production"
 context_files = []

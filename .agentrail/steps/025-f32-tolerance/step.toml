@@ -1,6 +1,6 @@
 number = 25
 slug = "f32-tolerance"
-status = "in-progress"
+status = "blocked"
 description = "X_eTaL-gpu's finding (its agent, 2026-10-16, GA7 done): diffusion.xtl's 1e-6 ..."
 role = "production"
 context_files = []

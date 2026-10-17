@@ -1,0 +1,1 @@
+BLOCKED: Deferred, not blocked: the user's order (2026-10-17) runs the pipeline steps first; reopen after pipeline-demos.
