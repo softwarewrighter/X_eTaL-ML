@@ -205,9 +205,9 @@ bench-check RUNS="5":
 bench-bless RUNS="5":
     scripts/bench-check.sh --bless {{RUNS}}
 
-# The full pre-commit gate
-gate:
-    scripts/gate.sh
+# The pre-commit gate: what the change touches (scripts/affected.py plans it); --full everything (after a pin)
+gate *FLAGS:
+    scripts/gate.sh {{FLAGS}}
 
 # Show the agentrail saga state and the current step
 status:

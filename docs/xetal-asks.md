@@ -168,6 +168,15 @@ block, as `## binds:` declares an anaphor), which the renderers then
 draw decorated stage by stage, `|>`, ` : name` and ` [N O]` as they
 are. Workaround: none; the site's test
 (`pages_show_xetal_rendered_not_typed`) leaves string spans out.
+X_eTaL took it the same day as its step 111, code strings (decided
+with the user): `c"..."` with the usual escapes and raw `cr"..."` /
+`cr#"..."#`, the same Char vector as a plain string (no new type, no
+macro change), the rendered view drawing the inside as code where it
+lexes. When it lands and this repository re-pins, the pipelines are
+written `@ pipe:p_ipe< cr"..."` and the site's test takes string
+spans in again. Its step 110, macro contracts (`## takes:`,
+`## uses: copied | parsed`), will have `Pipeline.xtlm` declare
+`## uses: parsed`.
 
 ### To take to X_eTaL
 

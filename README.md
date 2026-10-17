@@ -167,7 +167,7 @@ just                # list the recipes
 just xetal          # fetch and build the pinned X_eTaL (work/xetal, bin/xetal)
 just xetal-version  # which commits are pinned, and the binary's own report
 just eval "'+ r_/ 1 2 3"
-just gate           # the pre-commit gate
+just gate           # the pre-commit gate: what the change touches; just gate --full for everything
 ```
 
 This repository tracks no copy of X_eTaL: `XETAL_COMMIT` holds the

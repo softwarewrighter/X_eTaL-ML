@@ -404,9 +404,13 @@ Read before working:
 
 ## Every step ends with
 
-1. Tests exist for what the step delivered, and `just gate` passes
-   (pinned X_eTaL, tooling self-tests, demo and library baselines,
-   pinned types, pages current, markdown).
+1. Tests exist for what the step delivered, and `just gate` passes:
+   the cheap checks and what the change touches (`scripts/affected.py`
+   plans it: the demos and libraries changed or importing a changed
+   library, their pages built and checked in the browser); `just gate
+   --full` (everything: tooling self-tests, every demo, library and
+   page) after a pin or a change to the shared shell or the scripts,
+   which the plan asks for by itself.
 2. Docs updated: README (gallery, libraries, status), the demo's or
    library's pages, `CHANGES.md`, `docs/plan.md`,
    `docs/xetal-asks.md` as needed.
@@ -423,7 +427,7 @@ Read before working:
 
 ```bash
 just                      # list recipes
-just gate                 # pre-commit gate
+just gate                 # pre-commit gate: what the change touches; --full for everything
 agentrail status          # current saga state
 agentrail next            # current step + context
 agentrail plan            # the saga plan
