@@ -1,6 +1,6 @@
 number = 23
 slug = "gate-affected"
-status = "pending"
+status = "in-progress"
 description = "The user, 2026-10-17 (the gate takes about 30 minutes for any change: 13 demo..."
 role = "production"
 context_files = []
