@@ -1,0 +1,34 @@
+#!/usr/bin/env xetal
+# Integrals: two continuous equations of machine learning by the
+# macro. GELU, the activation of BERT and GPT, is x times the Gaussian
+# CDF, x Phi(x) (Hendrycks and Gimpel, 2016), Phi(x) = 1/2 + the
+# integral from 0 to x of the density exp(-u^2 / 2) / sqrt(2 pi): no
+# improper bound needed. The tanh form most frameworks compute is an
+# approximation; the integral says by how much. Then the KL divergence
+# of two Gaussians, the integral of p log (p / q) over a truncation,
+# beside its closed form. Run with "just demo Integrals".
+"integ:" u_se< "Integrals"
+"nn:" u_se< "NN"
+# The standard Gaussian density.
+u:p_hi := { u -> (e_xp n_eg (u * u) / 2.0) / (2.0 * p_i @) ^ 0.5 }
+# GELU at one x: x (1/2 + integral of the density from 0 to x), simpson on 32 steps.
+u:g_elu := { x -> x * 0.5 + @ integ:i_ntegral< "integral u:=0.0..x by simpson 32 | u:p_hi u" }
+# The tanh approximation (NN's t_anh): x/2 (1 + tanh(sqrt(2/pi) (x + 0.044715 x^3))).
+u:a_pprox := { x -> 0.5 * x * 1.0 + nn:t_anh ((2.0 / p_i @) ^ 0.5) * x + 0.044715 * x ^ 3 }
+xs := -3.0 -2.0 -1.0 -0.5 0.0 0.5 1.0 2.0 3.0
+g := 'u:g_elu e_ach xs
+(f_loat f_loor 0.5 + 10000.0 * g) / 10000.0
+# The approximation's error at those points, and its largest over -4..4.
+(f_loat f_loor 0.5 + 1000000.0 * g - u:a_pprox xs) / 1000000.0
+fine := -4.0 + 0.05 * f_loat o_ffsets 161
+(f_loat f_loor 0.5 + 1000000.0 * 'm_ax r_/ a_bs ('u:g_elu e_ach fine) - u:a_pprox fine) / 1000000.0
+# What the paper writes.
+@ integ:t_ex< "integral u:=0.0..x | u:p_hi u"
+# KL(N(0, 1) || N(1, 2)): the integral of p log (p / q) over -10..10
+# (the tails beyond are below 1e-20), beside the closed form
+# log(s2 / s1) + (s1^2 + (m1 - m2)^2) / (2 s2^2) - 1/2.
+u:n_ormal := { (m, s) x -> (e_xp n_eg ((x - m) ^ 2) / 2.0 * s * s) / s * (2.0 * p_i @) ^ 0.5 }
+kl := @ integ:i_ntegral< "integral x:=-10.0..10.0 by simpson 400 | ((0.0, 1.0) u:n_ormal x) * l_og ((0.0, 1.0) u:n_ormal x) / (1.0, 2.0) u:n_ormal x"
+closed := (l_og 2.0) + ((1.0 + 1.0) / 2.0 * 4.0) - 0.5
+(f_loat f_loor 0.5 + 1000000.0 * kl c_at closed) / 1000000.0
+@ integ:t_ex< "integral x:=-10.0..10.0 | p(x) * l_og p(x) / q(x)"

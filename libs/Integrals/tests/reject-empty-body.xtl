@@ -1,0 +1,4 @@
+#!/usr/bin/env xetal
+# Integrals: an empty body.
+"integ:" u_se< "Integrals"
+@ integ:i_ntegral< "integral x:=0..1 |"

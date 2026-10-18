@@ -1,0 +1,2 @@
+command = "../../../scripts/xt run reject-rule.xtl"
+exit_code = 1

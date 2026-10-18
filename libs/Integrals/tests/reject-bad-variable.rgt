@@ -1,0 +1,2 @@
+command = "../../../scripts/xt run reject-bad-variable.xtl"
+exit_code = 1

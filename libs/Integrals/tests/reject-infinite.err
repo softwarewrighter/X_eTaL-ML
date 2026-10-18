@@ -1,0 +1,1 @@
+error[bad-integral]: an improper integral (a bound of inf): write a truncation, 0..20 say, and show the tail is small, or change variables so the bounds are finite: 0..inf at 150..184

@@ -1,0 +1,7 @@
+#!/usr/bin/env xetal
+# Integrals: the LaTeX of a call, from the same reading as its value.
+"integ:" u_se< "Integrals"
+"\\int_{0}^{1} e_xp tau \\, d\\tau"
+"\\int_{0.0}^{p_i @} s_in x \\, dx"
+"$$" c_at (("\\int_{0}^{2} (u:b_ox tau) * u:b_ox t - tau \\, d\\tau")) c_at "$$"
+

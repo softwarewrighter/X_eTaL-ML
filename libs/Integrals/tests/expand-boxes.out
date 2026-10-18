@@ -1,0 +1,48 @@
+#!/usr/bin/env xetal
+# Integrals: the continuous convolution of two unit boxes, (f * g)(t)
+# = integral over tau of f(tau) g(t - tau), is the triangle t on 0..1
+# and 2 - t on 1..2. The integrand jumps, so trapezoid is first order
+# there: at each edge the sample takes the body's value as written (a
+# box's edges count as inside), so every value is high by about half a
+# step, and the error falls like h. The triangle itself, piecewise
+# linear with its kink on a grid point, is integrated exactly: the
+# plan's oracle, 1.0.
+"integ:" u_se< "Integrals"
+"k:" u_se< "Check"
+u:b_ox := { x -> f_loat (x >= 0.0) & x <= 1.0 }
+u:c_onv8 := { t -> { @ ->
+  g1:a := f_loat 0
+  g2:b := f_loat 2
+  g3:h := (g2:b - g1:a) / 8.0
+  tau := g1:a + g3:h * f_loat o_ffsets 9
+  g4:w := 0.5 c_at (7 r_eshape 1.0) c_at 0.5
+  g3:h * '+ r_/ g4:w * (u:b_ox tau) * u:b_ox t - tau
+} @ }
+u:c_onv128 := { t -> { @ ->
+  g5:a := f_loat 0
+  g6:b := f_loat 2
+  g7:h := (g6:b - g5:a) / 128.0
+  tau := g5:a + g7:h * f_loat o_ffsets 129
+  g8:w := 0.5 c_at (127 r_eshape 1.0) c_at 0.5
+  g7:h * '+ r_/ g8:w * (u:b_ox tau) * u:b_ox t - tau
+} @ }
+ts := 0.0 0.5 1.0 1.5 2.0
+tri := 0.0 0.5 1.0 0.5 0.0
+coarse := 'u:c_onv8 e_ach ts
+fine := 'u:c_onv128 e_ach ts
+coarse
+fine
+c1 := "at the peak, high by half a step" k:t_est (((3 s_elect coarse) c_at 3 s_elect fine) - 1.0) k:n_ear 0.125 0.0078125
+c2 := "the coarse grid is off by its step at the jumps" k:t_est ('m_ax r_/ a_bs coarse - tri) k:n_ear 0.25
+c3 := "sixteen times finer, sixteen times closer" k:t_est ('m_ax r_/ a_bs fine - tri) k:n_ear 0.25 / 16.0
+c4 := "the triangle's area by hand (the plan's oracle)" k:t_est (0.5 * '+ r_/ f_loat 0 0.5 1 0.5 0) k:n_ear 1.0
+c5 := "and by the macro, exactly" k:t_est (({ @ ->
+  g9:a := f_loat 0
+  g10:b := f_loat 2
+  g11:h := (g10:b - g9:a) / 4.0
+  t := g9:a + g11:h * f_loat o_ffsets 5
+  g12:w := 0.5 c_at (3 r_eshape 1.0) c_at 0.5
+  g11:h * '+ r_/ g12:w * (t * f_loat t <= 1.0) + (2.0 - t) * f_loat t > 1.0
+} @)) k:n_ear 1.0
+k:r_eport c1 k:a_nd c2 k:a_nd c3 k:a_nd c4 k:a_nd c5
+

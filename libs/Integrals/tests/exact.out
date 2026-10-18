@@ -1,0 +1,11 @@
+0.3333333333333333
+6.0
+ok: trapezoid is exact on a constant
+ok: trapezoid is exact on a line
+ok: simpson is exact on a quadratic
+ok: simpson is exact on a cubic
+ok: the default is trapezoid 64
+ok: Float bounds as written
+ok: the variable is the grid, n + 1 points
+ok: a bound may be an expression (to 1e-6)
+8 checks, all passed

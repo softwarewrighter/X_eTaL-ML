@@ -1,0 +1,2 @@
+command = "../../../scripts/xt expand reject-empty-body.xtl"
+exit_code = 1

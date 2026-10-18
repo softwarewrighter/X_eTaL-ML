@@ -1,0 +1,1 @@
+error[bad-integral]: an integral starts with the word integral: x:=0..1 at 115..128

@@ -1,0 +1,6 @@
+#!/usr/bin/env xetal
+# Integrals: the LaTeX of a call, from the same reading as its value.
+"integ:" u_se< "Integrals"
+@ integ:t_ex< "integral tau:=0..1 | e_xp tau"
+@ integ:t_ex< "integral x:=0.0..p_i @ by simpson 64 | s_in x"
+"$$" c_at (@ integ:t_ex< "integral tau:=0..2 by trapezoid 128 | (u:b_ox tau) * u:b_ox t - tau") c_at "$$"

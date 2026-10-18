@@ -1,0 +1,19 @@
+#!/usr/bin/env xetal
+# Integrals: the order of each rule on a smooth function, e_xp over
+# 0..1 (exact e - 1): doubling the grid divides trapezoid's error by
+# about 4 and simpson's by about 16.
+"integ:" u_se< "Integrals"
+"k:" u_se< "Check"
+exact := (e_xp 1.0) - 1.0
+t8 := a_bs exact - @ integ:i_ntegral< "integral x:=0..1 by trapezoid 8 | e_xp x"
+t16 := a_bs exact - @ integ:i_ntegral< "integral x:=0..1 by trapezoid 16 | e_xp x"
+t32 := a_bs exact - @ integ:i_ntegral< "integral x:=0..1 by trapezoid 32 | e_xp x"
+s8 := a_bs exact - @ integ:i_ntegral< "integral x:=0..1 by simpson 8 | e_xp x"
+s16 := a_bs exact - @ integ:i_ntegral< "integral x:=0..1 by simpson 16 | e_xp x"
+s32 := a_bs exact - @ integ:i_ntegral< "integral x:=0..1 by simpson 32 | e_xp x"
+# The error ratios, rounded.
+f_loor 0.5 + (t8 / t16) c_at (t16 / t32) c_at (s8 / s16) c_at s16 / s32
+c1 := "trapezoid: second order" k:t_est (f_loor 0.5 + (t8 / t16) c_at t16 / t32) k:i_s 4 4
+c2 := "simpson: fourth order" k:t_est (f_loor 0.5 + (s8 / s16) c_at s16 / s32) k:i_s 16 16
+c3 := "simpson 8 beats trapezoid 32" k:t_est k:t_rue s8 < t32
+k:r_eport c1 k:a_nd c2 k:a_nd c3

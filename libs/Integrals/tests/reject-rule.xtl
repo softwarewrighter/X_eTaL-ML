@@ -1,0 +1,4 @@
+#!/usr/bin/env xetal
+# Integrals: a rule the library does not have.
+"integ:" u_se< "Integrals"
+@ integ:i_ntegral< "integral x:=0..1 by midpoint 8 | x"

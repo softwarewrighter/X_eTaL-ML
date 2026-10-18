@@ -1,0 +1,2 @@
+command = "../../../scripts/xt type ../src/Integrals.xtlm"
+exit_code = 0

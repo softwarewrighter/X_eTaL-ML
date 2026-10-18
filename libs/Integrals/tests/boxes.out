@@ -1,0 +1,8 @@
+0.125 0.625 1.125 0.75 0.25
+0.0078125 0.5078125 1.0078125 0.515625 0.015625
+ok: at the peak, high by half a step
+ok: the coarse grid is off by its step at the jumps
+ok: sixteen times finer, sixteen times closer
+ok: the triangle's area by hand (the plan's oracle)
+ok: and by the macro, exactly
+5 checks, all passed

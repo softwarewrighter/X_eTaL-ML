@@ -1,0 +1,2 @@
+command = "../../../scripts/xt expand reject-no-binding.xtl"
+exit_code = 1

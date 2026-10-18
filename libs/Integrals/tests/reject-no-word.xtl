@@ -1,0 +1,4 @@
+#!/usr/bin/env xetal
+# Integrals: the word integral starts the call.
+"integ:" u_se< "Integrals"
+@ integ:i_ntegral< "x:=0..1 | x"

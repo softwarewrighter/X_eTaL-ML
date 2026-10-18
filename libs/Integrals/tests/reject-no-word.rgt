@@ -1,0 +1,2 @@
+command = "../../../scripts/xt run reject-no-word.xtl"
+exit_code = 1

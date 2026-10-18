@@ -1,0 +1,2 @@
+command = "../../../scripts/xt run convergence.xtl"
+exit_code = 0

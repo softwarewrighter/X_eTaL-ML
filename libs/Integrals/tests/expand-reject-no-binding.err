@@ -1,0 +1,1 @@
+error[bad-integral]: the variable and its bounds, tau:=a..b, not 0..1 at 111..130

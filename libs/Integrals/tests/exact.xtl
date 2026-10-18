@@ -1,0 +1,18 @@
+#!/usr/bin/env xetal
+# Integrals: the rules on what they are exact for (trapezoid: constants
+# and lines; simpson: quadratics and cubics), the default rule, Float
+# bounds as written, and the grid the variable is bound to.
+"integ:" u_se< "Integrals"
+"k:" u_se< "Check"
+# As the page shows them.
+@ integ:i_ntegral< "integral x:=0..1 by simpson 2 | x ^ 2"
+@ integ:i_ntegral< "integral x:=0..2 by trapezoid 4 | 1.0 + 2.0 * x"
+c1 := "trapezoid is exact on a constant" k:t_est (@ integ:i_ntegral< "integral x:=0..2 by trapezoid 4 | 3.0") k:n_ear 6.0
+c2 := "trapezoid is exact on a line" k:t_est (@ integ:i_ntegral< "integral x:=0..2 by trapezoid 4 | 1.0 + 2.0 * x") k:n_ear 6.0
+c3 := "simpson is exact on a quadratic" k:t_est (@ integ:i_ntegral< "integral x:=0..1 by simpson 2 | x ^ 2") k:n_ear 1.0 / 3.0
+c4 := "simpson is exact on a cubic" k:t_est (@ integ:i_ntegral< "integral x:=0..1 by simpson 2 | x ^ 3") k:n_ear 0.25
+c5 := "the default is trapezoid 64" k:t_est (@ integ:i_ntegral< "integral x:=0..1 | x ^ 2") k:n_ear @ integ:i_ntegral< "integral x:=0..1 by trapezoid 64 | x ^ 2"
+c6 := "Float bounds as written" k:t_est (@ integ:i_ntegral< "integral t:=0.5..1.5 by simpson 4 | 2.0 * t") k:n_ear 2.0
+c7 := "the variable is the grid, n + 1 points" k:t_est (@ integ:i_ntegral< "integral x:=0..1 by trapezoid 4 | f_loat t_ally x") k:n_ear 5.0
+c8 := "a bound may be an expression (to 1e-6)" k:t_est ((f_loat f_loor 0.5 + 1000000.0 * @ integ:i_ntegral< "integral x:=0.0..p_i @ by simpson 64 | s_in x") / 1000000.0) k:n_ear 2.0
+k:r_eport c1 k:a_nd c2 k:a_nd c3 k:a_nd c4 k:a_nd c5 k:a_nd c6 k:a_nd c7 k:a_nd c8

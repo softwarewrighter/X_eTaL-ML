@@ -1,0 +1,62 @@
+#!/usr/bin/env xetal
+# Integrals: the order of each rule on a smooth function, e_xp over
+# 0..1 (exact e - 1): doubling the grid divides trapezoid's error by
+# about 4 and simpson's by about 16.
+"integ:" u_se< "Integrals"
+"k:" u_se< "Check"
+exact := (e_xp 1.0) - 1.0
+t8 := a_bs exact - ({ @ ->
+  g1:a := f_loat 0
+  g2:b := f_loat 1
+  g3:h := (g2:b - g1:a) / 8.0
+  x := g1:a + g3:h * f_loat o_ffsets 9
+  g4:w := 0.5 c_at (7 r_eshape 1.0) c_at 0.5
+  g3:h * '+ r_/ g4:w * e_xp x
+} @)
+t16 := a_bs exact - ({ @ ->
+  g5:a := f_loat 0
+  g6:b := f_loat 1
+  g7:h := (g6:b - g5:a) / 16.0
+  x := g5:a + g7:h * f_loat o_ffsets 17
+  g8:w := 0.5 c_at (15 r_eshape 1.0) c_at 0.5
+  g7:h * '+ r_/ g8:w * e_xp x
+} @)
+t32 := a_bs exact - ({ @ ->
+  g9:a := f_loat 0
+  g10:b := f_loat 1
+  g11:h := (g10:b - g9:a) / 32.0
+  x := g9:a + g11:h * f_loat o_ffsets 33
+  g12:w := 0.5 c_at (31 r_eshape 1.0) c_at 0.5
+  g11:h * '+ r_/ g12:w * e_xp x
+} @)
+s8 := a_bs exact - ({ @ ->
+  g13:a := f_loat 0
+  g14:b := f_loat 1
+  g15:h := (g14:b - g13:a) / 8.0
+  x := g13:a + g15:h * f_loat o_ffsets 9
+  g16:w := (1.0 c_at (7 r_eshape 4.0 2.0) c_at 1.0) / 3.0
+  g15:h * '+ r_/ g16:w * e_xp x
+} @)
+s16 := a_bs exact - ({ @ ->
+  g17:a := f_loat 0
+  g18:b := f_loat 1
+  g19:h := (g18:b - g17:a) / 16.0
+  x := g17:a + g19:h * f_loat o_ffsets 17
+  g20:w := (1.0 c_at (15 r_eshape 4.0 2.0) c_at 1.0) / 3.0
+  g19:h * '+ r_/ g20:w * e_xp x
+} @)
+s32 := a_bs exact - ({ @ ->
+  g21:a := f_loat 0
+  g22:b := f_loat 1
+  g23:h := (g22:b - g21:a) / 32.0
+  x := g21:a + g23:h * f_loat o_ffsets 33
+  g24:w := (1.0 c_at (31 r_eshape 4.0 2.0) c_at 1.0) / 3.0
+  g23:h * '+ r_/ g24:w * e_xp x
+} @)
+# The error ratios, rounded.
+f_loor 0.5 + (t8 / t16) c_at (t16 / t32) c_at (s8 / s16) c_at s16 / s32
+c1 := "trapezoid: second order" k:t_est (f_loor 0.5 + (t8 / t16) c_at t16 / t32) k:i_s 4 4
+c2 := "simpson: fourth order" k:t_est (f_loor 0.5 + (s8 / s16) c_at s16 / s32) k:i_s 16 16
+c3 := "simpson 8 beats trapezoid 32" k:t_est k:t_rue s8 < t32
+k:r_eport c1 k:a_nd c2 k:a_nd c3
+

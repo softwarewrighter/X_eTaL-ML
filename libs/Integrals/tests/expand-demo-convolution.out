@@ -1,0 +1,36 @@
+#!/usr/bin/env xetal
+# Integrals: the continuous convolution of two unit boxes, as a paper
+# writes it, (f * g)(t) = integral over tau of f(tau) g(t - tau): the
+# triangle, drawn as a strip of its values; then one integral and its
+# LaTeX. Run with "just demo Integrals"; "just expand-lib Integrals
+# convolution" shows what each call became.
+"integ:" u_se< "Integrals"
+# A unit box: 1 on 0..1, 0 elsewhere.
+u:b_ox := { x -> f_loat (x >= 0.0) & x <= 1.0 }
+# The convolution at one t: the integral over tau, 128 steps.
+u:c_onv := { t -> { @ ->
+  g1:a := f_loat 0
+  g2:b := f_loat 2
+  g3:h := (g2:b - g1:a) / 128.0
+  tau := g1:a + g3:h * f_loat o_ffsets 129
+  g4:w := 0.5 c_at (127 r_eshape 1.0) c_at 0.5
+  g3:h * '+ r_/ g4:w * (u:b_ox tau) * u:b_ox t - tau
+} @ }
+ts := 0.125 * f_loat o_ffsets 17
+(f_loat f_loor 0.5 + 1000.0 * 'u:c_onv e_ach ts) / 1000.0
+# The triangle it converges to: t up to 1, then 2 - t.
+(ts * f_loat ts <= 1.0) + (2.0 - ts) * f_loat ts > 1.0
+# What the paper writes, for a page that draws math.
+"\\int_{0}^{2} (u:b_ox tau) * u:b_ox t - tau \\, d\\tau"
+# The area under e^x from 0 to 1 is e - 1, by simpson on 16 steps and exactly.
+{ @ ->
+  g5:a := f_loat 0
+  g6:b := f_loat 1
+  g7:h := (g6:b - g5:a) / 16.0
+  x := g5:a + g7:h * f_loat o_ffsets 17
+  g8:w := (1.0 c_at (15 r_eshape 4.0 2.0) c_at 1.0) / 3.0
+  g7:h * '+ r_/ g8:w * e_xp x
+} @
+(e_xp 1.0) - 1.0
+"\\int_{0}^{1} e_xp x \\, dx"
+

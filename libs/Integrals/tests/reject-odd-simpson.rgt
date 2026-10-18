@@ -1,0 +1,2 @@
+command = "../../../scripts/xt run reject-odd-simpson.xtl"
+exit_code = 1

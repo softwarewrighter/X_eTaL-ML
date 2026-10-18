@@ -1,0 +1,21 @@
+#!/usr/bin/env xetal
+# Integrals: the continuous convolution of two unit boxes, as a paper
+# writes it, (f * g)(t) = integral over tau of f(tau) g(t - tau): the
+# triangle, drawn as a strip of its values; then one integral and its
+# LaTeX. Run with "just demo Integrals"; "just expand-lib Integrals
+# convolution" shows what each call became.
+"integ:" u_se< "Integrals"
+# A unit box: 1 on 0..1, 0 elsewhere.
+u:b_ox := { x -> f_loat (x >= 0.0) & x <= 1.0 }
+# The convolution at one t: the integral over tau, 128 steps.
+u:c_onv := { t -> @ integ:i_ntegral< "integral tau:=0..2 by trapezoid 128 | (u:b_ox tau) * u:b_ox t - tau" }
+ts := 0.125 * f_loat o_ffsets 17
+(f_loat f_loor 0.5 + 1000.0 * 'u:c_onv e_ach ts) / 1000.0
+# The triangle it converges to: t up to 1, then 2 - t.
+(ts * f_loat ts <= 1.0) + (2.0 - ts) * f_loat ts > 1.0
+# What the paper writes, for a page that draws math.
+@ integ:t_ex< "integral tau:=0..2 | (u:b_ox tau) * u:b_ox t - tau"
+# The area under e^x from 0 to 1 is e - 1, by simpson on 16 steps and exactly.
+@ integ:i_ntegral< "integral x:=0..1 by simpson 16 | e_xp x"
+(e_xp 1.0) - 1.0
+@ integ:t_ex< "integral x:=0..1 by simpson 16 | e_xp x"

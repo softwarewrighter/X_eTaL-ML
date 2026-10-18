@@ -1,0 +1,4 @@
+#!/usr/bin/env xetal
+# Integrals: text after the grid is refused, never dropped.
+"integ:" u_se< "Integrals"
+@ integ:i_ntegral< "integral x:=0..1 by trapezoid 8 extra | x"

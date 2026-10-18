@@ -1,0 +1,1 @@
+error[bad-integral]: simpson needs an even number of steps, not 3 at 119..154

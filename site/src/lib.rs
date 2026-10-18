@@ -40,6 +40,7 @@ pub const GROUPS: &[(&str, &[&str])] = &[
     ("Transformers", &["Attention", "Norm", "Sample"]),
     ("Pictures and weights", &["Conv", "Quant"]),
     ("Classic machine learning", &["Learn", "Embed"]),
+    ("Mathematics", &["Integrals"]),
 ];
 
 /// A program after macro expansion, as `xetal expand` gives it (the

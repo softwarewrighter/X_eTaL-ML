@@ -1,0 +1,96 @@
+#!/usr/bin/env xetal
+# Integrals: the rules on what they are exact for (trapezoid: constants
+# and lines; simpson: quadratics and cubics), the default rule, Float
+# bounds as written, and the grid the variable is bound to.
+"integ:" u_se< "Integrals"
+"k:" u_se< "Check"
+# As the page shows them.
+{ @ ->
+  g1:a := f_loat 0
+  g2:b := f_loat 1
+  g3:h := (g2:b - g1:a) / 2.0
+  x := g1:a + g3:h * f_loat o_ffsets 3
+  g4:w := (1.0 c_at (1 r_eshape 4.0 2.0) c_at 1.0) / 3.0
+  g3:h * '+ r_/ g4:w * x ^ 2
+} @
+{ @ ->
+  g5:a := f_loat 0
+  g6:b := f_loat 2
+  g7:h := (g6:b - g5:a) / 4.0
+  x := g5:a + g7:h * f_loat o_ffsets 5
+  g8:w := 0.5 c_at (3 r_eshape 1.0) c_at 0.5
+  g7:h * '+ r_/ g8:w * 1.0 + 2.0 * x
+} @
+c1 := "trapezoid is exact on a constant" k:t_est (({ @ ->
+  g9:a := f_loat 0
+  g10:b := f_loat 2
+  g11:h := (g10:b - g9:a) / 4.0
+  x := g9:a + g11:h * f_loat o_ffsets 5
+  g12:w := 0.5 c_at (3 r_eshape 1.0) c_at 0.5
+  g11:h * '+ r_/ g12:w * 3.0
+} @)) k:n_ear 6.0
+c2 := "trapezoid is exact on a line" k:t_est (({ @ ->
+  g13:a := f_loat 0
+  g14:b := f_loat 2
+  g15:h := (g14:b - g13:a) / 4.0
+  x := g13:a + g15:h * f_loat o_ffsets 5
+  g16:w := 0.5 c_at (3 r_eshape 1.0) c_at 0.5
+  g15:h * '+ r_/ g16:w * 1.0 + 2.0 * x
+} @)) k:n_ear 6.0
+c3 := "simpson is exact on a quadratic" k:t_est (({ @ ->
+  g17:a := f_loat 0
+  g18:b := f_loat 1
+  g19:h := (g18:b - g17:a) / 2.0
+  x := g17:a + g19:h * f_loat o_ffsets 3
+  g20:w := (1.0 c_at (1 r_eshape 4.0 2.0) c_at 1.0) / 3.0
+  g19:h * '+ r_/ g20:w * x ^ 2
+} @)) k:n_ear 1.0 / 3.0
+c4 := "simpson is exact on a cubic" k:t_est (({ @ ->
+  g21:a := f_loat 0
+  g22:b := f_loat 1
+  g23:h := (g22:b - g21:a) / 2.0
+  x := g21:a + g23:h * f_loat o_ffsets 3
+  g24:w := (1.0 c_at (1 r_eshape 4.0 2.0) c_at 1.0) / 3.0
+  g23:h * '+ r_/ g24:w * x ^ 3
+} @)) k:n_ear 0.25
+c5 := "the default is trapezoid 64" k:t_est (({ @ ->
+  g25:a := f_loat 0
+  g26:b := f_loat 1
+  g27:h := (g26:b - g25:a) / 64.0
+  x := g25:a + g27:h * f_loat o_ffsets 65
+  g28:w := 0.5 c_at (63 r_eshape 1.0) c_at 0.5
+  g27:h * '+ r_/ g28:w * x ^ 2
+} @)) k:n_ear ({ @ ->
+  g29:a := f_loat 0
+  g30:b := f_loat 1
+  g31:h := (g30:b - g29:a) / 64.0
+  x := g29:a + g31:h * f_loat o_ffsets 65
+  g32:w := 0.5 c_at (63 r_eshape 1.0) c_at 0.5
+  g31:h * '+ r_/ g32:w * x ^ 2
+} @)
+c6 := "Float bounds as written" k:t_est (({ @ ->
+  g33:a := 0.5
+  g34:b := 1.5
+  g35:h := (g34:b - g33:a) / 4.0
+  t := g33:a + g35:h * f_loat o_ffsets 5
+  g36:w := (1.0 c_at (3 r_eshape 4.0 2.0) c_at 1.0) / 3.0
+  g35:h * '+ r_/ g36:w * 2.0 * t
+} @)) k:n_ear 2.0
+c7 := "the variable is the grid, n + 1 points" k:t_est (({ @ ->
+  g37:a := f_loat 0
+  g38:b := f_loat 1
+  g39:h := (g38:b - g37:a) / 4.0
+  x := g37:a + g39:h * f_loat o_ffsets 5
+  g40:w := 0.5 c_at (3 r_eshape 1.0) c_at 0.5
+  g39:h * '+ r_/ g40:w * f_loat t_ally x
+} @)) k:n_ear 5.0
+c8 := "a bound may be an expression (to 1e-6)" k:t_est ((f_loat f_loor 0.5 + 1000000.0 * ({ @ ->
+  g41:a := 0.0
+  g42:b := p_i @
+  g43:h := (g42:b - g41:a) / 64.0
+  x := g41:a + g43:h * f_loat o_ffsets 65
+  g44:w := (1.0 c_at (63 r_eshape 4.0 2.0) c_at 1.0) / 3.0
+  g43:h * '+ r_/ g44:w * s_in x
+} @)) / 1000000.0) k:n_ear 2.0
+k:r_eport c1 k:a_nd c2 k:a_nd c3 k:a_nd c4 k:a_nd c5 k:a_nd c6 k:a_nd c7 k:a_nd c8
+

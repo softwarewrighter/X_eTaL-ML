@@ -1,0 +1,4 @@
+#!/usr/bin/env xetal
+# Integrals: the variable is bound with :=.
+"integ:" u_se< "Integrals"
+@ integ:i_ntegral< "integral 0..1 | x"

@@ -1,0 +1,4 @@
+#!/usr/bin/env xetal
+# Integrals: simpson needs an even number of steps.
+"integ:" u_se< "Integrals"
+@ integ:i_ntegral< "integral x:=0..1 by simpson 3 | x"

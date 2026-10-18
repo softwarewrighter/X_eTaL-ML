@@ -1,0 +1,4 @@
+#!/usr/bin/env xetal
+# Integrals: the variable is a lowercase name.
+"integ:" u_se< "Integrals"
+@ integ:i_ntegral< "integral X1:=0..1 | X1"

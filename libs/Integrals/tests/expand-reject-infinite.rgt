@@ -1,0 +1,2 @@
+command = "../../../scripts/xt expand reject-infinite.xtl"
+exit_code = 1

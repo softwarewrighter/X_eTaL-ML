@@ -1,0 +1,5 @@
+4 4 16 16
+ok: trapezoid: second order
+ok: simpson: fourth order
+ok: simpson 8 beats trapezoid 32
+3 checks, all passed
