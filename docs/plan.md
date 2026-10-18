@@ -117,7 +117,7 @@ alias is the importer's choice.
 | Sample | `sm:` | temperature, top-k and top-p filtering, sampling from a distribution with `r_oll` | microgpt | 5 |
 | Optim | `op:` | hand-derived gradients for linear and logistic regression and a dense layer, SGD and momentum steps, a training loop by `p_ower` | new | 5 |
 | Net (`.xtlm`) | `net:` | `"784 128 relu 10 softmax" net:n_etwork<` -> a forward function built from `nn:` calls; `net:p_arams<`, `net:s_hapes<` | research3.txt | 3 |
-| Pipeline (`.xtlm`) | `pipe:` | `@ pipe:p_ipe< "X |> it nn:d_ense W1 |> nn:r_elu"` -> a block of one line per stage (X_eTaL D155, `docs/pipeline-macro.md`): function stages applied, `it` stages, ` : name` intermediates and tuples, ` [N O]` shape contracts checked at run time; `pipe:t_ext<` the pipeline read back | X_eTaL's spatial design, built here | 5 |
+| Flow (`.xtlm`) | `flow:` | `@ flow:p_ipe< "X |> it nn:d_ense W1 |> nn:r_elu"` -> a block of one line per stage (X_eTaL D155, `docs/pipeline-macro.md`): function stages applied, `it` stages, `$name` intermediates and `$(Q, K, V)` tuples, ` [N O]` shape contracts checked at run time; `flow:t_ext<` the pipeline read back | X_eTaL's spatial design, built here | 5 |
 
 ## Saga 1 -- foundation  [DONE, archived]
 

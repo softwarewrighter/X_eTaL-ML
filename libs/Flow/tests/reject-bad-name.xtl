@@ -1,0 +1,5 @@
+#!/usr/bin/env xetal
+# Flow: a name after $ is a plain name.
+"flow:" u_se< "Flow"
+x := f_loat 1 2 3 4
+@ flow:p_ipe< "x $m-1 |> n_eg"

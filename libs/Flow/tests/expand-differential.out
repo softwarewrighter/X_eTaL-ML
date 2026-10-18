@@ -1,0 +1,131 @@
+#!/usr/bin/env xetal
+# Flow: short pipelines against the same computation written as
+# plain X_eTaL, over every kind of stage and their orders: a function
+# applied, it on either side of a dyad, an earlier name, a tuple taken
+# apart, a function stage after a named one, a quoted lambda, a train.
+"flow:" u_se< "Flow"
+"k:" u_se< "Check"
+x := f_loat 1 2 3 4
+M := 2 2 r_eshape f_loat 1 2 3 4
+# functions in turn
+c1 := "f g" k:t_est (({ @ ->
+  g1:stage := x
+  g2:stage := n_eg g1:stage
+  g3:stage := e_xp g2:stage
+  g3:stage
+} @)) k:n_ear e_xp n_eg x
+# it on the left and on the right of a dyad: the order is written
+c2 := "it - m" k:t_est (({ @ ->
+  g4:stage := x
+  m := { @ ->
+    it := g4:stage
+    'm_ax r_/ it
+  } @
+  g5:stage := x - m
+  g5:stage
+} @)) k:n_ear x - 'm_ax r_/ x
+c3 := "m - it" k:t_est (({ @ ->
+  g6:stage := x
+  m := { @ ->
+    it := g6:stage
+    'm_ax r_/ it
+  } @
+  g7:stage := m - x
+  g7:stage
+} @)) k:n_ear ('m_ax r_/ x) - x
+c4 := "it twice in a stage" k:t_est (({ @ ->
+  g8:stage := x
+  g9:stage := { @ ->
+    it := g8:stage
+    it * it
+  } @
+  g9:stage
+} @)) k:n_ear x * x
+# a quoted lambda and a train as functions
+c5 := "a quoted lambda" k:t_est (({ @ ->
+  g10:stage := x
+  g11:stage := { v -> v * 2.0 } g10:stage
+  g11:stage
+} @)) k:n_ear 2.0 * x
+t6 := [n_eg r_ev] x
+c6 := "a train" k:t_est (({ @ ->
+  g12:stage := x
+  g13:stage := [n_eg r_ev] g12:stage
+  g13:stage
+} @)) k:n_ear t6
+c6b := "a quoted name" k:t_est (({ @ ->
+  g14:stage := x
+  g15:stage := n_eg g14:stage
+  g15:stage
+} @)) k:n_ear n_eg x
+# a tuple taken apart, then used by name and as it
+c7 := "a tuple" k:t_est (({ @ ->
+  g16:stage := x
+  (a, b) := { @ ->
+    it := g16:stage
+    (it, 2.0 * it)
+  } @
+  g17:stage := a + b
+  g17:stage
+} @)) k:n_ear 3.0 * x
+c8 := "a tuple is it too" k:t_est (({ @ ->
+  g18:stage := x
+  (a, b) := { @ ->
+    it := g18:stage
+    (it, 2.0 * it)
+  } @
+  g19:stage := { @ ->
+    it := (a, b)
+    (p, q) := it; q - p
+  } @
+  g19:stage
+} @)) k:n_ear x
+# a function after a named stage, and the name of the last stage
+c9 := "f after a $name" k:t_est (({ @ ->
+  s := x
+  t := n_eg s
+  g20:stage := e_xp t
+  g20:stage
+} @)) k:n_ear e_xp n_eg x
+c10 := "the last stage named" k:t_est (({ @ ->
+  g21:stage := x
+  t := n_eg g21:stage
+  t
+} @)) k:n_ear n_eg x
+# a matrix: the stages are any X_eTaL
+c11 := "a matrix product" k:t_est (({ @ ->
+  g22:stage := M
+  g23:stage := { @ ->
+    it := g22:stage
+    it '+ '* i_nner M
+  } @
+  g24:stage := { @ ->
+    it := g23:stage
+    o_\ it
+  } @
+  g24:stage
+} @)) k:n_ear o_\ M '+ '* i_nner M
+c12 := "a shape that holds" k:t_est (({ @ ->
+  g25:stage := M
+  P := { @ ->
+    it := g25:stage
+    it '+ '* i_nner M
+  } @
+  _ := { @ ->
+    ((s_hape P) m_atch r_avel 2 c_at 2) ? @
+    "shape" []S_IGNAL "stage 2 (P): shape " c_at (f_ormat s_hape P) c_at ", expected " c_at f_ormat r_avel 2 c_at 2
+  } @
+  v := r_avel P
+  _ := { @ ->
+    ((s_hape v) m_atch r_avel 4) ? @
+    "shape" []S_IGNAL "stage 3 (v): shape " c_at (f_ormat s_hape v) c_at ", expected " c_at f_ormat r_avel 4
+  } @
+  v
+} @)) k:n_ear r_avel M '+ '* i_nner M
+# one stage only: the data
+c13 := "the data alone" k:t_est (({ @ ->
+  g26:stage := x
+  g26:stage
+} @)) k:n_ear x
+k:r_eport c1 k:a_nd c2 k:a_nd c3 k:a_nd c4 k:a_nd c5 k:a_nd c6 k:a_nd c6b k:a_nd c7 k:a_nd c8 k:a_nd c9 k:a_nd c10 k:a_nd c11 k:a_nd c12 k:a_nd c13
+

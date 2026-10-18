@@ -1,5 +1,0 @@
-#!/usr/bin/env xetal
-# Pipeline: a shape goes with one name, not a tuple (each part has its own shape).
-"pipe:" u_se< "Pipeline"
-x := f_loat 1 2 3 4
-@ pipe:p_ipe< "x |> (it, it) : (a, b) [4] |> a + b"

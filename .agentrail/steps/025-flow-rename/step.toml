@@ -1,0 +1,8 @@
+number = 25
+slug = "flow-rename"
+status = "in-progress"
+description = "The user (2026-10-18, in the X_eTaL session): rename the Pipeline macro libra..."
+role = "production"
+context_files = []
+created_at = "2026-10-18T16:23:28"
+commits = []

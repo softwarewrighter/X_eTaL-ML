@@ -1,0 +1,5 @@
+#!/usr/bin/env xetal
+# Flow: two groups side by side after $ are refused whole, not read in part (the Equations case).
+"flow:" u_se< "Flow"
+x := f_loat 1 2 3 4
+@ flow:p_ipe< "x $(a, b) (c, d) |> n_eg"

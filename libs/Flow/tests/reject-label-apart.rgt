@@ -1,0 +1,2 @@
+command = "../../../scripts/xt run reject-label-apart.xtl"
+exit_code = 1

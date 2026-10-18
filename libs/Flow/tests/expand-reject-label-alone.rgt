@@ -1,0 +1,2 @@
+command = "../../../scripts/xt expand reject-label-alone.xtl"
+exit_code = 1

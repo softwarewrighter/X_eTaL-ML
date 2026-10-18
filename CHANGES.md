@@ -11,6 +11,10 @@ planning and reordering, `release` milestone release, `chore`
 agentrail bookkeeping (step complete, saga archive), `vendor` a
 refresh of the vendored X_eTaL.
 
+## 2026-10-18
+
+- 10:09 `lib` Pipeline renamed Flow (step flow-rename, decided with the user): `libs/Flow/`, `src/Flow.xtlm`, `"flow:" u_se< "Flow"`, so the call is `@ flow:p_ipe< "..."` and `flow:t_ext<`. A stage's label is `$name` and `$(Q, K, V)` (the `$` touching the name, X_eTaL S14, drawn as a small triangle as `|>` is, S13) in place of ` : name`, in the reader and in `t_ext<`'s writing back; `$ m` and a bare `$` are refused (two new refusal goldens). Every test, demo and page moved to the new spelling; the goldens rebased on purpose after review (the same values; the error offsets shift with the shorter import, the messages say `$`). scripts/affected.py, the site's Networks list, README, plan, docs/pipeline-macro.md. scripts/selftest-demos.sh: a portable `sed -i.bak` (`sed -i ''` is macOS only, so the self-test stopped the gate on Linux).
+
 ## 2026-10-17
 
 - 20:16 `lib` NN: `nn:a_ddAxis` and `nn:b_ias` (step pipeline-bias; docs/pipeline-macro.md, decided with the user): a vector added along a named axis (an outer product and a permuting transpose; the length checked, `error[shape]: a_ddAxis: 2 values for axis 2 of extent 3`), and the bias by convention (rows: the last axis; a channel-first picture: the first; a batch of them: the second), since X_eTaL has no implicit broadcasting and the APL family disagrees on the axis. Tests: NN's bias.xtl (9 checks), Pipeline's bias.xtl (the linear regression as `X |> it '+ '* i_nner W |> b nn:b_ias it`) and bias-wrong.xtl; the pages of NN, Conv and Pipeline; README, plan row 20.

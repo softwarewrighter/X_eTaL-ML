@@ -1,0 +1,5 @@
+#!/usr/bin/env xetal
+# Flow: a shape needs the stage's name before it.
+"flow:" u_se< "Flow"
+x := f_loat 1 2 3 4
+@ flow:p_ipe< "x |> n_eg [4]"

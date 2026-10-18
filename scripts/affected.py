@@ -102,14 +102,14 @@ def present():
 
 def self_test():
     demo_names = ["cnn-digits", "net-macro", "diffusion"]
-    lib_names = ["NN", "Net", "Conv", "Pipeline"]
+    lib_names = ["NN", "Net", "Conv", "Flow"]
     demo_imports = {"cnn-digits": {"NN", "Conv"}, "net-macro": {"NN", "Net"}, "diffusion": {"NN", "Conv"}}
-    lib_imports = {"NN": set(), "Net": {"NN"}, "Conv": set(), "Pipeline": {"Strings"}}
+    lib_imports = {"NN": set(), "Net": {"NN"}, "Conv": set(), "Flow": {"Strings"}}
     cases = [
         ([], []),
         (["README.md", "docs/plan.md", "CHANGES.md"], []),
         (["demos/diffusion/diffusion.xtl"], ["demo diffusion", "pages"]),
-        (["libs/Pipeline/src/Pipeline.xtlm", "libs/Pipeline/docs/README.md"], ["lib Pipeline", "pages"]),
+        (["libs/Flow/src/Flow.xtlm", "libs/Flow/docs/README.md"], ["lib Flow", "pages"]),
         (["libs/Conv/src/Conv.xtl"], ["demo cnn-digits", "demo diffusion", "lib Conv", "pages"]),
         (["libs/NN/src/NN.xtl"], ["demo cnn-digits", "demo diffusion", "demo net-macro", "lib NN", "lib Net", "pages"]),
         (["site/src/lib.rs"], ["pages"]),

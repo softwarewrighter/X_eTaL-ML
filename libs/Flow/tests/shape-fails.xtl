@@ -1,0 +1,6 @@
+#!/usr/bin/env xetal
+# Flow: a shape annotation the value does not meet stops the program, naming the stage, its shape and the one expected.
+"flow:" u_se< "Flow"
+x := f_loat 1 2 3 4
+n := 3
+@ flow:p_ipe< "x |> 2 * it $y [n] |> y + 1"

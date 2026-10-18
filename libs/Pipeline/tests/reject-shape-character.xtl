@@ -1,5 +1,0 @@
-#!/usr/bin/env xetal
-# Pipeline: a shape's extents are names or numbers; an unknown character is refused.
-"pipe:" u_se< "Pipeline"
-x := f_loat 1 2 3 4
-@ pipe:p_ipe< "x : m [4;] |> n_eg"

@@ -1,0 +1,1 @@
+error[bad-pipeline]: an empty pipeline: write the data, then |> and each stage at 110..112

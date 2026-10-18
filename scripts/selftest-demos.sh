@@ -43,6 +43,6 @@ printf 'line = "%s"\nwhy = "One reduce."\n' "'+ r_/ r_ange 10" >> "$XETAL_DEMOS_
 "$root/scripts/py" "$root/scripts/build-catalog.py" "$out/index.html" >/dev/null
 grep -q '<pre class="xtl"><span class="c-symbol">' "$out/index.html" && grep -q 'One reduce.' "$out/index.html" \
   || { echo "selftest: the catalog does not show the demo's key line" >&2; exit 1; }
-sed -i '' 's/^status = .*/status = "bogus"/' "$XETAL_DEMOS_DIR/probe/demo.toml"
+sed -i.bak 's/^status = .*/status = "bogus"/' "$XETAL_DEMOS_DIR/probe/demo.toml" && rm -f "$XETAL_DEMOS_DIR/probe/demo.toml.bak"
 expect fail "a bad status"
 echo "selftest-demos: ok"

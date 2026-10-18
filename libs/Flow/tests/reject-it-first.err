@@ -1,0 +1,1 @@
+error[bad-pipeline]: the first stage is the data; nothing precedes it: it * 2 at 140..156

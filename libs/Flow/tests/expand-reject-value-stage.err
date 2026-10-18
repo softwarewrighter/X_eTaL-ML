@@ -1,0 +1,1 @@
+error[bad-pipeline]: a stage is a function (nn:r_elu, [f_ g_], '{ x -> ... }) or an expression naming the previous value it (or a name bound before it): 3 at 174..182

@@ -1,5 +1,0 @@
-#!/usr/bin/env xetal
-# Pipeline: it in the first stage is refused (nothing precedes it).
-"pipe:" u_se< "Pipeline"
-x := f_loat 1 2 3 4
-@ pipe:p_ipe< "it * 2 |> n_eg"

@@ -1,5 +1,0 @@
-#!/usr/bin/env xetal
-# Pipeline: a stage that is a value, neither a function nor naming it or an earlier name, is refused.
-"pipe:" u_se< "Pipeline"
-x := f_loat 1 2 3 4
-@ pipe:p_ipe< "x |> 3"

@@ -1,0 +1,14 @@
+#!/usr/bin/env xetal
+# Flow: what the macro read is what was written. flow:t_ext< gives
+# a call's pipeline back from the same reading flow:p_ipe< expands,
+# blanks squeezed; a stage, name or shape the reader took in part
+# would show here.
+"flow:" u_se< "Flow"
+"k:" u_se< "Check"
+c1 := "one line" k:t_est (("X |> it '+ '* i_nner W $P |> P + (s_hape P) r_eshape b")) k:i_s "X |> it '+ '* i_nner W $P |> P + (s_hape P) r_eshape b"
+c2 := "blanks squeezed" k:t_est (("x $s |> 2 * it |> it + s")) k:i_s "x $s |> 2 * it |> it + s"
+c3 := "a raw string, one stage per line" k:t_est (("z |> 'm_ax r_/ it $m |> e_xp z - m $e |> e / '+ r_/ e")) k:i_s "z |> 'm_ax r_/ it $m |> e_xp z - m $e |> e / '+ r_/ e"
+c4 := "a tuple name and a shape" k:t_est (("X |> (it, it) $(A, B) |> A + B $S [2 3]")) k:i_s "X |> (it, it) $(A, B) |> A + B $S [2 3]"
+c5 := "|> inside brackets and strings is text" k:t_est (("x |> '{ v -> v |> 2 } $f |> \"a |> b\" c_at it")) k:i_s "x |> '{ v -> v |> 2 } $f |> \"a |> b\" c_at it"
+k:r_eport c1 k:a_nd c2 k:a_nd c3 k:a_nd c4 k:a_nd c5
+

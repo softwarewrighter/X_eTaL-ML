@@ -1,5 +1,0 @@
-#!/usr/bin/env xetal
-# Pipeline: a shape's bracket must close (the |> inside it is not a separator).
-"pipe:" u_se< "Pipeline"
-x := f_loat 1 2 3 4
-@ pipe:p_ipe< "x : m [4 |> n_eg"

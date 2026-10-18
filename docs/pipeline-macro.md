@@ -204,3 +204,17 @@ the spatial library the design sat in). What the building settled:
   strings (`c"..."`, `cr"..."`): at the re-pin the pipelines are written
   `cr"..."` and render as code; the macro is unchanged (the same Char
   vector). Its step 110's `## uses: parsed` line will declare the reader.
+
+## Renamed: Flow, and `$` labels (2026-10-18, step flow-rename)
+
+Decided with the user: the library is `Flow` (`libs/Flow/`,
+`"flow:" u_se< "Flow"`), so the call reads `@ flow:p_ipe< "..."`
+rather than the redundant `pipe:p_ipe<`. A stage's label is `$name`
+(a tuple `$(Q, K, V)`), the `$` touching the name, in place of
+` : name`: X_eTaL made `|>` a token drawn as a triangle (S13) and `$`
+the label token drawn as a small triangle (S14), so a pipeline in a
+code string `c"..."` is drawn decorated, labels included. `$ m` and a
+`$` with nothing after it are refused (`reject-label-apart.xtl`,
+`reject-label-alone.xtl`), as X_eTaL refuses them (`bad-label`). The
+examples above keep the names and labels of the time they were
+written.

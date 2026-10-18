@@ -1,0 +1,5 @@
+#!/usr/bin/env xetal
+# Flow: text after a stage's shape is refused, never dropped (the Equations case).
+"flow:" u_se< "Flow"
+x := f_loat 1 2 3 4
+@ flow:p_ipe< "x $m [4] extra |> n_eg"

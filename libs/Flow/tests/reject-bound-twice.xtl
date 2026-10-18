@@ -1,0 +1,5 @@
+#!/usr/bin/env xetal
+# Flow: a name bound twice is refused.
+"flow:" u_se< "Flow"
+x := f_loat 1 2 3 4
+@ flow:p_ipe< "x $m |> n_eg it $m"
