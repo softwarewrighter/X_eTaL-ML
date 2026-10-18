@@ -2,4 +2,4 @@
 # Flow: a shape's extents are names or numbers; an unknown character is refused.
 "flow:" u_se< "Flow"
 x := f_loat 1 2 3 4
-@ flow:p_ipe< "x $m [4;] |> n_eg"
+@ flow:p_ipe< c"x $m [4;] |> n_eg"

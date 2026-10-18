@@ -1,5 +1,5 @@
 error[bad-pipeline]: after $ comes a plain name, or a tuple of names (Q, K, V): (Q, 2)
  --> reject-bad-tuple.xtl:5:15
   |
-5 | @ flow:p_ipe< "x $(Q, 2) |> n_eg"
-  |               ^^^^^^^^^^^^^^^^^^^
+5 | @ flow:p_ipe< c"x $(Q, 2) |> n_eg"
+  |               ^^^^^^^^^^^^^^^^^^^^

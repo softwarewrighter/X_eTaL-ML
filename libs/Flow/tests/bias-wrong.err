@@ -3,7 +3,7 @@ error[shape]: a_ddAxis: 3 values for axis 2 of extent 2
     |
 112 |   (t_ally b) != k s_elect s ? "shape" []S_IGNAL "a_ddAxis: " c_at (f_ormat t_ally b) c_at " values for axis " c_at (f_ormat k) c_at " of extent " c_at f_ormat k s_elect s
     |                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-   ::: bias-wrong.xtl:7:42
+   ::: bias-wrong.xtl:7:43
     |
-  7 | @ flow:p_ipe< "X |> it '+ '* i_nner W |> 1 2 3 nn:b_ias it"
-    |                                          ----------------- called from the program here
+  7 | @ flow:p_ipe< c"X |> it '+ '* i_nner W |> 1 2 3 nn:b_ias it"
+    |                                           ----------------- called from the program here

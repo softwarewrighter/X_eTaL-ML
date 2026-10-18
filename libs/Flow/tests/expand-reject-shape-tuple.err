@@ -1,5 +1,5 @@
 error[bad-pipeline]: a shape [N O] goes after the stage's name: [4]
  --> reject-shape-tuple.xtl:5:15
   |
-5 | @ flow:p_ipe< "x |> (it, it) $(a, b) [4] |> a + b"
-  |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+5 | @ flow:p_ipe< c"x |> (it, it) $(a, b) [4] |> a + b"
+  |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

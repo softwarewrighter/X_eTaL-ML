@@ -1,5 +1,5 @@
 error[bad-pipeline]: a shape's extents are names or numbers, blanks between: [4;]
  --> reject-shape-character.xtl:5:15
   |
-5 | @ flow:p_ipe< "x $m [4;] |> n_eg"
-  |               ^^^^^^^^^^^^^^^^^^^
+5 | @ flow:p_ipe< c"x $m [4;] |> n_eg"
+  |               ^^^^^^^^^^^^^^^^^^^^

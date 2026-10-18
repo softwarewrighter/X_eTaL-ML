@@ -12,4 +12,6 @@ ok: the last stage named
 ok: a matrix product
 ok: a shape that holds
 ok: the data alone
-14 checks, all passed
+ok: plain, raw and code strings alike
+ok: raw
+16 checks, all passed

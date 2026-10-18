@@ -1,5 +1,5 @@
 error[bad-pipeline]: a shape is [extents] at the stage's end, nothing after it: [4] extra
  --> reject-trailing.xtl:5:15
   |
-5 | @ flow:p_ipe< "x $m [4] extra |> n_eg"
-  |               ^^^^^^^^^^^^^^^^^^^^^^^^
+5 | @ flow:p_ipe< c"x $m [4] extra |> n_eg"
+  |               ^^^^^^^^^^^^^^^^^^^^^^^^^

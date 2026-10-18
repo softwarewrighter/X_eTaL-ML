@@ -2,4 +2,4 @@
 # Flow: a stage that is a value, neither a function nor naming it or an earlier name, is refused.
 "flow:" u_se< "Flow"
 x := f_loat 1 2 3 4
-@ flow:p_ipe< "x |> 3"
+@ flow:p_ipe< c"x |> 3"

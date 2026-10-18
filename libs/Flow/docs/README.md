@@ -20,14 +20,16 @@ recommended alias. Designed in X_eTaL (its `docs/spatial.md`,
 
 | Macro | What |
 | ----- | ---- |
-| `@ flow:p_ipe< "X \|> W1 nn:d_ense it \|> nn:r_elu"` | the value of the pipeline: the data, then each stage in turn |
-| `@ flow:t_ext< "..."` | the pipeline written back from the same reading, a string (blanks squeezed) |
+| `@ flow:p_ipe< c"X \|> W1 nn:d_ense it \|> nn:r_elu"` | the value of the pipeline: the data, then each stage in turn |
+| `@ flow:t_ext< c"..."` | the pipeline written back from the same reading, a string (blanks squeezed) |
 
-The left side is `@`; the whole flow is in the right string. A raw
-string (`r"..."`, X_eTaL ST4) puts one stage per line:
+The left side is `@`; the whole flow is in the right string, a code
+string (`c"..."`, X_eTaL ST5): editors and pages draw its inside as
+X_eTaL, `|>` and `$` as triangles, and it may put one stage per line.
+A plain or raw string reads the same, drawn as typed:
 
 ```
-Y := @ flow:p_ipe< r"
+Y := @ flow:p_ipe< c"
    X
 |> it nn:d_ense W1
 |> nn:r_elu
@@ -59,7 +61,7 @@ Y := @ flow:p_ipe< r"
   stage's value; `$ m` and a `$` with nothing after it are refused.
   Later stages use
   the name directly, so fan-out and joins need nothing more:
-  `@ flow:p_ipe< "z |> 'm_ax r_/ it $m |> e_xp z - m $e |> e / '+ r_/ e"`. A tuple
+  `@ flow:p_ipe< c"z |> 'm_ax r_/ it $m |> e_xp z - m $e |> e / '+ r_/ e"`. A tuple
   `$(Q, K, V)` takes a tuple apart; the previous value for the next
   stage is then the tuple (`(p, q) := it`). Names are plain names
   (letters and digits), local to the pipeline, each bound once; each
@@ -126,9 +128,9 @@ Y := ({ @ ->
 } @)
 ```
 
-On the libraries' site the pipeline itself is drawn as typed: it is a
-string to the renderer, which decorates the expansion beside it (ask
-M17 in `docs/xetal-asks.md`).
+On the libraries' site the pipeline is drawn decorated, as the
+expansion beside it is: it is a code string (ask M17 in
+`docs/xetal-asks.md`, answered by X_eTaL's code strings).
 
 The expansion names no library: the stages carry their own calls
 under the aliases the caller chose (a macro's text cannot name the
@@ -144,17 +146,17 @@ equivalent in `docs/spatial-poc/pipes-oracle.xtl` there and
 `W2 := 2 1 r_eshape 1 2`:
 
 ```
-      @ flow:p_ipe< "X |> it '+ '* i_nner W $P |> P + (s_hape P) r_eshape b"
+      @ flow:p_ipe< c"X |> it '+ '* i_nner W $P |> P + (s_hape P) r_eshape b"
 14 25
 20 31
-      @ flow:p_ipe< "z |> 'm_ax r_/ it $m |> e_xp z - m $e |> e / '+ r_/ e"
+      @ flow:p_ipe< c"z |> 'm_ax r_/ it $m |> e_xp z - m $e |> e / '+ r_/ e"
 0.09003057317038046 0.24472847105479764 0.6652409557748218
-      @ flow:p_ipe< "x |> ('+ r_/ it) / f_loat t_ally it $mu |> x - mu $c |> ('+ r_/ c * c) / f_loat t_ally c $v |> c / v ^ 0.5"
+      @ flow:p_ipe< c"x |> ('+ r_/ it) / f_loat t_ally it $mu |> x - mu $c |> ('+ r_/ c * c) / f_loat t_ally c $v |> c / v ^ 0.5"
 -1.3416407864998738 -0.4472135954999579 0.4472135954999579 1.3416407864998738
-      @ flow:p_ipe< "X |> it '+ '* i_nner W1 |> 0 m_ax it |> it '+ '* i_nner W2"
+      @ flow:p_ipe< c"X |> it '+ '* i_nner W1 |> 0 m_ax it |> it '+ '* i_nner W2"
 2
 2
-      @ flow:p_ipe< "x $s |> 2 * it |> it + s"
+      @ flow:p_ipe< c"x $s |> 2 * it |> it + s"
 3.0 6.0 9.0 12.0
 ```
 
@@ -164,7 +166,7 @@ The residual shows why the direction matters: by hand, `2 * x + x` is
 A shape contract that fails (`../tests/shape-fails.xtl`, `n := 3`):
 
 ```
-      @ flow:p_ipe< "x |> 2 * it $y [n] |> y + 1"
+      @ flow:p_ipe< c"x |> 2 * it $y [n] |> y + 1"
 error[shape]: stage 2 (y): shape 4, expected 3
 ```
 
@@ -172,9 +174,9 @@ Text the grammar cannot use is refused (`../tests/reject-trailing.xtl`,
 `../tests/reject-two-groups.xtl`):
 
 ```
-      @ flow:p_ipe< "x $m [4] extra |> n_eg"
+      @ flow:p_ipe< c"x $m [4] extra |> n_eg"
 error[bad-pipeline]: a shape is [extents] at the stage's end, nothing after it: [4] extra
-      @ flow:p_ipe< "x $(a, b) (c, d) |> n_eg"
+      @ flow:p_ipe< c"x $(a, b) (c, d) |> n_eg"
 error[bad-pipeline]: after $ comes a plain name, or a tuple of names (Q, K, V): (a, b) (c, d)
 ```
 
@@ -182,7 +184,7 @@ The pipeline read back (`../tests/roundtrip.xtl`): what the macro
 read is what was written, blanks squeezed.
 
 ```
-      @ flow:t_ext< "  x   $s |>  2 * it   |>  it + s "
+      @ flow:t_ext< c"  x   $s |>  2 * it   |>  it + s "
 x $s |> 2 * it |> it + s
 ```
 

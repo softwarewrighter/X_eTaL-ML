@@ -25,12 +25,14 @@
 ## S14 label is written and drawn); " [N O]" after the name is the
 ## shape the value must have, checked when the program runs
 ## (error[shape], naming the stage, its shape and the one expected).
-## The left side is @; a raw string r"..." puts one stage per line.
+## The left side is @; the right is a code string c"...", drawn as
+## X_eTaL (|> and $ as triangles), and may put one stage per line; a
+## plain or raw string reads the same.
 ## binds: it
 ## uses: parsed
 ## >> "flow:" u_se< "Flow"
 ## >> x := f_loat 1 2 3 4
-## >> @ flow:p_ipe< "x $s |> 2 * it |> it + s"
+## >> @ flow:p_ipe< c"x $s |> 2 * it |> it + s"
 ## 3.0 6.0 9.0 12.0
 m:p_ipe< := { @ text -> h:w_rite h:r_ead text }
 
@@ -39,7 +41,7 @@ m:p_ipe< := { @ text -> h:w_rite h:r_ead text }
 ## the macro read is what was written, or the call was refused.
 ## uses: parsed
 ## >> "flow:" u_se< "Flow"
-## >> @ flow:t_ext< "x   $s |>  2 * it   |> it + s"
+## >> @ flow:t_ext< c"x   $s |>  2 * it   |> it + s"
 ## x $s |> 2 * it |> it + s
 m:t_ext< := { @ text -> "\"" c_at (h:e_scape h:s_how h:r_ead text) c_at "\"" }
 

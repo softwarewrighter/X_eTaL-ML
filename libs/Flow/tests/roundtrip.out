@@ -1,6 +1,6 @@
 ok: one line
 ok: blanks squeezed
-ok: a raw string, one stage per line
+ok: a code string, one stage per line
 ok: a tuple name and a shape
 ok: |> inside brackets and strings is text
 5 checks, all passed

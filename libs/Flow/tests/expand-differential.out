@@ -127,5 +127,33 @@ c13 := "the data alone" k:t_est (({ @ ->
   g26:stage := x
   g26:stage
 } @)) k:n_ear x
-k:r_eport c1 k:a_nd c2 k:a_nd c3 k:a_nd c4 k:a_nd c5 k:a_nd c6 k:a_nd c6b k:a_nd c7 k:a_nd c8 k:a_nd c9 k:a_nd c10 k:a_nd c11 k:a_nd c12 k:a_nd c13
+# a plain and a raw string read the same as a code string
+p14 := ({ @ ->
+  g27:stage := x
+  m := { @ ->
+    it := g27:stage
+    'm_ax r_/ it
+  } @
+  g28:stage := x - m
+  g28:stage
+} @)
+c14 := "plain, raw and code strings alike" k:t_est p14 k:n_ear ({ @ ->
+  g29:stage := x
+  m := { @ ->
+    it := g29:stage
+    'm_ax r_/ it
+  } @
+  g30:stage := x - m
+  g30:stage
+} @)
+c15 := "raw" k:t_est (({ @ ->
+  g31:stage := x
+  g32:stage := n_eg g31:stage
+  g32:stage
+} @)) k:n_ear ({ @ ->
+  g33:stage := x
+  g34:stage := n_eg g33:stage
+  g34:stage
+} @)
+k:r_eport c1 k:a_nd c2 k:a_nd c3 k:a_nd c4 k:a_nd c5 k:a_nd c6 k:a_nd c6b k:a_nd c7 k:a_nd c8 k:a_nd c9 k:a_nd c10 k:a_nd c11 k:a_nd c12 k:a_nd c13 k:a_nd c14 k:a_nd c15
 

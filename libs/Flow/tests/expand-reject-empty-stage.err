@@ -1,5 +1,5 @@
 error[bad-pipeline]: an empty stage (nothing between two |>, or after the last): x |> |> n_eg
  --> reject-empty-stage.xtl:5:15
   |
-5 | @ flow:p_ipe< "x |> |> n_eg"
-  |               ^^^^^^^^^^^^^^
+5 | @ flow:p_ipe< c"x |> |> n_eg"
+  |               ^^^^^^^^^^^^^^^

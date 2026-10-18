@@ -1,5 +1,5 @@
 error[shape]: stage 2 (y): shape 4, expected 3
  --> shape-fails.xtl:6:1
   |
-6 | @ flow:p_ipe< "x |> 2 * it $y [n] |> y + 1"
-  | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+6 | @ flow:p_ipe< c"x |> 2 * it $y [n] |> y + 1"
+  | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

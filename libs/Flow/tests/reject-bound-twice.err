@@ -1,5 +1,5 @@
 error[bad-pipeline]: a name is bound once in a pipeline: m
  --> reject-bound-twice.xtl:5:15
   |
-5 | @ flow:p_ipe< "x $m |> n_eg it $m"
-  |               ^^^^^^^^^^^^^^^^^^^^
+5 | @ flow:p_ipe< c"x $m |> n_eg it $m"
+  |               ^^^^^^^^^^^^^^^^^^^^^

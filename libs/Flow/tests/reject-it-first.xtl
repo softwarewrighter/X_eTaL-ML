@@ -2,4 +2,4 @@
 # Flow: it in the first stage is refused (nothing precedes it).
 "flow:" u_se< "Flow"
 x := f_loat 1 2 3 4
-@ flow:p_ipe< "it * 2 |> n_eg"
+@ flow:p_ipe< c"it * 2 |> n_eg"

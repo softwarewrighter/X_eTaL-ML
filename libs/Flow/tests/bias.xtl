@@ -9,7 +9,7 @@
 X := 2 3 r_eshape 1 2 3 4 5 6
 W := 3 2 r_eshape 1 0 0 1 1 1
 b := 10 20
-c1 := "linear regression with b_ias" k:t_est (@ flow:p_ipe< "X |> it '+ '* i_nner W |> b nn:b_ias it") k:i_s (X '+ '* i_nner W) + (s_hape X '+ '* i_nner W) r_eshape b
-c2 := "a_ddAxis names the axis" k:t_est (@ flow:p_ipe< "X |> it '+ '* i_nner W |> (2, b) nn:a_ddAxis it") k:i_s @ flow:p_ipe< "X |> it '+ '* i_nner W |> b nn:b_ias it"
-c3 := "the first axis, written" k:t_est (@ flow:p_ipe< "X |> (1, 100 200) nn:a_ddAxis it") k:i_s X + o_\ 3 2 r_eshape 100 200
+c1 := "linear regression with b_ias" k:t_est (@ flow:p_ipe< c"X |> it '+ '* i_nner W |> b nn:b_ias it") k:i_s (X '+ '* i_nner W) + (s_hape X '+ '* i_nner W) r_eshape b
+c2 := "a_ddAxis names the axis" k:t_est (@ flow:p_ipe< c"X |> it '+ '* i_nner W |> (2, b) nn:a_ddAxis it") k:i_s @ flow:p_ipe< c"X |> it '+ '* i_nner W |> b nn:b_ias it"
+c3 := "the first axis, written" k:t_est (@ flow:p_ipe< c"X |> (1, 100 200) nn:a_ddAxis it") k:i_s X + o_\ 3 2 r_eshape 100 200
 k:r_eport c1 k:a_nd c2 k:a_nd c3

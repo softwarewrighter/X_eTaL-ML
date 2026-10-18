@@ -1,5 +1,5 @@
 error[bad-pipeline]: it is the previous value, not a name to bind: it
  --> reject-it-name.xtl:5:15
   |
-5 | @ flow:p_ipe< "x $it |> n_eg"
-  |               ^^^^^^^^^^^^^^^
+5 | @ flow:p_ipe< c"x $it |> n_eg"
+  |               ^^^^^^^^^^^^^^^^

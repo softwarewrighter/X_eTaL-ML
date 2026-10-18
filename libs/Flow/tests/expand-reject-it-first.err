@@ -1,5 +1,5 @@
 error[bad-pipeline]: the first stage is the data; nothing precedes it: it * 2
  --> reject-it-first.xtl:5:15
   |
-5 | @ flow:p_ipe< "it * 2 |> n_eg"
-  |               ^^^^^^^^^^^^^^^^
+5 | @ flow:p_ipe< c"it * 2 |> n_eg"
+  |               ^^^^^^^^^^^^^^^^^

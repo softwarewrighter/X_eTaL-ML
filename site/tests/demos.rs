@@ -45,10 +45,10 @@ fn the_catalog_has_every_library() {
 
 #[test]
 fn pages_show_xetal_rendered_not_typed() {
-    // Typed spellings that the rendered form always decorates. A string
-    // literal's text is drawn as typed (a pipeline's stages live in one
-    // until X_eTaL's renderers decorate such arguments, ask M17), so
-    // string spans are left out of the check.
+    // Typed spellings that the rendered form always decorates. A plain
+    // string's text is drawn as typed, so string spans are left out of
+    // the check; a code string's inside is drawn as code (ask M17), so
+    // only its quotes are a string span and its code is checked.
     for lib in LIBRARIES {
         let docs = without_strings(lib.docs);
         for typed in ["u_se&lt;", "r_/", " := ", "s_elect", "t_ally"] {
@@ -56,6 +56,9 @@ fn pages_show_xetal_rendered_not_typed() {
         }
         assert!(lib.docs.contains("class=\"c-"), "{}: nothing rendered", lib.name);
     }
+    // A pipeline in a code string: |> and $ drawn as triangles.
+    let flow = LIBRARIES.iter().find(|l| l.name == "Flow").expect("Flow");
+    assert!(flow.docs.contains('\u{25b7}') && flow.docs.contains('\u{25b9}'), "Flow: a pipeline drawn as typed");
 }
 
 #[test]

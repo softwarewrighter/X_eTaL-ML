@@ -39,7 +39,7 @@ list stands on its own.
 | M14 | new | bug | `xetal_play::run` collects a run's `[]S_HOW` pictures in state shared across threads (`xetal_store::take_shown()`), so two runs at once take each other's pictures: a run can come back with none, or with another's | backprop, train-live, net-macro (their Rust tests, which cargo runs in parallel; a page runs one program at a time) | `microscope::run` runs one program at a time behind a lock |
 | M15 | new | feature | `xetal doc --out` names every site "X_eTaL doc" (the page titles, the sidebar's heading): a sibling's site cannot say whose it is; asked: a `--title` option | the cross-reference (pages/doc) | none: the catalog, the cards and the pages' footers say what the site is |
 | M16 | new | speed | The matrix product runs at about 85 ns a multiply-add: `(8 9 r_eshape ...) '+ '* i_nner 9 33800 r_eshape ...` and `(8 33800 r_eshape ...) '+ '* i_nner o_\ 9 33800 r_eshape ...` (2.4 million multiply-adds each, one with many short sums, one with few long ones) both take about 0.2 s, printed results included; the outer product `t_able` of 270,400 results takes 30 ms | cnn-backprop (the convolution and the filters' gradient are most of a step) | 600 digits and 20 a step, not more |
-| M17 | not yet taken | feature | A macro argument that holds X_eTaL code is drawn as typed: `xetal render --html -e '@ pipe:p_ipe< "x \|> 2 * it"'` gives one `c-string` span, so a pipeline's stages are the only code on a page not decorated (ST4 says the code a macro parses from a string stays ASCII, drawn decorated by the renderers; the renderers do not yet) | Flow (then Pipeline), its page on the libraries' site | the site's test leaves string spans out of its typed-spelling check; the stages read as typed |
+| M17 | not yet taken | feature | A macro argument that holds X_eTaL code is drawn as typed: `xetal render --html -e '@ pipe:p_ipe< "x \|> 2 * it"'` gives one `c-string` span, so a pipeline's stages are the only code on a page not decorated (ST4 says the code a macro parses from a string stays ASCII, drawn decorated by the renderers; the renderers do not yet) | Flow (then Pipeline), its page on the libraries' site; answered at the pin 4453400b by X_eTaL's code strings (`c"..."`, ST5; `\|>` and `$` drawn, S13, S14), Flow's pipelines now code strings drawn as code | the site's test leaves string spans out of its typed-spelling check; the stages read as typed |
 ## Details
 
 ### M1, M2: macro libraries and seeing an expansion (landed)
@@ -174,7 +174,12 @@ with the user): `c"..."` with the usual escapes and raw `cr"..."` /
 macro change), the rendered view drawing the inside as code where it
 lexes. When it lands and this repository re-pins, the pipelines are
 written `@ pipe:p_ipe< cr"..."` and the site's test takes string
-spans in again. Its step 110, macro contracts (`## takes:`,
+spans in again. Landed (2026-10-18, pin 4453400b): `cr"..."` was
+dropped for `c"..."` and `c#"..."#`; Flow's pipelines are written
+`@ flow:p_ipe< c"..."`, drawn as code with `|>` and `$` as triangles
+(S13, S14), and the site's test checks the triangles on Flow's page
+(a plain string's text stays out of its typed-spelling check). Flow
+and Net declare `## uses: parsed`. Its step 110, macro contracts (`## takes:`,
 `## uses: copied | parsed`), will have `Pipeline.xtlm` declare
 `## uses: parsed`.
 

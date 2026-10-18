@@ -1,5 +1,5 @@
 error[bad-pipeline]: an empty pipeline: write the data, then |> and each stage
  --> reject-empty-call.xtl:5:15
   |
-5 | @ flow:p_ipe< ""
-  |               ^^
+5 | @ flow:p_ipe< c""
+  |               ^^^

@@ -1,7 +1,7 @@
 #!/usr/bin/env xetal
 # Flow: the five examples of X_eTaL's docs/spatial.md, each equal
 # to its hand-written equivalent (X_eTaL's docs/spatial-poc/pipes-oracle.xtl),
-# one-line and one stage per line (a raw string).
+# one-line and one stage per line (a code string spanning lines).
 "flow:" u_se< "Flow"
 "k:" u_se< "Check"
 X := 2 3 r_eshape 1 2 3 4 5 6

@@ -4,4 +4,4 @@
 "flow:" u_se< "Flow"
 X := 2 3 r_eshape 1 2 3 4 5 6
 W := 3 2 r_eshape 1 0 0 1 1 1
-@ flow:p_ipe< "X |> it '+ '* i_nner W |> 1 2 3 nn:b_ias it"
+@ flow:p_ipe< c"X |> it '+ '* i_nner W |> 1 2 3 nn:b_ias it"

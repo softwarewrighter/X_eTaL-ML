@@ -3,4 +3,4 @@
 "flow:" u_se< "Flow"
 x := f_loat 1 2 3 4
 n := 3
-@ flow:p_ipe< "x |> 2 * it $y [n] |> y + 1"
+@ flow:p_ipe< c"x |> 2 * it $y [n] |> y + 1"
