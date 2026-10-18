@@ -1,1 +1,5 @@
-error[bad-macro-argument]: not a size or an activation (relu, sigmoid, tanh, softmax, logSoftmax): gelu at 149..159
+error[bad-macro-argument]: not a size or an activation (relu, sigmoid, tanh, softmax, logSoftmax): gelu
+ --> bad-activation.xtl:6:11
+  |
+6 | u:f_wd := "2 2 gelu" net:n_etwork< "w"
+  |           ^^^^^^^^^^

@@ -1,0 +1,8 @@
+number = 27
+slug = "repin-code-strings"
+status = "pending"
+description = 'Move XETAL_COMMIT to the X_eTaL commit with code strings (ST5, c"..."), |> dr...'
+role = "production"
+context_files = []
+created_at = "2026-10-18T18:59:24"
+commits = []

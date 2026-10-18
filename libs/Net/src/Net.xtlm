@@ -81,6 +81,7 @@ h:c_ount := { ws ns ->
 ## using the weight arrays named on the right, one per dense layer in
 ## order: an ordinary lambda of nn: calls, a batch (one example per
 ## row) in, the last layer's output out.
+## uses: parsed
 m:n_etwork< := { spec weights ->
   ws := h:w_ords spec
   ns := h:w_ords weights
@@ -97,6 +98,7 @@ m:n_etwork< := { spec weights ->
 ## many numbers, since r_eshape alone would silently repeat or cut the
 ## data), then the function, as n_etwork< writes it. The spec is the
 ## one place the network is described.
+## uses: parsed
 m:m_odel< := { what spec ->
   ws := h:w_ords spec
   0 < t_ally h:w_rong ws ? "bad-macro-argument right" []R_EJECT h:w_rong ws
@@ -185,6 +187,7 @@ h:t_rainable := { ws ->
 ## "u:g_rad X Y". The function takes the weights as a tuple
 ## (W1, .., WL) and gives the gradients as a tuple (G1, .., GL),
 ## each the shape of its layer's weights: backpropagation, written out.
+## uses: parsed
 m:g_radient< := { what spec ->
   ws := h:w_ords spec
   0 < t_ally h:t_rainable ws ? "bad-macro-argument right" []R_EJECT h:t_rainable ws
@@ -207,6 +210,7 @@ m:g_radient< := { what spec ->
 ## net:s_tate< writes the first), and gives the next: the forward pass,
 ## each layer's gradient by backpropagation (as g_radient< writes it),
 ## and Adam. The spec must end in softmax. Every name it binds is fresh.
+## uses: parsed
 m:t_rain< := { what spec ->
   ws := h:w_ords spec
   0 < t_ally h:t_rainable ws ? "bad-macro-argument right" []R_EJECT h:t_rainable ws
@@ -253,6 +257,7 @@ m:s_tate< := { @ weights ->
 ## How many numbers the network of the spec on the left has to learn
 ## (weights and biases), worked out when the program is compiled: the
 ## call becomes that number. Nothing is written on the right: @.
+## uses: parsed
 ## >> "net:" u_se< "Net"
 ## >> "2 16 relu 16 relu 3 softmax" net:p_arams< @
 ## 371
@@ -266,6 +271,7 @@ m:p_arams< := { spec @ ->
 ## Whether the weight arrays named on the right have the shapes the
 ## spec on the left says (a layer from m inputs to n outputs is
 ## m + 1 by n: the bias is the last row): 1 or 0.
+## uses: parsed
 ## >> "net:" u_se< "Net"
 ## >> w1 := 3 4 r_eshape 0.0
 ## >> w2 := 5 3 r_eshape 0.0

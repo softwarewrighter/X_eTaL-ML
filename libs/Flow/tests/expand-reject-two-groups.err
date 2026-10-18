@@ -1,1 +1,5 @@
-error[bad-pipeline]: after $ comes a plain name, or a tuple of names (Q, K, V): (a, b) (c, d) at 174..200
+error[bad-pipeline]: after $ comes a plain name, or a tuple of names (Q, K, V): (a, b) (c, d)
+ --> reject-two-groups.xtl:5:15
+  |
+5 | @ flow:p_ipe< "x $(a, b) (c, d) |> n_eg"
+  |               ^^^^^^^^^^^^^^^^^^^^^^^^^^

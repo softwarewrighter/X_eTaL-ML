@@ -27,6 +27,7 @@
 ## (error[shape], naming the stage, its shape and the one expected).
 ## The left side is @; a raw string r"..." puts one stage per line.
 ## binds: it
+## uses: parsed
 ## >> "flow:" u_se< "Flow"
 ## >> x := f_loat 1 2 3 4
 ## >> @ flow:p_ipe< "x $s |> 2 * it |> it + s"
@@ -36,6 +37,7 @@ m:p_ipe< := { @ text -> h:w_rite h:r_ead text }
 ## The pipeline written back from its reading, a string: the stages
 ## trimmed, " |> " between them, each name and shape as written. What
 ## the macro read is what was written, or the call was refused.
+## uses: parsed
 ## >> "flow:" u_se< "Flow"
 ## >> @ flow:t_ext< "x   $s |>  2 * it   |> it + s"
 ## x $s |> 2 * it |> it + s

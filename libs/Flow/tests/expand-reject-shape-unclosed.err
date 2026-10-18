@@ -1,1 +1,5 @@
-error[bad-pipeline]: a shape is [extents] at the stage's end, nothing after it: [4 |> n_eg at 152..169
+error[bad-pipeline]: a shape is [extents] at the stage's end, nothing after it: [4 |> n_eg
+ --> reject-shape-unclosed.xtl:5:15
+  |
+5 | @ flow:p_ipe< "x $m [4 |> n_eg"
+  |               ^^^^^^^^^^^^^^^^^

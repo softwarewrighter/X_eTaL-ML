@@ -1,1 +1,5 @@
-error[bad-macro-argument]: write the function's name and the weight files' prefix: "u:d_eep c" (for data/c1.txt, data/c2.txt, ...) at 130..138
+error[bad-macro-argument]: write the function's name and the weight files' prefix: "u:d_eep c" (for data/c1.txt, data/c2.txt, ...)
+ --> bad-model.xtl:5:1
+  |
+5 | "u:f_wd" net:m_odel< "2 3 softmax"
+  | ^^^^^^^^

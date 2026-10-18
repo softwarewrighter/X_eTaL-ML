@@ -1,4 +1,4 @@
-number = 27
+number = 28
 slug = "pipeline-demos"
 status = "pending"
 description = "The real pipelines on this repository's libraries: the dense layer with its b..."
