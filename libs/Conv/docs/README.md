@@ -22,6 +22,9 @@ the libraries without setup.
   (valid: no padding), pooled by 2 x 2 blocks to n x f x (h - 2)/2 x
   (w - 2)/2 (even sides).
 - The filters and their biases travel as a pair: `(K, B) cv:c_onv x`.
+  A bias added to maps afterward names its axis: `(2, b) nn:a_ddAxis V`
+  on a batch of maps (n x f x h x w: the second axis), which is also
+  what `b nn:b_ias V` does for a rank-4 array (NN).
 
 ## Functions
 

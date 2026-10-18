@@ -24,6 +24,12 @@ the libraries without setup.
   example, a matrix one example per row, a rank-3 array a batch of
   sequences.
 - Labels count from 1 (`nn:o_neHot`, `nn:a_rgmax`).
+- X_eTaL has no implicit broadcasting, and the APL family disagrees
+  on which axis a vector would match (J and BQN the first, NumPy the
+  last), so a bias names its axis: `(k, b) nn:a_ddAxis V`, or
+  `b nn:b_ias V` with the convention above (rows: the last axis;
+  channel-first pictures and their batches: the channel axis), checked
+  for length either way.
 - Everything is Float: `nn:r_elu` of an Int array is a type error;
   write `nn:r_elu f_loat x`.
 
@@ -38,6 +44,8 @@ the libraries without setup.
 | `nn:s_oftmax a` | `Num a => a -> Float` | each row into probabilities (largest taken off first, so nothing overflows) |
 | `nn:l_ogSoftmax a` | `Float -> Float` | the log of each row's softmax, computed stably |
 | `x nn:d_ense wb` | `Num a => a -> a -> a` | the layer x W + b, W and b stacked in wb |
+| `(k, b) nn:a_ddAxis V` | `Num a => (Int, a) -> a -> a` | the vector b added to V along its axis k; b's length must be that axis's extent (else `error[shape]` naming both), and the axis must exist (`error[axis]`) |
+| `b nn:b_ias V` | `Num a => a -> a -> a` | b added where a layer's bias goes, by V's rank: the last axis of rows (rank 1 or 2), the channel axis of a channel-first picture (rank 3: the first) or of a batch of them (rank 4: the second) |
 | `nn:a_rgmax a` | `Num a => a -> Int` | each row's position of its largest item (the first on a tie) |
 | `k nn:o_neHot y` | `Int -> Int -> Float` | labels 1..k as rows with 1.0 at the label |
 | `y nn:c_rossEntropy p` | `Float -> Float -> Float` | mean over rows of -sum(y log p); p clamped at 1e-12 |
@@ -94,6 +102,24 @@ Loss and accuracy:
 ignore a shift and work along the last axis of any rank; log-softmax
 is the log of softmax; sigmoid(-x) = 1 - sigmoid(x); tanh is odd;
 argmax inverts one-hot; dense is x W + b.
+
+From `../tests/bias.xtl`, with `M := 2 3 r_eshape f_loat r_ange 6` and
+`b := 10.0 20.0 30.0`: the bias on the last axis (as `nn:d_ense` keeps
+it), on the first, and on a picture's channels; a wrong length stops
+the program:
+
+```
+      b nn:b_ias M
+11.0 22.0 33.0
+14.0 25.0 36.0
+      (1, 100.0 200.0) nn:a_ddAxis M
+101.0 102.0 103.0
+204.0 205.0 206.0
+      r_avel b nn:b_ias 3 2 2 r_eshape 0.0
+10.0 10.0 10.0 10.0 20.0 20.0 20.0 20.0 30.0 30.0 30.0 30.0
+      (2, 1.0 2.0) nn:a_ddAxis M
+error[shape]: a_ddAxis: 2 values for axis 2 of extent 3
+```
 
 ## Demos
 

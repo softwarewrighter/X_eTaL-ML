@@ -1,0 +1,15 @@
+11.0 22.0 33.0
+14.0 25.0 36.0
+101.0 102.0 103.0
+204.0 205.0 206.0
+10.0 10.0 10.0 10.0 20.0 20.0 20.0 20.0 30.0 30.0 30.0 30.0
+ok: the last axis of a matrix, as d_ense writes a bias
+ok: a_ddAxis on the last axis is b_ias
+ok: the first axis of a matrix
+ok: the middle axis of a rank-3 array
+ok: a vector: its one axis
+ok: a picture's bias goes on the channel axis
+ok: the channels of one picture
+ok: a batch of pictures: the second axis
+ok: each picture of the batch alike
+9 checks, all passed

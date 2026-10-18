@@ -1,0 +1,2 @@
+command = "../../../scripts/xt run bias-wrong.xtl"
+exit_code = 1

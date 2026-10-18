@@ -119,7 +119,7 @@ just serve cnn-digits    # its page, at http://127.0.0.1:8435/
 
 | Library | Alias | What |
 | ------- | ----- | ---- |
-| [NN](libs/NN/docs/README.md) | `nn:` | activations, softmax by row (any rank), dense layers, argmax, one-hot, loss, accuracy |
+| [NN](libs/NN/docs/README.md) | `nn:` | activations, softmax by row (any rank), dense layers, a bias along a named axis (`nn:a_ddAxis`, `nn:b_ias`), argmax, one-hot, loss, accuracy |
 | [Norm](libs/Norm/docs/README.md) | `nm:` | normalizing each row: standardizing, layer norm (gain and bias), RMS norm |
 | [Sample](libs/Sample/docs/README.md) | `sm:` | choosing the next token: greedy, temperature, top-k, a draw by given uniform numbers |
 | [Optim](libs/Optim/docs/README.md) | `op:` | optimizers as steps on a tuple: gradient descent and Adam, a weight array and its averages in, moved out |
@@ -145,7 +145,7 @@ imports).
 | | Today |
 | - | ----- |
 | Demos | 13, all live, each with command-line and browser tests; three of them train in X_eTaL, a CNN among them; one clusters (k-means), one explores embeddings, one is a tiny GPT, one a tiny world model that dreams, one a learned denoiser drawing shapes from noise |
-| Libraries | NN (12 functions, typed, tested); Net (6 macros, every expansion pinned; written gradients checked against finite differences); Pipeline (2 macros: the five pipelines of X_eTaL's oracle equal their hand-written code, 14 differential checks, 14 refusals pinned, the run-time shape check); Learn (10 functions: k-means, kNN, PCA, logistic regression; k-means checked against Rust, all by their properties); Embed (7 functions: counts, PPMI, projection, neighbors); Quant (7 functions: float, integer and ternary formats, additions); Conv (5 functions: windows, convolution, pooling, their gradients); Attention (5 functions: scores, weights, masks, a head); Norm (3) and Sample (4) for the tiny GPT; Optim (3: gradient descent, Adam); every item documented, 83 doc examples run by the gate |
+| Libraries | NN (14 functions, typed, tested); Net (6 macros, every expansion pinned; written gradients checked against finite differences); Pipeline (2 macros: the five pipelines of X_eTaL's oracle equal their hand-written code, 14 differential checks, 14 refusals pinned, the run-time shape check); Learn (10 functions: k-means, kNN, PCA, logistic regression; k-means checked against Rust, all by their properties); Embed (7 functions: counts, PPMI, projection, neighbors); Quant (7 functions: float, integer and ternary formats, additions); Conv (5 functions: windows, convolution, pooling, their gradients); Attention (5 functions: scores, weights, masks, a head); Norm (3) and Sample (4) for the tiny GPT; Optim (3: gradient descent, Adam); every item documented, 83 doc examples run by the gate |
 | X_eTaL | pinned at X_eTaL main b8a6ac3b, after v0.1.0: tuples with patterns (the training state is one), `h:` private names, each name bound once (checked here too, `just check-rebind`), hygiene by choice (a macro's own names from `[]G_ENSYM`: Net's are), raw strings, `xetal expand` laid out as a program (`XETAL_COMMIT`, `just xetal-version`); X_eTaL-libraries at ed91e6d (Plot's charts, Equations, every library documented) |
 | Speed | measured and guarded (`just bench-check`, [`docs/speed.md`](docs/speed.md)); the CNN's whole program runs in a third of a second |
 | Waiting on X_eTaL | a grade per row, arrays in and out of the browser engine, `e_ach` returning arrays ([`docs/xetal-asks.md`](docs/xetal-asks.md)) |

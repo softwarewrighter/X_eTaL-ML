@@ -1,0 +1,5 @@
+#!/usr/bin/env xetal
+# NN: a bias of the wrong length for its axis stops the program, naming both lengths.
+"nn:" u_se< "NN"
+M := 2 3 r_eshape f_loat r_ange 6
+(2, 1.0 2.0) nn:a_ddAxis M

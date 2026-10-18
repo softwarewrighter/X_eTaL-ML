@@ -1,0 +1,19 @@
+#!/usr/bin/env xetal
+# Pipeline: a bias of the wrong length stops the program, naming both lengths (NN's check).
+"nn:" u_se< "NN"
+"pipe:" u_se< "Pipeline"
+X := 2 3 r_eshape 1 2 3 4 5 6
+W := 3 2 r_eshape 1 0 0 1 1 1
+{ @ ->
+  g1:stage := X
+  g2:stage := { @ ->
+    it := g1:stage
+    it '+ '* i_nner W
+  } @
+  g3:stage := { @ ->
+    it := g2:stage
+    1 2 3 nn:b_ias it
+  } @
+  g3:stage
+} @
+

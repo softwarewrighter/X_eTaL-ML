@@ -78,6 +78,60 @@ l:d_ense := { x wb ->
   (x '+ '* i_nner -1 d_rop wb) + (o_ffsets t_ally x) 'r_ight t_able f_irst -1 t_ake wb
 }
 
+### Adding a vector along an axis
+
+## `(k, b) a_ddAxis V`: the vector b added to V along its axis k (every
+## element of V gets the b of its position on that axis). X_eTaL has
+## no implicit broadcasting, and the APL family disagrees on which axis
+## a vector would match (J and BQN the first, NumPy the last), so the
+## axis is written. b's length must be that axis's extent, else
+## error[shape] naming both; an axis V does not have is error[axis].
+## >> "nn:" u_se< "NN"
+## >> (2, 10.0 20.0 30.0) nn:a_ddAxis 2 3 r_eshape f_loat r_ange 6
+## 11.0 22.0 33.0
+## 14.0 25.0 36.0
+## >> (1, 10.0 20.0) nn:a_ddAxis 2 3 r_eshape f_loat r_ange 6
+## 11.0 12.0 13.0
+## 24.0 25.0 26.0
+l:a_ddAxis := { (k, b) V ->
+  s := s_hape V
+  _ := (k, b) h:a_xisChecked s
+  r := t_ally s
+  rest := ((k - 1) t_ake s) c_at k d_rop s
+  B := b '+ t_able rest r_eshape (f_irst b) - f_irst b
+  j := r_ange r - 1
+  perm := k c_at j + 0 + j >= k
+  V + perm t_ranspose B
+}
+
+## Whether axis k of an array of shape s exists and b fits it; else the
+## error, naming the axis and both lengths.
+h:a_xisChecked := { (k, b) s ->
+  r := t_ally s
+  n_ot (k >= 1) & k <= r ? "axis" []S_IGNAL "a_ddAxis: axis " c_at (f_ormat k) c_at " of a rank " c_at (f_ormat r) c_at " array"
+  (t_ally b) != k s_elect s ? "shape" []S_IGNAL "a_ddAxis: " c_at (f_ormat t_ally b) c_at " values for axis " c_at (f_ormat k) c_at " of extent " c_at f_ormat k s_elect s
+  ""
+}
+
+## `b b_ias V`: the bias vector b added where a layer's bias goes, by
+## V's rank: a batch of rows or one row (rank 2 or 1) on the last axis,
+## one feature per column, as d_ense keeps it; a channel-first picture
+## (rank 3: channels, height, width, as Conv's maps for one picture) on
+## the first axis; a batch of them (rank 4) on the second. Any other
+## axis is written out with a_ddAxis.
+## >> "nn:" u_se< "NN"
+## >> 10.0 20.0 30.0 nn:b_ias 2 3 r_eshape f_loat r_ange 6
+## 11.0 22.0 33.0
+## 14.0 25.0 36.0
+## >> r_avel 1.0 2.0 nn:b_ias 2 2 2 r_eshape 0.0
+## 1.0 1.0 1.0 1.0 2.0 2.0 2.0 2.0
+l:b_ias := { b V ->
+  r := t_ally s_hape V
+  r <= 2 ? (r, b) l:a_ddAxis V
+  r = 3 ? (1, b) l:a_ddAxis V
+  (2, b) l:a_ddAxis V
+}
+
 ### Labels
 
 ## `a_rgmax a`: for each row (along the last axis), the position (from

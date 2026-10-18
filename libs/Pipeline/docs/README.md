@@ -93,8 +93,9 @@ text:
 Rank and shape mismatches only the arrays can tell are run-time
 errors from the annotation check, never silent. X_eTaL has no implicit
 broadcasting: adding a bias vector to every row is written out
-(`P + (s_hape P) r_eshape b`), until the bias helper lands
-(`nn:b_ias`, the next step).
+(`P + (s_hape P) r_eshape b`), or is the stage `b nn:b_ias it` (NN's
+helper, the axis by convention or named, `(2, b) nn:a_ddAxis it`,
+checked for length: `../tests/bias.xtl`).
 
 ## The expansion
 

@@ -196,8 +196,9 @@ the spatial library the design sat in). What the building settled:
 - `pipe:t_ext<` writes the pipeline back from the same reading, for the
   round-trip test; the differential test enumerates every kind of stage
   and their orders against plain X_eTaL.
-- The names: `Pipeline`, `pipe:`, `p_ipe<`, `t_ext<`; the bias helper
-  will be `nn:a_ddAxis` and `nn:b_ias` (step pipeline-bias).
+- The names: `Pipeline`, `pipe:`, `p_ipe<`, `t_ext<`; the bias helper is
+  `nn:a_ddAxis` and `nn:b_ias` (step pipeline-bias, the same day): the
+  linear regression is `X |> it '+ '* i_nner W |> b nn:b_ias it`.
 - On the libraries' site a pipeline is drawn as typed: it is a string
   to the renderer (ask M17). X_eTaL answered with its step 111, code
   strings (`c"..."`, `cr"..."`): at the re-pin the pipelines are written

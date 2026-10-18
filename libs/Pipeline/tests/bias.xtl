@@ -1,0 +1,15 @@
+#!/usr/bin/env xetal
+# Pipeline: the bias as a stage. X_eTaL has no implicit broadcasting,
+# so the linear regression's bias was written out, P + (s_hape P)
+# r_eshape b; with NN's b_ias (the last axis, as d_ense keeps it) and
+# a_ddAxis (any axis, written) it is one stage, checked for length.
+"nn:" u_se< "NN"
+"pipe:" u_se< "Pipeline"
+"k:" u_se< "Check"
+X := 2 3 r_eshape 1 2 3 4 5 6
+W := 3 2 r_eshape 1 0 0 1 1 1
+b := 10 20
+c1 := "linear regression with b_ias" k:t_est (@ pipe:p_ipe< "X |> it '+ '* i_nner W |> b nn:b_ias it") k:i_s (X '+ '* i_nner W) + (s_hape X '+ '* i_nner W) r_eshape b
+c2 := "a_ddAxis names the axis" k:t_est (@ pipe:p_ipe< "X |> it '+ '* i_nner W |> (2, b) nn:a_ddAxis it") k:i_s @ pipe:p_ipe< "X |> it '+ '* i_nner W |> b nn:b_ias it"
+c3 := "the first axis, written" k:t_est (@ pipe:p_ipe< "X |> (1, 100 200) nn:a_ddAxis it") k:i_s X + o_\ 3 2 r_eshape 100 200
+k:r_eport c1 k:a_nd c2 k:a_nd c3
