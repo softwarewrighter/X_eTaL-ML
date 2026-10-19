@@ -1,0 +1,14 @@
+[package]
+name = "pipelines-web"
+description = "Pipelines: layers written as data flow, a CNN layer four ways (math, pipeline, expansion, plain X_eTaL), checked to agree"
+version = "0.1.0"
+edition = "2021"
+license = "MIT"
+publish = false
+
+[dependencies]
+microscope = { path = "../../../shared/microscope" }
+yew = { version = "0.21", features = ["csr"] }
+console_error_panic_hook = "0.1"
+
+[workspace]

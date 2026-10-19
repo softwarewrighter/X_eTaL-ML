@@ -1,0 +1,5 @@
+ok: dense, its bias
+ok: stable softmax
+ok: layer norm
+ok: attention, one head
+4 checks, all passed

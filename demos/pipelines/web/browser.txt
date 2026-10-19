@@ -1,0 +1,4 @@
+# Text the page shows only after X_eTaL has run (scripts/browser-check.sh).
+ok: the equation and the pipeline
+ok: the pipeline and plain X_eTaL
+2 checks, all passed

@@ -1,0 +1,111 @@
+#!/usr/bin/env xetal
+## One CNN layer four ways, a Rosetta Stone: as a paper prints it (an
+## equation, read by X_eTaL-libraries' Equations), as a pipeline (Flow),
+## and as plain X_eTaL (this repository's Conv). The pipeline's
+## expansion, the fourth way, is what `xetal expand rosetta.xtl` shows.
+## All give the same feature maps.
+
+"e:" u_se< "Equations"
+"flow:" u_se< "Flow"
+"cv:" u_se< "Conv"
+"nn:" u_se< "NN"
+"k:" u_se< "Check"
+
+### Data
+
+## One 5 x 5 picture (one channel: a bright 2 x 2 square on a dim
+## field), two 3 x 3 filters (a vertical edge, a center-surround) and
+## their biases.
+m := 0.0 1.0 1.0 0.0 0.0
+P := 0.1 + 0.8 * m '* t_able m
+F := 2 3 3 r_eshape 1.0 0.0 -1.0 2.0 0.0 -2.0 1.0 0.0 -1.0 0.0 1.0 0.0 1.0 -4.0 1.0 0.0 1.0 0.0
+B := 0.5 -0.25
+O := 2
+Ho := 3
+Wo := 3
+
+### As a paper prints it
+
+## Y[o,h,w] = max(sum over r, s of P[h+r, w+s] F[o,r,s], plus B[o], 0):
+## its value, then its LaTeX, from the same reading of the same text.
+eq := (({ @ ->
+  g3:a_t := { A i -> (1 + i) s_elect r_avel A }
+  g2:c_heck := { (A, name, k, from) e ->
+    n := k s_elect s_hape A
+    bad := w_here n_ot r_avel (0 <= e) & e < n
+    0 = t_ally bad ? e
+    "index" []S_IGNAL name c_at " axis " c_at (f_ormat k) c_at ": index " c_at (f_ormat (f_irst bad) s_elect r_avel e) c_at " is outside 0.." c_at (f_ormat n - 1) c_at " (from " c_at from c_at ")"
+  }
+  g1:r_ank := { (A, name, q, ref) ->
+    (t_ally s_hape A) = q ? A
+    "rank" []S_IGNAL ref c_at " indexes " c_at (f_ormat q) c_at " axes, but " c_at name c_at " has rank " c_at f_ormat t_ally s_hape A
+  }
+  g4:grid := O c_at Ho c_at Wo
+  g5:g_rid := { k ->
+    g4:grid r_eshape (o_ffsets k s_elect g4:grid) 'l_eft t_able ('* r_/ k d_rop g4:grid) r_eshape 0
+  }
+  g4:grid r_eshape (((({ @ ->
+    g6:grid := O c_at Ho c_at Wo c_at (1 + 2 - 0) c_at (1 + 2 - 0)
+    g7:g_rid := { k ->
+      g6:grid r_eshape (o_ffsets k s_elect g6:grid) 'l_eft t_able ('* r_/ k d_rop g6:grid) r_eshape 0
+    }
+    '+ r_/_4 '+ r_/_5 g6:grid r_eshape ((
+    ((g1:r_ank (P, "P", 2, "P[h+r,w+s]")) g3:a_t ((
+      ((P, "P", 2, "w+s") g2:c_heck ((0 + g7:g_rid 3) + (0 + g7:g_rid 5))) + (2 s_elect s_hape P)
+              * 
+      ((P, "P", 1, "h+r") g2:c_heck ((0 + g7:g_rid 2) + (0 + g7:g_rid 4)))))) *
+        
+    ((g1:r_ank (F, "F", 3, "F[o,r,s]")) g3:a_t ((
+      ((F, "F", 3, "s") g2:c_heck (0 + g7:g_rid 5)) + (3 s_elect s_hape F) * (
+      ((F, "F", 2, "r") g2:c_heck (0 + g7:g_rid 4)) + (2 s_elect s_hape F) * 
+      ((F, "F", 1, "o") g2:c_heck (0 + g7:g_rid 1))))))))
+  } @) + 
+    ((g1:r_ank (B, "B", 1, "B[o]")) g3:a_t (
+      ((B, "B", 1, "o") g2:c_heck (0 + g5:g_rid 1))))) m_ax 0))
+} @))
+"Y_{o,h,w} = \\max(\\left(\\sum_{r=0}^{2} \\sum_{s=0}^{2} P_{h+r,w+s} \\, F_{o,r,s}\\right) + B_{o}, 0)"
+
+### As a pipeline
+
+## The windows of the picture, one column each; every filter times every
+## window (one matrix product); its bias along the filters' axis; the
+## maps shaped O x Ho x Wo; then the activation.
+pipe := ({ @ ->
+  g8:stage := 1 5 5 r_eshape P
+  g9:stage := cv:w_indows g8:stage
+  g10:stage := { @ ->
+    it := g9:stage
+    ((O c_at 9) r_eshape F) '+ '* i_nner it
+  } @
+  g11:stage := { @ ->
+    it := g10:stage
+    (1, B) nn:a_ddAxis it
+  } @
+  Y := { @ ->
+    it := g11:stage
+    (O c_at Ho c_at Wo) r_eshape it
+  } @
+  _ := { @ ->
+    ((s_hape Y) m_atch r_avel O c_at Ho c_at Wo) ? @
+    "shape" []S_IGNAL "stage 5 (Y): shape " c_at (f_ormat s_hape Y) c_at ", expected " c_at f_ormat r_avel O c_at Ho c_at Wo
+  } @
+  g12:stage := nn:r_elu Y
+  g12:stage
+} @)
+
+### Plain X_eTaL
+
+## Conv's layer for a batch of one picture, as the repository's CNN
+## demos use it.
+plain := nn:r_elu (O c_at Ho c_at Wo) r_eshape ((O c_at 9) r_eshape F, B) cv:c_onv 1 5 5 r_eshape P
+
+### The same
+
+r1 := "the equation and the pipeline" k:t_est eq k:n_ear pipe
+r2 := "the pipeline and plain X_eTaL" k:t_est pipe k:n_ear plain
+k:r_eport r1 k:a_nd r2
+
+## The two feature maps (after the activation): the vertical edge at
+## the square's left side, the center-surround on its corners.
+plain
+

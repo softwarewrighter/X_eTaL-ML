@@ -111,6 +111,8 @@ canvas.pic.mid { width: min(100%, 260px); }
 .zs th, .zs td { padding: 2px 8px; text-align: right; border-bottom: 1px solid var(--line); }
 .zs tr.out td { color: #e8590c; font-weight: 600; }
 .layout.even { grid-template-columns: minmax(300px, 1fr) minmax(300px, 1fr); }
+.layout.three { grid-template-columns: repeat(3, minmax(240px, 1fr)); }
+.tex { overflow-x: auto; padding: 8px 0; font-size: 1.1em; }
 .crosses { display: flex; gap: 18px; flex-wrap: wrap; }
 .nbhd.num td { width: auto; min-width: 56px; padding: 0 4px; font-weight: 500; font-variant-numeric: tabular-nums; font-size: .85rem; }
 .nbhd.num td:empty { border: none; }

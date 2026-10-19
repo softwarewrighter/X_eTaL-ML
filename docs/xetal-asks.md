@@ -40,6 +40,7 @@ list stands on its own.
 | M15 | new | feature | `xetal doc --out` names every site "X_eTaL doc" (the page titles, the sidebar's heading): a sibling's site cannot say whose it is; asked: a `--title` option | the cross-reference (pages/doc) | none: the catalog, the cards and the pages' footers say what the site is |
 | M16 | new | speed | The matrix product runs at about 85 ns a multiply-add: `(8 9 r_eshape ...) '+ '* i_nner 9 33800 r_eshape ...` and `(8 33800 r_eshape ...) '+ '* i_nner o_\ 9 33800 r_eshape ...` (2.4 million multiply-adds each, one with many short sums, one with few long ones) both take about 0.2 s, printed results included; the outer product `t_able` of 270,400 results takes 30 ms | cnn-backprop (the convolution and the filters' gradient are most of a step) | 600 digits and 20 a step, not more |
 | M17 | not yet taken | feature | A macro argument that holds X_eTaL code is drawn as typed: `xetal render --html -e '@ pipe:p_ipe< "x \|> 2 * it"'` gives one `c-string` span, so a pipeline's stages are the only code on a page not decorated (ST4 says the code a macro parses from a string stays ASCII, drawn decorated by the renderers; the renderers do not yet) | Flow (then Pipeline), its page on the libraries' site; answered at the pin 4453400b by X_eTaL's code strings (`c"..."`, ST5; `\|>` and `$` drawn, S13, S14), Flow's pipelines now code strings drawn as code | the site's test leaves string spans out of its typed-spelling check; the stages read as typed |
+| M18 | not yet taken | feature | A code string's escapes and X_eTaL's backslash names: `o_\\` in `c"..."` is `error[bad-string]: unknown escape`; asked: the linter or the error points to `c#"..."#` | pipelines (attention) | write the pipeline `c#"..."#` |
 ## Details
 
 ### M1, M2: macro libraries and seeing an expansion (landed)
@@ -186,6 +187,29 @@ keeps no `## takes:` line, so its notation is never parsed as code. Its step 110
 `## uses: copied | parsed`), will have `Pipeline.xtlm` declare
 `## uses: parsed`.
 
+### M18: a code string's escapes and X_eTaL's backslash names
+
+X_eTaL's functions may end in `\` (`o_\` transposes, `s_\` scans), and
+the escaped code string `c"..."` reads `\` as an escape: the pipelines
+demo's attention stage `(Q '+ '* i_nner o_\ K)` in `c"..."` is
+`error[bad-string]: unknown escape` at the backslash (placed well, at
+pin f7848d00). The verbatim form `c#"..."#` takes it as written, which
+the demo uses. Asked: that the linter say so (X_eTaL's string lints,
+`escapes-could-be-raw`, do not look at code strings yet), or that the
+lexer's error name the way out (`c#"..."#`) when the escape follows a
+function name's underscore. Workaround: write such a pipeline
+`c#"..."#`.
+
+The pipelines demo (2026-10-19) also bears on two earlier asks: M11
+does not touch Flow (a stage is copied with the caller's aliases, so
+`nn:`, `cv:` and `at:` in a stage are the caller's own), while Net
+still writes a fixed `nn:`; and a bias is a stage of its own, named
+(`b nn:b_ias it`, `(1, B) nn:a_ddAxis it`), since X_eTaL adds no
+broadcasting (M12, declined). X_eTaL's step 109 (the pipeline macro,
+D155) is now shown on this repository's libraries: dense with its
+bias, the stable softmax, layer norm, attention and a CNN layer, each
+checked against plain X_eTaL (`demos/pipelines/`).
+
 ### To take to X_eTaL
 
 M17 is filed here but not yet in X_eTaL's ledger (M15 and M16 are
@@ -197,6 +221,13 @@ form, ready to add there (this repository does not change X_eTaL):
 id = "M17"
 repo = "X_eTaL-ML"
 ask = "a macro argument that holds code (a pipeline's stages) is drawn as typed; let a macro library declare it code and the renderers decorate it"
+state = "new"
+here = ""
+
+[[ask]]
+id = "M18"
+repo = "X_eTaL-ML"
+ask = "c\"...\" reads the backslash of o_\\ and s_\\ as an escape: let the linter or the lexer's error point to c#\"...\"#"
 state = "new"
 here = ""
 ```

@@ -1,0 +1,108 @@
+#!/usr/bin/env xetal
+## Pipelines on this repository's own libraries: each layer written as
+## Flow writes data flow, left to right with |> between the stages, then
+## the same layer in plain X_eTaL, then a check that they agree.
+## `xetal expand pipelines.xtl` shows what each pipeline became.
+
+"flow:" u_se< "Flow"
+"nn:" u_se< "NN"
+"nm:" u_se< "Norm"
+"at:" u_se< "Attention"
+"k:" u_se< "Check"
+
+### Data
+
+## A batch of 3 rows of 4 features; a dense layer's weights, 4 x 2, and
+## its bias; small fixed values, so every result can be read.
+X := 3 4 r_eshape 0.1 * f_loat r_ange 12
+W := 4 2 r_eshape 0.5 -0.25 0.75 0.1 -0.3 0.2 0.05 -0.6
+b := 0.1 -0.2
+
+### Dense layer with its bias
+
+## The product, then the bias added along the last axis (NN's b_ias:
+## X_eTaL has no implicit broadcasting, so the axis is the library's).
+dense := ({ @ ->
+  g1:stage := X
+  g2:stage := { @ ->
+    it := g1:stage
+    it '+ '* i_nner W
+  } @
+  g3:stage := { @ ->
+    it := g2:stage
+    b nn:b_ias it
+  } @
+  g3:stage
+} @)
+dense0 := (X '+ '* i_nner W) + 3 2 r_eshape b
+c1 := "dense, its bias" k:t_est dense k:n_ear dense0
+
+### Stable softmax
+
+## The largest subtracted before e_xp, so e_xp never overflows: the
+## labels $m and $e name stages that later stages use.
+z := 1000.0 1001.0 1002.0
+soft := ({ @ ->
+  g4:stage := z
+  m := { @ ->
+    it := g4:stage
+    'm_ax r_/ it
+  } @
+  e := e_xp z - m
+  g5:stage := e / '+ r_/ e
+  g5:stage
+} @)
+soft0 := nn:s_oftmax z
+c2 := "stable softmax" k:t_est soft k:n_ear soft0
+
+### Layer norm
+
+## Each row standardized (less its mean, over its standard deviation:
+## Norm's s_tandard), then times the gain, plus the bias.
+g := 1.0 2.0 1.0 0.5
+c := 0.0 0.1 0.0 -0.1
+norm := ({ @ ->
+  g6:stage := X
+  g7:stage := nm:s_tandard g6:stage
+  g8:stage := { @ ->
+    it := g7:stage
+    it * (s_hape it) r_eshape g
+  } @
+  g9:stage := { @ ->
+    it := g8:stage
+    it + (s_hape it) r_eshape c
+  } @
+  g9:stage
+} @)
+norm0 := (g, c) nm:l_ayer X
+c3 := "layer norm" k:t_est norm k:n_ear norm0
+
+### Attention
+
+## One head: queries, keys and values from the same rows, taken apart
+## by a tuple label, then the scores, their weights under a causal mask
+## and the mix of the values. The verbatim form c#"..."# keeps the
+## transpose o_\ as written.
+Wq := 4 2 r_eshape 0.2 0.1 -0.1 0.3 0.05 0.2 0.1 -0.2
+Wk := 4 2 r_eshape 0.1 0.2 0.3 -0.1 -0.2 0.1 0.2 0.05
+Wv := 4 2 r_eshape 1.0 0.0 0.0 1.0 0.5 0.5 -0.5 0.5
+M := at:c_ausal 3
+head := ({ @ ->
+  g10:stage := X
+  (Q, K, V) := { @ ->
+    it := g10:stage
+    (it '+ '* i_nner Wq, it '+ '* i_nner Wk, it '+ '* i_nner Wv)
+  } @
+  S := (Q '+ '* i_nner o_\ K) / 2.0 ^ 0.5
+  g11:stage := M at:w_eights S
+  g12:stage := { @ ->
+    it := g11:stage
+    it '+ '* i_nner V
+  } @
+  g12:stage
+} @)
+head0 := (Wq, Wk, Wv) at:h_ead (X, M)
+c4 := "attention, one head" k:t_est head k:n_ear head0
+
+k:r_eport c1 k:a_nd c2 k:a_nd c3 k:a_nd c4
+

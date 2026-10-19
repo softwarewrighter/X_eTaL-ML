@@ -1,0 +1,61 @@
+#!/usr/bin/env xetal
+## One CNN layer four ways, a Rosetta Stone: as a paper prints it (an
+## equation, read by X_eTaL-libraries' Equations), as a pipeline (Flow),
+## and as plain X_eTaL (this repository's Conv). The pipeline's
+## expansion, the fourth way, is what `xetal expand rosetta.xtl` shows.
+## All give the same feature maps.
+
+"e:" u_se< "Equations"
+"flow:" u_se< "Flow"
+"cv:" u_se< "Conv"
+"nn:" u_se< "NN"
+"k:" u_se< "Check"
+
+### Data
+
+## One 5 x 5 picture (one channel: a bright 2 x 2 square on a dim
+## field), two 3 x 3 filters (a vertical edge, a center-surround) and
+## their biases.
+m := 0.0 1.0 1.0 0.0 0.0
+P := 0.1 + 0.8 * m '* t_able m
+F := 2 3 3 r_eshape 1.0 0.0 -1.0 2.0 0.0 -2.0 1.0 0.0 -1.0 0.0 1.0 0.0 1.0 -4.0 1.0 0.0 1.0 0.0
+B := 0.5 -0.25
+O := 2
+Ho := 3
+Wo := 3
+
+### As a paper prints it
+
+## Y[o,h,w] = max(sum over r, s of P[h+r, w+s] F[o,r,s], plus B[o], 0):
+## its value, then its LaTeX, from the same reading of the same text.
+eq := "Y[o,h,w] | O Ho Wo" e:e_q< "max((sum r:=0..2, sum s:=0..2 | P[h+r,w+s] * F[o,r,s]) + B[o], 0)"
+"Y[o,h,w] | O Ho Wo" e:t_ex< "max((sum r:=0..2, sum s:=0..2 | P[h+r,w+s] * F[o,r,s]) + B[o], 0)"
+
+### As a pipeline
+
+## The windows of the picture, one column each; every filter times every
+## window (one matrix product); its bias along the filters' axis; the
+## maps shaped O x Ho x Wo; then the activation.
+pipe := @ flow:p_ipe< c"
+   1 5 5 r_eshape P
+|> cv:w_indows
+|> ((O c_at 9) r_eshape F) '+ '* i_nner it
+|> (1, B) nn:a_ddAxis it
+|> (O c_at Ho c_at Wo) r_eshape it $Y [O Ho Wo]
+|> nn:r_elu Y"
+
+### Plain X_eTaL
+
+## Conv's layer for a batch of one picture, as the repository's CNN
+## demos use it.
+plain := nn:r_elu (O c_at Ho c_at Wo) r_eshape ((O c_at 9) r_eshape F, B) cv:c_onv 1 5 5 r_eshape P
+
+### The same
+
+r1 := "the equation and the pipeline" k:t_est eq k:n_ear pipe
+r2 := "the pipeline and plain X_eTaL" k:t_est pipe k:n_ear plain
+k:r_eport r1 k:a_nd r2
+
+## The two feature maps (after the activation): the vertical edge at
+## the square's left side, the center-surround on its corners.
+plain

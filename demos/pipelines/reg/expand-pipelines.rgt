@@ -1,0 +1,3 @@
+command = '"$XETAL" expand pipelines.xtl'
+exit_code = 0
+desc = "pipelines: pipelines.xtl after macro expansion by the pinned xetal: what Flow (and in rosetta.xtl Equations) wrote"
