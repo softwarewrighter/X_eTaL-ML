@@ -24,7 +24,8 @@ nav li.current { background: var(--accent); color: var(--bg); }
 nav li.current .summary, nav li.current .alias { color: var(--bg); }
 nav .name { font-weight: 600; }
 nav .summary { grid-column: 1 / 3; font-size: 0.8rem; color: var(--muted); }
-code, pre, textarea { font-family: "JuliaMono", "SF Mono", Menlo, Consolas, monospace; }
+/* No font ligatures: X_eTaL's rendered form draws its own glyphs (|> as a triangle), and the ASCII pane shows the text as typed; JuliaMono would otherwise draw |> as one glyph in both. As X_eTaL's own editor. */
+code, pre, textarea { font-family: "JuliaMono", "SF Mono", Menlo, Consolas, monospace; font-variant-ligatures: none; font-feature-settings: "liga" 0, "calt" 0, "dlig" 0; }
 .alias { color: var(--gold); margin-left: 8px; font-size: 0.9em; }
 section { padding: 16px 28px; min-width: 0; }
 section h2 { margin: 0; }
