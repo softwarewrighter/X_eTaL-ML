@@ -26,6 +26,8 @@ header { padding-top: 20px; }
 .brand h1 { margin: 0; font-size: 1.7rem; }
 .logo { height: 44px; width: auto; border-radius: 6px; display: block; }
 .lede { color: var(--muted); margin: 8px 0 12px; }
+/* No font ligatures: X_eTaL's rendered form draws its own glyphs (|> as a triangle); JuliaMono would draw the typed pair as one too. */
+code, .line, pre { font-variant-ligatures: none; font-feature-settings: "liga" 0, "calt" 0, "dlig" 0; }
 code, .line { font-family: "JuliaMono", "DejaVu Sans Mono", Menlo, ui-monospace, monospace; }
 .line { display: block; font-size: 1.25rem; padding: 12px 14px; background: var(--card);
   border: 1px solid var(--line); border-radius: 10px; overflow-x: auto; white-space: pre; }

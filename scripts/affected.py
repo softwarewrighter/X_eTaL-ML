@@ -72,8 +72,13 @@ def plan(files, demo_names, lib_names, demo_imports, lib_imports):
     files = [f for f in files if not (f.endswith(DOCS_ONLY[0]) or f.startswith(DOCS_ONLY[1:]))]
     if not files:
         return []
+    # A stylesheet changes how a page looks, not what its baselines read: the pages are rebuilt.
+    styles = [f for f in files if f.endswith(".css")]
+    files = [f for f in files if not f.endswith(".css")]
     if any(f.startswith(EVERYTHING) or f == "justfile" for f in files):
         return ["all"]
+    if not files:
+        return ["pages"] if styles else []
     touched_demos = {f.split("/")[1] for f in files if f.startswith("demos/") and f.count("/") >= 2}
     touched_libs = {f.split("/")[1] for f in files if f.startswith("libs/") and f.count("/") >= 2}
     site = any(f.startswith("site/") for f in files)
@@ -114,6 +119,7 @@ def self_test():
         (["libs/NN/src/NN.xtl"], ["demo cnn-digits", "demo diffusion", "demo net-macro", "lib NN", "lib Net", "pages"]),
         (["site/src/lib.rs"], ["pages"]),
         (["shared/microscope/src/run.rs"], ["all"]),
+        (["shared/microscope/microscope.css", "site/style.css"], ["pages"]),
         (["XETAL_COMMIT"], ["all"]),
         (["scripts/gate.sh"], ["all"]),
         (["bench/dense.xtl"], []),  # the timings are not in the gate
