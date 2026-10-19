@@ -1,1 +1,5 @@
-error[bad-integral]: the variable is a lowercase name: X1 at 114..138
+error[bad-integral]: the variable is a lowercase name: X1
+ --> reject-bad-variable.xtl:4:20
+  |
+4 | @ integ:i_ntegral< "integral X1:=0..1 | X1"
+  |                    ^^^^^^^^^^^^^^^^^^^^^^^^

@@ -1,1 +1,5 @@
-error[bad-integral]: an integral starts with the word integral: x:=0..1 at 115..128
+error[bad-integral]: an integral starts with the word integral: x:=0..1
+ --> reject-no-word.xtl:4:20
+  |
+4 | @ integ:i_ntegral< "x:=0..1 | x"
+  |                    ^^^^^^^^^^^^^

@@ -1,1 +1,5 @@
-error[bad-integral]: the variable and its bounds, tau:=a..b, not 0..1 at 111..130
+error[bad-integral]: the variable and its bounds, tau:=a..b, not 0..1
+ --> reject-no-binding.xtl:4:20
+  |
+4 | @ integ:i_ntegral< "integral 0..1 | x"
+  |                    ^^^^^^^^^^^^^^^^^^^

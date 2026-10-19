@@ -1,1 +1,5 @@
-error[bad-integral]: simpson needs an even number of steps, not 3 at 119..154
+error[bad-integral]: simpson needs an even number of steps, not 3
+ --> reject-odd-simpson.xtl:4:20
+  |
+4 | @ integ:i_ntegral< "integral x:=0..1 by simpson 3 | x"
+  |                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

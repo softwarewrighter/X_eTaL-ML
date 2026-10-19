@@ -1,1 +1,5 @@
-error[bad-integral]: after by: the rule and the grid, trapezoid 64 or simpson 32, not trapezoid 8 extra at 127..170
+error[bad-integral]: after by: the rule and the grid, trapezoid 64 or simpson 32, not trapezoid 8 extra
+ --> reject-trailing.xtl:4:20
+  |
+4 | @ integ:i_ntegral< "integral x:=0..1 by trapezoid 8 extra | x"
+  |                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

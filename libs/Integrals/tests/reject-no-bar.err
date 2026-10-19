@@ -1,1 +1,5 @@
-error[bad-integral]: the integral, then | and the body: integral x:=0..1 x at 104..124
+error[bad-integral]: the integral, then | and the body: integral x:=0..1 x
+ --> reject-no-bar.xtl:4:20
+  |
+4 | @ integ:i_ntegral< "integral x:=0..1 x"
+  |                    ^^^^^^^^^^^^^^^^^^^^

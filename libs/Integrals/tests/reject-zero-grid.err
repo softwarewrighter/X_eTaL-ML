@@ -1,1 +1,5 @@
-error[bad-integral]: the grid needs at least one step: 0 at 100..137
+error[bad-integral]: the grid needs at least one step: 0
+ --> reject-zero-grid.xtl:4:20
+  |
+4 | @ integ:i_ntegral< "integral x:=0..1 by trapezoid 0 | x"
+  |                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

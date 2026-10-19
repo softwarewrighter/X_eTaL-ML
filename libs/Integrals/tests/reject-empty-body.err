@@ -1,1 +1,5 @@
-error[bad-integral]: an empty body after |: integral x:=0..1 | at 95..115
+error[bad-integral]: an empty body after |: integral x:=0..1 |
+ --> reject-empty-body.xtl:4:20
+  |
+4 | @ integ:i_ntegral< "integral x:=0..1 |"
+  |                    ^^^^^^^^^^^^^^^^^^^^

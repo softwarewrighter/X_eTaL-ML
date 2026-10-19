@@ -1,1 +1,5 @@
-error[bad-integral]: an improper integral (a bound of inf): write a truncation, 0..20 say, and show the tail is small, or change variables so the bounds are finite: 0..inf at 150..184
+error[bad-integral]: an improper integral (a bound of inf): write a truncation, 0..20 say, and show the tail is small, or change variables so the bounds are finite: 0..inf
+ --> reject-infinite.xtl:4:20
+  |
+4 | @ integ:i_ntegral< "integral x:=0..inf | e_xp n_eg x"
+  |                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
