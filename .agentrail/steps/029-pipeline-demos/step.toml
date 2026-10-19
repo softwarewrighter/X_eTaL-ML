@@ -1,7 +1,7 @@
-number = 28
+number = 29
 slug = "pipeline-demos"
 status = "pending"
-description = "The real pipelines on this repository's libraries: the dense layer with its b..."
+description = "The real pipelines on this repository's libraries, as Flow writes them (flow:..."
 role = "production"
 context_files = []
 created_at = "2026-10-17T09:40:41"
