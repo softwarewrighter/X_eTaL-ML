@@ -55,16 +55,26 @@ def rebound(text):
                     found.append((i, n, scopes[-1][n]))
                 else:
                     scopes[-1][n] = i
-        opened = code.count("{") - code.count("}")
-        head = re.search(r"\{([^{}]*)->\s*$", code)
-        if opened > 0 and head:
-            scopes.append({n: i for n in names(head.group(1)) if not n.endswith("!")})
-        elif opened > 0:
-            scopes.append({})
-        while opened < 0 and len(scopes) > 1:
-            scopes.pop()
-            opened += 1
+        braced(code, i, scopes)
     return found
+
+
+def braced(code, i, scopes):
+    """Open and close the line's lambdas in order, so one closed and
+    another opened on the same line (`} @) + ({ @ ->`) are two scopes;
+    a lambda whose head ends the line (`{ x y ->`) binds its parameters."""
+    quote = False
+    for k, ch in enumerate(code):
+        if ch == '"':
+            quote = not quote
+        elif quote:
+            continue
+        elif ch == "}" and len(scopes) > 1:
+            scopes.pop()
+        elif ch == "{":
+            head = re.match(r"([^{}]*)->\s*$", code[k + 1:])
+            params = names(head.group(1)) if head else []
+            scopes.append({n: i for n in params if not n.endswith("!")})
 
 
 def self_test():
@@ -81,6 +91,7 @@ def self_test():
         "variable": "a! := 1\na! := 2\n",
         "separate lambdas": "u:f_ := { x ->\n  y := x\n  y\n}\nu:g_ := { x ->\n  y := x\n  y\n}\n",
         "comment": "a := 1 # a := 2\n# a := 3\n",
+        "two lambdas on a line": "c := ({ @ ->\n  x := 1\n  x\n} @) + ({ @ ->\n  x := 2\n  x\n} @)\n",
     }
     for k, src in bad.items():
         assert rebound(src), f"self-test: {k} not caught"

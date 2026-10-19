@@ -124,14 +124,20 @@ pub fn rebound(src: &str) -> Vec<String> {
                 }
             }
         }
-        let opened = code.matches('{').count() as i64 - code.matches('}').count() as i64;
-        if opened > 0 {
-            let params = code.rfind('{').and_then(|at| code[at + 1..].trim_end().strip_suffix("->").map(names)).unwrap_or_default();
-            scopes.push(params.into_iter().map(|n| (n, i)).collect());
-        }
-        for _ in 0..(-opened).max(0) {
-            if scopes.len() > 1 {
-                scopes.pop();
+        // The line's lambdas opened and closed in order, so one closed
+        // and another opened on a line are two scopes; a lambda whose
+        // head ends the line (`{ x y ->`) binds its parameters.
+        let mut quote = false;
+        for (at, c) in code.char_indices() {
+            match c {
+                '"' => quote = !quote,
+                '}' if !quote && scopes.len() > 1 => drop(scopes.pop()),
+                '{' if !quote => {
+                    let rest = code[at + 1..].trim_end();
+                    let params = rest.strip_suffix("->").filter(|h| !h.contains(['{', '}'])).map(names).unwrap_or_default();
+                    scopes.push(params.into_iter().map(|n| (n, i)).collect());
+                }
+                _ => {}
             }
         }
     }

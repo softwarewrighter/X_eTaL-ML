@@ -16,3 +16,12 @@ fn a_range_to_a_marker_on_its_own_line_ends_after_it() {
     let (a, b) = between(src, "z := ", "z := ");
     assert_eq!(&src[a..b], "z := 3");
 }
+
+/// One lambda closed and another opened on the same line are two
+/// scopes (scripts/check-rebind.py, the same rule).
+#[test]
+fn two_lambdas_on_one_line_are_two_scopes() {
+    let src = "c := ({ @ ->\n  x := 1\n  x\n} @) + ({ @ ->\n  x := 2\n  x\n} @)\n";
+    assert!(microscope::source::rebound(src).is_empty(), "{:?}", microscope::source::rebound(src));
+    assert_eq!(microscope::source::rebound("u:f_ := { x ->\n  x := x + 1\n  x\n}\n").len(), 1);
+}
