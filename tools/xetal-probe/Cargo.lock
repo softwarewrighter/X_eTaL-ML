@@ -589,6 +589,22 @@ dependencies = [
 ]
 
 [[package]]
+name = "xetal-codecheck"
+version = "0.1.0"
+dependencies = [
+ "xetal-base",
+ "xetal-core",
+ "xetal-expand",
+ "xetal-lex",
+ "xetal-lint",
+ "xetal-macro",
+ "xetal-program",
+ "xetal-sources",
+ "xetal-strtext",
+ "xetal-types",
+]
+
+[[package]]
 name = "xetal-complexity"
 version = "0.1.0"
 dependencies = [
@@ -671,6 +687,7 @@ dependencies = [
  "xetal-lex",
  "xetal-mapped",
  "xetal-reflow",
+ "xetal-syntax",
 ]
 
 [[package]]
@@ -769,6 +786,7 @@ name = "xetal-linter"
 version = "0.1.0"
 dependencies = [
  "xetal-base",
+ "xetal-codecheck",
  "xetal-ir",
  "xetal-lex",
  "xetal-lint",

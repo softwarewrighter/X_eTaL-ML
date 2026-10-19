@@ -179,7 +179,10 @@ dropped for `c"..."` and `c#"..."#`; Flow's pipelines are written
 `@ flow:p_ipe< c"..."`, drawn as code with `|>` and `$` as triangles
 (S13, S14), and the site's test checks the triangles on Flow's page
 (a plain string's text stays out of its typed-spelling check). Flow
-and Net declare `## uses: parsed`. Its step 110, macro contracts (`## takes:`,
+and Net declare `## uses: parsed`. At the pin f7848d00 (X_eTaL step 112) every code string's inside is
+lexed with the file: Flow's refusals of text that does not lex
+(`$ m-1`, a stray `$`) are the lexer's, placed at the character; Flow
+keeps no `## takes:` line, so its notation is never parsed as code. Its step 110, macro contracts (`## takes:`,
 `## uses: copied | parsed`), will have `Pipeline.xtlm` declare
 `## uses: parsed`.
 

@@ -1,5 +1,5 @@
-error[bad-pipeline]: after $ comes a plain name, or a tuple of names (Q, K, V): m-1
- --> reject-bad-name.xtl:5:15
+error[ambiguous-minus]: `-` touching the previous token and a digit is ambiguous: write `3 - 1` to subtract or `3 -1` for a negative literal
+ --> reject-bad-name.xtl:5:21
   |
 5 | @ flow:p_ipe< c"x $m-1 |> n_eg"
-  |               ^^^^^^^^^^^^^^^^^
+  |                     ^

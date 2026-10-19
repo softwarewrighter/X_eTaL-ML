@@ -10,7 +10,7 @@
 #   XETAL_LIBRARIES_SOURCE=../X_eTaL-libraries scripts/xetal-libraries.sh
 #   scripts/xetal-libraries.sh --pin [REF]   # pin a committed ref of ../X_eTaL-libraries (default HEAD)
 set -euo pipefail
-USE=(Check Plot Strings Format Lists)
+USE=(Check Plot Strings Format Lists Equations Parsing)
 root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 source="${XETAL_LIBRARIES_SOURCE:-https://github.com/softwarewrighter/X_eTaL-libraries.git}"
 clone="$root/work/xetal-libraries"

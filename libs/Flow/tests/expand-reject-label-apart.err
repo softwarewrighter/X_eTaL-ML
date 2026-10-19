@@ -1,5 +1,5 @@
-error[bad-pipeline]: $ labels a stage and touches the name or tuple it gives ($m, $(Q, K)): x $ m
- --> reject-label-apart.xtl:5:15
+error[bad-label]: `$` labels a pipeline stage and touches the name or tuple it gives: `$h`, `$(Q, K)`
+ --> reject-label-apart.xtl:5:19
   |
 5 | @ flow:p_ipe< c"x $ m |> n_eg"
-  |               ^^^^^^^^^^^^^^^^
+  |                   ^

@@ -11,6 +11,11 @@ planning and reordering, `release` milestone release, `chore`
 agentrail bookkeeping (step complete, saga archive), `vendor` a
 refresh of the vendored X_eTaL.
 
+## 2026-10-19
+
+- 19:32 `fix` scripts/check-rebind.py and microscope's `rebound` open and close a line's lambdas in order: a line that closes one block and opens the next (`} @)) k:n_ear ({ @ ->`) is two scopes, not one. Integrals' expand-exact golden was refused for an `x` bound once in each of two such blocks. A self-test and a microscope test for the case.
+- 19:32 `vendor` XETAL_COMMIT 4453400b to f7848d00 (X_eTaL #146: code strings checked, every code string's inside lexed with the file, `## takes: code`, string-kind and code-check lints, fmt's canonical insides; #147: fmt keeps statement macro calls), and XETAL_LIBRARIES_COMMIT ed91e6db to 0f82f93 (Equations and Tags parse through Parsing and say `## uses: parsed`), Equations and Parsing now linked (scripts/xetal-libraries.sh). Flow's three refusals of text that does not lex (`$ m-1`, a stray `$`, `$ m`) are now the lexer's, at the character (`ambiguous-minus`, `bad-label`), rebased on purpose after review; every other baseline unchanged; the demos' web lock files gain X_eTaL's new crates. Flow keeps no `## takes:` line, so its `|>` notation is never parsed as code. Full gate passed (cloud).
+
 ## 2026-10-18
 
 - 13:07 `lib` Integrals, a new macro library (`integ:`, step integrals; X_eTaL's Saga 42 decisions 2 to 4, built here in parallel with the cloud lanes): `@ integ:i_ntegral< "integral tau:=a..b by trapezoid 64 | body"` is a definite integral by a quadrature rule (trapezoid or simpson, the grid named, trapezoid 64 the default), the body X_eTaL over the grid vector bound to the variable, improper integrals refused naming the two ways out; `integ:t_ex<` the LaTeX; every reader rule uses all of its text or refuses it (11 refusals pinned). Tests first: exact where each rule should be, the orders 4 and 16 on e^x, the box convolution converging to the triangle (half a step high at the jumps), the plan's oracle 1.0; demos convolution.xtl and gelu.xtl (GELU as the integral that defines it against the tanh approximation, a Gaussian KL divergence beside its closed form), live on the libs site; its Mathematics group; README, plan row 21.
