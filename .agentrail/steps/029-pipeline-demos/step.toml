@@ -1,8 +1,9 @@
 number = 29
 slug = "pipeline-demos"
-status = "pending"
+status = "completed"
 description = "The real pipelines on this repository's libraries, as Flow writes them (flow:..."
 role = "production"
 context_files = []
 created_at = "2026-10-17T09:40:41"
-commits = []
+completed_at = "2026-10-19T03:05:58"
+commits = ["f51180e65ebd0c6958ff9172e73334d8f9374d8a"]
