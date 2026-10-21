@@ -255,3 +255,21 @@ table.next .bar { display: inline-block; height: 8px; background: #1c7ed6; borde
 table.next .p { color: var(--muted); font-size: 11px; }
 table.look td { width: 14px; height: 14px; padding: 0; }
 table.look th { font: 11px ui-monospace, Menlo, monospace; color: var(--muted); padding: 0 3px; }
+
+/* Composing (palette.rs): the palette's groups of parts, the editor (ASCII as typed beside the rendered form), what a run gave. */
+.compose .palette { margin: 8px 0 12px; }
+.compose .group { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin: 4px 0; }
+.compose .group .name { color: var(--muted); font-size: .8rem; min-width: 64px; text-transform: uppercase; letter-spacing: .04em; }
+.compose button.part { font: inherit; font-family: "JuliaMono", ui-monospace, monospace; font-size: .85rem; padding: 2px 8px; border-radius: 6px;
+  border: 1px solid var(--line); background: var(--off); color: var(--fg); cursor: pointer; }
+.compose button.part:hover { border-color: var(--accent); color: var(--accent); }
+.compose .edit { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 8px 0; }
+.compose .pane { min-width: 0; }
+.compose .label { font-size: .8rem; color: var(--muted); margin-bottom: 4px; text-transform: uppercase; letter-spacing: .04em; }
+.compose textarea.editor { width: 100%; box-sizing: border-box; font-family: "JuliaMono", ui-monospace, monospace; font-size: .92rem; line-height: 1.4;
+  padding: 12px; border: 1px solid var(--line); border-radius: 8px; background: var(--off); color: var(--fg); resize: vertical;
+  font-variant-ligatures: none; font-feature-settings: "liga" 0, "calt" 0, "dlig" 0; }
+.compose pre.output { background: var(--off); padding: 10px 12px; border-radius: 8px; overflow-x: auto; }
+.compose pre.err { background: var(--off); color: var(--sel); padding: 10px 12px; border-radius: 8px; overflow-x: auto; white-space: pre; }
+.compose .controls button.run { border-color: var(--accent); color: var(--accent); font-weight: 700; }
+@media (max-width: 900px) { .compose .edit { grid-template-columns: 1fr; } }

@@ -91,6 +91,22 @@ X0 = D(z0) = D(zT + sum_{t=1}^{T} dz_t)
 All three decode the same pictures, which the program checks; the page
 checks them against the arithmetic done directly (its tests).
 
+## Compose your own
+
+The page's last choice is a composer: a program to start from (an
+equation with its LaTeX, or a pipeline), a palette of the notations'
+parts put in at the caret (the equation grammar's `sum i:=0..N-1 | `,
+`A[i,j]`, its functions and Greek names; the pipeline's `|>`, `it`,
+`$name`, `$(a, b)`, `[N K]`; this repository's libraries as stages;
+the imports), the program typed in ASCII beside its rendered form,
+then Run and Expand: what it printed (a line between `$$` drawn as
+math), any error placed in the text as X_eTaL places it, and what the
+macros became. The input is the grammar, not LaTeX: the LaTeX comes
+out of the same reading, and a notation with a part the grammar does
+not use is refused at the call rather than read as something else,
+which is the lint of the notation. The parts are data,
+`shared/microscope/palette.tsv`, each of them run by the tests.
+
 ## What it shows about X_eTaL
 
 - A macro library can give a notation (data flow) without hiding

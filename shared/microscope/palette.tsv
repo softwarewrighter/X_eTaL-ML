@@ -1,0 +1,71 @@
+# The palette of parts to compose an equation or a pipeline from, one
+# per line: group, label, the text inserted at the caret, and how many
+# characters back from its end the caret lands (0 when left out). The
+# text may hold \n for a line break. Read by src/palette.rs; the
+# groups appear in this order.
+#
+# Equations: the grammar of X_eTaL-libraries' Equations (e:e_q<, e:t_ex<),
+# as a paper prints it; integral is this repository's Integrals until the
+# libraries' re-pin brings Equations' own.
+Equation	e:e_q< call	"y[i] | N" e:e_q< "sum j:=0..M-1 | A[i,j] * x[j]"
+Equation	e:t_ex< drawn	"$$" c_at ("y[i] | N" e:t_ex< "sum j:=0..M-1 | A[i,j] * x[j]") c_at "$$"
+Equation	sum	sum i:=0..N-1 |
+Equation	prod	prod i:=1..N |
+Equation	max over	max i:=0..N-1 |
+Equation	min over	min i:=0..N-1 |
+Equation	integral	@ integ:i_ntegral< "integral tau:=0..1 by simpson 64 | e_xp tau"
+Equation	A[i,j]	A[i,j]
+Equation	exp	exp()	1
+Equation	log	log()	1
+Equation	sqrt	sqrt()	1
+Equation	abs	abs()	1
+Equation	max(a, b)	max(, )	3
+Equation	min(a, b)	min(, )	3
+Equation	^2	^2
+Equation	( )	()	1
+Equation	alpha	alpha
+Equation	beta	beta
+Equation	lambda	lambda
+Equation	mu	mu
+Equation	sigma	sigma
+Equation	tau	tau
+Equation	theta	theta
+Equation	phi	phi
+# Pipelines: Flow's notation (flow:p_ipe<): the data, then stages after |>.
+Pipeline	flow:p_ipe< call	@ flow:p_ipe< c"X |> nn:r_elu"
+Pipeline	|> stage	\n|>
+Pipeline	it	it
+Pipeline	$name	 $y
+Pipeline	$(a, b)	 $(p, q)
+Pipeline	[N K] shape	 [N K]
+Pipeline	'+ r_/	'+ r_/
+Pipeline	'm_ax r_/	'm_ax r_/
+Pipeline	[n_eg r_ev]	[n_eg r_ev]
+Pipeline	'{ v -> }	'{ v -> v * 2.0 }	8
+Pipeline	it '+ '* i_nner W	it '+ '* i_nner W
+Pipeline	flow:t_ext< written back	@ flow:t_ext< c"X |> nn:r_elu"
+# Stages: this repository's libraries, each as a stage over it.
+Stages	nn:d_ense	it nn:d_ense wb
+Stages	nn:r_elu	nn:r_elu
+Stages	nn:s_igmoid	nn:s_igmoid
+Stages	nn:t_anh	nn:t_anh
+Stages	nn:s_oftmax	nn:s_oftmax
+Stages	nn:b_ias	b nn:b_ias it
+Stages	nn:a_ddAxis	(2, b) nn:a_ddAxis it
+Stages	nm:s_tandard	nm:s_tandard
+Stages	nm:l_ayer	(g, b) nm:l_ayer it
+Stages	nm:r_ms	g nm:r_ms it
+Stages	cv:w_indows	cv:w_indows
+Stages	cv:c_onv	(K, B) cv:c_onv it
+Stages	cv:p_ool	cv:p_ool
+Stages	at:s_cores	(Wq, Wk) at:s_cores it
+Stages	at:w_eights	M at:w_eights it
+# Imports: the libraries by their recommended aliases.
+Imports	Equations	"e:" u_se< "Equations"\n
+Imports	Flow	"flow:" u_se< "Flow"\n
+Imports	NN	"nn:" u_se< "NN"\n
+Imports	Norm	"nm:" u_se< "Norm"\n
+Imports	Conv	"cv:" u_se< "Conv"\n
+Imports	Attention	"at:" u_se< "Attention"\n
+Imports	Integrals	"integ:" u_se< "Integrals"\n
+Imports	Check	"k:" u_se< "Check"\n

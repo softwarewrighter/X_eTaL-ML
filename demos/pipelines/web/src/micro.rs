@@ -101,3 +101,10 @@ pub fn run(e: &Example) -> Result<Run, String> {
 pub fn calls(e: &Example) -> (Vec<String>, String, String) {
     (e.math.iter().map(|m| statement(e.src, m)).collect(), statement(e.src, e.pipe), statement(e.src, e.plain))
 }
+
+/// What Compose starts from: an equation with its LaTeX (the dense
+/// layer with its bias), and a pipeline (the stable softmax).
+pub const STARTERS: [(&str, &str); 2] = [
+    ("An equation", "\"e:\" u_se< \"Equations\"\nW := f_loat 2 3 r_eshape 1 2 3 4 5 6\nx := f_loat 1 1 1\nb := f_loat 10 20\n\"$$\" c_at (\"z[i] | 2\" e:t_ex< \"(sum j:=0..2 | W[i,j] * x[j]) + b[i]\") c_at \"$$\"\n\"z[i] | 2\" e:e_q< \"(sum j:=0..2 | W[i,j] * x[j]) + b[i]\"\n"),
+    ("A pipeline", "\"flow:\" u_se< \"Flow\"\n\"nn:\" u_se< \"NN\"\nz := 1.0 2.0 3.0\n@ flow:p_ipe< c\"\n   z\n|> 'm_ax r_/ it $m\n|> e_xp z - m $e\n|> e / '+ r_/ e\"\n"),
+];

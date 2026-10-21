@@ -107,3 +107,20 @@ fn the_diffusion_sampler_is_the_arithmetic_done_directly() {
         assert!((got - want).abs() < 1e-9, "{:?} {:?}", r.value, want);
     }
 }
+
+#[test]
+fn what_compose_starts_from_runs_and_the_equation_one_draws_its_math() {
+    use microscope::palette::compose;
+    use pipelines_web::micro::STARTERS;
+    for (title, src) in STARTERS {
+        let c = compose(src);
+        assert_eq!(c.err, "", "{title}: {}", c.err);
+        assert!(!c.out.is_empty(), "{title}: printed nothing");
+        assert!(c.expansion.unwrap().is_ok(), "{title}");
+        assert!(rebound(src).is_empty(), "{title}");
+    }
+    let c = compose(STARTERS[0].1);
+    assert_eq!(c.tex.len(), 1);
+    assert!(c.tex[0].starts_with("z_{i} = "), "{:?}", c.tex);
+    assert_eq!(c.out, ["16.0 35.0"]);
+}

@@ -6,17 +6,18 @@
 use yew::prelude::*;
 
 use microscope::chrome::{footer, header, panel};
+use microscope::palette::Composer;
 use microscope::source::{between, block, code, NONE};
 
-use crate::micro::{calls, program, run, Example, Run, EXAMPLES};
+use crate::micro::{calls, program, run, Example, Run, EXAMPLES, STARTERS};
 
 fn picker(picked: &UseStateHandle<usize>) -> Html {
     html! {
         <div class="controls">
             <span>{"An example: "}</span>
-            { for EXAMPLES.iter().enumerate().map(|(i, e)| {
+            { for EXAMPLES.iter().map(|e| e.title).chain(["Compose your own"]).enumerate().map(|(i, title)| {
                 let p = picked.clone();
-                html! { <button class={classes!((**picked == i).then_some("on"))} onclick={Callback::from(move |_| p.set(i))}>{e.title}</button> }
+                html! { <button class={classes!((**picked == i).then_some("on"))} onclick={Callback::from(move |_| p.set(i))}>{title}</button> }
             }) }
         </div>
     }
@@ -69,26 +70,34 @@ fn agree(e: &Example, r: &Run) -> Html {
 #[function_component(App)]
 pub fn app() -> Html {
     let picked = use_state(|| 0usize);
-    let e = EXAMPLES[*picked];
-    let src = program(&e);
-    let body = match run(&e) {
-        Ok(r) => html! { <>{ math(&e, &r) }{ columns(&e, &r) }{ agree(&e, &r) }</> },
-        Err(why) => html! { <p class="error">{format!("X_eTaL stopped: {why}")}</p> },
-    };
-    let from = format!("{} := ", e.pipe);
-    html! {
-        <>
-        <header>
-            { header("Pipelines", "A layer written as data flow: Flow's pipelines, left to right, |> between the stages, on this repository's libraries, each beside what it became and the same layer in plain X_eTaL. A CNN layer and a diffusion sampler are shown four ways: as a paper prints them, as a pipeline, as its expansion and as plain X_eTaL, all computing the same values.") }
-            { picker(&picked) }
-        </header>
-        <main>
+    // The last choice is composing one's own, from the palette.
+    let main = if *picked >= EXAMPLES.len() {
+        html! { <Composer starters={STARTERS.to_vec()} /> }
+    } else {
+        let e = EXAMPLES[*picked];
+        let src = program(&e);
+        let body = match run(&e) {
+            Ok(r) => html! { <>{ math(&e, &r) }{ columns(&e, &r) }{ agree(&e, &r) }</> },
+            Err(why) => html! { <p class="error">{format!("X_eTaL stopped: {why}")}</p> },
+        };
+        let from = format!("{} := ", e.pipe);
+        html! { <>
             { body }
             <section class="panel code">
                 <h2>{"The program"}</h2>
                 <p class="note">{"Everything the page runs, in your browser: the head of the program (its imports and data), this example's section, then the pipeline's value and the checks. The pipeline is highlighted."}</p>
                 { block(&src, between(&src, &from, &from)) }
             </section>
+        </> }
+    };
+    html! {
+        <>
+        <header>
+            { header("Pipelines", "A layer written as data flow: Flow's pipelines, left to right, |> between the stages, on this repository's libraries, each beside what it became and the same layer in plain X_eTaL. A CNN layer and a diffusion sampler are shown four ways: as a paper prints them, as a pipeline, as its expansion and as plain X_eTaL, all computing the same values. Compose your own from a palette of the notations' parts.") }
+            { picker(&picked) }
+        </header>
+        <main>
+            { main }
         </main>
         { footer() }
         </>

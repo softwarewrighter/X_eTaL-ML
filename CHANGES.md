@@ -13,6 +13,8 @@ refresh of the vendored X_eTaL.
 
 ## 2026-10-20
 
+- `feat` Compose your own on the pipelines page (step equation-palette): `shared/microscope/palette.rs`, a composer for the demo pages: programs to start from (an equation with its LaTeX, a pipeline), a palette of the notations' parts put in at the caret (`palette.tsv`: the equation grammar, the pipeline notation, the libraries as stages, the imports), the program in ASCII beside its rendered form, Run (what it printed, a line between `85651` drawn as math, errors placed in the text) and Expand; tests: the parts (lexed, every stage run over fitting data), insertion at the caret, composing and its errors, the starters
+- `plan` saga: step equation-palette inserted (031); the cursor repaired (027 closed with its commits)
 - `demo` Pipelines: a diffusion sampler four ways (step diffusion-rosetta): `demos/pipelines/diffusion.xtl`, the two forms a paper prints (the sum from T down to 1 of a_t z_t + b_t eps_theta(z_t, t, c) + sigma_t eps_rand, a recurrence, so one step as an Equations call applied T times by `p_ower`; and zT + the sum of the steps' differences, a plain Equations sum), as a Flow pipeline with the pictures' shape checked, and in plain X_eTaL as the diffusion demo writes it; all equal, checked, and the page's tests redo the arithmetic in Rust; the page draws both equations (an example's `math` is a list); CLI and expansion goldens. Asks for X_eTaL-libraries' Equations (a section of docs/xetal-asks.md): a descending range dies in the expansion, a recurrence word, the caller's functions by name
 - `plan` saga: step diffusion-rosetta inserted (030); f32-tolerance is 031
 

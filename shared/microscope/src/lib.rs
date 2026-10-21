@@ -8,6 +8,7 @@
 //! - `cells`: small boards as clickable cells
 //! - `chrome`: header, stage chips, panels, pictures, notices, footer
 //! - `libs`: this repo's libraries, importable with `u_se<`
+//! - `palette`: composing an equation or a pipeline from parts, run live
 //!
 //! Pages also link `microscope.css` (trunk: `rel="css"`).
 
@@ -16,5 +17,6 @@ pub mod cells;
 pub mod chrome;
 pub mod color;
 pub mod libs;
+pub mod palette;
 pub mod run;
 pub mod source;
