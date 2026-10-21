@@ -1,8 +1,12 @@
 number = 30
 slug = "diffusion-rosetta"
-status = "pending"
+status = "completed"
 description = "The user, 2026-10-20 (two screenshots of a latent diffusion sampler: X0 = D(z..."
 role = "production"
 context_files = []
 created_at = "2026-10-20T20:26:34"
-commits = []
+completed_at = "2026-10-20T20:45:36"
+commits = [
+    "82dc8dd5f606de34a7b4712a20e09aabce32ddca",
+    "8c21decb99b41bada298a87adf019cc75f057e92",
+]
