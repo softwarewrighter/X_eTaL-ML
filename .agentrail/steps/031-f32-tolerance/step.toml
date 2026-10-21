@@ -1,4 +1,4 @@
-number = 30
+number = 31
 slug = "f32-tolerance"
 status = "blocked"
 description = "X_eTaL-gpu's finding (its agent, 2026-10-16, GA7 done): diffusion.xtl's 1e-6 ..."
