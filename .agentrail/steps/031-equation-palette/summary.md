@@ -1,0 +1,1 @@
+shared/microscope/palette.rs: a composer for the demo pages (starters, a palette of the notations' parts from palette.tsv put in at the caret, ASCII beside rendered, Run with LaTeX drawn and errors placed, Expand), on the pipelines page as Compose your own; tests natively (parts lex, every stage runs, insertion, composing, starters); checked in Chrome. Full gate 1158 s.

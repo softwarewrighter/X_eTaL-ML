@@ -1,8 +1,9 @@
 number = 31
 slug = "equation-palette"
-status = "in-progress"
+status = "completed"
 description = "The user, 2026-10-20: a palette of math symbols and parts to compose an equat..."
 role = "production"
 context_files = []
 created_at = "2026-10-20T21:09:42"
-commits = []
+completed_at = "2026-10-20T21:46:24"
+commits = ["6601d685af2566d8bc902251d66d61bcb2ebbf98"]
