@@ -2,8 +2,8 @@
 # README's demo list and the live catalog (pages/index.html).
 slug = "pipelines"            # the directory name, demos/<slug>/
 title = "Pipelines"
-summary = "Layers written as data flow, left to right: a dense layer with its bias, a stable softmax, layer norm and one attention head as Flow pipelines on this repository's libraries, each beside what the macro wrote and the same layer in plain X_eTaL. A CNN layer is shown four ways, as a paper prints it (an equation, drawn as math), as a pipeline, as its expansion and as plain X_eTaL; all compute the same feature maps, checked as the page runs."
-concepts = ["macro libraries (.xtlm)", "code strings", "xetal expand", "|> and $ labels", "equations as macros", "convolution"]        # the X_eTaL ideas it shows
+summary = "Layers written as data flow, left to right: a dense layer with its bias, a stable softmax, layer norm and one attention head as Flow pipelines on this repository's libraries, each beside what the macro wrote and the same layer in plain X_eTaL. A CNN layer and a latent diffusion sampler are each shown four ways, as a paper prints them (equations, drawn as math; the sampler's sum from T down to 1 is a recurrence, one step applied T times), as a pipeline, as its expansion and as plain X_eTaL; all compute the same values, checked as the page runs."
+concepts = ["macro libraries (.xtlm)", "code strings", "xetal expand", "|> and $ labels", "equations as macros", "convolution", "diffusion sampling"]        # the X_eTaL ideas it shows
 status = "live"             # draft | live | deferred
 order = 51                  # position in the catalog (lower first)
 needs = []                   # asks in docs/xetal-asks.md it waits on or works around

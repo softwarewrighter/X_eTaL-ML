@@ -1,0 +1,3 @@
+command = '"$XETAL" run --seed 1 --draw "$XETAL_DRAW" diffusion.xtl'
+exit_code = 0
+desc = "pipelines: diffusion.xtl run by the pinned xetal CLI"

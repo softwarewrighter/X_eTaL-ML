@@ -1,0 +1,7 @@
+Zn_{n,k} = a_{t-1} \, Z_{n,k} + b_{t-1} \, eps_{n,k} + sigma_{t-1} \, noise_{t-1,n,k}
+z0_{n,k} = zT_{n,k} + \left(\sum_{t=1}^{T} dz_{t-1,n,k}\right)
+ok: the equations and the pipeline
+ok: the pipeline and plain X_eTaL
+2 checks, all passed
+-0.06919801180634849 0.19990828133183167  0.2852198225377993 0.10830157426111753
+-0.09665317911923497 0.12137441351913889 0.22781093011480252 0.12479912816684816

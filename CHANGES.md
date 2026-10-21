@@ -11,6 +11,11 @@ planning and reordering, `release` milestone release, `chore`
 agentrail bookkeeping (step complete, saga archive), `vendor` a
 refresh of the vendored X_eTaL.
 
+## 2026-10-20
+
+- `demo` Pipelines: a diffusion sampler four ways (step diffusion-rosetta): `demos/pipelines/diffusion.xtl`, the two forms a paper prints (the sum from T down to 1 of a_t z_t + b_t eps_theta(z_t, t, c) + sigma_t eps_rand, a recurrence, so one step as an Equations call applied T times by `p_ower`; and zT + the sum of the steps' differences, a plain Equations sum), as a Flow pipeline with the pictures' shape checked, and in plain X_eTaL as the diffusion demo writes it; all equal, checked, and the page's tests redo the arithmetic in Rust; the page draws both equations (an example's `math` is a list); CLI and expansion goldens. Asks for X_eTaL-libraries' Equations (a section of docs/xetal-asks.md): a descending range dies in the expansion, a recurrence word, the caller's functions by name
+- `plan` saga: step diffusion-rosetta inserted (030); f32-tolerance is 031
+
 ## 2026-10-19
 
 - 19:42 `demo` Pipelines (step pipeline-demos): `demos/pipelines/`, Flow pipelines on this repository's libraries: dense with its bias, the stable softmax, layer norm and one attention head (`$(Q, K, V)`), each beside its expansion and the same layer in plain X_eTaL, checked to agree; and a CNN layer four ways (rosetta.xtl): as a paper prints it (X_eTaL-libraries' Equations, `e:e_q<` its value and `e:t_ex<` its LaTeX, the activation as `max(..., 0)`), as a pipeline (with a `[O Ho Wo]` shape check), as its expansion and as plain X_eTaL (Conv), all the same maps. A live page shows them side by side, the equation drawn by KaTeX, now vendored in `shared/katex/` (0.18.10, MIT, the WOFF2 fonts only); its tests check every example and the CNN maps against the arithmetic done directly in Rust. Goldens: cli-pipelines, cli-rosetta, expand-pipelines and expand-rosetta (test.sh), browser-pipelines. microscope's stylesheet gains a three-column layout. Ask M18 (a code string's escapes and `o_\`). README gallery, plan.

@@ -22,15 +22,21 @@ fn picker(picked: &UseStateHandle<usize>) -> Html {
     }
 }
 
-/// The equation, drawn as math where KaTeX has loaded (index.html), its
-/// LaTeX as text where it has not.
+/// The equations, each drawn as math where KaTeX has loaded
+/// (index.html), its LaTeX as text where it has not, above the call
+/// that reads it.
 fn math(e: &Example, r: &Run) -> Html {
-    let (Some(call), Some(tex)) = (calls(e).0, r.tex.clone()) else { return html! {} };
+    let calls = calls(e).0;
+    if calls.is_empty() {
+        return html! {};
+    }
     panel("As a paper prints it", "e:e_q<",
-        "The equation, read by X_eTaL-libraries' Equations: e:e_q< gives its value, e:t_ex< its LaTeX, from one reading of the same text.",
+        "The equation, read by X_eTaL-libraries' Equations: e:e_q< gives its value, e:t_ex< its LaTeX, from one reading of the same text. A sum whose term uses the one before (a recurrence) is one step, applied by p_ower.",
         false, html! { <>
-            <div class="tex" data-tex={tex.clone()}>{tex}</div>
-            { block(&call, NONE) }
+            { for calls.iter().zip(&r.tex).map(|(call, tex)| html! { <>
+                <div class="tex" data-tex={tex.clone()}>{tex.clone()}</div>
+                { block(call, NONE) }
+            </> }) }
         </> })
 }
 
@@ -73,7 +79,7 @@ pub fn app() -> Html {
     html! {
         <>
         <header>
-            { header("Pipelines", "A layer written as data flow: Flow's pipelines, left to right, |> between the stages, on this repository's libraries, each beside what it became and the same layer in plain X_eTaL. The CNN layer is shown four ways: as a paper prints it, as a pipeline, as its expansion and as plain X_eTaL, all computing the same maps.") }
+            { header("Pipelines", "A layer written as data flow: Flow's pipelines, left to right, |> between the stages, on this repository's libraries, each beside what it became and the same layer in plain X_eTaL. A CNN layer and a diffusion sampler are shown four ways: as a paper prints them, as a pipeline, as its expansion and as plain X_eTaL, all computing the same values.") }
             { picker(&picked) }
         </header>
         <main>

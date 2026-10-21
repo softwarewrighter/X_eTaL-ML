@@ -241,3 +241,25 @@ bindings (Saga 23). M10 is declined: `e_ach` stays scalar-only, and
 into an array is for the user to decide in X_eTaL. With it the ten
 digits of cnn-digits would be one `m_ap` giving a 10 x 10 matrix of
 probabilities; today they are one `e_ach` per number wanted.
+
+## Asks for X_eTaL-libraries
+
+What the demos need from the libraries pinned by
+`XETAL_LIBRARIES_COMMIT` (`../X_eTaL-libraries`, read only from here;
+its own plan takes them). Equations' rules are deliberate (a fixed
+table of functions, every rule uses all of its text or refuses it), so
+these are asks, not bugs, but for E1. Filed from the diffusion sampler
+of `demos/pipelines/diffusion.xtl` (2026-10-20), a paper's
+`X0 = D(zT + sum_{t=T}^{1} [a_t z_t + b_t eps_theta(z_t, t, c) + sigma_t eps_rand] - z_t)`.
+
+| # | Status | Kind | Ask | Demos | Workaround |
+| - | ------ | ---- | --- | ----- | ---------- |
+| E1 | not yet taken | bug | A descending range, `sum t:=T..1 \| dz[t-1]`, is not refused by the reader: the expansion dies with `error[domain]: a count cannot be -1` at the call, which names no rule. Asked: the reader refuses it (`error[bad-equation]`), saying a range runs low..high, or reads it as the empty sum | pipelines (diffusion) | write the range upward, `1..T` |
+| E2 | not yet taken | feature | A recurrence word: a sum whose term uses the one before (the sampler's sum from T down to 1, a scan) cannot be a `sum`, whose references are all to the caller's arrays. Asked: an operator word for it (`scan t:=T..1 \| ...` with the previous term named, or a documented refusal naming `p_ower`) | pipelines (diffusion) | one step as the summand, an Equations call applied T times by `p_ower`; the differences collected and summed by a plain `sum` |
+| E3 | not yet taken | feature | The caller's functions by name: `D(z[k])` and `eps_theta(z[k], t, c)` are refused (`d_ecode is not a function of an equation (exp, log, sqrt, abs, max, min)`). Asked: a name in scope applied in an equation (the X_eTaL spelling, `u:d_ecode(z[k])`, or a declared table) calls it, drawn `\mathcal{D}(z_k)` | pipelines (diffusion) | the networks called outside the string, their results named (`eps`) and read inside it |
+
+The ledger check (`just check-asks`) covers X_eTaL's ledger only;
+these are kept in step with `../X_eTaL-libraries/docs/plan.md` by
+hand at each libraries re-pin. Seen at its HEAD (2026-10-20): Equations
+reads `integral` (Saga 42's decision 1, this repository's Integrals as
+its oracle), so the next re-pin lifts Integrals as planned.
