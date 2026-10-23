@@ -41,6 +41,7 @@ list stands on its own.
 | M16 | new | speed | The matrix product runs at about 85 ns a multiply-add: `(8 9 r_eshape ...) '+ '* i_nner 9 33800 r_eshape ...` and `(8 33800 r_eshape ...) '+ '* i_nner o_\ 9 33800 r_eshape ...` (2.4 million multiply-adds each, one with many short sums, one with few long ones) both take about 0.2 s, printed results included; the outer product `t_able` of 270,400 results takes 30 ms | cnn-backprop (the convolution and the filters' gradient are most of a step) | 600 digits and 20 a step, not more |
 | M17 | not yet taken | feature | A macro argument that holds X_eTaL code is drawn as typed: `xetal render --html -e '@ pipe:p_ipe< "x \|> 2 * it"'` gives one `c-string` span, so a pipeline's stages are the only code on a page not decorated (ST4 says the code a macro parses from a string stays ASCII, drawn decorated by the renderers; the renderers do not yet) | Flow (then Pipeline), its page on the libraries' site; answered at the pin 4453400b by X_eTaL's code strings (`c"..."`, ST5; `\|>` and `$` drawn, S13, S14), Flow's pipelines now code strings drawn as code | the site's test leaves string spans out of its typed-spelling check; the stages read as typed |
 | M18 | not yet taken | feature | A code string's escapes and X_eTaL's backslash names: `o_\\` in `c"..."` is `error[bad-string]: unknown escape`; asked: the linter or the error points to `c#"..."#` | pipelines (attention) | write the pipeline `c#"..."#` |
+| M19 | not yet taken | feature | The libm builtins: `t_anh`, `e_rf` (and `e_rfc`), `s_qrt`, `e_xpm1`, `l_og1p` beside `s_in`, `c_os`, `a_tan`, `e_xp`, `l_og`, by the rule that a builtin is what libm gives at full accuracy and a library cannot write as well (tanh from `e_xp` cancels near 0, `^ 0.5` is not the correctly rounded sqrt, erf has no closed form); the rest of trigonometry and the special functions are libraries (X_eTaL-libraries, E4 and E5). Nothing leaves the base language | Activations (planned: tanh, GELU, Mish, the exact GELU), NN (`t_anh`), Integrals' gelu demo, Equations' `sqrt`; X_eTaL-libraries' X22 asks for `t_anh` too | NN's `2 s_igmoid(2x) - 1`; a private erf (Abramowitz and Stegun 7.1.26) in Activations until then; `^ 0.5` |
 ## Details
 
 ### M1, M2: macro libraries and seeing an expansion (landed)
@@ -210,6 +211,44 @@ D155) is now shown on this repository's libraries: dense with its
 bias, the stable softmax, layer norm, attention and a CNN layer, each
 checked against plain X_eTaL (`demos/pipelines/`).
 
+### M19: the libm builtins, and what is a builtin at all
+
+Planning the Activations library (2026-10-23) raised where
+mathematics lives. X_eTaL has `s_in`, `c_os`, `a_tan`, `e_xp`, `l_og`
+and `p_i @`; not `t_an`, `a_sin`, `a_cos`, the hyperbolics, `s_qrt`
+(everyone writes `^ 0.5`), `l_og2`, `e_rf`:
+
+```
+t_anh 0.5     # error[unknown-builtin]: there is no built-in t_anh
+e_rf 0.5      # error[unknown-builtin]: there is no built-in e_rf
+```
+
+The rule proposed: a builtin is what libm gives at full accuracy and
+a library cannot write as well; everything derivable in closed form
+from the builtins is a library (X_eTaL-libraries' Trig, E4), and every
+approximation of a function without a closed form is a library until
+the builtin exists (Special, E5), wrapping the builtin from then on.
+Nothing is duplicated and nothing leaves the base language, so no
+breaking change is needed (there are no users yet, so one would be
+allowed). By that rule the asks are:
+
+- `t_anh`: NN's `2 s_igmoid(2x) - 1` does not overflow at either end
+  but cancels near 0 (about 1e-6 relative error at x = 1e-10), and a
+  tanh from `e_xp` overflows past 710; `f64::tanh` has neither flaw.
+  X_eTaL-libraries' X22 asks for the same.
+- `e_rf` and `e_rfc`: the Gauss error function, the normal CDF and
+  the exact GELU (`x * (1 + erf(x / sqrt 2)) / 2`), no closed form; a
+  library version is a rational approximation at 1.5e-7. Rust's std
+  lacks it, the `libm` crate has it (in WASM too).
+- `s_qrt`: IEEE's correctly rounded root; `^ 0.5` goes through `powf`.
+- `e_xpm1` and `l_og1p`: accuracy near 0 (softplus, log-softmax's
+  tails, the tanh above).
+
+Not asked: `t_an`, `a_sin`, `a_cos`, `a_tan2`, `s_inh`, `c_osh`,
+`l_og2`, degrees and radians, which a library writes exactly enough
+(E4); `g_amma` and the beta function (E5, Lanczos is a library's job
+until a builtin is wanted).
+
 ### To take to X_eTaL
 
 M17 is filed here but not yet in X_eTaL's ledger (M15 and M16 are
@@ -230,6 +269,13 @@ repo = "X_eTaL-ML"
 ask = "c\"...\" reads the backslash of o_\\ and s_\\ as an escape: let the linter or the lexer's error point to c#\"...\"#"
 state = "new"
 here = ""
+
+[[ask]]
+id = "M19"
+repo = "X_eTaL-ML"
+ask = "the libm builtins t_anh, e_rf (e_rfc), s_qrt, e_xpm1, l_og1p: a builtin is what libm gives at full accuracy and a library cannot write as well; the rest of trigonometry and the special functions stay libraries"
+state = "new"
+here = ""
 ```
 
 ### M5, M10
@@ -245,21 +291,8 @@ probabilities; today they are one `e_ach` per number wanted.
 ## Asks for X_eTaL-libraries
 
 What the demos need from the libraries pinned by
-`XETAL_LIBRARIES_COMMIT` (`../X_eTaL-libraries`, read only from here;
-its own plan takes them). Equations' rules are deliberate (a fixed
-table of functions, every rule uses all of its text or refuses it), so
-these are asks, not bugs, but for E1. Filed from the diffusion sampler
-of `demos/pipelines/diffusion.xtl` (2026-10-20), a paper's
-`X0 = D(zT + sum_{t=T}^{1} [a_t z_t + b_t eps_theta(z_t, t, c) + sigma_t eps_rand] - z_t)`.
-
-| # | Status | Kind | Ask | Demos | Workaround |
-| - | ------ | ---- | --- | ----- | ---------- |
-| E1 | not yet taken | bug | A descending range, `sum t:=T..1 \| dz[t-1]`, is not refused by the reader: the expansion dies with `error[domain]: a count cannot be -1` at the call, which names no rule. Asked: the reader refuses it (`error[bad-equation]`), saying a range runs low..high, or reads it as the empty sum | pipelines (diffusion) | write the range upward, `1..T` |
-| E2 | not yet taken | feature | A recurrence word: a sum whose term uses the one before (the sampler's sum from T down to 1, a scan) cannot be a `sum`, whose references are all to the caller's arrays. Asked: an operator word for it (`scan t:=T..1 \| ...` with the previous term named, or a documented refusal naming `p_ower`) | pipelines (diffusion) | one step as the summand, an Equations call applied T times by `p_ower`; the differences collected and summed by a plain `sum` |
-| E3 | not yet taken | feature | The caller's functions by name: `D(z[k])` and `eps_theta(z[k], t, c)` are refused (`d_ecode is not a function of an equation (exp, log, sqrt, abs, max, min)`). Asked: a name in scope applied in an equation (the X_eTaL spelling, `u:d_ecode(z[k])`, or a declared table) calls it, drawn `\mathcal{D}(z_k)` | pipelines (diffusion) | the networks called outside the string, their results named (`eps`) and read inside it |
-
-The ledger check (`just check-asks`) covers X_eTaL's ledger only;
-these are kept in step with `../X_eTaL-libraries/docs/plan.md` by
-hand at each libraries re-pin. Seen at its HEAD (2026-10-20): Equations
-reads `integral` (Saga 42's decision 1, this repository's Integrals as
-its oracle), so the next re-pin lifts Integrals as planned.
+`XETAL_LIBRARIES_COMMIT` is in
+[`xetal-libraries-asks.md`](xetal-libraries-asks.md) (E1 to E3 from
+the diffusion sampler, E4 to E9 for the Activations library: Trig,
+Special, Equations' functions and differentiation); M19 above is what
+those need from X_eTaL itself.

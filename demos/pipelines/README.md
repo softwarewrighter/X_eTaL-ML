@@ -120,4 +120,5 @@ which is the lint of the notation. The parts are data,
   it does not have, a sum that is really a recurrence (`t:=T..1` with
   a term using the one before) stay outside the string, as X_eTaL
   functions and `p_ower`; the asks for a recurrence word and the
-  caller's functions are in [docs/xetal-asks.md](../../docs/xetal-asks.md).
+  caller's functions are in
+  [docs/xetal-libraries-asks.md](../../docs/xetal-libraries-asks.md).

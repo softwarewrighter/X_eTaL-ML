@@ -11,6 +11,10 @@ planning and reordering, `release` milestone release, `chore`
 agentrail bookkeeping (step complete, saga archive), `vendor` a
 refresh of the vendored X_eTaL.
 
+## 2026-10-23
+
+- `docs` The asks for an Activations library, filed before the work (step math-asks): `docs/xetal-asks.md` M19, the libm builtins (`t_anh`, `e_rf`, `s_qrt`, `e_xpm1`, `l_og1p`) by the rule that a builtin is what libm gives at full accuracy and a library cannot write as well, nothing leaving the base language; `docs/xetal-libraries-asks.md`, new, the asks for X_eTaL-libraries in their own file: E1 to E3 moved from xetal-asks.md, E4 a Trig library, E5 Special functions (erf, gamma, the normal CDF), E6 Equations' function table widened (tanh, erf, sigmoid), E7 a numeric `derivative x:=x0 by central h | body` word in the shape of `integral`, E8 symbolic differentiation (`e:d_iff<`, `e:d_tex<`), E9 indexed gradients (backpropagation from the loss); the plan's Activations row and steps 27 to 31 (the library with a derivative per function, the move out of NN, a page of every curve with a measured table, the spiral trained with each activation, GELU beside SwiGLU in micro-gpt's FFN), the settled question on where mathematics lives; README's status row and the pipelines README's link
+
 ## 2026-10-20
 
 - `feat` Compose your own on the pipelines page (step equation-palette): `shared/microscope/palette.rs`, a composer for the demo pages: programs to start from (an equation with its LaTeX, a pipeline), a palette of the notations' parts put in at the caret (`palette.tsv`: the equation grammar, the pipeline notation, the libraries as stages, the imports), the program in ASCII beside its rendered form, Run (what it printed, a line between `85651` drawn as math, errors placed in the text) and Expand; tests: the parts (lexed, every stage run over fitting data), insertion at the caret, composing and its errors, the starters
