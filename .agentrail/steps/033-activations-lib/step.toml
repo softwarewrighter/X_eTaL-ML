@@ -1,8 +1,9 @@
 number = 33
 slug = "activations-lib"
-status = "in-progress"
+status = "completed"
 description = "| 27 | activations-lib | `libs/Activations` (`act:`) as the libraries table s..."
 role = "production"
 context_files = []
 created_at = "2026-10-23T07:36:04"
-commits = []
+completed_at = "2026-10-23T17:50:49"
+commits = ["c24d1f0498435a8ddeb48cae0475bf9bf403f37d"]
