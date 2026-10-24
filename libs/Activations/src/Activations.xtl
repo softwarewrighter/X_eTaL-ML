@@ -1,0 +1,223 @@
+## Activations: activation functions, a derivative for each, and the gated layers (GLU, ReGLU, GEGLU, SwiGLU)
+##
+## Import it with an alias of your choice: "act:" u_se< "Activations".
+## Put libs/Activations/src on XETAL_PATH ("just path"); the reference is libs/Activations/docs.
+## Names with l: are exported; h: names are private to this file.
+##
+## Every activation works item by item on a Float array of any shape,
+## so a batch (one example per row) goes through in one call. A
+## setting comes first (`0.1 act:l_eaky x`, `1.5 act:s_wish x`); PReLU's
+## slopes are one per column (the last axis), as a bias is. Each
+## function f has its derivative d_f written in terms of f's input
+## (`act:d_gelu z`, not of its output): X_eTaL has no automatic
+## differentiation, and the smooth activations cannot be written at
+## their output as ReLU, tanh and sigmoid can. A gated layer takes its
+## two weight arrays as a tuple, `(W, V) act:s_wiglu x`: the activation
+## on x W, times the linear x V (Shazeer 2020's order).
+##
+## tanh and erf are built here from e_xp (X_eTaL has no t_anh or e_rf
+## builtin: docs/xetal-asks.md M19): tanh as 2 sigmoid(2x) - 1, which
+## does not overflow at either end but loses digits near 0; erf by
+## Abramowitz and Stegun 7.1.26, within 1.5e-7. Both go the day the
+## builtins land (X_eTaL-libraries' Trig and Special, E4 and E5).
+
+### Helpers (private)
+
+## The error function, A&S 7.1.26 (|error| < 1.5e-7), odd in x.
+h:e_rf := { x ->
+  t := 1.0 / 1.0 + 0.3275911 * a_bs x
+  p := t * 0.254829592 + t * -0.284496736 + t * 1.421413741 + t * -1.453152027 + t * 1.061405429
+  ((2.0 * f_loat x >= 0.0) - 1.0) * 1.0 - p * e_xp n_eg x * x
+}
+
+## The inner tanh of GELU's approximation, at the point u(x) = sqrt(2/pi) (x + 0.044715 x^3).
+h:g_eluTanh := { x -> l:t_anh 0.7978845608028654 * x + 0.044715 * x * x * x }
+
+### Activations
+
+## `r_elu x`: max(x, 0), item by item.
+## >> "act:" u_se< "Activations"
+## >> act:r_elu -1.5 0.0 2.0
+## 0.0 0.0 2.0
+l:r_elu := { x -> x m_ax 0.0 }
+
+## `a l_eaky x`: leaky ReLU, x where positive and a times x elsewhere.
+## >> "act:" u_se< "Activations"
+## >> 0.1 act:l_eaky -2.0 3.0
+## -0.2 3.0
+l:l_eaky := { a x -> (x m_ax 0.0) + a * x m_in 0.0 }
+
+## `a p_relu x`: PReLU (He et al. 2015), a leaky ReLU whose slope a is
+## one number per column (a's length is x's last extent; a scalar is
+## l_eaky). The slopes are learned; the library only applies them.
+## >> "act:" u_se< "Activations"
+## >> 0.0 0.5 act:p_relu 2 2 r_eshape -2.0 -2.0 1.0 -4.0
+## 0.0 -1.0
+## 1.0 -2.0
+l:p_relu := { a x -> (x m_ax 0.0) + ((s_hape x) r_eshape a) * x m_in 0.0 }
+
+## `a e_lu x`: ELU (Clevert et al. 2016), x where positive and
+## a (e^x - 1) elsewhere: smooth at 0 when a is 1, bounded below by -a.
+## >> "act:" u_se< "Activations"
+## >> 1.0 act:e_lu -1.0 2.0
+## -0.6321205588285577 2.0
+l:e_lu := { a x -> (x m_ax 0.0) + a * (e_xp x m_in 0.0) - 1.0 }
+
+## `s_elu x`: SELU (Klambauer et al. 2017), lambda times an ELU with
+## alpha, the two constants that keep a standard-normal input's mean 0
+## and variance 1 through a layer (a self-normalizing network needs no
+## norm layer).
+## >> "act:" u_se< "Activations"
+## >> act:s_elu 0.0 1.0
+## 0.0 1.0507009873554805
+l:s_elu := { x -> 1.0507009873554805 * 1.6732632423543772 l:e_lu x }
+
+## `s_igmoid x`: 1 / (1 + e^-x), item by item.
+## >> "act:" u_se< "Activations"
+## >> act:s_igmoid 0.0 2.0
+## 0.5 0.8807970779778823
+l:s_igmoid := { x -> 1.0 / 1.0 + e_xp n_eg x }
+
+## `t_anh x`: the hyperbolic tangent, as 2 sigmoid(2x) - 1 (see the file's note).
+## >> "act:" u_se< "Activations"
+## >> act:t_anh 0.0 1.0
+## 0.0 0.7615941559557646
+l:t_anh := { x -> (2.0 * l:s_igmoid 2.0 * x) - 1.0 }
+
+## `s_oftplus x`: log(1 + e^x), a smooth ReLU, in the form that does
+## not overflow: max(x, 0) + log(1 + e^-|x|).
+## >> "act:" u_se< "Activations"
+## >> act:s_oftplus 0.0 1000.0
+## 0.6931471805599453 1000.0
+l:s_oftplus := { x -> (x m_ax 0.0) + l_og 1.0 + e_xp n_eg a_bs x }
+
+## `s_ilu x`: SiLU, x sigmoid(x) (Hendrycks and Gimpel 2016; Swish with
+## beta 1, Ramachandran et al. 2017): smooth, dips to -0.278 below 0.
+## >> "act:" u_se< "Activations"
+## >> act:s_ilu -1.0 1.0
+## -0.2689414213699951 0.7310585786300049
+l:s_ilu := { x -> x * l:s_igmoid x }
+
+## `b s_wish x`: Swish, x sigmoid(b x); b = 1 is s_ilu, a large b tends
+## to ReLU, b = 1.702 is close to GELU.
+## >> "act:" u_se< "Activations"
+## >> 1.702 act:s_wish 1.0
+## 0.8457957659328212
+l:s_wish := { b x -> x * l:s_igmoid b * x }
+
+## `g_elu x`: GELU (Hendrycks and Gimpel 2016) in the tanh form the
+## frameworks compute, x/2 (1 + tanh(sqrt(2/pi) (x + 0.044715 x^3))),
+## within 4.73e-4 of the exact g_eluErf.
+## >> "act:" u_se< "Activations"
+## >> act:g_elu -1.0 1.0
+## -0.15880800939172324 0.8411919906082768
+l:g_elu := { x -> 0.5 * x * 1.0 + h:g_eluTanh x }
+
+## `g_eluErf x`: the exact GELU, x Phi(x) = x/2 (1 + erf(x / sqrt 2)),
+## Phi the normal CDF (erf as this file's note says).
+## >> "act:" u_se< "Activations"
+## >> act:g_eluErf 1.0
+## 0.8413447361676363
+l:g_eluErf := { x -> 0.5 * x * 1.0 + h:e_rf x / 1.4142135623730951 }
+
+## `m_ish x`: Mish (Misra 2019), x tanh(softplus(x)): smooth, dips to
+## -0.309 below 0, finite at any x.
+## >> "act:" u_se< "Activations"
+## >> act:m_ish -1.0 1.0
+## -0.30340146137410895 0.8650983882673104
+l:m_ish := { x -> x * l:t_anh l:s_oftplus x }
+
+## `h_ardSigmoid x`: min(max(x + 3, 0), 6) / 6 (Howard et al. 2019,
+## MobileNetV3): a sigmoid of three straight lines, no e_xp.
+## >> "act:" u_se< "Activations"
+## >> act:h_ardSigmoid -4.0 0.0 1.5
+## 0.0 0.5 0.75
+l:h_ardSigmoid := { x -> (6.0 m_in 0.0 m_ax x + 3.0) / 6.0 }
+
+## `h_ardSwish x`: x h_ardSigmoid(x), the same paper's SiLU of straight
+## lines, within 0.15 of s_ilu everywhere.
+## >> "act:" u_se< "Activations"
+## >> act:h_ardSwish -4.0 1.0 4.0
+## -0.0 0.6666666666666666 4.0
+l:h_ardSwish := { x -> x * l:h_ardSigmoid x }
+
+### The gated layers
+
+## `(W, V) g_lu x`: GLU (Dauphin et al. 2017), sigmoid(x W) * (x V):
+## the activation on one projection of each row of x, times the other
+## (a gate), item by item. x is a batch (one row each), W and V both
+## inputs by hidden.
+## >> "act:" u_se< "Activations"
+## >> (2 2 r_eshape 1.0 0.0 0.0 1.0, 2 2 r_eshape 2.0 0.0 0.0 2.0) act:g_lu 1 2 r_eshape 0.0 1.0
+## 0.0 1.4621171572600098
+l:g_lu := { (W, V) x -> (l:s_igmoid x '+ '* i_nner W) * x '+ '* i_nner V }
+
+## `(W, V) r_eglu x`: relu(x W) * (x V) (Shazeer 2020).
+l:r_eglu := { (W, V) x -> (l:r_elu x '+ '* i_nner W) * x '+ '* i_nner V }
+
+## `(W, V) g_eglu x`: gelu(x W) * (x V) (Shazeer 2020).
+l:g_eglu := { (W, V) x -> (l:g_elu x '+ '* i_nner W) * x '+ '* i_nner V }
+
+## `(W, V) s_wiglu x`: silu(x W) * (x V) (Shazeer 2020; LLaMA's
+## feed-forward layer, with a hidden width of 2/3 the usual to keep
+## the parameter count).
+## >> "act:" u_se< "Activations"
+## >> (2 2 r_eshape 1.0 0.0 0.0 1.0, 2 2 r_eshape 2.0 0.0 0.0 2.0) act:s_wiglu 1 2 r_eshape 0.0 1.0
+## 0.0 1.4621171572600098
+l:s_wiglu := { (W, V) x -> (l:s_ilu x '+ '* i_nner W) * x '+ '* i_nner V }
+
+### Derivatives, in terms of each function's input
+
+## `d_relu x`: 1 where x is positive, else 0.
+## >> "act:" u_se< "Activations"
+## >> act:d_relu -1.5 0.0 2.0
+## 0.0 0.0 1.0
+l:d_relu := { x -> f_loat x > 0.0 }
+
+## `a d_leaky x`: 1 where x is positive, else a.
+l:d_leaky := { a x -> 1.0 + (a - 1.0) * f_loat x <= 0.0 }
+
+## `a d_prelu x`: 1 where x is positive, else the column's slope.
+l:d_prelu := { a x -> 1.0 + (((s_hape x) r_eshape a) - 1.0) * f_loat x <= 0.0 }
+
+## `a d_elu x`: 1 where x is positive, else a e^x.
+l:d_elu := { a x -> (f_loat x > 0.0) + a * (f_loat x <= 0.0) * e_xp x m_in 0.0 }
+
+## `d_selu x`: lambda where x is positive, else lambda alpha e^x.
+l:d_selu := { x -> 1.0507009873554805 * 1.6732632423543772 l:d_elu x }
+
+## `d_sigmoid x`: s (1 - s) for s = sigmoid(x): at most 1/4, at 0.
+## >> "act:" u_se< "Activations"
+## >> act:d_sigmoid 0.0
+## 0.25
+l:d_sigmoid := { x -> s := l:s_igmoid x; s * 1.0 - s }
+
+## `d_tanh x`: 1 - tanh(x)^2.
+l:d_tanh := { x -> t := l:t_anh x; 1.0 - t * t }
+
+## `d_softplus x`: sigmoid(x).
+l:d_softplus := { x -> l:s_igmoid x }
+
+## `d_silu x`: s (1 + x (1 - s)) for s = sigmoid(x).
+l:d_silu := { x -> s := l:s_igmoid x; s * 1.0 + x * 1.0 - s }
+
+## `b d_swish x`: s + b x s (1 - s) for s = sigmoid(b x).
+l:d_swish := { b x -> s := l:s_igmoid b * x; s + b * x * s * 1.0 - s }
+
+## `d_gelu x`: the tanh form's derivative, (1 + t)/2 + x/2 (1 - t^2) sqrt(2/pi) (1 + 3 * 0.044715 x^2), t the inner tanh.
+## >> "act:" u_se< "Activations"
+## >> act:d_gelu 0.0
+## 0.5
+l:d_gelu := { x -> t := h:g_eluTanh x; (0.5 * 1.0 + t) + 0.5 * x * (1.0 - t * t) * 0.7978845608028654 * 1.0 + 0.134145 * x * x }
+
+## `d_geluErf x`: Phi(x) + x phi(x), the normal CDF and density.
+l:d_geluErf := { x -> (0.5 * 1.0 + h:e_rf x / 1.4142135623730951) + x * 0.3989422804014327 * e_xp n_eg x * x / 2.0 }
+
+## `d_mish x`: t + x (1 - t^2) sigmoid(x) for t = tanh(softplus(x)).
+l:d_mish := { x -> t := l:t_anh l:s_oftplus x; t + x * (1.0 - t * t) * l:s_igmoid x }
+
+## `d_hardSigmoid x`: 1/6 where |x| < 3, else 0.
+l:d_hardSigmoid := { x -> (f_loat (a_bs x) < 3.0) / 6.0 }
+
+## `d_hardSwish x`: (2x + 3)/6 where |x| < 3; 0 below, 1 from 3 on.
+l:d_hardSwish := { x -> (f_loat x >= 3.0) + (f_loat (a_bs x) < 3.0) * ((2.0 * x) + 3.0) / 6.0 }

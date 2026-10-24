@@ -1,0 +1,18 @@
+#!/usr/bin/env xetal
+# Activations: every curve as a table. Thirteen points from -3 to 3
+# by halves across; one row per activation, in the library's order
+# (ReLU, leaky 0.1, PReLU with slopes 0.1 to 0.7 by column pairs, ELU
+# alpha 1, SELU, sigmoid, tanh, softplus, SiLU, Swish 1.5, GELU, exact
+# GELU, Mish, hard sigmoid, hard swish), then the same for their
+# derivatives; four places. Run with "just demo Activations curves".
+"act:" u_se< "Activations"
+xs := -3.0 + 0.5 * f_loat o_ffsets 13
+a := 0.1 0.1 0.2 0.2 0.3 0.3 0.4 0.4 0.5 0.5 0.6 0.6 0.7
+u:r_ound := { v -> (f_loat f_loor 0.5 + 10000.0 * v) / 10000.0 }
+values := (act:r_elu xs) c_at (0.1 act:l_eaky xs) c_at (a act:p_relu xs) c_at (1.0 act:e_lu xs) c_at (act:s_elu xs) c_at (act:s_igmoid xs) c_at (act:t_anh xs) c_at (act:s_oftplus xs) c_at (act:s_ilu xs) c_at (1.5 act:s_wish xs) c_at (act:g_elu xs) c_at (act:g_eluErf xs) c_at (act:m_ish xs) c_at (act:h_ardSigmoid xs) c_at act:h_ardSwish xs
+u:r_ound 15 13 r_eshape values
+slopes := (act:d_relu xs) c_at (0.1 act:d_leaky xs) c_at (a act:d_prelu xs) c_at (1.0 act:d_elu xs) c_at (act:d_selu xs) c_at (act:d_sigmoid xs) c_at (act:d_tanh xs) c_at (act:d_softplus xs) c_at (act:d_silu xs) c_at (1.5 act:d_swish xs) c_at (act:d_gelu xs) c_at (act:d_geluErf xs) c_at (act:d_mish xs) c_at (act:d_hardSigmoid xs) c_at act:d_hardSwish xs
+u:r_ound 15 13 r_eshape slopes
+# Where each smooth one dips lowest (its minimum over -6..6), four places.
+fine := -6.0 + 0.01 * f_loat o_ffsets 1201
+u:r_ound ('m_in r_/ act:g_elu fine) c_at ('m_in r_/ act:s_ilu fine) c_at ('m_in r_/ act:m_ish fine) c_at 'm_in r_/ 1.0 act:e_lu fine

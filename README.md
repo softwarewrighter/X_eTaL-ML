@@ -121,6 +121,7 @@ just serve cnn-digits    # its page, at http://127.0.0.1:8435/
 | Library | Alias | What |
 | ------- | ----- | ---- |
 | [NN](libs/NN/docs/README.md) | `nn:` | activations, softmax by row (any rank), dense layers, a bias along a named axis (`nn:a_ddAxis`, `nn:b_ias`), argmax, one-hot, loss, accuracy |
+| [Activations](libs/Activations/docs/README.md) | `act:` | fifteen activations item by item (ReLU, leaky, PReLU, ELU, SELU, sigmoid, tanh, softplus, SiLU, Swish, GELU in its tanh and exact forms, Mish, hard sigmoid, hard swish), a derivative for each in terms of the input, the gated layers (`(W, V) act:s_wiglu x`: GLU, ReGLU, GEGLU, SwiGLU); a comparison of their shapes, costs and uses on its page |
 | [Norm](libs/Norm/docs/README.md) | `nm:` | normalizing each row: standardizing, layer norm (gain and bias), RMS norm |
 | [Sample](libs/Sample/docs/README.md) | `sm:` | choosing the next token: greedy, temperature, top-k, a draw by given uniform numbers |
 | [Optim](libs/Optim/docs/README.md) | `op:` | optimizers as steps on a tuple: gradient descent and Adam, a weight array and its averages in, moved out |

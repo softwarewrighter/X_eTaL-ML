@@ -1,0 +1,2 @@
+command = "../../../scripts/xt type ../src/Activations.xtl"
+exit_code = 0

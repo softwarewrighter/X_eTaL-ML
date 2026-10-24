@@ -1,0 +1,80 @@
+#!/usr/bin/env xetal
+## Activations' properties, checked with Check: the relations between
+## the functions, the shapes of the curves (where the smooth ones dip,
+## what is bounded), SELU's fixed point, the two GELUs against each
+## other and against the Integrals demo's quadrature, the extremes,
+## the gated layers written out, and every derivative against central
+## differences. Run with "just run Activations checks".
+
+"act:" u_se< "Activations"
+"k:" u_se< "Check"
+
+x := -3.0 -1.0 -0.5 0.0 0.5 1.0 3.0
+fine := -6.0 + 0.01 * f_loat o_ffsets 1201
+m := 2 3 r_eshape -2.0 -1.0 0.0 1.0 2.0 -3.0
+
+### The functions
+c1 := "leaky ReLU is ReLU plus a times the negative part" k:t_est (0.1 act:l_eaky x) k:n_ear (act:r_elu x) + 0.1 * x m_in 0.0
+c2 := "PReLU with the same slope in every column is leaky ReLU" k:t_est (0.2 0.2 0.2 act:p_relu m) k:n_ear 0.2 act:l_eaky m
+c3 := "ELU is bounded below by -alpha, and is x where positive" k:t_est (1.0 act:e_lu -1000.0 -50.0 2.0) k:n_ear -1.0 -1.0 2.0
+c4 := "sigmoid(-x) = 1 - sigmoid(x)" k:t_est (act:s_igmoid n_eg x) k:n_ear 1.0 - act:s_igmoid x
+c4b := "tanh is odd" k:t_est (act:t_anh n_eg x) k:n_ear n_eg act:t_anh x
+c4c := "tanh stays inside -1..1" k:t_est k:t_rue 1.0 > a_bs act:t_anh fine
+c5 := "softplus is finite at the extremes and log 2 at 0" k:t_est (act:s_oftplus -1000.0 0.0 1000.0) k:n_ear 0.0 0.6931471805599453 1000.0
+c5b := "softplus is above ReLU" k:t_est k:t_rue (act:s_oftplus x) > act:r_elu x
+c6 := "SiLU is Swish with beta 1" k:t_est (act:s_ilu x) k:n_ear 1.0 act:s_wish x
+c7 := "GELU's tanh form is within 5e-4 of the exact one over -6..6" k:t_est k:t_rue 0.0005 > 'm_ax r_/ a_bs (act:g_elu fine) - act:g_eluErf fine
+## The Integrals demo (libs/Integrals/demos/gelu.xtl) integrates the
+## Gaussian density by simpson and prints GELU to four places.
+pts := -3.0 -2.0 -1.0 -0.5 0.0 0.5 1.0 2.0 3.0
+c8 := "the exact GELU agrees with the Integrals demo's quadrature to four places" k:t_est k:t_rue 0.0001 > 'm_ax r_/ a_bs (act:g_eluErf pts) - -0.004 -0.0455 -0.1587 -0.1543 0.0 0.3457 0.8413 1.9545 2.996
+dips := (f_loat f_loor 0.5 + 100.0 * ('m_in r_/ act:g_elu fine) c_at ('m_in r_/ act:s_ilu fine) c_at 'm_in r_/ act:m_ish fine) / 100.0
+c9 := "the smooth ones dip below zero (GELU -0.17, SiLU -0.28, Mish -0.31); ReLU never" k:t_est (dips c_at 'm_in r_/ act:r_elu fine) k:n_ear -0.17 -0.28 -0.31 0.0
+c10 := "Mish is finite at the extremes: 0 far below, x far above" k:t_est (act:m_ish -1000.0 1000.0) k:n_ear 0.0 1000.0
+c11 := "hard sigmoid is sigmoid at 0" k:t_est (act:h_ardSigmoid 0.0) k:n_ear act:s_igmoid 0.0
+c11b := "hard sigmoid stays inside 0..1" k:t_est k:t_rue (0.0 <= act:h_ardSigmoid fine) & 1.0 >= act:h_ardSigmoid fine
+c11c := "hard swish is within 0.15 of SiLU everywhere" k:t_est k:t_rue 0.15 > 'm_ax r_/ a_bs (act:h_ardSwish fine) - act:s_ilu fine
+
+### SELU's fixed point: 4,000 standard normals (Box-Muller from two
+### deterministic uniform grids) keep their mean 0 and variance 1
+### through SELU, within 0.01.
+n := 4000
+u1 := ((f_loat r_ange n) - 0.5) / f_loat n
+u2 := (0.6180339887498949 * f_loat r_ange n) - f_loat f_loor 0.6180339887498949 * f_loat r_ange n
+z := ((n_eg 2.0 * l_og u1) ^ 0.5) * c_os 2.0 * 3.141592653589793 * u2
+s := act:s_elu z
+c12 := "SELU keeps a standard-normal input's mean 0 and variance 1" k:t_est k:t_rue (0.01 > a_bs ('+ r_/ s) / f_loat n) & 0.01 > a_bs 1.0 - ('+ r_/ s * s) / f_loat n
+
+### The gated layers, written out
+X := 2 3 r_eshape 1.0 -2.0 0.5 0.0 1.0 -1.0
+W := 3 2 r_eshape 0.5 -0.5 1.0 0.25 -1.0 2.0
+V := 3 2 r_eshape 1.0 1.0 -0.5 2.0 0.0 -1.0
+c13 := "SwiGLU is silu(x W) times x V" k:t_est ((W, V) act:s_wiglu X) k:n_ear (act:s_ilu X '+ '* i_nner W) * X '+ '* i_nner V
+c13b := "GEGLU is gelu(x W) times x V" k:t_est ((W, V) act:g_eglu X) k:n_ear (act:g_elu X '+ '* i_nner W) * X '+ '* i_nner V
+c13c := "ReGLU is relu(x W) times x V" k:t_est ((W, V) act:r_eglu X) k:n_ear (act:r_elu X '+ '* i_nner W) * X '+ '* i_nner V
+c14 := "GLU gates with the sigmoid" k:t_est ((W, V) act:g_lu X) k:n_ear (act:s_igmoid X '+ '* i_nner W) * X '+ '* i_nner V
+c14b := "a zero V closes every gate" k:t_est ((W, 3 2 r_eshape 0.0) act:g_lu X) k:n_ear 2 2 r_eshape 0.0
+
+### Every derivative against central differences (step 1e-5, within
+### 1e-5), at points away from the kinks of the piecewise ones.
+xs := -2.5 -1.5 -0.5 0.5 1.5 2.5
+a6 := 0.1 0.2 0.3 0.4 0.5 0.6
+h := 0.00001
+u:s_lope := { d fd -> k:t_rue 0.00001 > 'm_ax r_/ a_bs d - fd }
+d1 := "d_relu" k:t_est (act:d_relu xs) u:s_lope ((act:r_elu xs + h) - act:r_elu xs - h) / 2.0 * h
+d2 := "d_leaky" k:t_est (0.1 act:d_leaky xs) u:s_lope ((0.1 act:l_eaky xs + h) - 0.1 act:l_eaky xs - h) / 2.0 * h
+d3 := "d_prelu" k:t_est (a6 act:d_prelu xs) u:s_lope ((a6 act:p_relu xs + h) - a6 act:p_relu xs - h) / 2.0 * h
+d4 := "d_elu" k:t_est (0.7 act:d_elu xs) u:s_lope ((0.7 act:e_lu xs + h) - 0.7 act:e_lu xs - h) / 2.0 * h
+d5 := "d_selu" k:t_est (act:d_selu xs) u:s_lope ((act:s_elu xs + h) - act:s_elu xs - h) / 2.0 * h
+d6 := "d_sigmoid" k:t_est (act:d_sigmoid xs) u:s_lope ((act:s_igmoid xs + h) - act:s_igmoid xs - h) / 2.0 * h
+d7 := "d_tanh" k:t_est (act:d_tanh xs) u:s_lope ((act:t_anh xs + h) - act:t_anh xs - h) / 2.0 * h
+d8 := "d_softplus" k:t_est (act:d_softplus xs) u:s_lope ((act:s_oftplus xs + h) - act:s_oftplus xs - h) / 2.0 * h
+d9 := "d_silu" k:t_est (act:d_silu xs) u:s_lope ((act:s_ilu xs + h) - act:s_ilu xs - h) / 2.0 * h
+d10 := "d_swish" k:t_est (1.5 act:d_swish xs) u:s_lope ((1.5 act:s_wish xs + h) - 1.5 act:s_wish xs - h) / 2.0 * h
+d11 := "d_gelu" k:t_est (act:d_gelu xs) u:s_lope ((act:g_elu xs + h) - act:g_elu xs - h) / 2.0 * h
+d12 := "d_geluErf" k:t_est (act:d_geluErf xs) u:s_lope ((act:g_eluErf xs + h) - act:g_eluErf xs - h) / 2.0 * h
+d13 := "d_mish" k:t_est (act:d_mish xs) u:s_lope ((act:m_ish xs + h) - act:m_ish xs - h) / 2.0 * h
+d14 := "d_hardSigmoid" k:t_est (act:d_hardSigmoid xs) u:s_lope ((act:h_ardSigmoid xs + h) - act:h_ardSigmoid xs - h) / 2.0 * h
+d15 := "d_hardSwish" k:t_est (act:d_hardSwish xs) u:s_lope ((act:h_ardSwish xs + h) - act:h_ardSwish xs - h) / 2.0 * h
+
+k:r_eport c1 k:a_nd c2 k:a_nd c3 k:a_nd c4 k:a_nd c4b k:a_nd c4c k:a_nd c5 k:a_nd c5b k:a_nd c6 k:a_nd c7 k:a_nd c8 k:a_nd c9 k:a_nd c10 k:a_nd c11 k:a_nd c11b k:a_nd c11c k:a_nd c12 k:a_nd c13 k:a_nd c13b k:a_nd c13c k:a_nd c14 k:a_nd c14b k:a_nd d1 k:a_nd d2 k:a_nd d3 k:a_nd d4 k:a_nd d5 k:a_nd d6 k:a_nd d7 k:a_nd d8 k:a_nd d9 k:a_nd d10 k:a_nd d11 k:a_nd d12 k:a_nd d13 k:a_nd d14 k:a_nd d15

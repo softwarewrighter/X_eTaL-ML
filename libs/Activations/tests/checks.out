@@ -1,0 +1,38 @@
+ok: leaky ReLU is ReLU plus a times the negative part
+ok: PReLU with the same slope in every column is leaky ReLU
+ok: ELU is bounded below by -alpha, and is x where positive
+ok: sigmoid(-x) = 1 - sigmoid(x)
+ok: tanh is odd
+ok: tanh stays inside -1..1
+ok: softplus is finite at the extremes and log 2 at 0
+ok: softplus is above ReLU
+ok: SiLU is Swish with beta 1
+ok: GELU's tanh form is within 5e-4 of the exact one over -6..6
+ok: the exact GELU agrees with the Integrals demo's quadrature to four places
+ok: the smooth ones dip below zero (GELU -0.17, SiLU -0.28, Mish -0.31); ReLU never
+ok: Mish is finite at the extremes: 0 far below, x far above
+ok: hard sigmoid is sigmoid at 0
+ok: hard sigmoid stays inside 0..1
+ok: hard swish is within 0.15 of SiLU everywhere
+ok: SELU keeps a standard-normal input's mean 0 and variance 1
+ok: SwiGLU is silu(x W) times x V
+ok: GEGLU is gelu(x W) times x V
+ok: ReGLU is relu(x W) times x V
+ok: GLU gates with the sigmoid
+ok: a zero V closes every gate
+ok: d_relu
+ok: d_leaky
+ok: d_prelu
+ok: d_elu
+ok: d_selu
+ok: d_sigmoid
+ok: d_tanh
+ok: d_softplus
+ok: d_silu
+ok: d_swish
+ok: d_gelu
+ok: d_geluErf
+ok: d_mish
+ok: d_hardSigmoid
+ok: d_hardSwish
+37 checks, all passed

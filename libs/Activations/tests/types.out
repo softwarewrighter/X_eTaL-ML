@@ -1,0 +1,34 @@
+l:r_elu : Float -> Float
+l:l_eaky : Float -> Float -> Float
+l:p_relu : Float -> Float -> Float
+l:e_lu : Float -> Float -> Float
+l:s_elu : Float -> Float
+l:s_igmoid : Float -> Float
+l:t_anh : Float -> Float
+l:s_oftplus : Float -> Float
+l:s_ilu : Float -> Float
+l:s_wish : Float -> Float -> Float
+l:g_elu : Float -> Float
+l:g_eluErf : Float -> Float
+l:m_ish : Float -> Float
+l:h_ardSigmoid : Float -> Float
+l:h_ardSwish : Float -> Float
+l:g_lu : (Float, Float) -> Float -> Float
+l:r_eglu : (Float, Float) -> Float -> Float
+l:g_eglu : (Float, Float) -> Float -> Float
+l:s_wiglu : (Float, Float) -> Float -> Float
+l:d_relu : Float -> Float
+l:d_leaky : Float -> Float -> Float
+l:d_prelu : Float -> Float -> Float
+l:d_elu : Float -> Float -> Float
+l:d_selu : Float -> Float
+l:d_sigmoid : Float -> Float
+l:d_tanh : Float -> Float
+l:d_softplus : Float -> Float
+l:d_silu : Float -> Float
+l:d_swish : Float -> Float -> Float
+l:d_gelu : Float -> Float
+l:d_geluErf : Float -> Float
+l:d_mish : Float -> Float
+l:d_hardSigmoid : Float -> Float
+l:d_hardSwish : Float -> Float
