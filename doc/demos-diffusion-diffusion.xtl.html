@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>demos/diffusion/diffusion.xtl - X_eTaL doc</title>
+<link rel="stylesheet" href="style.css">
+<script src="theme.js"></script>
+<script defer src="search-index.js"></script>
+<script defer src="search.js"></script>
+</head>
+<body>
+<nav class="side">
+<a class="home" href="index.html">X_eTaL doc</a>
+<input id="search" type="search" autocomplete="off" placeholder="Search: a name, or a type" title="A name (mean finds m_ean), or a type: Num a =&gt; a -&gt; a -&gt; a finds +, m_ax ...">
+<h2>Files</h2>
+<h3>demos/attention/</h3>
+<ul>
+<li><a href="demos-attention-attention.xtl.html">attention.xtl</a></li>
+</ul>
+<h3>demos/backprop/</h3>
+<ul>
+<li><a href="demos-backprop-backprop.xtl.html">backprop.xtl</a></li>
+</ul>
+<h3>demos/cnn-backprop/</h3>
+<ul>
+<li><a href="demos-cnn-backprop-cnn-backprop.xtl.html">cnn-backprop.xtl</a></li>
+</ul>
+<h3>demos/cnn-digits/</h3>
+<ul>
+<li><a href="demos-cnn-digits-batch.xtl.html">batch.xtl</a></li>
+<li><a href="demos-cnn-digits-cnn-digits.xtl.html">cnn-digits.xtl</a></li>
+</ul>
+<h3>demos/diffusion/</h3>
+<ul>
+<li><a href="demos-diffusion-diffusion.xtl.html">diffusion.xtl</a></li>
+</ul>
+<h3>demos/embedding-explorer/</h3>
+<ul>
+<li><a href="demos-embedding-explorer-embedding-explorer.xtl.html">embedding-explorer.xtl</a></li>
+</ul>
+<h3>demos/k-means/</h3>
+<ul>
+<li><a href="demos-k-means-k-means.xtl.html">k-means.xtl</a></li>
+</ul>
+<h3>demos/micro-gpt/</h3>
+<ul>
+<li><a href="demos-micro-gpt-batch.xtl.html">batch.xtl</a></li>
+<li><a href="demos-micro-gpt-micro-gpt.xtl.html">micro-gpt.xtl</a></li>
+</ul>
+<h3>demos/moe-router/</h3>
+<ul>
+<li><a href="demos-moe-router-moe-router.xtl.html">moe-router.xtl</a></li>
+</ul>
+<h3>demos/net-macro/</h3>
+<ul>
+<li><a href="demos-net-macro-net-macro.xtl.html">net-macro.xtl</a></li>
+<li><a href="demos-net-macro-train-it.xtl.html">train-it.xtl</a></li>
+</ul>
+<h3>demos/pipelines/</h3>
+<ul>
+<li><a href="demos-pipelines-diffusion.xtl.html">diffusion.xtl</a></li>
+<li><a href="demos-pipelines-pipelines.xtl.html">pipelines.xtl</a></li>
+<li><a href="demos-pipelines-rosetta.xtl.html">rosetta.xtl</a></li>
+</ul>
+<h3>demos/ternary-net/</h3>
+<ul>
+<li><a href="demos-ternary-net-ternary-net.xtl.html">ternary-net.xtl</a></li>
+</ul>
+<h3>demos/train-live/</h3>
+<ul>
+<li><a href="demos-train-live-train-live.xtl.html">train-live.xtl</a></li>
+</ul>
+<h3>demos/world-model/</h3>
+<ul>
+<li><a href="demos-world-model-world-model.xtl.html">world-model.xtl</a></li>
+</ul>
+<h3>libs/Activations/demos/</h3>
+<ul>
+<li><a href="libs-Activations-demos-curves.xtl.html">curves.xtl</a></li>
+</ul>
+<h3>libs/Activations/src/</h3>
+<ul>
+<li><a href="libs-Activations-src-Activations.xtl.html">Activations.xtl</a></li>
+</ul>
+<h3>libs/Attention/demos/</h3>
+<ul>
+<li><a href="libs-Attention-demos-previous.xtl.html">previous.xtl</a></li>
+</ul>
+<h3>libs/Attention/src/</h3>
+<ul>
+<li><a href="libs-Attention-src-Attention.xtl.html">Attention.xtl</a></li>
+</ul>
+<h3>libs/Conv/demos/</h3>
+<ul>
+<li><a href="libs-Conv-demos-edges.xtl.html">edges.xtl</a></li>
+</ul>
+<h3>libs/Conv/src/</h3>
+<ul>
+<li><a href="libs-Conv-src-Conv.xtl.html">Conv.xtl</a></li>
+</ul>
+<h3>libs/Embed/demos/</h3>
+<ul>
+<li><a href="libs-Embed-demos-pets.xtl.html">pets.xtl</a></li>
+</ul>
+<h3>libs/Embed/src/</h3>
+<ul>
+<li><a href="libs-Embed-src-Embed.xtl.html">Embed.xtl</a></li>
+</ul>
+<h3>libs/Flow/demos/</h3>
+<ul>
+<li><a href="libs-Flow-demos-mlp.xtl.html">mlp.xtl</a></li>
+</ul>
+<h3>libs/Flow/src/</h3>
+<ul>
+<li><a href="libs-Flow-src-Flow.xtlm.html">Flow.xtlm</a></li>
+</ul>
+<h3>libs/Integrals/demos/</h3>
+<ul>
+<li><a href="libs-Integrals-demos-convolution.xtl.html">convolution.xtl</a></li>
+<li><a href="libs-Integrals-demos-gelu.xtl.html">gelu.xtl</a></li>
+</ul>
+<h3>libs/Integrals/src/</h3>
+<ul>
+<li><a href="libs-Integrals-src-Integrals.xtlm.html">Integrals.xtlm</a></li>
+</ul>
+<h3>libs/Learn/demos/</h3>
+<ul>
+<li><a href="libs-Learn-demos-blobs.xtl.html">blobs.xtl</a></li>
+</ul>
+<h3>libs/Learn/src/</h3>
+<ul>
+<li><a href="libs-Learn-src-Learn.xtl.html">Learn.xtl</a></li>
+</ul>
+<h3>libs/Net/demos/</h3>
+<ul>
+<li><a href="libs-Net-demos-train-xor.xtl.html">train-xor.xtl</a></li>
+<li><a href="libs-Net-demos-xor.xtl.html">xor.xtl</a></li>
+</ul>
+<h3>libs/Net/src/</h3>
+<ul>
+<li><a href="libs-Net-src-Net.xtlm.html">Net.xtlm</a></li>
+</ul>
+<h3>libs/NN/demos/</h3>
+<ul>
+<li><a href="libs-NN-demos-xor.xtl.html">xor.xtl</a></li>
+</ul>
+<h3>libs/NN/src/</h3>
+<ul>
+<li><a href="libs-NN-src-NN.xtl.html">NN.xtl</a></li>
+</ul>
+<h3>libs/Norm/demos/</h3>
+<ul>
+<li><a href="libs-Norm-demos-rows.xtl.html">rows.xtl</a></li>
+</ul>
+<h3>libs/Norm/src/</h3>
+<ul>
+<li><a href="libs-Norm-src-Norm.xtl.html">Norm.xtl</a></li>
+</ul>
+<h3>libs/Optim/demos/</h3>
+<ul>
+<li><a href="libs-Optim-demos-bowl.xtl.html">bowl.xtl</a></li>
+</ul>
+<h3>libs/Optim/src/</h3>
+<ul>
+<li><a href="libs-Optim-src-Optim.xtl.html">Optim.xtl</a></li>
+</ul>
+<h3>libs/Quant/demos/</h3>
+<ul>
+<li><a href="libs-Quant-demos-formats.xtl.html">formats.xtl</a></li>
+</ul>
+<h3>libs/Quant/src/</h3>
+<ul>
+<li><a href="libs-Quant-src-Quant.xtl.html">Quant.xtl</a></li>
+</ul>
+<h3>libs/Sample/demos/</h3>
+<ul>
+<li><a href="libs-Sample-demos-next.xtl.html">next.xtl</a></li>
+</ul>
+<h3>libs/Sample/src/</h3>
+<ul>
+<li><a href="libs-Sample-src-Sample.xtl.html">Sample.xtl</a></li>
+</ul>
+<h3>std/</h3>
+<ul>
+<li><a href="std-System.xtlm.html">System.xtlm</a></li>
+</ul>
+<h3>work/libs/Check/src/</h3>
+<ul>
+<li><a href="work-libs-Check-src-Check.xtl.html">Check.xtl</a></li>
+<li><a href="work-libs-Check-src-Check.xtlm.html">Check.xtlm</a></li>
+</ul>
+<h3>work/libs/Equations/src/</h3>
+<ul>
+<li><a href="work-libs-Equations-src-Equations.xtl.html">Equations.xtl</a></li>
+<li><a href="work-libs-Equations-src-Equations.xtlm.html">Equations.xtlm</a></li>
+</ul>
+<h3>work/libs/Lists/src/</h3>
+<ul>
+<li><a href="work-libs-Lists-src-Lists.xtl.html">Lists.xtl</a></li>
+</ul>
+<h3>work/libs/Strings/src/</h3>
+<ul>
+<li><a href="work-libs-Strings-src-Strings.xtl.html">Strings.xtl</a></li>
+</ul>
+<ul>
+<li><a href="builtins.html">built-ins</a></li>
+</ul>
+<h2>On this page</h2>
+<ul>
+<li><a href="#section-1">The schedule</a></li>
+<li class="item"><a href="#ab">ab</a></li>
+<li class="item"><a href="#ra">ra</a></li>
+<li class="item"><a href="#rb">rb</a></li>
+<li><a href="#section-2">The denoiser, read from data/ (just diffusion-data)</a></li>
+<li class="item"><a href="#kb">kb</a></li>
+<li class="item"><a href="#wb1">wb1</a></li>
+<li class="item"><a href="#wh">wh</a></li>
+<li class="item"><a href="#wb2">wb2</a></li>
+<li class="item"><a href="#u.n_et"><span class="c-userfunc">ᵘn̲et</span></a></li>
+<li class="item"><a href="#u.c_lean"><span class="c-userfunc">ᵘc̲lean</span></a></li>
+<li class="item"><a href="#u.s_tep"><span class="c-userfunc">ᵘs̲tep</span></a></li>
+<li class="item"><a href="#u.s_ample"><span class="c-userfunc">ᵘs̲ample</span></a></li>
+<li><a href="#section-3">Pictures from noise</a></li>
+<li class="item"><a href="#u.g_auss"><span class="c-userfunc">ᵘg̲auss</span></a></li>
+<li class="item"><a href="#e">e</a></li>
+<li class="item"><a href="#F">F</a></li>
+<li class="item"><a href="#on">on</a></li>
+<li><a href="#section-4">One picture, level by level</a></li>
+<li class="item"><a href="#L">L</a></li>
+</ul>
+</nav>
+<main>
+<button class="theme" title="Light or dark">theme</button>
+<section id="results"></section>
+<h1><span class="kind">program</span>demos/diffusion/diffusion.xtl</h1>
+<div class="doc">
+<p>A learned denoiser: pictures from noise, step by step. The pictures
+are 10 x 10, one of three shapes (a disk, a hollow square, a cross)
+at some place, a pixel -1 off or 1 on. A small convolutional network
+(train/) was trained to see the clean picture in a noisy one at ten
+levels of noise. Sampling runs it backward: from a picture of pure
+noise, each step predicts the clean picture, infers the noise that
+must have been added, and steps down one level (DDIM, no new noise),
+so the picture that comes out depends only on the noise that went in.</p>
+</div>
+<p class="meta"><a href="demos-diffusion-diffusion.xtl.src.html">source</a> &middot; imports <code><span class="c-error">nn:</span></code> <a href="libs-NN-src-NN.xtl.html">libs/NN/src/NN.xtl</a>; <code><span class="c-string">cv</span><span class="c-string">:</span></code> <a href="libs-Conv-src-Conv.xtl.html">libs/Conv/src/Conv.xtl</a></p>
+<h2 class="section" id="section-1">The schedule</h2>
+<div class="item" id="ab">
+<h3><a href="#ab">ab</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-diffusion-diffusion.xtl.src.html#L17">line 17</a></div>
+<div class="doc">
+<p>The kept share of the picture at each level 0 to 10 (1.0 clean,
+0.001 all noise); the noisy picture is sqrt ab x + sqrt (1 - ab) e.</p>
+</div>
+<pre class="code">ab ← <span class="c-number">0.001</span> <a href="builtins.html#m_ax" class="c-builtin">m̲ax</a> (<a href="builtins.html#c_os" class="c-builtin">c̲os</a> ((<a href="builtins.html#p_i" class="c-builtin">p̲i</a> @) <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-number">2.0</span>) <a href="builtins.html#-2a" class="c-symbol">×</a> (<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="builtins.html#o_ffsets" class="c-builtin">o̲ffsets</a> <span class="c-number">11</span>) <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-number">10.0</span>) <a href="builtins.html#-5e" class="c-symbol">^</a> <span class="c-number">2.0</span></pre>
+<div class="uses">Used in: <a href="demos-diffusion-diffusion.xtl.html#ra">ra</a>, <a href="demos-diffusion-diffusion.xtl.html#rb">rb</a></div>
+</div>
+<div class="item" id="ra">
+<h3><a href="#ra">ra</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-diffusion-diffusion.xtl.src.html#L19">line 19</a></div>
+<div class="doc">
+<p>The roots the steps mix with, taken once: of the kept share and of the noise's.</p>
+</div>
+<pre class="code">ra ← <a href="demos-diffusion-diffusion.xtl.html#ab">ab</a> <a href="builtins.html#-5e" class="c-symbol">^</a> <span class="c-number">0.5</span></pre>
+<div class="uses">Used in: <a href="demos-diffusion-diffusion.xtl.html#u.s_tep"><span class="c-userfunc">ᵘs̲tep</span></a></div>
+</div>
+<div class="item" id="rb">
+<h3><a href="#rb">rb</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-diffusion-diffusion.xtl.src.html#L20">line 20</a></div>
+<pre class="code">rb ← (<span class="c-number">1.0</span> <a href="builtins.html#-2d" class="c-symbol">−</a> <a href="demos-diffusion-diffusion.xtl.html#ab">ab</a>) <a href="builtins.html#-5e" class="c-symbol">^</a> <span class="c-number">0.5</span></pre>
+<div class="uses">Used in: <a href="demos-diffusion-diffusion.xtl.html#u.s_tep"><span class="c-userfunc">ᵘs̲tep</span></a></div>
+</div>
+<h2 class="section" id="section-2">The denoiser, read from data/ (just diffusion-data)</h2>
+<div class="item" id="kb">
+<h3><a href="#kb">kb</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-diffusion-diffusion.xtl.src.html#L24">line 24</a></div>
+<div class="doc">
+<p>The 8 filters, 3 x 3 each as a row of 9 with its bias last (as Conv takes them).</p>
+</div>
+<pre class="code">kb ← <span class="c-number">8</span> <span class="c-number">10</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <a href="builtins.html#n_umbers" class="c-builtin">n̲umbers</a> <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;data/filters.txt&quot;</span></pre>
+<div class="uses">Used in: <a href="demos-diffusion-diffusion.xtl.html#u.n_et"><span class="c-userfunc">ᵘn̲et</span></a></div>
+</div>
+<div class="item" id="wb1">
+<h3><a href="#wb1">wb1</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-diffusion-diffusion.xtl.src.html#L28">line 28</a></div>
+<div class="doc">
+<p>The dense layers, each with its bias as one more row, as NN's d_ense
+takes them: the first over the 512 features, and the level's own
+weights wh (a row per level) added to it.</p>
+</div>
+<pre class="code">wb1 ← <span class="c-number">513</span> <span class="c-number">256</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> (<a href="builtins.html#n_umbers" class="c-builtin">n̲umbers</a> <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;data/w1.txt&quot;</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="builtins.html#n_umbers" class="c-builtin">n̲umbers</a> <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;data/b1.txt&quot;</span></pre>
+<div class="uses">Used in: <a href="demos-diffusion-diffusion.xtl.html#u.n_et"><span class="c-userfunc">ᵘn̲et</span></a></div>
+</div>
+<div class="item" id="wh">
+<h3><a href="#wh">wh</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-diffusion-diffusion.xtl.src.html#L29">line 29</a></div>
+<pre class="code">wh ← <span class="c-number">10</span> <span class="c-number">256</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <a href="builtins.html#n_umbers" class="c-builtin">n̲umbers</a> <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;data/wh.txt&quot;</span></pre>
+<div class="uses">Used in: <a href="demos-diffusion-diffusion.xtl.html#u.n_et"><span class="c-userfunc">ᵘn̲et</span></a></div>
+</div>
+<div class="item" id="wb2">
+<h3><a href="#wb2">wb2</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-diffusion-diffusion.xtl.src.html#L30">line 30</a></div>
+<pre class="code">wb2 ← <span class="c-number">257</span> <span class="c-number">100</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> (<a href="builtins.html#n_umbers" class="c-builtin">n̲umbers</a> <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;data/w2.txt&quot;</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="builtins.html#n_umbers" class="c-builtin">n̲umbers</a> <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;data/b2.txt&quot;</span></pre>
+<div class="uses">Used in: <a href="demos-diffusion-diffusion.xtl.html#u.n_et"><span class="c-userfunc">ᵘn̲et</span></a></div>
+</div>
+<div class="item" id="u.n_et">
+<h3><a href="#u.n_et"><span class="c-userfunc">ᵘn̲et</span></a> <span class="type">: Float -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="demos-diffusion-diffusion.xtl.src.html#L37">line 37</a></div>
+<div class="doc">
+<p>The network over the joined input J (a row per picture: its 100
+pixels, then the level as a one-hot): the picture's 3 x 3 windows
+through the 8 filters (valid, so 8 maps of 8 x 8) with ReLU, the 512
+features through a dense layer with the level's weights added and
+ReLU, and the output layer; the clean pictures it sees in -1 .. 1.
+One function of arrays, the part a GPU takes (docs/gpu-asks.md).</p>
+</div>
+<pre class="code"><span class="c-userfunc">ᵘn̲et</span> ← { J →
+  X ← ((<a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> J) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">10</span> <span class="c-number">10</span>) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">100</span> <a href="builtins.html#t_ake" class="c-builtin">t̲ake₂</a> J
+  V ← ((<a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> J) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">512</span>) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <a href="libs-NN-src-NN.xtl.html#l.r_elu" class="c-libfunc">ⁿⁿr̲elu</a> (<span class="c-number">9</span> <a href="builtins.html#t_ake" class="c-builtin">t̲ake₂</a> <a href="demos-diffusion-diffusion.xtl.html#kb">kb</a>, <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> <span class="c-number">-1</span> <a href="builtins.html#t_ake" class="c-builtin">t̲ake₂</a> <a href="demos-diffusion-diffusion.xtl.html#kb">kb</a>) <a href="libs-Conv-src-Conv.xtl.html#l.c_onv" class="c-libfunc">ᶜᵛc̲onv</a> X
+  A ← <a href="libs-NN-src-NN.xtl.html#l.r_elu" class="c-libfunc">ⁿⁿr̲elu</a> (V <a href="libs-NN-src-NN.xtl.html#l.d_ense" class="c-libfunc">ⁿⁿd̲ense</a> <a href="demos-diffusion-diffusion.xtl.html#wb1">wb1</a>) <a href="builtins.html#-2b" class="c-symbol">+</a> (<span class="c-number">-10</span> <a href="builtins.html#t_ake" class="c-builtin">t̲ake₂</a> J) <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#i_nner" class="c-builtin">i̲nner</a> <a href="demos-diffusion-diffusion.xtl.html#wh">wh</a>
+  (<span class="c-number">2.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="libs-NN-src-NN.xtl.html#l.s_igmoid" class="c-libfunc">ⁿⁿs̲igmoid</a> A <a href="libs-NN-src-NN.xtl.html#l.d_ense" class="c-libfunc">ⁿⁿd̲ense</a> <a href="demos-diffusion-diffusion.xtl.html#wb2">wb2</a>) <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1.0</span>
+}</pre>
+<div class="uses">Used in: <a href="demos-diffusion-diffusion.xtl.html#u.c_lean"><span class="c-userfunc">ᵘc̲lean</span></a></div>
+</div>
+<div class="item" id="u.c_lean">
+<h3><a href="#u.c_lean"><span class="c-userfunc">ᵘc̲lean</span></a> <span class="type">: Int -&gt; Float -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="demos-diffusion-diffusion.xtl.src.html#L45">line 45</a></div>
+<div class="doc">
+<p>The clean pictures the denoiser sees in the noisy pictures X (a row
+each) at level t: the level joins the pixels as a one-hot.</p>
+</div>
+<pre class="code"><span class="c-userfunc">ᵘc̲lean</span> ← { t X → <a href="demos-diffusion-diffusion.xtl.html#u.n_et" class="c-userfunc">ᵘn̲et</a> X <a href="builtins.html#c_at" class="c-builtin">c̲at₂</a> <span class="c-number">10</span> <a href="libs-NN-src-NN.xtl.html#l.o_neHot" class="c-libfunc">ⁿⁿo̲neHot</a> (<a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> X) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> t }</pre>
+<div class="uses">Used in: <a href="demos-diffusion-diffusion.xtl.html#u.s_tep"><span class="c-userfunc">ᵘs̲tep</span></a></div>
+</div>
+<div class="item" id="u.s_tep">
+<h3><a href="#u.s_tep"><span class="c-userfunc">ᵘs̲tep</span></a> <span class="type">: (Float, Int) -&gt; (Float, Int)</span></h3>
+<div class="meta">function &middot; <a href="demos-diffusion-diffusion.xtl.src.html#L48">line 48</a></div>
+<div class="doc">
+<p>One step down from level t: the clean pictures C it sees, the noise
+that would make X of them, and the pictures one level cleaner.</p>
+</div>
+<pre class="code"><span class="c-userfunc">ᵘs̲tep</span> ← { (X, t) →
+  C ← t <a href="demos-diffusion-diffusion.xtl.html#u.c_lean" class="c-userfunc">ᵘc̲lean</a> X
+  (((t <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="demos-diffusion-diffusion.xtl.html#ra">ra</a>) <a href="builtins.html#-2a" class="c-symbol">×</a> C) <a href="builtins.html#-2b" class="c-symbol">+</a> (t <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="demos-diffusion-diffusion.xtl.html#rb">rb</a>) <a href="builtins.html#-2a" class="c-symbol">×</a> (X <a href="builtins.html#-2d" class="c-symbol">−</a> ((<span class="c-number">1</span> <a href="builtins.html#-2b" class="c-symbol">+</a> t) <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="demos-diffusion-diffusion.xtl.html#ra">ra</a>) <a href="builtins.html#-2a" class="c-symbol">×</a> C) <a href="builtins.html#-2f" class="c-symbol">÷</a> (<span class="c-number">1</span> <a href="builtins.html#-2b" class="c-symbol">+</a> t) <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="demos-diffusion-diffusion.xtl.html#rb">rb</a>, t <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span>)
+}</pre>
+<div class="uses">Used in: <a href="demos-diffusion-diffusion.xtl.html#u.s_ample"><span class="c-userfunc">ᵘs̲ample</span></a>, <a href="demos-diffusion-diffusion.xtl.html#L">L</a></div>
+</div>
+<div class="item" id="u.s_ample">
+<h3><a href="#u.s_ample"><span class="c-userfunc">ᵘs̲ample</span></a> <span class="type">: Float -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="demos-diffusion-diffusion.xtl.src.html#L54">line 54</a></div>
+<div class="doc">
+<p>Ten steps from the pictures of noise E: at level 0 what is left is
+the last clean picture seen.</p>
+</div>
+<pre class="code"><span class="c-userfunc">ᵘs̲ample</span> ← { E → (X, _) ← <span class="c-number">10</span> <span class="c-userfunc">'</span><a href="demos-diffusion-diffusion.xtl.html#u.s_tep" class="c-userfunc">ᵘs̲tep</a> <a href="builtins.html#p_ower" class="c-builtin">p̲ower</a> (E, <span class="c-number">10</span>)◆ X }</pre>
+<div class="uses">Used in: <a href="demos-diffusion-diffusion.xtl.src.html#L66">demos/diffusion/diffusion.xtl:66</a>, <a href="demos-diffusion-diffusion.xtl.html#F">F</a></div>
+</div>
+<h2 class="section" id="section-3">Pictures from noise</h2>
+<div class="item" id="u.g_auss">
+<h3><a href="#u.g_auss"><span class="c-userfunc">ᵘg̲auss</span></a> <span class="type">: Int -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="demos-diffusion-diffusion.xtl.src.html#L59">line 59</a></div>
+<div class="doc">
+<p>n Gaussian numbers by Box-Muller from r_oll!</p>
+</div>
+<pre class="code"><span class="c-userfunc">ᵘg̲auss</span> ← { n →
+  u1 ← (<span class="c-number">1.0</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="builtins.html#r_oll-21" class="c-builtin">r̲oll!</a> n <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">999999</span>) <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-number">1000000.0</span>
+  u2 ← (<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="builtins.html#r_oll-21" class="c-builtin">r̲oll!</a> n <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">1000000</span>) <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-number">1000000.0</span>
+  ((<a href="builtins.html#n_eg" class="c-builtin">n̲eg</a> <span class="c-number">2.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#l_og" class="c-builtin">l̲og</a> u1) <a href="builtins.html#-5e" class="c-symbol">^</a> <span class="c-number">0.5</span>) <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#c_os" class="c-builtin">c̲os</a> (<span class="c-number">2.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#p_i" class="c-builtin">p̲i</a> @) <a href="builtins.html#-2a" class="c-symbol">×</a> u2
+}</pre>
+<div class="uses">Used in: <a href="demos-diffusion-diffusion.xtl.html#F">F</a></div>
+</div>
+<div class="item" id="e">
+<h3><a href="#e">e</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-diffusion-diffusion.xtl.src.html#L65">line 65</a></div>
+<pre class="code">e ← <span class="c-number">1</span> <span class="c-number">100</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <a href="builtins.html#n_umbers" class="c-builtin">n̲umbers</a> <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;data/noise.txt&quot;</span></pre>
+<div class="uses">Used in: <a href="demos-diffusion-diffusion.xtl.src.html#L66">demos/diffusion/diffusion.xtl:66</a>, <a href="demos-diffusion-diffusion.xtl.html#L">L</a></div>
+</div>
+<div class="item" id="F">
+<h3><a href="#F">F</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-diffusion-diffusion.xtl.src.html#L68">line 68</a></div>
+<pre class="code">F ← <a href="demos-diffusion-diffusion.xtl.html#u.s_ample" class="c-userfunc">ᵘs̲ample</a> <span class="c-number">128</span> <span class="c-number">100</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <a href="demos-diffusion-diffusion.xtl.html#u.g_auss" class="c-userfunc">ᵘg̲auss</a> <span class="c-number">12800</span></pre>
+<div class="uses">Used in: <a href="demos-diffusion-diffusion.xtl.src.html#L70">demos/diffusion/diffusion.xtl:70</a>, <a href="demos-diffusion-diffusion.xtl.html#on">on</a></div>
+</div>
+<div class="item" id="on">
+<h3><a href="#on">on</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-diffusion-diffusion.xtl.src.html#L72">line 72</a></div>
+<pre class="code">on ← <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/₂</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="demos-diffusion-diffusion.xtl.html#F">F</a> <a href="builtins.html#-3e" class="c-symbol">&gt;</a> <span class="c-number">0.0</span></pre>
+<div class="uses">Used in: <a href="demos-diffusion-diffusion.xtl.src.html#L73">demos/diffusion/diffusion.xtl:73</a></div>
+</div>
+<h2 class="section" id="section-4">One picture, level by level</h2>
+<div class="item" id="L">
+<h3><a href="#L">L</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-diffusion-diffusion.xtl.src.html#L77">line 77</a></div>
+<div class="doc">
+<p>The noisy picture at each level from 10 down to 0, # above zero.</p>
+</div>
+<pre class="code">(_, _, <a href="demos-diffusion-diffusion.xtl.html#L">L</a>) ← <span class="c-number">10</span> <span class="c-quote">'</span>{ (X, t, <a href="demos-diffusion-diffusion.xtl.html#L">L</a>) → (X1, t1) ← <a href="demos-diffusion-diffusion.xtl.html#u.s_tep" class="c-userfunc">ᵘs̲tep</a> (X, t)◆ (X1, t1, <a href="demos-diffusion-diffusion.xtl.html#L">L</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> X1) } <a href="builtins.html#p_ower" class="c-builtin">p̲ower</a> (<a href="demos-diffusion-diffusion.xtl.html#e">e</a>, <span class="c-number">10</span>, <a href="demos-diffusion-diffusion.xtl.html#e">e</a>)</pre>
+<div class="uses">Used in: <a href="demos-diffusion-diffusion.xtl.html#L">L</a>, <a href="demos-diffusion-diffusion.xtl.src.html#L78">demos/diffusion/diffusion.xtl:78</a></div>
+</div>
+</main>
+</body>
+</html>

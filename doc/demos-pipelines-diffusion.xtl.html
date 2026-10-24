@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>demos/pipelines/diffusion.xtl - X_eTaL doc</title>
+<link rel="stylesheet" href="style.css">
+<script src="theme.js"></script>
+<script defer src="search-index.js"></script>
+<script defer src="search.js"></script>
+</head>
+<body>
+<nav class="side">
+<a class="home" href="index.html">X_eTaL doc</a>
+<input id="search" type="search" autocomplete="off" placeholder="Search: a name, or a type" title="A name (mean finds m_ean), or a type: Num a =&gt; a -&gt; a -&gt; a finds +, m_ax ...">
+<h2>Files</h2>
+<h3>demos/attention/</h3>
+<ul>
+<li><a href="demos-attention-attention.xtl.html">attention.xtl</a></li>
+</ul>
+<h3>demos/backprop/</h3>
+<ul>
+<li><a href="demos-backprop-backprop.xtl.html">backprop.xtl</a></li>
+</ul>
+<h3>demos/cnn-backprop/</h3>
+<ul>
+<li><a href="demos-cnn-backprop-cnn-backprop.xtl.html">cnn-backprop.xtl</a></li>
+</ul>
+<h3>demos/cnn-digits/</h3>
+<ul>
+<li><a href="demos-cnn-digits-batch.xtl.html">batch.xtl</a></li>
+<li><a href="demos-cnn-digits-cnn-digits.xtl.html">cnn-digits.xtl</a></li>
+</ul>
+<h3>demos/diffusion/</h3>
+<ul>
+<li><a href="demos-diffusion-diffusion.xtl.html">diffusion.xtl</a></li>
+</ul>
+<h3>demos/embedding-explorer/</h3>
+<ul>
+<li><a href="demos-embedding-explorer-embedding-explorer.xtl.html">embedding-explorer.xtl</a></li>
+</ul>
+<h3>demos/k-means/</h3>
+<ul>
+<li><a href="demos-k-means-k-means.xtl.html">k-means.xtl</a></li>
+</ul>
+<h3>demos/micro-gpt/</h3>
+<ul>
+<li><a href="demos-micro-gpt-batch.xtl.html">batch.xtl</a></li>
+<li><a href="demos-micro-gpt-micro-gpt.xtl.html">micro-gpt.xtl</a></li>
+</ul>
+<h3>demos/moe-router/</h3>
+<ul>
+<li><a href="demos-moe-router-moe-router.xtl.html">moe-router.xtl</a></li>
+</ul>
+<h3>demos/net-macro/</h3>
+<ul>
+<li><a href="demos-net-macro-net-macro.xtl.html">net-macro.xtl</a></li>
+<li><a href="demos-net-macro-train-it.xtl.html">train-it.xtl</a></li>
+</ul>
+<h3>demos/pipelines/</h3>
+<ul>
+<li><a href="demos-pipelines-diffusion.xtl.html">diffusion.xtl</a></li>
+<li><a href="demos-pipelines-pipelines.xtl.html">pipelines.xtl</a></li>
+<li><a href="demos-pipelines-rosetta.xtl.html">rosetta.xtl</a></li>
+</ul>
+<h3>demos/ternary-net/</h3>
+<ul>
+<li><a href="demos-ternary-net-ternary-net.xtl.html">ternary-net.xtl</a></li>
+</ul>
+<h3>demos/train-live/</h3>
+<ul>
+<li><a href="demos-train-live-train-live.xtl.html">train-live.xtl</a></li>
+</ul>
+<h3>demos/world-model/</h3>
+<ul>
+<li><a href="demos-world-model-world-model.xtl.html">world-model.xtl</a></li>
+</ul>
+<h3>libs/Activations/demos/</h3>
+<ul>
+<li><a href="libs-Activations-demos-curves.xtl.html">curves.xtl</a></li>
+</ul>
+<h3>libs/Activations/src/</h3>
+<ul>
+<li><a href="libs-Activations-src-Activations.xtl.html">Activations.xtl</a></li>
+</ul>
+<h3>libs/Attention/demos/</h3>
+<ul>
+<li><a href="libs-Attention-demos-previous.xtl.html">previous.xtl</a></li>
+</ul>
+<h3>libs/Attention/src/</h3>
+<ul>
+<li><a href="libs-Attention-src-Attention.xtl.html">Attention.xtl</a></li>
+</ul>
+<h3>libs/Conv/demos/</h3>
+<ul>
+<li><a href="libs-Conv-demos-edges.xtl.html">edges.xtl</a></li>
+</ul>
+<h3>libs/Conv/src/</h3>
+<ul>
+<li><a href="libs-Conv-src-Conv.xtl.html">Conv.xtl</a></li>
+</ul>
+<h3>libs/Embed/demos/</h3>
+<ul>
+<li><a href="libs-Embed-demos-pets.xtl.html">pets.xtl</a></li>
+</ul>
+<h3>libs/Embed/src/</h3>
+<ul>
+<li><a href="libs-Embed-src-Embed.xtl.html">Embed.xtl</a></li>
+</ul>
+<h3>libs/Flow/demos/</h3>
+<ul>
+<li><a href="libs-Flow-demos-mlp.xtl.html">mlp.xtl</a></li>
+</ul>
+<h3>libs/Flow/src/</h3>
+<ul>
+<li><a href="libs-Flow-src-Flow.xtlm.html">Flow.xtlm</a></li>
+</ul>
+<h3>libs/Integrals/demos/</h3>
+<ul>
+<li><a href="libs-Integrals-demos-convolution.xtl.html">convolution.xtl</a></li>
+<li><a href="libs-Integrals-demos-gelu.xtl.html">gelu.xtl</a></li>
+</ul>
+<h3>libs/Integrals/src/</h3>
+<ul>
+<li><a href="libs-Integrals-src-Integrals.xtlm.html">Integrals.xtlm</a></li>
+</ul>
+<h3>libs/Learn/demos/</h3>
+<ul>
+<li><a href="libs-Learn-demos-blobs.xtl.html">blobs.xtl</a></li>
+</ul>
+<h3>libs/Learn/src/</h3>
+<ul>
+<li><a href="libs-Learn-src-Learn.xtl.html">Learn.xtl</a></li>
+</ul>
+<h3>libs/Net/demos/</h3>
+<ul>
+<li><a href="libs-Net-demos-train-xor.xtl.html">train-xor.xtl</a></li>
+<li><a href="libs-Net-demos-xor.xtl.html">xor.xtl</a></li>
+</ul>
+<h3>libs/Net/src/</h3>
+<ul>
+<li><a href="libs-Net-src-Net.xtlm.html">Net.xtlm</a></li>
+</ul>
+<h3>libs/NN/demos/</h3>
+<ul>
+<li><a href="libs-NN-demos-xor.xtl.html">xor.xtl</a></li>
+</ul>
+<h3>libs/NN/src/</h3>
+<ul>
+<li><a href="libs-NN-src-NN.xtl.html">NN.xtl</a></li>
+</ul>
+<h3>libs/Norm/demos/</h3>
+<ul>
+<li><a href="libs-Norm-demos-rows.xtl.html">rows.xtl</a></li>
+</ul>
+<h3>libs/Norm/src/</h3>
+<ul>
+<li><a href="libs-Norm-src-Norm.xtl.html">Norm.xtl</a></li>
+</ul>
+<h3>libs/Optim/demos/</h3>
+<ul>
+<li><a href="libs-Optim-demos-bowl.xtl.html">bowl.xtl</a></li>
+</ul>
+<h3>libs/Optim/src/</h3>
+<ul>
+<li><a href="libs-Optim-src-Optim.xtl.html">Optim.xtl</a></li>
+</ul>
+<h3>libs/Quant/demos/</h3>
+<ul>
+<li><a href="libs-Quant-demos-formats.xtl.html">formats.xtl</a></li>
+</ul>
+<h3>libs/Quant/src/</h3>
+<ul>
+<li><a href="libs-Quant-src-Quant.xtl.html">Quant.xtl</a></li>
+</ul>
+<h3>libs/Sample/demos/</h3>
+<ul>
+<li><a href="libs-Sample-demos-next.xtl.html">next.xtl</a></li>
+</ul>
+<h3>libs/Sample/src/</h3>
+<ul>
+<li><a href="libs-Sample-src-Sample.xtl.html">Sample.xtl</a></li>
+</ul>
+<h3>std/</h3>
+<ul>
+<li><a href="std-System.xtlm.html">System.xtlm</a></li>
+</ul>
+<h3>work/libs/Check/src/</h3>
+<ul>
+<li><a href="work-libs-Check-src-Check.xtl.html">Check.xtl</a></li>
+<li><a href="work-libs-Check-src-Check.xtlm.html">Check.xtlm</a></li>
+</ul>
+<h3>work/libs/Equations/src/</h3>
+<ul>
+<li><a href="work-libs-Equations-src-Equations.xtl.html">Equations.xtl</a></li>
+<li><a href="work-libs-Equations-src-Equations.xtlm.html">Equations.xtlm</a></li>
+</ul>
+<h3>work/libs/Lists/src/</h3>
+<ul>
+<li><a href="work-libs-Lists-src-Lists.xtl.html">Lists.xtl</a></li>
+</ul>
+<h3>work/libs/Strings/src/</h3>
+<ul>
+<li><a href="work-libs-Strings-src-Strings.xtl.html">Strings.xtl</a></li>
+</ul>
+<ul>
+<li><a href="builtins.html">built-ins</a></li>
+</ul>
+<h2>On this page</h2>
+<ul>
+<li><a href="#section-1">Data</a></li>
+<li class="item"><a href="#N">N</a></li>
+<li class="item"><a href="#K">K</a></li>
+<li class="item"><a href="#T">T</a></li>
+<li class="item"><a href="#a">a</a></li>
+<li class="item"><a href="#b">b</a></li>
+<li class="item"><a href="#sigma">sigma</a></li>
+<li class="item"><a href="#noise">noise</a></li>
+<li class="item"><a href="#zT">zT</a></li>
+<li class="item"><a href="#c">c</a></li>
+<li class="item"><a href="#We">We</a></li>
+<li class="item"><a href="#Wd">Wd</a></li>
+<li class="item"><a href="#u.e_psTheta"><span class="c-userfunc">ᵘe̲psTheta</span></a></li>
+<li><a href="#section-2">As a paper prints it</a></li>
+<li class="item"><a href="#u.s_tep"><span class="c-userfunc">ᵘs̲tep</span></a></li>
+<li class="item"><a href="#u.c_ollect"><span class="c-userfunc">ᵘc̲ollect</span></a></li>
+<li class="item"><a href="#dz">dz</a></li>
+<li class="item"><a href="#eq">eq</a></li>
+<li><a href="#section-3">As a pipeline</a></li>
+<li class="item"><a href="#pipe">pipe</a></li>
+<li><a href="#section-4">Plain X_eTaL</a></li>
+<li class="item"><a href="#u.p_lain"><span class="c-userfunc">ᵘp̲lain</span></a></li>
+<li class="item"><a href="#zp">zp</a></li>
+<li class="item"><a href="#plain">plain</a></li>
+<li><a href="#section-5">The same</a></li>
+<li class="item"><a href="#r1">r1</a></li>
+<li class="item"><a href="#r2">r2</a></li>
+</ul>
+</nav>
+<main>
+<button class="theme" title="Light or dark">theme</button>
+<section id="results"></section>
+<h1><span class="kind">program</span>demos/pipelines/diffusion.xtl</h1>
+<div class="doc">
+<p>Diffusion sampling four ways, a second Rosetta Stone: the two
+equations of a latent diffusion sampler as a paper prints them, read
+by X_eTaL-libraries' Equations; the sampler as a pipeline (Flow);
+and in plain X_eTaL, as this repository's diffusion demo runs it.
+The pipeline's expansion, the fourth way, is what <code>xetal expand
+diffusion<span class="c-error">.</span>xtl</code> shows. All give the same pictures.</p>
+<p>The paper's two forms (bold z a latent, D the decoder, eps_theta the
+denoiser conditioned on the text embedding of the prompt):
+  X0 = D(zT + sum_{t=T}^{1} [a_t z_t + b_t eps_theta(z_t, t, E_text(prompt)) + sigma_t eps_rand] - z_t)
+  X0 = D(z0) = D(zT + sum_{t=1}^{T} dz_t)
+The first sum is a recurrence (its term at t uses the z_t the term
+before made), so it is one step as the paper's summand, applied T
+times; the second is a plain sum of the steps' differences, and
+telescopes to the same z0.</p>
+</div>
+<p class="meta"><a href="demos-pipelines-diffusion.xtl.src.html">source</a> &middot; imports <code><span class="c-error">e:</span></code> <a href="work-libs-Equations-src-Equations.xtl.html">work/libs/Equations/src/Equations.xtl</a> <a href="work-libs-Equations-src-Equations.xtlm.html">work/libs/Equations/src/Equations.xtlm</a>; <code><span class="c-error">flow:</span></code> <a href="libs-Flow-src-Flow.xtlm.html">libs/Flow/src/Flow.xtlm</a>; <code><span class="c-error">nn:</span></code> <a href="libs-NN-src-NN.xtl.html">libs/NN/src/NN.xtl</a>; <code><span class="c-error">k:</span></code> <a href="work-libs-Check-src-Check.xtl.html">work/libs/Check/src/Check.xtl</a> <a href="work-libs-Check-src-Check.xtlm.html">work/libs/Check/src/Check.xtlm</a></p>
+<h2 class="section" id="section-1">Data</h2>
+<div class="item" id="N">
+<h3><a href="#N">N</a> <span class="type">: Int</span></h3>
+<div class="meta">value &middot; <a href="demos-pipelines-diffusion.xtl.src.html#L29">line 29</a></div>
+<div class="doc">
+<p>A batch of N latents of K numbers, T steps; the schedule a_t, b_t
+and sigma_t (the last step takes no noise, as DDIM), and the noise
+eps_rand of every step, drawn once (a formula stands in for a
+Gaussian draw, so the run is the same everywhere).</p>
+</div>
+<pre class="code">N ← <span class="c-number">2</span></pre>
+<div class="uses">Used in: <a href="demos-pipelines-diffusion.xtl.html#noise">noise</a>, <a href="demos-pipelines-diffusion.xtl.html#zT">zT</a>, <a href="demos-pipelines-diffusion.xtl.html#u.e_psTheta"><span class="c-userfunc">ᵘe̲psTheta</span></a>, <a href="demos-pipelines-diffusion.xtl.html#u.s_tep"><span class="c-userfunc">ᵘs̲tep</span></a>, <a href="demos-pipelines-diffusion.xtl.html#u.c_ollect"><span class="c-userfunc">ᵘc̲ollect</span></a>, <a href="demos-pipelines-diffusion.xtl.html#dz">dz</a>, <a href="demos-pipelines-diffusion.xtl.html#eq">eq</a>, <a href="demos-pipelines-diffusion.xtl.html#pipe">pipe</a></div>
+</div>
+<div class="item" id="K">
+<h3><a href="#K">K</a> <span class="type">: Int</span></h3>
+<div class="meta">value &middot; <a href="demos-pipelines-diffusion.xtl.src.html#L30">line 30</a></div>
+<pre class="code">K ← <span class="c-number">4</span></pre>
+<div class="uses">Used in: <a href="demos-pipelines-diffusion.xtl.html#noise">noise</a>, <a href="demos-pipelines-diffusion.xtl.html#zT">zT</a>, <a href="demos-pipelines-diffusion.xtl.html#u.s_tep"><span class="c-userfunc">ᵘs̲tep</span></a>, <a href="demos-pipelines-diffusion.xtl.html#u.c_ollect"><span class="c-userfunc">ᵘc̲ollect</span></a>, <a href="demos-pipelines-diffusion.xtl.html#dz">dz</a>, <a href="demos-pipelines-diffusion.xtl.html#eq">eq</a>, <a href="demos-pipelines-diffusion.xtl.html#pipe">pipe</a></div>
+</div>
+<div class="item" id="T">
+<h3><a href="#T">T</a> <span class="type">: Int</span></h3>
+<div class="meta">value &middot; <a href="demos-pipelines-diffusion.xtl.src.html#L31">line 31</a></div>
+<pre class="code">T ← <span class="c-number">3</span></pre>
+<div class="uses">Used in: <a href="demos-pipelines-diffusion.xtl.html#noise">noise</a>, <a href="demos-pipelines-diffusion.xtl.html#dz">dz</a>, <a href="demos-pipelines-diffusion.xtl.html#eq">eq</a>, <a href="demos-pipelines-diffusion.xtl.html#pipe">pipe</a>, <a href="demos-pipelines-diffusion.xtl.html#zp">zp</a></div>
+</div>
+<div class="item" id="a">
+<h3><a href="#a">a</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-pipelines-diffusion.xtl.src.html#L32">line 32</a></div>
+<pre class="code">a ← <span class="c-number">0.9</span> <span class="c-number">0.8</span> <span class="c-number">0.7</span></pre>
+<div class="uses">Used in: <a href="demos-pipelines-diffusion.xtl.html#u.s_tep"><span class="c-userfunc">ᵘs̲tep</span></a>, <a href="demos-pipelines-diffusion.xtl.html#u.p_lain"><span class="c-userfunc">ᵘp̲lain</span></a></div>
+</div>
+<div class="item" id="b">
+<h3><a href="#b">b</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-pipelines-diffusion.xtl.src.html#L33">line 33</a></div>
+<pre class="code">b ← <span class="c-number">0.1</span> <span class="c-number">0.2</span> <span class="c-number">0.3</span></pre>
+<div class="uses">Used in: <a href="demos-pipelines-diffusion.xtl.html#u.s_tep"><span class="c-userfunc">ᵘs̲tep</span></a>, <a href="demos-pipelines-diffusion.xtl.html#u.p_lain"><span class="c-userfunc">ᵘp̲lain</span></a></div>
+</div>
+<div class="item" id="sigma">
+<h3><a href="#sigma">sigma</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-pipelines-diffusion.xtl.src.html#L34">line 34</a></div>
+<pre class="code">sigma ← <span class="c-number">0.05</span> <span class="c-number">0.05</span> <span class="c-number">0.0</span></pre>
+<div class="uses">Used in: <a href="demos-pipelines-diffusion.xtl.html#u.s_tep"><span class="c-userfunc">ᵘs̲tep</span></a>, <a href="demos-pipelines-diffusion.xtl.html#u.p_lain"><span class="c-userfunc">ᵘp̲lain</span></a></div>
+</div>
+<div class="item" id="noise">
+<h3><a href="#noise">noise</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-pipelines-diffusion.xtl.src.html#L35">line 35</a></div>
+<pre class="code">noise ← (<a href="demos-pipelines-diffusion.xtl.html#T">T</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="demos-pipelines-diffusion.xtl.html#N">N</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="demos-pipelines-diffusion.xtl.html#K">K</a>) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.5</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#c_os" class="c-builtin">c̲os</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <span class="c-number">24</span></pre>
+<div class="uses">Used in: <a href="demos-pipelines-diffusion.xtl.html#u.s_tep"><span class="c-userfunc">ᵘs̲tep</span></a>, <a href="demos-pipelines-diffusion.xtl.html#u.p_lain"><span class="c-userfunc">ᵘp̲lain</span></a></div>
+</div>
+<div class="item" id="zT">
+<h3><a href="#zT">zT</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-pipelines-diffusion.xtl.src.html#L36">line 36</a></div>
+<pre class="code">zT ← (<a href="demos-pipelines-diffusion.xtl.html#N">N</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="demos-pipelines-diffusion.xtl.html#K">K</a>) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <a href="builtins.html#s_in" class="c-builtin">s̲in</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <span class="c-number">8</span></pre>
+<div class="uses">Used in: <a href="demos-pipelines-diffusion.xtl.html#dz">dz</a>, <a href="demos-pipelines-diffusion.xtl.html#eq">eq</a>, <a href="demos-pipelines-diffusion.xtl.html#pipe">pipe</a>, <a href="demos-pipelines-diffusion.xtl.html#zp">zp</a></div>
+</div>
+<div class="item" id="c">
+<h3><a href="#c">c</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-pipelines-diffusion.xtl.src.html#L42">line 42</a></div>
+<div class="doc">
+<p>The networks, stand-ins with made-up weights (the diffusion demo
+trains real ones): the text encoder gives the prompt's embedding c;
+the denoiser is a dense layer over each latent joined with its level
+and c; the decoder a dense layer over the latent.</p>
+</div>
+<pre class="code">c ← <span class="c-number">0.5</span> <span class="c-number">-0.5</span></pre>
+<div class="uses">Used in: <a href="demos-pipelines-diffusion.xtl.html#u.e_psTheta"><span class="c-userfunc">ᵘe̲psTheta</span></a></div>
+</div>
+<div class="item" id="We">
+<h3><a href="#We">We</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-pipelines-diffusion.xtl.src.html#L43">line 43</a></div>
+<pre class="code">We ← <span class="c-number">8</span> <span class="c-number">4</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.3</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#s_in" class="c-builtin">s̲in</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <span class="c-number">32</span></pre>
+<div class="uses">Used in: <a href="demos-pipelines-diffusion.xtl.html#u.e_psTheta"><span class="c-userfunc">ᵘe̲psTheta</span></a></div>
+</div>
+<div class="item" id="Wd">
+<h3><a href="#Wd">Wd</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-pipelines-diffusion.xtl.src.html#L44">line 44</a></div>
+<pre class="code">Wd ← <span class="c-number">5</span> <span class="c-number">4</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.3</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#c_os" class="c-builtin">c̲os</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <span class="c-number">20</span></pre>
+<div class="uses">Used in: <a href="demos-pipelines-diffusion.xtl.html#eq">eq</a>, <a href="demos-pipelines-diffusion.xtl.html#pipe">pipe</a>, <a href="demos-pipelines-diffusion.xtl.html#plain">plain</a></div>
+</div>
+<div class="item" id="u.e_psTheta">
+<h3><a href="#u.e_psTheta"><span class="c-userfunc">ᵘe̲psTheta</span></a> <span class="type">: Num a =&gt; (Float, a) -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="demos-pipelines-diffusion.xtl.src.html#L45">line 45</a></div>
+<pre class="code"><span class="c-userfunc">ᵘe̲psTheta</span> ← { (Z, t) → (Z <a href="builtins.html#c_at" class="c-builtin">c̲at₂</a> (<a href="demos-pipelines-diffusion.xtl.html#N">N</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">3</span>) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> (<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> t) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="demos-pipelines-diffusion.xtl.html#c">c</a>) <a href="libs-NN-src-NN.xtl.html#l.d_ense" class="c-libfunc">ⁿⁿd̲ense</a> <a href="demos-pipelines-diffusion.xtl.html#We">We</a> }</pre>
+<div class="uses">Used in: <a href="demos-pipelines-diffusion.xtl.html#u.s_tep"><span class="c-userfunc">ᵘs̲tep</span></a>, <a href="demos-pipelines-diffusion.xtl.html#u.p_lain"><span class="c-userfunc">ᵘp̲lain</span></a></div>
+</div>
+<h2 class="section" id="section-2">As a paper prints it</h2>
+<div class="item" id="u.s_tep">
+<h3><a href="#u.s_tep"><span class="c-userfunc">ᵘs̲tep</span></a> <span class="type">: (Float, Int) -&gt; (Float, Int)</span></h3>
+<div class="meta">function &middot; <a href="demos-pipelines-diffusion.xtl.src.html#L52">line 52</a></div>
+<div class="doc">
+<p>One step of the first sum, the paper's summand at level t: a_t z_t
++ b_t eps_theta(z_t, t, c) + sigma_t eps_rand, read by Equations
+over the batch (n) and the latent (k); the level goes down one.</p>
+</div>
+<pre class="code"><span class="c-userfunc">ᵘs̲tep</span> ← { (Z, t) →
+  eps ← <a href="demos-pipelines-diffusion.xtl.html#u.e_psTheta" class="c-userfunc">ᵘe̲psTheta</a> (Z, t)
+  Zn ← <span class="c-string">&quot;Zn[n,k] | N K&quot;</span> <a href="work-libs-Equations-src-Equations.xtlm.html#m.e_q-3c" class="c-macro">ᵉe̲q&lt;</a> <span class="c-string">&quot; | a[t-1] * Z[n,k] + b[t-1] * eps[n,k] + sigma[t-1] * noise[t-1,n,k]&quot;</span>
+  (Zn, t <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span>)
+}</pre>
+<details class="expansion"><summary><code><a href="work-libs-Equations-src-Equations.xtlm.html#m.e_q-3c" class="c-macro">ᵉe̲q&lt;</a></code> expands to</summary><pre class="code">(({ @ →
+  <span class="c-libfunc">g3:a̲t</span> ← { A i → (<span class="c-number">1</span> <a href="builtins.html#-2b" class="c-symbol">+</a> i) <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> A }
+  <span class="c-libfunc">g2:c̲heck</span> ← { (A, name, k, from) e →
+    n ← k <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> A
+    bad ← <a href="builtins.html#w_here" class="c-builtin">w̲here</a> <a href="builtins.html#n_ot" class="c-builtin">n̲ot</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> (<span class="c-number">0</span> <a href="builtins.html#-3c-3d" class="c-symbol">≤</a> e) <a href="builtins.html#-26" class="c-symbol">∧</a> e <a href="builtins.html#-3c" class="c-symbol">&lt;</a> n
+    <span class="c-number">0</span> <a href="builtins.html#-3d" class="c-symbol">=</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> bad ? e
+    <span class="c-string">&quot;index&quot;</span> <a href="builtins.html#-5b-5dS_IGNAL" class="c-builtin">⎕S̲IGNAL</a> name <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; axis &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> k) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;: index &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> (<a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> bad) <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> e) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; is outside 0..&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> n <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; (from &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> from <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;)&quot;</span>
+  }
+  <span class="c-libfunc">g1:r̲ank</span> ← { (A, name, q, ref) →
+    (<a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> <a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> A) <a href="builtins.html#-3d" class="c-symbol">=</a> q ? A
+    <span class="c-string">&quot;rank&quot;</span> <a href="builtins.html#-5b-5dS_IGNAL" class="c-builtin">⎕S̲IGNAL</a> ref <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; indexes &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> q) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; axes, but &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> name <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; has rank &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> <a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> A
+  }
+  g4:grid ← <a href="demos-pipelines-diffusion.xtl.html#N">N</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="demos-pipelines-diffusion.xtl.html#K">K</a>
+  <span class="c-libfunc">g5:g̲rid</span> ← { k → g4:grid <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> (<a href="builtins.html#o_ffsets" class="c-builtin">o̲ffsets</a> k <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> g4:grid) <span class="c-builtin">'</span><a href="builtins.html#l_eft" class="c-builtin">l̲eft</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> (<span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> k <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> g4:grid) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0</span> }
+  g4:grid <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> (({ @ →
+  g6:grid ← <a href="demos-pipelines-diffusion.xtl.html#N">N</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="demos-pipelines-diffusion.xtl.html#K">K</a>
+  <span class="c-libfunc">g7:g̲rid</span> ← { k → g6:grid <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> (<a href="builtins.html#o_ffsets" class="c-builtin">o̲ffsets</a> k <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> g6:grid) <span class="c-builtin">'</span><a href="builtins.html#l_eft" class="c-builtin">l̲eft</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> (<span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> k <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> g6:grid) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0</span> }
+  g6:grid <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> ((((
+    ((<span class="c-libfunc">g1:r̲ank</span> (<a href="demos-pipelines-diffusion.xtl.html#a">a</a>, <span class="c-string">&quot;a&quot;</span>, <span class="c-number">1</span>, <span class="c-string">&quot;a[t-1]&quot;</span>)) <span class="c-libfunc">g3:a̲t</span> (
+      ((<a href="demos-pipelines-diffusion.xtl.html#a">a</a>, <span class="c-string">&quot;a&quot;</span>, <span class="c-number">1</span>, <span class="c-string">&quot;t-1&quot;</span>) <span class="c-libfunc">g2:c̲heck</span> (t <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span>)))) <a href="builtins.html#-2a" class="c-symbol">×</a> 
+    ((<span class="c-libfunc">g1:r̲ank</span> (Z, <span class="c-string">&quot;Z&quot;</span>, <span class="c-number">2</span>, <span class="c-string">&quot;Z[n,k]&quot;</span>)) <span class="c-libfunc">g3:a̲t</span> ((
+      ((Z, <span class="c-string">&quot;Z&quot;</span>, <span class="c-number">2</span>, <span class="c-string">&quot;k&quot;</span>) <span class="c-libfunc">g2:c̲heck</span> (<span class="c-number">0</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-libfunc">g7:g̲rid</span> <span class="c-number">2</span>)) <a href="builtins.html#-2b" class="c-symbol">+</a> (<span class="c-number">2</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> Z) <a href="builtins.html#-2a" class="c-symbol">×</a> 
+      ((Z, <span class="c-string">&quot;Z&quot;</span>, <span class="c-number">1</span>, <span class="c-string">&quot;n&quot;</span>) <span class="c-libfunc">g2:c̲heck</span> (<span class="c-number">0</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-libfunc">g7:g̲rid</span> <span class="c-number">1</span>)))))) <a href="builtins.html#-2b" class="c-symbol">+</a> (
+    ((<span class="c-libfunc">g1:r̲ank</span> (<a href="demos-pipelines-diffusion.xtl.html#b">b</a>, <span class="c-string">&quot;b&quot;</span>, <span class="c-number">1</span>, <span class="c-string">&quot;b[t-1]&quot;</span>)) <span class="c-libfunc">g3:a̲t</span> (
+      ((<a href="demos-pipelines-diffusion.xtl.html#b">b</a>, <span class="c-string">&quot;b&quot;</span>, <span class="c-number">1</span>, <span class="c-string">&quot;t-1&quot;</span>) <span class="c-libfunc">g2:c̲heck</span> (t <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span>)))) <a href="builtins.html#-2a" class="c-symbol">×</a> 
+    ((<span class="c-libfunc">g1:r̲ank</span> (eps, <span class="c-string">&quot;eps&quot;</span>, <span class="c-number">2</span>, <span class="c-string">&quot;eps[n,k]&quot;</span>)) <span class="c-libfunc">g3:a̲t</span> ((
+      ((eps, <span class="c-string">&quot;eps&quot;</span>, <span class="c-number">2</span>, <span class="c-string">&quot;k&quot;</span>) <span class="c-libfunc">g2:c̲heck</span> (<span class="c-number">0</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-libfunc">g7:g̲rid</span> <span class="c-number">2</span>)) <a href="builtins.html#-2b" class="c-symbol">+</a> (<span class="c-number">2</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> eps) <a href="builtins.html#-2a" class="c-symbol">×</a> 
+      ((eps, <span class="c-string">&quot;eps&quot;</span>, <span class="c-number">1</span>, <span class="c-string">&quot;n&quot;</span>) <span class="c-libfunc">g2:c̲heck</span> (<span class="c-number">0</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-libfunc">g7:g̲rid</span> <span class="c-number">1</span>))))))) <a href="builtins.html#-2b" class="c-symbol">+</a> (
+    ((<span class="c-libfunc">g1:r̲ank</span> (<a href="demos-pipelines-diffusion.xtl.html#sigma">sigma</a>, <span class="c-string">&quot;sigma&quot;</span>, <span class="c-number">1</span>, <span class="c-string">&quot;sigma[t-1]&quot;</span>)) <span class="c-libfunc">g3:a̲t</span> (
+      ((<a href="demos-pipelines-diffusion.xtl.html#sigma">sigma</a>, <span class="c-string">&quot;sigma&quot;</span>, <span class="c-number">1</span>, <span class="c-string">&quot;t-1&quot;</span>) <span class="c-libfunc">g2:c̲heck</span> (t <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span>)))) <a href="builtins.html#-2a" class="c-symbol">×</a> 
+    ((<span class="c-libfunc">g1:r̲ank</span> (<a href="demos-pipelines-diffusion.xtl.html#noise">noise</a>, <span class="c-string">&quot;noise&quot;</span>, <span class="c-number">3</span>, <span class="c-string">&quot;noise[t-1,n,k]&quot;</span>)) <span class="c-libfunc">g3:a̲t</span> ((
+      ((<a href="demos-pipelines-diffusion.xtl.html#noise">noise</a>, <span class="c-string">&quot;noise&quot;</span>, <span class="c-number">3</span>, <span class="c-string">&quot;k&quot;</span>) <span class="c-libfunc">g2:c̲heck</span> (<span class="c-number">0</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-libfunc">g7:g̲rid</span> <span class="c-number">2</span>)) <a href="builtins.html#-2b" class="c-symbol">+</a> (<span class="c-number">3</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> <a href="demos-pipelines-diffusion.xtl.html#noise">noise</a>) <a href="builtins.html#-2a" class="c-symbol">×</a> (
+      ((<a href="demos-pipelines-diffusion.xtl.html#noise">noise</a>, <span class="c-string">&quot;noise&quot;</span>, <span class="c-number">2</span>, <span class="c-string">&quot;n&quot;</span>) <span class="c-libfunc">g2:c̲heck</span> (<span class="c-number">0</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-libfunc">g7:g̲rid</span> <span class="c-number">1</span>)) <a href="builtins.html#-2b" class="c-symbol">+</a> (<span class="c-number">2</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> <a href="demos-pipelines-diffusion.xtl.html#noise">noise</a>) <a href="builtins.html#-2a" class="c-symbol">×</a> 
+      ((<a href="demos-pipelines-diffusion.xtl.html#noise">noise</a>, <span class="c-string">&quot;noise&quot;</span>, <span class="c-number">1</span>, <span class="c-string">&quot;t-1&quot;</span>) <span class="c-libfunc">g2:c̲heck</span> (t <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span>)))))))))
+} @))
+} @))</pre></details>
+<div class="uses">Used in: <a href="demos-pipelines-diffusion.xtl.html#u.c_ollect"><span class="c-userfunc">ᵘc̲ollect</span></a>, <a href="demos-pipelines-diffusion.xtl.html#pipe">pipe</a></div>
+</div>
+<div class="item" id="u.c_ollect">
+<h3><a href="#u.c_ollect"><span class="c-userfunc">ᵘc̲ollect</span></a> <span class="type">: (Float, Int, Float) -&gt; (Float, Int, Float)</span></h3>
+<div class="meta">function &middot; <a href="demos-pipelines-diffusion.xtl.src.html#L62">line 62</a></div>
+<div class="doc">
+<p>The steps' differences dz_t = z_{t-1} - z_t, a row of N x K per
+step, collected as the T steps run; then the second form, the sum
+of them, and the decoder.</p>
+</div>
+<pre class="code"><span class="c-userfunc">ᵘc̲ollect</span> ← { (Z, t, <a href="demos-pipelines-diffusion.xtl.html#dz">dz</a>) →
+  (Zn, tn) ← <a href="demos-pipelines-diffusion.xtl.html#u.s_tep" class="c-userfunc">ᵘs̲tep</a> (Z, t)
+  (Zn, tn, <a href="demos-pipelines-diffusion.xtl.html#dz">dz</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-number">1</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="demos-pipelines-diffusion.xtl.html#N">N</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="demos-pipelines-diffusion.xtl.html#K">K</a>) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> Zn <a href="builtins.html#-2d" class="c-symbol">−</a> Z)
+}</pre>
+<div class="uses">Used in: <a href="demos-pipelines-diffusion.xtl.html#dz">dz</a></div>
+</div>
+<div class="item" id="dz">
+<h3><a href="#dz">dz</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-pipelines-diffusion.xtl.src.html#L66">line 66</a></div>
+<pre class="code">(_, _, <a href="demos-pipelines-diffusion.xtl.html#dz">dz</a>) ← <a href="demos-pipelines-diffusion.xtl.html#T">T</a> <span class="c-userfunc">'</span><a href="demos-pipelines-diffusion.xtl.html#u.c_ollect" class="c-userfunc">ᵘc̲ollect</a> <a href="builtins.html#p_ower" class="c-builtin">p̲ower</a> (<a href="demos-pipelines-diffusion.xtl.html#zT">zT</a>, <a href="demos-pipelines-diffusion.xtl.html#T">T</a>, (<span class="c-number">0</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="demos-pipelines-diffusion.xtl.html#N">N</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="demos-pipelines-diffusion.xtl.html#K">K</a>) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.0</span>)</pre>
+<div class="uses">Used in: <a href="demos-pipelines-diffusion.xtl.html#u.c_ollect"><span class="c-userfunc">ᵘc̲ollect</span></a>, <a href="demos-pipelines-diffusion.xtl.html#dz">dz</a>, <a href="demos-pipelines-diffusion.xtl.html#eq">eq</a></div>
+</div>
+<div class="item" id="eq">
+<h3><a href="#eq">eq</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-pipelines-diffusion.xtl.src.html#L67">line 67</a></div>
+<pre class="code">eq ← (<span class="c-string">&quot;z0[n,k] | N K&quot;</span> <a href="work-libs-Equations-src-Equations.xtlm.html#m.e_q-3c" class="c-macro">ᵉe̲q&lt;</a> <span class="c-string">&quot;zT[n,k] + (sum t:=1..T | dz[t-1,n,k])&quot;</span>) <a href="libs-NN-src-NN.xtl.html#l.d_ense" class="c-libfunc">ⁿⁿd̲ense</a> <a href="demos-pipelines-diffusion.xtl.html#Wd">Wd</a></pre>
+<details class="expansion"><summary><code><a href="work-libs-Equations-src-Equations.xtlm.html#m.e_q-3c" class="c-macro">ᵉe̲q&lt;</a></code> expands to</summary><pre class="code">(({ @ →
+  <span class="c-libfunc">g10:a̲t</span> ← { A i → (<span class="c-number">1</span> <a href="builtins.html#-2b" class="c-symbol">+</a> i) <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> A }
+  <span class="c-libfunc">g9:c̲heck</span> ← { (A, name, k, from) e →
+    n ← k <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> A
+    bad ← <a href="builtins.html#w_here" class="c-builtin">w̲here</a> <a href="builtins.html#n_ot" class="c-builtin">n̲ot</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> (<span class="c-number">0</span> <a href="builtins.html#-3c-3d" class="c-symbol">≤</a> e) <a href="builtins.html#-26" class="c-symbol">∧</a> e <a href="builtins.html#-3c" class="c-symbol">&lt;</a> n
+    <span class="c-number">0</span> <a href="builtins.html#-3d" class="c-symbol">=</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> bad ? e
+    <span class="c-string">&quot;index&quot;</span> <a href="builtins.html#-5b-5dS_IGNAL" class="c-builtin">⎕S̲IGNAL</a> name <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; axis &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> k) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;: index &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> (<a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> bad) <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> e) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; is outside 0..&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> n <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; (from &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> from <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;)&quot;</span>
+  }
+  <span class="c-libfunc">g8:r̲ank</span> ← { (A, name, q, ref) →
+    (<a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> <a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> A) <a href="builtins.html#-3d" class="c-symbol">=</a> q ? A
+    <span class="c-string">&quot;rank&quot;</span> <a href="builtins.html#-5b-5dS_IGNAL" class="c-builtin">⎕S̲IGNAL</a> ref <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; indexes &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> q) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; axes, but &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> name <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; has rank &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> <a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> A
+  }
+  g11:grid ← <a href="demos-pipelines-diffusion.xtl.html#N">N</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="demos-pipelines-diffusion.xtl.html#K">K</a>
+  <span class="c-libfunc">g12:g̲rid</span> ← { k → g11:grid <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> (<a href="builtins.html#o_ffsets" class="c-builtin">o̲ffsets</a> k <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> g11:grid) <span class="c-builtin">'</span><a href="builtins.html#l_eft" class="c-builtin">l̲eft</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> (<span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> k <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> g11:grid) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0</span> }
+  g11:grid <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> ((
+    ((<span class="c-libfunc">g8:r̲ank</span> (<a href="demos-pipelines-diffusion.xtl.html#zT">zT</a>, <span class="c-string">&quot;zT&quot;</span>, <span class="c-number">2</span>, <span class="c-string">&quot;zT[n,k]&quot;</span>)) <span class="c-libfunc">g10:a̲t</span> ((
+      ((<a href="demos-pipelines-diffusion.xtl.html#zT">zT</a>, <span class="c-string">&quot;zT&quot;</span>, <span class="c-number">2</span>, <span class="c-string">&quot;k&quot;</span>) <span class="c-libfunc">g9:c̲heck</span> (<span class="c-number">0</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-libfunc">g12:g̲rid</span> <span class="c-number">2</span>)) <a href="builtins.html#-2b" class="c-symbol">+</a> (<span class="c-number">2</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> <a href="demos-pipelines-diffusion.xtl.html#zT">zT</a>) <a href="builtins.html#-2a" class="c-symbol">×</a> 
+      ((<a href="demos-pipelines-diffusion.xtl.html#zT">zT</a>, <span class="c-string">&quot;zT&quot;</span>, <span class="c-number">1</span>, <span class="c-string">&quot;n&quot;</span>) <span class="c-libfunc">g9:c̲heck</span> (<span class="c-number">0</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-libfunc">g12:g̲rid</span> <span class="c-number">1</span>))))) <a href="builtins.html#-2b" class="c-symbol">+</a> ({ @ →
+  g13:grid ← <a href="demos-pipelines-diffusion.xtl.html#N">N</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="demos-pipelines-diffusion.xtl.html#K">K</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-number">1</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="demos-pipelines-diffusion.xtl.html#T">T</a> <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span>)
+  <span class="c-libfunc">g14:g̲rid</span> ← { k → g13:grid <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> (<a href="builtins.html#o_ffsets" class="c-builtin">o̲ffsets</a> k <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> g13:grid) <span class="c-builtin">'</span><a href="builtins.html#l_eft" class="c-builtin">l̲eft</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> (<span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> k <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> g13:grid) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0</span> }
+  <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/₃</a> g13:grid <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> (
+    ((<span class="c-libfunc">g8:r̲ank</span> (<a href="demos-pipelines-diffusion.xtl.html#dz">dz</a>, <span class="c-string">&quot;dz&quot;</span>, <span class="c-number">3</span>, <span class="c-string">&quot;dz[t-1,n,k]&quot;</span>)) <span class="c-libfunc">g10:a̲t</span> ((
+      ((<a href="demos-pipelines-diffusion.xtl.html#dz">dz</a>, <span class="c-string">&quot;dz&quot;</span>, <span class="c-number">3</span>, <span class="c-string">&quot;k&quot;</span>) <span class="c-libfunc">g9:c̲heck</span> (<span class="c-number">0</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-libfunc">g14:g̲rid</span> <span class="c-number">2</span>)) <a href="builtins.html#-2b" class="c-symbol">+</a> (<span class="c-number">3</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> <a href="demos-pipelines-diffusion.xtl.html#dz">dz</a>) <a href="builtins.html#-2a" class="c-symbol">×</a> (
+      ((<a href="demos-pipelines-diffusion.xtl.html#dz">dz</a>, <span class="c-string">&quot;dz&quot;</span>, <span class="c-number">2</span>, <span class="c-string">&quot;n&quot;</span>) <span class="c-libfunc">g9:c̲heck</span> (<span class="c-number">0</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-libfunc">g14:g̲rid</span> <span class="c-number">1</span>)) <a href="builtins.html#-2b" class="c-symbol">+</a> (<span class="c-number">2</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> <a href="demos-pipelines-diffusion.xtl.html#dz">dz</a>) <a href="builtins.html#-2a" class="c-symbol">×</a> 
+      ((<a href="demos-pipelines-diffusion.xtl.html#dz">dz</a>, <span class="c-string">&quot;dz&quot;</span>, <span class="c-number">1</span>, <span class="c-string">&quot;t-1&quot;</span>) <span class="c-libfunc">g9:c̲heck</span> ((<span class="c-number">1</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-libfunc">g14:g̲rid</span> <span class="c-number">3</span>) <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span>)))))))
+} @)))
+} @))</pre></details>
+<div class="uses">Used in: <a href="demos-pipelines-diffusion.xtl.html#r1">r1</a></div>
+</div>
+<h2 class="section" id="section-3">As a pipeline</h2>
+<div class="item" id="pipe">
+<h3><a href="#pipe">pipe</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-pipelines-diffusion.xtl.src.html#L74">line 74</a></div>
+<div class="doc">
+<p>The latents of noise, the T steps (p_ower applies the step T times
+to the latents and the level), the final latents labeled, the decoder.</p>
+</div>
+<pre class="code">pipe ← @ <span class="c-macro">ᶠˡᵒʷp̲ipe&lt;</span> <span class="c-string">c&quot;</span></pre>
+<details class="expansion"><summary><code><a href="libs-Flow-src-Flow.xtlm.html#m.p_ipe-3c" class="c-macro">ᶠˡᵒʷp̲ipe&lt;</a></code> expands to</summary><pre class="code">({ @ →
+  g15:stage ← <a href="demos-pipelines-diffusion.xtl.html#zT">zT</a>
+  (z0, t0) ← { @ →
+    it ← g15:stage
+    <a href="demos-pipelines-diffusion.xtl.html#T">T</a> <span class="c-userfunc">'</span><a href="demos-pipelines-diffusion.xtl.html#u.s_tep" class="c-userfunc">ᵘs̲tep</a> <a href="builtins.html#p_ower" class="c-builtin">p̲ower</a> (it, <a href="demos-pipelines-diffusion.xtl.html#T">T</a>)
+  } @
+  X0 ← z0 <a href="libs-NN-src-NN.xtl.html#l.d_ense" class="c-libfunc">ⁿⁿd̲ense</a> <a href="demos-pipelines-diffusion.xtl.html#Wd">Wd</a>
+  _ ← { @ →
+    ((<a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> X0) <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> <a href="demos-pipelines-diffusion.xtl.html#N">N</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="demos-pipelines-diffusion.xtl.html#K">K</a>) ? @
+    <span class="c-string">&quot;shape&quot;</span> <a href="builtins.html#-5b-5dS_IGNAL" class="c-builtin">⎕S̲IGNAL</a> <span class="c-string">&quot;stage 3 (X0): shape &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> X0) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;, expected &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> <a href="demos-pipelines-diffusion.xtl.html#N">N</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="demos-pipelines-diffusion.xtl.html#K">K</a>
+  } @
+  X0
+} @)</pre></details>
+<div class="uses">Used in: <a href="demos-pipelines-diffusion.xtl.html#r1">r1</a>, <a href="demos-pipelines-diffusion.xtl.html#r2">r2</a></div>
+</div>
+<h2 class="section" id="section-4">Plain X_eTaL</h2>
+<div class="item" id="u.p_lain">
+<h3><a href="#u.p_lain"><span class="c-userfunc">ᵘp̲lain</span></a> <span class="type">: (Float, Int) -&gt; (Float, Int)</span></h3>
+<div class="meta">function &middot; <a href="demos-pipelines-diffusion.xtl.src.html#L83">line 83</a></div>
+<div class="doc">
+<p>The step without the macro: the schedule's values by level, the
+noise's slab; then the sampler as the diffusion demo writes it.</p>
+</div>
+<pre class="code"><span class="c-userfunc">ᵘp̲lain</span> ← { (Z, t) → (((t <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="demos-pipelines-diffusion.xtl.html#a">a</a>) <a href="builtins.html#-2a" class="c-symbol">×</a> Z) <a href="builtins.html#-2b" class="c-symbol">+</a> ((t <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="demos-pipelines-diffusion.xtl.html#b">b</a>) <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="demos-pipelines-diffusion.xtl.html#u.e_psTheta" class="c-userfunc">ᵘe̲psTheta</a> (Z, t)) <a href="builtins.html#-2b" class="c-symbol">+</a> (t <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="demos-pipelines-diffusion.xtl.html#sigma">sigma</a>) <a href="builtins.html#-2a" class="c-symbol">×</a> t <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="demos-pipelines-diffusion.xtl.html#noise">noise</a>, t <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span>) }</pre>
+<div class="uses">Used in: <a href="demos-pipelines-diffusion.xtl.html#zp">zp</a></div>
+</div>
+<div class="item" id="zp">
+<h3><a href="#zp">zp</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-pipelines-diffusion.xtl.src.html#L84">line 84</a></div>
+<pre class="code">(<a href="demos-pipelines-diffusion.xtl.html#zp">zp</a>, _) ← <a href="demos-pipelines-diffusion.xtl.html#T">T</a> <span class="c-userfunc">'</span><a href="demos-pipelines-diffusion.xtl.html#u.p_lain" class="c-userfunc">ᵘp̲lain</a> <a href="builtins.html#p_ower" class="c-builtin">p̲ower</a> (<a href="demos-pipelines-diffusion.xtl.html#zT">zT</a>, <a href="demos-pipelines-diffusion.xtl.html#T">T</a>)</pre>
+<div class="uses">Used in: <a href="demos-pipelines-diffusion.xtl.html#zp">zp</a>, <a href="demos-pipelines-diffusion.xtl.html#plain">plain</a></div>
+</div>
+<div class="item" id="plain">
+<h3><a href="#plain">plain</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-pipelines-diffusion.xtl.src.html#L85">line 85</a></div>
+<pre class="code">plain ← <a href="demos-pipelines-diffusion.xtl.html#zp">zp</a> <a href="libs-NN-src-NN.xtl.html#l.d_ense" class="c-libfunc">ⁿⁿd̲ense</a> <a href="demos-pipelines-diffusion.xtl.html#Wd">Wd</a></pre>
+<div class="uses">Used in: <a href="demos-pipelines-diffusion.xtl.html#r2">r2</a>, <a href="demos-pipelines-diffusion.xtl.src.html#L94">demos/pipelines/diffusion.xtl:94</a></div>
+</div>
+<h2 class="section" id="section-5">The same</h2>
+<div class="item" id="r1">
+<h3><a href="#r1">r1</a> <span class="type">: Char</span></h3>
+<div class="meta">value &middot; <a href="demos-pipelines-diffusion.xtl.src.html#L89">line 89</a></div>
+<pre class="code">r1 ← <span class="c-string">&quot;the equations and the pipeline&quot;</span> <a href="work-libs-Check-src-Check.xtl.html#l.t_est" class="c-libfunc">ᵏt̲est</a> <a href="demos-pipelines-diffusion.xtl.html#eq">eq</a> <a href="work-libs-Check-src-Check.xtl.html#l.n_ear" class="c-libfunc">ᵏn̲ear</a> <a href="demos-pipelines-diffusion.xtl.html#pipe">pipe</a></pre>
+<div class="uses">Used in: <a href="demos-pipelines-diffusion.xtl.src.html#L91">demos/pipelines/diffusion.xtl:91</a></div>
+</div>
+<div class="item" id="r2">
+<h3><a href="#r2">r2</a> <span class="type">: Char</span></h3>
+<div class="meta">value &middot; <a href="demos-pipelines-diffusion.xtl.src.html#L90">line 90</a></div>
+<pre class="code">r2 ← <span class="c-string">&quot;the pipeline and plain X_eTaL&quot;</span> <a href="work-libs-Check-src-Check.xtl.html#l.t_est" class="c-libfunc">ᵏt̲est</a> <a href="demos-pipelines-diffusion.xtl.html#pipe">pipe</a> <a href="work-libs-Check-src-Check.xtl.html#l.n_ear" class="c-libfunc">ᵏn̲ear</a> <a href="demos-pipelines-diffusion.xtl.html#plain">plain</a></pre>
+<div class="uses">Used in: <a href="demos-pipelines-diffusion.xtl.src.html#L91">demos/pipelines/diffusion.xtl:91</a></div>
+</div>
+</main>
+</body>
+</html>

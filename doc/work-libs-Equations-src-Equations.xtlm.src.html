@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>work/libs/Equations/src/Equations.xtlm - X_eTaL doc</title>
+<link rel="stylesheet" href="style.css">
+<script src="theme.js"></script>
+<script defer src="search-index.js"></script>
+<script defer src="search.js"></script>
+</head>
+<body>
+<nav class="side">
+<a class="home" href="index.html">X_eTaL doc</a>
+<input id="search" type="search" autocomplete="off" placeholder="Search: a name, or a type" title="A name (mean finds m_ean), or a type: Num a =&gt; a -&gt; a -&gt; a finds +, m_ax ...">
+<h2>Files</h2>
+<h3>demos/attention/</h3>
+<ul>
+<li><a href="demos-attention-attention.xtl.html">attention.xtl</a></li>
+</ul>
+<h3>demos/backprop/</h3>
+<ul>
+<li><a href="demos-backprop-backprop.xtl.html">backprop.xtl</a></li>
+</ul>
+<h3>demos/cnn-backprop/</h3>
+<ul>
+<li><a href="demos-cnn-backprop-cnn-backprop.xtl.html">cnn-backprop.xtl</a></li>
+</ul>
+<h3>demos/cnn-digits/</h3>
+<ul>
+<li><a href="demos-cnn-digits-batch.xtl.html">batch.xtl</a></li>
+<li><a href="demos-cnn-digits-cnn-digits.xtl.html">cnn-digits.xtl</a></li>
+</ul>
+<h3>demos/diffusion/</h3>
+<ul>
+<li><a href="demos-diffusion-diffusion.xtl.html">diffusion.xtl</a></li>
+</ul>
+<h3>demos/embedding-explorer/</h3>
+<ul>
+<li><a href="demos-embedding-explorer-embedding-explorer.xtl.html">embedding-explorer.xtl</a></li>
+</ul>
+<h3>demos/k-means/</h3>
+<ul>
+<li><a href="demos-k-means-k-means.xtl.html">k-means.xtl</a></li>
+</ul>
+<h3>demos/micro-gpt/</h3>
+<ul>
+<li><a href="demos-micro-gpt-batch.xtl.html">batch.xtl</a></li>
+<li><a href="demos-micro-gpt-micro-gpt.xtl.html">micro-gpt.xtl</a></li>
+</ul>
+<h3>demos/moe-router/</h3>
+<ul>
+<li><a href="demos-moe-router-moe-router.xtl.html">moe-router.xtl</a></li>
+</ul>
+<h3>demos/net-macro/</h3>
+<ul>
+<li><a href="demos-net-macro-net-macro.xtl.html">net-macro.xtl</a></li>
+<li><a href="demos-net-macro-train-it.xtl.html">train-it.xtl</a></li>
+</ul>
+<h3>demos/pipelines/</h3>
+<ul>
+<li><a href="demos-pipelines-diffusion.xtl.html">diffusion.xtl</a></li>
+<li><a href="demos-pipelines-pipelines.xtl.html">pipelines.xtl</a></li>
+<li><a href="demos-pipelines-rosetta.xtl.html">rosetta.xtl</a></li>
+</ul>
+<h3>demos/ternary-net/</h3>
+<ul>
+<li><a href="demos-ternary-net-ternary-net.xtl.html">ternary-net.xtl</a></li>
+</ul>
+<h3>demos/train-live/</h3>
+<ul>
+<li><a href="demos-train-live-train-live.xtl.html">train-live.xtl</a></li>
+</ul>
+<h3>demos/world-model/</h3>
+<ul>
+<li><a href="demos-world-model-world-model.xtl.html">world-model.xtl</a></li>
+</ul>
+<h3>libs/Activations/demos/</h3>
+<ul>
+<li><a href="libs-Activations-demos-curves.xtl.html">curves.xtl</a></li>
+</ul>
+<h3>libs/Activations/src/</h3>
+<ul>
+<li><a href="libs-Activations-src-Activations.xtl.html">Activations.xtl</a></li>
+</ul>
+<h3>libs/Attention/demos/</h3>
+<ul>
+<li><a href="libs-Attention-demos-previous.xtl.html">previous.xtl</a></li>
+</ul>
+<h3>libs/Attention/src/</h3>
+<ul>
+<li><a href="libs-Attention-src-Attention.xtl.html">Attention.xtl</a></li>
+</ul>
+<h3>libs/Conv/demos/</h3>
+<ul>
+<li><a href="libs-Conv-demos-edges.xtl.html">edges.xtl</a></li>
+</ul>
+<h3>libs/Conv/src/</h3>
+<ul>
+<li><a href="libs-Conv-src-Conv.xtl.html">Conv.xtl</a></li>
+</ul>
+<h3>libs/Embed/demos/</h3>
+<ul>
+<li><a href="libs-Embed-demos-pets.xtl.html">pets.xtl</a></li>
+</ul>
+<h3>libs/Embed/src/</h3>
+<ul>
+<li><a href="libs-Embed-src-Embed.xtl.html">Embed.xtl</a></li>
+</ul>
+<h3>libs/Flow/demos/</h3>
+<ul>
+<li><a href="libs-Flow-demos-mlp.xtl.html">mlp.xtl</a></li>
+</ul>
+<h3>libs/Flow/src/</h3>
+<ul>
+<li><a href="libs-Flow-src-Flow.xtlm.html">Flow.xtlm</a></li>
+</ul>
+<h3>libs/Integrals/demos/</h3>
+<ul>
+<li><a href="libs-Integrals-demos-convolution.xtl.html">convolution.xtl</a></li>
+<li><a href="libs-Integrals-demos-gelu.xtl.html">gelu.xtl</a></li>
+</ul>
+<h3>libs/Integrals/src/</h3>
+<ul>
+<li><a href="libs-Integrals-src-Integrals.xtlm.html">Integrals.xtlm</a></li>
+</ul>
+<h3>libs/Learn/demos/</h3>
+<ul>
+<li><a href="libs-Learn-demos-blobs.xtl.html">blobs.xtl</a></li>
+</ul>
+<h3>libs/Learn/src/</h3>
+<ul>
+<li><a href="libs-Learn-src-Learn.xtl.html">Learn.xtl</a></li>
+</ul>
+<h3>libs/Net/demos/</h3>
+<ul>
+<li><a href="libs-Net-demos-train-xor.xtl.html">train-xor.xtl</a></li>
+<li><a href="libs-Net-demos-xor.xtl.html">xor.xtl</a></li>
+</ul>
+<h3>libs/Net/src/</h3>
+<ul>
+<li><a href="libs-Net-src-Net.xtlm.html">Net.xtlm</a></li>
+</ul>
+<h3>libs/NN/demos/</h3>
+<ul>
+<li><a href="libs-NN-demos-xor.xtl.html">xor.xtl</a></li>
+</ul>
+<h3>libs/NN/src/</h3>
+<ul>
+<li><a href="libs-NN-src-NN.xtl.html">NN.xtl</a></li>
+</ul>
+<h3>libs/Norm/demos/</h3>
+<ul>
+<li><a href="libs-Norm-demos-rows.xtl.html">rows.xtl</a></li>
+</ul>
+<h3>libs/Norm/src/</h3>
+<ul>
+<li><a href="libs-Norm-src-Norm.xtl.html">Norm.xtl</a></li>
+</ul>
+<h3>libs/Optim/demos/</h3>
+<ul>
+<li><a href="libs-Optim-demos-bowl.xtl.html">bowl.xtl</a></li>
+</ul>
+<h3>libs/Optim/src/</h3>
+<ul>
+<li><a href="libs-Optim-src-Optim.xtl.html">Optim.xtl</a></li>
+</ul>
+<h3>libs/Quant/demos/</h3>
+<ul>
+<li><a href="libs-Quant-demos-formats.xtl.html">formats.xtl</a></li>
+</ul>
+<h3>libs/Quant/src/</h3>
+<ul>
+<li><a href="libs-Quant-src-Quant.xtl.html">Quant.xtl</a></li>
+</ul>
+<h3>libs/Sample/demos/</h3>
+<ul>
+<li><a href="libs-Sample-demos-next.xtl.html">next.xtl</a></li>
+</ul>
+<h3>libs/Sample/src/</h3>
+<ul>
+<li><a href="libs-Sample-src-Sample.xtl.html">Sample.xtl</a></li>
+</ul>
+<h3>std/</h3>
+<ul>
+<li><a href="std-System.xtlm.html">System.xtlm</a></li>
+</ul>
+<h3>work/libs/Check/src/</h3>
+<ul>
+<li><a href="work-libs-Check-src-Check.xtl.html">Check.xtl</a></li>
+<li><a href="work-libs-Check-src-Check.xtlm.html">Check.xtlm</a></li>
+</ul>
+<h3>work/libs/Equations/src/</h3>
+<ul>
+<li><a href="work-libs-Equations-src-Equations.xtl.html">Equations.xtl</a></li>
+<li><a href="work-libs-Equations-src-Equations.xtlm.html">Equations.xtlm</a></li>
+</ul>
+<h3>work/libs/Lists/src/</h3>
+<ul>
+<li><a href="work-libs-Lists-src-Lists.xtl.html">Lists.xtl</a></li>
+</ul>
+<h3>work/libs/Strings/src/</h3>
+<ul>
+<li><a href="work-libs-Strings-src-Strings.xtl.html">Strings.xtl</a></li>
+</ul>
+<ul>
+<li><a href="builtins.html">built-ins</a></li>
+</ul>
+<h2>On this page</h2>
+<ul>
+<li class="item"><a href="#L31"><span class="c-macro">ᵐe̲q&lt;</span></a></li>
+<li class="item"><a href="#L38"><span class="c-macro">ᵐt̲ex&lt;</span></a></li>
+<li class="item"><a href="#L42"><span class="c-macro">ᵐb̲oth&lt;</span></a></li>
+<li class="item"><a href="#L48"><span class="c-libfunc">ʰf̲ree</span></a></li>
+<li class="item"><a href="#L63"><span class="c-libfunc">ʰc̲hecked</span></a></li>
+<li class="item"><a href="#L76"><span class="c-libfunc">ʰw̲hole</span></a></li>
+<li class="item"><a href="#L84">nameChars</a></li>
+<li class="item"><a href="#L87">alphabet</a></li>
+<li class="item"><a href="#L90">words</a></li>
+<li class="item"><a href="#L91">functions</a></li>
+<li class="item"><a href="#L95"><span class="c-libfunc">ʰp̲ickText</span></a></li>
+<li class="item"><a href="#L99"><span class="c-libfunc">ʰp̲ickCount</span></a></li>
+<li class="item"><a href="#L109"><span class="c-libfunc">ʰk̲ind</span></a></li>
+<li class="item"><a href="#L122"><span class="c-libfunc">ʰf̲n?</span></a></li>
+<li class="item"><a href="#L132"><span class="c-libfunc">ʰf̲nParts</span></a></li>
+<li class="item"><a href="#L142"><span class="c-libfunc">ʰs̲umParts</span></a></li>
+<li class="item"><a href="#L157"><span class="c-libfunc">ʰb̲oxed</span></a></li>
+<li class="item"><a href="#L160"><span class="c-libfunc">ʰa̲tom</span></a></li>
+<li class="item"><a href="#L169"><span class="c-libfunc">ʰv̲alue</span></a></li>
+<li class="item"><a href="#L187"><span class="c-libfunc">ʰg̲ridLines</span></a></li>
+<li class="item"><a href="#L193"><span class="c-libfunc">ʰv̲alueOf</span></a></li>
+<li class="item"><a href="#L207"><span class="c-libfunc">ʰv̲alueChain</span></a></li>
+<li class="item"><a href="#L215"><span class="c-libfunc">ʰv̲alueFold</span></a></li>
+<li class="item"><a href="#L222"><span class="c-libfunc">ʰv̲aluePow</span></a></li>
+<li class="item"><a href="#L231"><span class="c-libfunc">ʰv̲alueSum</span></a></li>
+<li class="item"><a href="#L247"><span class="c-libfunc">ʰr̲educer</span></a></li>
+<li class="item"><a href="#L256"><span class="c-libfunc">ʰb̲ound</span></a></li>
+<li class="item"><a href="#L263"><span class="c-libfunc">ʰs̲paced</span></a></li>
+<li class="item"><a href="#L266"><span class="c-libfunc">ʰv̲alueFn</span></a></li>
+<li class="item"><a href="#L280"><span class="c-libfunc">ʰv̲alueRef</span></a></li>
+<li class="item"><a href="#L290"><span class="c-libfunc">ʰh̲orner</span></a></li>
+<li class="item"><a href="#L300"><span class="c-libfunc">ʰv̲alueAtom</span></a></li>
+<li class="item"><a href="#L311"><span class="c-libfunc">ʰc̲hecks</span></a></li>
+<li class="item"><a href="#L322"><span class="c-libfunc">ʰt̲ex</span></a></li>
+<li class="item"><a href="#L332"><span class="c-libfunc">ʰt̲exBody</span></a></li>
+<li class="item"><a href="#L338"><span class="c-libfunc">ʰt̲exOf</span></a></li>
+<li class="item"><a href="#L352"><span class="c-libfunc">ʰt̲exChain</span></a></li>
+<li class="item"><a href="#L360"><span class="c-libfunc">ʰt̲exFold</span></a></li>
+<li class="item"><a href="#L371"><span class="c-libfunc">ʰt̲exBare</span></a></li>
+<li class="item"><a href="#L380"><span class="c-libfunc">ʰt̲exJoin</span></a></li>
+<li class="item"><a href="#L386"><span class="c-libfunc">ʰt̲exPow</span></a></li>
+<li class="item"><a href="#L393"><span class="c-libfunc">ʰt̲exSum</span></a></li>
+<li class="item"><a href="#L400"><span class="c-libfunc">ʰs̲ymbol</span></a></li>
+<li class="item"><a href="#L408"><span class="c-libfunc">ʰt̲exFn</span></a></li>
+<li class="item"><a href="#L419"><span class="c-libfunc">ʰt̲exRef</span></a></li>
+<li class="item"><a href="#L424"><span class="c-libfunc">ʰs̲ubscript</span></a></li>
+<li class="item"><a href="#L430"><span class="c-libfunc">ʰp̲lain</span></a></li>
+<li class="item"><a href="#L443"><span class="c-libfunc">ʰp̲lainChain</span></a></li>
+<li class="item"><a href="#L450"><span class="c-libfunc">ʰp̲lainFold</span></a></li>
+<li class="item"><a href="#L455"><span class="c-libfunc">ʰp̲lainPow</span></a></li>
+<li class="item"><a href="#L460"><span class="c-libfunc">ʰp̲lainSum</span></a></li>
+<li class="item"><a href="#L466"><span class="c-libfunc">ʰp̲lainFn</span></a></li>
+<li class="item"><a href="#L471"><span class="c-libfunc">ʰp̲lainRef</span></a></li>
+<li class="item"><a href="#L479"><span class="c-libfunc">ʰj̲oinWith</span></a></li>
+</ul>
+</nav>
+<main>
+<button class="theme" title="Light or dark">theme</button>
+<section id="results"></section>
+<h1><span class="kind">source</span><a href="work-libs-Equations-src-Equations.xtlm.html">work/libs/Equations/src/Equations.xtlm</a></h1>
+<div class="source"><span class="line" id="L1"><a class="ln" href="#L1">1</a><span class="c-doc">⍝│</span><span class="c-doc"> Equations: its macro library -- e_q&lt;, t_ex&lt; and b_oth&lt;: an equation as</span></span>
+<span class="line" id="L2"><a class="ln" href="#L2">2</a><span class="c-doc">⍝│</span><span class="c-doc"> printed in a paper, to its value, its LaTeX, or both.</span></span>
+<span class="line" id="L3"><a class="ln" href="#L3">3</a><span class="c-doc">⍝│</span><span class="c-doc"> Imported with the functions, under one alias: &quot;e:&quot; u_se&lt; &quot;Equations&quot;.</span></span>
+<span class="line" id="L4"><a class="ln" href="#L4">4</a><span class="c-doc">⍝│</span><span class="c-doc"> A macro is a function from the source text written left and right of</span></span>
+<span class="line" id="L5"><a class="ln" href="#L5">5</a><span class="c-doc">⍝│</span><span class="c-doc"> its call to the source that replaces the call, run before the program</span></span>
+<span class="line" id="L6"><a class="ln" href="#L6">6</a><span class="c-doc">⍝│</span><span class="c-doc"> is compiled (X_eTaL MC10). Names with m: are macros; those under h: are</span></span>
+<span class="line" id="L7"><a class="ln" href="#L7">7</a><span class="c-doc">⍝│</span><span class="c-doc"> private to this file.</span></span>
+<span class="line" id="L8"><a class="ln" href="#L8">8</a></span>
+<span class="line" id="L9"><a class="ln" href="#L9">9</a><span class="c-libfunc">ᵗ⁼</span><a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="work-libs-Strings-src-Strings.xtl.html" class="c-string">&quot;Strings&quot;</a></span>
+<span class="line" id="L10"><a class="ln" href="#L10">10</a><span class="c-libfunc">ᵖᵃ⁼</span><a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <span class="c-string">&quot;Parsing&quot;</span></span>
+<span class="line" id="L11"><a class="ln" href="#L11">11</a></span>
+<span class="line" id="L12"><a class="ln" href="#L12">12</a><span class="c-heading">⍝━━</span><span class="c-heading"> The macros</span></span>
+<span class="line" id="L13"><a class="ln" href="#L13">13</a></span>
+<span class="line" id="L14"><a class="ln" href="#L14">14</a><span class="c-doc">⍝│</span><span class="c-doc"> The value of an equation written as a paper prints it. The left names</span></span>
+<span class="line" id="L15"><a class="ln" href="#L15">15</a><span class="c-doc">⍝│</span><span class="c-doc"> the result, its free indices and their extents (&quot;Y[o,h,w] | O Ho Wo&quot;,</span></span>
+<span class="line" id="L16"><a class="ln" href="#L16">16</a><span class="c-doc">⍝│</span><span class="c-doc"> or &quot;L[] | &quot; for a scalar). The right is an expression over the free</span></span>
+<span class="line" id="L17"><a class="ln" href="#L17">17</a><span class="c-doc">⍝│</span><span class="c-doc"> indices in which a parenthesized sum is a term:</span></span>
+<span class="line" id="L18"><a class="ln" href="#L18">18</a><span class="c-doc">⍝│</span><span class="c-doc">   &quot;(sum j:=0..M-1 | W[i,j] * x[j]) + b[i]&quot;</span></span>
+<span class="line" id="L19"><a class="ln" href="#L19">19</a><span class="c-doc">⍝│</span><span class="c-doc"> A sum is an operator word (sum, prod, max, min), an index, := and an</span></span>
+<span class="line" id="L20"><a class="ln" href="#L20">20</a><span class="c-doc">⍝│</span><span class="c-doc"> inclusive range low..high, then | and its body; several, separated by</span></span>
+<span class="line" id="L21"><a class="ln" href="#L21">21</a><span class="c-doc">⍝│</span><span class="c-doc"> commas, nest outermost first. A right side that is one bare sum needs</span></span>
+<span class="line" id="L22"><a class="ln" href="#L22">22</a><span class="c-doc">⍝│</span><span class="c-doc"> no parentheses: &quot;sum c:=0..C-1, sum r:=0..Kh-1 | X[c,h+r] * W[c,r]&quot;.</span></span>
+<span class="line" id="L23"><a class="ln" href="#L23">23</a><span class="c-doc">⍝│</span><span class="c-doc"> Expressions follow math precedence: ^ binds tightest (right to left),</span></span>
+<span class="line" id="L24"><a class="ln" href="#L24">24</a><span class="c-doc">⍝│</span><span class="c-doc"> then * and /, then + and - (left to right); parentheses group; the</span></span>
+<span class="line" id="L25"><a class="ln" href="#L25">25</a><span class="c-doc">⍝│</span><span class="c-doc"> functions are exp(x), log(x), sqrt(x), abs(x), max(a, b) and</span></span>
+<span class="line" id="L26"><a class="ln" href="#L26">26</a><span class="c-doc">⍝│</span><span class="c-doc"> min(a, b); A[e1,e2] reads one element of the caller's array A, one</span></span>
+<span class="line" id="L27"><a class="ln" href="#L27">27</a><span class="c-doc">⍝│</span><span class="c-doc"> index per axis, from 0. Every reading rule uses all of its text or</span></span>
+<span class="line" id="L28"><a class="ln" href="#L28">28</a><span class="c-doc">⍝│</span><span class="c-doc"> refuses the call, and what was read is written back and compared</span></span>
+<span class="line" id="L29"><a class="ln" href="#L29">29</a><span class="c-doc">⍝│</span><span class="c-doc"> with the text at every call, so nothing written is ever dropped.</span></span>
+<span class="line" id="L30"><a class="ln" href="#L30">30</a><span class="c-doc">⍝│</span><span class="c-doc"> uses: parsed</span></span>
+<span class="line" id="L31"><a class="ln" href="#L31">31</a><span class="c-macro">ᵐe̲q&lt;</span> ← { lhs rhs → (<a href="work-libs-Equations-src-Equations.xtlm.html#h.f_ree" class="c-libfunc">ʰf̲ree</a> lhs) <a href="work-libs-Equations-src-Equations.xtlm.html#h.v_alue" class="c-libfunc">ʰv̲alue</a> <a href="work-libs-Equations-src-Equations.xtlm.html#h.c_hecked" class="c-libfunc">ʰc̲hecked</a> rhs }</span>
+<span class="line" id="L32"><a class="ln" href="#L32">32</a></span>
+<span class="line" id="L33"><a class="ln" href="#L33">33</a><span class="c-doc">⍝│</span><span class="c-doc"> The LaTeX of the same call, a string: the result as written (L for a</span></span>
+<span class="line" id="L34"><a class="ln" href="#L34">34</a><span class="c-doc">⍝│</span><span class="c-doc"> scalar, Y_{o,h,w} for an array), then = and the expression, with</span></span>
+<span class="line" id="L35"><a class="ln" href="#L35">35</a><span class="c-doc">⍝│</span><span class="c-doc"> \sum \prod \max \min, \frac for a quotient, \sqrt \exp \log, and the</span></span>
+<span class="line" id="L36"><a class="ln" href="#L36">36</a><span class="c-doc">⍝│</span><span class="c-doc"> brackets as subscripts.</span></span>
+<span class="line" id="L37"><a class="ln" href="#L37">37</a><span class="c-doc">⍝│</span><span class="c-doc"> uses: parsed</span></span>
+<span class="line" id="L38"><a class="ln" href="#L38">38</a><span class="c-macro">ᵐt̲ex&lt;</span> ← { lhs rhs → <span class="c-string">&quot;\&quot;&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (lhs <a href="work-libs-Equations-src-Equations.xtlm.html#h.t_ex" class="c-libfunc">ʰt̲ex</a> <a href="work-libs-Equations-src-Equations.xtlm.html#h.c_hecked" class="c-libfunc">ʰc̲hecked</a> rhs) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;\&quot;&quot;</span> }</span>
+<span class="line" id="L39"><a class="ln" href="#L39">39</a></span>
+<span class="line" id="L40"><a class="ln" href="#L40">40</a><span class="c-doc">⍝│</span><span class="c-doc"> Both from one call: the pair (value, LaTeX).</span></span>
+<span class="line" id="L41"><a class="ln" href="#L41">41</a><span class="c-doc">⍝│</span><span class="c-doc"> uses: parsed</span></span>
+<span class="line" id="L42"><a class="ln" href="#L42">42</a><span class="c-macro">ᵐb̲oth&lt;</span> ← { lhs rhs → <span class="c-string">&quot;(&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> ((<a href="work-libs-Equations-src-Equations.xtlm.html#h.f_ree" class="c-libfunc">ʰf̲ree</a> lhs) <a href="work-libs-Equations-src-Equations.xtlm.html#h.v_alue" class="c-libfunc">ʰv̲alue</a> <a href="work-libs-Equations-src-Equations.xtlm.html#h.c_hecked" class="c-libfunc">ʰc̲hecked</a> rhs) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;, \&quot;&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (lhs <a href="work-libs-Equations-src-Equations.xtlm.html#h.t_ex" class="c-libfunc">ʰt̲ex</a> <a href="work-libs-Equations-src-Equations.xtlm.html#h.c_hecked" class="c-libfunc">ʰc̲hecked</a> rhs) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;\&quot;)&quot;</span> }</span>
+<span class="line" id="L43"><a class="ln" href="#L43">43</a></span>
+<span class="line" id="L44"><a class="ln" href="#L44">44</a><span class="c-heading">⍝━━</span><span class="c-heading"> Reading the call</span></span>
+<span class="line" id="L45"><a class="ln" href="#L45">45</a></span>
+<span class="line" id="L46"><a class="ln" href="#L46">46</a><span class="c-doc">⍝│</span><span class="c-doc"> The free indices and their extents, from &quot;Y[o,h,w] | O Ho Wo&quot;, as</span></span>
+<span class="line" id="L47"><a class="ln" href="#L47">47</a><span class="c-doc">⍝│</span><span class="c-doc"> (names, extents), boxed texts; &quot;L[] | &quot; gives none of either.</span></span>
+<span class="line" id="L48"><a class="ln" href="#L48">48</a><span class="c-libfunc">ʰf̲ree</span> ← { lhs →</span>
+<span class="line" id="L49"><a class="ln" href="#L49">49</a>  l ← <span class="c-string">&quot;|&quot;</span> <span class="c-libfunc">ᵖᵃs̲plit</span> lhs</span>
+<span class="line" id="L50"><a class="ln" href="#L50">50</a>  _ ← (<span class="c-number">2</span> <a href="builtins.html#-3d" class="c-symbol">=</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> l) <span class="c-libfunc">ᵖᵃr̲equire</span> (<span class="c-string">&quot;bad-equation left&quot;</span>, <span class="c-string">&quot;the result, then | and its extents: \&quot;Y[o,h,w] | O Ho Wo\&quot;&quot;</span>)</span>
+<span class="line" id="L51"><a class="ln" href="#L51">51</a>  head ← <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> l</span>
+<span class="line" id="L52"><a class="ln" href="#L52">52</a>  _ ← (<span class="c-number">0</span> <a href="builtins.html#-3c" class="c-symbol">&lt;</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> <a href="builtins.html#w_here" class="c-builtin">w̲here</a> head <a href="builtins.html#m_ember-3f" class="c-builtin">m̲ember?</a> <span class="c-string">&quot;[&quot;</span>) <span class="c-libfunc">ᵖᵃr̲equire</span> (<span class="c-string">&quot;bad-equation left&quot;</span>, <span class="c-string">&quot;the result names its free indices in brackets: Y[o,h,w], or L[] for a scalar&quot;</span>)</span>
+<span class="line" id="L53"><a class="ln" href="#L53">53</a>  (_, names) ← <span class="c-string">&quot;bad-equation left&quot;</span> <span class="c-libfunc">ᵖᵃr̲eference</span> head</span>
+<span class="line" id="L54"><a class="ln" href="#L54">54</a>  extents ← <span class="c-string">&quot; &quot;</span> <span class="c-libfunc">ᵖᵃs̲plit</span> <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> <span class="c-number">1</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> l</span>
+<span class="line" id="L55"><a class="ln" href="#L55">55</a>  _ ← ((<a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> names) <a href="builtins.html#-3d" class="c-symbol">=</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> extents) <span class="c-libfunc">ᵖᵃr̲equire</span> (<span class="c-string">&quot;bad-equation left&quot;</span>, <span class="c-string">&quot;one extent for each free index: &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> lhs)</span>
+<span class="line" id="L56"><a class="ln" href="#L56">56</a>  (names, extents)</span>
+<span class="line" id="L57"><a class="ln" href="#L57">57</a>}</span>
+<span class="line" id="L58"><a class="ln" href="#L58">58</a></span>
+<span class="line" id="L59"><a class="ln" href="#L59">59</a><span class="c-doc">⍝│</span><span class="c-doc"> The right text, checked: its characters are the grammar's, a bare</span></span>
+<span class="line" id="L60"><a class="ln" href="#L60">60</a><span class="c-doc">⍝│</span><span class="c-doc"> sum is wrapped as the term it is, and the reading written back</span></span>
+<span class="line" id="L61"><a class="ln" href="#L61">61</a><span class="c-doc">⍝│</span><span class="c-doc"> equals the text with its spaces removed (so no rule dropped a</span></span>
+<span class="line" id="L62"><a class="ln" href="#L62">62</a><span class="c-doc">⍝│</span><span class="c-doc"> character); the text to read.</span></span>
+<span class="line" id="L63"><a class="ln" href="#L63">63</a><span class="c-libfunc">ʰc̲hecked</span> ← { rhs →</span>
+<span class="line" id="L64"><a class="ln" href="#L64">64</a>  t ← <a href="work-libs-Strings-src-Strings.xtl.html#l.t_rim" class="c-libfunc">ᵗt̲rim</a> rhs</span>
+<span class="line" id="L65"><a class="ln" href="#L65">65</a>  _ ← (<span class="c-number">0</span> <a href="builtins.html#-3c" class="c-symbol">&lt;</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> t) <span class="c-libfunc">ᵖᵃr̲equire</span> (<span class="c-string">&quot;bad-equation right&quot;</span>, <span class="c-string">&quot;an empty equation&quot;</span>)</span>
+<span class="line" id="L66"><a class="ln" href="#L66">66</a>  bad ← (<a href="builtins.html#n_ot" class="c-builtin">n̲ot</a> t <a href="builtins.html#m_ember-3f" class="c-builtin">m̲ember?</a> <a href="work-libs-Equations-src-Equations.xtlm.html#alphabet">alphabet</a>) <a href="builtins.html#r_eplicate" class="c-builtin">r̲eplicate</a> t</span>
+<span class="line" id="L67"><a class="ln" href="#L67">67</a>  <span class="c-number">0</span> <a href="builtins.html#-3c" class="c-symbol">&lt;</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> bad ? <span class="c-string">&quot;bad-equation right&quot;</span> <a href="builtins.html#-5b-5dR_EJECT" class="c-builtin">⎕R̲EJECT</a> <span class="c-string">&quot;not a character of an equation (names, numbers, + - * / ^, parentheses, brackets, a sum's | := and ..): &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-number">1</span> <a href="builtins.html#t_ake" class="c-builtin">t̲ake</a> bad) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; in &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> t</span>
+<span class="line" id="L68"><a class="ln" href="#L68">68</a>  whole ← <a href="work-libs-Equations-src-Equations.xtlm.html#h.w_hole" class="c-libfunc">ʰw̲hole</a> t</span>
+<span class="line" id="L69"><a class="ln" href="#L69">69</a>  back ← <a href="work-libs-Equations-src-Equations.xtlm.html#h.p_lain" class="c-libfunc">ʰp̲lain</a> whole</span>
+<span class="line" id="L70"><a class="ln" href="#L70">70</a>  _ ← (back <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> <span class="c-libfunc">ᵖᵃs̲queeze</span> whole) <span class="c-libfunc">ᵖᵃr̲equire</span> (<span class="c-string">&quot;bad-equation right&quot;</span>, <span class="c-string">&quot;the reader did not use all of the text: it read &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> back <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; from &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> t)</span>
+<span class="line" id="L71"><a class="ln" href="#L71">71</a>  t</span>
+<span class="line" id="L72"><a class="ln" href="#L72">72</a>}</span>
+<span class="line" id="L73"><a class="ln" href="#L73">73</a></span>
+<span class="line" id="L74"><a class="ln" href="#L74">74</a><span class="c-doc">⍝│</span><span class="c-doc"> A right side that is one bare sum, &quot;sum i:=0..n | body&quot;, as the term</span></span>
+<span class="line" id="L75"><a class="ln" href="#L75">75</a><span class="c-doc">⍝│</span><span class="c-doc"> it is, parenthesized; anything else as written.</span></span>
+<span class="line" id="L76"><a class="ln" href="#L76">76</a><span class="c-libfunc">ʰw̲hole</span> ← { t →</span>
+<span class="line" id="L77"><a class="ln" href="#L77">77</a>  <span class="c-number">0</span> <a href="builtins.html#-3c" class="c-symbol">&lt;</a> <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> <span class="c-number">0</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-string">&quot;|&quot;</span> <span class="c-libfunc">ᵖᵃt̲op</span> t ? <span class="c-string">&quot;(&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;)&quot;</span></span>
+<span class="line" id="L78"><a class="ln" href="#L78">78</a>  t</span>
+<span class="line" id="L79"><a class="ln" href="#L79">79</a>}</span>
+<span class="line" id="L80"><a class="ln" href="#L80">80</a></span>
+<span class="line" id="L81"><a class="ln" href="#L81">81</a><span class="c-heading">⍝━━</span><span class="c-heading"> The grammar, shared by the three readings</span></span>
+<span class="line" id="L82"><a class="ln" href="#L82">82</a></span>
+<span class="line" id="L83"><a class="ln" href="#L83">83</a><span class="c-doc">⍝│</span><span class="c-doc"> Characters of names and numbers.</span></span>
+<span class="line" id="L84"><a class="ln" href="#L84">84</a>nameChars ← <span class="c-string">&quot;abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_:&quot;</span></span>
+<span class="line" id="L85"><a class="ln" href="#L85">85</a></span>
+<span class="line" id="L86"><a class="ln" href="#L86">86</a><span class="c-doc">⍝│</span><span class="c-doc"> Every character an equation may hold.</span></span>
+<span class="line" id="L87"><a class="ln" href="#L87">87</a>alphabet ← <a href="work-libs-Equations-src-Equations.xtlm.html#nameChars">nameChars</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;.+-*/^()[]|,= &quot;</span></span>
+<span class="line" id="L88"><a class="ln" href="#L88">88</a></span>
+<span class="line" id="L89"><a class="ln" href="#L89">89</a><span class="c-doc">⍝│</span><span class="c-doc"> The operator words and the functions.</span></span>
+<span class="line" id="L90"><a class="ln" href="#L90">90</a>words ← <span class="c-string">&quot;sum&quot;</span> <span class="c-string">&quot;prod&quot;</span> <span class="c-string">&quot;max&quot;</span> <span class="c-string">&quot;min&quot;</span></span>
+<span class="line" id="L91"><a class="ln" href="#L91">91</a>functions ← <span class="c-string">&quot;exp&quot;</span> <span class="c-string">&quot;log&quot;</span> <span class="c-string">&quot;sqrt&quot;</span> <span class="c-string">&quot;abs&quot;</span> <span class="c-string">&quot;max&quot;</span> <span class="c-string">&quot;min&quot;</span></span>
+<span class="line" id="L92"><a class="ln" href="#L92">92</a></span>
+<span class="line" id="L93"><a class="ln" href="#L93">93</a><span class="c-doc">⍝│</span><span class="c-doc"> a when c holds, else b, both already computed: texts or counts (one each: a library's helpers form one binding group, in</span></span>
+<span class="line" id="L94"><a class="ln" href="#L94">94</a><span class="c-doc">⍝│</span><span class="c-doc"> which a helper used at two types is not yet generalized).</span></span>
+<span class="line" id="L95"><a class="ln" href="#L95">95</a><span class="c-libfunc">ʰp̲ickText</span> ← { c (a, b) →</span>
+<span class="line" id="L96"><a class="ln" href="#L96">96</a>  c ? a</span>
+<span class="line" id="L97"><a class="ln" href="#L97">97</a>  b</span>
+<span class="line" id="L98"><a class="ln" href="#L98">98</a>}</span>
+<span class="line" id="L99"><a class="ln" href="#L99">99</a><span class="c-libfunc">ʰp̲ickCount</span> ← { c (a, b) →</span>
+<span class="line" id="L100"><a class="ln" href="#L100">100</a>  c ? a</span>
+<span class="line" id="L101"><a class="ln" href="#L101">101</a>  b</span>
+<span class="line" id="L102"><a class="ln" href="#L102">102</a>}</span>
+<span class="line" id="L103"><a class="ln" href="#L103">103</a></span>
+<span class="line" id="L104"><a class="ln" href="#L104">104</a><span class="c-doc">⍝│</span><span class="c-doc"> What a term is, from its text (trimmed, not empty): &quot;add&quot; (a chain of</span></span>
+<span class="line" id="L105"><a class="ln" href="#L105">105</a><span class="c-doc">⍝│</span><span class="c-doc"> + and -, a leading - a negation), &quot;mul&quot; (* and /), &quot;pow&quot; (^), &quot;sum&quot;</span></span>
+<span class="line" id="L106"><a class="ln" href="#L106">106</a><span class="c-doc">⍝│</span><span class="c-doc"> (a parenthesized sum), &quot;group&quot; (parentheses), &quot;fn&quot; (a function</span></span>
+<span class="line" id="L107"><a class="ln" href="#L107">107</a><span class="c-doc">⍝│</span><span class="c-doc"> applied), &quot;ref&quot; (an array indexed) or &quot;atom&quot; (a name or a number).</span></span>
+<span class="line" id="L108"><a class="ln" href="#L108">108</a><span class="c-doc">⍝│</span><span class="c-doc"> One place decides, so the value, the LaTeX and the reprint agree.</span></span>
+<span class="line" id="L109"><a class="ln" href="#L109">109</a><span class="c-libfunc">ʰk̲ind</span> ← { t →</span>
+<span class="line" id="L110"><a class="ln" href="#L110">110</a>  <span class="c-number">0</span> <a href="builtins.html#-3c" class="c-symbol">&lt;</a> <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> <span class="c-number">0</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-string">&quot;+-&quot;</span> <span class="c-libfunc">ᵖᵃt̲op</span> t ? <span class="c-string">&quot;add&quot;</span></span>
+<span class="line" id="L111"><a class="ln" href="#L111">111</a>  <span class="c-number">0</span> <a href="builtins.html#-3c" class="c-symbol">&lt;</a> <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> <span class="c-number">0</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-string">&quot;*/&quot;</span> <span class="c-libfunc">ᵖᵃt̲op</span> t ? <span class="c-string">&quot;mul&quot;</span></span>
+<span class="line" id="L112"><a class="ln" href="#L112">112</a>  <span class="c-number">0</span> <a href="builtins.html#-3c" class="c-symbol">&lt;</a> <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> <span class="c-number">0</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-string">&quot;^&quot;</span> <span class="c-libfunc">ᵖᵃt̲op</span> t ? <span class="c-string">&quot;pow&quot;</span></span>
+<span class="line" id="L113"><a class="ln" href="#L113">113</a>  (<span class="c-libfunc">ᵖᵃg̲roup?</span> t) <a href="builtins.html#-26" class="c-symbol">∧</a> <span class="c-number">0</span> <a href="builtins.html#-3c" class="c-symbol">&lt;</a> <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> <span class="c-number">0</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-string">&quot;|&quot;</span> <span class="c-libfunc">ᵖᵃt̲op</span> <span class="c-libfunc">ᵖᵃi̲nner</span> t ? <span class="c-string">&quot;sum&quot;</span></span>
+<span class="line" id="L114"><a class="ln" href="#L114">114</a>  <span class="c-libfunc">ᵖᵃg̲roup?</span> t ? <span class="c-string">&quot;group&quot;</span></span>
+<span class="line" id="L115"><a class="ln" href="#L115">115</a>  <a href="work-libs-Equations-src-Equations.xtlm.html#h.f_n-3f" class="c-libfunc">ʰf̲n?</a> t ? <span class="c-string">&quot;fn&quot;</span></span>
+<span class="line" id="L116"><a class="ln" href="#L116">116</a>  <span class="c-number">0</span> <a href="builtins.html#-3c" class="c-symbol">&lt;</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> <a href="builtins.html#w_here" class="c-builtin">w̲here</a> t <a href="builtins.html#m_ember-3f" class="c-builtin">m̲ember?</a> <span class="c-string">&quot;[&quot;</span> ? <span class="c-string">&quot;ref&quot;</span></span>
+<span class="line" id="L117"><a class="ln" href="#L117">117</a>  <span class="c-string">&quot;atom&quot;</span></span>
+<span class="line" id="L118"><a class="ln" href="#L118">118</a>}</span>
+<span class="line" id="L119"><a class="ln" href="#L119">119</a></span>
+<span class="line" id="L120"><a class="ln" href="#L120">120</a><span class="c-doc">⍝│</span><span class="c-doc"> Whether t is a function applied: one of the functions, then one</span></span>
+<span class="line" id="L121"><a class="ln" href="#L121">121</a><span class="c-doc">⍝│</span><span class="c-doc"> parenthesized group that ends the text.</span></span>
+<span class="line" id="L122"><a class="ln" href="#L122">122</a><span class="c-libfunc">ʰf̲n?</span> ← { t →</span>
+<span class="line" id="L123"><a class="ln" href="#L123">123</a>  <a href="builtins.html#n_ot" class="c-builtin">n̲ot</a> <span class="c-libfunc">ᵖᵃa̲pplied?</span> t ? <span class="c-number">0</span> <a href="builtins.html#-3d" class="c-symbol">=</a> <span class="c-number">1</span></span>
+<span class="line" id="L124"><a class="ln" href="#L124">124</a>  (name, _) ← <span class="c-string">&quot;bad-equation right&quot;</span> <span class="c-libfunc">ᵖᵃa̲pplied</span> t</span>
+<span class="line" id="L125"><a class="ln" href="#L125">125</a>  known ← <span class="c-number">0</span> <a href="builtins.html#-3c" class="c-symbol">&lt;</a> <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> <span class="c-number">0</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-quote">'</span>{ f → (<a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> f) <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> name } <a href="builtins.html#e_ach" class="c-builtin">e̲ach</a> <a href="work-libs-Equations-src-Equations.xtlm.html#functions">functions</a></span>
+<span class="line" id="L126"><a class="ln" href="#L126">126</a>  _ ← known <span class="c-libfunc">ᵖᵃr̲equire</span> (<span class="c-string">&quot;bad-equation right&quot;</span>, name <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; is not a function of an equation (exp, log, sqrt, abs, max, min): &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> t)</span>
+<span class="line" id="L127"><a class="ln" href="#L127">127</a>  known</span>
+<span class="line" id="L128"><a class="ln" href="#L128">128</a>}</span>
+<span class="line" id="L129"><a class="ln" href="#L129">129</a></span>
+<span class="line" id="L130"><a class="ln" href="#L130">130</a><span class="c-doc">⍝│</span><span class="c-doc"> A function applied, as (name, arguments), the arguments cut at the</span></span>
+<span class="line" id="L131"><a class="ln" href="#L131">131</a><span class="c-doc">⍝│</span><span class="c-doc"> top-level commas; the count must be the function's.</span></span>
+<span class="line" id="L132"><a class="ln" href="#L132">132</a><span class="c-libfunc">ʰf̲nParts</span> ← { t →</span>
+<span class="line" id="L133"><a class="ln" href="#L133">133</a>  (name, args) ← <span class="c-string">&quot;bad-equation right&quot;</span> <span class="c-libfunc">ᵖᵃa̲pplied</span> t</span>
+<span class="line" id="L134"><a class="ln" href="#L134">134</a>  wanted ← ((<span class="c-string">&quot;max&quot;</span> <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> name) <a href="builtins.html#-7c" class="c-symbol">∨</a> <span class="c-string">&quot;min&quot;</span> <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> name) <a href="work-libs-Equations-src-Equations.xtlm.html#h.p_ickCount" class="c-libfunc">ʰp̲ickCount</a> (<span class="c-number">2</span>, <span class="c-number">1</span>)</span>
+<span class="line" id="L135"><a class="ln" href="#L135">135</a>  _ ← (wanted <a href="builtins.html#-3d" class="c-symbol">=</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> args) <span class="c-libfunc">ᵖᵃr̲equire</span> (<span class="c-string">&quot;bad-equation right&quot;</span>, name <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; takes &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> wanted) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; argument(s): &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> t)</span>
+<span class="line" id="L136"><a class="ln" href="#L136">136</a>  (name, args)</span>
+<span class="line" id="L137"><a class="ln" href="#L137">137</a>}</span>
+<span class="line" id="L138"><a class="ln" href="#L138">138</a></span>
+<span class="line" id="L139"><a class="ln" href="#L139">139</a><span class="c-doc">⍝│</span><span class="c-doc"> A parenthesized sum as (words, indices, lows, highs, body): the</span></span>
+<span class="line" id="L140"><a class="ln" href="#L140">140</a><span class="c-doc">⍝│</span><span class="c-doc"> bindings before the top-level |, each &quot;word i:=low..high&quot; (the word</span></span>
+<span class="line" id="L141"><a class="ln" href="#L141">141</a><span class="c-doc">⍝│</span><span class="c-doc"> an operator word).</span></span>
+<span class="line" id="L142"><a class="ln" href="#L142">142</a><span class="c-libfunc">ʰs̲umParts</span> ← { t →</span>
+<span class="line" id="L143"><a class="ln" href="#L143">143</a>  inner ← <span class="c-libfunc">ᵖᵃi̲nner</span> t</span>
+<span class="line" id="L144"><a class="ln" href="#L144">144</a>  cut ← <span class="c-string">&quot;|&quot;</span> <span class="c-libfunc">ᵖᵃt̲op</span> inner</span>
+<span class="line" id="L145"><a class="ln" href="#L145">145</a>  _ ← (<span class="c-number">1</span> <a href="builtins.html#-3d" class="c-symbol">=</a> <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> <span class="c-number">0</span> <a href="builtins.html#-2b" class="c-symbol">+</a> cut) <span class="c-libfunc">ᵖᵃr̲equire</span> (<span class="c-string">&quot;bad-equation right&quot;</span>, <span class="c-string">&quot;a sum has its bindings, then one | and its body: &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> t)</span>
+<span class="line" id="L146"><a class="ln" href="#L146">146</a>  at ← <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> <a href="builtins.html#w_here" class="c-builtin">w̲here</a> cut</span>
+<span class="line" id="L147"><a class="ln" href="#L147">147</a>  bindings ← <span class="c-string">&quot;,&quot;</span> <span class="c-libfunc">ᵖᵃs̲plit</span> (at <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span>) <a href="builtins.html#t_ake" class="c-builtin">t̲ake</a> inner</span>
+<span class="line" id="L148"><a class="ln" href="#L148">148</a>  body ← <a href="work-libs-Strings-src-Strings.xtl.html#l.t_rim" class="c-libfunc">ᵗt̲rim</a> at <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> inner</span>
+<span class="line" id="L149"><a class="ln" href="#L149">149</a>  _ ← (<span class="c-number">0</span> <a href="builtins.html#-3c" class="c-symbol">&lt;</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> body) <span class="c-libfunc">ᵖᵃr̲equire</span> (<span class="c-string">&quot;bad-equation right&quot;</span>, <span class="c-string">&quot;a sum needs a body after |: &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> t)</span>
+<span class="line" id="L150"><a class="ln" href="#L150">150</a>  ds ← <span class="c-quote">'</span>{ b → <a href="work-libs-Equations-src-Equations.xtlm.html#h.b_oxed" class="c-libfunc">ʰb̲oxed</a> (<span class="c-string">&quot;bad-equation right&quot;</span>, <span class="c-string">&quot;an operator word&quot;</span>, <a href="work-libs-Equations-src-Equations.xtlm.html#words">words</a>) <span class="c-libfunc">ᵖᵃb̲inding</span> <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> b } <a href="builtins.html#m_ap" class="c-builtin">m̲ap</a> bindings</span>
+<span class="line" id="L151"><a class="ln" href="#L151">151</a>  <span class="c-builtin">p̲art</span> ← { k → <span class="c-quote">'</span>{ d → <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> k <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> d } <a href="builtins.html#m_ap" class="c-builtin">m̲ap</a> ds }</span>
+<span class="line" id="L152"><a class="ln" href="#L152">152</a>  (<span class="c-builtin">p̲art</span> <span class="c-number">1</span>, <span class="c-builtin">p̲art</span> <span class="c-number">2</span>, <span class="c-builtin">p̲art</span> <span class="c-number">3</span>, <span class="c-builtin">p̲art</span> <span class="c-number">4</span>, body)</span>
+<span class="line" id="L153"><a class="ln" href="#L153">153</a>}</span>
+<span class="line" id="L154"><a class="ln" href="#L154">154</a></span>
+<span class="line" id="L155"><a class="ln" href="#L155">155</a><span class="c-doc">⍝│</span><span class="c-doc"> A binding's (word, index, low, high), boxed, so a sum's bindings</span></span>
+<span class="line" id="L156"><a class="ln" href="#L156">156</a><span class="c-doc">⍝│</span><span class="c-doc"> can be taken apart by position.</span></span>
+<span class="line" id="L157"><a class="ln" href="#L157">157</a><span class="c-libfunc">ʰb̲oxed</span> ← { (w, i, lo, hi) → (<a href="builtins.html#e_nclose" class="c-builtin">e̲nclose</a> w) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#e_nclose" class="c-builtin">e̲nclose</a> i) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#e_nclose" class="c-builtin">e̲nclose</a> lo) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="builtins.html#e_nclose" class="c-builtin">e̲nclose</a> hi }</span>
+<span class="line" id="L158"><a class="ln" href="#L158">158</a></span>
+<span class="line" id="L159"><a class="ln" href="#L159">159</a><span class="c-doc">⍝│</span><span class="c-doc"> An atom checked: a name or a number.</span></span>
+<span class="line" id="L160"><a class="ln" href="#L160">160</a><span class="c-libfunc">ʰa̲tom</span> ← { t →</span>
+<span class="line" id="L161"><a class="ln" href="#L161">161</a>  _ ← ((<span class="c-number">0</span> <a href="builtins.html#-3c" class="c-symbol">&lt;</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> t) <a href="builtins.html#-26" class="c-symbol">∧</a> <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> <span class="c-number">0</span> <a href="builtins.html#-2b" class="c-symbol">+</a> t <a href="builtins.html#m_ember-3f" class="c-builtin">m̲ember?</a> <a href="work-libs-Equations-src-Equations.xtlm.html#nameChars">nameChars</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;.&quot;</span>) <span class="c-libfunc">ᵖᵃr̲equire</span> (<span class="c-string">&quot;bad-equation right&quot;</span>, <span class="c-string">&quot;not a name, number, A[i,j], function or (sum ...) in an equation: &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> t)</span>
+<span class="line" id="L162"><a class="ln" href="#L162">162</a>  t</span>
+<span class="line" id="L163"><a class="ln" href="#L163">163</a>}</span>
+<span class="line" id="L164"><a class="ln" href="#L164">164</a></span>
+<span class="line" id="L165"><a class="ln" href="#L165">165</a><span class="c-heading">⍝━━</span><span class="c-heading"> The value</span></span>
+<span class="line" id="L166"><a class="ln" href="#L166">166</a></span>
+<span class="line" id="L167"><a class="ln" href="#L167">167</a><span class="c-doc">⍝│</span><span class="c-doc"> The whole expansion: a block defining the checks, the grid of the</span></span>
+<span class="line" id="L168"><a class="ln" href="#L168">168</a><span class="c-doc">⍝│</span><span class="c-doc"> free indices, and the expression's value over it.</span></span>
+<span class="line" id="L169"><a class="ln" href="#L169">169</a><span class="c-libfunc">ʰv̲alue</span> ← { (names, extents) t →</span>
+<span class="line" id="L170"><a class="ln" href="#L170">170</a>  helpers ← (<a href="builtins.html#-5b-5dG_ENSYM" class="c-builtin">⎕G̲ENSYM</a> <span class="c-string">&quot;a_t&quot;</span>, <a href="builtins.html#-5b-5dG_ENSYM" class="c-builtin">⎕G̲ENSYM</a> <span class="c-string">&quot;c_heck&quot;</span>, <a href="builtins.html#-5b-5dG_ENSYM" class="c-builtin">⎕G̲ENSYM</a> <span class="c-string">&quot;r_ank&quot;</span>)</span>
+<span class="line" id="L171"><a class="ln" href="#L171">171</a>  (at, chk, rk) ← helpers</span>
+<span class="line" id="L172"><a class="ln" href="#L172">172</a>  grid ← <a href="builtins.html#-5b-5dG_ENSYM" class="c-builtin">⎕G̲ENSYM</a> <span class="c-string">&quot;grid&quot;</span></span>
+<span class="line" id="L173"><a class="ln" href="#L173">173</a>  cell ← <a href="builtins.html#-5b-5dG_ENSYM" class="c-builtin">⎕G̲ENSYM</a> <span class="c-string">&quot;g_rid&quot;</span></span>
+<span class="line" id="L174"><a class="ln" href="#L174">174</a>  spans ← <span class="c-quote">'</span>{ e → (<a href="builtins.html#e_nclose" class="c-builtin">e̲nclose</a> <span class="c-string">&quot;&quot;</span>) <a href="work-libs-Equations-src-Equations.xtlm.html#h.b_ound" class="c-libfunc">ʰb̲ound</a> <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> e } <a href="builtins.html#m_ap" class="c-builtin">m̲ap</a> extents</span>
+<span class="line" id="L175"><a class="ln" href="#L175">175</a>  lows ← <span class="c-quote">'</span>{ n → <span class="c-string">&quot;0&quot;</span> } <a href="builtins.html#m_ap" class="c-builtin">m̲ap</a> names</span>
+<span class="line" id="L176"><a class="ln" href="#L176">176</a>  env ← (names, spans, lows, cell, helpers)</span>
+<span class="line" id="L177"><a class="ln" href="#L177">177</a>  gridLines ← (<span class="c-number">0</span> <a href="builtins.html#-3d" class="c-symbol">=</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> names) <a href="work-libs-Equations-src-Equations.xtlm.html#h.p_ickText" class="c-libfunc">ʰp̲ickText</a> (<span class="c-string">&quot;&quot;</span>, <a href="work-libs-Equations-src-Equations.xtlm.html#h.g_ridLines" class="c-libfunc">ʰg̲ridLines</a> (grid, cell, spans))</span>
+<span class="line" id="L178"><a class="ln" href="#L178">178</a>  atLine ← <span class="c-string">&quot;  &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> at <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; := { A i -&gt; (1 + i) s_elect r_avel A }\n&quot;</span></span>
+<span class="line" id="L179"><a class="ln" href="#L179">179</a>  <span class="c-comment">⍝</span><span class="c-comment"> A value that names no index is a scalar: shaped to the grid, so the</span></span>
+<span class="line" id="L180"><a class="ln" href="#L180">180</a>  <span class="c-comment">⍝</span><span class="c-comment"> result has one axis per free index whatever the expression.</span></span>
+<span class="line" id="L181"><a class="ln" href="#L181">181</a>  shaped ← (<span class="c-number">0</span> <a href="builtins.html#-3d" class="c-symbol">=</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> names) <a href="work-libs-Equations-src-Equations.xtlm.html#h.p_ickText" class="c-libfunc">ʰp̲ickText</a> (<span class="c-string">&quot;&quot;</span>, grid <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; r_eshape &quot;</span>)</span>
+<span class="line" id="L182"><a class="ln" href="#L182">182</a>  <span class="c-string">&quot;({ @ -&gt;\n&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> atLine <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="work-libs-Equations-src-Equations.xtlm.html#h.c_hecks" class="c-libfunc">ʰc̲hecks</a> (chk, rk)) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> gridLines <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;  &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> shaped <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;(&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (env <a href="work-libs-Equations-src-Equations.xtlm.html#h.v_alueOf" class="c-libfunc">ʰv̲alueOf</a> <a href="work-libs-Equations-src-Equations.xtlm.html#h.w_hole" class="c-libfunc">ʰw̲hole</a> t) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;)\n} @)&quot;</span></span>
+<span class="line" id="L183"><a class="ln" href="#L183">183</a>}</span>
+<span class="line" id="L184"><a class="ln" href="#L184">184</a></span>
+<span class="line" id="L185"><a class="ln" href="#L185">185</a><span class="c-doc">⍝│</span><span class="c-doc"> The lines defining a grid over spans and its cell function (the</span></span>
+<span class="line" id="L186"><a class="ln" href="#L186">186</a><span class="c-doc">⍝│</span><span class="c-doc"> coordinates along axis k, shaped like the grid).</span></span>
+<span class="line" id="L187"><a class="ln" href="#L187">187</a><span class="c-libfunc">ʰg̲ridLines</span> ← { (grid, cell, spans) →</span>
+<span class="line" id="L188"><a class="ln" href="#L188">188</a>  <span class="c-string">&quot;  &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> grid <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; := &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot; c_at &quot;</span> <a href="work-libs-Equations-src-Equations.xtlm.html#h.j_oinWith" class="c-libfunc">ʰj̲oinWith</a> spans) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;\n  &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> cell <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; := { k -&gt; &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> grid <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; r_eshape (o_ffsets k s_elect &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> grid <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;) 'l_eft t_able ('* r_/ k d_rop &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> grid <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;) r_eshape 0 }\n&quot;</span></span>
+<span class="line" id="L189"><a class="ln" href="#L189">189</a>}</span>
+<span class="line" id="L190"><a class="ln" href="#L190">190</a></span>
+<span class="line" id="L191"><a class="ln" href="#L191">191</a><span class="c-doc">⍝│</span><span class="c-doc"> The value of a term in env (the indices in scope, their spans and</span></span>
+<span class="line" id="L192"><a class="ln" href="#L192">192</a><span class="c-doc">⍝│</span><span class="c-doc"> lows, the grid's cell function, the helpers), as X_eTaL text.</span></span>
+<span class="line" id="L193"><a class="ln" href="#L193">193</a><span class="c-libfunc">ʰv̲alueOf</span> ← { env text →</span>
+<span class="line" id="L194"><a class="ln" href="#L194">194</a>  t ← <a href="work-libs-Strings-src-Strings.xtl.html#l.t_rim" class="c-libfunc">ᵗt̲rim</a> text</span>
+<span class="line" id="L195"><a class="ln" href="#L195">195</a>  k ← <a href="work-libs-Equations-src-Equations.xtlm.html#h.k_ind" class="c-libfunc">ʰk̲ind</a> t</span>
+<span class="line" id="L196"><a class="ln" href="#L196">196</a>  <span class="c-string">&quot;add&quot;</span> <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> k ? env <a href="work-libs-Equations-src-Equations.xtlm.html#h.v_alueChain" class="c-libfunc">ʰv̲alueChain</a> (<span class="c-string">&quot;+-&quot;</span>, t)</span>
+<span class="line" id="L197"><a class="ln" href="#L197">197</a>  <span class="c-string">&quot;mul&quot;</span> <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> k ? env <a href="work-libs-Equations-src-Equations.xtlm.html#h.v_alueChain" class="c-libfunc">ʰv̲alueChain</a> (<span class="c-string">&quot;*/&quot;</span>, t)</span>
+<span class="line" id="L198"><a class="ln" href="#L198">198</a>  <span class="c-string">&quot;pow&quot;</span> <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> k ? env <a href="work-libs-Equations-src-Equations.xtlm.html#h.v_aluePow" class="c-libfunc">ʰv̲aluePow</a> t</span>
+<span class="line" id="L199"><a class="ln" href="#L199">199</a>  <span class="c-string">&quot;sum&quot;</span> <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> k ? env <a href="work-libs-Equations-src-Equations.xtlm.html#h.v_alueSum" class="c-libfunc">ʰv̲alueSum</a> t</span>
+<span class="line" id="L200"><a class="ln" href="#L200">200</a>  <span class="c-string">&quot;group&quot;</span> <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> k ? <span class="c-string">&quot;(&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (env <a href="work-libs-Equations-src-Equations.xtlm.html#h.v_alueOf" class="c-libfunc">ʰv̲alueOf</a> <span class="c-libfunc">ᵖᵃi̲nner</span> t) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;)&quot;</span></span>
+<span class="line" id="L201"><a class="ln" href="#L201">201</a>  <span class="c-string">&quot;fn&quot;</span> <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> k ? env <a href="work-libs-Equations-src-Equations.xtlm.html#h.v_alueFn" class="c-libfunc">ʰv̲alueFn</a> t</span>
+<span class="line" id="L202"><a class="ln" href="#L202">202</a>  <span class="c-string">&quot;ref&quot;</span> <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> k ? env <a href="work-libs-Equations-src-Equations.xtlm.html#h.v_alueRef" class="c-libfunc">ʰv̲alueRef</a> t</span>
+<span class="line" id="L203"><a class="ln" href="#L203">203</a>  env <a href="work-libs-Equations-src-Equations.xtlm.html#h.v_alueAtom" class="c-libfunc">ʰv̲alueAtom</a> <a href="work-libs-Equations-src-Equations.xtlm.html#h.a_tom" class="c-libfunc">ʰa̲tom</a> t</span>
+<span class="line" id="L204"><a class="ln" href="#L204">204</a>}</span>
+<span class="line" id="L205"><a class="ln" href="#L205">205</a></span>
+<span class="line" id="L206"><a class="ln" href="#L206">206</a><span class="c-doc">⍝│</span><span class="c-doc"> A chain folded left: ((a + b) - c); a leading minus is 0 - a.</span></span>
+<span class="line" id="L207"><a class="ln" href="#L207">207</a><span class="c-libfunc">ʰv̲alueChain</span> ← { env (ops, t) →</span>
+<span class="line" id="L208"><a class="ln" href="#L208">208</a>  (parts, os, neg) ← (<span class="c-string">&quot;bad-equation right&quot;</span>, ops) <span class="c-libfunc">ᵖᵃp̲arts</span> t</span>
+<span class="line" id="L209"><a class="ln" href="#L209">209</a>  first ← env <a href="work-libs-Equations-src-Equations.xtlm.html#h.v_alueOf" class="c-libfunc">ʰv̲alueOf</a> <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> parts</span>
+<span class="line" id="L210"><a class="ln" href="#L210">210</a>  acc ← neg <a href="work-libs-Equations-src-Equations.xtlm.html#h.p_ickText" class="c-libfunc">ʰp̲ickText</a> (<span class="c-string">&quot;(0 - &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> first <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;)&quot;</span>, first)</span>
+<span class="line" id="L211"><a class="ln" href="#L211">211</a>  env <a href="work-libs-Equations-src-Equations.xtlm.html#h.v_alueFold" class="c-libfunc">ʰv̲alueFold</a> (acc, os, <span class="c-number">1</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> parts)</span>
+<span class="line" id="L212"><a class="ln" href="#L212">212</a>}</span>
+<span class="line" id="L213"><a class="ln" href="#L213">213</a></span>
+<span class="line" id="L214"><a class="ln" href="#L214">214</a><span class="c-doc">⍝│</span><span class="c-doc"> The left fold of a chain: acc, then each operator with the next part.</span></span>
+<span class="line" id="L215"><a class="ln" href="#L215">215</a><span class="c-libfunc">ʰv̲alueFold</span> ← { env (acc, os, parts) →</span>
+<span class="line" id="L216"><a class="ln" href="#L216">216</a>  <span class="c-number">0</span> <a href="builtins.html#-3d" class="c-symbol">=</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> os ? acc</span>
+<span class="line" id="L217"><a class="ln" href="#L217">217</a>  next ← <span class="c-string">&quot;(&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> acc <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-number">1</span> <a href="builtins.html#t_ake" class="c-builtin">t̲ake</a> os) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (env <a href="work-libs-Equations-src-Equations.xtlm.html#h.v_alueOf" class="c-libfunc">ʰv̲alueOf</a> <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> parts) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;)&quot;</span></span>
+<span class="line" id="L218"><a class="ln" href="#L218">218</a>  env <a href="work-libs-Equations-src-Equations.xtlm.html#h.v_alueFold" class="c-libfunc">ʰv̲alueFold</a> (next, <span class="c-number">1</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> os, <span class="c-number">1</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> parts)</span>
+<span class="line" id="L219"><a class="ln" href="#L219">219</a>}</span>
+<span class="line" id="L220"><a class="ln" href="#L220">220</a></span>
+<span class="line" id="L221"><a class="ln" href="#L221">221</a><span class="c-doc">⍝│</span><span class="c-doc"> a ^ b, right to left: the text cut at its first top-level ^.</span></span>
+<span class="line" id="L222"><a class="ln" href="#L222">222</a><span class="c-libfunc">ʰv̲aluePow</span> ← { env t →</span>
+<span class="line" id="L223"><a class="ln" href="#L223">223</a>  i ← <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> <a href="builtins.html#w_here" class="c-builtin">w̲here</a> <span class="c-string">&quot;^&quot;</span> <span class="c-libfunc">ᵖᵃt̲op</span> t</span>
+<span class="line" id="L224"><a class="ln" href="#L224">224</a>  <span class="c-string">&quot;(&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (env <a href="work-libs-Equations-src-Equations.xtlm.html#h.v_alueOf" class="c-libfunc">ʰv̲alueOf</a> (i <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span>) <a href="builtins.html#t_ake" class="c-builtin">t̲ake</a> t) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; ^ &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (env <a href="work-libs-Equations-src-Equations.xtlm.html#h.v_alueOf" class="c-libfunc">ʰv̲alueOf</a> i <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> t) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;)&quot;</span></span>
+<span class="line" id="L225"><a class="ln" href="#L225">225</a>}</span>
+<span class="line" id="L226"><a class="ln" href="#L226">226</a></span>
+<span class="line" id="L227"><a class="ln" href="#L227">227</a><span class="c-doc">⍝│</span><span class="c-doc"> A parenthesized sum: a block with its own grid over the indices in</span></span>
+<span class="line" id="L228"><a class="ln" href="#L228">228</a><span class="c-doc">⍝│</span><span class="c-doc"> scope and then its own, the body on that grid, and one reduction per</span></span>
+<span class="line" id="L229"><a class="ln" href="#L229">229</a><span class="c-doc">⍝│</span><span class="c-doc"> binding (innermost first), leaving an array over the indices in</span></span>
+<span class="line" id="L230"><a class="ln" href="#L230">230</a><span class="c-doc">⍝│</span><span class="c-doc"> scope.</span></span>
+<span class="line" id="L231"><a class="ln" href="#L231">231</a><span class="c-libfunc">ʰv̲alueSum</span> ← { (names, spans, lows, cell, helpers) t →</span>
+<span class="line" id="L232"><a class="ln" href="#L232">232</a>  (ws, ns, ls, hs, body) ← <a href="work-libs-Equations-src-Equations.xtlm.html#h.s_umParts" class="c-libfunc">ʰs̲umParts</a> t</span>
+<span class="line" id="L233"><a class="ln" href="#L233">233</a>  n ← <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> names</span>
+<span class="line" id="L234"><a class="ln" href="#L234">234</a>  _ ← ((<a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> ns) <a href="builtins.html#-3d" class="c-symbol">=</a> <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> <span class="c-number">0</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> (names <a href="builtins.html#c_at" class="c-builtin">c̲at</a> ns) <span class="c-builtin">'</span><a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> ns) <span class="c-libfunc">ᵖᵃr̲equire</span> (<span class="c-string">&quot;bad-equation right&quot;</span>, <span class="c-string">&quot;an index is bound once: &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> t)</span>
+<span class="line" id="L235"><a class="ln" href="#L235">235</a>  own ← ls <span class="c-quote">'</span>{ l h → <a href="builtins.html#e_nclose" class="c-builtin">e̲nclose</a> <span class="c-string">&quot;(1 + &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (names <a href="work-libs-Equations-src-Equations.xtlm.html#h.b_ound" class="c-libfunc">ʰb̲ound</a> <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> h) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; - &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (names <a href="work-libs-Equations-src-Equations.xtlm.html#h.b_ound" class="c-libfunc">ʰb̲ound</a> <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> l) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;)&quot;</span> } <a href="builtins.html#e_ach" class="c-builtin">e̲ach</a> hs</span>
+<span class="line" id="L236"><a class="ln" href="#L236">236</a>  lows2 ← <span class="c-quote">'</span>{ l → names <a href="work-libs-Equations-src-Equations.xtlm.html#h.b_ound" class="c-libfunc">ʰb̲ound</a> <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> l } <a href="builtins.html#m_ap" class="c-builtin">m̲ap</a> ls</span>
+<span class="line" id="L237"><a class="ln" href="#L237">237</a>  grid ← <a href="builtins.html#-5b-5dG_ENSYM" class="c-builtin">⎕G̲ENSYM</a> <span class="c-string">&quot;grid&quot;</span></span>
+<span class="line" id="L238"><a class="ln" href="#L238">238</a>  cell2 ← <a href="builtins.html#-5b-5dG_ENSYM" class="c-builtin">⎕G̲ENSYM</a> <span class="c-string">&quot;g_rid&quot;</span></span>
+<span class="line" id="L239"><a class="ln" href="#L239">239</a>  env ← (names <a href="builtins.html#c_at" class="c-builtin">c̲at</a> ns, spans <a href="builtins.html#c_at" class="c-builtin">c̲at</a> own, lows <a href="builtins.html#c_at" class="c-builtin">c̲at</a> lows2, cell2, helpers)</span>
+<span class="line" id="L240"><a class="ln" href="#L240">240</a>  reds ← <span class="c-string">&quot;&quot;</span> <a href="work-libs-Strings-src-Strings.xtl.html#l.j_oin" class="c-libfunc">ᵗj̲oin</a> <span class="c-quote">'</span>{ k → (<a href="work-libs-Equations-src-Equations.xtlm.html#h.r_educer" class="c-libfunc">ʰr̲educer</a> <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> k <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> ws) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; r_/_&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> n <a href="builtins.html#-2b" class="c-symbol">+</a> k) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; &quot;</span> } <a href="builtins.html#m_ap" class="c-builtin">m̲ap</a> <a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> ns</span>
+<span class="line" id="L241"><a class="ln" href="#L241">241</a>  lines ← (<span class="c-number">0</span> <a href="builtins.html#-3d" class="c-symbol">=</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> spans <a href="builtins.html#c_at" class="c-builtin">c̲at</a> own) <a href="work-libs-Equations-src-Equations.xtlm.html#h.p_ickText" class="c-libfunc">ʰp̲ickText</a> (<span class="c-string">&quot;&quot;</span>, <a href="work-libs-Equations-src-Equations.xtlm.html#h.g_ridLines" class="c-libfunc">ʰg̲ridLines</a> (grid, cell2, spans <a href="builtins.html#c_at" class="c-builtin">c̲at</a> own))</span>
+<span class="line" id="L242"><a class="ln" href="#L242">242</a>  shaped ← (<span class="c-number">0</span> <a href="builtins.html#-3d" class="c-symbol">=</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> spans <a href="builtins.html#c_at" class="c-builtin">c̲at</a> own) <a href="work-libs-Equations-src-Equations.xtlm.html#h.p_ickText" class="c-libfunc">ʰp̲ickText</a> (<span class="c-string">&quot;&quot;</span>, grid <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; r_eshape &quot;</span>)</span>
+<span class="line" id="L243"><a class="ln" href="#L243">243</a>  <span class="c-string">&quot;({ @ -&gt;\n&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> lines <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;  &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> reds <a href="builtins.html#c_at" class="c-builtin">c̲at</a> shaped <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;(&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (env <a href="work-libs-Equations-src-Equations.xtlm.html#h.v_alueOf" class="c-libfunc">ʰv̲alueOf</a> body) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;)\n} @)&quot;</span></span>
+<span class="line" id="L244"><a class="ln" href="#L244">244</a>}</span>
+<span class="line" id="L245"><a class="ln" href="#L245">245</a></span>
+<span class="line" id="L246"><a class="ln" href="#L246">246</a><span class="c-doc">⍝│</span><span class="c-doc"> The reduction an operator word stands for.</span></span>
+<span class="line" id="L247"><a class="ln" href="#L247">247</a><span class="c-libfunc">ʰr̲educer</span> ← { w →</span>
+<span class="line" id="L248"><a class="ln" href="#L248">248</a>  <span class="c-string">&quot;sum&quot;</span> <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> w ? <span class="c-string">&quot;'+&quot;</span></span>
+<span class="line" id="L249"><a class="ln" href="#L249">249</a>  <span class="c-string">&quot;prod&quot;</span> <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> w ? <span class="c-string">&quot;'*&quot;</span></span>
+<span class="line" id="L250"><a class="ln" href="#L250">250</a>  <span class="c-string">&quot;max&quot;</span> <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> w ? <span class="c-string">&quot;'m_ax&quot;</span></span>
+<span class="line" id="L251"><a class="ln" href="#L251">251</a>  <span class="c-string">&quot;'m_in&quot;</span></span>
+<span class="line" id="L252"><a class="ln" href="#L252">252</a>}</span>
+<span class="line" id="L253"><a class="ln" href="#L253">253</a></span>
+<span class="line" id="L254"><a class="ln" href="#L254">254</a><span class="c-doc">⍝│</span><span class="c-doc"> A bound or extent: an expression of the caller's values, with no</span></span>
+<span class="line" id="L255"><a class="ln" href="#L255">255</a><span class="c-doc">⍝│</span><span class="c-doc"> index in scope; one that names an index is refused.</span></span>
+<span class="line" id="L256"><a class="ln" href="#L256">256</a><span class="c-libfunc">ʰb̲ound</span> ← { names t →</span>
+<span class="line" id="L257"><a class="ln" href="#L257">257</a>  used ← <span class="c-quote">'</span>{ w → <span class="c-number">0</span> <a href="builtins.html#-3c" class="c-symbol">&lt;</a> <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> <span class="c-number">0</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-quote">'</span>{ n → (<a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> n) <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> w } <a href="builtins.html#e_ach" class="c-builtin">e̲ach</a> names } <a href="builtins.html#e_ach" class="c-builtin">e̲ach</a> <a href="work-libs-Strings-src-Strings.xtl.html#l.w_ords" class="c-libfunc">ᵗw̲ords</a> <a href="work-libs-Equations-src-Equations.xtlm.html#h.s_paced" class="c-libfunc">ʰs̲paced</a> t</span>
+<span class="line" id="L258"><a class="ln" href="#L258">258</a>  _ ← (<span class="c-number">0</span> <a href="builtins.html#-3d" class="c-symbol">=</a> <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> <span class="c-number">0</span> <a href="builtins.html#-2b" class="c-symbol">+</a> used) <span class="c-libfunc">ᵖᵃr̲equire</span> (<span class="c-string">&quot;bad-equation right&quot;</span>, <span class="c-string">&quot;a bound or extent cannot depend on an index: &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> t)</span>
+<span class="line" id="L259"><a class="ln" href="#L259">259</a>  (<a href="builtins.html#e_nclose" class="c-builtin">e̲nclose</a> <span class="c-string">&quot;&quot;</span>, <a href="builtins.html#e_nclose" class="c-builtin">e̲nclose</a> <span class="c-string">&quot;&quot;</span>, <a href="builtins.html#e_nclose" class="c-builtin">e̲nclose</a> <span class="c-string">&quot;&quot;</span>, <span class="c-string">&quot;&quot;</span>, (<span class="c-string">&quot;&quot;</span>, <span class="c-string">&quot;&quot;</span>, <span class="c-string">&quot;&quot;</span>)) <a href="work-libs-Equations-src-Equations.xtlm.html#h.v_alueOf" class="c-libfunc">ʰv̲alueOf</a> t</span>
+<span class="line" id="L260"><a class="ln" href="#L260">260</a>}</span>
+<span class="line" id="L261"><a class="ln" href="#L261">261</a></span>
+<span class="line" id="L262"><a class="ln" href="#L262">262</a><span class="c-doc">⍝│</span><span class="c-doc"> t with its operators and brackets spaced out, so its words are its names.</span></span>
+<span class="line" id="L263"><a class="ln" href="#L263">263</a><span class="c-libfunc">ʰs̲paced</span> ← { t → <span class="c-string">&quot;&quot;</span> <a href="work-libs-Strings-src-Strings.xtl.html#l.j_oin" class="c-libfunc">ᵗj̲oin</a> <span class="c-quote">'</span>{ ch → (ch <a href="builtins.html#m_ember-3f" class="c-builtin">m̲ember?</a> <span class="c-string">&quot;+-*/^()[],&quot;</span>) ? <span class="c-string">&quot; &quot;</span>◆ ch } <a href="builtins.html#m_ap" class="c-builtin">m̲ap</a> t }</span>
+<span class="line" id="L264"><a class="ln" href="#L264">264</a></span>
+<span class="line" id="L265"><a class="ln" href="#L265">265</a><span class="c-doc">⍝│</span><span class="c-doc"> A function applied to its arguments' values.</span></span>
+<span class="line" id="L266"><a class="ln" href="#L266">266</a><span class="c-libfunc">ʰv̲alueFn</span> ← { env t →</span>
+<span class="line" id="L267"><a class="ln" href="#L267">267</a>  (name, args) ← <a href="work-libs-Equations-src-Equations.xtlm.html#h.f_nParts" class="c-libfunc">ʰf̲nParts</a> t</span>
+<span class="line" id="L268"><a class="ln" href="#L268">268</a>  vs ← <span class="c-quote">'</span>{ a → env <a href="work-libs-Equations-src-Equations.xtlm.html#h.v_alueOf" class="c-libfunc">ʰv̲alueOf</a> <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> a } <a href="builtins.html#m_ap" class="c-builtin">m̲ap</a> args</span>
+<span class="line" id="L269"><a class="ln" href="#L269">269</a>  a ← <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> vs</span>
+<span class="line" id="L270"><a class="ln" href="#L270">270</a>  <span class="c-string">&quot;sqrt&quot;</span> <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> name ? <span class="c-string">&quot;(&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> a <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; ^ 0.5)&quot;</span></span>
+<span class="line" id="L271"><a class="ln" href="#L271">271</a>  <span class="c-string">&quot;exp&quot;</span> <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> name ? <span class="c-string">&quot;(e_xp &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> a <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;)&quot;</span></span>
+<span class="line" id="L272"><a class="ln" href="#L272">272</a>  <span class="c-string">&quot;log&quot;</span> <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> name ? <span class="c-string">&quot;(l_og &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> a <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;)&quot;</span></span>
+<span class="line" id="L273"><a class="ln" href="#L273">273</a>  <span class="c-string">&quot;abs&quot;</span> <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> name ? <span class="c-string">&quot;(a_bs &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> a <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;)&quot;</span></span>
+<span class="line" id="L274"><a class="ln" href="#L274">274</a>  <span class="c-string">&quot;(&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> a <a href="builtins.html#c_at" class="c-builtin">c̲at</a> ((<span class="c-string">&quot;max&quot;</span> <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> name) <a href="work-libs-Equations-src-Equations.xtlm.html#h.p_ickText" class="c-libfunc">ʰp̲ickText</a> (<span class="c-string">&quot; m_ax &quot;</span>, <span class="c-string">&quot; m_in &quot;</span>)) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> <span class="c-number">2</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> vs) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;)&quot;</span></span>
+<span class="line" id="L275"><a class="ln" href="#L275">275</a>}</span>
+<span class="line" id="L276"><a class="ln" href="#L276">276</a></span>
+<span class="line" id="L277"><a class="ln" href="#L277">277</a><span class="c-doc">⍝│</span><span class="c-doc"> A[e1,...,en] as a gather from A's ravel, the index by Horner's rule</span></span>
+<span class="line" id="L278"><a class="ln" href="#L278">278</a><span class="c-doc">⍝│</span><span class="c-doc"> over A's shape (0-origin, as the equation writes it); A is checked</span></span>
+<span class="line" id="L279"><a class="ln" href="#L279">279</a><span class="c-doc">⍝│</span><span class="c-doc"> to have n axes, and each index to lie within its axis.</span></span>
+<span class="line" id="L280"><a class="ln" href="#L280">280</a><span class="c-libfunc">ʰv̲alueRef</span> ← { (names, spans, lows, cell, (at, chk, rk)) t →</span>
+<span class="line" id="L281"><a class="ln" href="#L281">281</a>  (name, ix) ← <span class="c-string">&quot;bad-equation right&quot;</span> <span class="c-libfunc">ᵖᵃr̲eference</span> t</span>
+<span class="line" id="L282"><a class="ln" href="#L282">282</a>  inner ← (names, spans, lows, cell, (at, chk, rk)) <a href="work-libs-Equations-src-Equations.xtlm.html#h.h_orner" class="c-libfunc">ʰh̲orner</a> (name, ix, <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> ix)</span>
+<span class="line" id="L283"><a class="ln" href="#L283">283</a>  checked ← <span class="c-string">&quot;(&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> rk <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; (&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> name <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;, \&quot;&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> name <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;\&quot;, &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> ix) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;, \&quot;&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;\&quot;))&quot;</span></span>
+<span class="line" id="L284"><a class="ln" href="#L284">284</a>  <span class="c-string">&quot;\n    (&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> checked <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> at <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; (&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> inner <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;))&quot;</span></span>
+<span class="line" id="L285"><a class="ln" href="#L285">285</a>}</span>
+<span class="line" id="L286"><a class="ln" href="#L286">286</a></span>
+<span class="line" id="L287"><a class="ln" href="#L287">287</a><span class="c-doc">⍝│</span><span class="c-doc"> The ravel position of A[e1,...,ek] by Horner's rule: ek + (k-th</span></span>
+<span class="line" id="L288"><a class="ln" href="#L288">288</a><span class="c-doc">⍝│</span><span class="c-doc"> extent of A) * (the same for e1 ... e(k-1)), down to e1; each ek</span></span>
+<span class="line" id="L289"><a class="ln" href="#L289">289</a><span class="c-doc">⍝│</span><span class="c-doc"> passes through the bounds check.</span></span>
+<span class="line" id="L290"><a class="ln" href="#L290">290</a><span class="c-libfunc">ʰh̲orner</span> ← { (names, spans, lows, cell, (at, chk, rk)) (name, ix, k) →</span>
+<span class="line" id="L291"><a class="ln" href="#L291">291</a>  env ← (names, spans, lows, cell, (at, chk, rk))</span>
+<span class="line" id="L292"><a class="ln" href="#L292">292</a>  written ← <a href="work-libs-Strings-src-Strings.xtl.html#l.t_rim" class="c-libfunc">ᵗt̲rim</a> <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> k <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> ix</span>
+<span class="line" id="L293"><a class="ln" href="#L293">293</a>  e ← <span class="c-string">&quot;\n      ((&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> name <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;, \&quot;&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> name <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;\&quot;, &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> k) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;, \&quot;&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> written <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;\&quot;) &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> chk <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (env <a href="work-libs-Equations-src-Equations.xtlm.html#h.v_alueOf" class="c-libfunc">ʰv̲alueOf</a> written) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;)&quot;</span></span>
+<span class="line" id="L294"><a class="ln" href="#L294">294</a>  k <a href="builtins.html#-3d" class="c-symbol">=</a> <span class="c-number">1</span> ? e</span>
+<span class="line" id="L295"><a class="ln" href="#L295">295</a>  <span class="c-string">&quot;(&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> e <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; + (&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> k) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; s_elect s_hape &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> name <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;) * &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (env <a href="work-libs-Equations-src-Equations.xtlm.html#h.h_orner" class="c-libfunc">ʰh̲orner</a> (name, ix, k <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span>)) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;)&quot;</span></span>
+<span class="line" id="L296"><a class="ln" href="#L296">296</a>}</span>
+<span class="line" id="L297"><a class="ln" href="#L297">297</a></span>
+<span class="line" id="L298"><a class="ln" href="#L298">298</a><span class="c-doc">⍝│</span><span class="c-doc"> An index in scope as its coordinates on the grid (its low added),</span></span>
+<span class="line" id="L299"><a class="ln" href="#L299">299</a><span class="c-doc">⍝│</span><span class="c-doc"> anything else as written: the caller's name or a number.</span></span>
+<span class="line" id="L300"><a class="ln" href="#L300">300</a><span class="c-libfunc">ʰv̲alueAtom</span> ← { (names, spans, lows, cell, helpers) t →</span>
+<span class="line" id="L301"><a class="ln" href="#L301">301</a>  hit ← <a href="builtins.html#w_here" class="c-builtin">w̲here</a> <span class="c-quote">'</span>{ n → (<a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> n) <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> t } <a href="builtins.html#e_ach" class="c-builtin">e̲ach</a> names</span>
+<span class="line" id="L302"><a class="ln" href="#L302">302</a>  <span class="c-number">0</span> <a href="builtins.html#-3d" class="c-symbol">=</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> hit ? t</span>
+<span class="line" id="L303"><a class="ln" href="#L303">303</a>  k ← <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> hit</span>
+<span class="line" id="L304"><a class="ln" href="#L304">304</a>  <span class="c-string">&quot;(&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> k <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> lows) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; + &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> cell <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> k) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;)&quot;</span></span>
+<span class="line" id="L305"><a class="ln" href="#L305">305</a>}</span>
+<span class="line" id="L306"><a class="ln" href="#L306">306</a></span>
+<span class="line" id="L307"><a class="ln" href="#L307">307</a><span class="c-doc">⍝│</span><span class="c-doc"> The two run-time checks the expansion defines: an index within its</span></span>
+<span class="line" id="L308"><a class="ln" href="#L308">308</a><span class="c-doc">⍝│</span><span class="c-doc"> axis (0 to the extent less one), and a reference with as many</span></span>
+<span class="line" id="L309"><a class="ln" href="#L309">309</a><span class="c-doc">⍝│</span><span class="c-doc"> indices as its array has axes; each names the array, the axis and</span></span>
+<span class="line" id="L310"><a class="ln" href="#L310">310</a><span class="c-doc">⍝│</span><span class="c-doc"> the expression as written, and gives its argument back when it holds.</span></span>
+<span class="line" id="L311"><a class="ln" href="#L311">311</a><span class="c-libfunc">ʰc̲hecks</span> ← { (chk, rk) →</span>
+<span class="line" id="L312"><a class="ln" href="#L312">312</a>  c ← <span class="c-string">&quot;  &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> chk <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; := { (A, name, k, from) e -&gt;\n    n := k s_elect s_hape A\n    bad := w_here n_ot r_avel (0 &lt;= e) &amp; e &lt; n\n    0 = t_ally bad ? e\n    \&quot;index\&quot; []S_IGNAL name c_at \&quot; axis \&quot; c_at (f_ormat k) c_at \&quot;: index \&quot; c_at (f_ormat (f_irst bad) s_elect r_avel e) c_at \&quot; is outside 0..\&quot; c_at (f_ormat n - 1) c_at \&quot; (from \&quot; c_at from c_at \&quot;)\&quot;\n  }\n&quot;</span></span>
+<span class="line" id="L313"><a class="ln" href="#L313">313</a>  r ← <span class="c-string">&quot;  &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> rk <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; := { (A, name, q, ref) -&gt;\n    (t_ally s_hape A) = q ? A\n    \&quot;rank\&quot; []S_IGNAL ref c_at \&quot; indexes \&quot; c_at (f_ormat q) c_at \&quot; axes, but \&quot; c_at name c_at \&quot; has rank \&quot; c_at f_ormat t_ally s_hape A\n  }\n&quot;</span></span>
+<span class="line" id="L314"><a class="ln" href="#L314">314</a>  c <a href="builtins.html#c_at" class="c-builtin">c̲at</a> r</span>
+<span class="line" id="L315"><a class="ln" href="#L315">315</a>}</span>
+<span class="line" id="L316"><a class="ln" href="#L316">316</a></span>
+<span class="line" id="L317"><a class="ln" href="#L317">317</a><span class="c-heading">⍝━━</span><span class="c-heading"> The same call as LaTeX</span></span>
+<span class="line" id="L318"><a class="ln" href="#L318">318</a></span>
+<span class="line" id="L319"><a class="ln" href="#L319">319</a><span class="c-doc">⍝│</span><span class="c-doc"> The LaTeX text of the call (no quotes): the result as written (L for</span></span>
+<span class="line" id="L320"><a class="ln" href="#L320">320</a><span class="c-doc">⍝│</span><span class="c-doc"> a scalar), = and the expression; a bare sum without the parentheses</span></span>
+<span class="line" id="L321"><a class="ln" href="#L321">321</a><span class="c-doc">⍝│</span><span class="c-doc"> the reader gave it.</span></span>
+<span class="line" id="L322"><a class="ln" href="#L322">322</a><span class="c-libfunc">ʰt̲ex</span> ← { lhs rhs →</span>
+<span class="line" id="L323"><a class="ln" href="#L323">323</a>  (names, extents) ← <a href="work-libs-Equations-src-Equations.xtlm.html#h.f_ree" class="c-libfunc">ʰf̲ree</a> lhs</span>
+<span class="line" id="L324"><a class="ln" href="#L324">324</a>  head ← <a href="work-libs-Strings-src-Strings.xtl.html#l.t_rim" class="c-libfunc">ᵗt̲rim</a> <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> <span class="c-string">&quot;|&quot;</span> <span class="c-libfunc">ᵖᵃs̲plit</span> lhs</span>
+<span class="line" id="L325"><a class="ln" href="#L325">325</a>  name ← ((<a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> <a href="builtins.html#w_here" class="c-builtin">w̲here</a> head <a href="builtins.html#m_ember-3f" class="c-builtin">m̲ember?</a> <span class="c-string">&quot;[&quot;</span>) <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span>) <a href="builtins.html#t_ake" class="c-builtin">t̲ake</a> head</span>
+<span class="line" id="L326"><a class="ln" href="#L326">326</a>  sub ← (<span class="c-number">0</span> <a href="builtins.html#-3d" class="c-symbol">=</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> names) <a href="work-libs-Equations-src-Equations.xtlm.html#h.p_ickText" class="c-libfunc">ʰp̲ickText</a> (<span class="c-string">&quot;&quot;</span>, <span class="c-string">&quot;_{&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot;,&quot;</span> <a href="work-libs-Strings-src-Strings.xtl.html#l.j_oin" class="c-libfunc">ᵗj̲oin</a> names) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;}&quot;</span>)</span>
+<span class="line" id="L327"><a class="ln" href="#L327">327</a>  name <a href="builtins.html#c_at" class="c-builtin">c̲at</a> sub <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; = &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="work-libs-Equations-src-Equations.xtlm.html#h.t_exBody" class="c-libfunc">ʰt̲exBody</a> <a href="work-libs-Strings-src-Strings.xtl.html#l.t_rim" class="c-libfunc">ᵗt̲rim</a> rhs</span>
+<span class="line" id="L328"><a class="ln" href="#L328">328</a>}</span>
+<span class="line" id="L329"><a class="ln" href="#L329">329</a></span>
+<span class="line" id="L330"><a class="ln" href="#L330">330</a><span class="c-doc">⍝│</span><span class="c-doc"> The right side as LaTeX: a bare sum without the parentheses the</span></span>
+<span class="line" id="L331"><a class="ln" href="#L331">331</a><span class="c-doc">⍝│</span><span class="c-doc"> reader gives it, anything else as a term.</span></span>
+<span class="line" id="L332"><a class="ln" href="#L332">332</a><span class="c-libfunc">ʰt̲exBody</span> ← { t →</span>
+<span class="line" id="L333"><a class="ln" href="#L333">333</a>  <span class="c-number">0</span> <a href="builtins.html#-3c" class="c-symbol">&lt;</a> <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> <span class="c-number">0</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-string">&quot;|&quot;</span> <span class="c-libfunc">ᵖᵃt̲op</span> t ? (<span class="c-string">&quot;&quot;</span>, <span class="c-string">&quot;&quot;</span>) <a href="work-libs-Equations-src-Equations.xtlm.html#h.t_exSum" class="c-libfunc">ʰt̲exSum</a> t</span>
+<span class="line" id="L334"><a class="ln" href="#L334">334</a>  <a href="work-libs-Equations-src-Equations.xtlm.html#h.t_exOf" class="c-libfunc">ʰt̲exOf</a> <a href="work-libs-Equations-src-Equations.xtlm.html#h.w_hole" class="c-libfunc">ʰw̲hole</a> t</span>
+<span class="line" id="L335"><a class="ln" href="#L335">335</a>}</span>
+<span class="line" id="L336"><a class="ln" href="#L336">336</a></span>
+<span class="line" id="L337"><a class="ln" href="#L337">337</a><span class="c-doc">⍝│</span><span class="c-doc"> A term as LaTeX.</span></span>
+<span class="line" id="L338"><a class="ln" href="#L338">338</a><span class="c-libfunc">ʰt̲exOf</span> ← { text →</span>
+<span class="line" id="L339"><a class="ln" href="#L339">339</a>  t ← <a href="work-libs-Strings-src-Strings.xtl.html#l.t_rim" class="c-libfunc">ᵗt̲rim</a> text</span>
+<span class="line" id="L340"><a class="ln" href="#L340">340</a>  k ← <a href="work-libs-Equations-src-Equations.xtlm.html#h.k_ind" class="c-libfunc">ʰk̲ind</a> t</span>
+<span class="line" id="L341"><a class="ln" href="#L341">341</a>  <span class="c-string">&quot;add&quot;</span> <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> k ? <span class="c-string">&quot;+-&quot;</span> <a href="work-libs-Equations-src-Equations.xtlm.html#h.t_exChain" class="c-libfunc">ʰt̲exChain</a> t</span>
+<span class="line" id="L342"><a class="ln" href="#L342">342</a>  <span class="c-string">&quot;mul&quot;</span> <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> k ? <span class="c-string">&quot;*/&quot;</span> <a href="work-libs-Equations-src-Equations.xtlm.html#h.t_exChain" class="c-libfunc">ʰt̲exChain</a> t</span>
+<span class="line" id="L343"><a class="ln" href="#L343">343</a>  <span class="c-string">&quot;pow&quot;</span> <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> k ? <a href="work-libs-Equations-src-Equations.xtlm.html#h.t_exPow" class="c-libfunc">ʰt̲exPow</a> t</span>
+<span class="line" id="L344"><a class="ln" href="#L344">344</a>  <span class="c-string">&quot;sum&quot;</span> <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> k ? (<span class="c-string">&quot;\\\\left(&quot;</span>, <span class="c-string">&quot;\\\\right)&quot;</span>) <a href="work-libs-Equations-src-Equations.xtlm.html#h.t_exSum" class="c-libfunc">ʰt̲exSum</a> <span class="c-libfunc">ᵖᵃi̲nner</span> t</span>
+<span class="line" id="L345"><a class="ln" href="#L345">345</a>  <span class="c-string">&quot;group&quot;</span> <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> k ? <span class="c-string">&quot;\\\\left(&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="work-libs-Equations-src-Equations.xtlm.html#h.t_exOf" class="c-libfunc">ʰt̲exOf</a> <span class="c-libfunc">ᵖᵃi̲nner</span> t) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;\\\\right)&quot;</span></span>
+<span class="line" id="L346"><a class="ln" href="#L346">346</a>  <span class="c-string">&quot;fn&quot;</span> <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> k ? <a href="work-libs-Equations-src-Equations.xtlm.html#h.t_exFn" class="c-libfunc">ʰt̲exFn</a> t</span>
+<span class="line" id="L347"><a class="ln" href="#L347">347</a>  <span class="c-string">&quot;ref&quot;</span> <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> k ? <a href="work-libs-Equations-src-Equations.xtlm.html#h.t_exRef" class="c-libfunc">ʰt̲exRef</a> t</span>
+<span class="line" id="L348"><a class="ln" href="#L348">348</a>  <a href="work-libs-Equations-src-Equations.xtlm.html#h.a_tom" class="c-libfunc">ʰa̲tom</a> t</span>
+<span class="line" id="L349"><a class="ln" href="#L349">349</a>}</span>
+<span class="line" id="L350"><a class="ln" href="#L350">350</a></span>
+<span class="line" id="L351"><a class="ln" href="#L351">351</a><span class="c-doc">⍝│</span><span class="c-doc"> A chain: a + b - c; a \, b for a product; \frac{a}{b} for a quotient.</span></span>
+<span class="line" id="L352"><a class="ln" href="#L352">352</a><span class="c-libfunc">ʰt̲exChain</span> ← { ops t →</span>
+<span class="line" id="L353"><a class="ln" href="#L353">353</a>  (parts, os, neg) ← (<span class="c-string">&quot;bad-equation right&quot;</span>, ops) <span class="c-libfunc">ᵖᵃp̲arts</span> t</span>
+<span class="line" id="L354"><a class="ln" href="#L354">354</a>  p1 ← <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> parts</span>
+<span class="line" id="L355"><a class="ln" href="#L355">355</a>  first ← (<span class="c-string">&quot;/&quot;</span> <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> <span class="c-number">1</span> <a href="builtins.html#t_ake" class="c-builtin">t̲ake</a> os <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; &quot;</span>) <a href="work-libs-Equations-src-Equations.xtlm.html#h.p_ickText" class="c-libfunc">ʰp̲ickText</a> (<a href="work-libs-Equations-src-Equations.xtlm.html#h.t_exBare" class="c-libfunc">ʰt̲exBare</a> p1, <a href="work-libs-Equations-src-Equations.xtlm.html#h.t_exOf" class="c-libfunc">ʰt̲exOf</a> p1)</span>
+<span class="line" id="L356"><a class="ln" href="#L356">356</a>  acc ← neg <a href="work-libs-Equations-src-Equations.xtlm.html#h.p_ickText" class="c-libfunc">ʰp̲ickText</a> (<span class="c-string">&quot;-&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> first, first)</span>
+<span class="line" id="L357"><a class="ln" href="#L357">357</a>  <a href="work-libs-Equations-src-Equations.xtlm.html#h.t_exFold" class="c-libfunc">ʰt̲exFold</a> (acc, os, <span class="c-number">1</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> parts)</span>
+<span class="line" id="L358"><a class="ln" href="#L358">358</a>}</span>
+<span class="line" id="L359"><a class="ln" href="#L359">359</a></span>
+<span class="line" id="L360"><a class="ln" href="#L360">360</a><span class="c-libfunc">ʰt̲exFold</span> ← { (acc, os, parts) →</span>
+<span class="line" id="L361"><a class="ln" href="#L361">361</a>  <span class="c-number">0</span> <a href="builtins.html#-3d" class="c-symbol">=</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> os ? acc</span>
+<span class="line" id="L362"><a class="ln" href="#L362">362</a>  op ← <span class="c-number">1</span> <a href="builtins.html#t_ake" class="c-builtin">t̲ake</a> os</span>
+<span class="line" id="L363"><a class="ln" href="#L363">363</a>  p ← <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> parts</span>
+<span class="line" id="L364"><a class="ln" href="#L364">364</a>  next ← (<span class="c-string">&quot;/&quot;</span> <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> op) <a href="work-libs-Equations-src-Equations.xtlm.html#h.p_ickText" class="c-libfunc">ʰp̲ickText</a> (<a href="work-libs-Equations-src-Equations.xtlm.html#h.t_exBare" class="c-libfunc">ʰt̲exBare</a> p, <a href="work-libs-Equations-src-Equations.xtlm.html#h.t_exOf" class="c-libfunc">ʰt̲exOf</a> p)</span>
+<span class="line" id="L365"><a class="ln" href="#L365">365</a>  <a href="work-libs-Equations-src-Equations.xtlm.html#h.t_exFold" class="c-libfunc">ʰt̲exFold</a> (<a href="work-libs-Equations-src-Equations.xtlm.html#h.t_exJoin" class="c-libfunc">ʰt̲exJoin</a> (acc, op, next), <span class="c-number">1</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> os, <span class="c-number">1</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> parts)</span>
+<span class="line" id="L366"><a class="ln" href="#L366">366</a>}</span>
+<span class="line" id="L367"><a class="ln" href="#L367">367</a></span>
+<span class="line" id="L368"><a class="ln" href="#L368">368</a><span class="c-doc">⍝│</span><span class="c-doc"> A term without the parentheses it was written in, where what holds</span></span>
+<span class="line" id="L369"><a class="ln" href="#L369">369</a><span class="c-doc">⍝│</span><span class="c-doc"> it already sets it apart: the numerator or denominator of \frac, the</span></span>
+<span class="line" id="L370"><a class="ln" href="#L370">370</a><span class="c-doc">⍝│</span><span class="c-doc"> argument of \sqrt.</span></span>
+<span class="line" id="L371"><a class="ln" href="#L371">371</a><span class="c-libfunc">ʰt̲exBare</span> ← { text →</span>
+<span class="line" id="L372"><a class="ln" href="#L372">372</a>  t ← <a href="work-libs-Strings-src-Strings.xtl.html#l.t_rim" class="c-libfunc">ᵗt̲rim</a> text</span>
+<span class="line" id="L373"><a class="ln" href="#L373">373</a>  k ← <a href="work-libs-Equations-src-Equations.xtlm.html#h.k_ind" class="c-libfunc">ʰk̲ind</a> t</span>
+<span class="line" id="L374"><a class="ln" href="#L374">374</a>  <span class="c-string">&quot;sum&quot;</span> <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> k ? (<span class="c-string">&quot;&quot;</span>, <span class="c-string">&quot;&quot;</span>) <a href="work-libs-Equations-src-Equations.xtlm.html#h.t_exSum" class="c-libfunc">ʰt̲exSum</a> <span class="c-libfunc">ᵖᵃi̲nner</span> t</span>
+<span class="line" id="L375"><a class="ln" href="#L375">375</a>  <span class="c-string">&quot;group&quot;</span> <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> k ? <a href="work-libs-Equations-src-Equations.xtlm.html#h.t_exOf" class="c-libfunc">ʰt̲exOf</a> <span class="c-libfunc">ᵖᵃi̲nner</span> t</span>
+<span class="line" id="L376"><a class="ln" href="#L376">376</a>  <a href="work-libs-Equations-src-Equations.xtlm.html#h.t_exOf" class="c-libfunc">ʰt̲exOf</a> t</span>
+<span class="line" id="L377"><a class="ln" href="#L377">377</a>}</span>
+<span class="line" id="L378"><a class="ln" href="#L378">378</a></span>
+<span class="line" id="L379"><a class="ln" href="#L379">379</a><span class="c-doc">⍝│</span><span class="c-doc"> Two operands joined by an operator: \frac for /, a thin space for *.</span></span>
+<span class="line" id="L380"><a class="ln" href="#L380">380</a><span class="c-libfunc">ʰt̲exJoin</span> ← { (acc, op, next) →</span>
+<span class="line" id="L381"><a class="ln" href="#L381">381</a>  <span class="c-string">&quot;/&quot;</span> <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> op ? <span class="c-string">&quot;\\\\frac{&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> acc <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;}{&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> next <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;}&quot;</span></span>
+<span class="line" id="L382"><a class="ln" href="#L382">382</a>  <span class="c-string">&quot;*&quot;</span> <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> op ? acc <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; \\\\, &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> next</span>
+<span class="line" id="L383"><a class="ln" href="#L383">383</a>  acc <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> op <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> next</span>
+<span class="line" id="L384"><a class="ln" href="#L384">384</a>}</span>
+<span class="line" id="L385"><a class="ln" href="#L385">385</a></span>
+<span class="line" id="L386"><a class="ln" href="#L386">386</a><span class="c-libfunc">ʰt̲exPow</span> ← { t →</span>
+<span class="line" id="L387"><a class="ln" href="#L387">387</a>  i ← <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> <a href="builtins.html#w_here" class="c-builtin">w̲here</a> <span class="c-string">&quot;^&quot;</span> <span class="c-libfunc">ᵖᵃt̲op</span> t</span>
+<span class="line" id="L388"><a class="ln" href="#L388">388</a>  (<a href="work-libs-Equations-src-Equations.xtlm.html#h.t_exOf" class="c-libfunc">ʰt̲exOf</a> (i <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span>) <a href="builtins.html#t_ake" class="c-builtin">t̲ake</a> t) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;^{&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="work-libs-Equations-src-Equations.xtlm.html#h.t_exOf" class="c-libfunc">ʰt̲exOf</a> i <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> t) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;}&quot;</span></span>
+<span class="line" id="L389"><a class="ln" href="#L389">389</a>}</span>
+<span class="line" id="L390"><a class="ln" href="#L390">390</a></span>
+<span class="line" id="L391"><a class="ln" href="#L391">391</a><span class="c-doc">⍝│</span><span class="c-doc"> A sum's bindings as \sum_{i=low}^{high} (the operator word's symbol),</span></span>
+<span class="line" id="L392"><a class="ln" href="#L392">392</a><span class="c-doc">⍝│</span><span class="c-doc"> then its body, wrapped as asked.</span></span>
+<span class="line" id="L393"><a class="ln" href="#L393">393</a><span class="c-libfunc">ʰt̲exSum</span> ← { (open, close) inner →</span>
+<span class="line" id="L394"><a class="ln" href="#L394">394</a>  (ws, ns, ls, hs, body) ← <a href="work-libs-Equations-src-Equations.xtlm.html#h.s_umParts" class="c-libfunc">ʰs̲umParts</a> <span class="c-string">&quot;(&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> inner <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;)&quot;</span></span>
+<span class="line" id="L395"><a class="ln" href="#L395">395</a>  <span class="c-builtin">o̲ne</span> ← { k → (<a href="work-libs-Equations-src-Equations.xtlm.html#h.s_ymbol" class="c-libfunc">ʰs̲ymbol</a> <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> k <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> ws) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;_{&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> k <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> ns) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;=&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="work-libs-Equations-src-Equations.xtlm.html#h.t_exOf" class="c-libfunc">ʰt̲exOf</a> <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> k <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> ls) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;}^{&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="work-libs-Equations-src-Equations.xtlm.html#h.t_exOf" class="c-libfunc">ʰt̲exOf</a> <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> k <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> hs) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;} &quot;</span> }</span>
+<span class="line" id="L396"><a class="ln" href="#L396">396</a>  open <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot;&quot;</span> <a href="work-libs-Strings-src-Strings.xtl.html#l.j_oin" class="c-libfunc">ᵗj̲oin</a> <span class="c-builtin">'</span><span class="c-builtin">o̲ne</span> <a href="builtins.html#m_ap" class="c-builtin">m̲ap</a> <a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> ns) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="work-libs-Equations-src-Equations.xtlm.html#h.t_exOf" class="c-libfunc">ʰt̲exOf</a> body) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> close</span>
+<span class="line" id="L397"><a class="ln" href="#L397">397</a>}</span>
+<span class="line" id="L398"><a class="ln" href="#L398">398</a></span>
+<span class="line" id="L399"><a class="ln" href="#L399">399</a><span class="c-doc">⍝│</span><span class="c-doc"> The symbol of an operator word.</span></span>
+<span class="line" id="L400"><a class="ln" href="#L400">400</a><span class="c-libfunc">ʰs̲ymbol</span> ← { w →</span>
+<span class="line" id="L401"><a class="ln" href="#L401">401</a>  <span class="c-string">&quot;sum&quot;</span> <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> w ? <span class="c-string">&quot;\\\\sum&quot;</span></span>
+<span class="line" id="L402"><a class="ln" href="#L402">402</a>  <span class="c-string">&quot;prod&quot;</span> <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> w ? <span class="c-string">&quot;\\\\prod&quot;</span></span>
+<span class="line" id="L403"><a class="ln" href="#L403">403</a>  <span class="c-string">&quot;max&quot;</span> <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> w ? <span class="c-string">&quot;\\\\max&quot;</span></span>
+<span class="line" id="L404"><a class="ln" href="#L404">404</a>  <span class="c-string">&quot;\\\\min&quot;</span></span>
+<span class="line" id="L405"><a class="ln" href="#L405">405</a>}</span>
+<span class="line" id="L406"><a class="ln" href="#L406">406</a></span>
+<span class="line" id="L407"><a class="ln" href="#L407">407</a><span class="c-doc">⍝│</span><span class="c-doc"> A function applied: \exp(x), \log(x), \sqrt{x}, \lvert x \rvert, \max(a, b).</span></span>
+<span class="line" id="L408"><a class="ln" href="#L408">408</a><span class="c-libfunc">ʰt̲exFn</span> ← { t →</span>
+<span class="line" id="L409"><a class="ln" href="#L409">409</a>  (name, args) ← <a href="work-libs-Equations-src-Equations.xtlm.html#h.f_nParts" class="c-libfunc">ʰf̲nParts</a> t</span>
+<span class="line" id="L410"><a class="ln" href="#L410">410</a>  as ← <span class="c-quote">'</span>{ a → <a href="work-libs-Equations-src-Equations.xtlm.html#h.t_exOf" class="c-libfunc">ʰt̲exOf</a> <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> a } <a href="builtins.html#m_ap" class="c-builtin">m̲ap</a> args</span>
+<span class="line" id="L411"><a class="ln" href="#L411">411</a>  a ← <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> as</span>
+<span class="line" id="L412"><a class="ln" href="#L412">412</a>  <span class="c-string">&quot;sqrt&quot;</span> <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> name ? <span class="c-string">&quot;\\\\sqrt{&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="work-libs-Equations-src-Equations.xtlm.html#h.t_exBare" class="c-libfunc">ʰt̲exBare</a> <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> args) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;}&quot;</span></span>
+<span class="line" id="L413"><a class="ln" href="#L413">413</a>  <span class="c-string">&quot;abs&quot;</span> <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> name ? <span class="c-string">&quot;\\\\lvert &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> a <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; \\\\rvert&quot;</span></span>
+<span class="line" id="L414"><a class="ln" href="#L414">414</a>  <span class="c-string">&quot;\\\\&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> name <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;(&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot;, &quot;</span> <a href="work-libs-Strings-src-Strings.xtl.html#l.j_oin" class="c-libfunc">ᵗj̲oin</a> as) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;)&quot;</span></span>
+<span class="line" id="L415"><a class="ln" href="#L415">415</a>}</span>
+<span class="line" id="L416"><a class="ln" href="#L416">416</a></span>
+<span class="line" id="L417"><a class="ln" href="#L417">417</a><span class="c-doc">⍝│</span><span class="c-doc"> A reference as a subscript: A_{i,j}, the indices as written without</span></span>
+<span class="line" id="L418"><a class="ln" href="#L418">418</a><span class="c-doc">⍝│</span><span class="c-doc"> spaces, a product among them as a thin space.</span></span>
+<span class="line" id="L419"><a class="ln" href="#L419">419</a><span class="c-libfunc">ʰt̲exRef</span> ← { t →</span>
+<span class="line" id="L420"><a class="ln" href="#L420">420</a>  (name, ix) ← <span class="c-string">&quot;bad-equation right&quot;</span> <span class="c-libfunc">ᵖᵃr̲eference</span> t</span>
+<span class="line" id="L421"><a class="ln" href="#L421">421</a>  name <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;_{&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot;,&quot;</span> <a href="work-libs-Strings-src-Strings.xtl.html#l.j_oin" class="c-libfunc">ᵗj̲oin</a> <span class="c-quote">'</span>{ i → <a href="work-libs-Equations-src-Equations.xtlm.html#h.s_ubscript" class="c-libfunc">ʰs̲ubscript</a> <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> i } <a href="builtins.html#m_ap" class="c-builtin">m̲ap</a> ix) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;}&quot;</span></span>
+<span class="line" id="L422"><a class="ln" href="#L422">422</a>}</span>
+<span class="line" id="L423"><a class="ln" href="#L423">423</a></span>
+<span class="line" id="L424"><a class="ln" href="#L424">424</a><span class="c-libfunc">ʰs̲ubscript</span> ← { t → <span class="c-string">&quot;&quot;</span> <a href="work-libs-Strings-src-Strings.xtl.html#l.j_oin" class="c-libfunc">ᵗj̲oin</a> <span class="c-quote">'</span>{ ch → (ch <a href="builtins.html#m_ember-3f" class="c-builtin">m̲ember?</a> <span class="c-string">&quot;*&quot;</span>) ? <span class="c-string">&quot;\\\\,&quot;</span>◆ (ch <a href="builtins.html#m_ember-3f" class="c-builtin">m̲ember?</a> <span class="c-string">&quot; &quot;</span>) ? <span class="c-string">&quot;&quot;</span>◆ ch } <a href="builtins.html#m_ap" class="c-builtin">m̲ap</a> t }</span>
+<span class="line" id="L425"><a class="ln" href="#L425">425</a></span>
+<span class="line" id="L426"><a class="ln" href="#L426">426</a><span class="c-heading">⍝━━</span><span class="c-heading"> The reading written back</span></span>
+<span class="line" id="L427"><a class="ln" href="#L427">427</a></span>
+<span class="line" id="L428"><a class="ln" href="#L428">428</a><span class="c-doc">⍝│</span><span class="c-doc"> A term as it was read, with no spaces: the same text it came from,</span></span>
+<span class="line" id="L429"><a class="ln" href="#L429">429</a><span class="c-doc">⍝│</span><span class="c-doc"> or a rule dropped something.</span></span>
+<span class="line" id="L430"><a class="ln" href="#L430">430</a><span class="c-libfunc">ʰp̲lain</span> ← { text →</span>
+<span class="line" id="L431"><a class="ln" href="#L431">431</a>  t ← <a href="work-libs-Strings-src-Strings.xtl.html#l.t_rim" class="c-libfunc">ᵗt̲rim</a> text</span>
+<span class="line" id="L432"><a class="ln" href="#L432">432</a>  k ← <a href="work-libs-Equations-src-Equations.xtlm.html#h.k_ind" class="c-libfunc">ʰk̲ind</a> t</span>
+<span class="line" id="L433"><a class="ln" href="#L433">433</a>  <span class="c-string">&quot;add&quot;</span> <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> k ? <span class="c-string">&quot;+-&quot;</span> <a href="work-libs-Equations-src-Equations.xtlm.html#h.p_lainChain" class="c-libfunc">ʰp̲lainChain</a> t</span>
+<span class="line" id="L434"><a class="ln" href="#L434">434</a>  <span class="c-string">&quot;mul&quot;</span> <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> k ? <span class="c-string">&quot;*/&quot;</span> <a href="work-libs-Equations-src-Equations.xtlm.html#h.p_lainChain" class="c-libfunc">ʰp̲lainChain</a> t</span>
+<span class="line" id="L435"><a class="ln" href="#L435">435</a>  <span class="c-string">&quot;pow&quot;</span> <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> k ? <a href="work-libs-Equations-src-Equations.xtlm.html#h.p_lainPow" class="c-libfunc">ʰp̲lainPow</a> t</span>
+<span class="line" id="L436"><a class="ln" href="#L436">436</a>  <span class="c-string">&quot;sum&quot;</span> <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> k ? <a href="work-libs-Equations-src-Equations.xtlm.html#h.p_lainSum" class="c-libfunc">ʰp̲lainSum</a> t</span>
+<span class="line" id="L437"><a class="ln" href="#L437">437</a>  <span class="c-string">&quot;group&quot;</span> <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> k ? <span class="c-string">&quot;(&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="work-libs-Equations-src-Equations.xtlm.html#h.p_lain" class="c-libfunc">ʰp̲lain</a> <span class="c-libfunc">ᵖᵃi̲nner</span> t) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;)&quot;</span></span>
+<span class="line" id="L438"><a class="ln" href="#L438">438</a>  <span class="c-string">&quot;fn&quot;</span> <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> k ? <a href="work-libs-Equations-src-Equations.xtlm.html#h.p_lainFn" class="c-libfunc">ʰp̲lainFn</a> t</span>
+<span class="line" id="L439"><a class="ln" href="#L439">439</a>  <span class="c-string">&quot;ref&quot;</span> <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> k ? <a href="work-libs-Equations-src-Equations.xtlm.html#h.p_lainRef" class="c-libfunc">ʰp̲lainRef</a> t</span>
+<span class="line" id="L440"><a class="ln" href="#L440">440</a>  <a href="work-libs-Equations-src-Equations.xtlm.html#h.a_tom" class="c-libfunc">ʰa̲tom</a> t</span>
+<span class="line" id="L441"><a class="ln" href="#L441">441</a>}</span>
+<span class="line" id="L442"><a class="ln" href="#L442">442</a></span>
+<span class="line" id="L443"><a class="ln" href="#L443">443</a><span class="c-libfunc">ʰp̲lainChain</span> ← { ops t →</span>
+<span class="line" id="L444"><a class="ln" href="#L444">444</a>  (parts, os, neg) ← (<span class="c-string">&quot;bad-equation right&quot;</span>, ops) <span class="c-libfunc">ᵖᵃp̲arts</span> t</span>
+<span class="line" id="L445"><a class="ln" href="#L445">445</a>  first ← <a href="work-libs-Equations-src-Equations.xtlm.html#h.p_lain" class="c-libfunc">ʰp̲lain</a> <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> parts</span>
+<span class="line" id="L446"><a class="ln" href="#L446">446</a>  acc ← neg <a href="work-libs-Equations-src-Equations.xtlm.html#h.p_ickText" class="c-libfunc">ʰp̲ickText</a> (<span class="c-string">&quot;-&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> first, first)</span>
+<span class="line" id="L447"><a class="ln" href="#L447">447</a>  <a href="work-libs-Equations-src-Equations.xtlm.html#h.p_lainFold" class="c-libfunc">ʰp̲lainFold</a> (acc, os, <span class="c-number">1</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> parts)</span>
+<span class="line" id="L448"><a class="ln" href="#L448">448</a>}</span>
+<span class="line" id="L449"><a class="ln" href="#L449">449</a></span>
+<span class="line" id="L450"><a class="ln" href="#L450">450</a><span class="c-libfunc">ʰp̲lainFold</span> ← { (acc, os, parts) →</span>
+<span class="line" id="L451"><a class="ln" href="#L451">451</a>  <span class="c-number">0</span> <a href="builtins.html#-3d" class="c-symbol">=</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> os ? acc</span>
+<span class="line" id="L452"><a class="ln" href="#L452">452</a>  <a href="work-libs-Equations-src-Equations.xtlm.html#h.p_lainFold" class="c-libfunc">ʰp̲lainFold</a> (acc <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-number">1</span> <a href="builtins.html#t_ake" class="c-builtin">t̲ake</a> os) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="work-libs-Equations-src-Equations.xtlm.html#h.p_lain" class="c-libfunc">ʰp̲lain</a> <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> parts), <span class="c-number">1</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> os, <span class="c-number">1</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> parts)</span>
+<span class="line" id="L453"><a class="ln" href="#L453">453</a>}</span>
+<span class="line" id="L454"><a class="ln" href="#L454">454</a></span>
+<span class="line" id="L455"><a class="ln" href="#L455">455</a><span class="c-libfunc">ʰp̲lainPow</span> ← { t →</span>
+<span class="line" id="L456"><a class="ln" href="#L456">456</a>  i ← <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> <a href="builtins.html#w_here" class="c-builtin">w̲here</a> <span class="c-string">&quot;^&quot;</span> <span class="c-libfunc">ᵖᵃt̲op</span> t</span>
+<span class="line" id="L457"><a class="ln" href="#L457">457</a>  (<a href="work-libs-Equations-src-Equations.xtlm.html#h.p_lain" class="c-libfunc">ʰp̲lain</a> (i <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span>) <a href="builtins.html#t_ake" class="c-builtin">t̲ake</a> t) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;^&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="work-libs-Equations-src-Equations.xtlm.html#h.p_lain" class="c-libfunc">ʰp̲lain</a> i <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> t</span>
+<span class="line" id="L458"><a class="ln" href="#L458">458</a>}</span>
+<span class="line" id="L459"><a class="ln" href="#L459">459</a></span>
+<span class="line" id="L460"><a class="ln" href="#L460">460</a><span class="c-libfunc">ʰp̲lainSum</span> ← { t →</span>
+<span class="line" id="L461"><a class="ln" href="#L461">461</a>  (ws, ns, ls, hs, body) ← <a href="work-libs-Equations-src-Equations.xtlm.html#h.s_umParts" class="c-libfunc">ʰs̲umParts</a> t</span>
+<span class="line" id="L462"><a class="ln" href="#L462">462</a>  <span class="c-builtin">o̲ne</span> ← { k → (<a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> k <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> ws) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> k <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> ns) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;:=&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="work-libs-Equations-src-Equations.xtlm.html#h.p_lain" class="c-libfunc">ʰp̲lain</a> <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> k <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> ls) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;..&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="work-libs-Equations-src-Equations.xtlm.html#h.p_lain" class="c-libfunc">ʰp̲lain</a> <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> k <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> hs) }</span>
+<span class="line" id="L463"><a class="ln" href="#L463">463</a>  <span class="c-string">&quot;(&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot;,&quot;</span> <a href="work-libs-Strings-src-Strings.xtl.html#l.j_oin" class="c-libfunc">ᵗj̲oin</a> <span class="c-builtin">'</span><span class="c-builtin">o̲ne</span> <a href="builtins.html#m_ap" class="c-builtin">m̲ap</a> <a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> ns) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;|&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="work-libs-Equations-src-Equations.xtlm.html#h.p_lain" class="c-libfunc">ʰp̲lain</a> body) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;)&quot;</span></span>
+<span class="line" id="L464"><a class="ln" href="#L464">464</a>}</span>
+<span class="line" id="L465"><a class="ln" href="#L465">465</a></span>
+<span class="line" id="L466"><a class="ln" href="#L466">466</a><span class="c-libfunc">ʰp̲lainFn</span> ← { t →</span>
+<span class="line" id="L467"><a class="ln" href="#L467">467</a>  (name, args) ← <a href="work-libs-Equations-src-Equations.xtlm.html#h.f_nParts" class="c-libfunc">ʰf̲nParts</a> t</span>
+<span class="line" id="L468"><a class="ln" href="#L468">468</a>  name <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;(&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot;,&quot;</span> <a href="work-libs-Strings-src-Strings.xtl.html#l.j_oin" class="c-libfunc">ᵗj̲oin</a> <span class="c-quote">'</span>{ a → <a href="work-libs-Equations-src-Equations.xtlm.html#h.p_lain" class="c-libfunc">ʰp̲lain</a> <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> a } <a href="builtins.html#m_ap" class="c-builtin">m̲ap</a> args) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;)&quot;</span></span>
+<span class="line" id="L469"><a class="ln" href="#L469">469</a>}</span>
+<span class="line" id="L470"><a class="ln" href="#L470">470</a></span>
+<span class="line" id="L471"><a class="ln" href="#L471">471</a><span class="c-libfunc">ʰp̲lainRef</span> ← { t →</span>
+<span class="line" id="L472"><a class="ln" href="#L472">472</a>  (name, ix) ← <span class="c-string">&quot;bad-equation right&quot;</span> <span class="c-libfunc">ᵖᵃr̲eference</span> t</span>
+<span class="line" id="L473"><a class="ln" href="#L473">473</a>  name <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;[&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot;,&quot;</span> <a href="work-libs-Strings-src-Strings.xtl.html#l.j_oin" class="c-libfunc">ᵗj̲oin</a> <span class="c-quote">'</span>{ i → <a href="work-libs-Equations-src-Equations.xtlm.html#h.p_lain" class="c-libfunc">ʰp̲lain</a> <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> i } <a href="builtins.html#m_ap" class="c-builtin">m̲ap</a> ix) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;]&quot;</span></span>
+<span class="line" id="L474"><a class="ln" href="#L474">474</a>}</span>
+<span class="line" id="L475"><a class="ln" href="#L475">475</a></span>
+<span class="line" id="L476"><a class="ln" href="#L476">476</a><span class="c-heading">⍝━━</span><span class="c-heading"> Text helpers</span></span>
+<span class="line" id="L477"><a class="ln" href="#L477">477</a></span>
+<span class="line" id="L478"><a class="ln" href="#L478">478</a><span class="c-doc">⍝│</span><span class="c-doc"> The boxed texts b joined by sep.</span></span>
+<span class="line" id="L479"><a class="ln" href="#L479">479</a><span class="c-libfunc">ʰj̲oinWith</span> ← { sep b → sep <a href="work-libs-Strings-src-Strings.xtl.html#l.j_oin" class="c-libfunc">ᵗj̲oin</a> b }</span>
+</div>
+</main>
+</body>
+</html>

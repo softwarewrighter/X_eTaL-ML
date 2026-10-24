@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Pipelines</title>
+  
+<script type="module">
+import init, * as bindings from '/X_eTaL-ML/pipelines/pipelines-web-e52e633e2fdc5d00.js';
+const wasm = await init({ module_or_path: '/X_eTaL-ML/pipelines/pipelines-web-e52e633e2fdc5d00_bg.wasm' });
+
+
+window.wasmBindings = bindings;
+
+
+dispatchEvent(new CustomEvent("TrunkApplicationStarted", {detail: {wasm}}));
+
+</script>
+  
+  <link rel="icon" href="/X_eTaL-ML/pipelines/favicon-a11bc0a2bcd81290.ico" integrity="sha384-xOjSLs9ZRBKy2hF6zlqNv+0U86E4BqZOJy7H7a4GXSVwDQMNie0D851/sRBSYI9a"/>
+  <link rel="stylesheet" href="/X_eTaL-ML/pipelines/microscope-b922efafa92831ab.css" integrity="sha384-k5TG4aWhdtCr6p3wmLkWvzyiViLB+xJaEbouiR8FtRp5BmZwPsvQBt8avUHFWSha"/>
+  <!-- KaTeX (shared/katex) draws the equation's LaTeX; where it has not
+       loaded, the LaTeX shows as text. -->
+  
+  <link rel="stylesheet" href="katex/katex.min.css" />
+  <script defer src="katex/katex.min.js"></script>
+  <script>
+    function drawTex() {
+      if (!window.katex) return;
+      document.querySelectorAll(".tex[data-tex]").forEach(function (el) {
+        if (el.dataset.drawn === el.dataset.tex) return;
+        try { katex.render(el.dataset.tex, el, { displayMode: true, throwOnError: false }); el.dataset.drawn = el.dataset.tex; } catch (e) {}
+      });
+    }
+    new MutationObserver(drawTex).observe(document.documentElement, { childList: true, subtree: true });
+    window.addEventListener("load", drawTex);
+  </script>
+<link rel="modulepreload" href="/X_eTaL-ML/pipelines/pipelines-web-e52e633e2fdc5d00.js" crossorigin="anonymous" integrity="sha384-mIa3WHJ3B9wcC6EJ5Ar6MWVn79YN9VztV4iWbhsOB37qnGZtxof/UKyuGFjSStqg"><link rel="preload" href="/X_eTaL-ML/pipelines/pipelines-web-e52e633e2fdc5d00_bg.wasm" crossorigin="anonymous" integrity="sha384-4Wr8V6Wz3oTQHrZO3B8Vnap/+GuisJU3PXjrnKlpUuk4hz33hb6LAr/OE8OtHZ2d" as="fetch" type="application/wasm"></head>
+<body></body>
+</html>

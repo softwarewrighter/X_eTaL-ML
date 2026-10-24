@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Embedding Explorer</title>
+  
+<script type="module">
+import init, * as bindings from '/X_eTaL-ML/embedding-explorer/embedding-explorer-web-52b45d21e433bd3b.js';
+const wasm = await init({ module_or_path: '/X_eTaL-ML/embedding-explorer/embedding-explorer-web-52b45d21e433bd3b_bg.wasm' });
+
+
+window.wasmBindings = bindings;
+
+
+dispatchEvent(new CustomEvent("TrunkApplicationStarted", {detail: {wasm}}));
+
+</script>
+  
+  <link rel="icon" href="/X_eTaL-ML/embedding-explorer/favicon-a11bc0a2bcd81290.ico" integrity="sha384-xOjSLs9ZRBKy2hF6zlqNv+0U86E4BqZOJy7H7a4GXSVwDQMNie0D851/sRBSYI9a"/>
+  <link rel="stylesheet" href="/X_eTaL-ML/embedding-explorer/microscope-b922efafa92831ab.css" integrity="sha384-k5TG4aWhdtCr6p3wmLkWvzyiViLB+xJaEbouiR8FtRp5BmZwPsvQBt8avUHFWSha"/>
+<link rel="modulepreload" href="/X_eTaL-ML/embedding-explorer/embedding-explorer-web-52b45d21e433bd3b.js" crossorigin="anonymous" integrity="sha384-AKVWUq5XF9OVzE3aKFloR5Pfx4Pc0CccbyPM6B4qBgwjK1ESpMMbQpt/1ezMp2Rp"><link rel="preload" href="/X_eTaL-ML/embedding-explorer/embedding-explorer-web-52b45d21e433bd3b_bg.wasm" crossorigin="anonymous" integrity="sha384-J2v6VUZRfqW6eBleKaXuNEcfXcOxsou6VEvXoWQo2Yh7a7APiQUmUjSP3W9QM/ky" as="fetch" type="application/wasm"></head>
+<body></body>
+</html>

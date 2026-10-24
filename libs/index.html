@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>X_eTaL ML libraries</title>
+  <link rel="icon" href="/X_eTaL-ML/libs/favicon-a11bc0a2bcd81290.ico" integrity="sha384-xOjSLs9ZRBKy2hF6zlqNv+0U86E4BqZOJy7H7a4GXSVwDQMNie0D851/sRBSYI9a"/>
+  
+<script type="module">
+import init, * as bindings from '/X_eTaL-ML/libs/xetal-ml-libraries-dcaf0b1382bf5998.js';
+const wasm = await init({ module_or_path: '/X_eTaL-ML/libs/xetal-ml-libraries-dcaf0b1382bf5998_bg.wasm' });
+
+
+window.wasmBindings = bindings;
+
+
+dispatchEvent(new CustomEvent("TrunkApplicationStarted", {detail: {wasm}}));
+
+</script>
+  
+    <link rel="stylesheet" href="/X_eTaL-ML/libs/style-ca840a70c4dd3198.css" integrity="sha384-MupKqdF+NHGFdQHVhdexcPgk1xstmAZawUH3N47x1+K/nhEP6oeXoPkqdDHBVzJw"/>
+<link rel="modulepreload" href="/X_eTaL-ML/libs/xetal-ml-libraries-dcaf0b1382bf5998.js" crossorigin="anonymous" integrity="sha384-LrVvzj58D2ucbMy6GoHHaL48FMypeaqrSJIaEFMX5y71pwKjsQh+dMlz7ai4thjt"><link rel="preload" href="/X_eTaL-ML/libs/xetal-ml-libraries-dcaf0b1382bf5998_bg.wasm" crossorigin="anonymous" integrity="sha384-iZW7jy1NDIcNLRHasFTxjRz1UEl7Sd1+P/A68vHDsZX0wR97AzMEwC4ks6UlU6nr" as="fetch" type="application/wasm"></head>
+<body></body>
+</html>
