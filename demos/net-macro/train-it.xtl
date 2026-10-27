@@ -7,6 +7,7 @@
 ## made in X_eTaL, and the weights start small and random.
 
 "nn:" u_se< "NN"
+"act:" u_se< "Activations"
 "net:" u_se< "Net"
 
 ### The spiral: 100 points on each of three arms

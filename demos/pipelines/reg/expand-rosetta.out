@@ -9,6 +9,7 @@
 "flow:" u_se< "Flow"
 "cv:" u_se< "Conv"
 "nn:" u_se< "NN"
+"act:" u_se< "Activations"
 "k:" u_se< "Check"
 
 ### Data
@@ -89,7 +90,7 @@ pipe := ({ @ ->
     ((s_hape Y) m_atch r_avel O c_at Ho c_at Wo) ? @
     "shape" []S_IGNAL "stage 5 (Y): shape " c_at (f_ormat s_hape Y) c_at ", expected " c_at f_ormat r_avel O c_at Ho c_at Wo
   } @
-  g12:stage := nn:r_elu Y
+  g12:stage := act:r_elu Y
   g12:stage
 } @)
 
@@ -97,7 +98,7 @@ pipe := ({ @ ->
 
 ## Conv's layer for a batch of one picture, as the repository's CNN
 ## demos use it.
-plain := nn:r_elu (O c_at Ho c_at Wo) r_eshape ((O c_at 9) r_eshape F, B) cv:c_onv 1 5 5 r_eshape P
+plain := act:r_elu (O c_at Ho c_at Wo) r_eshape ((O c_at 9) r_eshape F, B) cv:c_onv 1 5 5 r_eshape P
 
 ### The same
 

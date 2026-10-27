@@ -7,6 +7,7 @@
 ## (docs/gpu-asks.md); cnn-digits.xtl is the lesson, a picture at a time.
 
 "nn:" u_se< "NN"
+"act:" u_se< "Activations"
 "cv:" u_se< "Conv"
 
 ### The network, read from data/ (as cnn-digits.xtl reads it)
@@ -22,7 +23,7 @@ labels := f_loor n_umbers []N_GET "data/test-labels.txt"
 ## the filters over every window, ReLU, 2 x 2 pooling, the dense layer,
 ## the likeliest output. One function of arrays, the part a GPU takes.
 u:r_ead := { X ->
-  (nn:a_rgmax (((t_ally X) c_at 1352) r_eshape cv:p_ool nn:r_elu (9 t_ake_2 fb, r_avel -1 t_ake_2 fb) cv:c_onv X) nn:d_ense wb) - 1
+  (nn:a_rgmax (((t_ally X) c_at 1352) r_eshape cv:p_ool act:r_elu (9 t_ake_2 fb, r_avel -1 t_ake_2 fb) cv:c_onv X) nn:d_ense wb) - 1
 }
 # -- end of the core ------------------------------------------
 

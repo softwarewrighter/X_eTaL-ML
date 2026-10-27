@@ -73,7 +73,7 @@ pub fn tail(state: Option<&[f64]>, steps: usize, earlier: &[(f64, f64)]) -> Stri
          grid := o_\\ (2 c_at g * g) r_eshape (r_avel (o_ffsets g) 'r_ight t_able c) c_at r_avel (r_ev c) 'l_eft t_able o_ffsets g\n\
          (w1, w2, m1, m2, v1, v2, k) := s1\n\
          (r_avel w1) c_at (r_avel w2) c_at (r_avel m1) c_at (r_avel m2) c_at (r_avel v1) c_at (r_avel v2) c_at k\n\
-         now := (u:l_oss s1) c_at u:r_ight s1\nnow\nnn:a_rgmax nn:s_oftmax (nn:t_anh grid nn:d_ense w1) nn:d_ense w2\nr_avel X\n1 + arm\n{}",
+         now := (u:l_oss s1) c_at u:r_ight s1\nnow\nnn:a_rgmax nn:s_oftmax (act:t_anh grid nn:d_ense w1) nn:d_ense w2\nr_avel X\n1 + arm\n{}",
         line("u:l_oss"),
         line("u:r_ight"),
         curves(earlier)

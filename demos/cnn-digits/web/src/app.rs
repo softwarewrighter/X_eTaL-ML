@@ -30,7 +30,7 @@ fn num(x: f64) -> String {
 fn stage_chip(m: &UseReducerHandle<Model>, s: Stage) -> Html {
     let (name, src, dims, meaning): (&str, &str, Vec<usize>, &str) = match s {
         Stage::Digit => ("digit", "x", vec![28, 28], "the picture, 0 (dark) to 1 (ink)"),
-        Stage::Conv => ("convolution", "nn:r_elu u:c_onv x", vec![8, 26, 26], "8 filters over every 3 x 3 window, then ReLU"),
+        Stage::Conv => ("convolution", "act:r_elu u:c_onv x", vec![8, 26, 26], "8 filters over every 3 x 3 window, then ReLU"),
         Stage::Pool => ("pooling", "u:p_ool c", vec![8, 13, 13], "the largest of each 2 x 2 block"),
         Stage::Classify => ("classify", "u:c_lassify x", vec![10], "dense layer and softmax: a probability per digit"),
     };
@@ -136,7 +136,7 @@ fn conv(m: &UseReducerHandle<Model>, a: &Anatomy) -> Html {
         <p class="note">{"What each finds over the digit, after ReLU (click any cell to see how it was computed):"}</p>
         { row_of(8, 26, 26, &a.c, scaled, Some(m.sel), pick, "fmaps") }
     </> };
-    panel("2. Convolution and ReLU:", "c := nn:r_elu u:c_onv x",
+    panel("2. Convolution and ReLU:", "c := act:r_elu u:c_onv x",
         "The digit's nine shifted copies (every 3 x 3 window at once) times the 8 filters: one matrix product, then the biases, then ReLU keeps what is positive.",
         m.focus == Stage::Conv, body)
 }

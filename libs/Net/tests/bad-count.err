@@ -1,5 +1,5 @@
 error[bad-macro-argument]: name one weight array per dense layer: 2 for this spec, 1 given
- --> bad-count.xtl:6:46
+ --> bad-count.xtl:7:46
   |
-6 | u:f_wd := "2 2 relu 2 softmax" net:n_etwork< "w"
+7 | u:f_wd := "2 2 relu 2 softmax" net:n_etwork< "w"
   |                                              ^^^

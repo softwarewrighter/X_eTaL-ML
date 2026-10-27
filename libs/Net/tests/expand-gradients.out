@@ -1,7 +1,8 @@
 #!/usr/bin/env xetal
 # Net: the gradients g_radient< writes equal finite differences, for
-# networks of every activation, checked with Check.
+# networks of every activation word, checked with Check.
 "nn:" u_se< "NN"
+"act:" u_se< "Activations"
 "net:" u_se< "Net"
 "k:" u_se< "Check"
 X := 5 3 r_eshape 0.3 -0.7 1.1 0.0 2.0 -1.5 0.9 0.4
@@ -12,8 +13,8 @@ w3 := 5 3 r_eshape 0.2 -0.6 0.9 -0.1 0.4
 v1 := 4 3 r_eshape 0.8 -0.3 0.5 0.1 -0.9
 u:g_a := { (g1:W1, g2:W2, g3:W3) ->
   g4:A0 := X
-  g5:A1 := nn:r_elu g4:A0 nn:d_ense g1:W1
-  g6:A2 := nn:s_igmoid g5:A1 nn:d_ense g2:W2
+  g5:A1 := act:r_elu g4:A0 nn:d_ense g1:W1
+  g6:A2 := act:s_igmoid g5:A1 nn:d_ense g2:W2
   g7:A3 := nn:s_oftmax g6:A2 nn:d_ense g3:W3
   g10:D3 := (g7:A3 - Y) / f_loat t_ally X
   g9:D2 := (g10:D3 '+ '* i_nner o_\ -1 d_rop g3:W3) * g6:A2 * 1.0 - g6:A2
@@ -25,7 +26,7 @@ u:g_a := { (g1:W1, g2:W2, g3:W3) ->
 }
 u:g_b := { (g14:W1, g15:W2, g16:W3) ->
   g17:A0 := X
-  g18:A1 := nn:t_anh g17:A0 nn:d_ense g14:W1
+  g18:A1 := act:t_anh g17:A0 nn:d_ense g14:W1
   g19:A2 := g18:A1 nn:d_ense g15:W2
   g20:A3 := nn:s_oftmax g19:A2 nn:d_ense g16:W3
   g23:D3 := (g20:A3 - Y) / f_loat t_ally X
@@ -43,10 +44,54 @@ u:g_c := { g27:W1 ->
   g31:G1 := (o_\ g28:A0 c_at_2 ((t_ally g28:A0) c_at 1) r_eshape 1.0) '+ '* i_nner g30:D1
   g31:G1
 }
+# The smooth ones: their slopes are Activations' derivatives of the
+# dense layer before them.
+u:g_d := { (g32:W1, g33:W2, g34:W3) ->
+  g35:A0 := X
+  g36:A1 := act:g_elu g35:A0 nn:d_ense g32:W1
+  g37:A2 := act:m_ish g36:A1 nn:d_ense g33:W2
+  g38:A3 := nn:s_oftmax g37:A2 nn:d_ense g34:W3
+  g41:D3 := (g38:A3 - Y) / f_loat t_ally X
+  g40:D2 := (g41:D3 '+ '* i_nner o_\ -1 d_rop g34:W3) * act:d_mish g36:A1 nn:d_ense g33:W2
+  g39:D1 := (g40:D2 '+ '* i_nner o_\ -1 d_rop g33:W2) * act:d_gelu g35:A0 nn:d_ense g32:W1
+  g42:G1 := (o_\ g35:A0 c_at_2 ((t_ally g35:A0) c_at 1) r_eshape 1.0) '+ '* i_nner g39:D1
+  g43:G2 := (o_\ g36:A1 c_at_2 ((t_ally g36:A1) c_at 1) r_eshape 1.0) '+ '* i_nner g40:D2
+  g44:G3 := (o_\ g37:A2 c_at_2 ((t_ally g37:A2) c_at 1) r_eshape 1.0) '+ '* i_nner g41:D3
+  (g42:G1, g43:G2, g44:G3)
+}
+u:g_e := { (g45:W1, g46:W2, g47:W3) ->
+  g48:A0 := X
+  g49:A1 := act:s_ilu g48:A0 nn:d_ense g45:W1
+  g50:A2 := act:s_oftplus g49:A1 nn:d_ense g46:W2
+  g51:A3 := nn:s_oftmax g50:A2 nn:d_ense g47:W3
+  g54:D3 := (g51:A3 - Y) / f_loat t_ally X
+  g53:D2 := (g54:D3 '+ '* i_nner o_\ -1 d_rop g47:W3) * act:d_softplus g49:A1 nn:d_ense g46:W2
+  g52:D1 := (g53:D2 '+ '* i_nner o_\ -1 d_rop g46:W2) * act:d_silu g48:A0 nn:d_ense g45:W1
+  g55:G1 := (o_\ g48:A0 c_at_2 ((t_ally g48:A0) c_at 1) r_eshape 1.0) '+ '* i_nner g52:D1
+  g56:G2 := (o_\ g49:A1 c_at_2 ((t_ally g49:A1) c_at 1) r_eshape 1.0) '+ '* i_nner g53:D2
+  g57:G3 := (o_\ g50:A2 c_at_2 ((t_ally g50:A2) c_at 1) r_eshape 1.0) '+ '* i_nner g54:D3
+  (g55:G1, g56:G2, g57:G3)
+}
+u:g_f := { (g58:W1, g59:W2, g60:W3) ->
+  g61:A0 := X
+  g62:A1 := act:s_elu g61:A0 nn:d_ense g58:W1
+  g63:A2 := act:h_ardSwish g62:A1 nn:d_ense g59:W2
+  g64:A3 := nn:s_oftmax g63:A2 nn:d_ense g60:W3
+  g67:D3 := (g64:A3 - Y) / f_loat t_ally X
+  g66:D2 := (g67:D3 '+ '* i_nner o_\ -1 d_rop g60:W3) * act:d_hardSwish g62:A1 nn:d_ense g59:W2
+  g65:D1 := (g66:D2 '+ '* i_nner o_\ -1 d_rop g59:W2) * act:d_selu g61:A0 nn:d_ense g58:W1
+  g68:G1 := (o_\ g61:A0 c_at_2 ((t_ally g61:A0) c_at 1) r_eshape 1.0) '+ '* i_nner g65:D1
+  g69:G2 := (o_\ g62:A1 c_at_2 ((t_ally g62:A1) c_at 1) r_eshape 1.0) '+ '* i_nner g66:D2
+  g70:G3 := (o_\ g63:A2 c_at_2 ((t_ally g63:A2) c_at 1) r_eshape 1.0) '+ '* i_nner g67:D3
+  (g68:G1, g69:G2, g70:G3)
+}
 # The loss of weights w (a tuple) for each network.
-u:l_a := { (a, b, c) -> Y nn:c_rossEntropy nn:s_oftmax (nn:s_igmoid (nn:r_elu X nn:d_ense a) nn:d_ense b) nn:d_ense c }
-u:l_b := { (a, b, c) -> Y nn:c_rossEntropy nn:s_oftmax ((nn:t_anh X nn:d_ense a) nn:d_ense b) nn:d_ense c }
+u:l_a := { (a, b, c) -> Y nn:c_rossEntropy nn:s_oftmax (act:s_igmoid (act:r_elu X nn:d_ense a) nn:d_ense b) nn:d_ense c }
+u:l_b := { (a, b, c) -> Y nn:c_rossEntropy nn:s_oftmax ((act:t_anh X nn:d_ense a) nn:d_ense b) nn:d_ense c }
 u:l_c := { a -> Y nn:c_rossEntropy nn:s_oftmax X nn:d_ense a }
+u:l_d := { (a, b, c) -> Y nn:c_rossEntropy nn:s_oftmax (act:m_ish (act:g_elu X nn:d_ense a) nn:d_ense b) nn:d_ense c }
+u:l_e := { (a, b, c) -> Y nn:c_rossEntropy nn:s_oftmax (act:s_oftplus (act:s_ilu X nn:d_ense a) nn:d_ense b) nn:d_ense c }
+u:l_f := { (a, b, c) -> Y nn:c_rossEntropy nn:s_oftmax (act:h_ardSwish (act:s_elu X nn:d_ense a) nn:d_ense b) nn:d_ense c }
 # e at item i of an array shaped as w, 0 elsewhere.
 e := 0.00001
 u:b_ump := { w i -> e * f_loat (s_hape w) r_eshape i = r_ange t_ally r_avel w }
@@ -60,11 +105,26 @@ FA3 := (s_hape w3) r_eshape '{ i -> ((u:l_a (w1, w2, w3 + w3 u:b_ump i)) - u:l_a
 FB1 := (s_hape w1) r_eshape '{ i -> ((u:l_b (w1 + w1 u:b_ump i, w2, w3)) - u:l_b (w1 - w1 u:b_ump i, w2, w3)) / 2.0 * e } e_ach r_ange t_ally r_avel w1
 FB2 := (s_hape w2) r_eshape '{ i -> ((u:l_b (w1, w2 + w2 u:b_ump i, w3)) - u:l_b (w1, w2 - w2 u:b_ump i, w3)) / 2.0 * e } e_ach r_ange t_ally r_avel w2
 FB3 := (s_hape w3) r_eshape '{ i -> ((u:l_b (w1, w2, w3 + w3 u:b_ump i)) - u:l_b (w1, w2, w3 - w3 u:b_ump i)) / 2.0 * e } e_ach r_ange t_ally r_avel w3
+(D1, D2, D3) := u:g_d (w1, w2, w3)
+FD1 := (s_hape w1) r_eshape '{ i -> ((u:l_d (w1 + w1 u:b_ump i, w2, w3)) - u:l_d (w1 - w1 u:b_ump i, w2, w3)) / 2.0 * e } e_ach r_ange t_ally r_avel w1
+FD2 := (s_hape w2) r_eshape '{ i -> ((u:l_d (w1, w2 + w2 u:b_ump i, w3)) - u:l_d (w1, w2 - w2 u:b_ump i, w3)) / 2.0 * e } e_ach r_ange t_ally r_avel w2
+FD3 := (s_hape w3) r_eshape '{ i -> ((u:l_d (w1, w2, w3 + w3 u:b_ump i)) - u:l_d (w1, w2, w3 - w3 u:b_ump i)) / 2.0 * e } e_ach r_ange t_ally r_avel w3
+(E1, E2, E3) := u:g_e (w1, w2, w3)
+FE1 := (s_hape w1) r_eshape '{ i -> ((u:l_e (w1 + w1 u:b_ump i, w2, w3)) - u:l_e (w1 - w1 u:b_ump i, w2, w3)) / 2.0 * e } e_ach r_ange t_ally r_avel w1
+FE2 := (s_hape w2) r_eshape '{ i -> ((u:l_e (w1, w2 + w2 u:b_ump i, w3)) - u:l_e (w1, w2 - w2 u:b_ump i, w3)) / 2.0 * e } e_ach r_ange t_ally r_avel w2
+FE3 := (s_hape w3) r_eshape '{ i -> ((u:l_e (w1, w2, w3 + w3 u:b_ump i)) - u:l_e (w1, w2, w3 - w3 u:b_ump i)) / 2.0 * e } e_ach r_ange t_ally r_avel w3
+(F1, F2, F3) := u:g_f (w1, w2, w3)
+FF1 := (s_hape w1) r_eshape '{ i -> ((u:l_f (w1 + w1 u:b_ump i, w2, w3)) - u:l_f (w1 - w1 u:b_ump i, w2, w3)) / 2.0 * e } e_ach r_ange t_ally r_avel w1
+FF2 := (s_hape w2) r_eshape '{ i -> ((u:l_f (w1, w2 + w2 u:b_ump i, w3)) - u:l_f (w1, w2 - w2 u:b_ump i, w3)) / 2.0 * e } e_ach r_ange t_ally r_avel w2
+FF3 := (s_hape w3) r_eshape '{ i -> ((u:l_f (w1, w2, w3 + w3 u:b_ump i)) - u:l_f (w1, w2, w3 - w3 u:b_ump i)) / 2.0 * e } e_ach r_ange t_ally r_avel w3
 C1 := u:g_c v1
 FC1 := (s_hape v1) r_eshape '{ i -> ((u:l_c v1 + v1 u:b_ump i) - u:l_c v1 - v1 u:b_ump i) / 2.0 * e } e_ach r_ange t_ally r_avel v1
 c1 := "relu, sigmoid, softmax" k:t_est k:t_rue 0.0000001 > (A1 u:g_ap FA1) m_ax (A2 u:g_ap FA2) m_ax A3 u:g_ap FA3
 c2 := "tanh, none, softmax" k:t_est k:t_rue 0.0000001 > (B1 u:g_ap FB1) m_ax (B2 u:g_ap FB2) m_ax B3 u:g_ap FB3
 c3 := "one layer, softmax: one array in, one out" k:t_est k:t_rue 0.0000001 > C1 u:g_ap FC1
 c4 := "each gradient has its weights' shape" k:t_est ((s_hape w1) c_at (s_hape w2) c_at s_hape w3) k:i_s (s_hape A1) c_at (s_hape A2) c_at s_hape A3
-k:r_eport c1 k:a_nd c2 k:a_nd c3 k:a_nd c4
+c5 := "gelu, mish, softmax" k:t_est k:t_rue 0.0000001 > (D1 u:g_ap FD1) m_ax (D2 u:g_ap FD2) m_ax D3 u:g_ap FD3
+c6 := "silu, softplus, softmax" k:t_est k:t_rue 0.0000001 > (E1 u:g_ap FE1) m_ax (E2 u:g_ap FE2) m_ax E3 u:g_ap FE3
+c7 := "selu, hardSwish, softmax" k:t_est k:t_rue 0.0000001 > (F1 u:g_ap FF1) m_ax (F2 u:g_ap FF2) m_ax F3 u:g_ap FF3
+k:r_eport c1 k:a_nd c2 k:a_nd c3 k:a_nd c4 k:a_nd c5 k:a_nd c6 k:a_nd c7
 

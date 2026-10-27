@@ -1,7 +1,3 @@
-l:r_elu : Float -> Float
-l:l_eaky : Float -> Float -> Float
-l:s_igmoid : Num a => a -> Float
-l:t_anh : Float -> Float
 l:s_oftmax : Num a => a -> Float
 l:l_ogSoftmax : Float -> Float
 l:d_ense : Num a => a -> a -> a

@@ -1,3 +1,4 @@
+bench/activations.xtl	200
 bench/conv.xtl	100
 bench/dense.xtl	145
 bench/inner-wide.xtl	87

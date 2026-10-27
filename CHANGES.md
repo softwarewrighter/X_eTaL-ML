@@ -11,6 +11,10 @@ planning and reordering, `release` milestone release, `chore`
 agentrail bookkeeping (step complete, saga archive), `vendor` a
 refresh of the vendored X_eTaL.
 
+## 2026-10-27
+
+- `refactor` NN's activations moved to Activations (step activations-move): `nn:r_elu`, `nn:l_eaky`, `nn:s_igmoid`, `nn:t_anh` are `act:` now, NN keeps softmax, log-softmax, the dense layer, the bias, argmax, one-hot and the losses; every program, page, README, the palette and the tests moved, the import beside NN's; Net's spec takes softplus, silu, gelu, mish, selu, hardSigmoid and hardSwish too (`"2 16 gelu 3 softmax"`), its training slopes for those Activations' derivatives of the layer's input, checked against finite differences; Net's programs import Activations as `act:`. Every run's output unchanged; the expansion and error goldens re-blessed after review (names, line numbers, the wider word list); `bench/activations.xtl`
+
 ## 2026-10-23
 
 - `lib` Activations (`act:`), a new library (step activations-lib): fifteen activations item by item (ReLU, leaky, PReLU with a slope per column, ELU, SELU, sigmoid, tanh, the stable softplus, SiLU, Swish, GELU in the tanh form and exact through a private erf, Mish, hard sigmoid, hard swish), the gated layers `(W, V) act:s_wiglu x` (GLU, ReGLU, GEGLU, SwiGLU: the activation on x W times x V), and a derivative for each activation in terms of its input (X_eTaL has no automatic differentiation); 20 doc examples, 37 checks (the relations between the functions, the bounds and extremes, where the smooth ones dip, the two GELUs against each other and the exact one against the Integrals demo's quadrature, SELU's fixed point on 4,000 Box-Muller normals, the gates written out, every derivative against central differences), pinned types, a curves demo; the page compares shape, cost, slope range and use; the site's Networks group, README's table. tanh and erf built from e_xp until X_eTaL's M19 or the libraries' Trig and Special land (both planned there the same day)

@@ -6,6 +6,7 @@
 ## xetal expand shows what it wrote.
 
 "nn:" u_se< "NN"
+"act:" u_se< "Activations"
 "net:" u_se< "Net"
 
 ### The data, read from data/ (just net-train)

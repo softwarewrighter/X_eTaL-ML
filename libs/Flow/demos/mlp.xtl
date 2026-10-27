@@ -4,6 +4,7 @@
 # "just demo Flow"; "just expand-lib Flow mlp" shows what each
 # call became.
 "nn:" u_se< "NN"
+"act:" u_se< "Activations"
 "flow:" u_se< "Flow"
 # Four points of XOR, a 2-3-2 network set by hand: a dense layer's
 # weights carry the bias as their last row (NN). The hidden units are
@@ -14,17 +15,17 @@ X := 4 2 r_eshape 0.0 0.0 0.0 1.0 1.0 0.0 1.0 1.0
 W1 := 3 3 r_eshape 1.0 1.0 0.0 1.0 1.0 0.0 -0.5 -1.5 0.0
 W2 := 4 2 r_eshape -8.0 8.0 24.0 -24.0 0.0 0.0 2.0 -2.0
 # The network as a pipeline: the data first, then each layer in turn.
-# A function stage (nn:r_elu, nn:s_oftmax) is applied to the previous
+# A function stage (act:r_elu, nn:s_oftmax) is applied to the previous
 # value; a stage naming it (it nn:d_ense W1) says where it goes.
 Y := @ flow:p_ipe< c"
    X
 |> it nn:d_ense W1
-|> nn:r_elu
+|> act:r_elu
 |> it nn:d_ense W2
 |> nn:s_oftmax"
 Y
 # The same by hand, right to left.
-nn:s_oftmax (nn:r_elu X nn:d_ense W1) nn:d_ense W2
+nn:s_oftmax (act:r_elu X nn:d_ense W1) nn:d_ense W2
 # Which class each point gets: 1 for (0, 0) and (1, 1), 2 for the
 # other two: XOR.
 nn:a_rgmax Y
@@ -34,5 +35,5 @@ z := f_loat 1 2 3
 @ flow:p_ipe< c"z |> 'm_ax r_/ it $m |> e_xp z - m $e |> e / '+ r_/ e"
 nn:s_oftmax z
 # A shape contract: the hidden layer's output is 4 by 3, said and checked.
-H := @ flow:p_ipe< c"X |> nn:r_elu it nn:d_ense W1 $h [4 3] |> h"
+H := @ flow:p_ipe< c"X |> act:r_elu it nn:d_ense W1 $h [4 3] |> h"
 s_hape H

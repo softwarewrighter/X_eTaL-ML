@@ -1,0 +1,6 @@
+# Activations: each of the fifteen on 65,536 Floats, their sums
+# printed (a regression guard for the library; the per-function cost
+# is measured on the activations page).
+"act:" u_se< "Activations"
+x := 256 256 r_eshape -4.0 + 0.000122 * f_loat o_ffsets 65536
+'+ r_/ r_avel (act:r_elu x) + (0.1 act:l_eaky x) + (1.0 act:e_lu x) + (act:s_elu x) + (act:s_igmoid x) + (act:t_anh x) + (act:s_oftplus x) + (act:s_ilu x) + (1.5 act:s_wish x) + (act:g_elu x) + (act:g_eluErf x) + (act:m_ish x) + (act:h_ardSigmoid x) + (act:h_ardSwish x) + 0.2 act:p_relu x

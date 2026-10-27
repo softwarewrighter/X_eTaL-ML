@@ -9,6 +9,7 @@
 "flow:" u_se< "Flow"
 "cv:" u_se< "Conv"
 "nn:" u_se< "NN"
+"act:" u_se< "Activations"
 "k:" u_se< "Check"
 
 ### Data
@@ -42,13 +43,13 @@ pipe := @ flow:p_ipe< c"
 |> ((O c_at 9) r_eshape F) '+ '* i_nner it
 |> (1, B) nn:a_ddAxis it
 |> (O c_at Ho c_at Wo) r_eshape it $Y [O Ho Wo]
-|> nn:r_elu Y"
+|> act:r_elu Y"
 
 ### Plain X_eTaL
 
 ## Conv's layer for a batch of one picture, as the repository's CNN
 ## demos use it.
-plain := nn:r_elu (O c_at Ho c_at Wo) r_eshape ((O c_at 9) r_eshape F, B) cv:c_onv 1 5 5 r_eshape P
+plain := act:r_elu (O c_at Ho c_at Wo) r_eshape ((O c_at 9) r_eshape F, B) cv:c_onv 1 5 5 r_eshape P
 
 ### The same
 

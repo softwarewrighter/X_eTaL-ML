@@ -32,7 +32,7 @@ Equation	tau	tau
 Equation	theta	theta
 Equation	phi	phi
 # Pipelines: Flow's notation (flow:p_ipe<): the data, then stages after |>.
-Pipeline	flow:p_ipe< call	@ flow:p_ipe< c"X |> nn:r_elu"
+Pipeline	flow:p_ipe< call	@ flow:p_ipe< c"X |> act:r_elu"
 Pipeline	|> stage	\n|>
 Pipeline	it	it
 Pipeline	$name	 $y
@@ -43,12 +43,17 @@ Pipeline	'm_ax r_/	'm_ax r_/
 Pipeline	[n_eg r_ev]	[n_eg r_ev]
 Pipeline	'{ v -> }	'{ v -> v * 2.0 }	8
 Pipeline	it '+ '* i_nner W	it '+ '* i_nner W
-Pipeline	flow:t_ext< written back	@ flow:t_ext< c"X |> nn:r_elu"
+Pipeline	flow:t_ext< written back	@ flow:t_ext< c"X |> act:r_elu"
 # Stages: this repository's libraries, each as a stage over it.
 Stages	nn:d_ense	it nn:d_ense wb
-Stages	nn:r_elu	nn:r_elu
-Stages	nn:s_igmoid	nn:s_igmoid
-Stages	nn:t_anh	nn:t_anh
+Stages	act:r_elu	act:r_elu
+Stages	act:s_igmoid	act:s_igmoid
+Stages	act:t_anh	act:t_anh
+Stages	act:g_elu	act:g_elu
+Stages	act:s_ilu	act:s_ilu
+Stages	act:m_ish	act:m_ish
+Stages	act:l_eaky	0.1 act:l_eaky it
+Stages	act:s_wiglu	(W, V) act:s_wiglu it
 Stages	nn:s_oftmax	nn:s_oftmax
 Stages	nn:b_ias	b nn:b_ias it
 Stages	nn:a_ddAxis	(2, b) nn:a_ddAxis it
@@ -64,6 +69,7 @@ Stages	at:w_eights	M at:w_eights it
 Imports	Equations	"e:" u_se< "Equations"\n
 Imports	Flow	"flow:" u_se< "Flow"\n
 Imports	NN	"nn:" u_se< "NN"\n
+Imports	Activations	"act:" u_se< "Activations"\n
 Imports	Norm	"nm:" u_se< "Norm"\n
 Imports	Conv	"cv:" u_se< "Conv"\n
 Imports	Attention	"at:" u_se< "Attention"\n

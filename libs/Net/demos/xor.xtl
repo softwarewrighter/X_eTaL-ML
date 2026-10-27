@@ -5,6 +5,7 @@
 ## Run with "just demo-lib Net xor"; see it with "just expand-lib Net xor".
 
 "nn:" u_se< "NN"
+"act:" u_se< "Activations"
 "net:" u_se< "Net"
 ## The four points and their classes (1: same, 2: differ).
 x := 4 2 r_eshape 0.0 0.0 0.0 1.0 1.0 0.0 1.0 1.0

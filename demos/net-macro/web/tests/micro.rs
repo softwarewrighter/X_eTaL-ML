@@ -64,7 +64,7 @@ fn the_macro_wrote_the_function_and_counted_the_parameters() {
     assert!(deep.expansion.contains("c2 := { v ->\n  272 = t_ally v ? 17 16 r_eshape v\n  []P_ANIC"), "{}", deep.expansion);
     assert!(deep.expansion.ends_with("nn:d_ense c3\n}"), "{}", deep.expansion);
     assert_eq!(deep.expansion.matches("nn:d_ense").count(), 3);
-    assert_eq!(deep.expansion.matches("nn:r_elu").count(), 2);
+    assert_eq!(deep.expansion.matches("act:r_elu").count(), 2);
     assert!(deep.expansion.contains("nn:s_oftmax") && deep.expansion.contains("nn:d_ense c3"));
     assert!(run(&n[0]).unwrap().accuracy < 0.6 && deep.accuracy > 0.95, "a line cannot follow a spiral; the deep network does");
 }
@@ -73,15 +73,17 @@ fn the_macro_wrote_the_function_and_counted_the_parameters() {
 fn a_typed_spec_is_expanded_and_counted() {
     let t = typed("784 128 relu 10 softmax").unwrap();
     assert_eq!(t.params, 101770);
-    assert!(t.expansion.contains("nn:d_ense w1") && t.expansion.contains("nn:d_ense w2") && t.expansion.contains("nn:r_elu"));
+    assert!(t.expansion.contains("nn:d_ense w1") && t.expansion.contains("nn:d_ense w2") && t.expansion.contains("act:r_elu"));
     assert_eq!(weight_names("784 128 relu 10 softmax"), "w1 w2");
     assert_eq!(weight_names("3"), "");
 }
 
 #[test]
 fn a_bad_spec_is_refused_with_the_macros_message() {
-    let e = typed("2 8 gelu 3").unwrap_err();
-    assert!(e.contains("not a size or an activation") && e.contains("gelu"), "{e}");
+    let e = typed("2 8 swiglu 3").unwrap_err();
+    assert!(e.contains("not a size or an activation") && e.contains("swiglu"), "{e}");
+    // GELU is a word of the spec since the Activations library.
+    assert!(typed("2 8 gelu 3").unwrap().expansion.contains("act:g_elu"));
     assert!(typed("relu").is_err());
     // A quote cannot break out of the spec's string.
     assert_eq!(clean("2 3\" p_rint! 1 \"softmax"), "2 3  p_rint! 1  softmax");
@@ -158,7 +160,7 @@ fn the_default_spec_learns_the_spiral() {
     let a = train(TRAIN_SPEC, &sizes, None, 200, &[]).unwrap();
     assert!(a.right > 0.9 && a.loss < 0.3, "{} {}", a.loss, a.right);
     let step = step_written(TRAIN_SPEC, &sizes).unwrap();
-    assert!(step.starts_with("u:s_tep := {") && step.ends_with('}') && step.contains("nn:r_elu"), "{step}");
+    assert!(step.starts_with("u:s_tep := {") && step.ends_with('}') && step.contains("act:r_elu"), "{step}");
     assert!(train_program(TRAIN_SPEC, &sizes, None, 1, &[]).contains("p:c_hart!"));
 }
 

@@ -3,6 +3,7 @@
 # one (the backprop microscope's gradient and Adam), checked with Check
 # after 20 steps on the same spiral from the same start.
 "nn:" u_se< "NN"
+"act:" u_se< "Activations"
 "net:" u_se< "Net"
 "k:" u_se< "Check"
 n := 60
@@ -16,7 +17,7 @@ lr := 0.02
 # By hand, as demos/train-live writes it.
 u:o_nes := { x -> x c_at_2 ((t_ally x) c_at 1) r_eshape 1.0 }
 u:g_rad := { W1 W2 ->
-  H := nn:t_anh X nn:d_ense W1
+  H := act:t_anh X nn:d_ense W1
   D2 := ((nn:s_oftmax H nn:d_ense W2) - Y) / f_loat n
   D1 := (D2 '+ '* i_nner o_\ -1 d_rop W2) * 1.0 - H * H
   ((o_\ u:o_nes X) '+ '* i_nner D1, (o_\ u:o_nes H) '+ '* i_nner D2)
@@ -34,7 +35,7 @@ u:h_and := { (W1, W2, M1, M2, V1, V2, k) ->
 # By the macro, from the spec.
 u:m_acro := { (g1:W1, g2:W2, g3:M1, g4:M2, g5:V1, g6:V2, g7:k) ->
   g8:A0 := X
-  g9:A1 := nn:t_anh g8:A0 nn:d_ense g1:W1
+  g9:A1 := act:t_anh g8:A0 nn:d_ense g1:W1
   g10:A2 := nn:s_oftmax g9:A1 nn:d_ense g2:W2
   g12:D2 := (g10:A2 - Y) / f_loat t_ally X
   g11:D1 := (g12:D2 '+ '* i_nner o_\ -1 d_rop g2:W2) * 1.0 - g9:A1 * g9:A1
@@ -54,7 +55,7 @@ w2 := 17 3 r_eshape -0.21 0.33 0.08 -0.39 0.26
 s0 := ((w1, w2, 0.0 * w1, 0.0 * w2, 0.0 * w1, 0.0 * w2, 0.0))
 (a1, a2, _, _, _, av2, _) := 20 'u:h_and p_ower s0
 (b1, b2, _, _, _, bv2, bk) := 20 'u:m_acro p_ower s0
-u:l_oss := { W1 W2 -> Y nn:c_rossEntropy nn:s_oftmax (nn:t_anh X nn:d_ense W1) nn:d_ense W2 }
+u:l_oss := { W1 W2 -> Y nn:c_rossEntropy nn:s_oftmax (act:t_anh X nn:d_ense W1) nn:d_ense W2 }
 c1 := "W1 as by hand" k:t_est a1 k:n_ear b1
 c2 := "W2 as by hand" k:t_est a2 k:n_ear b2
 c3 := "Adam's averages as by hand" k:t_est (r_avel av2) k:n_ear r_avel bv2

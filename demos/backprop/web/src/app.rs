@@ -66,7 +66,7 @@ fn forward(m: &UseReducerHandle<Model>, s: &Step) -> Html {
         <div class="arrs">{ table("X", &s.x, N, I, 2) }{ table("Y", &s.y, N, K, 0) }{ table("H", &s.h, N, J, 3) }{ table("P", &s.p, N, K, 3) }</div>
         <p class="calc">{"The loss, the mean of "}{code("-log")}{" of each point's probability for its own arm: "}{code(&format!("L = {:.6}", s.loss.0))}</p>
     </> };
-    panel("1. Forward:", "P := nn:s_oftmax (nn:t_anh X nn:d_ense W1) nn:d_ense W2",
+    panel("1. Forward:", "P := nn:s_oftmax (act:t_anh X nn:d_ense W1) nn:d_ense W2",
         "Six points (x, y) and their arms (one-hot), through a tanh layer of 4 and a softmax over 3: every point at once.",
         m.focus == Stage::Forward, body)
 }

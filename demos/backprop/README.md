@@ -30,7 +30,7 @@ A network of 2 inputs, 4 tanh units and a softmax over 3 classes, on
 six points of a spiral (two from each arm). Forward:
 
 ```
-H := nn:t_anh X nn:d_ense W1
+H := act:t_anh X nn:d_ense W1
 P := nn:s_oftmax H nn:d_ense W2
 L := Y nn:c_rossEntropy P
 ```

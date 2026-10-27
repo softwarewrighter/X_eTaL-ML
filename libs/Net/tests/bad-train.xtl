@@ -1,5 +1,6 @@
 #!/usr/bin/env xetal
 # Net: a trained network ends in softmax (cross-entropy needs it).
 "nn:" u_se< "NN"
+"act:" u_se< "Activations"
 "net:" u_se< "Net"
 "u:s_tep X Y lr" net:t_rain< "2 4 tanh 3"

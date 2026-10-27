@@ -51,7 +51,7 @@ function. What the third line becomes (`just expand net-macro`):
 c1 := { v -> 48 = t_ally v ? 3 16 r_eshape v; []P_ANIC "data/c1.txt holds " c_at (f_ormat t_ally v) c_at " numbers; layer 1 of \"2 16 relu 16 relu 3 softmax\" (2 inputs and a bias, 16 outputs) needs 48" } n_umbers []N_GET "data/c1.txt"
 c2 := { v -> 272 = t_ally v ? 17 16 r_eshape v; []P_ANIC "..." } n_umbers []N_GET "data/c2.txt"
 c3 := { v -> 51 = t_ally v ? 17 3 r_eshape v; []P_ANIC "..." } n_umbers []N_GET "data/c3.txt"
-u:d_eep := { x -> nn:s_oftmax (nn:r_elu (nn:r_elu x nn:d_ense c1) nn:d_ense c2) nn:d_ense c3 }
+u:d_eep := { x -> nn:s_oftmax (act:r_elu (act:r_elu x nn:d_ense c1) nn:d_ense c2) nn:d_ense c3 }
 ```
 
 The function one would write by hand, and before it the weights read

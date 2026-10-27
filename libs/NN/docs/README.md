@@ -1,8 +1,11 @@
 # NN
 
-Neural-network building blocks: activations, softmax by row, dense
-layers, one-hot labels, loss and accuracy. Each is one short array
-expression over a whole batch.
+Neural-network building blocks: softmax by row, dense layers, a bias
+along a named axis, one-hot labels, loss and accuracy. Each is one
+short array expression over a whole batch. The item-by-item
+activations (ReLU, leaky ReLU, sigmoid, tanh, GELU, SiLU, ...) and
+their derivatives are the [Activations](../../Activations/docs/README.md)
+library's (`"act:" u_se< "Activations"`).
 
 ```
 "nn:" u_se< "NN"
@@ -19,8 +22,8 @@ the libraries without setup.
 - A layer is one array: the weights W (one row per input, one column
   per output) with the bias b as one more row at the bottom, so
   `x nn:d_ense wb` is x W + b in two arguments.
-- Activations work item by item on any shape. Softmax, log-softmax
-  and argmax work along the last axis of any array: a vector is one
+- Softmax, log-softmax and argmax work along the last axis of any
+  array: a vector is one
   example, a matrix one example per row, a rank-3 array a batch of
   sequences.
 - Labels count from 1 (`nn:o_neHot`, `nn:a_rgmax`).
@@ -30,17 +33,13 @@ the libraries without setup.
   `b nn:b_ias V` with the convention above (rows: the last axis;
   channel-first pictures and their batches: the channel axis), checked
   for length either way.
-- Everything is Float: `nn:r_elu` of an Int array is a type error;
-  write `nn:r_elu f_loat x`.
+- Everything is Float: `nn:s_oftmax` of an Int array is a type
+  error; write `nn:s_oftmax f_loat x`.
 
 ## Functions
 
 | Function | Type | What |
 | -------- | ---- | ---- |
-| `nn:r_elu x` | `Float -> Float` | max(x, 0) |
-| `a nn:l_eaky x` | `Float -> Float -> Float` | x where positive, a times x elsewhere |
-| `nn:s_igmoid x` | `Num a => a -> Float` | 1 / (1 + e^-x) |
-| `nn:t_anh x` | `Float -> Float` | the hyperbolic tangent, 2 sigmoid(2x) - 1 |
 | `nn:s_oftmax a` | `Num a => a -> Float` | each row into probabilities (largest taken off first, so nothing overflows) |
 | `nn:l_ogSoftmax a` | `Float -> Float` | the log of each row's softmax, computed stably |
 | `x nn:d_ense wb` | `Num a => a -> a -> a` | the layer x W + b, W and b stacked in wb |
@@ -58,14 +57,6 @@ From `../tests/basics.xtl`, with
 `m := 2 3 r_eshape 1.0 2.0 3.0 -1.0 0.0 5.0`:
 
 ```
-      nn:r_elu m
-1.0 2.0 3.0
-0.0 0.0 5.0
-      0.1 nn:l_eaky m
- 1.0 2.0 3.0
--0.1 0.0 5.0
-      nn:s_igmoid 0.0 2.0
-0.5 0.8807970779778823
       nn:s_oftmax 1.0 2.0 3.0
 0.09003057317038046 0.24472847105479764 0.6652409557748218
       nn:s_oftmax m
@@ -100,8 +91,7 @@ Loss and accuracy:
 
 `../tests/checks.xtl` checks the properties: softmax rows sum to 1,
 ignore a shift and work along the last axis of any rank; log-softmax
-is the log of softmax; sigmoid(-x) = 1 - sigmoid(x); tanh is odd;
-argmax inverts one-hot; dense is x W + b.
+is the log of softmax; argmax inverts one-hot; dense is x W + b.
 
 From `../tests/bias.xtl`, with `M := 2 3 r_eshape f_loat r_ange 6` and
 `b := 10.0 20.0 30.0`: the bias on the last axis (as `nn:d_ense` keeps
@@ -125,12 +115,12 @@ error[shape]: a_ddAxis: 2 values for axis 2 of extent 3
 
 - [`demos/xor.xtl`](../demos/xor.xtl): XOR, which no single layer can
   learn, by a two-layer network with hand-set weights: the batch of
-  four points through `nn:d_ense`, `nn:r_elu`, `nn:d_ense`,
+  four points through `nn:d_ense`, Activations' `act:r_elu`, `nn:d_ense`,
   `nn:s_oftmax`, then `nn:a_rgmax`, `nn:a_ccuracy` and
   `nn:c_rossEntropy`.
 - [`../../../demos/cnn-digits`](../../../demos/cnn-digits/README.md):
-  a convolutional network on MNIST digits uses `nn:r_elu`,
-  `nn:d_ense`, `nn:s_oftmax` and `nn:a_rgmax`.
+  a convolutional network on MNIST digits uses `nn:d_ense`,
+  `nn:s_oftmax` and `nn:a_rgmax` (with Activations' `act:r_elu`).
 
 ## Provenance
 

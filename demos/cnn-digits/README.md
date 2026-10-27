@@ -52,7 +52,7 @@ u:c_onv := { x ->
   8 26 26 r_eshape (k9 '+ '* i_nner 9 676 r_eshape v) + bc 'l_eft t_able o_ffsets 676
 }
 u:p_ool := { x -> 'm_ax r_/_35 8 13 2 13 2 r_eshape x }
-u:c_lassify := { x -> f_irst nn:s_oftmax (1 1352 r_eshape r_avel u:p_ool nn:r_elu u:c_onv x) nn:d_ense wb }
+u:c_lassify := { x -> f_irst nn:s_oftmax (1 1352 r_eshape r_avel u:p_ool act:r_elu u:c_onv x) nn:d_ense wb }
 ```
 
 Read right to left:
@@ -66,7 +66,7 @@ Read right to left:
   once; the biases are spread across each map.
 - Pooling reshapes each 26 x 26 map into 13 x 2 x 13 x 2 blocks and
   takes the largest along the two block axes.
-- `nn:r_elu`, `nn:d_ense` (the 1352 pooled values times the dense
+- `act:r_elu`, `nn:d_ense` (the 1352 pooled values times the dense
   weights, plus the bias row) and `nn:s_oftmax` come from the
   [NN library](../../libs/NN/docs/README.md).
 
@@ -87,7 +87,7 @@ program checks it). The reader is one function of arrays:
 
 ```
 u:r_ead := { X ->
-  (nn:a_rgmax (((t_ally X) c_at 1352) r_eshape cv:p_ool nn:r_elu (9 t_ake_2 fb, r_avel -1 t_ake_2 fb) cv:c_onv X) nn:d_ense wb) - 1
+  (nn:a_rgmax (((t_ally X) c_at 1352) r_eshape cv:p_ool act:r_elu (9 t_ake_2 fb, r_avel -1 t_ake_2 fb) cv:c_onv X) nn:d_ense wb) - 1
 }
 ```
 

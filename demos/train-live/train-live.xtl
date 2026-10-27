@@ -5,6 +5,7 @@
 ## written out, moves the weights; p_ower repeats the step.
 
 "nn:" u_se< "NN"
+"act:" u_se< "Activations"
 
 ### The spiral: 100 points on each of three arms
 n := 300
@@ -17,11 +18,11 @@ Y := 3 nn:o_neHot 1 + arm
 
 ### The network: W1 (3 x 16), W2 (17 x 3), each bias its last row
 u:o_nes := { x -> x c_at_2 ((t_ally x) c_at 1) r_eshape 1.0 }
-u:f_orward := { W1 W2 -> nn:s_oftmax (nn:t_anh X nn:d_ense W1) nn:d_ense W2 }
+u:f_orward := { W1 W2 -> nn:s_oftmax (act:t_anh X nn:d_ense W1) nn:d_ense W2 }
 ## The gradients of the loss by W1 and by W2, a pair (the backprop
 ## microscope's four lines).
 u:g_rad := { W1 W2 ->
-  H := nn:t_anh X nn:d_ense W1
+  H := act:t_anh X nn:d_ense W1
   D2 := ((nn:s_oftmax H nn:d_ense W2) - Y) / f_loat n
   D1 := (D2 '+ '* i_nner o_\ -1 d_rop W2) * 1.0 - H * H
   ((o_\ u:o_nes X) '+ '* i_nner D1, (o_\ u:o_nes H) '+ '* i_nner D2)

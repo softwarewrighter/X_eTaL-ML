@@ -5,6 +5,7 @@
 ## step; then every gradient checked against a finite difference.
 
 "nn:" u_se< "NN"
+"act:" u_se< "Activations"
 
 ### The batch and the starting weights, read from data/
 b := 6 3 r_eshape n_umbers []N_GET "data/batch.txt"
@@ -15,7 +16,7 @@ W2 := 5 3 r_eshape n_umbers []N_GET "data/w2.txt"   # 4 inputs, then the bias ro
 lr := 0.5
 
 ### Forward
-H := nn:t_anh X nn:d_ense W1           # 6 x 4
+H := act:t_anh X nn:d_ense W1           # 6 x 4
 P := nn:s_oftmax H nn:d_ense W2        # 6 x 3
 L := Y nn:c_rossEntropy P
 
@@ -29,7 +30,7 @@ G1 := (o_\ u:o_nes X) '+ '* i_nner D1              # W1's gradient, 3 x 4
 ### The step
 V1 := W1 - lr * G1
 V2 := W2 - lr * G2
-u:l_oss := { w1 w2 -> Y nn:c_rossEntropy nn:s_oftmax (nn:t_anh X nn:d_ense w1) nn:d_ense w2 }
+u:l_oss := { w1 w2 -> Y nn:c_rossEntropy nn:s_oftmax (act:t_anh X nn:d_ense w1) nn:d_ense w2 }
 # -- end of the core ----------------------------------------------
 
 u:r_ound := { a -> (f_loat f_loor 0.5 + 10000.0 * a) / 10000.0 }

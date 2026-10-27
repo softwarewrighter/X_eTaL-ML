@@ -8,7 +8,7 @@
 # of two Gaussians, the integral of p log (p / q) over a truncation,
 # beside its closed form. Run with "just demo Integrals".
 "integ:" u_se< "Integrals"
-"nn:" u_se< "NN"
+"act:" u_se< "Activations"
 # The standard Gaussian density.
 u:p_hi := { u -> (e_xp n_eg (u * u) / 2.0) / (2.0 * p_i @) ^ 0.5 }
 # GELU at one x: x (1/2 + integral of the density from 0 to x), simpson on 32 steps.
@@ -20,8 +20,8 @@ u:g_elu := { x -> x * 0.5 + ({ @ ->
   g4:w := (1.0 c_at (31 r_eshape 4.0 2.0) c_at 1.0) / 3.0
   g3:h * '+ r_/ g4:w * u:p_hi u
 } @) }
-# The tanh approximation (NN's t_anh): x/2 (1 + tanh(sqrt(2/pi) (x + 0.044715 x^3))).
-u:a_pprox := { x -> 0.5 * x * 1.0 + nn:t_anh ((2.0 / p_i @) ^ 0.5) * x + 0.044715 * x ^ 3 }
+# The tanh approximation (Activations' g_elu, written out): x/2 (1 + tanh(sqrt(2/pi) (x + 0.044715 x^3))).
+u:a_pprox := { x -> 0.5 * x * 1.0 + act:t_anh ((2.0 / p_i @) ^ 0.5) * x + 0.044715 * x ^ 3 }
 xs := -3.0 -2.0 -1.0 -0.5 0.0 0.5 1.0 2.0 3.0
 g := 'u:g_elu e_ach xs
 (f_loat f_loor 0.5 + 10000.0 * g) / 10000.0

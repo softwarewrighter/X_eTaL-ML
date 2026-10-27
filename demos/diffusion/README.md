@@ -54,9 +54,9 @@ outside it:
 ```
 u:n_et := { J ->
   X := ((t_ally J) c_at 10 10) r_eshape 100 t_ake_2 J
-  V := ((t_ally J) c_at 512) r_eshape nn:r_elu (9 t_ake_2 kb, r_avel -1 t_ake_2 kb) cv:c_onv X
-  A := nn:r_elu (V nn:d_ense wb1) + (-10 t_ake_2 J) '+ '* i_nner wh
-  (2.0 * nn:s_igmoid A nn:d_ense wb2) - 1.0
+  V := ((t_ally J) c_at 512) r_eshape act:r_elu (9 t_ake_2 kb, r_avel -1 t_ake_2 kb) cv:c_onv X
+  A := act:r_elu (V nn:d_ense wb1) + (-10 t_ake_2 J) '+ '* i_nner wh
+  (2.0 * act:s_igmoid A nn:d_ense wb2) - 1.0
 }
 u:c_lean := { t X -> u:n_et X c_at_2 10 nn:o_neHot (t_ally X) r_eshape t }
 ```

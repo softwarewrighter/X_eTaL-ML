@@ -2,4 +2,7 @@ ok: relu, sigmoid, softmax
 ok: tanh, none, softmax
 ok: one layer, softmax: one array in, one out
 ok: each gradient has its weights' shape
-4 checks, all passed
+ok: gelu, mish, softmax
+ok: silu, softplus, softmax
+ok: selu, hardSwish, softmax
+7 checks, all passed

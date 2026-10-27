@@ -8,13 +8,15 @@ written, so the notation hides nothing.
 
 ```
 "nn:"  u_se< "NN"
+"act:" u_se< "Activations"
 "net:" u_se< "Net"
 ```
 
 Put each library's `src/` directory on `XETAL_PATH` (`just path`
 prints them; see the [README](../../../README.md)); `net:` is the
-recommended alias. Import [NN](../../NN/docs/README.md) as `nn:`: the
-code the macros write calls NN under that alias (see Limits).
+recommended alias. Import [NN](../../NN/docs/README.md) as `nn:` and
+[Activations](../../Activations/docs/README.md) as `act:`: the code
+the macros write calls them under those aliases (see Limits).
 
 ## A spec
 
@@ -24,7 +26,12 @@ A spec is a list of words, the input's size first:
 | ---- | ----- |
 | the first number | how many inputs an example has |
 | a later number | a dense layer with that many outputs (`nn:d_ense`), using the next weight array |
-| `relu`, `sigmoid`, `tanh`, `softmax`, `logSoftmax` | that function of NN, applied to the layer before |
+| `relu`, `sigmoid`, `tanh`, `softplus`, `silu`, `gelu`, `mish`, `selu`, `hardSigmoid`, `hardSwish` | that function of Activations (`act:r_elu`, `act:g_elu`, ...), applied to the layer before |
+| `softmax`, `logSoftmax` | that function of NN, along each row |
+
+An activation with a setting (leaky ReLU's slope, Swish's beta, ELU's
+alpha, PReLU's slopes) or a gated layer (SwiGLU: two weight arrays) is
+not a word: write that layer by hand.
 
 A dense layer's weights are one array, as NN keeps them: from m inputs
 to n outputs it is m + 1 by n, the bias its last row.
@@ -75,7 +82,7 @@ loaded and checked, then the function.
 ```
 t1 := { v -> 6 = t_ally v ? 3 2 r_eshape v; []P_ANIC "data/t1.txt holds " c_at (f_ormat t_ally v) c_at " numbers; layer 1 of \"2 2 relu 2 softmax\" (2 inputs and a bias, 2 outputs) needs 6" } n_umbers []N_GET "data/t1.txt"
 t2 := { v -> 6 = t_ally v ? 3 2 r_eshape v; []P_ANIC "data/t2.txt holds " c_at (f_ormat t_ally v) c_at " numbers; layer 2 of \"2 2 relu 2 softmax\" (2 inputs and a bias, 2 outputs) needs 6" } n_umbers []N_GET "data/t2.txt"
-u:x_or2 := { x -> nn:s_oftmax (nn:r_elu x nn:d_ense t1) nn:d_ense t2 }
+u:x_or2 := { x -> nn:s_oftmax (act:r_elu x nn:d_ense t1) nn:d_ense t2 }
 ```
 
 A file with the wrong count (`../tests/bad-file.xtl`):
@@ -105,7 +112,7 @@ What those lines became (`xetal expand`, recorded in
 `../tests/expand-basics.out`):
 
 ```
-u:x_or := ({ g1:x -> nn:s_oftmax (nn:r_elu g1:x nn:d_ense w1) nn:d_ense w2 })
+u:x_or := ({ g1:x -> nn:s_oftmax (act:r_elu g1:x nn:d_ense w1) nn:d_ense w2 })
 12
 101770
 ((s_hape w1) m_atch 3 2) & ((s_hape w2) m_atch 3 2)
@@ -122,7 +129,7 @@ the macro's function gives the same numbers as the hand-written one.
 A wrong spec is refused when the program is compiled, at the call:
 
 ```
-error[bad-macro-argument]: not a size or an activation (relu, sigmoid, tanh, softmax, logSoftmax): gelu at 146..156
+error[bad-macro-argument]: not a size or an activation (relu sigmoid tanh softplus silu gelu mish selu hardSigmoid hardSwish softmax logSoftmax): swiglu
 error[bad-macro-argument]: name one weight array per dense layer: 2 for this spec, 1 given at 190..193
 ```
 
@@ -145,7 +152,7 @@ may be called anything, `n` or `k` included (`../tests/hygiene.xtl`):
 ```
 u:s_tep := { (g1:W1, g2:W2, g3:M1, g4:M2, g5:V1, g6:V2, g7:k) ->
   g8:A0 := X
-  g9:A1 := nn:t_anh g8:A0 nn:d_ense g1:W1
+  g9:A1 := act:t_anh g8:A0 nn:d_ense g1:W1
   g10:A2 := nn:s_oftmax g9:A1 nn:d_ense g2:W2
   g11:D2 := (g10:A2 - Y) / f_loat t_ally X
   g12:D1 := (g11:D2 '+ '* i_nner o_\ -1 d_rop g2:W2) * 1.0 - g9:A1 * g9:A1
@@ -165,10 +172,16 @@ name once in its scope); `@ net:s_tate< "w1 w2"` writes the first, `(w1, w2,
 0.0 * w1, 0.0 * w2, 0.0 * w1, 0.0 * w2, 0.0)`. The lines left out are
 the second layer's averages and its moved weights. Each layer's
 gradient is the backprop microscope's expression; each activation's
-slope is written in where it goes back through it (tanh `1 - A * A`,
-sigmoid `A * (1 - A)`, relu `A > 0`). `../tests/gradients.xtl` checks
-the written gradients against finite differences for relu, sigmoid,
-tanh and no-activation networks; `../tests/train.xtl` checks that 20
+slope is written in where it goes back through it: at the layer's
+output A for tanh `1 - A * A`, sigmoid `A * (1 - A)` and relu `A > 0`,
+as one writes them by hand; for the smooth ones (softplus, silu, gelu,
+mish, selu and the hard ones) Activations' derivative of the layer's
+input, the dense layer computed again (`act:d_gelu A0 nn:d_ense W1`),
+since their slope cannot be had from their output.
+`../tests/gradients.xtl` checks the written gradients against finite
+differences for networks through every word (relu and sigmoid, tanh
+and none, gelu and mish, silu and softplus, selu and hard swish) and
+a one-layer one; `../tests/train.xtl` checks that 20
 written training steps equal the hand-written ones of the
 [training-live demo](../../../demos/train-live/README.md).
 
@@ -182,11 +195,11 @@ written training steps equal the hand-written ones of the
 
 ## Limits
 
-- The written code calls NN as `nn:`, so NN must be imported under
-  that alias: a macro's text cannot ask which alias the caller chose,
+- The written code calls NN as `nn:` and Activations as `act:`, so
+  they must be imported under those aliases: a macro's text cannot ask which alias the caller chose,
   and may not import a library itself (ask M11 in
   [`docs/xetal-asks.md`](../../../docs/xetal-asks.md)).
-- Dense layers and NN's activations only: a convolution or attention
+- Dense layers and the activation words only: a convolution or attention
   layer is written by hand, as the demos do. Training is with
   cross-entropy on a softmax output, by Adam.
 - A one-layer network's gradient is one array, not a tuple: X_eTaL

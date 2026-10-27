@@ -6,6 +6,7 @@
 ## "just expand-lib Net train-xor".
 
 "nn:" u_se< "NN"
+"act:" u_se< "Activations"
 "net:" u_se< "Net"
 X := 4 2 r_eshape 0.0 0.0 0.0 1.0 1.0 0.0 1.0 1.0
 y := 1 2 2 1
@@ -13,7 +14,7 @@ Y := 2 nn:o_neHot y
 lr := 0.05
 u:s_tep := { (g1:W1, g2:W2, g3:M1, g4:M2, g5:V1, g6:V2, g7:k) ->
   g8:A0 := X
-  g9:A1 := nn:t_anh g8:A0 nn:d_ense g1:W1
+  g9:A1 := act:t_anh g8:A0 nn:d_ense g1:W1
   g10:A2 := nn:s_oftmax g9:A1 nn:d_ense g2:W2
   g12:D2 := (g10:A2 - Y) / f_loat t_ally X
   g11:D1 := (g12:D2 '+ '* i_nner o_\ -1 d_rop g2:W2) * 1.0 - g9:A1 * g9:A1
@@ -32,8 +33,8 @@ w1 := (f_loat (3 4 r_eshape r_oll! 12 r_eshape 201) - 101) / 100.0
 w2 := (f_loat (5 2 r_eshape r_oll! 10 r_eshape 201) - 101) / 100.0
 ## The state after 300 steps, a tuple: the weights first.
 (v1, v2, _, _, _, _, _) := 300 'u:s_tep p_ower ((w1, w2, 0.0 * w1, 0.0 * w2, 0.0 * w1, 0.0 * w2, 0.0))
-u:b_efore := ({ g20:x -> nn:s_oftmax (nn:t_anh g20:x nn:d_ense w1) nn:d_ense w2 })
-u:a_fter := ({ g21:x -> nn:s_oftmax (nn:t_anh g21:x nn:d_ense v1) nn:d_ense v2 })
+u:b_efore := ({ g20:x -> nn:s_oftmax (act:t_anh g20:x nn:d_ense w1) nn:d_ense w2 })
+u:a_fter := ({ g21:x -> nn:s_oftmax (act:t_anh g21:x nn:d_ense v1) nn:d_ense v2 })
 # The loss before and after 300 steps, and the classes read after.
 (Y nn:c_rossEntropy u:b_efore X) c_at Y nn:c_rossEntropy u:a_fter X
 nn:a_rgmax u:a_fter X

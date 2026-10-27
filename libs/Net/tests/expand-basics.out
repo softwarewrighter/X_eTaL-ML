@@ -1,11 +1,12 @@
 #!/usr/bin/env xetal
 # Net: the three macros. Run with "just run-lib Net basics".
 "nn:" u_se< "NN"
+"act:" u_se< "Activations"
 "net:" u_se< "Net"
 w1 := 3 2 r_eshape 1.0 1.0 1.0 1.0 0.0 -1.0
 w2 := 3 2 r_eshape 0.0 4.0 0.0 -8.0 0.0 -2.0
 x := 4 2 r_eshape 0.0 0.0 0.0 1.0 1.0 0.0 1.0 1.0
-u:x_or := ({ g1:x -> nn:s_oftmax (nn:r_elu g1:x nn:d_ense w1) nn:d_ense w2 })
+u:x_or := ({ g1:x -> nn:s_oftmax (act:r_elu g1:x nn:d_ense w1) nn:d_ense w2 })
 u:x_or x
 nn:a_rgmax u:x_or x
 12
@@ -25,6 +26,6 @@ t2 := { v ->
   6 = t_ally v ? 3 2 r_eshape v
   []P_ANIC "data/t2.txt holds " c_at (f_ormat t_ally v) c_at " numbers; layer 2 of \"2 2 relu 2 softmax\" (2 inputs and a bias, 2 outputs) needs 6"
 } n_umbers []N_GET "data/t2.txt"
-u:x_or2 := { g3:x -> nn:s_oftmax (nn:r_elu g3:x nn:d_ense t1) nn:d_ense t2 }
+u:x_or2 := { g3:x -> nn:s_oftmax (act:r_elu g3:x nn:d_ense t1) nn:d_ense t2 }
 nn:a_rgmax u:x_or2 x
 

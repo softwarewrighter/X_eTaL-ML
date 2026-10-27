@@ -6,6 +6,7 @@
 ## the 10,000 test digits right); just cnn-train writes data/.
 
 "nn:" u_se< "NN"
+"act:" u_se< "Activations"
 
 ### The network, read from data/
 fb := 8 10 r_eshape n_umbers []N_GET "data/filters.txt"
@@ -20,7 +21,7 @@ u:c_onv := { x ->
   8 26 26 r_eshape (k9 '+ '* i_nner 9 676 r_eshape v) + bc 'l_eft t_able o_ffsets 676
 }
 u:p_ool := { x -> 'm_ax r_/_35 8 13 2 13 2 r_eshape x }
-u:c_lassify := { x -> f_irst nn:s_oftmax (1 1352 r_eshape r_avel u:p_ool nn:r_elu u:c_onv x) nn:d_ense wb }
+u:c_lassify := { x -> f_irst nn:s_oftmax (1 1352 r_eshape r_avel u:p_ool act:r_elu u:c_onv x) nn:d_ense wb }
 # -- end of the core -------------------------------------
 
 ### Drawing: values as shades, maps side by side
@@ -46,7 +47,7 @@ u:w_ide 28 28 r_eshape u:s_hade x
 # The 8 filters (3 x 3), from most negative to most positive.
 u:s_ide (1 + f_loor 0 m_ax 4 m_in 2.5 + 2.0 * 8 3 3 r_eshape k9) s_elect "=-.+#"
 ## Convolution and ReLU: 8 maps of 26 x 26, what each filter finds.
-c := nn:r_elu u:c_onv x
+c := act:r_elu u:c_onv x
 u:s_ide u:m_aps 4 t_ake c
 u:s_ide u:m_aps 4 d_rop c
 ## Max-pooling: 8 maps of 13 x 13 (drawn twice as wide).

@@ -9,6 +9,7 @@
 ## so the picture that comes out depends only on the noise that went in.
 
 "nn:" u_se< "NN"
+"act:" u_se< "Activations"
 "cv:" u_se< "Conv"
 
 ### The schedule
@@ -36,9 +37,9 @@ wb2 := 257 100 r_eshape (n_umbers []N_GET "data/w2.txt") c_at n_umbers []N_GET "
 ## One function of arrays, the part a GPU takes (docs/gpu-asks.md).
 u:n_et := { J ->
   X := ((t_ally J) c_at 10 10) r_eshape 100 t_ake_2 J
-  V := ((t_ally J) c_at 512) r_eshape nn:r_elu (9 t_ake_2 kb, r_avel -1 t_ake_2 kb) cv:c_onv X
-  A := nn:r_elu (V nn:d_ense wb1) + (-10 t_ake_2 J) '+ '* i_nner wh
-  (2.0 * nn:s_igmoid A nn:d_ense wb2) - 1.0
+  V := ((t_ally J) c_at 512) r_eshape act:r_elu (9 t_ake_2 kb, r_avel -1 t_ake_2 kb) cv:c_onv X
+  A := act:r_elu (V nn:d_ense wb1) + (-10 t_ake_2 J) '+ '* i_nner wh
+  (2.0 * act:s_igmoid A nn:d_ense wb2) - 1.0
 }
 ## The clean pictures the denoiser sees in the noisy pictures X (a row
 ## each) at level t: the level joins the pixels as a one-hot.

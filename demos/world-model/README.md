@@ -53,7 +53,7 @@ the [NN](../../libs/NN/docs/README.md) library, the weights read from
 `data/`:
 
 ```
-u:p_redict := { X -> nn:s_igmoid (nn:r_elu X nn:d_ense wb1) nn:d_ense wb2 }
+u:p_redict := { X -> act:s_igmoid (act:r_elu X nn:d_ense wb1) nn:d_ense wb2 }
 ```
 
 All 1,936 states go through it as one batch (the program's slow

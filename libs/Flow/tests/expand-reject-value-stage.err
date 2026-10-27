@@ -1,4 +1,4 @@
-error[bad-pipeline]: a stage is a function (nn:r_elu, [f_ g_], '{ x -> ... }) or an expression naming the previous value it (or a name bound before it): 3
+error[bad-pipeline]: a stage is a function (act:r_elu, [f_ g_], '{ x -> ... }) or an expression naming the previous value it (or a name bound before it): 3
  --> reject-value-stage.xtl:5:15
   |
 5 | @ flow:p_ipe< c"x |> 3"

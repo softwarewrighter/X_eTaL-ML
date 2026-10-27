@@ -17,7 +17,7 @@
 ### The macros
 
 ## The value of a pipeline: the data, then each stage in turn, |>
-## between them. A stage is a function (nn:r_elu, [f_ g_], '{ x -> ... }),
+## between them. A stage is a function (act:r_elu, [f_ g_], '{ x -> ... }),
 ## applied to the previous value, or an expression naming the previous
 ## value it (W nn:d_ense it; the order is written, never guessed).
 ## "$name" at a stage's end names its value for the later stages, the
@@ -118,7 +118,7 @@ h:t_ouches? := { s ->
 ## the call is refused with the text ("" when it is one of these).
 h:s_tage? := { earlier e ->
   named := '| r_/ (0 = 1) c_at '{ w -> (d_isclose w) h:w_ord? e } e_ach earlier
-  ((h:i_t? e) | (h:f_unction? e) | named) h:r_equire "a stage is a function (nn:r_elu, [f_ g_], '{ x -> ... }) or an expression naming the previous value it (or a name bound before it): " c_at e
+  ((h:i_t? e) | (h:f_unction? e) | named) h:r_equire "a stage is a function (act:r_elu, [f_ g_], '{ x -> ... }) or an expression naming the previous value it (or a name bound before it): " c_at e
 }
 
 ## Whether e names the previous value: the word it, outside strings.
@@ -137,7 +137,7 @@ h:w_ord? := { w e ->
 
 ## Whether e is written as a function: a quoted function or lambda
 ## ('n_eg, '+ r_/, '{ x -> ... }), a train ([f_ g_]), or one function
-## name (nn:r_elu, t_ally: no blanks, an underline).
+## name (act:r_elu, t_ally: no blanks, an underline).
 h:f_unction? := { e ->
   ("'" m_atch 1 t_ake e) | "[" m_atch 1 t_ake e ? 0 = 0
   (0 = t_ally w_here e m_ember? " ") & (0 < t_ally w_here e m_ember? "_") & '& r_/ e m_ember? nameChars
@@ -267,7 +267,7 @@ h:r_equire := { ok message ->
   "bad-pipeline right" []R_EJECT message
 }
 
-## Characters of names: of values (Q, m1), of functions (nn:r_elu,
+## Characters of names: of values (Q, m1), of functions (act:r_elu,
 ## n_ame?, p_rint!), and digits.
 nameChars := "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_:?!"
 ## Characters of plain names and numbers.

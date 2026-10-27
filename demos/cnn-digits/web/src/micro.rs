@@ -45,7 +45,7 @@ pub fn input_line(input: &Input) -> String {
 /// every array the page draws.
 pub fn tail(input: &Input) -> String {
     format!(
-        "{}\nc := nn:r_elu u:c_onv x\nm := u:p_ool c\np := u:c_lassify x\n\
+        "{}\nc := act:r_elu u:c_onv x\nm := u:p_ool c\np := u:c_lassify x\n\
          r_avel x\nr_avel k9\nr_avel bc\nr_avel c\nr_avel m\nr_avel p\n",
         input_line(input)
     )

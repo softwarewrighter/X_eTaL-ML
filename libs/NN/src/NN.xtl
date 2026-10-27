@@ -1,4 +1,4 @@
-## NN: neural-network building blocks -- activations, softmax by row, dense layers, one-hot, loss, accuracy
+## NN: neural-network building blocks -- softmax by row, dense layers, one-hot, loss, accuracy
 ##
 ## Import it with an alias of your choice: "nn:" u_se< "NN".
 ## Put libs/NN/src on XETAL_PATH ("just path"); the reference is libs/NN/docs.
@@ -7,10 +7,11 @@
 ## A batch is a matrix, one example per row; a layer's weights are a
 ## matrix with one row per input and one column per output, and its
 ## bias is one more row at the bottom (so a layer is one array, and
-## `x nn:d_ense wb` takes two arguments). Activations work item by item
-## on any shape. Softmax, log-softmax and argmax work along the last
-## axis of any array: a vector is one example, a matrix one per row, a
-## rank-3 array a batch of sequences.
+## `x nn:d_ense wb` takes two arguments). Softmax, log-softmax and
+## argmax work along the last axis of any array: a vector is one
+## example, a matrix one per row, a rank-3 array a batch of sequences.
+## The item-by-item activations (ReLU, sigmoid, tanh, GELU, ...) are in
+## the Activations library: "act:" u_se< "Activations".
 
 ### Helpers (private)
 
@@ -19,32 +20,6 @@ h:s_pread := { r m -> o_\ ((-1 t_ake s_hape m) c_at t_ally r) r_eshape r }
 
 ## m as a matrix of its last-axis rows (a vector becomes one row).
 h:r_ows := { m -> (('* r_/ -1 d_rop s_hape m) c_at -1 t_ake s_hape m) r_eshape m }
-
-### Activations
-
-## `r_elu x`: max(x, 0), item by item.
-## >> "nn:" u_se< "NN"
-## >> nn:r_elu -1.5 0.0 2.0
-## 0.0 0.0 2.0
-l:r_elu := { x -> x m_ax 0.0 }
-
-## `a l_eaky x`: leaky ReLU, x where positive and a times x elsewhere.
-## >> "nn:" u_se< "NN"
-## >> 0.1 nn:l_eaky -2.0 3.0
-## -0.2 3.0
-l:l_eaky := { a x -> (x m_ax 0.0) + a * x m_in 0.0 }
-
-## `s_igmoid x`: 1 / (1 + e^-x), item by item.
-## >> "nn:" u_se< "NN"
-## >> nn:s_igmoid 0.0 2.0
-## 0.5 0.8807970779778823
-l:s_igmoid := { x -> 1.0 / 1.0 + e_xp n_eg x }
-
-## `t_anh x`: the hyperbolic tangent, as 2 s_igmoid(2x) - 1.
-## >> "nn:" u_se< "NN"
-## >> nn:t_anh 0.0
-## 0.0
-l:t_anh := { x -> (2.0 * l:s_igmoid 2.0 * x) - 1.0 }
 
 ### Softmax and argmax: along the last axis
 

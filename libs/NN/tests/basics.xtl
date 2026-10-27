@@ -2,10 +2,6 @@
 # NN: every function on small arrays. Run with "just run-lib NN basics".
 "nn:" u_se< "NN"
 m := 2 3 r_eshape 1.0 2.0 3.0 -1.0 0.0 5.0
-nn:r_elu m
-0.1 nn:l_eaky m
-nn:s_igmoid 0.0 2.0
-nn:t_anh 0.0 1.0
 nn:s_oftmax 1.0 2.0 3.0
 nn:s_oftmax m
 nn:l_ogSoftmax m

@@ -156,7 +156,7 @@ pub fn weight_names(spec: &str) -> String {
 pub fn typed_programs(spec: &str) -> (String, String) {
     let spec = clean(spec);
     (
-        format!("\"nn:\" u_se< \"NN\"\n\"net:\" u_se< \"Net\"\nu:n_et := \"{spec}\" net:n_etwork< \"{}\"\n", weight_names(&spec)),
+        format!("\"nn:\" u_se< \"NN\"\n\"act:\" u_se< \"Activations\"\n\"net:\" u_se< \"Net\"\nu:n_et := \"{spec}\" net:n_etwork< \"{}\"\n", weight_names(&spec)),
         format!("\"net:\" u_se< \"Net\"\n\"{spec}\" net:p_arams< @\n"),
     )
 }

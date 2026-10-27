@@ -7,5 +7,5 @@ concepts = ["world model", "next-frame prediction", "a batch through dense layer
 status = "live"             # draft | live | deferred
 order = 50                  # position in the catalog (lower first)
 needs = []                   # asks in docs/xetal-asks.md it waits on or works around
-line = "u:p_redict := { X -> nn:s_igmoid (nn:r_elu X nn:d_ense wb1) nn:d_ense wb2 }"
+line = "u:p_redict := { X -> act:s_igmoid (act:r_elu X nn:d_ense wb1) nn:d_ense wb2 }"
 why = "The whole world at once: X is 1,936 windows, one row per state, three frames side by side; two dense layers give every state's next frame together, a probability per pixel, and one count says how many are exactly right."

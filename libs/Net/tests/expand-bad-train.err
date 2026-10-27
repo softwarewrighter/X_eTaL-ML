@@ -1,5 +1,5 @@
 error[bad-macro-argument]: a network trained with cross-entropy ends in softmax
- --> bad-train.xtl:5:30
+ --> bad-train.xtl:6:30
   |
-5 | "u:s_tep X Y lr" net:t_rain< "2 4 tanh 3"
+6 | "u:s_tep X Y lr" net:t_rain< "2 4 tanh 3"
   |                              ^^^^^^^^^^^^

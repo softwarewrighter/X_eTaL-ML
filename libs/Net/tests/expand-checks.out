@@ -2,17 +2,18 @@
 # Net, checked with Check: the macro's network is the network written
 # by hand, for every activation.
 "nn:" u_se< "NN"
+"act:" u_se< "Activations"
 "net:" u_se< "Net"
 "k:" u_se< "Check"
 a := 4 3 r_eshape 0.5 -1.0 0.25 2.0 0.0 -0.5 1.0 1.5 -2.0 0.1 0.2 0.3
 b := 4 2 r_eshape 1.0 -1.0 0.5 0.5 -0.25 2.0 0.0 0.1
 x := 5 3 r_eshape 0.3 -0.7 1.1 0.0 2.0 -1.5 0.9
-u:r_eluNet := ({ g1:x -> nn:s_oftmax (nn:r_elu g1:x nn:d_ense a) nn:d_ense b })
-u:s_igNet := ({ g2:x -> nn:l_ogSoftmax (nn:s_igmoid g2:x nn:d_ense a) nn:d_ense b })
-u:t_anhNet := ({ g3:x -> (nn:t_anh g3:x nn:d_ense a) nn:d_ense b })
-c1 := "relu then softmax" k:t_est (u:r_eluNet x) k:n_ear nn:s_oftmax (nn:r_elu x nn:d_ense a) nn:d_ense b
-c2 := "sigmoid then log-softmax" k:t_est (u:s_igNet x) k:n_ear nn:l_ogSoftmax (nn:s_igmoid x nn:d_ense a) nn:d_ense b
-c3 := "tanh, no last activation" k:t_est (u:t_anhNet x) k:n_ear (nn:t_anh x nn:d_ense a) nn:d_ense b
+u:r_eluNet := ({ g1:x -> nn:s_oftmax (act:r_elu g1:x nn:d_ense a) nn:d_ense b })
+u:s_igNet := ({ g2:x -> nn:l_ogSoftmax (act:s_igmoid g2:x nn:d_ense a) nn:d_ense b })
+u:t_anhNet := ({ g3:x -> (act:t_anh g3:x nn:d_ense a) nn:d_ense b })
+c1 := "relu then softmax" k:t_est (u:r_eluNet x) k:n_ear nn:s_oftmax (act:r_elu x nn:d_ense a) nn:d_ense b
+c2 := "sigmoid then log-softmax" k:t_est (u:s_igNet x) k:n_ear nn:l_ogSoftmax (act:s_igmoid x nn:d_ense a) nn:d_ense b
+c3 := "tanh, no last activation" k:t_est (u:t_anhNet x) k:n_ear (act:t_anh x nn:d_ense a) nn:d_ense b
 c4 := "parameters counted" k:t_est 20 k:i_s (20)
 c5 := "shapes agree" k:t_est k:t_rue (((s_hape a) m_atch 4 3) & ((s_hape b) m_atch 4 2))
 c6 := "shapes disagree" k:t_est k:t_rue n_ot (((s_hape a) m_atch 4 4) & ((s_hape b) m_atch 5 2))
@@ -24,8 +25,8 @@ t2 := { v ->
   6 = t_ally v ? 3 2 r_eshape v
   []P_ANIC "data/t2.txt holds " c_at (f_ormat t_ally v) c_at " numbers; layer 2 of \"2 2 relu 2 softmax\" (2 inputs and a bias, 2 outputs) needs 6"
 } n_umbers []N_GET "data/t2.txt"
-u:m_odel := { g4:x -> nn:s_oftmax (nn:r_elu g4:x nn:d_ense t1) nn:d_ense t2 }
-u:s_ame := ({ g5:x -> nn:s_oftmax (nn:r_elu g5:x nn:d_ense t1) nn:d_ense t2 })
+u:m_odel := { g4:x -> nn:s_oftmax (act:r_elu g4:x nn:d_ense t1) nn:d_ense t2 }
+u:s_ame := ({ g5:x -> nn:s_oftmax (act:r_elu g5:x nn:d_ense t1) nn:d_ense t2 })
 xs := 4 2 r_eshape 0.0 0.0 0.0 1.0 1.0 0.0 1.0 1.0
 c7 := "a model is the network of its loaded weights" k:t_est (u:m_odel xs) k:n_ear u:s_ame xs
 c8 := "its weights have the spec's shapes" k:t_est k:t_rue (((s_hape t1) m_atch 3 2) & ((s_hape t2) m_atch 3 2))

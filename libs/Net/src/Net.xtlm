@@ -10,10 +10,12 @@
 ## is a list of words: sizes and activations, the input's size first:
 ## "784 128 relu 10 softmax". A size after the first is a dense layer
 ## (nn:d_ense, with its weights: one array per layer, the bias its last
-## row); an activation is a function of NN (relu, sigmoid, tanh,
-## softmax, logSoftmax). The expansion calls NN under the alias nn:
-## (an expansion cannot ask which alias the caller chose), so import
-## NN as "nn:" u_se< "NN".
+## row); an activation is a function of Activations (relu, sigmoid,
+## tanh, softplus, silu, gelu, mish, selu, hardSigmoid, hardSwish) or
+## of NN (softmax, logSoftmax). The expansion calls them under the
+## aliases nn: and act: (an expansion cannot ask which alias the caller
+## chose), so import NN as "nn:" u_se< "NN" and Activations as
+## "act:" u_se< "Activations".
 
 ### Reading a spec (private)
 
@@ -28,9 +30,14 @@ h:j_oin := { b ->
 ## Whether the text w is a whole number (a layer's size).
 h:s_ize? := { w -> '& r_/ w m_ember? []D }
 ## Whether the text w names an activation.
-h:a_ct? := { w -> '| r_/ '{ a -> w m_atch d_isclose a } e_ach h:w_ords "relu sigmoid tanh softmax logSoftmax" }
-## An activation's function in NN: relu -> nn:r_elu.
-h:a_ct := { w -> "nn:" c_at (1 t_ake w) c_at "_" c_at 1 d_rop w }
+h:a_ct? := { w -> '| r_/ '{ a -> w m_atch d_isclose a } e_ach h:w_ords actWords }
+## The activation words: Activations' item-by-item ones, then NN's along the rows.
+actWords := "relu sigmoid tanh softplus silu gelu mish selu hardSigmoid hardSwish softmax logSoftmax"
+## The library of the activation word w: NN for those along the rows
+## (softmax, logSoftmax), Activations for the rest.
+h:l_ib := { w -> (w m_atch "softmax") | w m_atch "logSoftmax" ? "nn:"; "act:" }
+## An activation's function: relu -> act:r_elu, softmax -> nn:s_oftmax.
+h:a_ct := { w -> (h:l_ib w) c_at (1 t_ake w) c_at "_" c_at 1 d_rop w }
 ## The spec's sizes, as Ints.
 h:s_izes := { ws -> f_loor n_umbers h:j_oin '{ w -> (h:s_ize? d_isclose w) ? (d_isclose w) c_at " "; "" } m_ap ws }
 ## What a spec looks like, for the messages.
@@ -40,7 +47,7 @@ h:w_rong := { ws ->
   2 > t_ally ws ? specShape
   n_ot h:s_ize? d_isclose f_irst ws ? specShape
   bad := '{ w -> n_ot (h:s_ize? d_isclose w) | h:a_ct? d_isclose w } e_ach ws
-  0 < '+ r_/ 0 + bad ? "not a size or an activation (relu, sigmoid, tanh, softmax, logSoftmax): " c_at d_isclose f_irst (w_here bad) s_elect ws
+  0 < '+ r_/ 0 + bad ? "not a size or an activation (" c_at actWords c_at "): " c_at d_isclose f_irst (w_here bad) s_elect ws
   ""
 }
 
@@ -118,15 +125,20 @@ m:m_odel< := { what spec ->
 
 ### Writing backpropagation (private)
 
-## The function of NN for an activation word (relu -> nn:r_elu); "" for none.
+## The function for an activation word (relu -> act:r_elu); "" for none.
 h:a_ctFn := { w -> 0 = t_ally w ? ""; (h:a_ct w) c_at " " }
-## Its slope at its output A (the name of the array), times which the
-## error goes back through it; "" when there is none.
-h:s_lope := { w a ->
+## Its slope, times which the error goes back through it; "" when there
+## is none. a is the layer's output (a name), z its input before the
+## activation (the text of the dense layer). ReLU, tanh and sigmoid
+## have theirs at the output, as written by hand; the smooth ones
+## cannot, so their derivative in Activations is taken of z, the dense
+## layer computed again.
+h:s_lope := { w (a, z) ->
+  0 = t_ally w ? ""
   w m_atch "relu" ? " * f_loat " c_at a c_at " > 0.0"
   w m_atch "tanh" ? " * 1.0 - " c_at a c_at " * " c_at a
   w m_atch "sigmoid" ? " * " c_at a c_at " * 1.0 - " c_at a
-  ""
+  " * act:d_" c_at w c_at " " c_at z
 }
 ## The activation after each dense layer of the spec's words ws (a box
 ## per layer, "" for none).
@@ -168,7 +180,7 @@ h:b_ackprop := { (Wn, An, Dn, Gn) (ws, xy) ->
   r := r_ange L
   fwd := h:j_oin '{ l -> "  " c_at (An h:n_th l + 1) c_at " := " c_at (h:a_ctFn d_isclose l s_elect acts) c_at (An h:n_th l) c_at " nn:d_ense " c_at (Wn h:n_th l) c_at "\n" } m_ap r
   dL := "  " c_at (Dn h:n_th L) c_at " := (" c_at (An h:n_th L + 1) c_at " - " c_at y c_at ") / f_loat t_ally " c_at x c_at "\n"
-  back := h:j_oin '{ l -> "  " c_at (Dn h:n_th l) c_at " := (" c_at (Dn h:n_th l + 1) c_at " '+ '* i_nner o_\\ -1 d_rop " c_at (Wn h:n_th l + 1) c_at ")" c_at ((d_isclose l s_elect acts) h:s_lope An h:n_th l + 1) c_at "\n" } m_ap r_ev -1 d_rop r
+  back := h:j_oin '{ l -> "  " c_at (Dn h:n_th l) c_at " := (" c_at (Dn h:n_th l + 1) c_at " '+ '* i_nner o_\\ -1 d_rop " c_at (Wn h:n_th l + 1) c_at ")" c_at ((d_isclose l s_elect acts) h:s_lope (An h:n_th l + 1, (An h:n_th l) c_at " nn:d_ense " c_at Wn h:n_th l)) c_at "\n" } m_ap r_ev -1 d_rop r
   grads := h:j_oin '{ l -> "  " c_at (Gn h:n_th l) c_at " := (o_\\ " c_at (An h:n_th l) c_at " c_at_2 ((t_ally " c_at (An h:n_th l) c_at ") c_at 1) r_eshape 1.0) '+ '* i_nner " c_at (Dn h:n_th l) c_at "\n" } m_ap r
   "  " c_at (An h:n_th 1) c_at " := " c_at x c_at "\n" c_at fwd c_at dL c_at back c_at grads
 }

@@ -9,6 +9,7 @@
 ## the weights, 20 digits a step, and p_ower repeats the step.
 
 "nn:" u_se< "NN"
+"act:" u_se< "Activations"
 
 ### The digits, read from data/ (just cnn-backprop-data)
 ## 600 digits to train on, 200 to test with: each a label, then 784 pixels.
@@ -26,7 +27,7 @@ ty := 1 + f_loor r_avel 1 t_ake_2 te
 ## convolution (every 3 x 3 window of every digit, the 8 filters over
 ## them in one matrix product) and pooling, then ReLU's and the dense
 ## layer.
-u:p_robs := { (K, B, W) x -> nn:s_oftmax (((t_ally x) c_at 1352) r_eshape cv:p_ool nn:r_elu (K, B) cv:c_onv x) nn:d_ense W }
+u:p_robs := { (K, B, W) x -> nn:s_oftmax (((t_ally x) c_at 1352) r_eshape cv:p_ool act:r_elu (K, B) cv:c_onv x) nn:d_ense W }
 
 ### Backward: each stage undone, in reverse
 ## The gradients of the loss by K, B and W, for the digits numbered i.
@@ -36,7 +37,7 @@ u:g_rad := { (K, B, W) i ->
   n := t_ally x
   V := cv:w_indows x
   C := (K, B) cv:c_onv x
-  A := nn:r_elu C
+  A := act:r_elu C
   Q := cv:p_ool A
   F := (n c_at 1352) r_eshape Q
   P := nn:s_oftmax F nn:d_ense W

@@ -20,7 +20,7 @@ recommended alias. Designed in X_eTaL (its `docs/spatial.md`,
 
 | Macro | What |
 | ----- | ---- |
-| `@ flow:p_ipe< c"X \|> W1 nn:d_ense it \|> nn:r_elu"` | the value of the pipeline: the data, then each stage in turn |
+| `@ flow:p_ipe< c"X \|> W1 nn:d_ense it \|> act:r_elu"` | the value of the pipeline: the data, then each stage in turn |
 | `@ flow:t_ext< c"..."` | the pipeline written back from the same reading, a string (blanks squeezed) |
 
 The left side is `@`; the whole flow is in the right string, a code
@@ -32,7 +32,7 @@ A plain or raw string reads the same, drawn as typed:
 Y := @ flow:p_ipe< c"
    X
 |> it nn:d_ense W1
-|> nn:r_elu
+|> act:r_elu
 |> it nn:d_ense W2
 |> nn:s_oftmax"
 ```
@@ -45,7 +45,7 @@ Y := @ flow:p_ipe< c"
   copied into the expansion as written, so an error in it is reported
   inside the string. After the first, a stage is one of:
   - a **function**, applied to the previous value: a name
-    (`nn:r_elu`, `t_ally`), a train (`[n_eg r_ev]`), a derived
+    (`act:r_elu`, `t_ally`), a train (`[n_eg r_ev]`), a derived
     function (`'+ r_/`), or a quoted function or lambda (`'n_eg`,
     `'{ v -> v * 2.0 }`; the quote passes it, the macro applies it);
   - an **expression naming the previous value `it`**: `it nn:d_ense W1`,
@@ -118,7 +118,7 @@ Y := ({ @ ->
     it := g1:stage
     it nn:d_ense W1
   } @
-  g3:stage := nn:r_elu g2:stage
+  g3:stage := act:r_elu g2:stage
   g4:stage := { @ ->
     it := g3:stage
     it nn:d_ense W2

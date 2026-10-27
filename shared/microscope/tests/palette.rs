@@ -65,7 +65,7 @@ fn an_error_is_placed_in_the_text_and_a_refused_notation_names_its_rule() {
 #[test]
 fn every_stage_of_the_palette_runs_in_a_pipeline_over_fitting_data() {
     // The data each stage's text names, as the demos name them.
-    let head = "\"flow:\" u_se< \"Flow\"\n\"nn:\" u_se< \"NN\"\n\"nm:\" u_se< \"Norm\"\n\"cv:\" u_se< \"Conv\"\n\"at:\" u_se< \"Attention\"\nX := 2 3 r_eshape 1.0 2.0 3.0 4.0 5.0 7.0\nwb := 4 3 r_eshape 0.5\nb := 0.1 0.2 0.3\ng := 1.0 1.0 1.0\nK := 2 9 r_eshape 0.5\nB := 0.5 -0.25\nP := 1 4 4 r_eshape f_loat r_ange 16\nQ := 1 2 4 4 r_eshape f_loat r_ange 32\nWq := 3 2 r_eshape 0.5\nWk := 3 2 r_eshape 0.25\nM := at:c_ausal 2\nS := (Wq, Wk) at:s_cores X\n";
+    let head = "\"flow:\" u_se< \"Flow\"\n\"nn:\" u_se< \"NN\"\n\"act:\" u_se< \"Activations\"\n\"nm:\" u_se< \"Norm\"\n\"cv:\" u_se< \"Conv\"\n\"at:\" u_se< \"Attention\"\nX := 2 3 r_eshape 1.0 2.0 3.0 4.0 5.0 7.0\nwb := 4 3 r_eshape 0.5\nW := 3 2 r_eshape 0.5\nV := 3 2 r_eshape -0.25\nb := 0.1 0.2 0.3\ng := 1.0 1.0 1.0\nK := 2 9 r_eshape 0.5\nB := 0.5 -0.25\nP := 1 4 4 r_eshape f_loat r_ange 16\nQ := 1 2 4 4 r_eshape f_loat r_ange 32\nWq := 3 2 r_eshape 0.5\nWk := 3 2 r_eshape 0.25\nM := at:c_ausal 2\nS := (Wq, Wk) at:s_cores X\n";
     for p in parts().into_iter().filter(|p| p.group == "Stages") {
         // A convolution stage takes pictures, pooling a batch of maps, the attention weights the scores, the others rows.
         let data = if p.text == "cv:p_ool" { "Q" } else if p.text.contains("cv:") { "P" } else if p.text.contains("at:w_eights") { "S" } else { "X" };

@@ -9,6 +9,7 @@
 ## its own predictions, it plays the ball forward on its own.
 
 "nn:" u_se< "NN"
+"act:" u_se< "Activations"
 
 ### The world
 ## One step of the states s (rows of x y vx vy): move, and bounce off a
@@ -42,7 +43,7 @@ u:w_indow := { s ->
 wb1 := 433 64 r_eshape (n_umbers []N_GET "data/w1.txt") c_at n_umbers []N_GET "data/b1.txt"
 wb2 := 65 144 r_eshape (n_umbers []N_GET "data/w2.txt") c_at n_umbers []N_GET "data/b2.txt"
 ## Each window's next frame, a probability per pixel.
-u:p_redict := { X -> nn:s_igmoid (nn:r_elu X nn:d_ense wb1) nn:d_ense wb2 }
+u:p_redict := { X -> act:s_igmoid (act:r_elu X nn:d_ense wb1) nn:d_ense wb2 }
 ## How many rows of P are the frames T exactly: every pixel on the right side of one half.
 u:e_xact := { P T -> f_loor '+ r_/ 'm_in r_/_2 f_loat (P > 0.5) = T > 0.5 }
 ## The likeliest place for the ball in a predicted frame p: the 2 x 2

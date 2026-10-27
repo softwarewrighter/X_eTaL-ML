@@ -5,6 +5,7 @@
 ## Run with "just demo-lib Net xor"; see it with "just expand-lib Net xor".
 
 "nn:" u_se< "NN"
+"act:" u_se< "Activations"
 "net:" u_se< "Net"
 ## The four points and their classes (1: same, 2: differ).
 x := 4 2 r_eshape 0.0 0.0 0.0 1.0 1.0 0.0 1.0 1.0
@@ -17,7 +18,7 @@ w2 := 3 2 r_eshape 0.0 4.0 0.0 -8.0 0.0 -2.0
 12
 ((s_hape w1) m_atch 3 2) & ((s_hape w2) m_atch 3 2)
 ## The network: a function, written by the macro.
-u:x_or := ({ g1:x -> nn:s_oftmax (nn:r_elu g1:x nn:d_ense w1) nn:d_ense w2 })
+u:x_or := ({ g1:x -> nn:s_oftmax (act:r_elu g1:x nn:d_ense w1) nn:d_ense w2 })
 p := u:x_or x
 p
 nn:a_rgmax p

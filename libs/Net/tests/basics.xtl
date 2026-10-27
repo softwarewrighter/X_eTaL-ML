@@ -1,6 +1,7 @@
 #!/usr/bin/env xetal
 # Net: the three macros. Run with "just run-lib Net basics".
 "nn:" u_se< "NN"
+"act:" u_se< "Activations"
 "net:" u_se< "Net"
 w1 := 3 2 r_eshape 1.0 1.0 1.0 1.0 0.0 -1.0
 w2 := 3 2 r_eshape 0.0 4.0 0.0 -8.0 0.0 -2.0

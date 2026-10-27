@@ -42,7 +42,7 @@ fn sections_cut_between_markers() {
 
 #[test]
 fn a_program_imports_this_repos_libraries() {
-    let out = microscope::run::output("\"nn:\" u_se< \"NN\"\nnn:r_elu -1.0 2.0\n", 1).unwrap();
+    let out = microscope::run::output("\"act:\" u_se< \"Activations\"\nact:r_elu -1.0 2.0\n", 1).unwrap();
     assert_eq!(out, vec!["0.0 2.0".to_string()]);
 }
 
@@ -61,15 +61,15 @@ fn a_program_reads_a_data_file_a_page_added() {
 
 #[test]
 fn a_program_uses_a_macro_library_and_its_expansion_is_shown() {
-    let src = "\"nn:\" u_se< \"NN\"\n\"net:\" u_se< \"Net\"\nw := 3 2 r_eshape 1.0\nu:f_wd := \"2 2 relu\" net:n_etwork< \"w\"\ns_hape u:f_wd 1 2 r_eshape 1.0\n\"2 2 relu\" net:p_arams< @\n";
+    let src = "\"nn:\" u_se< \"NN\"\n\"act:\" u_se< \"Activations\"\n\"net:\" u_se< \"Net\"\nw := 3 2 r_eshape 1.0\nu:f_wd := \"2 2 relu\" net:n_etwork< \"w\"\ns_hape u:f_wd 1 2 r_eshape 1.0\n\"2 2 relu\" net:p_arams< @\n";
     assert_eq!(microscope::run::output(src, 2).unwrap(), vec!["1 2".to_string(), "6".to_string()]);
     let shown = microscope::run::expanded(src).unwrap();
-    assert!(shown.contains("nn:r_elu") && shown.contains("nn:d_ense w"), "{shown}");
+    assert!(shown.contains("act:r_elu") && shown.contains("nn:d_ense w"), "{shown}");
     assert!(shown.lines().any(|l| l == "6"), "{shown}");
 }
 
 #[test]
 fn a_refused_macro_call_is_an_error_with_its_message() {
-    let e = microscope::run::expanded("\"net:\" u_se< \"Net\"\n\"2 2 gelu\" net:p_arams< @\n").unwrap_err();
-    assert!(e.contains("not a size or an activation") && e.contains("gelu"), "{e}");
+    let e = microscope::run::expanded("\"net:\" u_se< \"Net\"\n\"2 2 swiglu\" net:p_arams< @\n").unwrap_err();
+    assert!(e.contains("not a size or an activation") && e.contains("swiglu"), "{e}");
 }
