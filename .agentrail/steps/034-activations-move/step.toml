@@ -1,8 +1,9 @@
 number = 34
 slug = "activations-move"
-status = "in-progress"
+status = "completed"
 description = "| 28 | activations-move | NN loses `r_elu`, `l_eaky`, `s_igmoid`, `t_anh` (it..."
 role = "production"
 context_files = []
 created_at = "2026-10-23T20:17:12"
-commits = []
+completed_at = "2026-10-27T16:31:46"
+commits = ["df5cf4f5e21125878471ddaa7d5e3305705a53d2"]
