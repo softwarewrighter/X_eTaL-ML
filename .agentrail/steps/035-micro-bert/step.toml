@@ -1,0 +1,8 @@
+number = 35
+slug = "micro-bert"
+status = "pending"
+description = "The user, 2026-10-27: BERT as a one-line equation and a demo of it as a tenso..."
+role = "production"
+context_files = []
+created_at = "2026-10-27T16:45:21"
+commits = []
