@@ -1,0 +1,1 @@
+The user, 2026-10-28 (go on the offer): a 3D view of a stage's tensors on the Pipelines page, driven by the same selection as the stage values (a drawn row or a stage chip): the chosen stage's inputs and output drawn as 3D blocks of cells colored by value, rank 1-3, sliced or summarized when large; tests for the geometry; the page's browser baseline.
