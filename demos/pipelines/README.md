@@ -134,6 +134,16 @@ example's own pipeline.
    [Tiny BERT](../micro-bert/README.md) applies two such layers to
    letters.
 
+## What each stage gives
+
+On the page, click a row of a pipeline drawn as math, or a stage under
+a pipeline's code: the stage is highlighted (its row; its text in the
+pipeline and its lines in what it became), and a panel shows what it
+gives, its shape and its numbers as a table colored by sign and size
+(a rank-3 value as slices), or its range and first numbers when it is
+large; a tuple's parts each. The values come from Flow's
+`flow:s_tages<`, every stage's value in one run.
+
 ## Compose your own
 
 The page's last choice is a composer: a program to start from (an

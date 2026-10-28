@@ -4,6 +4,7 @@
 //! what the pipeline became. Nothing here knows about the browser.
 
 use microscope::run::{expanded, numbers, output, section};
+use microscope::source::Range;
 
 /// The command-line programs.
 pub const PIPELINES: &str = include_str!("../../pipelines.xtl");
@@ -63,10 +64,116 @@ pub fn statement(src: &str, name: &str) -> String {
 }
 
 /// The program the page runs for `e`: the head, the example's section,
-/// then its pipeline's value (r_avel) and the report of its checks.
+/// then its pipeline's value (r_avel), the report of its checks, and
+/// every stage's value of the pipeline of equations and of the pipeline
+/// (flow:s_tages<, the same text as each).
 pub fn program(e: &Example) -> String {
     let body = section(e.src, e.from, e.to).trim_end();
-    format!("{}{body}\n\n# -- the run --------------------------------------------\nr_avel {}\nk:r_eport {}\n", head(e.src), e.pipe, e.checks.join(" k:a_nd "))
+    let (math, pipe, _) = calls(e);
+    let drawn = math.iter().find(|m| m.contains("flow:m_ath<")).map_or(String::new(), |m| after(m, "flow:m_ath<"));
+    format!(
+        "{}{body}\n\n# -- the run --------------------------------------------\nr_avel {}\nk:r_eport {}\n\n# -- every stage's value: the equations, the pipeline --\n@ flow:s_tages<{drawn}\n@ flow:s_tages<{}\n",
+        head(e.src),
+        e.pipe,
+        e.checks.join(" k:a_nd "),
+        after(&pipe, "flow:p_ipe<")
+    )
+}
+
+/// The text after `word` in `s` (a call's argument).
+fn after(s: &str, word: &str) -> String {
+    s.find(word).map_or(String::new(), |i| s[i + word.len()..].to_string())
+}
+
+/// One value a stage gives, as flow:s_tages< writes it: its stage's
+/// number (from 1, the data first), its label ("" for none), its shape,
+/// its smallest and largest item, its first items (64 at most).
+#[derive(Clone, Debug, PartialEq)]
+pub struct Value {
+    pub stage: usize,
+    pub label: String,
+    pub shape: Vec<usize>,
+    pub min: f64,
+    pub max: f64,
+    pub items: Vec<f64>,
+}
+
+impl Value {
+    /// How many items it holds.
+    pub fn count(&self) -> usize {
+        self.shape.iter().product()
+    }
+}
+
+/// The records of a flow:s_tages< line.
+pub fn values(line: &str) -> Result<Vec<Value>, String> {
+    line.split(" | ")
+        .map(|r| {
+            let f: Vec<&str> = r.split(';').collect();
+            if f.len() != 6 {
+                return Err(format!("a stage's record has {} fields: {r}", f.len()));
+            }
+            let num = |s: &str| s.trim().parse::<f64>().map_err(|_| format!("not a number: {s}"));
+            Ok(Value {
+                stage: f[0].trim().parse().map_err(|_| format!("not a stage: {}", f[0]))?,
+                label: f[1].to_string(),
+                shape: f[2].split_whitespace().map(|w| w.parse().map_err(|_| format!("not an extent: {w}"))).collect::<Result<_, _>>()?,
+                min: num(f[3])?,
+                max: num(f[4])?,
+                items: f[5].split_whitespace().map(num).collect::<Result<_, _>>()?,
+            })
+        })
+        .collect()
+}
+
+/// Where each stage's text is in a pipeline's statement (the data
+/// first): the pieces between |>, their blanks trimmed.
+pub fn stage_ranges(statement: &str) -> Vec<Range> {
+    let open = statement.find("c#\"").map(|i| i + 3).or_else(|| statement.find("c\"").map(|i| i + 2)).unwrap_or(0);
+    let close = statement.rfind('"').filter(|&c| c > open).unwrap_or(statement.len());
+    let body = &statement[open..close];
+    let mut out = Vec::new();
+    let mut start = 0;
+    for (i, _) in body.match_indices("|>").chain(std::iter::once((body.len(), ""))) {
+        let piece = &body[start..i];
+        let lead = piece.len() - piece.trim_start().len();
+        out.push((open + start + lead, open + start + piece.trim_end().len()));
+        start = i + 2;
+    }
+    out
+}
+
+/// Where each stage's lines are in a pipeline's expansion: the lines
+/// binding its value (two blanks in, not a shape check's _ :=) through
+/// the line before the next stage's, a stage's check included.
+pub fn expansion_ranges(expansion: &str) -> Vec<Range> {
+    let mut starts = Vec::new();
+    let mut at = 0;
+    for line in expansion.split_inclusive('\n') {
+        if line.starts_with("  ") && !line.starts_with("   ") && line.contains(" := ") && !line.starts_with("  _ := ") {
+            starts.push(at);
+        }
+        at += line.len();
+    }
+    let end = expansion.rfind("\n  ").map_or(expansion.len(), |i| i);
+    starts.iter().enumerate().map(|(k, &s)| (s, starts.get(k + 1).map_or(end, |&n| n - 1))).collect()
+}
+
+/// A pipeline drawn as math, each row's stage clickable: the part after
+/// each row's & wrapped as \htmlClass{st st-K}{...} (K from 1, the data
+/// first), the row `on` also of class st-on.
+pub fn clickable(tex: &str, on: Option<usize>) -> String {
+    let (head, tail) = ("\\begin{aligned} ", " \\end{aligned}");
+    let Some(body) = tex.strip_prefix(head).and_then(|b| b.strip_suffix(tail)) else { return tex.to_string() };
+    let rows: Vec<String> = body
+        .split(" \\\\ ")
+        .enumerate()
+        .map(|(k, row)| match row.find("& ") {
+            Some(i) => format!("{}& \\htmlClass{{st st-{}{}}}{{{}}}", &row[..i], k + 1, if on == Some(k + 1) { " st-on" } else { "" }, &row[i + 2..]),
+            None => row.to_string(),
+        })
+        .collect();
+    format!("{head}{}{tail}", rows.join(" \\\\ "))
 }
 
 /// What one run gave.
@@ -80,13 +187,18 @@ pub struct Run {
     pub checks: Vec<String>,
     /// What the pipeline's statement became (`xetal expand`).
     pub expansion: String,
+    /// What each stage gives: of the pipeline of equations (drawn as
+    /// math), and of the pipeline.
+    pub drawn: Vec<Value>,
+    pub stages: Vec<Value>,
 }
 
 /// Run `e`'s program and expand it.
 pub fn run(e: &Example) -> Result<Run, String> {
     let src = program(e);
     let tex = e.math.len();
-    let out = output(&src, tex + 2 + e.checks.len())?;
+    let out = output(&src, tex + 2 + e.checks.len() + 2)?;
+    let n = out.len();
     let all = expanded(&src)?;
     // The pipeline's statement, its name at the start of a line (eqpipe
     // := is not pipe :=): through the block's closing line.
@@ -97,8 +209,10 @@ pub fn run(e: &Example) -> Result<Run, String> {
     Ok(Run {
         tex: out[..tex].to_vec(),
         value: numbers(&out[tex], out[tex].split_whitespace().count())?,
-        checks: out[tex + 1..].to_vec(),
+        checks: out[tex + 1..n - 2].to_vec(),
         expansion,
+        drawn: values(&out[n - 2])?,
+        stages: values(&out[n - 1])?,
     })
 }
 

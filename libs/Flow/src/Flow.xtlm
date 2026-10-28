@@ -58,6 +58,18 @@ m:t_ext< := { @ text -> "\"" c_at (h:e_scape h:s_how h:r_ead text) c_at "\"" }
 ## \begin{aligned} & x \qquad \triangleright \, s \\ \longrightarrow \; & \texttt{2 * it} \\ \longrightarrow \; & \texttt{it + s} \end{aligned}
 m:m_ath< := { @ text -> h:d_raw h:r_ead text }
 
+## Every stage's value, as one line of text: a record per value, " | "
+## between them, each its stage's number, its label ("" for none), its
+## shape, its smallest and largest item and its first 64 items, ";"
+## between the fields; a tuple's parts a record each. For pages that
+## show what each stage gives; the values are those flow:p_ipe< gives.
+## uses: parsed
+## >> "flow:" u_se< "Flow"
+## >> x := f_loat 1 2 3
+## >> @ flow:s_tages< c"x |> 2 * it $y"
+## 1;;3;1.0;3.0;1.0 2.0 3.0 | 2;y;3;2.0;6.0;2.0 4.0 6.0
+m:s_tages< := { @ text -> h:t_race h:r_ead text }
+
 ### Reading the call
 
 ## The stages of text as (expressions, names, shapes), each a boxed
@@ -366,6 +378,30 @@ h:l_atexChar := { ch ->
 
 ## s as a raw string literal, r#"s"#: a backslash stays a backslash.
 h:r_aw := { s -> "r#\"" c_at s c_at "\"#" }
+
+### Tracing the stages
+
+## The expansion as flow:p_ipe< writes it, the last line the records of
+## every stage's value instead of the last value.
+h:t_race := { (es, bs, ss) ->
+  n := t_ally es
+  names := '{ i -> b := d_isclose i s_elect bs; 0 = t_ally b ? []G_ENSYM "stage"; b } m_ap r_ange n
+  lines := '{ i -> (es, ss, names) h:l_ine i } m_ap r_ange n
+  records := '{ i -> h:r_ecords (i, d_isclose i s_elect bs, d_isclose i s_elect names) } m_ap r_ange n
+  "{ @ ->\n" c_at ("" t:j_oin lines) c_at "  " c_at (" c_at \" | \" c_at " t:j_oin records) c_at "\n} @"
+}
+
+## The records of stage i's value (the name it is bound to): one, or
+## one per part of a tuple label, as code giving text.
+h:r_ecords := { (i, b, name) ->
+  "(" m_atch 1 t_ake b c_at " " ? " c_at \" | \" c_at " t:j_oin '{ p -> (i, d_isclose p) h:r_ecord d_isclose p } m_ap h:p_arts b
+  (i, b) h:r_ecord name
+}
+
+## One value's record, as code giving text.
+h:r_ecord := { (i, label) v ->
+  "(\"" c_at (f_ormat i) c_at ";" c_at label c_at ";\" c_at (f_ormat s_hape " c_at v c_at ") c_at \";\" c_at (f_ormat 'm_in r_/ r_avel " c_at v c_at ") c_at \";\" c_at (f_ormat 'm_ax r_/ r_avel " c_at v c_at ") c_at \";\" c_at f_ormat (64 m_in t_ally r_avel " c_at v c_at ") t_ake r_avel " c_at v c_at ")"
+}
 
 ### Writing the call back
 

@@ -1,6 +1,6 @@
 number = 38
 slug = "stage-values"
-status = "pending"
+status = "in-progress"
 description = "The user, 2026-10-27: see the data at each pipe stage: make a stage's line cl..."
 role = "production"
 context_files = []

@@ -6,18 +6,27 @@
 use yew::prelude::*;
 
 use microscope::chrome::{footer, header, panel};
+use microscope::color::{ramp, DIVERGE};
 use microscope::palette::Composer;
 use microscope::source::{between, block, code, NONE};
 
-use crate::micro::{calls, program, run, Example, Run, EXAMPLES, STARTERS};
+use crate::micro::{calls, clickable, expansion_ranges, program, run, stage_ranges, Example, Run, Value, EXAMPLES, STARTERS};
 
-fn picker(picked: &UseStateHandle<usize>) -> Html {
+/// The stage chosen: of the pipeline of equations (drawn as math) or of
+/// the pipeline, its number from 1 (the data first).
+#[derive(Clone, Copy, Debug, PartialEq)]
+pub enum Chosen {
+    Drawn(usize),
+    Piped(usize),
+}
+
+fn picker(picked: &UseStateHandle<usize>, chosen: &UseStateHandle<Option<Chosen>>) -> Html {
     html! {
         <div class="controls">
             <span>{"An example: "}</span>
             { for EXAMPLES.iter().map(|e| e.title).chain(["Compose your own"]).enumerate().map(|(i, title)| {
-                let p = picked.clone();
-                html! { <button class={classes!((**picked == i).then_some("on"))} onclick={Callback::from(move |_| p.set(i))}>{title}</button> }
+                let (p, c) = (picked.clone(), chosen.clone());
+                html! { <button class={classes!((**picked == i).then_some("on"))} onclick={Callback::from(move |_| { p.set(i); c.set(None); })}>{title}</button> }
             }) }
         </div>
     }
@@ -26,8 +35,23 @@ fn picker(picked: &UseStateHandle<usize>) -> Html {
 /// The equations, each drawn as math where KaTeX has loaded
 /// (index.html), its LaTeX as text where it has not, above the call
 /// that reads it.
-fn math(e: &Example, r: &Run) -> Html {
+fn math(e: &Example, r: &Run, chosen: &UseStateHandle<Option<Chosen>>) -> Html {
     let calls = calls(e).0;
+    let on = match **chosen {
+        Some(Chosen::Drawn(k)) => Some(k),
+        _ => None,
+    };
+    // A click on a drawn row chooses its stage (its class st-K).
+    let c = chosen.clone();
+    let pick = Callback::from(move |ev: MouseEvent| {
+        let stage = ev
+            .target_dyn_into::<web_sys::Element>()
+            .and_then(|el| el.closest(".st").ok().flatten())
+            .and_then(|el| el.class_name().split_whitespace().find_map(|w| w.strip_prefix("st-").and_then(|n| n.parse::<usize>().ok())));
+        if let Some(k) = stage {
+            c.set(Some(Chosen::Drawn(k)));
+        }
+    });
     if calls.is_empty() {
         return html! {};
     }
@@ -36,10 +60,14 @@ fn math(e: &Example, r: &Run) -> Html {
         if paper { "The equation as a paper prints it first, read by Equations (e:e_q< its value, e:t_ex< its LaTeX, one reading of the same text; a sum whose term uses the one before is one step, applied by p_ower). " } else { "" });
     panel("As math", "flow:m_ath<", &note,
         false, html! { <>
-            { for calls.iter().zip(&r.tex).map(|(call, tex)| html! { <>
-                <div class="tex" style="overflow-x: auto" data-tex={tex.clone()}>{tex.clone()}</div>
-                { block(call, NONE) }
-            </> }) }
+            { for calls.iter().zip(&r.tex).map(|(call, tex)| {
+                let shown = if call.contains("flow:m_ath<") { clickable(tex, on) } else { tex.clone() };
+                html! { <>
+                    <div class="tex" style="overflow-x: auto" onclick={pick.clone()} data-tex={shown.clone()}>{shown.clone()}</div>
+                    { block(call, NONE) }
+                </> }
+            }) }
+            <p class="note">{"Click a row of the pipeline drawn as math, or a stage under the pipeline below, to see what it gives."}</p>
         </> })
 }
 
@@ -51,21 +79,75 @@ fn about(e: &Example) -> Html {
     html! { <p class="note">{e.about}{ for e.link.iter().map(|(title, href)| html! { <>{" The whole model: "}<a href={*href} style="color: var(--accent)">{*title}</a>{"."}</> }) }</p> }
 }
 
-fn columns(e: &Example, r: &Run) -> Html {
+fn columns(e: &Example, r: &Run, chosen: &UseStateHandle<Option<Chosen>>) -> Html {
     let (_, pipe, plain) = calls(e);
+    let on = match **chosen {
+        Some(Chosen::Piped(k)) => Some(k),
+        _ => None,
+    };
+    let texts = stage_ranges(&pipe);
+    let lines = expansion_ranges(&r.expansion);
+    let at = |ranges: &[(usize, usize)]| on.and_then(|k| ranges.get(k - 1).copied()).unwrap_or(NONE);
+    let chips = html! { <div class="stages">
+        { for (1..=texts.len()).map(|k| {
+            let c = chosen.clone();
+            let label = r.stages.iter().filter(|v| v.stage == k).map(|v| v.label.clone()).filter(|l| !l.is_empty()).collect::<Vec<_>>().join(", ");
+            let title = if label.is_empty() { format!("stage {k}") } else { format!("stage {k}: {label}") };
+            html! { <button class={classes!((on == Some(k)).then_some("on"))} onclick={Callback::from(move |_| c.set(Some(Chosen::Piped(k))))}>{title}</button> }
+        }) }
+    </div> };
     html! {
         <div class="layout three">
             <div class="col">{ panel("The pipeline", "flow:p_ipe<",
                 "Data flow, left to right: the data, then each stage, |> between them; it names the previous value, $ labels a stage's value for later stages.",
-                true, block(&pipe, NONE)) }</div>
+                true, html! { <>{ block(&pipe, at(&texts)) }{ chips }</> }) }</div>
             <div class="col">{ panel("What it became", "xetal expand",
                 "What the Flow macro wrote in its place when the program was compiled: one line per stage, each value named, type-checked like any code.",
-                false, block(&r.expansion, NONE)) }</div>
+                false, block(&r.expansion, at(&lines))) }</div>
             <div class="col">{ panel("Plain X_eTaL", "the library",
                 "The same layer as this repository's libraries write it, without a pipeline.",
                 false, block(&plain, NONE)) }</div>
         </div>
     }
+}
+
+/// What the chosen stage gives: each value (a tuple's parts each), its
+/// shape, its numbers as a table colored by sign and size when it fits
+/// (64 items at most, slices of a rank-3 array), else its range and its
+/// first numbers.
+fn gives(r: &Run, chosen: &UseStateHandle<Option<Chosen>>) -> Html {
+    let (trace, k, whose) = match **chosen {
+        Some(Chosen::Drawn(k)) => (&r.drawn, k, "of the pipeline of equations"),
+        Some(Chosen::Piped(k)) => (&r.stages, k, "of the pipeline"),
+        None => return html! {},
+    };
+    let vs: Vec<&Value> = trace.iter().filter(|v| v.stage == k).collect();
+    let title = format!("Stage {k} {whose} gives");
+    panel(&title, "flow:s_tages<", "Computed as the page runs, the same values the pipeline passes on (Flow's s_tages< keeps every stage's value).", false, html! { <>
+        { for vs.iter().map(|v| value(v)) }
+    </> })
+}
+
+fn value(v: &Value) -> Html {
+    let name = if v.label.is_empty() { String::new() } else { format!("{}: ", v.label) };
+    let shape = if v.shape.is_empty() { "one number".to_string() } else { v.shape.iter().map(|n| n.to_string()).collect::<Vec<_>>().join(" \u{00d7} ") };
+    let size = v.items.iter().fold(0.0f64, |m, x| m.max(x.abs())).max(1e-300);
+    let cell = |x: f64| {
+        let c = ramp(&DIVERGE, 0.5 + 0.5 * x / size);
+        html! { <td style={format!("background: rgb({}, {}, {})", c[0], c[1], c[2])}>{format!("{x:.3}")}</td> }
+    };
+    let table = |rows: usize, cols: usize, from: usize| html! { <table class="items">
+        { for (0..rows).map(|i| html! { <tr>{ for (0..cols).map(|j| cell(v.items[from + i * cols + j])) }</tr> }) }
+    </table> };
+    let fits = v.count() <= 64 && v.items.len() == v.count();
+    let body = match (fits, v.shape.as_slice()) {
+        (true, []) => table(1, 1, 0),
+        (true, [n]) => table(1, *n, 0),
+        (true, [r, c]) => table(*r, *c, 0),
+        (true, [s, r, c]) => html! { <>{ for (0..*s).map(|i| table(*r, *c, i * r * c)) }</> },
+        _ => html! { <p class="calc">{format!("from {:.4} to {:.4}; the first numbers: {}", v.min, v.max, v.items.iter().take(8).map(|x| format!("{x:.4}")).collect::<Vec<_>>().join(" "))}</p> },
+    };
+    html! { <div class="value"><p class="calc">{ code(&format!("{name}{shape}")) }</p>{ body }</div> }
 }
 
 fn agree(e: &Example, r: &Run) -> Html {
@@ -80,6 +162,7 @@ fn agree(e: &Example, r: &Run) -> Html {
 #[function_component(App)]
 pub fn app() -> Html {
     let picked = use_state(|| 0usize);
+    let chosen = use_state(|| None::<Chosen>);
     // The last choice is composing one's own, from the palette.
     let main = if *picked >= EXAMPLES.len() {
         html! { <Composer starters={STARTERS.to_vec()} /> }
@@ -87,10 +170,14 @@ pub fn app() -> Html {
         let e = EXAMPLES[*picked];
         let src = program(&e);
         let body = match run(&e) {
-            Ok(r) => html! { <>{ about(&e) }{ math(&e, &r) }{ columns(&e, &r) }{ agree(&e, &r) }</> },
+            Ok(r) => {
+                // What a stage gives, beside where it was chosen.
+                let drawn = matches!(*chosen, Some(Chosen::Drawn(_)));
+                html! { <>{ about(&e) }{ math(&e, &r, &chosen) }{ if drawn { gives(&r, &chosen) } else { html! {} } }{ columns(&e, &r, &chosen) }{ if drawn { html! {} } else { gives(&r, &chosen) } }{ agree(&e, &r) }</> }
+            }
             Err(why) => html! { <p class="error">{format!("X_eTaL stopped: {why}")}</p> },
         };
-        let from = format!("{} := ", e.pipe);
+        let from = format!("\n{} := ", e.pipe);
         html! { <>
             { body }
             <section class="panel code">
@@ -104,7 +191,7 @@ pub fn app() -> Html {
         <>
         <header>
             { header("Pipelines", "A layer written as data flow: Flow's pipelines, left to right, |> between the stages, on this repository's libraries, each beside what it became and the same layer in plain X_eTaL. A CNN layer and a diffusion sampler are shown four ways: as a paper prints them, as a pipeline, as its expansion and as plain X_eTaL, all computing the same values. Every example is also written as a pipeline of equations, drawn as math a row a stage. Compose your own from a palette of the notations' parts.") }
-            { picker(&picked) }
+            { picker(&picked, &chosen) }
         </header>
         <main>
             { main }

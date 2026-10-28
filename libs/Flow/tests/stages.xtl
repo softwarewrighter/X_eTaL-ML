@@ -1,0 +1,30 @@
+#!/usr/bin/env xetal
+# Flow: every stage's value, as flow:s_tages< gives it for pages that
+# show what each stage gives: a record per value (a tuple label's parts
+# a record each), its stage's number, label, shape, smallest and
+# largest item and first items. Each record is checked against the
+# stage computed alone.
+"flow:" u_se< "Flow"
+"t:" u_se< "Strings"
+"k:" u_se< "Check"
+X := 3 4 r_eshape 0.1 * f_loat r_ange 12
+W := 4 2 r_eshape 1.0 -1.0 0.5 2.0 0.0 1.0 -0.5 0.25
+b := 0.1 -0.2
+## A labeled stage, an unlabeled one, a scalar at the end.
+s1 := @ flow:s_tages< c"X |> it '+ '* i_nner W $p [3 2] |> p + 3 2 r_eshape b |> '+ r_/ r_avel it"
+s1
+r := " | " t:s_plit s1
+u:f_ields := { i -> ";" t:s_plit d_isclose i s_elect r }
+c1 := "a record per stage, the data first" k:t_est 4 k:i_s t_ally r
+c2 := "the data, its shape and range" k:t_est ("1" "" "3 4" "0.1" "1.2000000000000002") k:i_s 5 t_ake u:f_ields 1
+c3 := "a labeled stage, its values those of the stage alone" k:t_est (d_isclose 6 s_elect u:f_ields 2) k:i_s f_ormat r_avel X '+ '* i_nner W
+c4 := "a scalar has an empty shape" k:t_est ("4" "" "") k:i_s 3 t_ake u:f_ields 4
+c5 := "the last value is the pipeline's" k:t_est (d_isclose 6 s_elect u:f_ields 4) k:i_s f_ormat @ flow:p_ipe< c"X |> it '+ '* i_nner W $p [3 2] |> p + 3 2 r_eshape b |> '+ r_/ r_avel it"
+## A tuple label: a record per part.
+s2 := @ flow:s_tages< c#"X |> (it '+ '* i_nner W, 2.0 * it '+ '* i_nner W) $(Q, K) |> K - Q"#
+q := " | " t:s_plit s2
+c6 := "a tuple's parts, a record each" k:t_est ("2;Q" "2;K") k:i_s '{ i -> 3 t_ake d_isclose i s_elect q } m_ap 2 3
+## At most 64 items are given.
+s3 := @ flow:s_tages< c"f_loat r_ange 100 |> 2.0 * it"
+c7 := "64 items at most" k:t_est 64 k:i_s t_ally t:w_ords d_isclose 6 s_elect ";" t:s_plit d_isclose 1 s_elect " | " t:s_plit s3
+k:r_eport c1 k:a_nd c2 k:a_nd c3 k:a_nd c4 k:a_nd c5 k:a_nd c6 k:a_nd c7

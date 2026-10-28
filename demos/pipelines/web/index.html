@@ -18,12 +18,24 @@
       if (!window.katex) return;
       document.querySelectorAll(".tex[data-tex]").forEach(function (el) {
         if (el.dataset.drawn === el.dataset.tex) return;
-        try { katex.render(el.dataset.tex, el, { displayMode: true, throwOnError: false }); el.dataset.drawn = el.dataset.tex; } catch (e) {}
+        try { katex.render(el.dataset.tex, el, { displayMode: true, throwOnError: false, trust: function (c) { return c.command === "\\htmlClass"; } }); el.dataset.drawn = el.dataset.tex; } catch (e) {}
       });
     }
     new MutationObserver(drawTex).observe(document.documentElement, { childList: true, subtree: true });
     window.addEventListener("load", drawTex);
   </script>
+  <style>
+    /* A stage of a pipeline drawn as math, clickable; the one chosen. */
+    .st { cursor: pointer; border-radius: 3px; padding: 0 2px; }
+    .st:hover { outline: 1px dashed var(--accent); }
+    .st-on { background: rgba(255, 138, 76, 0.22); outline: 1px solid var(--sel); }
+    .stages { display: flex; flex-wrap: wrap; gap: 4px; margin: 6px 0; }
+    .stages button { background: var(--off); color: var(--on); border: 1px solid rgba(128, 128, 128, 0.5); border-radius: 6px; padding: 2px 8px; font: inherit; font-size: 0.85em; cursor: pointer; }
+    .stages button:hover { border-color: var(--accent); }
+    .stages button.on { border-color: var(--sel); color: var(--sel); }
+    table.items { margin: 0 0 6px 0; }
+    table.items td { padding: 2px 6px; text-align: right; font-variant-numeric: tabular-nums; color: #111; }
+  </style>
 </head>
 <body></body>
 </html>

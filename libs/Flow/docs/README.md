@@ -23,6 +23,7 @@ recommended alias. Designed in X_eTaL (its `docs/spatial.md`,
 | `@ flow:p_ipe< c"X \|> W1 nn:d_ense it \|> act:r_elu"` | the value of the pipeline: the data, then each stage in turn |
 | `@ flow:t_ext< c"..."` | the pipeline written back from the same reading, a string (blanks squeezed) |
 | `@ flow:m_ath< c"..."` | the pipeline drawn as math, a LaTeX string: a row a stage (see Pipelines of equations) |
+| `@ flow:s_tages< c"..."` | every stage's value as one line of text, for a page that shows what each stage gives: a record per value (a tuple label's parts each), `number;label;shape;smallest;largest;first 64 items`, `" \| "` between |
 
 The left side is `@`; the whole flow is in the right string, a code
 string (`c"..."`, X_eTaL ST5): editors and pages draw its inside as
@@ -240,6 +241,9 @@ x $s |> 2 * it |> it + s
   a shape that holds, the data alone) against plain X_eTaL.
 - `roundtrip.xtl`: `flow:t_ext<` gives the pipeline back, `|>` inside
   brackets and strings included.
+- `stages.xtl`: `flow:s_tages<`, a record per stage and per part of a
+  tuple label, each equal to the stage computed alone, at most 64
+  items.
 - `equations.xtl`: equations as stages (a dense layer and ReLU; a
   softmax by row, equations and code mixed) against the same written
   out, and both drawn by `flow:m_ath<`.

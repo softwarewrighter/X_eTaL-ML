@@ -1,3 +1,4 @@
 m:p_ipe< : Unit -> Char -> Char
 m:t_ext< : Unit -> Char -> Char
 m:m_ath< : Unit -> Char -> Char
+m:s_tages< : Unit -> Char -> Char

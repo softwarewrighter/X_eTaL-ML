@@ -150,3 +150,40 @@ fn every_example_draws_a_pipeline_of_equations_that_computes() {
     assert!(bert.tex[0].contains("G_{i,k} = \\frac{f_{i,k}}{1 + \\exp(-2 \\, u_{i,k})}") && bert.tex[0].contains("\\triangleright \\, out: n \\times 3"), "{}", bert.tex[0]);
     assert!(EQUATIONS.contains("Tiny BERT, demos/micro-bert"));
 }
+
+#[test]
+fn every_stage_gives_its_value_and_the_last_is_the_pipelines() {
+    use pipelines_web::micro::{clickable, expansion_ranges, stage_ranges};
+    for e in EXAMPLES {
+        let r = run(&e).unwrap_or_else(|why| panic!("{}: {why}", e.title));
+        let (math, pipe, _) = calls(&e);
+        let drawn = math.iter().find(|m| m.contains("flow:m_ath<")).unwrap();
+        // A record per stage of the pipeline of equations, in order, the data first.
+        let rows = drawn.matches("|>").count() + 1;
+        assert_eq!(r.drawn.iter().map(|v| v.stage).collect::<Vec<_>>(), (1..=rows).collect::<Vec<_>>(), "{}", e.title);
+        // Both end in the example's value; every record holds its items or its first 64.
+        for trace in [&r.drawn, &r.stages] {
+            let last = trace.last().unwrap();
+            assert_eq!(last.items.len(), r.value.len().min(64), "{}", e.title);
+            assert!(last.items.iter().zip(&r.value).all(|(a, b)| (a - b).abs() < 1e-9), "{}: {:?} {:?}", e.title, last.items, r.value);
+            for v in trace.iter() {
+                assert_eq!(v.items.len(), v.count().min(64), "{}: stage {}", e.title, v.stage);
+                assert!(v.items.iter().all(|&x| v.min <= x && x <= v.max), "{}: stage {}", e.title, v.stage);
+            }
+        }
+        // The pipeline's stages: a record each (a tuple's parts each), a range of its text each, a range of its expansion each.
+        let stages = pipe.matches("|>").count() + 1;
+        assert_eq!(r.stages.last().unwrap().stage, stages, "{}", e.title);
+        let ranges = stage_ranges(&pipe);
+        assert_eq!(ranges.len(), stages, "{}", e.title);
+        assert_eq!(&pipe[ranges[1].0..ranges[1].0 + 1], pipe.split("|>").nth(1).unwrap().trim_start().get(..1).unwrap(), "{}", e.title);
+        let lines = expansion_ranges(&r.expansion);
+        assert_eq!(lines.len(), stages, "{}: {:?}", e.title, lines);
+        assert!(r.expansion[lines[stages - 1].0..lines[stages - 1].1].contains(":="), "{}", e.title);
+        // The math, clickable a row a stage, the chosen one marked.
+        let c = clickable(&r.tex.iter().find(|t| t.starts_with("\\begin{aligned}")).unwrap(), Some(2));
+        assert_eq!(c.matches("\\htmlClass{st st-").count(), rows, "{c}");
+        assert_eq!(c.matches("st-on").count(), 1, "{c}");
+        assert!(c.starts_with("\\begin{aligned} & \\htmlClass{st st-1}{"), "{c}");
+    }
+}
