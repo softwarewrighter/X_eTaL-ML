@@ -1,8 +1,9 @@
 number = 35
 slug = "micro-bert"
-status = "in-progress"
+status = "completed"
 description = "The user, 2026-10-27: BERT as a one-line equation and a demo of it as a tenso..."
 role = "production"
 context_files = []
 created_at = "2026-10-27T16:45:21"
-commits = []
+completed_at = "2026-10-27T18:29:46"
+commits = ["3f2d6e7ff0f0e405e8f501db4915bb70916281cb"]
