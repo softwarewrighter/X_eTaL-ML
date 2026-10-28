@@ -1,0 +1,39 @@
+#!/usr/bin/env xetal
+# Flow: stages that are equations. An Equations call names its arrays
+# inside its strings (x[i,j], it[i,k]), where Flow does not look for
+# code; a stage that calls a macro counts the names in its strings too,
+# and one naming it gets the previous value as it. Each pipeline is
+# checked against the same layer written out, and drawn as LaTeX by
+# flow:m_ath<, one row a stage, the equations as Equations draws them.
+"e:" u_se< "Equations"
+"act:" u_se< "Activations"
+"flow:" u_se< "Flow"
+"k:" u_se< "Check"
+X := 2 3 r_eshape 1.0 -2.0 3.0 4.0 5.0 -6.0
+W := 3 2 r_eshape 0.5 -1.0 1.0 0.0 0.25 2.0
+## A dense layer and ReLU, each stage an equation: the second reads the
+## first by its label.
+p1 := @ flow:p_ipe< c#"
+   X
+|> "H[i,k] | 2 2" e:e_q< "sum j:=0..2 | it[i,j] * W[j,k]" $h [2 2]
+|> "Y[i,k] | 2 2" e:e_q< "max(h[i,k], 0)""#
+c1 := "equations as stages: a dense layer and ReLU" k:t_est p1 k:n_ear act:r_elu X '+ '* i_nner W
+## Equations and code mixed: the softmax of each row, its largest taken
+## off first by a code stage.
+p2 := @ flow:p_ipe< c#"
+   X $x
+|> 'm_ax r_/_2 it $m
+|> "E[i,j] | 2 3" e:e_q< "exp(x[i,j] - m[i])" $e
+|> "P[i,j] | 2 3" e:e_q< "e[i,j] / (sum c:=0..2 | e[i,c])""#
+c2 := "equations and code in one pipeline: softmax by row" k:t_est (r_avel p2) k:n_ear r_avel (e_xp X - o_\ 3 2 r_eshape 'm_ax r_/_2 X) / o_\ 3 2 r_eshape '+ r_/_2 e_xp X - o_\ 3 2 r_eshape 'm_ax r_/_2 X
+k:r_eport c1 k:a_nd c2
+## The two pipelines drawn.
+@ flow:m_ath< c#"
+   X
+|> "H[i,k] | 2 2" e:e_q< "sum j:=0..2 | it[i,j] * W[j,k]" $h [2 2]
+|> "Y[i,k] | 2 2" e:e_q< "max(h[i,k], 0)""#
+@ flow:m_ath< c#"
+   X $x
+|> 'm_ax r_/_2 it $m
+|> "E[i,j] | 2 3" e:e_q< "exp(x[i,j] - m[i])" $e
+|> "P[i,j] | 2 3" e:e_q< "e[i,j] / (sum c:=0..2 | e[i,c])""#

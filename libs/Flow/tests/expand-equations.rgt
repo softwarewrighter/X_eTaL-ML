@@ -1,0 +1,2 @@
+command = "../../../scripts/xt expand equations.xtl"
+exit_code = 0

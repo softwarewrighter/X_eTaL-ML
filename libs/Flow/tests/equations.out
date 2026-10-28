@@ -1,0 +1,5 @@
+ok: equations as stages: a dense layer and ReLU
+ok: equations and code in one pipeline: softmax by row
+2 checks, all passed
+\begin{aligned} & X \\ \longrightarrow \; & H_{i,k} = \sum_{j=0}^{2} X_{i,j} \, W_{j,k} \qquad \triangleright \, h: 2 \times 2 \\ \longrightarrow \; & Y_{i,k} = \max(h_{i,k}, 0) \end{aligned}
+\begin{aligned} & X \qquad \triangleright \, x \\ \longrightarrow \; & \texttt{'m\_ax r\_/\_2 it} \qquad \triangleright \, m \\ \longrightarrow \; & E_{i,j} = \exp(x_{i,j} - m_{i}) \qquad \triangleright \, e \\ \longrightarrow \; & P_{i,j} = \frac{e_{i,j}}{\sum_{c=0}^{2} e_{i,c}} \end{aligned}

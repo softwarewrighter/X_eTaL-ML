@@ -22,6 +22,7 @@ recommended alias. Designed in X_eTaL (its `docs/spatial.md`,
 | ----- | ---- |
 | `@ flow:p_ipe< c"X \|> W1 nn:d_ense it \|> act:r_elu"` | the value of the pipeline: the data, then each stage in turn |
 | `@ flow:t_ext< c"..."` | the pipeline written back from the same reading, a string (blanks squeezed) |
+| `@ flow:m_ath< c"..."` | the pipeline drawn as math, a LaTeX string: a row a stage (see Pipelines of equations) |
 
 The left side is `@`; the whole flow is in the right string, a code
 string (`c"..."`, X_eTaL ST5): editors and pages draw its inside as
@@ -54,6 +55,11 @@ Y := @ flow:p_ipe< c"
     MC30), so a stage cannot bind an `it` of its own;
   - an **expression of names the pipeline bound before it**:
     `e / '+ r_/ e`, `P + (s_hape P) r_eshape b`.
+  A stage that calls a macro, an equation of X_eTaL-libraries'
+  Equations above all, names its arrays inside its strings
+  (`"Y[i,k] | n d" e:e_q< "max(h[i,k], 0)"`); Flow counts the names
+  in such a stage's strings too, `it` among them, and Equations checks
+  each name and index.
   Anything else (`3`, `X`) is refused: it can be neither applied nor
   joined.
 - **`$name`** at a stage's end, the `$` touching the name (X_eTaL's
@@ -73,6 +79,35 @@ Y := @ flow:p_ipe< c"
   or refutes the annotation before the program runs is X_eTaL's work
   (its step shape-lint); the run-time check stays as the backstop.
 - **The value** of the call is the last stage's.
+
+## Pipelines of equations
+
+Each stage can be an equation, so a layer is written the way a paper
+writes it, a line at a time, left to right. The pipeline is then a
+raw code string, `c#"..."#`, which may hold the equations' quotes:
+
+```
+Y := @ flow:p_ipe< c#"
+   X
+|> "H[i,k] | 2 2" e:e_q< "sum j:=0..2 | it[i,j] * W[j,k]" $h [2 2]
+|> "Y[i,k] | 2 2" e:e_q< "max(h[i,k], 0)""#
+```
+
+`flow:m_ath<` draws the same text as math, for KaTeX or LaTeX: an
+aligned display of a row per stage, an arrow before each stage after
+the data, each label after the stage it names (a triangle, as X_eTaL
+draws `$`, with its shape); an equation as Equations draws it (the
+call's `e:e_q<` becomes `e:t_ex<`, the same strings), with `it` under
+the name the value came with; any other stage as code:
+
+```
+\begin{aligned} & X \\ \longrightarrow \; & H_{i,k} = \sum_{j=0}^{2} X_{i,j} \, W_{j,k} \qquad \triangleright \, h: 2 \times 2 \\ \longrightarrow \; & Y_{i,k} = \max(h_{i,k}, 0) \end{aligned}
+```
+
+The drawing reads the call by the rules `flow:p_ipe<` reads it, so
+what is drawn is a pipeline that computes. The Pipelines demo
+(`demos/pipelines`, equations.xtl) draws an attention head written as
+equations and a BERT layer.
 
 ## What is refused
 
@@ -198,9 +233,13 @@ x $s |> 2 * it |> it + s
   a shape that holds, the data alone) against plain X_eTaL.
 - `roundtrip.xtl`: `flow:t_ext<` gives the pipeline back, `|>` inside
   brackets and strings included.
+- `equations.xtl`: equations as stages (a dense layer and ReLU; a
+  softmax by row, equations and code mixed) against the same written
+  out, and both drawn by `flow:m_ath<`.
 - `reject-*.xtl`: one golden per refusal above, the Equations cases
   among them (text after a stage, two groups side by side, an unknown
-  character).
+  character), and an equation stage naming none of the pipeline's
+  values.
 - `shape-fails.xtl`: the run-time check, with its message.
 - `expand-*.rgt`: every program's expansion, pinned.
 

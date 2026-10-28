@@ -19,9 +19,11 @@ just xetal                         # fetch and build the pinned X_eTaL (once)
 just run pipelines                 # four layers, each pipeline checked against plain X_eTaL
 just run pipelines rosetta.xtl     # a CNN layer four ways, the feature maps
 just run pipelines diffusion.xtl   # a diffusion sampler four ways, the pictures
+just run pipelines equations.xtl   # pipelines of equations, drawn as math
 just expand pipelines              # what each pipeline became
 just expand pipelines rosetta.xtl
 just expand pipelines diffusion.xtl
+just expand pipelines equations.xtl
 just serve pipelines               # the web app
 just test-demo pipelines           # its CLI, expansion and browser baselines, the web app's tests
 ```
@@ -90,6 +92,37 @@ X0 = D(z0) = D(zT + sum_{t=1}^{T} dz_t)
 
 All three decode the same pictures, which the program checks; the page
 checks them against the arithmetic done directly (its tests).
+
+`equations.xtl` writes pipelines whose stages are equations, each an
+Equations call naming the arrays it reads (the previous value as `it`,
+earlier stages by their labels), and draws each pipeline as math with
+Flow's `flow:m_ath<`: a row a stage, an arrow between, each label
+after the stage it names.
+
+1. **Attention as equations**: one head written as a paper writes it,
+   a line at a time. The queries, keys and values each from the data
+   (the label `$x` fans out), the scores, the softmax written out, the
+   values weighted (fan-in from `$a` and `$v`):
+
+   ```
+   head := @ flow:p_ipe< c#"
+      X $x
+   |> "Q[i,d] | n 2" e:e_q< "sum c:=0..2 | x[i,c] * Wq[c,d]" $q
+   |> "K[j,d] | n 2" e:e_q< "sum c:=0..2 | x[j,c] * Wk[c,d]" $k
+   |> "V[j,d] | n 2" e:e_q< "sum c:=0..2 | x[j,c] * Wv[c,d]" $v
+   |> "S[i,j] | n n" e:e_q< "(sum d:=0..1 | q[i,d] * k[j,d]) / sqrt(2.0)" $s [n n]
+   |> "A[i,j] | n n" e:e_q< "exp(s[i,j]) / (sum m:=0..n-1 | exp(s[i,m]))" $a
+   |> "Y[i,d] | n 2" e:e_q< "sum j:=0..n-1 | a[i,j] * v[j,d]""#
+   ```
+
+   checked equal to Attention's `at:h_ead` with every token seeing
+   every token.
+2. **A BERT layer**: one encoder layer with made-up weights, the
+   attention, added back to the input (its label `$h`) and
+   layer-normed, the GELU feed-forward layer, added back (`$a`) and
+   layer-normed, the shapes checked; equal to the layer written out.
+   [Tiny BERT](../micro-bert/README.md) applies two such layers to
+   letters.
 
 ## Compose your own
 

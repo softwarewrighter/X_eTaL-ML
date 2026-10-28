@@ -3,7 +3,7 @@
 //! checked against the arithmetic done directly in Rust.
 
 use microscope::source::rebound;
-use pipelines_web::micro::{calls, head, program, run, statement, DIFFUSION, EXAMPLES, PIPELINES, ROSETTA};
+use pipelines_web::micro::{calls, head, program, run, statement, DIFFUSION, EQUATIONS, EXAMPLES, PIPELINES, ROSETTA};
 
 #[test]
 fn every_example_runs_and_its_checks_pass() {
@@ -22,7 +22,7 @@ fn the_page_shows_the_command_line_programs_code() {
         assert!(pipe.contains("flow:p_ipe<") && e.src.contains(&pipe), "{pipe}");
         assert!(e.src.contains(&plain) && !plain.contains("flow:"), "{plain}");
         assert_eq!(math.len(), e.math.len());
-        assert!(math.iter().all(|m| e.src.contains(m) && m.contains("e:e_q<")), "{math:?}");
+        assert!(math.iter().all(|m| e.src.contains(m) && (m.contains("e:e_q<") || m.contains("flow:m_ath<"))), "{math:?}");
         let src = program(&e);
         assert!(src.starts_with(head(e.src)) && src.contains(&pipe));
         assert!(rebound(&src).is_empty(), "{}: {:?}", e.title, rebound(&src));
@@ -123,4 +123,24 @@ fn what_compose_starts_from_runs_and_the_equation_one_draws_its_math() {
     assert_eq!(c.tex.len(), 1);
     assert!(c.tex[0].starts_with("z_{i} = "), "{:?}", c.tex);
     assert_eq!(c.out, ["16.0 35.0"]);
+}
+
+#[test]
+fn a_pipeline_of_equations_is_drawn_as_the_pipeline_it_computes() {
+    for title in ["Attention as equations", "A BERT layer"] {
+        let e = EXAMPLES.iter().find(|e| e.title == title).copied().unwrap();
+        let (math, pipe, _) = calls(&e);
+        // The drawing reads the very text the pipeline computes.
+        let text = |s: &str, word: &str| s[s.find(word).unwrap() + word.len()..].to_string();
+        assert_eq!(text(&math[0], "flow:m_ath<"), text(&pipe, "flow:p_ipe<"), "{title}");
+        let r = run(&e).unwrap();
+        assert!(r.tex[0].starts_with("\\begin{aligned} & X ") && r.tex[0].ends_with("\\end{aligned}"), "{}", r.tex[0]);
+        assert_eq!(r.tex[0].matches("\\longrightarrow").count(), pipe.matches("|>").count(), "{}", r.tex[0]);
+    }
+    let attention = run(&EXAMPLES.iter().find(|e| e.title == "Attention as equations").copied().unwrap()).unwrap();
+    assert!(attention.tex[0].contains("Q_{i,d} = \\sum_{c=0}^{2} x_{i,c} \\, Wq_{c,d} \\qquad \\triangleright \\, q"), "{}", attention.tex[0]);
+    assert!(attention.tex[0].contains("\\triangleright \\, s: n \\times n"), "{}", attention.tex[0]);
+    let bert = run(&EXAMPLES.iter().find(|e| e.title == "A BERT layer").copied().unwrap()).unwrap();
+    assert!(bert.tex[0].contains("\\texttt{act:g\\_elu it nn:d\\_ense W1}") && bert.tex[0].contains("\\triangleright \\, out: n \\times 3"), "{}", bert.tex[0]);
+    assert!(EQUATIONS.contains("Tiny BERT, demos/micro-bert"));
 }

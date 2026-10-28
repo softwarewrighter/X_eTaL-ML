@@ -1,0 +1,3 @@
+command = '"$XETAL" expand equations.xtl'
+exit_code = 0
+desc = "pipelines: equations.xtl after macro expansion by the pinned xetal: the pipelines of equations, what Flow and Equations wrote, and the drawings"

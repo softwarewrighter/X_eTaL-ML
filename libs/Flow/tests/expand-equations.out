@@ -1,0 +1,156 @@
+#!/usr/bin/env xetal
+# Flow: stages that are equations. An Equations call names its arrays
+# inside its strings (x[i,j], it[i,k]), where Flow does not look for
+# code; a stage that calls a macro counts the names in its strings too,
+# and one naming it gets the previous value as it. Each pipeline is
+# checked against the same layer written out, and drawn as LaTeX by
+# flow:m_ath<, one row a stage, the equations as Equations draws them.
+"e:" u_se< "Equations"
+"act:" u_se< "Activations"
+"flow:" u_se< "Flow"
+"k:" u_se< "Check"
+X := 2 3 r_eshape 1.0 -2.0 3.0 4.0 5.0 -6.0
+W := 3 2 r_eshape 0.5 -1.0 1.0 0.0 0.25 2.0
+## A dense layer and ReLU, each stage an equation: the second reads the
+## first by its label.
+p1 := ({ @ ->
+  g1:stage := X
+  h := { @ ->
+    it := g1:stage
+    ({ @ ->
+      g5:a_t := { A i -> (1 + i) s_elect r_avel A }
+      g4:c_heck := { (A, name, k, from) e ->
+        n := k s_elect s_hape A
+        bad := w_here n_ot r_avel (0 <= e) & e < n
+        0 = t_ally bad ? e
+        "index" []S_IGNAL name c_at " axis " c_at (f_ormat k) c_at ": index " c_at (f_ormat (f_irst bad) s_elect r_avel e) c_at " is outside 0.." c_at (f_ormat n - 1) c_at " (from " c_at from c_at ")"
+      }
+      g3:r_ank := { (A, name, q, ref) ->
+        (t_ally s_hape A) = q ? A
+        "rank" []S_IGNAL ref c_at " indexes " c_at (f_ormat q) c_at " axes, but " c_at name c_at " has rank " c_at f_ormat t_ally s_hape A
+      }
+      g6:grid := 2 c_at 2
+      g7:g_rid := { k ->
+        g6:grid r_eshape (o_ffsets k s_elect g6:grid) 'l_eft t_able ('* r_/ k d_rop g6:grid) r_eshape 0
+      }
+      g6:grid r_eshape (({ @ ->
+        g8:grid := 2 c_at 2 c_at (1 + 2 - 0)
+        g9:g_rid := { k ->
+          g8:grid r_eshape (o_ffsets k s_elect g8:grid) 'l_eft t_able ('* r_/ k d_rop g8:grid) r_eshape 0
+        }
+        '+ r_/_3 g8:grid r_eshape ((
+    ((g3:r_ank (it, "it", 2, "it[i,j]")) g5:a_t ((
+      ((it, "it", 2, "j") g4:c_heck (0 + g9:g_rid 3)) + (2 s_elect s_hape it) * 
+      ((it, "it", 1, "i") g4:c_heck (0 + g9:g_rid 1))))) * 
+    ((g3:r_ank (W, "W", 2, "W[j,k]")) g5:a_t ((
+      ((W, "W", 2, "k") g4:c_heck (0 + g9:g_rid 2)) + (2 s_elect s_hape W) * 
+      ((W, "W", 1, "j") g4:c_heck (0 + g9:g_rid 3)))))))
+      } @))
+    } @)
+  } @
+  _ := { @ ->
+    ((s_hape h) m_atch r_avel 2 c_at 2) ? @
+    "shape" []S_IGNAL "stage 2 (h): shape " c_at (f_ormat s_hape h) c_at ", expected " c_at f_ormat r_avel 2 c_at 2
+  } @
+  g2:stage := (({ @ ->
+    g12:a_t := { A i -> (1 + i) s_elect r_avel A }
+    g11:c_heck := { (A, name, k, from) e ->
+      n := k s_elect s_hape A
+      bad := w_here n_ot r_avel (0 <= e) & e < n
+      0 = t_ally bad ? e
+      "index" []S_IGNAL name c_at " axis " c_at (f_ormat k) c_at ": index " c_at (f_ormat (f_irst bad) s_elect r_avel e) c_at " is outside 0.." c_at (f_ormat n - 1) c_at " (from " c_at from c_at ")"
+    }
+    g10:r_ank := { (A, name, q, ref) ->
+      (t_ally s_hape A) = q ? A
+      "rank" []S_IGNAL ref c_at " indexes " c_at (f_ormat q) c_at " axes, but " c_at name c_at " has rank " c_at f_ormat t_ally s_hape A
+    }
+    g13:grid := 2 c_at 2
+    g14:g_rid := { k ->
+      g13:grid r_eshape (o_ffsets k s_elect g13:grid) 'l_eft t_able ('* r_/ k d_rop g13:grid) r_eshape 0
+    }
+    g13:grid r_eshape ((
+    ((g10:r_ank (h, "h", 2, "h[i,k]")) g12:a_t ((
+      ((h, "h", 2, "k") g11:c_heck (0 + g14:g_rid 2)) + (2 s_elect s_hape h) * 
+      ((h, "h", 1, "i") g11:c_heck (0 + g14:g_rid 1))))) m_ax 0))
+  } @))
+  g2:stage
+} @)
+c1 := "equations as stages: a dense layer and ReLU" k:t_est p1 k:n_ear act:r_elu X '+ '* i_nner W
+## Equations and code mixed: the softmax of each row, its largest taken
+## off first by a code stage.
+p2 := ({ @ ->
+  x := X
+  m := { @ ->
+    it := x
+    'm_ax r_/_2 it
+  } @
+  e := (({ @ ->
+    g18:a_t := { A i -> (1 + i) s_elect r_avel A }
+    g17:c_heck := { (A, name, k, from) e ->
+      n := k s_elect s_hape A
+      bad := w_here n_ot r_avel (0 <= e) & e < n
+      0 = t_ally bad ? e
+      "index" []S_IGNAL name c_at " axis " c_at (f_ormat k) c_at ": index " c_at (f_ormat (f_irst bad) s_elect r_avel e) c_at " is outside 0.." c_at (f_ormat n - 1) c_at " (from " c_at from c_at ")"
+    }
+    g16:r_ank := { (A, name, q, ref) ->
+      (t_ally s_hape A) = q ? A
+      "rank" []S_IGNAL ref c_at " indexes " c_at (f_ormat q) c_at " axes, but " c_at name c_at " has rank " c_at f_ormat t_ally s_hape A
+    }
+    g19:grid := 2 c_at 3
+    g20:g_rid := { k ->
+      g19:grid r_eshape (o_ffsets k s_elect g19:grid) 'l_eft t_able ('* r_/ k d_rop g19:grid) r_eshape 0
+    }
+    g19:grid r_eshape ((e_xp (
+    ((g16:r_ank (x, "x", 2, "x[i,j]")) g18:a_t ((
+      ((x, "x", 2, "j") g17:c_heck (0 + g20:g_rid 2)) + (2 s_elect s_hape x) * 
+      ((x, "x", 1, "i") g17:c_heck (0 + g20:g_rid 1))))) - 
+    ((g16:r_ank (m, "m", 1, "m[i]")) g18:a_t (
+      ((m, "m", 1, "i") g17:c_heck (0 + g20:g_rid 1)))))))
+  } @))
+  g15:stage := (({ @ ->
+    g23:a_t := { A i -> (1 + i) s_elect r_avel A }
+    g22:c_heck := { (A, name, k, from) e ->
+      n := k s_elect s_hape A
+      bad := w_here n_ot r_avel (0 <= e) & e < n
+      0 = t_ally bad ? e
+      "index" []S_IGNAL name c_at " axis " c_at (f_ormat k) c_at ": index " c_at (f_ormat (f_irst bad) s_elect r_avel e) c_at " is outside 0.." c_at (f_ormat n - 1) c_at " (from " c_at from c_at ")"
+    }
+    g21:r_ank := { (A, name, q, ref) ->
+      (t_ally s_hape A) = q ? A
+      "rank" []S_IGNAL ref c_at " indexes " c_at (f_ormat q) c_at " axes, but " c_at name c_at " has rank " c_at f_ormat t_ally s_hape A
+    }
+    g24:grid := 2 c_at 3
+    g25:g_rid := { k ->
+      g24:grid r_eshape (o_ffsets k s_elect g24:grid) 'l_eft t_able ('* r_/ k d_rop g24:grid) r_eshape 0
+    }
+    g24:grid r_eshape ((
+    ((g21:r_ank (e, "e", 2, "e[i,j]")) g23:a_t ((
+      ((e, "e", 2, "j") g22:c_heck (0 + g25:g_rid 2)) + (2 s_elect s_hape e) * 
+      ((e, "e", 1, "i") g22:c_heck (0 + g25:g_rid 1))))) / ({ @ ->
+      g26:grid := 2 c_at 3 c_at (1 + 2 - 0)
+      g27:g_rid := { k ->
+        g26:grid r_eshape (o_ffsets k s_elect g26:grid) 'l_eft t_able ('* r_/ k d_rop g26:grid) r_eshape 0
+      }
+      '+ r_/_3 g26:grid r_eshape (
+    ((g21:r_ank (e, "e", 2, "e[i,c]")) g23:a_t ((
+      ((e, "e", 2, "c") g22:c_heck (0 + g27:g_rid 3)) + (2 s_elect s_hape e) * 
+      ((e, "e", 1, "i") g22:c_heck (0 + g27:g_rid 1))))))
+    } @)))
+  } @))
+  g15:stage
+} @)
+c2 := "equations and code in one pipeline: softmax by row" k:t_est (r_avel p2) k:n_ear r_avel (e_xp X - o_\ 3 2 r_eshape 'm_ax r_/_2 X) / o_\ 3 2 r_eshape '+ r_/_2 e_xp X - o_\ 3 2 r_eshape 'm_ax r_/_2 X
+k:r_eport c1 k:a_nd c2
+## The two pipelines drawn.
+(r#"\begin{aligned} "# c_at r#"& "# c_at r#"X"# c_at r#" \\ "# c_at
+  r#"\longrightarrow \; & "# c_at (("H_{i,k} = \\sum_{j=0}^{2} X_{i,j} \\, W_{j,k}"))
+  c_at r#" \qquad \triangleright \, h: 2 \times 2 \\ "# c_at
+  r#"\longrightarrow \; & "# c_at (("Y_{i,k} = \\max(h_{i,k}, 0)")) c_at r#""#
+  c_at r#" \end{aligned}"#)
+(r#"\begin{aligned} "# c_at r#"& "# c_at r#"X"# c_at
+  r#" \qquad \triangleright \, x \\ "# c_at r#"\longrightarrow \; & "# c_at
+  r#"\texttt{'m\_ax r\_/\_2 it}"# c_at r#" \qquad \triangleright \, m \\ "# c_at
+  r#"\longrightarrow \; & "# c_at (("E_{i,j} = \\exp(x_{i,j} - m_{i})")) c_at
+  r#" \qquad \triangleright \, e \\ "# c_at r#"\longrightarrow \; & "# c_at (("P_{i,j} = \\frac{e_{i,j}}{\\sum_{c=0}^{2} e_{i,c}}"))
+  c_at r#""# c_at r#" \end{aligned}"#)
+

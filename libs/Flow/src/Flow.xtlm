@@ -45,6 +45,19 @@ m:p_ipe< := { @ text -> h:w_rite h:r_ead text }
 ## x $s |> 2 * it |> it + s
 m:t_ext< := { @ text -> "\"" c_at (h:e_scape h:s_how h:r_ead text) c_at "\"" }
 
+## The pipeline drawn as math, a LaTeX string: an aligned display of a
+## row per stage, the data first, each later stage after an arrow, each
+## label after its stage as X_eTaL draws $ (a triangle, the name, its
+## shape); an equation stage
+## ("H[i,k] | n d" e:e_q< "...") as Equations draws it (its e:t_ex<,
+## the same strings), any other stage as code. The call is read as
+## flow:p_ipe< reads it, or refused; KaTeX or LaTeX draws the result.
+## uses: parsed
+## >> "flow:" u_se< "Flow"
+## >> @ flow:m_ath< c"x $s |> 2 * it |> it + s"
+## \begin{aligned} & x \qquad \triangleright \, s \\ \longrightarrow \; & \texttt{2 * it} \\ \longrightarrow \; & \texttt{it + s} \end{aligned}
+m:m_ath< := { @ text -> h:d_raw h:r_ead text }
+
 ### Reading the call
 
 ## The stages of text as (expressions, names, shapes), each a boxed
@@ -114,25 +127,39 @@ h:t_ouches? := { s ->
 }
 
 ## A stage after the first is a function, or an expression naming the
-## previous value it or a name bound before it (earlier, boxed); else
-## the call is refused with the text ("" when it is one of these).
+## previous value it or a name bound before it (earlier, boxed); a stage
+## that calls a macro (an equation, "Y[i] | n" e:e_q< "2 * it[i]") names
+## them in its strings too. Else the call is refused with the text (""
+## when it is one of these).
 h:s_tage? := { earlier e ->
-  named := '| r_/ (0 = 1) c_at '{ w -> (d_isclose w) h:w_ord? e } e_ach earlier
-  ((h:i_t? e) | (h:f_unction? e) | named) h:r_equire "a stage is a function (act:r_elu, [f_ g_], '{ x -> ... }) or an expression naming the previous value it (or a name bound before it): " c_at e
+  named := '| r_/ (0 = 1) c_at '{ w -> (d_isclose w) h:u_ses? e } e_ach earlier
+  ((h:i_t? e) | (h:f_unction? e) | named) h:r_equire "a stage is a function (act:r_elu, [f_ g_], '{ x -> ... }) or an expression naming the previous value it (or a name bound before it), in an equation's strings or out: " c_at e
 }
 
-## Whether e names the previous value: the word it, outside strings.
-h:i_t? := { e -> "it" h:w_ord? e }
+## Whether e names the previous value: the word it, outside strings, or
+## in the strings of a macro call.
+h:i_t? := { e -> "it" h:u_ses? e }
 
-## Whether the word w (a name) occurs whole in e, outside strings.
-h:w_ord? := { w e ->
+## Whether e uses the name w: outside strings; in a macro call's
+## strings too (the names an equation reads, x[i,j]).
+h:u_ses? := { w e -> (w, h:m_acro? e) h:w_ord? e }
+
+## Whether e calls a macro: a word ending in < outside strings (e:e_q<).
+h:m_acro? := { e ->
+  ps := "<" h:o_utside e
+  '| r_/ (0 = 1) c_at '{ p -> p = 1 ? 0 = 1; ((p - 1) s_elect e) m_ember? nameChars } e_ach ps
+}
+
+## Whether the word w (a name) occurs whole in e: outside strings, or
+## anywhere when inStrings holds.
+h:w_ord? := { (w, inStrings) e ->
   ps := w t:f_ind e
   0 = t_ally ps ? 0 = 1
   q := h:q_uoted e
   n := t_ally w
   before := '{ p -> p = 1 ? 0 = 1; ((p - 1) s_elect e) m_ember? nameChars } e_ach ps
   after := '{ p -> (p + n) > t_ally e ? 0 = 1; ((p + n) s_elect e) m_ember? nameChars } e_ach ps
-  '| r_/ (n_ot before) & (n_ot after) & 0 = ps s_elect q
+  '| r_/ (n_ot before) & (n_ot after) & inStrings | 0 = ps s_elect q
 }
 
 ## Whether e is written as a function: a quoted function or lambda
@@ -239,6 +266,106 @@ h:c_heck := { (i, name) sh ->
   expected := "r_avel " c_at " c_at " t:j_oin t:w_ords 1 d_rop -1 d_rop sh
   "  _ := { @ ->\n    ((s_hape " c_at name c_at ") m_atch " c_at expected c_at ") ? @\n    \"shape\" []S_IGNAL \"stage " c_at (f_ormat i) c_at " (" c_at name c_at "): shape \" c_at (f_ormat s_hape " c_at name c_at ") c_at \", expected \" c_at f_ormat " c_at expected c_at "\n  } @\n"
 }
+
+### Drawing the call
+
+## The display: the rows joined, inside \begin{aligned} ... \end{aligned},
+## as an expression of strings (an equation's row is its library's
+## t_ex< call, expanded in turn).
+h:d_raw := { (es, bs, ss) ->
+  n := t_ally es
+  rows := '{ i -> (es, bs, ss) h:r_ow i } m_ap r_ange n
+  pieces := (e_nclose h:r_aw "\\begin{aligned} ") c_at rows c_at e_nclose h:r_aw " \\end{aligned}"
+  "(" c_at (" c_at " t:j_oin pieces) c_at ")"
+}
+
+## Row i: an arrow before every stage but the data, the stage drawn,
+## its label after it as X_eTaL draws $ (a small triangle, the name and
+## its shape), a line break after every row but the last.
+h:r_ow := { (es, bs, ss) i ->
+  e := (es, bs) h:s_hown i
+  into := h:i_nto i
+  label := h:n_amed (d_isclose i s_elect bs, d_isclose i s_elect ss)
+  (h:r_aw into) c_at " c_at " c_at (h:d_rawn e) c_at " c_at " c_at h:r_aw label c_at i h:b_reak t_ally es
+}
+
+## What comes before row i: the column for the data, an arrow then the
+## column for each later stage.
+h:i_nto := { i ->
+  i = 1 ? "& "
+  "\\longrightarrow \\; & "
+}
+
+## What ends row i of n: a line break, but for the last.
+h:b_reak := { i n ->
+  i = n ? ""
+  " \\\\ "
+}
+
+## A stage's label drawn after it: the triangle, the name, the extents
+## of its shape (n \\times 16); "" when it has no name.
+h:n_amed := { (b, sh) ->
+  0 = t_ally b ? ""
+  dims := " \\times " t:j_oin t:w_ords 1 d_rop -1 d_rop sh
+  " \\qquad \\triangleright \\, " c_at b c_at (": " h:o_pt dims)
+}
+
+## Stage i as drawn: in an equation, it, the previous value, under the
+## name it came with when it has one (the previous stage's label, or the
+## data when the data is a name), so it reads X[i,j], not it[i,j]; code
+## as written.
+h:s_hown := { (es, bs) i ->
+  e := d_isclose i s_elect es
+  (i = 1) | 0 = t_ally "e_q<" h:o_utside e ? e
+  ((es, bs) h:i_ncoming i - 1) h:a_s e
+}
+
+## The name stage i's value goes by: its label, or the data itself when
+## it is a plain name; "" for none (a tuple label is no one name).
+h:i_ncoming := { (es, bs) i ->
+  b := d_isclose i s_elect bs
+  h:n_ame? b ? b
+  (i = 1) & h:n_ame? d_isclose 1 s_elect es ? d_isclose 1 s_elect es
+  ""
+}
+
+## The i-th character of s, a blank before its start and past its end.
+h:c_hr := { s i -> (i < 1) | i > t_ally s ? 1 s_elect " "; i s_elect s }
+
+## e with each whole word it written as name (e as it is for "").
+h:a_s := { name e ->
+  0 = t_ally name ? e
+  ps := "it" t:f_ind e
+  whole := '{ p -> n_ot ((e h:c_hr p - 1) m_ember? nameChars) | (e h:c_hr p + 2) m_ember? nameChars } e_ach ps
+  0 = '+ r_/ 0 + whole ? e
+  p := f_irst whole r_eplicate ps
+  ((p - 1) t_ake e) c_at name c_at name h:a_s (p + 1) d_rop e
+}
+
+## A stage drawn, as an expression of a string: an equation by its
+## library's t_ex< on the same strings (e:e_q< becomes e:t_ex<); a
+## plain name as itself; anything else as code.
+h:d_rawn := { e ->
+  ps := "e_q<" h:o_utside e
+  0 < t_ally ps ? "(" c_at ((-1 + f_irst ps) t_ake e) c_at "t_ex<" c_at ((3 + f_irst ps) d_rop e) c_at ")"
+  h:n_ame? e ? h:r_aw e
+  h:r_aw h:t_t e
+}
+
+## Code as LaTeX's typewriter text, its special characters escaped.
+h:t_t := { s -> "\\texttt{" c_at ("" t:j_oin '{ ch -> h:l_atexChar ch } m_ap s) c_at "}" }
+
+## One character of code as LaTeX text.
+h:l_atexChar := { ch ->
+  ch m_ember? "\\" ? "\\textbackslash{}"
+  ch m_ember? "^" ? "\\textasciicircum{}"
+  ch m_ember? "~" ? "\\textasciitilde{}"
+  ch m_ember? "{}_$&%#" ? "\\" c_at ch
+  ch
+}
+
+## s as a raw string literal, r#"s"#: a backslash stays a backslash.
+h:r_aw := { s -> "r#\"" c_at s c_at "\"#" }
 
 ### Writing the call back
 

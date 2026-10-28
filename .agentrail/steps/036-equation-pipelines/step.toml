@@ -1,6 +1,6 @@
 number = 36
 slug = "equation-pipelines"
-status = "pending"
+status = "in-progress"
 description = "The user, 2026-10-27: the pipeline demos lack a math-like tensor pipeline of ..."
 role = "production"
 context_files = []
