@@ -1,0 +1,11 @@
+[package]
+name = "micro-bert-train"
+description = "Trains the micro-bert demo's tiny BERT (2 layers, 16 wide, 2 heads) to fill a blank letter in baby names and writes its weights into data/"
+version = "0.1.0"
+edition = "2021"
+license = "MIT"
+publish = false
+
+[dependencies]
+
+[workspace]

@@ -1,0 +1,4 @@
+# Text the page shows only after X_eTaL has run (scripts/browser-check.sh).
+The blank, filled:
+Where each head looks:
+layer 2, head 2

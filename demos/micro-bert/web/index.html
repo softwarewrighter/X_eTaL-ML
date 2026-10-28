@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Tiny BERT</title>
+  <link data-trunk rel="rust" data-bin="micro-bert-web" />
+  <link data-trunk rel="copy-file" href="../../../images/xetal-logo-orange.png" />
+  <link data-trunk rel="icon" href="../../../images/favicon.ico" />
+  <link data-trunk rel="css" href="../../../shared/microscope/microscope.css" />
+  <!-- KaTeX (shared/katex) draws the equation's LaTeX; where it has not
+       loaded, the LaTeX shows as text. -->
+  <link data-trunk rel="copy-dir" href="../../../shared/katex" />
+  <link rel="stylesheet" href="katex/katex.min.css" />
+  <script defer src="katex/katex.min.js"></script>
+  <script>
+    function drawTex() {
+      if (!window.katex) return;
+      document.querySelectorAll(".tex[data-tex]").forEach(function (el) {
+        if (el.dataset.drawn === el.dataset.tex) return;
+        try { katex.render(el.dataset.tex, el, { displayMode: true, throwOnError: false }); el.dataset.drawn = el.dataset.tex; } catch (e) {}
+      });
+    }
+    new MutationObserver(drawTex).observe(document.documentElement, { childList: true, subtree: true });
+    window.addEventListener("load", drawTex);
+  </script>
+</head>
+<body></body>
+</html>

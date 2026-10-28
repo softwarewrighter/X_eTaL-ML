@@ -82,6 +82,11 @@ micro-gpt-data:
     @[ -s work/names.txt ] || curl -fsSL -o work/names.txt https://raw.githubusercontent.com/karpathy/makemore/988aa59/names.txt
     cargo run --release -q --manifest-path demos/micro-gpt/train/Cargo.toml
 
+# Fetch the baby names (makemore, pinned) into work/ and train the micro-bert demo's tiny BERT (3 minutes), writing its weights into data/
+micro-bert-data:
+    @[ -s work/names.txt ] || curl -fsSL -o work/names.txt https://raw.githubusercontent.com/karpathy/makemore/988aa59/names.txt
+    cargo run --release -q --manifest-path demos/micro-bert/train/Cargo.toml
+
 # Train the world-model demo's network (1,936 states of a bouncing ball, a fifth held out; 25 s) and write its weights into data/
 world-model-data:
     cargo run --release -q --manifest-path demos/world-model/train/Cargo.toml

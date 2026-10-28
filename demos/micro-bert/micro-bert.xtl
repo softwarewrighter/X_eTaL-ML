@@ -1,0 +1,149 @@
+#!/usr/bin/env xetal
+## A tiny BERT in X_eTaL: the encoder half of a transformer (Devlin et
+## al. 2019), 2 layers, 16 numbers wide, 2 attention heads, 7,594
+## weights, trained offline to fill a blank letter in baby names. Every
+## letter sees every other, before it and after it, which a GPT's causal
+## mask forbids. One encoder layer is a pipeline (Flow), applied L times
+## by p_ower; the forward pass gives the same scores as the Rust model it
+## was trained in, and the same as the layer written out, and the
+## attention as Equations writes it.
+
+"nn:" u_se< "NN"
+"act:" u_se< "Activations"
+"nm:" u_se< "Norm"
+"at:" u_se< "Attention"
+"flow:" u_se< "Flow"
+"e:" u_se< "Equations"
+"k:" u_se< "Check"
+"t:" u_se< "Strings"
+
+### The model, read from data/ (just micro-bert-data)
+## The 26 letters; the token 27 is the mask, the blank to fill.
+chars := -1 d_rop []N_GET "data/chars.txt"
+L := 2
+## Each matrix a row per input, as x times it is written; a dense layer
+## with its bias as one more row (NN's d_ense); a layer norm as two rows,
+## its gain and its bias; a layer's weights stacked, layer 1 first.
+wte := 27 16 r_eshape n_umbers []N_GET "data/wte.txt"
+wpe := 16 16 r_eshape n_umbers []N_GET "data/wpe.txt"
+ln0 := 2 16 r_eshape n_umbers []N_GET "data/ln0.txt"
+Wq := 2 16 16 r_eshape n_umbers []N_GET "data/wq.txt"
+Wk := 2 16 16 r_eshape n_umbers []N_GET "data/wk.txt"
+Wv := 2 16 16 r_eshape n_umbers []N_GET "data/wv.txt"
+Wo := 2 16 16 r_eshape n_umbers []N_GET "data/wo.txt"
+ln1 := 2 2 16 r_eshape n_umbers []N_GET "data/ln1.txt"
+W1 := 2 17 64 r_eshape n_umbers []N_GET "data/w1.txt"
+W2 := 2 65 16 r_eshape n_umbers []N_GET "data/w2.txt"
+ln2 := 2 2 16 r_eshape n_umbers []N_GET "data/ln2.txt"
+lm := 17 26 r_eshape n_umbers []N_GET "data/lm.txt"
+
+### The forward pass
+## The columns r of a matrix.
+u:c_ols := { r W -> o_\ r s_elect o_\ W }
+## Head j of layer l: its eight columns of the layer's projections; every
+## letter sees every letter (at:a_ll, not a causal mask).
+u:h_ead := { (l, j) H ->
+  r := (8 * j - 1) + r_ange 8
+  (r u:c_ols l s_elect Wq, r u:c_ols l s_elect Wk, r u:c_ols l s_elect Wv) at:h_ead (H, at:a_ll t_ally H)
+}
+## Where head j of layer l looks: its attention weights, n x n.
+u:l_ooks := { (l, j) H ->
+  r := (8 * j - 1) + r_ange 8
+  (at:a_ll t_ally H) at:w_eights (r u:c_ols l s_elect Wq, r u:c_ols l s_elect Wk) at:s_cores H
+}
+## Layer l's attention: its two heads side by side, times Wo.
+u:a_ttention := { l H -> (((l, 1) u:h_ead H) c_at_2 (l, 2) u:h_ead H) '+ '* i_nner l s_elect Wo }
+## Layer norm by its two rows.
+u:n_orm := { G X -> (1 s_elect G, 2 s_elect G) nm:l_ayer X }
+## Encoder layer l as a pipeline: attention, added back ($h) and normed,
+## the GELU feed-forward layer, added back ($a) and normed; the shapes
+## checked. It takes and gives the layer number too, for p_ower.
+u:l_ayer := { (H, l) ->
+  n := t_ally H
+  y := @ flow:p_ipe< c"
+     H $h
+  |> l u:a_ttention it
+  |> (l s_elect ln1) u:n_orm it + h $a [n 16]
+  |> act:g_elu it nn:d_ense l s_elect W1
+  |> it nn:d_ense l s_elect W2
+  |> (l s_elect ln2) u:n_orm it + a $out [n 16]"
+  (y, l + 1)
+}
+## The letters' embeddings and their places', normed.
+u:e_mbed := { ids -> ln0 u:n_orm (ids s_elect wte) + (r_ange t_ally ids) s_elect wpe }
+## The scores over the 26 letters at every place of the tokens ids: L layers, then the dense layer.
+u:b_ert := { ids ->
+  (hL, _) := L 'u:l_ayer p_ower (u:e_mbed ids, 1)
+  hL nn:d_ense lm
+}
+## A name with a blank, "ma_y", as tokens: the blank is the mask (27,
+## past the letters).
+u:t_okens := { s -> chars i_ndexOf s }
+## The probability of each letter for the blank.
+u:f_ill := { s -> nn:s_oftmax (f_irst w_here 27 = u:t_okens s) s_elect u:b_ert u:t_okens s }
+# -- end of the core ------------------------------------------
+
+### Four ways to write it
+## 1. As a paper prints it, one line: L layers, each attention then the
+## feed-forward layer, each added back (I +) and layer-normed, on the
+## letters' and places' embeddings. Equations has no composition or
+## power of functions, so this line is written as LaTeX by hand; the
+## pieces below are read by Equations.
+r"\mathrm{BERT}(x) = \big(\mathrm{LN} \circ (I + \mathrm{FFN}) \circ \mathrm{LN} \circ (I + \mathrm{MHA})\big)^{L} \, \mathrm{LN}(E_{tok}[x] + E_{pos})"
+
+## 2. The attention of head 1 of layer 1 as Equations reads it, for the
+## blank of "em_a": the scores, the softmax written out (exp over the
+## row's sum: not shifted by the row's largest, fine at these sizes),
+## the values weighted. GELU, the layer and its L repeats stay outside
+## the strings (asks E6, E3, E2 in docs/xetal-libraries-asks.md).
+ids := u:t_okens "em_a"
+n := t_ally ids
+X := u:e_mbed ids
+c := r_ange 8
+Q := X '+ '* i_nner c u:c_ols 1 s_elect Wq
+K := X '+ '* i_nner c u:c_ols 1 s_elect Wk
+V := X '+ '* i_nner c u:c_ols 1 s_elect Wv
+S := "S[i,j] | n n" e:e_q< "(sum k:=0..7 | Q[i,k] * K[j,k]) / sqrt(8.0)"
+A := "A[i,j] | n n" e:e_q< "exp(S[i,j]) / (sum m:=0..n-1 | exp(S[i,m]))"
+Y := "Y[i,d] | n 8" e:e_q< "sum j:=0..n-1 | A[i,j] * V[j,d]"
+"S[i,j] | n n" e:t_ex< "(sum k:=0..7 | Q[i,k] * K[j,k]) / sqrt(8.0)"
+"A[i,j] | n n" e:t_ex< "exp(S[i,j]) / (sum m:=0..n-1 | exp(S[i,m]))"
+"Y[i,d] | n 8" e:t_ex< "sum j:=0..n-1 | A[i,j] * V[j,d]"
+
+## 3. As a pipeline: u:l_ayer above, L times by p_ower (u:b_ert).
+
+## 4. As plain X_eTaL: the same layer written out.
+u:p_lain := { (H, l) ->
+  a := (l s_elect ln1) u:n_orm H + l u:a_ttention H
+  ((l s_elect ln2) u:n_orm a + (act:g_elu a nn:d_ense l s_elect W1) nn:d_ense l s_elect W2, l + 1)
+}
+
+### The checks
+## The Rust model's scores for "em_a" at every place (data/expected.txt)
+## and its heads' attention, layer by layer (data/expected-looks.txt),
+## written by the trainer.
+expected := 4 26 r_eshape n_umbers []N_GET "data/expected.txt"
+looks := 4 16 r_eshape n_umbers []N_GET "data/expected-looks.txt"
+(h1, _) := u:l_ayer (X, 1)
+(hP, _) := L 'u:p_lain p_ower (X, 1)
+(hF, _) := L 'u:l_ayer p_ower (X, 1)
+mine := r_avel ((1, 1) u:l_ooks X) c_at ((1, 2) u:l_ooks X) c_at ((2, 1) u:l_ooks h1) c_at (2, 2) u:l_ooks h1
+r1 := "the attention as Equations reads it is head 1's" k:t_est Y k:n_ear (1, 1) u:h_ead X
+r2 := "the pipeline, L times, is the layer written out" k:t_est hF k:n_ear hP
+u:c_lose := { a b -> k:t_rue 1e-9 > 'm_ax r_/ r_avel a_bs a - b }
+r3 := "the scores are the Rust model's, within 1e-9" k:t_est expected u:c_lose u:b_ert ids
+r4 := "and so is where each head looks" k:t_est (r_avel looks) u:c_lose mine
+k:r_eport r1 k:a_nd r2 k:a_nd r3 k:a_nd r4
+
+### Blanks filled: the three likeliest letters and their probabilities
+u:t_op := { s ->
+  p := u:f_ill s
+  o := 3 t_ake r_ev g_rade p
+  s c_at "  " c_at " " t:j_oin '{ i -> (i s_elect chars) c_at " " c_at f_ormat (f_loat f_loor 0.5 + 1000.0 * i s_elect p) / 1000.0 } m_ap o
+}
+u:t_op "em_a"
+u:t_op "ma_y"
+u:t_op "_lice"
+u:t_op "sophi_"
+u:t_op "jo_n"
+u:t_op "_"

@@ -1,0 +1,16 @@
+[package]
+name = "micro-bert-web"
+description = "A tiny BERT in the browser: an encoder of 7,594 weights run by X_eTaL, filling a blank letter in a name and showing where each head looks"
+version = "0.1.0"
+edition = "2021"
+license = "MIT"
+publish = false
+
+[dependencies]
+microscope = { path = "../../../shared/microscope" }
+yew = { version = "0.21", features = ["csr"] }
+js-sys = "0.3"
+web-sys = { version = "0.3", features = ["HtmlInputElement", "HtmlSelectElement"] }
+console_error_panic_hook = "0.1"
+
+[workspace]

@@ -1,0 +1,11 @@
+# One demo's description: read by scripts/demos.py for the tests, the
+# README's demo list and the live catalog (pages/index.html).
+slug = "micro-bert"            # the directory name, demos/<slug>/
+title = "Tiny BERT"
+summary = "The encoder half of a transformer in X_eTaL: 2 layers, 16 numbers wide, 2 attention heads, 7,594 weights trained to fill a blank letter in baby names, each letter looking both ways. Type a name with a blank and see the letters it would put there and where each head looks; one encoder layer is a pipeline applied twice, and the model is drawn in one line of math."
+concepts = ["transformer encoder", "masked language model", "attention both ways", "layer norm", "GELU", "pipelines", "p_ower over layers", "equations as macros"]        # the X_eTaL ideas it shows
+status = "live"             # draft | live | deferred
+order = 23                  # position in the catalog (lower first)
+needs = []                   # asks in docs/xetal-asks.md it waits on or works around
+line = "(hL, _) := L 'u:l_ayer p_ower (u:e_mbed ids, 1)"
+why = "BERT is L copies of one layer: the layer is a pipeline (attention, added back and normed, the GELU feed-forward layer, added back and normed), and p_ower applies it L times, carrying the layer number to pick each layer's weights."

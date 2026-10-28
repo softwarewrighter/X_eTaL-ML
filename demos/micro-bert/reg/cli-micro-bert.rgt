@@ -1,0 +1,3 @@
+command = '"$XETAL" run --seed 1 --draw "$XETAL_DRAW" micro-bert.xtl'
+exit_code = 0
+desc = "micro-bert: micro-bert.xtl run by the pinned xetal CLI"

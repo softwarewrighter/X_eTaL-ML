@@ -1,0 +1,15 @@
+\mathrm{BERT}(x) = \big(\mathrm{LN} \circ (I + \mathrm{FFN}) \circ \mathrm{LN} \circ (I + \mathrm{MHA})\big)^{L} \, \mathrm{LN}(E_{tok}[x] + E_{pos})
+S_{i,j} = \frac{\sum_{k=0}^{7} Q_{i,k} \, K_{j,k}}{\sqrt{8.0}}
+A_{i,j} = \frac{\exp(S_{i,j})}{\sum_{m=0}^{n - 1} \exp(S_{i,m})}
+Y_{i,d} = \sum_{j=0}^{n - 1} A_{i,j} \, V_{j,d}
+ok: the attention as Equations reads it is head 1's
+ok: the pipeline, L times, is the layer written out
+ok: the scores are the Rust model's, within 1e-9
+ok: and so is where each head looks
+4 checks, all passed
+em_a  i 0.379 y 0.101 n 0.079
+ma_y  r 0.313 l 0.143 m 0.074
+_lice  a 0.427 e 0.316 b 0.062
+sophi_  a 0.217 n 0.188 r 0.155
+jo_n  a 0.291 i 0.147 e 0.146
+_  a 0.438 e 0.303 r 0.05
