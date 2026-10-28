@@ -1,0 +1,1 @@
+Every Pipelines example has a pipeline of equations drawn as math: the BERT layer rewritten all equations (GELU with exp), and CNN, diffusion, dense, softmax, layer norm, causal attention each gain one, checked equal; page test; fixed eqpipe/pipe expansion mixup. Gate ok.
