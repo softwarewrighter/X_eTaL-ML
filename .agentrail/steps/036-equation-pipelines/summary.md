@@ -1,0 +1,1 @@
+Flow: equation stages (names in a macro stage's strings counted); flow:m_ath< draws a pipeline as one aligned LaTeX display, labels beside their stages, equations by e:t_ex<. Tests and goldens. Pipelines demo equations.xtl: attention head as equations (vs at:h_ead) and a BERT layer (vs written out), both drawn; two page examples, link to Tiny BERT; checked in Chrome. Gate ok.
