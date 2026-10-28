@@ -1,0 +1,1 @@
+flow:s_tages< (every stage's value as records; tests); Pipelines page: drawn rows and pipeline stage chips clickable, stage highlighted in drawing, pipeline and expansion, values panel (shape, colored table or range); native tests; Chrome-checked. Gate ok.

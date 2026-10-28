@@ -1,8 +1,9 @@
 number = 38
 slug = "stage-values"
-status = "in-progress"
+status = "completed"
 description = "The user, 2026-10-27: see the data at each pipe stage: make a stage's line cl..."
 role = "production"
 context_files = []
 created_at = "2026-10-27T21:19:29"
-commits = []
+completed_at = "2026-10-27T22:30:23"
+commits = ["b59e834f15d12fd6850206f8dd330d48dd3b775e"]
