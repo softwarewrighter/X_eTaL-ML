@@ -1,6 +1,6 @@
 number = 35
 slug = "micro-bert"
-status = "pending"
+status = "in-progress"
 description = "The user, 2026-10-27: BERT as a one-line equation and a demo of it as a tenso..."
 role = "production"
 context_files = []

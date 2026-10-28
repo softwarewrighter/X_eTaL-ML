@@ -1,0 +1,8 @@
+number = 36
+slug = "equation-pipelines"
+status = "pending"
+description = "The user, 2026-10-27: the pipeline demos lack a math-like tensor pipeline of ..."
+role = "production"
+context_files = []
+created_at = "2026-10-27T17:45:29"
+commits = []
