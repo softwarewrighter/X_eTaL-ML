@@ -1,5 +1,6 @@
 page: loaded
 errors: none
+found: ok: the equation and the pipeline of equations
 found: ok: the equation and the pipeline
 found: ok: the pipeline and plain X_eTaL
-found: 2 checks, all passed
+found: 3 checks, all passed

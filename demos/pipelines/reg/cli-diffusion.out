@@ -1,7 +1,9 @@
 Zn_{n,k} = a_{t-1} \, Z_{n,k} + b_{t-1} \, eps_{n,k} + sigma_{t-1} \, noise_{t-1,n,k}
 z0_{n,k} = zT_{n,k} + \left(\sum_{t=1}^{T} dz_{t-1,n,k}\right)
+\begin{aligned} & zT \\ \longrightarrow \; & Z0_{n,k} = zT_{n,k} + \left(\sum_{t=1}^{T} dz_{t-1,n,k}\right) \qquad \triangleright \, z0 \\ \longrightarrow \; & X0_{n,j} = \left(\sum_{k=0}^{K - 1} z0_{n,k} \, Wd_{k,j}\right) + Wd_{K,j} \end{aligned}
+ok: the equations and the pipeline of equations
 ok: the equations and the pipeline
 ok: the pipeline and plain X_eTaL
-2 checks, all passed
+3 checks, all passed
 -0.06919801180634849 0.19990828133183167  0.2852198225377993 0.10830157426111753
 -0.09665317911923497 0.12137441351913889 0.22781093011480252 0.12479912816684816

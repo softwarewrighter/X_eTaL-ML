@@ -32,6 +32,18 @@ Wo := 3
 eq := "Y[o,h,w] | O Ho Wo" e:e_q< "max((sum r:=0..2, sum s:=0..2 | P[h+r,w+s] * F[o,r,s]) + B[o], 0)"
 "Y[o,h,w] | O Ho Wo" e:t_ex< "max((sum r:=0..2, sum s:=0..2 | P[h+r,w+s] * F[o,r,s]) + B[o], 0)"
 
+## The same as a pipeline of equations, a stage each: the convolution
+## with its bias, then the activation; drawn as math a row a stage.
+eqpipe := @ flow:p_ipe< c#"
+   P $p
+|> "C[o,h,w] | O Ho Wo" e:e_q< "(sum r:=0..2, sum s:=0..2 | p[h+r,w+s] * F[o,r,s]) + B[o]" $c [O Ho Wo]
+|> "Y[o,h,w] | O Ho Wo" e:e_q< "max(c[o,h,w], 0)""#
+drawn := @ flow:m_ath< c#"
+   P $p
+|> "C[o,h,w] | O Ho Wo" e:e_q< "(sum r:=0..2, sum s:=0..2 | p[h+r,w+s] * F[o,r,s]) + B[o]" $c [O Ho Wo]
+|> "Y[o,h,w] | O Ho Wo" e:e_q< "max(c[o,h,w], 0)""#
+drawn
+
 ### As a pipeline
 
 ## The windows of the picture, one column each; every filter times every
@@ -53,9 +65,10 @@ plain := act:r_elu (O c_at Ho c_at Wo) r_eshape ((O c_at 9) r_eshape F, B) cv:c_
 
 ### The same
 
+r0 := "the equation and the pipeline of equations" k:t_est eq k:n_ear eqpipe
 r1 := "the equation and the pipeline" k:t_est eq k:n_ear pipe
 r2 := "the pipeline and plain X_eTaL" k:t_est pipe k:n_ear plain
-k:r_eport r1 k:a_nd r2
+k:r_eport r0 k:a_nd r1 k:a_nd r2
 
 ## The two feature maps (after the activation): the vertical edge at
 ## the square's left side, the center-surround on its corners.

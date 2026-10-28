@@ -117,10 +117,20 @@ after the stage it names.
 
    checked equal to Attention's `at:h_ead` with every token seeing
    every token.
-2. **A BERT layer**: one encoder layer with made-up weights, the
-   attention, added back to the input (its label `$h`) and
-   layer-normed, the GELU feed-forward layer, added back (`$a`) and
-   layer-normed, the shapes checked; equal to the layer written out.
+2. **A BERT layer**: one encoder layer with made-up weights, every
+   stage an equation: one head of attention, out through Wo and added
+   back to the input, layer norm (each row's mean and variance, then
+   normalized), the feed-forward layer (a dense layer, GELU written
+   with exp as `f / (1 + exp(-2u))`, a dense layer added back), layer
+   norm again, the shapes checked; equal to the layer written out with
+   the libraries.
+
+Every example on the page is shown as math this way too: the CNN
+layer and the diffusion sampler beside the equations a paper prints,
+the dense layer, the softmax (`exp(z_j - max_i z_i)` over the sum),
+layer norm and the causal attention head (the mask multiplying each
+exponential), each a pipeline of equations checked equal to the
+example's own pipeline.
    [Tiny BERT](../micro-bert/README.md) applies two such layers to
    letters.
 

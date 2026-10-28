@@ -5,6 +5,7 @@
 ## `xetal expand pipelines.xtl` shows what each pipeline became.
 
 "flow:" u_se< "Flow"
+"e:" u_se< "Equations"
 "nn:" u_se< "NN"
 "nm:" u_se< "Norm"
 "at:" u_se< "Attention"
@@ -36,6 +37,74 @@ dense := ({ @ ->
 } @)
 dense0 := (X '+ '* i_nner W) + 3 2 r_eshape b
 c1 := "dense, its bias" k:t_est dense k:n_ear dense0
+## As math: the product, then the bias, a stage each.
+dense1 := ({ @ ->
+  g4:stage := X
+  p := { @ ->
+    it := g4:stage
+    ({ @ ->
+      g8:a_t := { A i -> (1 + i) s_elect r_avel A }
+      g7:c_heck := { (A, name, k, from) e ->
+        n := k s_elect s_hape A
+        bad := w_here n_ot r_avel (0 <= e) & e < n
+        0 = t_ally bad ? e
+        "index" []S_IGNAL name c_at " axis " c_at (f_ormat k) c_at ": index " c_at (f_ormat (f_irst bad) s_elect r_avel e) c_at " is outside 0.." c_at (f_ormat n - 1) c_at " (from " c_at from c_at ")"
+      }
+      g6:r_ank := { (A, name, q, ref) ->
+        (t_ally s_hape A) = q ? A
+        "rank" []S_IGNAL ref c_at " indexes " c_at (f_ormat q) c_at " axes, but " c_at name c_at " has rank " c_at f_ormat t_ally s_hape A
+      }
+      g9:grid := 3 c_at 2
+      g10:g_rid := { k ->
+        g9:grid r_eshape (o_ffsets k s_elect g9:grid) 'l_eft t_able ('* r_/ k d_rop g9:grid) r_eshape 0
+      }
+      g9:grid r_eshape (({ @ ->
+        g11:grid := 3 c_at 2 c_at (1 + 3 - 0)
+        g12:g_rid := { k ->
+          g11:grid r_eshape (o_ffsets k s_elect g11:grid) 'l_eft t_able ('* r_/ k d_rop g11:grid) r_eshape 0
+        }
+        '+ r_/_3 g11:grid r_eshape ((
+    ((g6:r_ank (it, "it", 2, "it[i,j]")) g8:a_t ((
+      ((it, "it", 2, "j") g7:c_heck (0 + g12:g_rid 3)) + (2 s_elect s_hape it) *
+              
+      ((it, "it", 1, "i") g7:c_heck (0 + g12:g_rid 1))))) * 
+    ((g6:r_ank (W, "W", 2, "W[j,o]")) g8:a_t ((
+      ((W, "W", 2, "o") g7:c_heck (0 + g12:g_rid 2)) + (2 s_elect s_hape W) * 
+      ((W, "W", 1, "j") g7:c_heck (0 + g12:g_rid 3)))))))
+      } @))
+    } @)
+  } @
+  g5:stage := (({ @ ->
+    g15:a_t := { A i -> (1 + i) s_elect r_avel A }
+    g14:c_heck := { (A, name, k, from) e ->
+      n := k s_elect s_hape A
+      bad := w_here n_ot r_avel (0 <= e) & e < n
+      0 = t_ally bad ? e
+      "index" []S_IGNAL name c_at " axis " c_at (f_ormat k) c_at ": index " c_at (f_ormat (f_irst bad) s_elect r_avel e) c_at " is outside 0.." c_at (f_ormat n - 1) c_at " (from " c_at from c_at ")"
+    }
+    g13:r_ank := { (A, name, q, ref) ->
+      (t_ally s_hape A) = q ? A
+      "rank" []S_IGNAL ref c_at " indexes " c_at (f_ormat q) c_at " axes, but " c_at name c_at " has rank " c_at f_ormat t_ally s_hape A
+    }
+    g16:grid := 3 c_at 2
+    g17:g_rid := { k ->
+      g16:grid r_eshape (o_ffsets k s_elect g16:grid) 'l_eft t_able ('* r_/ k d_rop g16:grid) r_eshape 0
+    }
+    g16:grid r_eshape ((
+    ((g13:r_ank (p, "p", 2, "p[i,o]")) g15:a_t ((
+      ((p, "p", 2, "o") g14:c_heck (0 + g17:g_rid 2)) + (2 s_elect s_hape p) * 
+      ((p, "p", 1, "i") g14:c_heck (0 + g17:g_rid 1))))) + 
+    ((g13:r_ank (b, "b", 1, "b[o]")) g15:a_t (
+      ((b, "b", 1, "o") g14:c_heck (0 + g17:g_rid 2))))))
+  } @))
+  g5:stage
+} @)
+denseM := ((r#"\begin{aligned} "# c_at r#"& "# c_at r#"X"# c_at r#" \\ "# c_at
+    r#"\longrightarrow \; & "# c_at (("P_{i,o} = \\sum_{j=0}^{3} X_{i,j} \\, W_{j,o}"))
+    c_at r#" \qquad \triangleright \, p \\ "# c_at r#"\longrightarrow \; & "#
+    c_at (("Y_{i,o} = p_{i,o} + b_{o}")) c_at r#""# c_at r#" \end{aligned}"#))
+denseM
+c1b := "the same as equations" k:t_est dense1 k:n_ear dense0
 
 ### Stable softmax
 
@@ -43,17 +112,89 @@ c1 := "dense, its bias" k:t_est dense k:n_ear dense0
 ## labels $m and $e name stages that later stages use.
 z := 1000.0 1001.0 1002.0
 soft := ({ @ ->
-  g4:stage := z
+  g18:stage := z
   m := { @ ->
-    it := g4:stage
+    it := g18:stage
     'm_ax r_/ it
   } @
   e := e_xp z - m
-  g5:stage := e / '+ r_/ e
-  g5:stage
+  g19:stage := e / '+ r_/ e
+  g19:stage
 } @)
 soft0 := nn:s_oftmax z
 c2 := "stable softmax" k:t_est soft k:n_ear soft0
+## As math: the exponential of each less the largest (max as a
+## reduction), each over their sum.
+soft1 := ({ @ ->
+  g20:stage := z
+  e := { @ ->
+    it := g20:stage
+    ({ @ ->
+      g24:a_t := { A i -> (1 + i) s_elect r_avel A }
+      g23:c_heck := { (A, name, k, from) e ->
+        n := k s_elect s_hape A
+        bad := w_here n_ot r_avel (0 <= e) & e < n
+        0 = t_ally bad ? e
+        "index" []S_IGNAL name c_at " axis " c_at (f_ormat k) c_at ": index " c_at (f_ormat (f_irst bad) s_elect r_avel e) c_at " is outside 0.." c_at (f_ormat n - 1) c_at " (from " c_at from c_at ")"
+      }
+      g22:r_ank := { (A, name, q, ref) ->
+        (t_ally s_hape A) = q ? A
+        "rank" []S_IGNAL ref c_at " indexes " c_at (f_ormat q) c_at " axes, but " c_at name c_at " has rank " c_at f_ormat t_ally s_hape A
+      }
+      g25:grid := 3
+      g26:g_rid := { k ->
+        g25:grid r_eshape (o_ffsets k s_elect g25:grid) 'l_eft t_able ('* r_/ k d_rop g25:grid) r_eshape 0
+      }
+      g25:grid r_eshape ((e_xp (
+    ((g22:r_ank (it, "it", 1, "it[j]")) g24:a_t (
+      ((it, "it", 1, "j") g23:c_heck (0 + g26:g_rid 1)))) - ({ @ ->
+        g27:grid := 3 c_at (1 + 2 - 0)
+        g28:g_rid := { k ->
+          g27:grid r_eshape (o_ffsets k s_elect g27:grid) 'l_eft t_able ('* r_/ k d_rop g27:grid) r_eshape 0
+        }
+        'm_ax r_/_2 g27:grid r_eshape (
+    ((g22:r_ank (it, "it", 1, "it[i]")) g24:a_t (
+      ((it, "it", 1, "i") g23:c_heck (0 + g28:g_rid 2)))))
+      } @))))
+    } @)
+  } @
+  g21:stage := (({ @ ->
+    g31:a_t := { A i -> (1 + i) s_elect r_avel A }
+    g30:c_heck := { (A, name, k, from) e ->
+      n := k s_elect s_hape A
+      bad := w_here n_ot r_avel (0 <= e) & e < n
+      0 = t_ally bad ? e
+      "index" []S_IGNAL name c_at " axis " c_at (f_ormat k) c_at ": index " c_at (f_ormat (f_irst bad) s_elect r_avel e) c_at " is outside 0.." c_at (f_ormat n - 1) c_at " (from " c_at from c_at ")"
+    }
+    g29:r_ank := { (A, name, q, ref) ->
+      (t_ally s_hape A) = q ? A
+      "rank" []S_IGNAL ref c_at " indexes " c_at (f_ormat q) c_at " axes, but " c_at name c_at " has rank " c_at f_ormat t_ally s_hape A
+    }
+    g32:grid := 3
+    g33:g_rid := { k ->
+      g32:grid r_eshape (o_ffsets k s_elect g32:grid) 'l_eft t_able ('* r_/ k d_rop g32:grid) r_eshape 0
+    }
+    g32:grid r_eshape ((
+    ((g29:r_ank (e, "e", 1, "e[j]")) g31:a_t (
+      ((e, "e", 1, "j") g30:c_heck (0 + g33:g_rid 1)))) / ({ @ ->
+      g34:grid := 3 c_at (1 + 2 - 0)
+      g35:g_rid := { k ->
+        g34:grid r_eshape (o_ffsets k s_elect g34:grid) 'l_eft t_able ('* r_/ k d_rop g34:grid) r_eshape 0
+      }
+      '+ r_/_2 g34:grid r_eshape (
+    ((g29:r_ank (e, "e", 1, "e[i]")) g31:a_t (
+      ((e, "e", 1, "i") g30:c_heck (0 + g35:g_rid 2)))))
+    } @)))
+  } @))
+  g21:stage
+} @)
+softM := ((r#"\begin{aligned} "# c_at r#"& "# c_at r#"z"# c_at r#" \\ "# c_at
+    r#"\longrightarrow \; & "# c_at (("E_{j} = \\exp(z_{j} - \\left(\\max_{i=0}^{2} z_{i}\\right))"))
+    c_at r#" \qquad \triangleright \, e \\ "# c_at r#"\longrightarrow \; & "#
+    c_at (("P_{j} = \\frac{e_{j}}{\\sum_{i=0}^{2} e_{i}}")) c_at r#""# c_at
+    r#" \end{aligned}"#))
+softM
+c2b := "the same as equations" k:t_est soft1 k:n_ear soft0
 
 ### Layer norm
 
@@ -62,20 +203,125 @@ c2 := "stable softmax" k:t_est soft k:n_ear soft0
 g := 1.0 2.0 1.0 0.5
 c := 0.0 0.1 0.0 -0.1
 norm := ({ @ ->
-  g6:stage := X
-  g7:stage := nm:s_tandard g6:stage
-  g8:stage := { @ ->
-    it := g7:stage
+  g36:stage := X
+  g37:stage := nm:s_tandard g36:stage
+  g38:stage := { @ ->
+    it := g37:stage
     it * (s_hape it) r_eshape g
   } @
-  g9:stage := { @ ->
-    it := g8:stage
+  g39:stage := { @ ->
+    it := g38:stage
     it + (s_hape it) r_eshape c
   } @
-  g9:stage
+  g39:stage
 } @)
 norm0 := (g, c) nm:l_ayer X
 c3 := "layer norm" k:t_est norm k:n_ear norm0
+## As math: each row's mean and variance, then each item normalized,
+## times the gain, plus the bias.
+norm1 := ({ @ ->
+  x := X
+  mu := { @ ->
+    it := x
+    ({ @ ->
+      g43:a_t := { A i -> (1 + i) s_elect r_avel A }
+      g42:c_heck := { (A, name, k, from) e ->
+        n := k s_elect s_hape A
+        bad := w_here n_ot r_avel (0 <= e) & e < n
+        0 = t_ally bad ? e
+        "index" []S_IGNAL name c_at " axis " c_at (f_ormat k) c_at ": index " c_at (f_ormat (f_irst bad) s_elect r_avel e) c_at " is outside 0.." c_at (f_ormat n - 1) c_at " (from " c_at from c_at ")"
+      }
+      g41:r_ank := { (A, name, q, ref) ->
+        (t_ally s_hape A) = q ? A
+        "rank" []S_IGNAL ref c_at " indexes " c_at (f_ormat q) c_at " axes, but " c_at name c_at " has rank " c_at f_ormat t_ally s_hape A
+      }
+      g44:grid := 3
+      g45:g_rid := { k ->
+        g44:grid r_eshape (o_ffsets k s_elect g44:grid) 'l_eft t_able ('* r_/ k d_rop g44:grid) r_eshape 0
+      }
+      g44:grid r_eshape ((({ @ ->
+        g46:grid := 3 c_at (1 + 3 - 0)
+        g47:g_rid := { k ->
+          g46:grid r_eshape (o_ffsets k s_elect g46:grid) 'l_eft t_able ('* r_/ k d_rop g46:grid) r_eshape 0
+        }
+        '+ r_/_2 g46:grid r_eshape (
+    ((g41:r_ank (it, "it", 2, "it[i,j]")) g43:a_t ((
+      ((it, "it", 2, "j") g42:c_heck (0 + g47:g_rid 2)) + (2 s_elect s_hape it)
+            * 
+      ((it, "it", 1, "i") g42:c_heck (0 + g47:g_rid 1))))))
+      } @) / 4.0))
+    } @)
+  } @
+  var := (({ @ ->
+    g50:a_t := { A i -> (1 + i) s_elect r_avel A }
+    g49:c_heck := { (A, name, k, from) e ->
+      n := k s_elect s_hape A
+      bad := w_here n_ot r_avel (0 <= e) & e < n
+      0 = t_ally bad ? e
+      "index" []S_IGNAL name c_at " axis " c_at (f_ormat k) c_at ": index " c_at (f_ormat (f_irst bad) s_elect r_avel e) c_at " is outside 0.." c_at (f_ormat n - 1) c_at " (from " c_at from c_at ")"
+    }
+    g48:r_ank := { (A, name, q, ref) ->
+      (t_ally s_hape A) = q ? A
+      "rank" []S_IGNAL ref c_at " indexes " c_at (f_ormat q) c_at " axes, but " c_at name c_at " has rank " c_at f_ormat t_ally s_hape A
+    }
+    g51:grid := 3
+    g52:g_rid := { k ->
+      g51:grid r_eshape (o_ffsets k s_elect g51:grid) 'l_eft t_able ('* r_/ k d_rop g51:grid) r_eshape 0
+    }
+    g51:grid r_eshape ((({ @ ->
+      g53:grid := 3 c_at (1 + 3 - 0)
+      g54:g_rid := { k ->
+        g53:grid r_eshape (o_ffsets k s_elect g53:grid) 'l_eft t_able ('* r_/ k d_rop g53:grid) r_eshape 0
+      }
+      '+ r_/_2 g53:grid r_eshape ((((
+    ((g48:r_ank (x, "x", 2, "x[i,j]")) g50:a_t ((
+      ((x, "x", 2, "j") g49:c_heck (0 + g54:g_rid 2)) + (2 s_elect s_hape x) * 
+      ((x, "x", 1, "i") g49:c_heck (0 + g54:g_rid 1))))) - 
+    ((g48:r_ank (mu, "mu", 1, "mu[i]")) g50:a_t (
+      ((mu, "mu", 1, "i") g49:c_heck (0 + g54:g_rid 1)))))) ^ 2))
+    } @) / 4.0))
+  } @))
+  g40:stage := (({ @ ->
+    g57:a_t := { A i -> (1 + i) s_elect r_avel A }
+    g56:c_heck := { (A, name, k, from) e ->
+      n := k s_elect s_hape A
+      bad := w_here n_ot r_avel (0 <= e) & e < n
+      0 = t_ally bad ? e
+      "index" []S_IGNAL name c_at " axis " c_at (f_ormat k) c_at ": index " c_at (f_ormat (f_irst bad) s_elect r_avel e) c_at " is outside 0.." c_at (f_ormat n - 1) c_at " (from " c_at from c_at ")"
+    }
+    g55:r_ank := { (A, name, q, ref) ->
+      (t_ally s_hape A) = q ? A
+      "rank" []S_IGNAL ref c_at " indexes " c_at (f_ormat q) c_at " axes, but " c_at name c_at " has rank " c_at f_ormat t_ally s_hape A
+    }
+    g58:grid := 3 c_at 4
+    g59:g_rid := { k ->
+      g58:grid r_eshape (o_ffsets k s_elect g58:grid) 'l_eft t_able ('* r_/ k d_rop g58:grid) r_eshape 0
+    }
+    g58:grid r_eshape ((((
+    ((g55:r_ank (g, "g", 1, "g[j]")) g57:a_t (
+      ((g, "g", 1, "j") g56:c_heck (0 + g59:g_rid 2)))) * ((
+    ((g55:r_ank (x, "x", 2, "x[i,j]")) g57:a_t ((
+      ((x, "x", 2, "j") g56:c_heck (0 + g59:g_rid 2)) + (2 s_elect s_hape x) * 
+      ((x, "x", 1, "i") g56:c_heck (0 + g59:g_rid 1))))) - 
+    ((g55:r_ank (mu, "mu", 1, "mu[i]")) g57:a_t (
+      ((mu, "mu", 1, "i") g56:c_heck (0 + g59:g_rid 1))))))) / ((
+    ((g55:r_ank (var, "var", 1, "var[i]")) g57:a_t (
+      ((var, "var", 1, "i") g56:c_heck (0 + g59:g_rid 1)))) + 0.00001) ^ 0.5)) +
+      
+    ((g55:r_ank (c, "c", 1, "c[j]")) g57:a_t (
+      ((c, "c", 1, "j") g56:c_heck (0 + g59:g_rid 2))))))
+  } @))
+  g40:stage
+} @)
+normM := ((r#"\begin{aligned} "# c_at r#"& "# c_at r#"X"# c_at
+    r#" \qquad \triangleright \, x \\ "# c_at r#"\longrightarrow \; & "# c_at (("Mean_{i} = \\frac{\\sum_{j=0}^{3} x_{i,j}}{4.0}"))
+    c_at r#" \qquad \triangleright \, mu \\ "# c_at r#"\longrightarrow \; & "#
+    c_at (("Var_{i} = \\frac{\\sum_{j=0}^{3} \\left(x_{i,j} - mu_{i}\\right)^{2}}{4.0}"))
+    c_at r#" \qquad \triangleright \, var \\ "# c_at r#"\longrightarrow \; & "#
+    c_at (("Y_{i,j} = \\frac{g_{j} \\, \\left(x_{i,j} - mu_{i}\\right)}{\\sqrt{var_{i} + 0.00001}} + c_{j}"))
+    c_at r#""# c_at r#" \end{aligned}"#))
+normM
+c3b := "the same as equations" k:t_est norm1 k:n_ear norm0
 
 ### Attention
 
@@ -88,21 +334,233 @@ Wk := 4 2 r_eshape 0.1 0.2 0.3 -0.1 -0.2 0.1 0.2 0.05
 Wv := 4 2 r_eshape 1.0 0.0 0.0 1.0 0.5 0.5 -0.5 0.5
 M := at:c_ausal 3
 head := ({ @ ->
-  g10:stage := X
+  g60:stage := X
   (Q, K, V) := { @ ->
-    it := g10:stage
+    it := g60:stage
     (it '+ '* i_nner Wq, it '+ '* i_nner Wk, it '+ '* i_nner Wv)
   } @
   S := (Q '+ '* i_nner o_\ K) / 2.0 ^ 0.5
-  g11:stage := M at:w_eights S
-  g12:stage := { @ ->
-    it := g11:stage
+  g61:stage := M at:w_eights S
+  g62:stage := { @ ->
+    it := g61:stage
     it '+ '* i_nner V
   } @
-  g12:stage
+  g62:stage
 } @)
 head0 := (Wq, Wk, Wv) at:h_ead (X, M)
 c4 := "attention, one head" k:t_est head k:n_ear head0
+## As math: the queries, keys and values, the scores, the softmax
+## under the causal mask (M multiplies each exponential: a masked place
+## gets 0), the values weighted.
+head1 := ({ @ ->
+  x := X
+  q := (({ @ ->
+    g66:a_t := { A i -> (1 + i) s_elect r_avel A }
+    g65:c_heck := { (A, name, k, from) e ->
+      n := k s_elect s_hape A
+      bad := w_here n_ot r_avel (0 <= e) & e < n
+      0 = t_ally bad ? e
+      "index" []S_IGNAL name c_at " axis " c_at (f_ormat k) c_at ": index " c_at (f_ormat (f_irst bad) s_elect r_avel e) c_at " is outside 0.." c_at (f_ormat n - 1) c_at " (from " c_at from c_at ")"
+    }
+    g64:r_ank := { (A, name, q, ref) ->
+      (t_ally s_hape A) = q ? A
+      "rank" []S_IGNAL ref c_at " indexes " c_at (f_ormat q) c_at " axes, but " c_at name c_at " has rank " c_at f_ormat t_ally s_hape A
+    }
+    g67:grid := 3 c_at 2
+    g68:g_rid := { k ->
+      g67:grid r_eshape (o_ffsets k s_elect g67:grid) 'l_eft t_able ('* r_/ k d_rop g67:grid) r_eshape 0
+    }
+    g67:grid r_eshape (({ @ ->
+      g69:grid := 3 c_at 2 c_at (1 + 3 - 0)
+      g70:g_rid := { k ->
+        g69:grid r_eshape (o_ffsets k s_elect g69:grid) 'l_eft t_able ('* r_/ k d_rop g69:grid) r_eshape 0
+      }
+      '+ r_/_3 g69:grid r_eshape ((
+    ((g64:r_ank (x, "x", 2, "x[i,f]")) g66:a_t ((
+      ((x, "x", 2, "f") g65:c_heck (0 + g70:g_rid 3)) + (2 s_elect s_hape x) * 
+      ((x, "x", 1, "i") g65:c_heck (0 + g70:g_rid 1))))) * 
+    ((g64:r_ank (Wq, "Wq", 2, "Wq[f,d]")) g66:a_t ((
+      ((Wq, "Wq", 2, "d") g65:c_heck (0 + g70:g_rid 2)) + (2 s_elect s_hape Wq)
+              * 
+      ((Wq, "Wq", 1, "f") g65:c_heck (0 + g70:g_rid 3)))))))
+    } @))
+  } @))
+  k := (({ @ ->
+    g73:a_t := { A i -> (1 + i) s_elect r_avel A }
+    g72:c_heck := { (A, name, k, from) e ->
+      n := k s_elect s_hape A
+      bad := w_here n_ot r_avel (0 <= e) & e < n
+      0 = t_ally bad ? e
+      "index" []S_IGNAL name c_at " axis " c_at (f_ormat k) c_at ": index " c_at (f_ormat (f_irst bad) s_elect r_avel e) c_at " is outside 0.." c_at (f_ormat n - 1) c_at " (from " c_at from c_at ")"
+    }
+    g71:r_ank := { (A, name, q, ref) ->
+      (t_ally s_hape A) = q ? A
+      "rank" []S_IGNAL ref c_at " indexes " c_at (f_ormat q) c_at " axes, but " c_at name c_at " has rank " c_at f_ormat t_ally s_hape A
+    }
+    g74:grid := 3 c_at 2
+    g75:g_rid := { k ->
+      g74:grid r_eshape (o_ffsets k s_elect g74:grid) 'l_eft t_able ('* r_/ k d_rop g74:grid) r_eshape 0
+    }
+    g74:grid r_eshape (({ @ ->
+      g76:grid := 3 c_at 2 c_at (1 + 3 - 0)
+      g77:g_rid := { k ->
+        g76:grid r_eshape (o_ffsets k s_elect g76:grid) 'l_eft t_able ('* r_/ k d_rop g76:grid) r_eshape 0
+      }
+      '+ r_/_3 g76:grid r_eshape ((
+    ((g71:r_ank (x, "x", 2, "x[j,f]")) g73:a_t ((
+      ((x, "x", 2, "f") g72:c_heck (0 + g77:g_rid 3)) + (2 s_elect s_hape x) * 
+      ((x, "x", 1, "j") g72:c_heck (0 + g77:g_rid 1))))) * 
+    ((g71:r_ank (Wk, "Wk", 2, "Wk[f,d]")) g73:a_t ((
+      ((Wk, "Wk", 2, "d") g72:c_heck (0 + g77:g_rid 2)) + (2 s_elect s_hape Wk)
+              * 
+      ((Wk, "Wk", 1, "f") g72:c_heck (0 + g77:g_rid 3)))))))
+    } @))
+  } @))
+  v := (({ @ ->
+    g80:a_t := { A i -> (1 + i) s_elect r_avel A }
+    g79:c_heck := { (A, name, k, from) e ->
+      n := k s_elect s_hape A
+      bad := w_here n_ot r_avel (0 <= e) & e < n
+      0 = t_ally bad ? e
+      "index" []S_IGNAL name c_at " axis " c_at (f_ormat k) c_at ": index " c_at (f_ormat (f_irst bad) s_elect r_avel e) c_at " is outside 0.." c_at (f_ormat n - 1) c_at " (from " c_at from c_at ")"
+    }
+    g78:r_ank := { (A, name, q, ref) ->
+      (t_ally s_hape A) = q ? A
+      "rank" []S_IGNAL ref c_at " indexes " c_at (f_ormat q) c_at " axes, but " c_at name c_at " has rank " c_at f_ormat t_ally s_hape A
+    }
+    g81:grid := 3 c_at 2
+    g82:g_rid := { k ->
+      g81:grid r_eshape (o_ffsets k s_elect g81:grid) 'l_eft t_able ('* r_/ k d_rop g81:grid) r_eshape 0
+    }
+    g81:grid r_eshape (({ @ ->
+      g83:grid := 3 c_at 2 c_at (1 + 3 - 0)
+      g84:g_rid := { k ->
+        g83:grid r_eshape (o_ffsets k s_elect g83:grid) 'l_eft t_able ('* r_/ k d_rop g83:grid) r_eshape 0
+      }
+      '+ r_/_3 g83:grid r_eshape ((
+    ((g78:r_ank (x, "x", 2, "x[j,f]")) g80:a_t ((
+      ((x, "x", 2, "f") g79:c_heck (0 + g84:g_rid 3)) + (2 s_elect s_hape x) * 
+      ((x, "x", 1, "j") g79:c_heck (0 + g84:g_rid 1))))) * 
+    ((g78:r_ank (Wv, "Wv", 2, "Wv[f,d]")) g80:a_t ((
+      ((Wv, "Wv", 2, "d") g79:c_heck (0 + g84:g_rid 2)) + (2 s_elect s_hape Wv)
+              * 
+      ((Wv, "Wv", 1, "f") g79:c_heck (0 + g84:g_rid 3)))))))
+    } @))
+  } @))
+  s := (({ @ ->
+    g87:a_t := { A i -> (1 + i) s_elect r_avel A }
+    g86:c_heck := { (A, name, k, from) e ->
+      n := k s_elect s_hape A
+      bad := w_here n_ot r_avel (0 <= e) & e < n
+      0 = t_ally bad ? e
+      "index" []S_IGNAL name c_at " axis " c_at (f_ormat k) c_at ": index " c_at (f_ormat (f_irst bad) s_elect r_avel e) c_at " is outside 0.." c_at (f_ormat n - 1) c_at " (from " c_at from c_at ")"
+    }
+    g85:r_ank := { (A, name, q, ref) ->
+      (t_ally s_hape A) = q ? A
+      "rank" []S_IGNAL ref c_at " indexes " c_at (f_ormat q) c_at " axes, but " c_at name c_at " has rank " c_at f_ormat t_ally s_hape A
+    }
+    g88:grid := 3 c_at 3
+    g89:g_rid := { k ->
+      g88:grid r_eshape (o_ffsets k s_elect g88:grid) 'l_eft t_able ('* r_/ k d_rop g88:grid) r_eshape 0
+    }
+    g88:grid r_eshape ((({ @ ->
+      g90:grid := 3 c_at 3 c_at (1 + 1 - 0)
+      g91:g_rid := { k ->
+        g90:grid r_eshape (o_ffsets k s_elect g90:grid) 'l_eft t_able ('* r_/ k d_rop g90:grid) r_eshape 0
+      }
+      '+ r_/_3 g90:grid r_eshape ((
+    ((g85:r_ank (q, "q", 2, "q[i,d]")) g87:a_t ((
+      ((q, "q", 2, "d") g86:c_heck (0 + g91:g_rid 3)) + (2 s_elect s_hape q) * 
+      ((q, "q", 1, "i") g86:c_heck (0 + g91:g_rid 1))))) * 
+    ((g85:r_ank (k, "k", 2, "k[j,d]")) g87:a_t ((
+      ((k, "k", 2, "d") g86:c_heck (0 + g91:g_rid 3)) + (2 s_elect s_hape k) * 
+      ((k, "k", 1, "j") g86:c_heck (0 + g91:g_rid 2)))))))
+    } @) / (2.0 ^ 0.5)))
+  } @))
+  a := (({ @ ->
+    g94:a_t := { A i -> (1 + i) s_elect r_avel A }
+    g93:c_heck := { (A, name, k, from) e ->
+      n := k s_elect s_hape A
+      bad := w_here n_ot r_avel (0 <= e) & e < n
+      0 = t_ally bad ? e
+      "index" []S_IGNAL name c_at " axis " c_at (f_ormat k) c_at ": index " c_at (f_ormat (f_irst bad) s_elect r_avel e) c_at " is outside 0.." c_at (f_ormat n - 1) c_at " (from " c_at from c_at ")"
+    }
+    g92:r_ank := { (A, name, q, ref) ->
+      (t_ally s_hape A) = q ? A
+      "rank" []S_IGNAL ref c_at " indexes " c_at (f_ormat q) c_at " axes, but " c_at name c_at " has rank " c_at f_ormat t_ally s_hape A
+    }
+    g95:grid := 3 c_at 3
+    g96:g_rid := { k ->
+      g95:grid r_eshape (o_ffsets k s_elect g95:grid) 'l_eft t_able ('* r_/ k d_rop g95:grid) r_eshape 0
+    }
+    g95:grid r_eshape (((
+    ((g92:r_ank (M, "M", 2, "M[i,j]")) g94:a_t ((
+      ((M, "M", 2, "j") g93:c_heck (0 + g96:g_rid 2)) + (2 s_elect s_hape M) * 
+      ((M, "M", 1, "i") g93:c_heck (0 + g96:g_rid 1))))) * (e_xp 
+    ((g92:r_ank (s, "s", 2, "s[i,j]")) g94:a_t ((
+      ((s, "s", 2, "j") g93:c_heck (0 + g96:g_rid 2)) + (2 s_elect s_hape s) * 
+      ((s, "s", 1, "i") g93:c_heck (0 + g96:g_rid 1))))))) / ({ @ ->
+      g97:grid := 3 c_at 3 c_at (1 + 2 - 0)
+      g98:g_rid := { k ->
+        g97:grid r_eshape (o_ffsets k s_elect g97:grid) 'l_eft t_able ('* r_/ k d_rop g97:grid) r_eshape 0
+      }
+      '+ r_/_3 g97:grid r_eshape ((
+    ((g92:r_ank (M, "M", 2, "M[i,m]")) g94:a_t ((
+      ((M, "M", 2, "m") g93:c_heck (0 + g98:g_rid 3)) + (2 s_elect s_hape M) * 
+      ((M, "M", 1, "i") g93:c_heck (0 + g98:g_rid 1))))) * (e_xp 
+    ((g92:r_ank (s, "s", 2, "s[i,m]")) g94:a_t ((
+      ((s, "s", 2, "m") g93:c_heck (0 + g98:g_rid 3)) + (2 s_elect s_hape s) * 
+      ((s, "s", 1, "i") g93:c_heck (0 + g98:g_rid 1))))))))
+    } @)))
+  } @))
+  g63:stage := (({ @ ->
+    g101:a_t := { A i -> (1 + i) s_elect r_avel A }
+    g100:c_heck := { (A, name, k, from) e ->
+      n := k s_elect s_hape A
+      bad := w_here n_ot r_avel (0 <= e) & e < n
+      0 = t_ally bad ? e
+      "index" []S_IGNAL name c_at " axis " c_at (f_ormat k) c_at ": index " c_at (f_ormat (f_irst bad) s_elect r_avel e) c_at " is outside 0.." c_at (f_ormat n - 1) c_at " (from " c_at from c_at ")"
+    }
+    g99:r_ank := { (A, name, q, ref) ->
+      (t_ally s_hape A) = q ? A
+      "rank" []S_IGNAL ref c_at " indexes " c_at (f_ormat q) c_at " axes, but " c_at name c_at " has rank " c_at f_ormat t_ally s_hape A
+    }
+    g102:grid := 3 c_at 2
+    g103:g_rid := { k ->
+      g102:grid r_eshape (o_ffsets k s_elect g102:grid) 'l_eft t_able ('* r_/ k d_rop g102:grid) r_eshape 0
+    }
+    g102:grid r_eshape (({ @ ->
+      g104:grid := 3 c_at 2 c_at (1 + 2 - 0)
+      g105:g_rid := { k ->
+        g104:grid r_eshape (o_ffsets k s_elect g104:grid) 'l_eft t_able ('* r_/ k d_rop g104:grid) r_eshape 0
+      }
+      '+ r_/_3 g104:grid r_eshape ((
+    ((g99:r_ank (a, "a", 2, "a[i,j]")) g101:a_t ((
+      ((a, "a", 2, "j") g100:c_heck (0 + g105:g_rid 3)) + (2 s_elect s_hape a) *
+              
+      ((a, "a", 1, "i") g100:c_heck (0 + g105:g_rid 1))))) * 
+    ((g99:r_ank (v, "v", 2, "v[j,d]")) g101:a_t ((
+      ((v, "v", 2, "d") g100:c_heck (0 + g105:g_rid 2)) + (2 s_elect s_hape v) *
+              
+      ((v, "v", 1, "j") g100:c_heck (0 + g105:g_rid 3)))))))
+    } @))
+  } @))
+  g63:stage
+} @)
+headM := ((r#"\begin{aligned} "# c_at r#"& "# c_at r#"X"# c_at
+    r#" \qquad \triangleright \, x \\ "# c_at r#"\longrightarrow \; & "# c_at (("Q_{i,d} = \\sum_{f=0}^{3} x_{i,f} \\, Wq_{f,d}"))
+    c_at r#" \qquad \triangleright \, q \\ "# c_at r#"\longrightarrow \; & "#
+    c_at (("K_{j,d} = \\sum_{f=0}^{3} x_{j,f} \\, Wk_{f,d}")) c_at
+    r#" \qquad \triangleright \, k \\ "# c_at r#"\longrightarrow \; & "# c_at (("V_{j,d} = \\sum_{f=0}^{3} x_{j,f} \\, Wv_{f,d}"))
+    c_at r#" \qquad \triangleright \, v \\ "# c_at r#"\longrightarrow \; & "#
+    c_at (("S_{i,j} = \\frac{\\sum_{d=0}^{1} q_{i,d} \\, k_{j,d}}{\\sqrt{2.0}}"))
+    c_at r#" \qquad \triangleright \, s \\ "# c_at r#"\longrightarrow \; & "#
+    c_at (("A_{i,j} = \\frac{M_{i,j} \\, \\exp(s_{i,j})}{\\sum_{m=0}^{2} M_{i,m} \\, \\exp(s_{i,m})}"))
+    c_at r#" \qquad \triangleright \, a \\ "# c_at r#"\longrightarrow \; & "#
+    c_at (("Y_{i,d} = \\sum_{j=0}^{2} a_{i,j} \\, v_{j,d}")) c_at r#""# c_at
+    r#" \end{aligned}"#))
+headM
+c4b := "the same as equations" k:t_est head1 k:n_ear head0
 
-k:r_eport c1 k:a_nd c2 k:a_nd c3 k:a_nd c4
+k:r_eport c1 k:a_nd c1b k:a_nd c2 k:a_nd c2b k:a_nd c3 k:a_nd c3b k:a_nd c4 k:a_nd c4b
 

@@ -54,35 +54,65 @@ r1 := "the equations are Attention's head, every token seeing every token" k:t_e
 ### A BERT layer
 
 ## One encoder layer of BERT (Tiny BERT, demos/micro-bert, applies two
-## of them to letters): the attention (here Attention's own head), out
-## through Wo, added back to the input (its label h) and layer-normed;
-## the GELU feed-forward layer, added back (a) and layer-normed. The
-## shapes are checked as it runs. Made-up weights; one head of width 3.
-Wo := 3 3 r_eshape 0.3 * c_os 2.0 * f_loat r_ange 9
+## of them to letters), every stage an equation: one head of attention
+## (queries, keys and values from the input h, the scores, the softmax,
+## the values weighted), out through Wo and added back to h; layer norm
+## (each row's mean and variance, then normalized, times the gain g,
+## plus beta); the feed-forward layer, a dense layer (its bias the last
+## row of W1), GELU, a dense layer added back to y, and layer norm
+## again. GELU is its tanh form written with exp, f / (1 + e^(-2u)) for
+## u = sqrt(2/pi) (f + 0.044715 f^3), which is Activations' g_elu (the
+## grammar has no tanh: ask E6). Checked against the layer written out
+## with the libraries; made-up weights, one head of width 3.
 Bq := 3 3 r_eshape 0.4 * s_in 3.0 * f_loat r_ange 9
+Bk := 3 3 r_eshape 0.4 * c_os 3.0 * f_loat r_ange 9
+Bv := 3 3 r_eshape 0.5 * s_in 2.0 * f_loat r_ange 9
+Wo := 3 3 r_eshape 0.3 * c_os 2.0 * f_loat r_ange 9
 W1 := 4 6 r_eshape 0.3 * s_in f_loat r_ange 24
 W2 := 7 3 r_eshape 0.3 * c_os f_loat r_ange 21
-g := 1.0 1.0 1.0
-c := 0.0 0.0 0.0
+g := 1.0 0.9 1.1
+beta := 0.1 0.0 -0.1
 layer := @ flow:p_ipe< c#"
    X $h
-|> (Bq, Bq, Bq) at:h_ead (it, at:a_ll n)
-|> it '+ '* i_nner Wo
-|> (g, c) nm:l_ayer it + h $a [n 3]
-|> act:g_elu it nn:d_ense W1
-|> it nn:d_ense W2
-|> (g, c) nm:l_ayer it + a $out [n 3]"#
+|> "Q[i,d] | n 3" e:e_q< "sum c:=0..2 | h[i,c] * Bq[c,d]" $q
+|> "K[j,d] | n 3" e:e_q< "sum c:=0..2 | h[j,c] * Bk[c,d]" $k
+|> "V[j,d] | n 3" e:e_q< "sum c:=0..2 | h[j,c] * Bv[c,d]" $v
+|> "S[i,j] | n n" e:e_q< "(sum d:=0..2 | q[i,d] * k[j,d]) / sqrt(3.0)" $s
+|> "A[i,j] | n n" e:e_q< "exp(s[i,j]) / (sum m:=0..n-1 | exp(s[i,m]))" $a
+|> "Z[i,d] | n 3" e:e_q< "sum j:=0..n-1 | a[i,j] * v[j,d]" $z
+|> "R[i,c] | n 3" e:e_q< "h[i,c] + (sum d:=0..2 | z[i,d] * Wo[d,c])" $r
+|> "Mean[i] | n" e:e_q< "(sum c:=0..2 | r[i,c]) / 3.0" $mu
+|> "Var[i] | n" e:e_q< "(sum c:=0..2 | (r[i,c] - mu[i])^2) / 3.0" $var
+|> "N[i,c] | n 3" e:e_q< "g[c] * (r[i,c] - mu[i]) / sqrt(var[i] + 0.00001) + beta[c]" $y [n 3]
+|> "F[i,k] | n 6" e:e_q< "(sum c:=0..2 | y[i,c] * W1[c,k]) + W1[3,k]" $f
+|> "U[i,k] | n 6" e:e_q< "0.7978845608028654 * (f[i,k] + 0.044715 * f[i,k]^3)" $u
+|> "G[i,k] | n 6" e:e_q< "f[i,k] / (1 + exp(-2 * u[i,k]))" $gl
+|> "P[i,c] | n 3" e:e_q< "y[i,c] + (sum k:=0..5 | gl[i,k] * W2[k,c]) + W2[6,c]" $p
+|> "Mean[i] | n" e:e_q< "(sum c:=0..2 | p[i,c]) / 3.0" $mu2
+|> "Var[i] | n" e:e_q< "(sum c:=0..2 | (p[i,c] - mu2[i])^2) / 3.0" $var2
+|> "O[i,c] | n 3" e:e_q< "g[c] * (p[i,c] - mu2[i]) / sqrt(var2[i] + 0.00001) + beta[c]" $out [n 3]"#
 shown := @ flow:m_ath< c#"
    X $h
-|> (Bq, Bq, Bq) at:h_ead (it, at:a_ll n)
-|> it '+ '* i_nner Wo
-|> (g, c) nm:l_ayer it + h $a [n 3]
-|> act:g_elu it nn:d_ense W1
-|> it nn:d_ense W2
-|> (g, c) nm:l_ayer it + a $out [n 3]"#
+|> "Q[i,d] | n 3" e:e_q< "sum c:=0..2 | h[i,c] * Bq[c,d]" $q
+|> "K[j,d] | n 3" e:e_q< "sum c:=0..2 | h[j,c] * Bk[c,d]" $k
+|> "V[j,d] | n 3" e:e_q< "sum c:=0..2 | h[j,c] * Bv[c,d]" $v
+|> "S[i,j] | n n" e:e_q< "(sum d:=0..2 | q[i,d] * k[j,d]) / sqrt(3.0)" $s
+|> "A[i,j] | n n" e:e_q< "exp(s[i,j]) / (sum m:=0..n-1 | exp(s[i,m]))" $a
+|> "Z[i,d] | n 3" e:e_q< "sum j:=0..n-1 | a[i,j] * v[j,d]" $z
+|> "R[i,c] | n 3" e:e_q< "h[i,c] + (sum d:=0..2 | z[i,d] * Wo[d,c])" $r
+|> "Mean[i] | n" e:e_q< "(sum c:=0..2 | r[i,c]) / 3.0" $mu
+|> "Var[i] | n" e:e_q< "(sum c:=0..2 | (r[i,c] - mu[i])^2) / 3.0" $var
+|> "N[i,c] | n 3" e:e_q< "g[c] * (r[i,c] - mu[i]) / sqrt(var[i] + 0.00001) + beta[c]" $y [n 3]
+|> "F[i,k] | n 6" e:e_q< "(sum c:=0..2 | y[i,c] * W1[c,k]) + W1[3,k]" $f
+|> "U[i,k] | n 6" e:e_q< "0.7978845608028654 * (f[i,k] + 0.044715 * f[i,k]^3)" $u
+|> "G[i,k] | n 6" e:e_q< "f[i,k] / (1 + exp(-2 * u[i,k]))" $gl
+|> "P[i,c] | n 3" e:e_q< "y[i,c] + (sum k:=0..5 | gl[i,k] * W2[k,c]) + W2[6,c]" $p
+|> "Mean[i] | n" e:e_q< "(sum c:=0..2 | p[i,c]) / 3.0" $mu2
+|> "Var[i] | n" e:e_q< "(sum c:=0..2 | (p[i,c] - mu2[i])^2) / 3.0" $var2
+|> "O[i,c] | n 3" e:e_q< "g[c] * (p[i,c] - mu2[i]) / sqrt(var2[i] + 0.00001) + beta[c]" $out [n 3]"#
 shown
-a0 := (g, c) nm:l_ayer X + ((Bq, Bq, Bq) at:h_ead (X, at:a_ll n)) '+ '* i_nner Wo
-layer0 := (g, c) nm:l_ayer a0 + (act:g_elu a0 nn:d_ense W1) nn:d_ense W2
-r2 := "the pipeline is the layer written out" k:t_est layer k:n_ear layer0
+a0 := (g, beta) nm:l_ayer X + ((Bq, Bk, Bv) at:h_ead (X, at:a_ll n)) '+ '* i_nner Wo
+layer0 := (g, beta) nm:l_ayer a0 + (act:g_elu a0 nn:d_ense W1) nn:d_ense W2
+r2 := "the equations are the layer written out" k:t_est layer k:n_ear layer0
 
 k:r_eport r1 k:a_nd r2

@@ -31,12 +31,10 @@ fn math(e: &Example, r: &Run) -> Html {
     if calls.is_empty() {
         return html! {};
     }
-    let drawn = calls.iter().any(|c| c.contains("flow:m_ath<"));
-    let (title, word, note) = match drawn {
-        true => ("The pipeline drawn as math", "flow:m_ath<", "The same pipeline drawn by Flow's m_ath<: a row a stage, an arrow between, each label after the stage it names (a triangle, as X_eTaL draws $, with its shape); an equation stage as Equations draws it from the same strings, any other stage as code."),
-        false => ("As a paper prints it", "e:e_q<", "The equation, read by X_eTaL-libraries' Equations: e:e_q< gives its value, e:t_ex< its LaTeX, from one reading of the same text. A sum whose term uses the one before (a recurrence) is one step, applied by p_ower."),
-    };
-    panel(title, word, note,
+    let paper = calls.iter().any(|c| !c.contains("flow:m_ath<"));
+    let note = format!("{}The layer as a pipeline of equations, drawn by Flow's m_ath< from the very text that computes it: a row a stage, an arrow between, each label after the stage it names (a triangle, as X_eTaL draws $, with its shape), each equation as X_eTaL-libraries' Equations draws it; checked equal to the pipeline below as the page runs.",
+        if paper { "The equation as a paper prints it first, read by Equations (e:e_q< its value, e:t_ex< its LaTeX, one reading of the same text; a sum whose term uses the one before is one step, applied by p_ower). " } else { "" });
+    panel("As math", "flow:m_ath<", &note,
         false, html! { <>
             { for calls.iter().zip(&r.tex).map(|(call, tex)| html! { <>
                 <div class="tex" style="overflow-x: auto" data-tex={tex.clone()}>{tex.clone()}</div>
@@ -105,7 +103,7 @@ pub fn app() -> Html {
     html! {
         <>
         <header>
-            { header("Pipelines", "A layer written as data flow: Flow's pipelines, left to right, |> between the stages, on this repository's libraries, each beside what it became and the same layer in plain X_eTaL. A CNN layer and a diffusion sampler are shown four ways: as a paper prints them, as a pipeline, as its expansion and as plain X_eTaL, all computing the same values. Pipelines of equations, an attention head and a BERT layer, are drawn as math a row a stage. Compose your own from a palette of the notations' parts.") }
+            { header("Pipelines", "A layer written as data flow: Flow's pipelines, left to right, |> between the stages, on this repository's libraries, each beside what it became and the same layer in plain X_eTaL. A CNN layer and a diffusion sampler are shown four ways: as a paper prints them, as a pipeline, as its expansion and as plain X_eTaL, all computing the same values. Every example is also written as a pipeline of equations, drawn as math a row a stage. Compose your own from a palette of the notations' parts.") }
             { picker(&picked) }
         </header>
         <main>

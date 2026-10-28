@@ -67,6 +67,19 @@ u:c_ollect := { (Z, t, dz) ->
 eq := ("z0[n,k] | N K" e:e_q< "zT[n,k] + (sum t:=1..T | dz[t-1,n,k])") nn:d_ense Wd
 "z0[n,k] | N K" e:t_ex< "zT[n,k] + (sum t:=1..T | dz[t-1,n,k])"
 
+## The second form as a pipeline of equations: the latents of noise,
+## the steps' differences added, the decoder (a dense layer, its bias
+## Wd's last row); drawn as math a row a stage.
+eqpipe := @ flow:p_ipe< c#"
+   zT
+|> "Z0[n,k] | N K" e:e_q< "it[n,k] + (sum t:=1..T | dz[t-1,n,k])" $z0
+|> "X0[n,j] | N K" e:e_q< "(sum k:=0..K-1 | z0[n,k] * Wd[k,j]) + Wd[K,j]""#
+drawn := @ flow:m_ath< c#"
+   zT
+|> "Z0[n,k] | N K" e:e_q< "it[n,k] + (sum t:=1..T | dz[t-1,n,k])" $z0
+|> "X0[n,j] | N K" e:e_q< "(sum k:=0..K-1 | z0[n,k] * Wd[k,j]) + Wd[K,j]""#
+drawn
+
 ### As a pipeline
 
 ## The latents of noise, the T steps (p_ower applies the step T times
@@ -86,9 +99,10 @@ plain := zp nn:d_ense Wd
 
 ### The same
 
+r0 := "the equations and the pipeline of equations" k:t_est eq k:n_ear eqpipe
 r1 := "the equations and the pipeline" k:t_est eq k:n_ear pipe
 r2 := "the pipeline and plain X_eTaL" k:t_est pipe k:n_ear plain
-k:r_eport r1 k:a_nd r2
+k:r_eport r0 k:a_nd r1 k:a_nd r2
 
 ## The decoded pictures, a row per latent.
 plain

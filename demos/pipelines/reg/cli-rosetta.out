@@ -1,7 +1,9 @@
 Y_{o,h,w} = \max(\left(\sum_{r=0}^{2} \sum_{s=0}^{2} P_{h+r,w+s} \, F_{o,r,s}\right) + B_{o}, 0)
+\begin{aligned} & P \qquad \triangleright \, p \\ \longrightarrow \; & C_{o,h,w} = \left(\sum_{r=0}^{2} \sum_{s=0}^{2} p_{h+r,w+s} \, F_{o,r,s}\right) + B_{o} \qquad \triangleright \, c: O \times Ho \times Wo \\ \longrightarrow \; & Y_{o,h,w} = \max(c_{o,h,w}, 0) \end{aligned}
+ok: the equation and the pipeline of equations
 ok: the equation and the pipeline
 ok: the pipeline and plain X_eTaL
-2 checks, all passed
+3 checks, all passed
  0.0 2.9000000000000004 2.9000000000000004
  0.0                2.9                2.9
  0.0                1.3                1.3

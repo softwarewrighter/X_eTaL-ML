@@ -36,7 +36,10 @@ fn each_expansion_is_the_pipelines_stages_as_code() {
     for e in EXAMPLES {
         let x = run(&e).unwrap().expansion;
         assert!(x.starts_with(&format!("{} := ", e.pipe)), "{x}");
-        assert!(x.contains(":stage := ") && !x.contains("flow:p_ipe<"), "{x}");
+        // A line binding each stage's value (a label, or a fresh :stage name).
+        let stages = calls(&e).1.matches("|>").count() + 1;
+        let bound = x.lines().filter(|l| l.starts_with("  ") && !l.starts_with("   ") && l.contains(" := ")).count();
+        assert!(bound >= stages && !x.contains("flow:p_ipe<"), "{}: {bound} of {stages}\n{x}", e.title);
         assert!(x.ends_with("} @)") && !x.contains("\n#"), "{x}");
     }
 }
@@ -126,21 +129,24 @@ fn what_compose_starts_from_runs_and_the_equation_one_draws_its_math() {
 }
 
 #[test]
-fn a_pipeline_of_equations_is_drawn_as_the_pipeline_it_computes() {
-    for title in ["Attention as equations", "A BERT layer"] {
-        let e = EXAMPLES.iter().find(|e| e.title == title).copied().unwrap();
-        let (math, pipe, _) = calls(&e);
-        // The drawing reads the very text the pipeline computes.
+fn every_example_draws_a_pipeline_of_equations_that_computes() {
+    for e in EXAMPLES {
+        let (math, _, _) = calls(&e);
+        let drawings: Vec<&String> = math.iter().filter(|m| m.contains("flow:m_ath<")).collect();
+        assert_eq!(drawings.len(), 1, "{}: one pipeline drawn as math", e.title);
+        // The drawing reads the very text of a pipeline the example computes and checks.
         let text = |s: &str, word: &str| s[s.find(word).unwrap() + word.len()..].to_string();
-        assert_eq!(text(&math[0], "flow:m_ath<"), text(&pipe, "flow:p_ipe<"), "{title}");
+        let drawn = text(drawings[0], "flow:m_ath<");
+        assert!(e.src.contains(&format!("flow:p_ipe<{drawn}")), "{}: no pipeline computes what is drawn", e.title);
+        assert!(drawn.matches("e:e_q<").count() == drawn.matches("|>").count(), "{}: every stage an equation", e.title);
         let r = run(&e).unwrap();
-        assert!(r.tex[0].starts_with("\\begin{aligned} & X ") && r.tex[0].ends_with("\\end{aligned}"), "{}", r.tex[0]);
-        assert_eq!(r.tex[0].matches("\\longrightarrow").count(), pipe.matches("|>").count(), "{}", r.tex[0]);
+        let tex = r.tex.iter().find(|t| t.starts_with("\\begin{aligned}")).unwrap();
+        assert!(tex.ends_with("\\end{aligned}") && !tex.contains("\\texttt"), "{}: {tex}", e.title);
+        assert_eq!(tex.matches("\\longrightarrow").count(), drawn.matches("|>").count(), "{}: {tex}", e.title);
     }
     let attention = run(&EXAMPLES.iter().find(|e| e.title == "Attention as equations").copied().unwrap()).unwrap();
     assert!(attention.tex[0].contains("Q_{i,d} = \\sum_{c=0}^{2} x_{i,c} \\, Wq_{c,d} \\qquad \\triangleright \\, q"), "{}", attention.tex[0]);
-    assert!(attention.tex[0].contains("\\triangleright \\, s: n \\times n"), "{}", attention.tex[0]);
     let bert = run(&EXAMPLES.iter().find(|e| e.title == "A BERT layer").copied().unwrap()).unwrap();
-    assert!(bert.tex[0].contains("\\texttt{act:g\\_elu it nn:d\\_ense W1}") && bert.tex[0].contains("\\triangleright \\, out: n \\times 3"), "{}", bert.tex[0]);
+    assert!(bert.tex[0].contains("G_{i,k} = \\frac{f_{i,k}}{1 + \\exp(-2 \\, u_{i,k})}") && bert.tex[0].contains("\\triangleright \\, out: n \\times 3"), "{}", bert.tex[0]);
     assert!(EQUATIONS.contains("Tiny BERT, demos/micro-bert"));
 }

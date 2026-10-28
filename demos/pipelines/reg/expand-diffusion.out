@@ -142,14 +142,101 @@ eq := ((({ @ ->
 } @))) nn:d_ense Wd
 "z0_{n,k} = zT_{n,k} + \\left(\\sum_{t=1}^{T} dz_{t-1,n,k}\\right)"
 
+## The second form as a pipeline of equations: the latents of noise,
+## the steps' differences added, the decoder (a dense layer, its bias
+## Wd's last row); drawn as math a row a stage.
+eqpipe := ({ @ ->
+  g15:stage := zT
+  z0 := { @ ->
+    it := g15:stage
+    ({ @ ->
+      g19:a_t := { A i -> (1 + i) s_elect r_avel A }
+      g18:c_heck := { (A, name, k, from) e ->
+        n := k s_elect s_hape A
+        bad := w_here n_ot r_avel (0 <= e) & e < n
+        0 = t_ally bad ? e
+        "index" []S_IGNAL name c_at " axis " c_at (f_ormat k) c_at ": index " c_at (f_ormat (f_irst bad) s_elect r_avel e) c_at " is outside 0.." c_at (f_ormat n - 1) c_at " (from " c_at from c_at ")"
+      }
+      g17:r_ank := { (A, name, q, ref) ->
+        (t_ally s_hape A) = q ? A
+        "rank" []S_IGNAL ref c_at " indexes " c_at (f_ormat q) c_at " axes, but " c_at name c_at " has rank " c_at f_ormat t_ally s_hape A
+      }
+      g20:grid := N c_at K
+      g21:g_rid := { k ->
+        g20:grid r_eshape (o_ffsets k s_elect g20:grid) 'l_eft t_able ('* r_/ k d_rop g20:grid) r_eshape 0
+      }
+      g20:grid r_eshape ((
+    ((g17:r_ank (it, "it", 2, "it[n,k]")) g19:a_t ((
+      ((it, "it", 2, "k") g18:c_heck (0 + g21:g_rid 2)) + (2 s_elect s_hape it)
+            * 
+      ((it, "it", 1, "n") g18:c_heck (0 + g21:g_rid 1))))) + ({ @ ->
+        g22:grid := N c_at K c_at (1 + T - 1)
+        g23:g_rid := { k ->
+          g22:grid r_eshape (o_ffsets k s_elect g22:grid) 'l_eft t_able ('* r_/ k d_rop g22:grid) r_eshape 0
+        }
+        '+ r_/_3 g22:grid r_eshape (
+    ((g17:r_ank (dz, "dz", 3, "dz[t-1,n,k]")) g19:a_t ((
+      ((dz, "dz", 3, "k") g18:c_heck (0 + g23:g_rid 2)) + (3 s_elect s_hape dz)
+            * (
+      ((dz, "dz", 2, "n") g18:c_heck (0 + g23:g_rid 1)) + (2 s_elect s_hape dz)
+              * 
+      ((dz, "dz", 1, "t-1") g18:c_heck ((1 + g23:g_rid 3) - 1)))))))
+      } @)))
+    } @)
+  } @
+  g16:stage := (({ @ ->
+    g26:a_t := { A i -> (1 + i) s_elect r_avel A }
+    g25:c_heck := { (A, name, k, from) e ->
+      n := k s_elect s_hape A
+      bad := w_here n_ot r_avel (0 <= e) & e < n
+      0 = t_ally bad ? e
+      "index" []S_IGNAL name c_at " axis " c_at (f_ormat k) c_at ": index " c_at (f_ormat (f_irst bad) s_elect r_avel e) c_at " is outside 0.." c_at (f_ormat n - 1) c_at " (from " c_at from c_at ")"
+    }
+    g24:r_ank := { (A, name, q, ref) ->
+      (t_ally s_hape A) = q ? A
+      "rank" []S_IGNAL ref c_at " indexes " c_at (f_ormat q) c_at " axes, but " c_at name c_at " has rank " c_at f_ormat t_ally s_hape A
+    }
+    g27:grid := N c_at K
+    g28:g_rid := { k ->
+      g27:grid r_eshape (o_ffsets k s_elect g27:grid) 'l_eft t_able ('* r_/ k d_rop g27:grid) r_eshape 0
+    }
+    g27:grid r_eshape ((({ @ ->
+      g29:grid := N c_at K c_at (1 + (K - 1) - 0)
+      g30:g_rid := { k ->
+        g29:grid r_eshape (o_ffsets k s_elect g29:grid) 'l_eft t_able ('* r_/ k d_rop g29:grid) r_eshape 0
+      }
+      '+ r_/_3 g29:grid r_eshape ((
+    ((g24:r_ank (z0, "z0", 2, "z0[n,k]")) g26:a_t ((
+      ((z0, "z0", 2, "k") g25:c_heck (0 + g30:g_rid 3)) + (2 s_elect s_hape z0)
+              * 
+      ((z0, "z0", 1, "n") g25:c_heck (0 + g30:g_rid 1))))) * 
+    ((g24:r_ank (Wd, "Wd", 2, "Wd[k,j]")) g26:a_t ((
+      ((Wd, "Wd", 2, "j") g25:c_heck (0 + g30:g_rid 2)) + (2 s_elect s_hape Wd)
+              * 
+      ((Wd, "Wd", 1, "k") g25:c_heck (0 + g30:g_rid 3)))))))
+    } @) + 
+    ((g24:r_ank (Wd, "Wd", 2, "Wd[K,j]")) g26:a_t ((
+      ((Wd, "Wd", 2, "j") g25:c_heck (0 + g28:g_rid 2)) + (2 s_elect s_hape Wd)
+            * 
+      ((Wd, "Wd", 1, "K") g25:c_heck K))))))
+  } @))
+  g16:stage
+} @)
+drawn := ((r#"\begin{aligned} "# c_at r#"& "# c_at r#"zT"# c_at r#" \\ "# c_at
+    r#"\longrightarrow \; & "# c_at (("Z0_{n,k} = zT_{n,k} + \\left(\\sum_{t=1}^{T} dz_{t-1,n,k}\\right)"))
+    c_at r#" \qquad \triangleright \, z0 \\ "# c_at r#"\longrightarrow \; & "#
+    c_at (("X0_{n,j} = \\left(\\sum_{k=0}^{K - 1} z0_{n,k} \\, Wd_{k,j}\\right) + Wd_{K,j}"))
+    c_at r#""# c_at r#" \end{aligned}"#))
+drawn
+
 ### As a pipeline
 
 ## The latents of noise, the T steps (p_ower applies the step T times
 ## to the latents and the level), the final latents labeled, the decoder.
 pipe := ({ @ ->
-  g15:stage := zT
+  g31:stage := zT
   (z0, t0) := { @ ->
-    it := g15:stage
+    it := g31:stage
     T 'u:s_tep p_ower (it, T)
   } @
   X0 := z0 nn:d_ense Wd
@@ -170,9 +257,10 @@ plain := zp nn:d_ense Wd
 
 ### The same
 
+r0 := "the equations and the pipeline of equations" k:t_est eq k:n_ear eqpipe
 r1 := "the equations and the pipeline" k:t_est eq k:n_ear pipe
 r2 := "the pipeline and plain X_eTaL" k:t_est pipe k:n_ear plain
-k:r_eport r1 k:a_nd r2
+k:r_eport r0 k:a_nd r1 k:a_nd r2
 
 ## The decoded pictures, a row per latent.
 plain

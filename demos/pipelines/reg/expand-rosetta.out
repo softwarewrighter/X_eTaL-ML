@@ -66,32 +66,106 @@ eq := (({ @ ->
 } @))
 "Y_{o,h,w} = \\max(\\left(\\sum_{r=0}^{2} \\sum_{s=0}^{2} P_{h+r,w+s} \\, F_{o,r,s}\\right) + B_{o}, 0)"
 
+## The same as a pipeline of equations, a stage each: the convolution
+## with its bias, then the activation; drawn as math a row a stage.
+eqpipe := ({ @ ->
+  p := P
+  c := (({ @ ->
+    g11:a_t := { A i -> (1 + i) s_elect r_avel A }
+    g10:c_heck := { (A, name, k, from) e ->
+      n := k s_elect s_hape A
+      bad := w_here n_ot r_avel (0 <= e) & e < n
+      0 = t_ally bad ? e
+      "index" []S_IGNAL name c_at " axis " c_at (f_ormat k) c_at ": index " c_at (f_ormat (f_irst bad) s_elect r_avel e) c_at " is outside 0.." c_at (f_ormat n - 1) c_at " (from " c_at from c_at ")"
+    }
+    g9:r_ank := { (A, name, q, ref) ->
+      (t_ally s_hape A) = q ? A
+      "rank" []S_IGNAL ref c_at " indexes " c_at (f_ormat q) c_at " axes, but " c_at name c_at " has rank " c_at f_ormat t_ally s_hape A
+    }
+    g12:grid := O c_at Ho c_at Wo
+    g13:g_rid := { k ->
+      g12:grid r_eshape (o_ffsets k s_elect g12:grid) 'l_eft t_able ('* r_/ k d_rop g12:grid) r_eshape 0
+    }
+    g12:grid r_eshape ((({ @ ->
+      g14:grid := O c_at Ho c_at Wo c_at (1 + 2 - 0) c_at (1 + 2 - 0)
+      g15:g_rid := { k ->
+        g14:grid r_eshape (o_ffsets k s_elect g14:grid) 'l_eft t_able ('* r_/ k d_rop g14:grid) r_eshape 0
+      }
+      '+ r_/_4 '+ r_/_5 g14:grid r_eshape ((
+    ((g9:r_ank (p, "p", 2, "p[h+r,w+s]")) g11:a_t ((
+      ((p, "p", 2, "w+s") g10:c_heck ((0 + g15:g_rid 3) + (0 + g15:g_rid 5))) +
+              (2 s_elect s_hape p) * 
+      ((p, "p", 1, "h+r") g10:c_heck ((0 + g15:g_rid 2) + (0 + g15:g_rid 4))))))
+        * 
+    ((g9:r_ank (F, "F", 3, "F[o,r,s]")) g11:a_t ((
+      ((F, "F", 3, "s") g10:c_heck (0 + g15:g_rid 5)) + (3 s_elect s_hape F) * (
+      ((F, "F", 2, "r") g10:c_heck (0 + g15:g_rid 4)) + (2 s_elect s_hape F) * 
+      ((F, "F", 1, "o") g10:c_heck (0 + g15:g_rid 1))))))))
+    } @) + 
+    ((g9:r_ank (B, "B", 1, "B[o]")) g11:a_t (
+      ((B, "B", 1, "o") g10:c_heck (0 + g13:g_rid 1))))))
+  } @))
+  _ := { @ ->
+    ((s_hape c) m_atch r_avel O c_at Ho c_at Wo) ? @
+    "shape" []S_IGNAL "stage 2 (c): shape " c_at (f_ormat s_hape c) c_at ", expected " c_at f_ormat r_avel O c_at Ho c_at Wo
+  } @
+  g8:stage := (({ @ ->
+    g18:a_t := { A i -> (1 + i) s_elect r_avel A }
+    g17:c_heck := { (A, name, k, from) e ->
+      n := k s_elect s_hape A
+      bad := w_here n_ot r_avel (0 <= e) & e < n
+      0 = t_ally bad ? e
+      "index" []S_IGNAL name c_at " axis " c_at (f_ormat k) c_at ": index " c_at (f_ormat (f_irst bad) s_elect r_avel e) c_at " is outside 0.." c_at (f_ormat n - 1) c_at " (from " c_at from c_at ")"
+    }
+    g16:r_ank := { (A, name, q, ref) ->
+      (t_ally s_hape A) = q ? A
+      "rank" []S_IGNAL ref c_at " indexes " c_at (f_ormat q) c_at " axes, but " c_at name c_at " has rank " c_at f_ormat t_ally s_hape A
+    }
+    g19:grid := O c_at Ho c_at Wo
+    g20:g_rid := { k ->
+      g19:grid r_eshape (o_ffsets k s_elect g19:grid) 'l_eft t_able ('* r_/ k d_rop g19:grid) r_eshape 0
+    }
+    g19:grid r_eshape ((
+    ((g16:r_ank (c, "c", 3, "c[o,h,w]")) g18:a_t ((
+      ((c, "c", 3, "w") g17:c_heck (0 + g20:g_rid 3)) + (3 s_elect s_hape c) * (
+      ((c, "c", 2, "h") g17:c_heck (0 + g20:g_rid 2)) + (2 s_elect s_hape c) * 
+      ((c, "c", 1, "o") g17:c_heck (0 + g20:g_rid 1)))))) m_ax 0))
+  } @))
+  g8:stage
+} @)
+drawn := ((r#"\begin{aligned} "# c_at r#"& "# c_at r#"P"# c_at
+    r#" \qquad \triangleright \, p \\ "# c_at r#"\longrightarrow \; & "# c_at (("C_{o,h,w} = \\left(\\sum_{r=0}^{2} \\sum_{s=0}^{2} p_{h+r,w+s} \\, F_{o,r,s}\\right) + B_{o}"))
+    c_at r#" \qquad \triangleright \, c: O \times Ho \times Wo \\ "# c_at
+    r#"\longrightarrow \; & "# c_at (("Y_{o,h,w} = \\max(c_{o,h,w}, 0)")) c_at
+    r#""# c_at r#" \end{aligned}"#))
+drawn
+
 ### As a pipeline
 
 ## The windows of the picture, one column each; every filter times every
 ## window (one matrix product); its bias along the filters' axis; the
 ## maps shaped O x Ho x Wo; then the activation.
 pipe := ({ @ ->
-  g8:stage := 1 5 5 r_eshape P
-  g9:stage := cv:w_indows g8:stage
-  g10:stage := { @ ->
-    it := g9:stage
+  g21:stage := 1 5 5 r_eshape P
+  g22:stage := cv:w_indows g21:stage
+  g23:stage := { @ ->
+    it := g22:stage
     ((O c_at 9) r_eshape F) '+ '* i_nner it
   } @
-  g11:stage := { @ ->
-    it := g10:stage
+  g24:stage := { @ ->
+    it := g23:stage
     (1, B) nn:a_ddAxis it
   } @
   Y := { @ ->
-    it := g11:stage
+    it := g24:stage
     (O c_at Ho c_at Wo) r_eshape it
   } @
   _ := { @ ->
     ((s_hape Y) m_atch r_avel O c_at Ho c_at Wo) ? @
     "shape" []S_IGNAL "stage 5 (Y): shape " c_at (f_ormat s_hape Y) c_at ", expected " c_at f_ormat r_avel O c_at Ho c_at Wo
   } @
-  g12:stage := act:r_elu Y
-  g12:stage
+  g25:stage := act:r_elu Y
+  g25:stage
 } @)
 
 ### Plain X_eTaL
@@ -102,9 +176,10 @@ plain := act:r_elu (O c_at Ho c_at Wo) r_eshape ((O c_at 9) r_eshape F, B) cv:c_
 
 ### The same
 
+r0 := "the equation and the pipeline of equations" k:t_est eq k:n_ear eqpipe
 r1 := "the equation and the pipeline" k:t_est eq k:n_ear pipe
 r2 := "the pipeline and plain X_eTaL" k:t_est pipe k:n_ear plain
-k:r_eport r1 k:a_nd r2
+k:r_eport r0 k:a_nd r1 k:a_nd r2
 
 ## The two feature maps (after the activation): the vertical edge at
 ## the square's left side, the center-surround on its corners.

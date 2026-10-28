@@ -105,9 +105,16 @@ the name the value came with; any other stage as code:
 ```
 
 The drawing reads the call by the rules `flow:p_ipe<` reads it, so
-what is drawn is a pipeline that computes. The Pipelines demo
-(`demos/pipelines`, equations.xtl) draws an attention head written as
-equations and a BERT layer.
+what is drawn is a pipeline that computes. A stage that is code is
+drawn as code, typewriter text as typed: `act:g_elu it nn:d_ense W1`
+is not math. To draw a layer as math, write each stage as an equation
+(GELU, for one, is `f / (1 + exp(-2 * u))` with u its tanh form's
+argument, Activations' `g_elu` in the grammar's own words); drawing a
+library's functions as math would need a notation per function, which
+no library declares yet. The Pipelines demo
+(`demos/pipelines`) draws every one of its examples this way, an
+attention head and a BERT layer among them, each checked equal to its
+pipeline.
 
 ## What is refused
 

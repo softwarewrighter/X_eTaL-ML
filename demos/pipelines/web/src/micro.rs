@@ -34,14 +34,14 @@ pub struct Example {
 
 /// The examples, the two Rosetta Stones first, then the pipelines of equations.
 pub const EXAMPLES: [Example; 8] = [
-    Example { title: "A CNN layer, four ways", src: ROSETTA, from: "### As a paper prints it", to: "\nk:r_eport r1", pipe: "pipe", plain: "plain", checks: &["r1", "r2"], math: &["eq"], about: "", link: None },
-    Example { title: "Diffusion sampling, four ways", src: DIFFUSION, from: "### As a paper prints it", to: "\nk:r_eport r1", pipe: "pipe", plain: "plain", checks: &["r1", "r2"], math: &["u:s_tep", "eq"], about: "", link: None },
+    Example { title: "A CNN layer, four ways", src: ROSETTA, from: "### As a paper prints it", to: "\nk:r_eport r0", pipe: "pipe", plain: "plain", checks: &["r0", "r1", "r2"], math: &["eq", "drawn"], about: "", link: None },
+    Example { title: "Diffusion sampling, four ways", src: DIFFUSION, from: "### As a paper prints it", to: "\nk:r_eport r0", pipe: "pipe", plain: "plain", checks: &["r0", "r1", "r2"], math: &["u:s_tep", "eq", "drawn"], about: "", link: None },
     Example { title: "Attention as equations", src: EQUATIONS, from: "### Attention as equations", to: "### A BERT layer", pipe: "head", plain: "head0", checks: &["r1"], math: &["drawn"], about: "A pipeline whose stages are equations: each stage an Equations call reading the arrays it names (it, the previous value, or an earlier stage's label inside its strings), the whole drawn as math, one row a stage.", link: None },
-    Example { title: "A BERT layer", src: EQUATIONS, from: "### A BERT layer", to: "\nk:r_eport", pipe: "layer", plain: "layer0", checks: &["r2"], math: &["shown"], about: "One encoder layer of BERT with made-up weights: attention, added back and layer-normed, the GELU feed-forward layer, added back and layer-normed; the residuals are labels, the shapes checked.", link: Some(("Tiny BERT", "../micro-bert/")) },
-    Example { title: "Dense, its bias", src: PIPELINES, from: "### Dense layer with its bias", to: "### Stable softmax", pipe: "dense", plain: "dense0", checks: &["c1"], math: &[], about: "", link: None },
-    Example { title: "Stable softmax", src: PIPELINES, from: "### Stable softmax", to: "### Layer norm", pipe: "soft", plain: "soft0", checks: &["c2"], math: &[], about: "", link: None },
-    Example { title: "Layer norm", src: PIPELINES, from: "### Layer norm", to: "### Attention", pipe: "norm", plain: "norm0", checks: &["c3"], math: &[], about: "", link: None },
-    Example { title: "Attention, one head", src: PIPELINES, from: "### Attention", to: "\nk:r_eport", pipe: "head", plain: "head0", checks: &["c4"], math: &[], about: "", link: None },
+    Example { title: "A BERT layer", src: EQUATIONS, from: "### A BERT layer", to: "\nk:r_eport", pipe: "layer", plain: "layer0", checks: &["r2"], math: &["shown"], about: "One encoder layer of BERT with made-up weights, every stage an equation: one head of attention, added back and layer-normed (mean, variance, normalized), the feed-forward layer with GELU written with exp, added back and layer-normed; the residuals are labels, the shapes checked.", link: Some(("Tiny BERT", "../micro-bert/")) },
+    Example { title: "Dense, its bias", src: PIPELINES, from: "### Dense layer with its bias", to: "### Stable softmax", pipe: "dense", plain: "dense0", checks: &["c1", "c1b"], math: &["denseM"], about: "", link: None },
+    Example { title: "Stable softmax", src: PIPELINES, from: "### Stable softmax", to: "### Layer norm", pipe: "soft", plain: "soft0", checks: &["c2", "c2b"], math: &["softM"], about: "", link: None },
+    Example { title: "Layer norm", src: PIPELINES, from: "### Layer norm", to: "### Attention", pipe: "norm", plain: "norm0", checks: &["c3", "c3b"], math: &["normM"], about: "", link: None },
+    Example { title: "Attention, one head", src: PIPELINES, from: "### Attention", to: "\nk:r_eport", pipe: "head", plain: "head0", checks: &["c4", "c4b"], math: &["headM"], about: "", link: None },
 ];
 
 /// What a program starts with: its comment, the imports and its data
@@ -88,9 +88,10 @@ pub fn run(e: &Example) -> Result<Run, String> {
     let tex = e.math.len();
     let out = output(&src, tex + 2 + e.checks.len())?;
     let all = expanded(&src)?;
-    let from = format!("{} := ", e.pipe);
-    // The pipeline's statement: through the block's closing line.
-    let start = all.find(&from).unwrap_or(0);
+    // The pipeline's statement, its name at the start of a line (eqpipe
+    // := is not pipe :=): through the block's closing line.
+    let from = format!("\n{} := ", e.pipe);
+    let start = all.find(&from).map_or(0, |i| i + 1);
     let end = all[start..].find("\n} @)").map_or(all.len(), |i| start + i + 5);
     let expansion = all[start..end].to_string();
     Ok(Run {
