@@ -141,8 +141,14 @@ a pipeline's code: the stage is highlighted (its row; its text in the
 pipeline and its lines in what it became), and a panel shows what it
 gives, its shape and its numbers as a table colored by sign and size
 (a rank-3 value as slices), or its range and first numbers when it is
-large; a tuple's parts each. The values come from Flow's
-`flow:s_tages<`, every stage's value in one run.
+large; a tuple's parts each. Below them the stage in 3D: the values
+of the stages it reads (the previous value when it names `it` or is a
+function applied to it, each earlier stage whose label it names), an
+arrow, and what it gives, each a block of cubes, an item a cube colored
+as the tables are (a rank-3 value its slices one behind another; a long
+axis drawn 12 cubes, its extent in the label; past the 64 numbers the
+page keeps, the block outlined only); drag to turn them. The values
+come from Flow's `flow:s_tages<`, every stage's value in one run.
 
 ## Compose your own
 

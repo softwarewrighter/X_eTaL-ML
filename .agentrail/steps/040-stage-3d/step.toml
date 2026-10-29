@@ -1,6 +1,6 @@
 number = 40
 slug = "stage-3d"
-status = "pending"
+status = "in-progress"
 description = "The user, 2026-10-28 (go on the offer): a 3D view of a stage's tensors on the..."
 role = "production"
 context_files = []

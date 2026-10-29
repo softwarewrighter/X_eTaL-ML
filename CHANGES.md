@@ -13,6 +13,7 @@ refresh of the vendored X_eTaL.
 
 ## 2026-10-29
 
+- `demo` A pipeline stage in 3D (step stage-3d): on the Pipelines page, the chosen stage's inputs (the stages it reads, by Flow's rule: `it`, a function's argument, the labels it names) and what it gives, each a block of cubes colored by value, rank 1 to 3 (higher ranks folded), a long axis capped at 12 with its extent labeled, past the 64 kept numbers outlined; drag to turn. `blocks.rs` with 6 tests; checked in Chrome.
 - `docs` Ask M20 filed for X_eTaL (docs/xetal-asks.md, not yet taken; in "To take to X_eTaL"): n-wise reduction, APL2's `N f/ V` (`2 -/ V` the differences of neighbors, `2 ,/ S` every pair, negative N reversing each window), from the user's question of 2026-10-27; the workarounds through X_eTaL-libraries' Lists named.
 
 ## 2026-10-28

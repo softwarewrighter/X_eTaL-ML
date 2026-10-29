@@ -35,6 +35,14 @@
     .stages button:hover { border-color: var(--accent); }
     .stages button.on { border-color: var(--sel); color: var(--sel); }
     table.items { margin: 0 0 6px 0; }
+    .solids { touch-action: none; cursor: grab; user-select: none; }
+    .solids .row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+    .solids figure.solid { margin: 0; max-width: 100%; }
+    .solids svg { max-width: 100%; height: auto; }
+    .solids svg .edge { stroke: rgba(128, 128, 128, 0.7); stroke-dasharray: 3 3; fill: none; }
+    .solids svg text { fill: var(--on); font-size: 11px; }
+    .solids figcaption { font-size: 0.8em; max-width: 240px; }
+    .solids .arrow { font-size: 1.6em; color: var(--accent); }
     table.items td { padding: 2px 6px; text-align: right; font-variant-numeric: tabular-nums; color: #111; }
   </style>
 </head>
