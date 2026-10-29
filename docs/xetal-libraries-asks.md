@@ -84,10 +84,25 @@ pipeline the page draws, each stage highlighted back in the original.
 | E10 | planned | feature | An equation read as a pipeline of stages: `"Y[o,h,w] \| O Ho Wo" e:s_tages< "max((sum r:=0..2, sum s:=0..2 \| P[h+r,w+s] * F[o,r,s]) + B[o], 0)"` gives the pipeline's text, inside out turned left to right: each sum and each function applied over the indices a stage of its own equation, named (`C[o,h,w] \| O Ho Wo`), `\|>` between and the earlier stages' values by label, as Flow reads it (`flow:p_ipe<`, `flow:m_ath<`); and with it where each stage came from in the equation's text (start and end), so a page highlights the part of the original a stage computes. Tested: the pipeline's value equals the equation's (`e:e_q<`) on the demos' equations. Planned there as its Saga 24 (equation-stages) | pipelines (every example's pipeline of equations; the CNN layer's and the sampler's from the paper's line), micro-bert | each pipeline of equations written by hand beside its equation, checked equal (`equations.xtl`, `rosetta.xtl`, `diffusion.xtl`) |
 | E11 | planned | feature | LaTeX in: `e:f_romTex<` reads the LaTeX `e:t_ex<` writes (subscripts as indices, `\sum_{i=0}^{n-1}`, `\frac`, `\sqrt`, `\exp`, `\log`, `\max`, `\left( \right)`, Greek names, `\,` and `\cdot` as products) into the grammar's text, refusing what the grammar does not have by name (as the grammar refuses a function it lacks); so an equation taken from a paper or from OCR is read as typed. Tested: `e:t_ex<` of what it reads gives back the LaTeX, on every equation the demos draw. Planned there as its Saga 25 (latex-in) | pipelines (the composer: paste a paper's LaTeX), micro-bert | the equation typed again in the grammar, its LaTeX compared by eye |
 
+## Plot: graphing functions (2026-10-29)
+
+Filed for the activations explorer (`docs/plan.md`, step
+activations-explorer), after X_eTaL-libraries' `docs/research2.txt`
+settled the split: plotting there, knowing nothing of networks;
+activations here. Plot's line charts (`l_ine!`, `l_ines!`, `c_hart!`)
+place a series' points by position (1, 2, ...), so y = f(x) over x in
+-6..6 cannot be drawn with its x axis labeled -6, -3, 0, 3, 6. Its
+agent is extending Plot (the same library and alias), not adding one.
+
+| # | Status | Kind | Ask | Demos, libraries | Workaround |
+| - | ------ | ---- | --- | ---------------- | ---------- |
+| E12 | in progress | feature | Plot's line charts over real x values: a function's graph from explicit (xs, ys), `p:f_unction!` and several in one chart, `p:f_unctions!`, with a legend (f and its derivative, or a built-in beside a user's own); round-number ticks on both axes; a gap where a value is NaN or infinite rather than a line to it; the picture's SVG text given back, as `l_ine!` does, for a page to draw; and a linspace helper (n points from a to b). Its agent's word, 2026-10-29: extending Plot, not a new library | the activations explorer (every Activations function and its derivative over -6..6; a user's own activation), Activations' reference page | the curves demo prints tables of values (`libs/Activations/demos/curves.xtl`) |
+
 ## To take to X_eTaL-libraries
 
 Nothing waiting: E1 to E9 are in its plan since 2026-10-23 (its
 07ca150, Sagas 17 to 23), E10 and E11 since 2026-10-28 (its 8db355b,
-Sagas 24 and 25); E1 has landed in the commit pinned here (92ce936). A new ask
+Sagas 24 and 25); E1 has landed in the commit pinned here (92ce936);
+E12 its agent is doing (2026-10-29), not yet a row of its plan. A new ask
 goes in a table above as not yet taken, with the demos and libraries
 here as its users, until that repository's plan takes it.

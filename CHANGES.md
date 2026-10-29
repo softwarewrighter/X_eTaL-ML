@@ -13,6 +13,7 @@ refresh of the vendored X_eTaL.
 
 ## 2026-10-29
 
+- `plan` Ask E12 filed for X_eTaL-libraries (Plot's line charts over real x values, in progress there); plan rows 41 (chain-rule) and 42 (activations-explorer, superseding row 29)
 - `feat` Compose shows a pipeline stage by stage, as the examples (step compose-stages): its first pipeline drawn as math with clickable rows and as written with stage buttons, the chosen stage's values and 3D in the resizable right pane; a starter, a pipeline of equations; microscope's `run::printed` and the composer's `after` slot
 - `vendor` X_eTaL-libraries pinned at 92ce936: Equations reads `integral` (an integral in an equation runs in Compose); E1 landed
 - `plan` saga: step compose-stages inserted (043); f32-tolerance is 044
