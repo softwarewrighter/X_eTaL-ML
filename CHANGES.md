@@ -13,6 +13,9 @@ refresh of the vendored X_eTaL.
 
 ## 2026-10-29
 
+- `feat` Compose shows a pipeline stage by stage, as the examples (step compose-stages): its first pipeline drawn as math with clickable rows and as written with stage buttons, the chosen stage's values and 3D in the resizable right pane; a starter, a pipeline of equations; microscope's `run::printed` and the composer's `after` slot
+- `vendor` X_eTaL-libraries pinned at 92ce936: Equations reads `integral` (an integral in an equation runs in Compose); E1 landed
+- `plan` saga: step compose-stages inserted (043); f32-tolerance is 044
 - `fix` Pipelines: what a stage gives in a resizable pane beside the page, in view as it scrolls (a bottom panel on a phone, with a close button); the example run once as it is picked, behind a spinner, not on every render (a stage click was rerunning X_eTaL, seconds on the BERT layer) (step stage-pane)
 - `plan` saga: step stage-pane inserted (042); f32-tolerance is 043
 - `vendor` X_eTaL pinned at 623b1016 (M17 landed there; every baseline and the timings re-run at the pin)

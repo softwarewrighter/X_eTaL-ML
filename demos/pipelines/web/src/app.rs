@@ -15,6 +15,7 @@ use microscope::palette::Composer;
 use microscope::source::{between, block, code, NONE};
 
 use crate::blocks::{dragged, inputs, picture, SIDE, SIZE};
+use crate::explore::Stages;
 use crate::micro::{calls, chosen_row, clickable, expansion_ranges, program, run, stage_ranges, Example, Run, Value, EXAMPLES, STARTERS};
 
 /// The stage chosen: of the pipeline of equations (drawn as math) or of
@@ -37,19 +38,10 @@ fn picker(picked: &UseStateHandle<usize>, chosen: &UseStateHandle<Option<Chosen>
     }
 }
 
-/// The equations, each drawn as math where KaTeX has loaded
-/// (index.html), its LaTeX as text where it has not, above the call
-/// that reads it.
-fn math(e: &Example, r: &Run, chosen: &UseStateHandle<Option<Chosen>>) -> Html {
-    let calls = calls(e).0;
-    let on = match **chosen {
-        Some(Chosen::Drawn(k)) => Some(k),
-        _ => None,
-    };
-    // A click on a drawn row chooses its stage (its class st-K), the row
-    // by where the click falls (chosen_row).
-    let c = chosen.clone();
-    let pick = Callback::from(move |ev: MouseEvent| {
+/// A click on a drawn pipeline's row: its stage (its class st-K) given
+/// to `chose`, the row by where the click falls (chosen_row).
+pub fn row_picker(chose: Callback<usize>) -> Callback<MouseEvent> {
+    Callback::from(move |ev: MouseEvent| {
         let Some(tex) = ev.current_target().and_then(|t| t.dyn_into::<web_sys::Element>().ok()) else { return };
         let Ok(found) = tex.query_selector_all(".st") else { return };
         let rows: Vec<(usize, f64, f64)> = (0..found.length())
@@ -62,9 +54,22 @@ fn math(e: &Example, r: &Run, chosen: &UseStateHandle<Option<Chosen>>) -> Html {
             })
             .collect();
         if let Some(k) = chosen_row(&rows, ev.client_y() as f64) {
-            c.set(Some(Chosen::Drawn(k)));
+            chose.emit(k);
         }
-    });
+    })
+}
+
+/// The equations, each drawn as math where KaTeX has loaded
+/// (index.html), its LaTeX as text where it has not, above the call
+/// that reads it.
+fn math(e: &Example, r: &Run, chosen: &UseStateHandle<Option<Chosen>>) -> Html {
+    let calls = calls(e).0;
+    let on = match **chosen {
+        Some(Chosen::Drawn(k)) => Some(k),
+        _ => None,
+    };
+    let c = chosen.clone();
+    let pick = row_picker(Callback::from(move |k| c.set(Some(Chosen::Drawn(k)))));
     if calls.is_empty() {
         return html! {};
     }
@@ -148,13 +153,23 @@ fn gives(e: &Example, r: &Run, chosen: &UseStateHandle<Option<Chosen>>, turn: &U
     let (trace, k, whose, text) = match **chosen {
         Some(Chosen::Drawn(k)) => (&r.drawn, k, "of the pipeline of equations", math.into_iter().find(|c| c.contains("flow:m_ath<")).unwrap_or_default()),
         Some(Chosen::Piped(k)) => (&r.stages, k, "of the pipeline", pipe),
-        None => {
-            return panel("What a stage gives", "flow:s_tages<", "Click a row of the pipeline drawn as math, or a stage under the pipeline, to see here what it gives: its shape, its numbers, and in 3D the stages it reads and what it gives.", false, html! {})
-        }
+        None => return no_stage(),
     };
+    stage_view(trace, &text, k, whose, turn)
+}
+
+/// The hint the right pane shows until a stage is chosen.
+pub fn no_stage() -> Html {
+    panel("What a stage gives", "flow:s_tages<", "Click a row of the pipeline drawn as math, or a stage under the pipeline, to see here what it gives: its shape, its numbers, and in 3D the stages it reads and what it gives.", false, html! {})
+}
+
+/// Stage `k` of a pipeline (`text`, its call as written) with its
+/// values `trace` (flow:s_tages<): what it gives, then in 3D what it
+/// reads and gives.
+pub fn stage_view(trace: &[Value], text: &str, k: usize, whose: &str, turn: &UseStateHandle<Turn>) -> Html {
     let vs: Vec<&Value> = trace.iter().filter(|v| v.stage == k).collect();
     let labels: Vec<(usize, String)> = trace.iter().filter(|v| !v.label.is_empty()).map(|v| (v.stage, v.label.clone())).collect();
-    let reads = stage_ranges(&text).get(k - 1).map(|&(a, b)| inputs(&text[a..b], k, &labels)).unwrap_or_default();
+    let reads = stage_ranges(text).get(k - 1).map(|&(a, b)| inputs(&text[a..b], k, &labels)).unwrap_or_default();
     let title = format!("Stage {k} {whose} gives");
     panel(&title, "flow:s_tages<", "Computed as the page runs, the same values the pipeline passes on (Flow's s_tages< keeps every stage's value).", false, html! { <>
         { for vs.iter().map(|v| value(v)) }
@@ -241,22 +256,20 @@ fn agree(e: &Example, r: &Run) -> Html {
     </> })
 }
 
-#[function_component(App)]
-pub fn app() -> Html {
-    let picked = use_state(|| 0usize);
-    let chosen = use_state(|| None::<Chosen>);
-    let turn = use_state(Turn::default);
-    // The example's run, once per example (X_eTaL runs for seconds on the
-    // BERT layer): after the spinner is drawn, not on every render.
-    let ran = use_state(|| None::<(usize, Rc<Result<Run, String>>)>);
-    {
-        let ran = ran.clone();
-        use_effect_with(*picked, move |&p| {
-            let t = (p < EXAMPLES.len()).then(|| Timeout::new(60, move || ran.set(Some((p, Rc::new(run(&EXAMPLES[p])))))));
-            move || drop(t)
-        });
-    }
-    // The divider between the panes: dragged, the right pane's width.
+#[derive(Properties, PartialEq)]
+pub struct SplitProps {
+    pub left: Html,
+    pub right: Html,
+    /// No stage chosen: on a narrow screen the right pane is hidden.
+    pub idle: bool,
+    /// The right pane's close button (shown when a stage is chosen).
+    pub close: Callback<()>,
+}
+
+/// Two panes: `left`, and `right` in view as the page scrolls; the
+/// divider between them dragged to resize the right (`dragged`).
+#[function_component(Split)]
+pub fn split(p: &SplitProps) -> Html {
     let side = use_state(|| SIDE);
     let drag = use_state(|| None::<(f64, f64)>);
     let (s1, d1, s2, d2, d3) = (side.clone(), drag.clone(), side.clone(), drag.clone(), drag.clone());
@@ -272,9 +285,38 @@ pub fn app() -> Html {
         }
     });
     let up = Callback::from(move |_: PointerEvent| d3.set(None));
+    let close = p.close.reform(|_: MouseEvent| ());
+    html! {
+        <div class={classes!("work", p.idle.then_some("idle"))} style={format!("--side: {:.0}px", *side)}>
+            <div class="left">{ p.left.clone() }</div>
+            <div class={classes!("divider", drag.is_some().then_some("drag"))} title="drag to resize"
+                onpointerdown={down} onpointermove={mv} onpointerup={up.clone()} onpointercancel={up}></div>
+            <aside class="side">
+                { if p.idle { html! {} } else { html! { <button class="close" title="close" aria-label="close the stage" onclick={close}>{"\u{00d7}"}</button> } } }
+                { p.right.clone() }
+            </aside>
+        </div>
+    }
+}
+
+#[function_component(App)]
+pub fn app() -> Html {
+    let picked = use_state(|| 0usize);
+    let chosen = use_state(|| None::<Chosen>);
+    let turn = use_state(Turn::default);
+    // The example's run, once per example (X_eTaL runs for seconds on the
+    // BERT layer): after the spinner is drawn, not on every render.
+    let ran = use_state(|| None::<(usize, Rc<Result<Run, String>>)>);
+    {
+        let ran = ran.clone();
+        use_effect_with(*picked, move |&p| {
+            let t = (p < EXAMPLES.len()).then(|| Timeout::new(60, move || ran.set(Some((p, Rc::new(run(&EXAMPLES[p])))))));
+            move || drop(t)
+        });
+    }
     // The last choice is composing one's own, from the palette.
     let main = if *picked >= EXAMPLES.len() {
-        html! { <Composer starters={STARTERS.to_vec()} /> }
+        html! { <Composer starters={STARTERS.to_vec()} after={Some(Callback::from(|src: String| html! { <Stages {src} /> }))} /> }
     } else {
         let e = EXAMPLES[*picked];
         let src = program(&e);
@@ -293,17 +335,9 @@ pub fn app() -> Html {
             </> },
             Some(r) => match r.as_ref() {
                 Ok(r) => html! {
-                    <div class={classes!("work", chosen.is_none().then_some("idle"))} style={format!("--side: {:.0}px", *side)}>
-                        <div class="left">
-                            { about(&e) }{ math(&e, r, &chosen) }{ columns(&e, r, &chosen) }{ agree(&e, r) }{ the_program }
-                        </div>
-                        <div class={classes!("divider", drag.is_some().then_some("drag"))} title="drag to resize"
-                            onpointerdown={down} onpointermove={mv} onpointerup={up.clone()} onpointercancel={up}></div>
-                        <aside class="side">
-                            { if chosen.is_some() { let c = chosen.clone(); html! { <button class="close" title="close" aria-label="close the stage" onclick={Callback::from(move |_| c.set(None))}>{"\u{00d7}"}</button> } } else { html! {} } }
-                            { gives(&e, r, &chosen, &turn) }
-                        </aside>
-                    </div>
+                    <Split idle={chosen.is_none()} close={{ let c = chosen.clone(); Callback::from(move |_| c.set(None)) }}
+                        left={html! { <>{ about(&e) }{ math(&e, r, &chosen) }{ columns(&e, r, &chosen) }{ agree(&e, r) }{ the_program }</> }}
+                        right={gives(&e, r, &chosen, &turn)} />
                 },
                 Err(why) => html! { <><p class="error">{format!("X_eTaL stopped: {why}")}</p>{ the_program }</> },
             },

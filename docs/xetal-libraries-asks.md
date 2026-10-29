@@ -28,7 +28,7 @@ bugs, but for E1. Filed from the diffusion sampler of
 
 | # | Status | Kind | Ask | Demos, libraries | Workaround |
 | - | ------ | ---- | --- | ---------------- | ---------- |
-| E1 | planned | bug | A descending range, `sum t:=T..1 \| dz[t-1]`, is not refused by the reader: the expansion dies with `error[domain]: a count cannot be -1` at the call, which names no rule. Asked: the reader refuses it (`error[bad-equation]`), saying a range runs low..high, or reads it as the empty sum. Planned there as its Saga 17 (equations-grammar) | pipelines (diffusion) | write the range upward, `1..T` |
+| E1 | landed | bug | A descending range, `sum t:=T..1 \| dz[t-1]`, is not refused by the reader: the expansion dies with `error[domain]: a count cannot be -1` at the call, which names no rule. Asked: the reader refuses it (`error[bad-equation]`), saying a range runs low..high, or reads it as the empty sum. Landed in its ba533ac (Saga 17 step 1, in the commit pinned here, 92ce936): the range checked when the program runs, refused by name | pipelines (diffusion) | none needed: the sampler writes the range upward, `1..T`, as a sum is read; a backward range is now refused saying so |
 | E2 | planned | feature | A recurrence word: a sum whose term uses the one before (the sampler's sum from T down to 1, a scan) cannot be a `sum`, whose references are all to the caller's arrays. Asked: an operator word for it (`scan t:=T..1 \| ...` with the previous term named, or a documented refusal naming `p_ower`). Planned there as its Saga 17, step scan-word: the previous term named by a reserved word, `prev` (decided in its ede0da9) | pipelines (diffusion) | one step as the summand, an Equations call applied T times by `p_ower`; the differences collected and summed by a plain `sum` |
 | E3 | planned | feature | The caller's functions by name: `D(z[k])` and `eps_theta(z[k], t, c)` are refused (`d_ecode is not a function of an equation (exp, log, sqrt, abs, max, min)`). Asked: a name in scope applied in an equation (the X_eTaL spelling, `u:d_ecode(z[k])`, or a declared table) calls it, drawn `\mathcal{D}(z_k)`. Planned there as its Saga 17: the program's own functions called by name, `u:name(args)`, a bad name or arity caught when the expansion compiles (decided in its ede0da9) | pipelines (diffusion) | the networks called outside the string, their results named (`eps`) and read inside it |
 
@@ -88,6 +88,6 @@ pipeline the page draws, each stage highlighted back in the original.
 
 Nothing waiting: E1 to E9 are in its plan since 2026-10-23 (its
 07ca150, Sagas 17 to 23), E10 and E11 since 2026-10-28 (its 8db355b,
-Sagas 24 and 25); none has landed in the commit pinned here. A new ask
+Sagas 24 and 25); E1 has landed in the commit pinned here (92ce936). A new ask
 goes in a table above as not yet taken, with the demos and libraries
 here as its users, until that repository's plan takes it.

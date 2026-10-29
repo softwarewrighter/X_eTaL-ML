@@ -92,6 +92,10 @@ pub fn compose(src: &str) -> Composed {
 pub struct Props {
     /// The programs to start from: a title and the source of each.
     pub starters: Vec<(&'static str, &'static str)>,
+    /// What a page shows below a run's results, given the program run
+    /// (the Pipelines page: its pipeline's stages).
+    #[prop_or_default]
+    pub after: Option<Callback<String, Html>>,
 }
 
 /// The composer: the starters, the palette, the editable program (ASCII
@@ -102,6 +106,7 @@ pub fn composer(props: &Props) -> Html {
     let parts = use_memo((), |_| parts());
     let text = use_state(|| props.starters.first().map_or(String::new(), |s| s.1.to_string()));
     let result = use_state(|| None::<Composed>);
+    let ran = use_state(String::new);
     let showing = use_state(|| false);
     let area = use_node_ref();
 
@@ -113,8 +118,11 @@ pub fn composer(props: &Props) -> Html {
         })
     };
     let run = {
-        let (text, result) = (text.clone(), result.clone());
-        Callback::from(move |_| result.set(Some(compose(&text))))
+        let (text, result, ran) = (text.clone(), result.clone(), ran.clone());
+        Callback::from(move |_| {
+            result.set(Some(compose(&text)));
+            ran.set((*text).clone());
+        })
     };
     let toggle = {
         let showing = showing.clone();
@@ -177,6 +185,10 @@ pub fn composer(props: &Props) -> Html {
                 <button onclick={toggle}>{ if *showing { "Hide expansion" } else { "Expand" } }</button>
             </div>
             { gave.unwrap_or_default() }
+            { match (&props.after, result.is_some()) {
+                (Some(after), true) => after.emit((*ran).clone()),
+                _ => html! {},
+            } }
         </section>
     }
 }

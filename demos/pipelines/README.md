@@ -171,6 +171,17 @@ not use is refused at the call rather than read as something else,
 which is the lint of the notation. The parts are data,
 `shared/microscope/palette.tsv`, each of them run by the tests.
 
+After a run, the program's first pipeline (`flow:p_ipe<`, else
+`flow:m_ath<`) is shown as the examples are: drawn as math, a row a
+stage, and as written with a button a stage; click one for what it
+gives in the right pane, its numbers and in 3D what it reads and gives
+(the page runs the program again with `flow:m_ath<` and `flow:s_tages<`
+of the same text, so the pipeline's names must be bound at the top).
+The starters include a pipeline of equations, a dense layer and its
+ReLU. An equation may hold an integral, `"L[] | " e:e_q< "integral
+u:=0..x by simpson 32 | exp(-(u^2) / 2) / sqrt(2 * pi)"`, GELU's
+Gaussian CDF.
+
 ## What it shows about X_eTaL
 
 - A macro library can give a notation (data flow) without hiding

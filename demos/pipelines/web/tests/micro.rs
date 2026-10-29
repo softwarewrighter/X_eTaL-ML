@@ -3,7 +3,7 @@
 //! checked against the arithmetic done directly in Rust.
 
 use microscope::source::rebound;
-use pipelines_web::micro::{calls, chosen_row, head, program, run, statement, DIFFUSION, EQUATIONS, EXAMPLES, PIPELINES, ROSETTA};
+use pipelines_web::micro::{calls, chosen_row, clickable, explore, first_pipeline, head, stage_ranges, STARTERS, program, run, statement, DIFFUSION, EQUATIONS, EXAMPLES, PIPELINES, ROSETTA};
 
 #[test]
 fn every_example_runs_and_its_checks_pass() {
@@ -198,4 +198,55 @@ fn a_click_chooses_the_row_under_it_whose_middle_is_nearest() {
     assert_eq!(chosen_row(&rows, 100.0), Some(3), "the last row is chosen too");
     assert_eq!(chosen_row(&rows, 30.0), None, "between rows, none");
     assert_eq!(chosen_row(&[], 5.0), None);
+}
+
+#[test]
+fn compose_finds_the_first_pipeline_as_written() {
+    let src = "x := 1 2 3\ny := @ flow:p_ipe< c\"x |> 2 * it $d |> d + \\\"a\\\" r_ho it\"\nz := 1";
+    let (call, lit) = first_pipeline(src).unwrap();
+    assert_eq!(call, "flow:p_ipe< c\"x |> 2 * it $d |> d + \\\"a\\\" r_ho it\"");
+    assert_eq!(lit, "c\"x |> 2 * it $d |> d + \\\"a\\\" r_ho it\"");
+    // The verbatim form; a pipeline before a drawing preferred.
+    let src = "d := @ flow:m_ath< c#\"X |> \"Y[i] | 2\" e:e_q< \"it[i]\"\"#\np := @ flow:p_ipe< c#\"X |> 'n_eg\"#";
+    assert_eq!(first_pipeline(src).unwrap().1, "c#\"X |> 'n_eg\"#");
+    assert_eq!(first_pipeline("d := @ flow:m_ath< c#\"X |> 'n_eg\"#").unwrap().0, "flow:m_ath< c#\"X |> 'n_eg\"#");
+    assert_eq!(first_pipeline("1 + 2"), None);
+    assert_eq!(first_pipeline("@ flow:p_ipe< c\"x |> 2 * it"), None, "an unclosed string");
+}
+
+#[test]
+fn every_starter_with_a_pipeline_shows_its_stages() {
+    let mut shown = 0;
+    for (title, src) in STARTERS {
+        let Some(found) = explore(src) else { continue };
+        let x = found.unwrap_or_else(|e| panic!("{title}: {e}"));
+        let n = stage_ranges(&x.call).len();
+        assert!(n >= 2, "{title}: {n} stages");
+        assert_eq!(x.trace.iter().map(|v| v.stage).max(), Some(n), "{title}: a value for every stage");
+        assert_eq!(clickable(&x.tex, None).matches("\\htmlClass{st st-").count(), n, "{title}: a drawn row a stage");
+        shown += 1;
+    }
+    assert_eq!(shown, 2, "the pipeline and the pipeline of equations");
+    // The pipeline of equations: Y = max(X W, 0).
+    let x = explore(STARTERS[2].1).unwrap().unwrap();
+    let y = x.trace.iter().find(|v| v.stage == 3).unwrap();
+    assert_eq!((y.shape.clone(), y.items.clone()), (vec![3, 2], vec![3.0, 0.0, 0.0, 10.0, 0.0, 0.0]));
+}
+
+#[test]
+fn compose_says_why_a_pipeline_inside_a_function_cannot_be_shown() {
+    let src = "\"flow:\" u_se< \"Flow\"\nu:f := { v -> @ flow:p_ipe< c\"v |> 2 * it\" }\nu:f 1 2 3\n";
+    assert!(matches!(explore(src), Some(Err(_))));
+    assert_eq!(explore("1 + 2"), None);
+}
+
+#[test]
+fn compose_reads_an_integral_inside_an_equation() {
+    // The user's program, 2026-10-29: GELU as x times the Gaussian CDF,
+    // the integral read by Equations (X_eTaL-libraries past 3a61a22).
+    let src = "\"e:\" u_se< \"Equations\"\npi := 3.141592653589793\nu:g_elu := { x -> x * 0.5 + \"L[] | \" e:e_q< \"integral u:=0..x by simpson 32 | exp(-(u^2) / 2) / sqrt(2 * pi)\" }\n'u:g_elu e_ach 1.0 2.0\n";
+    let c = microscope::palette::compose(src);
+    assert_eq!(c.err, "");
+    let g: Vec<f64> = c.out[0].split_whitespace().map(|w| w.parse().unwrap()).collect();
+    assert!((g[0] - 0.8413447).abs() < 1e-6 && (g[1] - 1.9544997).abs() < 1e-6, "{g:?}");
 }

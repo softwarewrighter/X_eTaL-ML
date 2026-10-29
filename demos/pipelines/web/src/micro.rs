@@ -3,7 +3,7 @@
 //! them, the program the page runs for one example, what it printed and
 //! what the pipeline became. Nothing here knows about the browser.
 
-use microscope::run::{expanded, numbers, output, section};
+use microscope::run::{expanded, numbers, output, printed, section};
 use microscope::source::Range;
 
 /// The command-line programs.
@@ -235,9 +235,60 @@ pub fn calls(e: &Example) -> (Vec<String>, String, String) {
     (e.math.iter().map(|m| statement(e.src, m)).collect(), statement(e.src, e.pipe), statement(e.src, e.plain))
 }
 
+/// The first pipeline in a program a person wrote: the call as
+/// written, from its macro's name (`flow:p_ipe<`, else `flow:m_ath<`)
+/// through the code string's closing quote, and that code string
+/// (`c"..."` or `c#"..."#`).
+pub fn first_pipeline(src: &str) -> Option<(String, String)> {
+    let at = src.find("flow:p_ipe<").or_else(|| src.find("flow:m_ath<"))?;
+    let after = at + "flow:p_ipe<".len();
+    let rest = &src[after..];
+    let open = after + (rest.len() - rest.trim_start().len());
+    let close = if src[open..].starts_with("c#\"") {
+        open + 3 + src[open + 3..].find("\"#")? + 2
+    } else if src[open..].starts_with("c\"") {
+        let b = src.as_bytes();
+        let mut i = open + 2;
+        while i < b.len() && b[i] != b'"' {
+            i += if b[i] == b'\\' { 2 } else { 1 };
+        }
+        (i < b.len()).then_some(i + 1)?
+    } else {
+        return None;
+    };
+    Some((src[at..close].to_string(), src[open..close].to_string()))
+}
+
+/// What the stages of a person's pipeline give: the program run with
+/// two lines more, the pipeline drawn as math (Flow's m_ath<) and every
+/// stage's value (s_tages<), both of the same code string.
+#[derive(Clone, Debug, PartialEq)]
+pub struct Explored {
+    /// The pipeline's call as written (first_pipeline).
+    pub call: String,
+    /// The pipeline drawn as math, a row a stage.
+    pub tex: String,
+    /// Every stage's value.
+    pub trace: Vec<Value>,
+}
+
+/// Run `src` for its first pipeline's stages; None when it has none, the
+/// Err when the run stops (the pipeline inside a function, its names
+/// not bound at the top, among the reasons).
+pub fn explore(src: &str) -> Option<Result<Explored, String>> {
+    let (call, lit) = first_pipeline(src)?;
+    let program = format!("{}\n@ flow:m_ath< {lit}\n@ flow:s_tages< {lit}\n", src.trim_end());
+    Some(printed(&program).and_then(|out| match out.as_slice() {
+        [.., tex, stages] => Ok(Explored { call, tex: tex.clone(), trace: values(stages)? }),
+        _ => Err("the stages printed nothing".to_string()),
+    }))
+}
+
 /// What Compose starts from: an equation with its LaTeX (the dense
-/// layer with its bias), and a pipeline (the stable softmax).
-pub const STARTERS: [(&str, &str); 2] = [
+/// layer with its bias), a pipeline (the stable softmax), and a
+/// pipeline of equations (a dense layer and its ReLU, drawn as math).
+pub const STARTERS: [(&str, &str); 3] = [
     ("An equation", "\"e:\" u_se< \"Equations\"\nW := f_loat 2 3 r_eshape 1 2 3 4 5 6\nx := f_loat 1 1 1\nb := f_loat 10 20\n\"$$\" c_at (\"z[i] | 2\" e:t_ex< \"(sum j:=0..2 | W[i,j] * x[j]) + b[i]\") c_at \"$$\"\n\"z[i] | 2\" e:e_q< \"(sum j:=0..2 | W[i,j] * x[j]) + b[i]\"\n"),
     ("A pipeline", "\"flow:\" u_se< \"Flow\"\n\"nn:\" u_se< \"NN\"\nz := 1.0 2.0 3.0\n@ flow:p_ipe< c\"\n   z\n|> 'm_ax r_/ it $m\n|> e_xp z - m $e\n|> e / '+ r_/ e\"\n"),
+    ("A pipeline of equations", "\"e:\" u_se< \"Equations\"\n\"flow:\" u_se< \"Flow\"\nX := f_loat 3 2 r_eshape 1 -2 3 4 -5 6\nW := f_loat 2 2 r_eshape 1 2 -1 1\n\"$$\" c_at (@ flow:m_ath< c#\"\n   X $x\n|> \"Z[i,k] | 3 2\" e:e_q< \"sum c:=0..1 | x[i,c] * W[c,k]\" $z\n|> \"Y[i,k] | 3 2\" e:e_q< \"max(z[i,k], 0)\"\"#) c_at \"$$\"\n@ flow:p_ipe< c#\"\n   X $x\n|> \"Z[i,k] | 3 2\" e:e_q< \"sum c:=0..1 | x[i,c] * W[c,k]\" $z\n|> \"Y[i,k] | 3 2\" e:e_q< \"max(z[i,k], 0)\"\"#\n"),
 ];

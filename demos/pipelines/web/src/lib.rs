@@ -7,4 +7,5 @@
 
 pub mod app;
 pub mod blocks;
+pub mod explore;
 pub mod micro;

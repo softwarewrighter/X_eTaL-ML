@@ -42,6 +42,21 @@ pub fn output_pictures(src: &str, lines: usize) -> Result<(Vec<String>, Vec<Stri
 /// As `output_pictures`, with `files` (path, text) put first where the
 /// program's `[]N_GET` finds them (a page's state between runs).
 pub fn output_with(files: &[(String, String)], src: &str, lines: usize) -> Result<(Vec<String>, Vec<String>), String> {
+    let (out, pictures) = ran(files, src)?;
+    match out.len() == lines {
+        true => Ok((out, pictures)),
+        false => Err(format!("expected {lines} lines of output, got {}", out.len())),
+    }
+}
+
+/// Run `src` and return its output lines, however many (a program a
+/// person wrote); an X_eTaL error is the Err.
+pub fn printed(src: &str) -> Result<Vec<String>, String> {
+    ran(&[], src).map(|(out, _)| out)
+}
+
+/// Run `src`, `files` first: its output lines and its pictures.
+fn ran(files: &[(String, String)], src: &str) -> Result<(Vec<String>, Vec<String>), String> {
     crate::libs::install();
     // One program at a time, its files with it: X_eTaL collects a run's
     // pictures in state shared across threads, and the files are shared
@@ -57,11 +72,7 @@ pub fn output_with(files: &[(String, String)], src: &str, lines: usize) -> Resul
     if !run.err.is_empty() {
         return Err(run.err);
     }
-    let out: Vec<String> = run.out.lines().map(str::to_string).collect();
-    match out.len() == lines {
-        true => Ok((out, run.pictures)),
-        false => Err(format!("expected {lines} lines of output, got {}", out.len())),
-    }
+    Ok((run.out.lines().map(str::to_string).collect(), run.pictures))
 }
 
 /// `src` after macro expansion, as `xetal expand` prints it (the
