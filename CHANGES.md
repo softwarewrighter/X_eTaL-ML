@@ -11,6 +11,10 @@ planning and reordering, `release` milestone release, `chore`
 agentrail bookkeeping (step complete, saga archive), `vendor` a
 refresh of the vendored X_eTaL.
 
+## 2026-10-29
+
+- `docs` Ask M20 filed for X_eTaL (docs/xetal-asks.md, not yet taken; in "To take to X_eTaL"): n-wise reduction, APL2's `N f/ V` (`2 -/ V` the differences of neighbors, `2 ,/ S` every pair, negative N reversing each window), from the user's question of 2026-10-27; the workarounds through X_eTaL-libraries' Lists named.
+
 ## 2026-10-28
 
 - `fix` Every drawn pipeline stage clickable, the last included (step last-stage-click): KaTeX's column box covered the later rows of a tall drawing, so a click there chose nothing; the rows sit above it and the row is picked by where the click falls (`chosen_row`, tested). And a choice between two stages of one shape left the old row highlighted: the KaTeX observer redrew only on added nodes, not a changed `data-tex` (it watches the attribute now, on Tiny BERT's page too). Checked in Chrome on every row of every example. Asks E10 (an equation read as a pipeline of stages) and E11 (LaTeX in) filed for X_eTaL-libraries.

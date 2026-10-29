@@ -42,6 +42,7 @@ list stands on its own.
 | M17 | not yet taken | feature | A macro argument that holds X_eTaL code is drawn as typed: `xetal render --html -e '@ pipe:p_ipe< "x \|> 2 * it"'` gives one `c-string` span, so a pipeline's stages are the only code on a page not decorated (ST4 says the code a macro parses from a string stays ASCII, drawn decorated by the renderers; the renderers do not yet) | Flow (then Pipeline), its page on the libraries' site; answered at the pin 4453400b by X_eTaL's code strings (`c"..."`, ST5; `\|>` and `$` drawn, S13, S14), Flow's pipelines now code strings drawn as code | the site's test leaves string spans out of its typed-spelling check; the stages read as typed |
 | M18 | not yet taken | feature | A code string's escapes and X_eTaL's backslash names: `o_\\` in `c"..."` is `error[bad-string]: unknown escape`; asked: the linter or the error points to `c#"..."#` | pipelines (attention) | write the pipeline `c#"..."#` |
 | M19 | not yet taken | feature | The libm builtins: `t_anh`, `e_rf` (and `e_rfc`), `s_qrt`, `e_xpm1`, `l_og1p` beside `s_in`, `c_os`, `a_tan`, `e_xp`, `l_og`, by the rule that a builtin is what libm gives at full accuracy and a library cannot write as well (tanh from `e_xp` cancels near 0, `^ 0.5` is not the correctly rounded sqrt, erf has no closed form); the rest of trigonometry and the special functions are libraries (X_eTaL-libraries, E4 and E5). Nothing leaves the base language | Activations (planned: tanh, GELU, Mish, the exact GELU), NN (`t_anh`), Integrals' gelu demo, Equations' `sqrt`; X_eTaL-libraries' X22 asks for `t_anh` too | NN's `2 s_igmoid(2x) - 1`; a private erf (Abramowitz and Stegun 7.1.26) in Activations until then; `^ 0.5` |
+| M20 | not yet taken | feature | N-wise reduction, APL2's `N f/ V`: f over every window of N consecutive items (`2 -/ V` the differences of neighbors, `2 ,/ S` every pair of letters, `3 +/ V` moving sums); `r_/` takes its function on the left, so the window has no place today (`2 '- r_/ c` is `error[type-mismatch]`). Asked: a spelling for it (a word, `2 '- n_wise c`, or the window with the function, `(2, '-) r_/ c`), with APL2's negative N for the reversed order | the user's question (2026-10-27: every pair of a string, boxed, and the differences of their codes); pipelines and the diffusion sampler (the steps' differences), Conv's windows along one axis, the training curves' moving averages | X_eTaL-libraries' Lists: `li:d_eltas v` (the differences of neighbors, `(1 d_rop v) - -1 d_rop v`), `n li:w_indows v` (every window as a row, then `'+ r_/_2`); the pairs boxed by `'{ i -> 2 t_ake (i - 1) d_rop s } m_ap r_ange -1 + t_ally s` |
 ## Details
 
 ### M1, M2: macro libraries and seeing an expansion (landed)
@@ -249,6 +250,30 @@ Not asked: `t_an`, `a_sin`, `a_cos`, `a_tan2`, `s_inh`, `c_osh`,
 (E4); `g_amma` and the beta function (E5, Lanczos is a library's job
 until a builtin is wanted).
 
+### M20: n-wise reduction
+
+The user asked (2026-10-27) for every pair of letters of a string
+boxed, as APL2's `2 ,/ S` shows them, and then the differences
+between neighbors' codes, `2 -/ []UCS S`. X_eTaL has the pieces but
+not the operator:
+
+```
+s := "abdgk"
+c := []U_CS s
+'{ i -> 2 t_ake (i - 1) d_rop s } m_ap r_ange -1 + t_ally s   # the pairs, boxed
+(1 d_rop c) - -1 d_rop c                                      # 1 2 3 4
+2 '- r_/ c        # error[type-mismatch]: expected a number, found Int -> a
+```
+
+APL2's `N f/ V` reduces each window of N consecutive items with f
+(J's `N f/\ V`, BQN's windows (`N` range-left), NumPy's
+`sliding_window_view`); a negative N reverses each window, so `_2 -/ V` (APL's high minus 2)
+is the differences in reading order, which is what `li:d_eltas`
+gives. Asked: the operator under a spelling X_eTaL chooses, the
+window's place being the question since `r_/` takes the function on
+its left. The pairs as a matrix of rows meanwhile:
+`o_\ (2 c_at -1 + t_ally s) r_eshape (-1 d_rop s) c_at 1 d_rop s`.
+
 ### To take to X_eTaL
 
 M17 is filed here but not yet in X_eTaL's ledger (M15 and M16 are
@@ -274,6 +299,13 @@ here = ""
 id = "M19"
 repo = "X_eTaL-ML"
 ask = "the libm builtins t_anh, e_rf (e_rfc), s_qrt, e_xpm1, l_og1p: a builtin is what libm gives at full accuracy and a library cannot write as well; the rest of trigonometry and the special functions stay libraries"
+state = "new"
+here = ""
+
+[[ask]]
+id = "M20"
+repo = "X_eTaL-ML"
+ask = "n-wise reduction, APL2's N f/ V: f over every window of N consecutive items (2 -/ V the differences, 2 ,/ S the pairs), negative N reversing each window; a spelling for the window, since r_/ takes its function on the left"
 state = "new"
 here = ""
 ```
