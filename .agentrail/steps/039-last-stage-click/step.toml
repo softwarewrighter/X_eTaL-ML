@@ -1,8 +1,9 @@
 number = 39
 slug = "last-stage-click"
-status = "in-progress"
+status = "completed"
 description = "The user, 2026-10-28: the clickable pipeline stages do not yet (but need to) ..."
 role = "production"
 context_files = []
 created_at = "2026-10-28T15:25:49"
-commits = []
+completed_at = "2026-10-28T21:31:32"
+commits = ["444ba8cb9f16cfebc02bfa9e1e1305ce94e43c6d"]

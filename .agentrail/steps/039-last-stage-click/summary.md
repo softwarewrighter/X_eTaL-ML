@@ -1,0 +1,1 @@
+Drawn pipeline rows all clickable, the last included: rows above KaTeX's column box and chosen by click position (chosen_row, tested); KaTeX observer watches data-tex so a same-shape choice redraws (pipelines and micro-bert pages); checked in Chrome on every row of every example. Asks E10 and E11 filed for X_eTaL-libraries.
