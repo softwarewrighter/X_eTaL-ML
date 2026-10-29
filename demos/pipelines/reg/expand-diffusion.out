@@ -127,7 +127,10 @@ eq := ((({ @ ->
       ((zT, "zT", 2, "k") g9:c_heck (0 + g12:g_rid 2)) + (2 s_elect s_hape zT) *
             
       ((zT, "zT", 1, "n") g9:c_heck (0 + g12:g_rid 1))))) + ({ @ ->
-    g13:grid := N c_at K c_at (1 + T - 1)
+    g13:grid := N c_at K c_at ({ v ->
+      (0 <= v) ? v
+      "bad-equation" []S_IGNAL "sum's range runs low..high: 1..T"
+    } (1 + T - 1))
     g14:g_rid := { k ->
       g13:grid r_eshape (o_ffsets k s_elect g13:grid) 'l_eft t_able ('* r_/ k d_rop g13:grid) r_eshape 0
     }
@@ -170,7 +173,10 @@ eqpipe := ({ @ ->
       ((it, "it", 2, "k") g18:c_heck (0 + g21:g_rid 2)) + (2 s_elect s_hape it)
             * 
       ((it, "it", 1, "n") g18:c_heck (0 + g21:g_rid 1))))) + ({ @ ->
-        g22:grid := N c_at K c_at (1 + T - 1)
+        g22:grid := N c_at K c_at ({ v ->
+      (0 <= v) ? v
+      "bad-equation" []S_IGNAL "sum's range runs low..high: 1..T"
+    } (1 + T - 1))
         g23:g_rid := { k ->
           g22:grid r_eshape (o_ffsets k s_elect g22:grid) 'l_eft t_able ('* r_/ k d_rop g22:grid) r_eshape 0
         }
@@ -201,7 +207,10 @@ eqpipe := ({ @ ->
       g27:grid r_eshape (o_ffsets k s_elect g27:grid) 'l_eft t_able ('* r_/ k d_rop g27:grid) r_eshape 0
     }
     g27:grid r_eshape ((({ @ ->
-      g29:grid := N c_at K c_at (1 + (K - 1) - 0)
+      g29:grid := N c_at K c_at ({ v ->
+      (0 <= v) ? v
+      "bad-equation" []S_IGNAL "sum's range runs low..high: 0..K-1"
+    } (1 + (K - 1) - 0))
       g30:g_rid := { k ->
         g29:grid r_eshape (o_ffsets k s_elect g29:grid) 'l_eft t_able ('* r_/ k d_rop g29:grid) r_eshape 0
       }

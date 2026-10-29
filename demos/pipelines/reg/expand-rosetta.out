@@ -46,7 +46,13 @@ eq := (({ @ ->
     g4:grid r_eshape (o_ffsets k s_elect g4:grid) 'l_eft t_able ('* r_/ k d_rop g4:grid) r_eshape 0
   }
   g4:grid r_eshape (((({ @ ->
-    g6:grid := O c_at Ho c_at Wo c_at (1 + 2 - 0) c_at (1 + 2 - 0)
+    g6:grid := O c_at Ho c_at Wo c_at ({ v ->
+      (0 <= v) ? v
+      "bad-equation" []S_IGNAL "sum's range runs low..high: 0..2"
+    } (1 + 2 - 0)) c_at ({ v ->
+      (0 <= v) ? v
+      "bad-equation" []S_IGNAL "sum's range runs low..high: 0..2"
+    } (1 + 2 - 0))
     g7:g_rid := { k ->
       g6:grid r_eshape (o_ffsets k s_elect g6:grid) 'l_eft t_able ('* r_/ k d_rop g6:grid) r_eshape 0
     }
@@ -87,7 +93,13 @@ eqpipe := ({ @ ->
       g12:grid r_eshape (o_ffsets k s_elect g12:grid) 'l_eft t_able ('* r_/ k d_rop g12:grid) r_eshape 0
     }
     g12:grid r_eshape ((({ @ ->
-      g14:grid := O c_at Ho c_at Wo c_at (1 + 2 - 0) c_at (1 + 2 - 0)
+      g14:grid := O c_at Ho c_at Wo c_at ({ v ->
+      (0 <= v) ? v
+      "bad-equation" []S_IGNAL "sum's range runs low..high: 0..2"
+    } (1 + 2 - 0)) c_at ({ v ->
+      (0 <= v) ? v
+      "bad-equation" []S_IGNAL "sum's range runs low..high: 0..2"
+    } (1 + 2 - 0))
       g15:g_rid := { k ->
         g14:grid r_eshape (o_ffsets k s_elect g14:grid) 'l_eft t_able ('* r_/ k d_rop g14:grid) r_eshape 0
       }
