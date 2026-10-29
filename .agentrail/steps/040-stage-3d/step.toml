@@ -1,8 +1,9 @@
 number = 40
 slug = "stage-3d"
-status = "in-progress"
+status = "completed"
 description = "The user, 2026-10-28 (go on the offer): a 3D view of a stage's tensors on the..."
 role = "production"
 context_files = []
 created_at = "2026-10-28T15:25:49"
-commits = []
+completed_at = "2026-10-29T08:50:37"
+commits = ["f452d40f9fedd305d5fda8e2b3d005ea16156239"]

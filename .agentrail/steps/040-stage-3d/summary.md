@@ -1,0 +1,1 @@
+Pipelines page: the chosen stage in 3D, the stages it reads (Flow's rule from its text) and what it gives, blocks of cubes colored by value, capped and outlined when large, drag to turn; blocks.rs with 6 tests; checked in Chrome.
