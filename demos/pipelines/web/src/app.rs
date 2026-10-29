@@ -3,6 +3,9 @@
 //! the equation as a paper prints it first); the checks that they
 //! agree; and the whole program the page ran.
 
+use std::rc::Rc;
+
+use gloo_timers::callback::Timeout;
 use wasm_bindgen::JsCast;
 use yew::prelude::*;
 
@@ -11,7 +14,7 @@ use microscope::color::{ramp, DIVERGE};
 use microscope::palette::Composer;
 use microscope::source::{between, block, code, NONE};
 
-use crate::blocks::{inputs, picture, SIZE};
+use crate::blocks::{dragged, inputs, picture, SIDE, SIZE};
 use crate::micro::{calls, chosen_row, clickable, expansion_ranges, program, run, stage_ranges, Example, Run, Value, EXAMPLES, STARTERS};
 
 /// The stage chosen: of the pipeline of equations (drawn as math) or of
@@ -145,7 +148,9 @@ fn gives(e: &Example, r: &Run, chosen: &UseStateHandle<Option<Chosen>>, turn: &U
     let (trace, k, whose, text) = match **chosen {
         Some(Chosen::Drawn(k)) => (&r.drawn, k, "of the pipeline of equations", math.into_iter().find(|c| c.contains("flow:m_ath<")).unwrap_or_default()),
         Some(Chosen::Piped(k)) => (&r.stages, k, "of the pipeline", pipe),
-        None => return html! {},
+        None => {
+            return panel("What a stage gives", "flow:s_tages<", "Click a row of the pipeline drawn as math, or a stage under the pipeline, to see here what it gives: its shape, its numbers, and in 3D the stages it reads and what it gives.", false, html! {})
+        }
     };
     let vs: Vec<&Value> = trace.iter().filter(|v| v.stage == k).collect();
     let labels: Vec<(usize, String)> = trace.iter().filter(|v| !v.label.is_empty()).map(|v| (v.stage, v.label.clone())).collect();
@@ -241,29 +246,68 @@ pub fn app() -> Html {
     let picked = use_state(|| 0usize);
     let chosen = use_state(|| None::<Chosen>);
     let turn = use_state(Turn::default);
+    // The example's run, once per example (X_eTaL runs for seconds on the
+    // BERT layer): after the spinner is drawn, not on every render.
+    let ran = use_state(|| None::<(usize, Rc<Result<Run, String>>)>);
+    {
+        let ran = ran.clone();
+        use_effect_with(*picked, move |&p| {
+            let t = (p < EXAMPLES.len()).then(|| Timeout::new(60, move || ran.set(Some((p, Rc::new(run(&EXAMPLES[p])))))));
+            move || drop(t)
+        });
+    }
+    // The divider between the panes: dragged, the right pane's width.
+    let side = use_state(|| SIDE);
+    let drag = use_state(|| None::<(f64, f64)>);
+    let (s1, d1, s2, d2, d3) = (side.clone(), drag.clone(), side.clone(), drag.clone(), drag.clone());
+    let down = Callback::from(move |e: PointerEvent| {
+        if let Some(el) = e.target_dyn_into::<web_sys::Element>() {
+            let _ = el.set_pointer_capture(e.pointer_id());
+        }
+        d1.set(Some((e.client_x() as f64, *s1)));
+    });
+    let mv = Callback::from(move |e: PointerEvent| {
+        if let Some((x, w)) = *d2 {
+            s2.set(dragged(w, x, e.client_x() as f64));
+        }
+    });
+    let up = Callback::from(move |_: PointerEvent| d3.set(None));
     // The last choice is composing one's own, from the palette.
     let main = if *picked >= EXAMPLES.len() {
         html! { <Composer starters={STARTERS.to_vec()} /> }
     } else {
         let e = EXAMPLES[*picked];
         let src = program(&e);
-        let body = match run(&e) {
-            Ok(r) => {
-                // What a stage gives, beside where it was chosen.
-                let drawn = matches!(*chosen, Some(Chosen::Drawn(_)));
-                html! { <>{ about(&e) }{ math(&e, &r, &chosen) }{ if drawn { gives(&e, &r, &chosen, &turn) } else { html! {} } }{ columns(&e, &r, &chosen) }{ if drawn { html! {} } else { gives(&e, &r, &chosen, &turn) } }{ agree(&e, &r) }</> }
-            }
-            Err(why) => html! { <p class="error">{format!("X_eTaL stopped: {why}")}</p> },
-        };
         let from = format!("\n{} := ", e.pipe);
-        html! { <>
-            { body }
+        let the_program = html! {
             <section class="panel code">
                 <h2>{"The program"}</h2>
                 <p class="note">{"Everything the page runs, in your browser: the head of the program (its imports and data), this example's section, then the pipeline's value and the checks. The pipeline is highlighted."}</p>
                 { block(&src, between(&src, &from, &from)) }
             </section>
-        </> }
+        };
+        match ran.as_ref().filter(|(p, _)| *p == *picked).map(|(_, r)| r.clone()) {
+            None => html! { <>
+                <div class="running"><span class="spinner"></span>{format!("X_eTaL is running {} in your browser\u{2026}", e.title)}</div>
+                { the_program }
+            </> },
+            Some(r) => match r.as_ref() {
+                Ok(r) => html! {
+                    <div class={classes!("work", chosen.is_none().then_some("idle"))} style={format!("--side: {:.0}px", *side)}>
+                        <div class="left">
+                            { about(&e) }{ math(&e, r, &chosen) }{ columns(&e, r, &chosen) }{ agree(&e, r) }{ the_program }
+                        </div>
+                        <div class={classes!("divider", drag.is_some().then_some("drag"))} title="drag to resize"
+                            onpointerdown={down} onpointermove={mv} onpointerup={up.clone()} onpointercancel={up}></div>
+                        <aside class="side">
+                            { if chosen.is_some() { let c = chosen.clone(); html! { <button class="close" title="close" aria-label="close the stage" onclick={Callback::from(move |_| c.set(None))}>{"\u{00d7}"}</button> } } else { html! {} } }
+                            { gives(&e, r, &chosen, &turn) }
+                        </aside>
+                    </div>
+                },
+                Err(why) => html! { <><p class="error">{format!("X_eTaL stopped: {why}")}</p>{ the_program }</> },
+            },
+        }
     };
     html! {
         <>
@@ -272,7 +316,7 @@ pub fn app() -> Html {
             { picker(&picked, &chosen) }
         </header>
         <main>
-            { main }
+            <div class="wide">{ main }</div>
         </main>
         { footer() }
         </>

@@ -44,6 +44,27 @@
     .solids figcaption { font-size: 0.8em; max-width: 240px; }
     .solids .arrow { font-size: 1.6em; color: var(--accent); }
     table.items td { padding: 2px 6px; text-align: right; font-variant-numeric: tabular-nums; color: #111; }
+    /* The page on the left; the chosen stage on the right, in view as the
+       page scrolls; the divider between them dragged to resize. */
+    body:has(main > .wide) :is(header, main, footer) { max-width: 1720px; }
+    .work { display: grid; grid-template-columns: minmax(0, 1fr) 12px var(--side, 460px); gap: 0 4px; align-items: start; }
+    .work > .left { min-width: 0; }
+    .work .layout.three { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+    .divider { align-self: stretch; cursor: col-resize; touch-action: none; border-radius: 4px;
+      background: linear-gradient(to right, transparent 5px, var(--line) 5px, var(--line) 7px, transparent 7px); }
+    .divider:hover, .divider.drag { background: linear-gradient(to right, transparent 3px, var(--accent) 3px, var(--accent) 9px, transparent 9px); }
+    .side { position: sticky; top: 8px; max-height: calc(100vh - 16px); overflow: auto; }
+    .side .close { float: right; margin: 10px 6px 0 0; background: var(--off); color: var(--on); border: 1px solid var(--line); border-radius: 6px; font: inherit; font-size: 1.1em; line-height: 1; padding: 2px 8px; cursor: pointer; }
+    .running { display: flex; align-items: center; gap: 12px; padding: 28px 4px; font-size: 1.05em; }
+    .spinner { width: 26px; height: 26px; border-radius: 50%; border: 3px solid var(--line); border-top-color: var(--accent); animation: spin 0.8s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    @media (max-width: 900px) {
+      .work { grid-template-columns: minmax(0, 1fr); }
+      .divider { display: none; }
+      .side { position: fixed; left: 0; right: 0; bottom: 0; top: auto; max-height: 45vh; z-index: 5; background: var(--bg); border-top: 2px solid var(--accent); padding: 0 12px; }
+      .work.idle .side { display: none; }
+      .work:not(.idle) { padding-bottom: 46vh; }
+    }
   </style>
 </head>
 <body></body>

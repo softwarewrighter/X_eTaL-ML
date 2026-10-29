@@ -1,6 +1,6 @@
 //! A stage in 3D: its inputs by Flow's rule, a value as a block of cubes.
 
-use pipelines_web::blocks::{block, inputs, picture, CAP, SIZE};
+use pipelines_web::blocks::{block, dragged, inputs, picture, CAP, SIDE, SIDE_RANGE, SIZE};
 use pipelines_web::micro::{calls, run, stage_ranges, EXAMPLES};
 
 fn labels(pairs: &[(usize, &str)]) -> Vec<(usize, String)> {
@@ -94,4 +94,12 @@ fn turning_shows_other_faces() {
     assert_eq!(front.faces.len(), 1, "head on, the front face only");
     let above = picture(&[1, 1, 1], 1, 0.0, 0.5);
     assert_eq!(above.faces.len(), 2, "from above, the top too");
+}
+
+#[test]
+fn dragging_the_divider_left_widens_the_pane_within_its_range() {
+    assert_eq!(dragged(SIDE, 1000.0, 800.0), SIDE + 200.0);
+    assert_eq!(dragged(SIDE, 1000.0, 1100.0), SIDE - 100.0);
+    assert_eq!(dragged(SIDE, 1000.0, 1900.0), SIDE_RANGE.0, "never narrower than its least");
+    assert_eq!(dragged(SIDE, 1000.0, 0.0), SIDE_RANGE.1, "never wider than its most");
 }

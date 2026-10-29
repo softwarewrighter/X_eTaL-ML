@@ -1,6 +1,7 @@
 //! A stage in 3D: which earlier stages it reads (Flow's rule), and a
 //! value drawn as a block of cubes, a cube an item colored by its value,
-//! turned by yaw and pitch. Pure, tested natively; app.rs draws it.
+//! turned by yaw and pitch; the pane it is shown in, resized by a
+//! drag. Pure, tested natively; app.rs draws it.
 
 /// The cubes drawn along an axis at most; a longer axis is drawn this
 /// long, its true extent in the label.
@@ -8,6 +9,18 @@ pub const CAP: usize = 12;
 
 /// The picture is SIZE by SIZE.
 pub const SIZE: f64 = 240.0;
+
+/// The right pane's width at first, and the narrowest and widest a
+/// drag of the divider makes it.
+pub const SIDE: f64 = 460.0;
+pub const SIDE_RANGE: (f64, f64) = (300.0, 1100.0);
+
+/// The right pane's width after the divider is dragged from `from` to
+/// `to` (pixels across the page) when it was `width`: wider as the
+/// divider moves left, within SIDE_RANGE.
+pub fn dragged(width: f64, from: f64, to: f64) -> f64 {
+    (width - (to - from)).clamp(SIDE_RANGE.0, SIDE_RANGE.1)
+}
 
 /// The earlier stages stage `k` (from 1, the data first) reads, by
 /// Flow's rule: the previous value when it names `it` or names no

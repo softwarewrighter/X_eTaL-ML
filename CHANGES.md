@@ -13,6 +13,8 @@ refresh of the vendored X_eTaL.
 
 ## 2026-10-29
 
+- `fix` Pipelines: what a stage gives in a resizable pane beside the page, in view as it scrolls (a bottom panel on a phone, with a close button); the example run once as it is picked, behind a spinner, not on every render (a stage click was rerunning X_eTaL, seconds on the BERT layer) (step stage-pane)
+- `plan` saga: step stage-pane inserted (042); f32-tolerance is 043
 - `vendor` X_eTaL pinned at 623b1016 (M17 landed there; every baseline and the timings re-run at the pin)
 - `docs` The asks' statuses (step asks-statuses): X_eTaL's M17 landed, M11, M14 to M16, M18 to M20 planned with their steps there; X_eTaL-libraries' E1 to E11 planned as its Sagas 17 to 25; README's waiting row says what is planned where and that nothing is blocked
 - `plan` saga: step asks-statuses inserted (041); f32-tolerance is 042

@@ -8,7 +8,9 @@ the program is compiled; `xetal expand` shows it.
 
 Live: [Pipelines](https://softwarewrighter.github.io/X_eTaL-ML/pipelines/)
 (pick an example and see the pipeline, what it became and the same
-layer in plain X_eTaL side by side, checked to agree in your browser).
+layer in plain X_eTaL side by side, checked to agree in your browser;
+the example runs once as it is picked, a spinner showing meanwhile,
+about 15 seconds for the BERT layer).
 
 ## Run it
 
@@ -137,7 +139,10 @@ example's own pipeline.
 ## What each stage gives
 
 On the page, click a row of a pipeline drawn as math, or a stage under
-a pipeline's code: the stage is highlighted (its row; its text in the
+a pipeline's code. What the stage gives opens in a pane on the right,
+which stays in view as the page scrolls (drag the divider to widen it;
+on a phone it is a panel at the bottom, closed with its x). The stage
+is highlighted (its row; its text in the
 pipeline and its lines in what it became), and a panel shows what it
 gives, its shape and its numbers as a table colored by sign and size
 (a rank-3 value as slices), or its range and first numbers when it is
