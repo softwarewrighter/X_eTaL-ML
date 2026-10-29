@@ -11,6 +11,11 @@ planning and reordering, `release` milestone release, `chore`
 agentrail bookkeeping (step complete, saga archive), `vendor` a
 refresh of the vendored X_eTaL.
 
+## 2026-10-28
+
+- `fix` Every drawn pipeline stage clickable, the last included (step last-stage-click): KaTeX's column box covered the later rows of a tall drawing, so a click there chose nothing; the rows sit above it and the row is picked by where the click falls (`chosen_row`, tested). And a choice between two stages of one shape left the old row highlighted: the KaTeX observer redrew only on added nodes, not a changed `data-tex` (it watches the attribute now, on Tiny BERT's page too). Checked in Chrome on every row of every example. Asks E10 (an equation read as a pipeline of stages) and E11 (LaTeX in) filed for X_eTaL-libraries.
+- `plan` saga: steps last-stage-click (039) and stage-3d (040) inserted; f32-tolerance is 041
+
 ## 2026-10-27
 
 - `feat` What each pipeline stage gives (step stage-values): Flow's `flow:s_tages<` gives every stage's value in one run (a record per value: number, label, shape, range, first 64 items; a tuple's parts each), tested against each stage alone; on the Pipelines page every row of a pipeline drawn as math and every stage of a pipeline is clickable: the stage is highlighted in the drawing, the pipeline and its expansion, and a panel shows its shape and its numbers as a colored table when they fit, else their range; native tests for the traces, ranges and clickable math; fixed The program panel's highlight (eqpipe for pipe)

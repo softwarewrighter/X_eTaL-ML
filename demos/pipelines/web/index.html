@@ -21,12 +21,13 @@
         try { katex.render(el.dataset.tex, el, { displayMode: true, throwOnError: false, trust: function (c) { return c.command === "\\htmlClass"; } }); el.dataset.drawn = el.dataset.tex; } catch (e) {}
       });
     }
-    new MutationObserver(drawTex).observe(document.documentElement, { childList: true, subtree: true });
+    // data-tex changed in place too (a choice redrawn, nothing added).
+    new MutationObserver(drawTex).observe(document.documentElement, { childList: true, subtree: true, attributes: true, attributeFilter: ["data-tex"] });
     window.addEventListener("load", drawTex);
   </script>
   <style>
     /* A stage of a pipeline drawn as math, clickable; the one chosen. */
-    .st { cursor: pointer; border-radius: 3px; padding: 0 2px; }
+    .st { cursor: pointer; border-radius: 3px; padding: 0 2px; position: relative; z-index: 1; }
     .st:hover { outline: 1px dashed var(--accent); }
     .st-on { background: rgba(255, 138, 76, 0.22); outline: 1px solid var(--sel); }
     .stages { display: flex; flex-wrap: wrap; gap: 4px; margin: 6px 0; }

@@ -3,6 +3,7 @@
 //! the equation as a paper prints it first); the checks that they
 //! agree; and the whole program the page ran.
 
+use wasm_bindgen::JsCast;
 use yew::prelude::*;
 
 use microscope::chrome::{footer, header, panel};
@@ -10,7 +11,7 @@ use microscope::color::{ramp, DIVERGE};
 use microscope::palette::Composer;
 use microscope::source::{between, block, code, NONE};
 
-use crate::micro::{calls, clickable, expansion_ranges, program, run, stage_ranges, Example, Run, Value, EXAMPLES, STARTERS};
+use crate::micro::{calls, chosen_row, clickable, expansion_ranges, program, run, stage_ranges, Example, Run, Value, EXAMPLES, STARTERS};
 
 /// The stage chosen: of the pipeline of equations (drawn as math) or of
 /// the pipeline, its number from 1 (the data first).
@@ -41,14 +42,22 @@ fn math(e: &Example, r: &Run, chosen: &UseStateHandle<Option<Chosen>>) -> Html {
         Some(Chosen::Drawn(k)) => Some(k),
         _ => None,
     };
-    // A click on a drawn row chooses its stage (its class st-K).
+    // A click on a drawn row chooses its stage (its class st-K), the row
+    // by where the click falls (chosen_row).
     let c = chosen.clone();
     let pick = Callback::from(move |ev: MouseEvent| {
-        let stage = ev
-            .target_dyn_into::<web_sys::Element>()
-            .and_then(|el| el.closest(".st").ok().flatten())
-            .and_then(|el| el.class_name().split_whitespace().find_map(|w| w.strip_prefix("st-").and_then(|n| n.parse::<usize>().ok())));
-        if let Some(k) = stage {
+        let Some(tex) = ev.current_target().and_then(|t| t.dyn_into::<web_sys::Element>().ok()) else { return };
+        let Ok(found) = tex.query_selector_all(".st") else { return };
+        let rows: Vec<(usize, f64, f64)> = (0..found.length())
+            .filter_map(|i| found.item(i)?.dyn_into::<web_sys::Element>().ok())
+            .filter_map(|el| {
+                let k = el.class_name().split_whitespace().find_map(|w| w.strip_prefix("st-").and_then(|n| n.parse::<usize>().ok()))?;
+                let r = el.get_bounding_client_rect();
+                let x = ev.client_x() as f64;
+                (r.left() <= x && x <= r.right()).then(|| (k, r.top(), r.bottom()))
+            })
+            .collect();
+        if let Some(k) = chosen_row(&rows, ev.client_y() as f64) {
             c.set(Some(Chosen::Drawn(k)));
         }
     });

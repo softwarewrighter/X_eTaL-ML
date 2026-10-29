@@ -21,7 +21,8 @@
         try { katex.render(el.dataset.tex, el, { displayMode: true, throwOnError: false }); el.dataset.drawn = el.dataset.tex; } catch (e) {}
       });
     }
-    new MutationObserver(drawTex).observe(document.documentElement, { childList: true, subtree: true });
+    // data-tex changed in place too (a choice redrawn, nothing added).
+    new MutationObserver(drawTex).observe(document.documentElement, { childList: true, subtree: true, attributes: true, attributeFilter: ["data-tex"] });
     window.addEventListener("load", drawTex);
   </script>
 </head>

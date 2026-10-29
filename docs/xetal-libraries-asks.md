@@ -68,6 +68,22 @@ duplicated: a library function wraps a builtin the day it exists.
 There are no users yet, so the split could be changed either way; this
 one needs no breaking change.
 
+## Equations as pipelines: what the Pipelines page found (2026-10-28)
+
+The Pipelines page shows each example as a paper prints it, as a
+pipeline of equations drawn as math (Flow's `flow:m_ath<`), as its
+expansion and as plain X_eTaL, and what each stage gives. The way in
+is hand work twice over: the paper's equation, read inside out, is
+rewritten by hand as stages read left to right, and the paper's
+LaTeX is typed again in the grammar. These two asks would let an
+equation from a paper (or from OCR, which gives LaTeX) become the
+pipeline the page draws, each stage highlighted back in the original.
+
+| # | Status | Kind | Ask | Demos, libraries | Workaround |
+| - | ------ | ---- | --- | ---------------- | ---------- |
+| E10 | not yet taken | feature | An equation read as a pipeline of stages: `"Y[o,h,w] \| O Ho Wo" e:s_tages< "max((sum r:=0..2, sum s:=0..2 \| P[h+r,w+s] * F[o,r,s]) + B[o], 0)"` gives the pipeline's text, inside out turned left to right: each sum and each function applied over the indices a stage of its own equation, named (`C[o,h,w] \| O Ho Wo`), `\|>` between and the earlier stages' values by label, as Flow reads it (`flow:p_ipe<`, `flow:m_ath<`); and with it where each stage came from in the equation's text (start and end), so a page highlights the part of the original a stage computes. Tested: the pipeline's value equals the equation's (`e:e_q<`) on the demos' equations | pipelines (every example's pipeline of equations; the CNN layer's and the sampler's from the paper's line), micro-bert | each pipeline of equations written by hand beside its equation, checked equal (`equations.xtl`, `rosetta.xtl`, `diffusion.xtl`) |
+| E11 | not yet taken | feature | LaTeX in: `e:f_romTex<` reads the LaTeX `e:t_ex<` writes (subscripts as indices, `\sum_{i=0}^{n-1}`, `\frac`, `\sqrt`, `\exp`, `\log`, `\max`, `\left( \right)`, Greek names, `\,` and `\cdot` as products) into the grammar's text, refusing what the grammar does not have by name (as the grammar refuses a function it lacks); so an equation taken from a paper or from OCR is read as typed. Tested: `e:t_ex<` of what it reads gives back the LaTeX, on every equation the demos draw | pipelines (the composer: paste a paper's LaTeX), micro-bert | the equation typed again in the grammar, its LaTeX compared by eye |
+
 ## To take to X_eTaL-libraries
 
 These are not in its plan yet. Its `docs/plan.md` takes asks as rows

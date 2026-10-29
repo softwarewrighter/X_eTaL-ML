@@ -176,6 +176,18 @@ pub fn clickable(tex: &str, on: Option<usize>) -> String {
     format!("{head}{}{tail}", rows.join(" \\\\ "))
 }
 
+/// The stage a click at height `y` chose, of the drawn rows (stage, top,
+/// bottom) on the page: of the rows under the pointer, the one whose
+/// middle is nearest (a fraction reaches over the row above it). By
+/// place, not by the element clicked: KaTeX's column box lies over the
+/// later rows of a tall drawing.
+pub fn chosen_row(rows: &[(usize, f64, f64)], y: f64) -> Option<usize> {
+    rows.iter()
+        .filter(|&&(_, top, bottom)| top <= y && y <= bottom)
+        .min_by(|a, b| ((a.1 + a.2) / 2.0 - y).abs().total_cmp(&((b.1 + b.2) / 2.0 - y).abs()))
+        .map(|&(k, _, _)| k)
+}
+
 /// What one run gave.
 #[derive(Clone, Debug, PartialEq)]
 pub struct Run {

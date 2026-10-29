@@ -3,7 +3,7 @@
 //! checked against the arithmetic done directly in Rust.
 
 use microscope::source::rebound;
-use pipelines_web::micro::{calls, head, program, run, statement, DIFFUSION, EQUATIONS, EXAMPLES, PIPELINES, ROSETTA};
+use pipelines_web::micro::{calls, chosen_row, head, program, run, statement, DIFFUSION, EQUATIONS, EXAMPLES, PIPELINES, ROSETTA};
 
 #[test]
 fn every_example_runs_and_its_checks_pass() {
@@ -186,4 +186,16 @@ fn every_stage_gives_its_value_and_the_last_is_the_pipelines() {
         assert_eq!(c.matches("st-on").count(), 1, "{c}");
         assert!(c.starts_with("\\begin{aligned} & \\htmlClass{st st-1}{"), "{c}");
     }
+}
+
+#[test]
+fn a_click_chooses_the_row_under_it_whose_middle_is_nearest() {
+    // Three rows; the third's fraction reaches up over the second's lower half.
+    let rows = [(1, 0.0, 24.0), (2, 48.0, 72.0), (3, 60.0, 110.0)];
+    assert_eq!(chosen_row(&rows, 10.0), Some(1));
+    assert_eq!(chosen_row(&rows, 55.0), Some(2));
+    assert_eq!(chosen_row(&rows, 70.0), Some(2));
+    assert_eq!(chosen_row(&rows, 100.0), Some(3), "the last row is chosen too");
+    assert_eq!(chosen_row(&rows, 30.0), None, "between rows, none");
+    assert_eq!(chosen_row(&[], 5.0), None);
 }
