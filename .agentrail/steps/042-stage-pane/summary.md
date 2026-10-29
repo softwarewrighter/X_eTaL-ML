@@ -1,0 +1,1 @@
+Pipelines: two panes (page left, chosen stage right, sticky, draggable divider via blocks::dragged, bottom panel on phones, close button); X_eTaL run once per example behind a spinner instead of on every render (stage click 0.2 s); checked in Chrome.
