@@ -33,16 +33,16 @@ list stands on its own.
 | M8 | landed | feature | Float literals with an exponent (`1.5e-5`) | NN (`1e-12`), attention (`1e9`) | none |
 | M9 | landed | bug | A Bool bound to a name in arithmetic: works in X_eTaL v0.1.0 (`a := 1 2 > 0` then `1 * a` gives `1 1`) | masks | none left (no demo here carried the workaround) |
 | M10 | declined | feature | `e_ach` returning an array per item (`'{ i -> i * 1 2 3 } e_ach 1 2` is refused: e_ach needs a single value from each call) X_eTaL declined it (B14: `e_ach` stays scalar-only; `m_ap` boxes each result); a mix to turn the boxes back into an array is to decide with the user | cnn-digits (the ten digits, one number per call), a per-row grade | one `e_ach` per number wanted |
-| M11 | new | feature | A macro's text cannot name a library by the importer's alias: `m:f_` in an expansion is not rewritten to the alias the caller chose, and an expansion may not import (MC23), so a macro library cannot call its own `.xtl` half, or another library, without fixing the alias (X_eTaL-libraries X14) | Net (its networks call NN) | the expansion says `nn:`; the page tells the reader to import NN under that alias |
+| M11 | planned | feature | A macro's text cannot name a library by the importer's alias: `m:f_` in an expansion is not rewritten to the alias the caller chose, and an expansion may not import (MC23), so a macro library cannot call its own `.xtl` half, or another library, without fixing the alias (X_eTaL-libraries X14) (X_eTaL step 171 (macro-alias), to decide with the user first) | Net (its networks call NN) | the expansion says `nn:`; the page tells the reader to import NN under that alias |
 | M12 | declined | feature | Shapes in types: a matrix's type is `Float`, so code can be well-typed and shape-wrong (a spec saying 4 outputs against a 3-column weight array ran and answered); `r_eshape` repeats or cuts data silently. Asked in three sizes: a shape ascription built-in now, rank in types next, sized types as research X_eTaL declined it (T7: array types are rank-erased, shapes are checked at run time; T4: no annotations in v0) | Net (its models check at load instead), every demo | the Net macros write run-time checks that stop with an error naming the layer |
 | M13 | landed | feature | A state of several arrays for `p_ower`: tuples with destructuring, then records (first asked by X_eTaL-demos; on X_eTaL's wish list as named records). Tuples through `p_ower` landed in X_eTaL 96060b5 and patterns in d284a8c, pinned here 2026-10-08: train-live's and Net's training state is a tuple taken apart by name (step tuple-state). Boxes already carry arrays of different shapes and one element type, by position; tuples would carry mixed types, by name | train-live (Adam's state), net-train-macro | none left |
-| M14 | new | bug | `xetal_play::run` collects a run's `[]S_HOW` pictures in state shared across threads (`xetal_store::take_shown()`), so two runs at once take each other's pictures: a run can come back with none, or with another's | backprop, train-live, net-macro (their Rust tests, which cargo runs in parallel; a page runs one program at a time) | `microscope::run` runs one program at a time behind a lock |
-| M15 | new | feature | `xetal doc --out` names every site "X_eTaL doc" (the page titles, the sidebar's heading): a sibling's site cannot say whose it is; asked: a `--title` option | the cross-reference (pages/doc) | none: the catalog, the cards and the pages' footers say what the site is |
-| M16 | new | speed | The matrix product runs at about 85 ns a multiply-add: `(8 9 r_eshape ...) '+ '* i_nner 9 33800 r_eshape ...` and `(8 33800 r_eshape ...) '+ '* i_nner o_\ 9 33800 r_eshape ...` (2.4 million multiply-adds each, one with many short sums, one with few long ones) both take about 0.2 s, printed results included; the outer product `t_able` of 270,400 results takes 30 ms | cnn-backprop (the convolution and the filters' gradient are most of a step) | 600 digits and 20 a step, not more |
-| M17 | not yet taken | feature | A macro argument that holds X_eTaL code is drawn as typed: `xetal render --html -e '@ pipe:p_ipe< "x \|> 2 * it"'` gives one `c-string` span, so a pipeline's stages are the only code on a page not decorated (ST4 says the code a macro parses from a string stays ASCII, drawn decorated by the renderers; the renderers do not yet) | Flow (then Pipeline), its page on the libraries' site; answered at the pin 4453400b by X_eTaL's code strings (`c"..."`, ST5; `\|>` and `$` drawn, S13, S14), Flow's pipelines now code strings drawn as code | the site's test leaves string spans out of its typed-spelling check; the stages read as typed |
-| M18 | not yet taken | feature | A code string's escapes and X_eTaL's backslash names: `o_\\` in `c"..."` is `error[bad-string]: unknown escape`; asked: the linter or the error points to `c#"..."#` | pipelines (attention) | write the pipeline `c#"..."#` |
-| M19 | not yet taken | feature | The libm builtins: `t_anh`, `e_rf` (and `e_rfc`), `s_qrt`, `e_xpm1`, `l_og1p` beside `s_in`, `c_os`, `a_tan`, `e_xp`, `l_og`, by the rule that a builtin is what libm gives at full accuracy and a library cannot write as well (tanh from `e_xp` cancels near 0, `^ 0.5` is not the correctly rounded sqrt, erf has no closed form); the rest of trigonometry and the special functions are libraries (X_eTaL-libraries, E4 and E5). Nothing leaves the base language | Activations (planned: tanh, GELU, Mish, the exact GELU), NN (`t_anh`), Integrals' gelu demo, Equations' `sqrt`; X_eTaL-libraries' X22 asks for `t_anh` too | NN's `2 s_igmoid(2x) - 1`; a private erf (Abramowitz and Stegun 7.1.26) in Activations until then; `^ 0.5` |
-| M20 | not yet taken | feature | N-wise reduction, APL2's `N f/ V`: f over every window of N consecutive items (`2 -/ V` the differences of neighbors, `2 ,/ S` every pair of letters, `3 +/ V` moving sums); `r_/` takes its function on the left, so the window has no place today (`2 '- r_/ c` is `error[type-mismatch]`). Asked: a spelling for it (a word, `2 '- n_wise c`, or the window with the function, `(2, '-) r_/ c`), with APL2's negative N for the reversed order | the user's question (2026-10-27: every pair of a string, boxed, and the differences of their codes); pipelines and the diffusion sampler (the steps' differences), Conv's windows along one axis, the training curves' moving averages | X_eTaL-libraries' Lists: `li:d_eltas v` (the differences of neighbors, `(1 d_rop v) - -1 d_rop v`), `n li:w_indows v` (every window as a row, then `'+ r_/_2`); the pairs boxed by `'{ i -> 2 t_ake (i - 1) d_rop s } m_ap r_ange -1 + t_ally s` |
+| M14 | planned | bug | `xetal_play::run` collects a run's `[]S_HOW` pictures in state shared across threads (`xetal_store::take_shown()`), so two runs at once take each other's pictures: a run can come back with none, or with another's (X_eTaL step 167 (pictures-per-run)) | backprop, train-live, net-macro (their Rust tests, which cargo runs in parallel; a page runs one program at a time) | `microscope::run` runs one program at a time behind a lock |
+| M15 | planned | feature | `xetal doc --out` names every site "X_eTaL doc" (the page titles, the sidebar's heading): a sibling's site cannot say whose it is; asked: a `--title` option (X_eTaL step 168 (doc-title: `xetal doc --out DIR --title TEXT`)) | the cross-reference (pages/doc) | none: the catalog, the cards and the pages' footers say what the site is |
+| M16 | planned | speed | The matrix product runs at about 85 ns a multiply-add: `(8 9 r_eshape ...) '+ '* i_nner 9 33800 r_eshape ...` and `(8 33800 r_eshape ...) '+ '* i_nner o_\ 9 33800 r_eshape ...` (2.4 million multiply-adds each, one with many short sums, one with few long ones) both take about 0.2 s, printed results included; the outer product `t_able` of 270,400 results takes 30 ms (X_eTaL Saga 22, speed (vector kernels)) | cnn-backprop (the convolution and the filters' gradient are most of a step) | 600 digits and 20 a step, not more |
+| M17 | landed | feature | A macro argument that holds X_eTaL code is drawn as typed: `xetal render --html -e '@ pipe:p_ipe< "x \|> 2 * it"'` gives one `c-string` span, so a pipeline's stages are the only code on a page not decorated (ST4 says the code a macro parses from a string stays ASCII, drawn decorated by the renderers; the renderers do not yet) | Flow (then Pipeline), its page on the libraries' site; answered at the pin 4453400b by X_eTaL's code strings (`c"..."`, ST5; `\|>` and `$` drawn, S13, S14), Flow's pipelines now code strings drawn as code | none left: Flow's pipelines are code strings, drawn and checked as code (the site's test leaves out only plain strings' text, drawn as typed as it should be) |
+| M18 | planned | feature | A code string's escapes and X_eTaL's backslash names: `o_\\` in `c"..."` is `error[bad-string]: unknown escape`; asked: the linter or the error points to `c#"..."#` (X_eTaL step 170 (code-string-escape-hint)) | pipelines (attention) | write the pipeline `c#"..."#` |
+| M19 | planned | feature | The libm builtins: `t_anh`, `e_rf` (and `e_rfc`), `s_qrt`, `e_xpm1`, `l_og1p` beside `s_in`, `c_os`, `a_tan`, `e_xp`, `l_og`, by the rule that a builtin is what libm gives at full accuracy and a library cannot write as well (tanh from `e_xp` cancels near 0, `^ 0.5` is not the correctly rounded sqrt, erf has no closed form); the rest of trigonometry and the special functions are libraries (X_eTaL-libraries, E4 and E5). Nothing leaves the base language (X_eTaL step 169 (libm-builtins), the rule to confirm with the user first) | Activations (planned: tanh, GELU, Mish, the exact GELU), NN (`t_anh`), Integrals' gelu demo, Equations' `sqrt`; X_eTaL-libraries' X22 asks for `t_anh` too | NN's `2 s_igmoid(2x) - 1`; a private erf (Abramowitz and Stegun 7.1.26) in Activations until then; `^ 0.5` |
+| M20 | planned | feature | N-wise reduction, APL2's `N f/ V`: f over every window of N consecutive items (`2 -/ V` the differences of neighbors, `2 ,/ S` every pair of letters, `3 +/ V` moving sums); `r_/` takes its function on the left, so the window has no place today (`2 '- r_/ c` is `error[type-mismatch]`). Asked: a spelling for it (a word, `2 '- n_wise c`, or the window with the function, `(2, '-) r_/ c`), with APL2's negative N for the reversed order (X_eTaL step 172 (n-wise-reduce), the spelling to decide with the user first (its recommendation: a built-in `n_wise`, `2 '- n_wise c`)) | the user's question (2026-10-27: every pair of a string, boxed, and the differences of their codes); pipelines and the diffusion sampler (the steps' differences), Conv's windows along one axis, the training curves' moving averages | X_eTaL-libraries' Lists: `li:d_eltas v` (the differences of neighbors, `(1 d_rop v) - -1 d_rop v`), `n li:w_indows v` (every window as a row, then `'+ r_/_2`); the pairs boxed by `'{ i -> 2 t_ake (i - 1) d_rop s } m_ap r_ange -1 + t_ally s` |
 ## Details
 
 ### M1, M2: macro libraries and seeing an expansion (landed)
@@ -276,39 +276,11 @@ its left. The pairs as a matrix of rows meanwhile:
 
 ### To take to X_eTaL
 
-M17 is filed here but not yet in X_eTaL's ledger (M15 and M16 are
-there since 2026-10-12, as new). The entry in its `docs/asks.toml`
-form, ready to add there (this repository does not change X_eTaL):
-
-```
-[[ask]]
-id = "M17"
-repo = "X_eTaL-ML"
-ask = "a macro argument that holds code (a pipeline's stages) is drawn as typed; let a macro library declare it code and the renderers decorate it"
-state = "new"
-here = ""
-
-[[ask]]
-id = "M18"
-repo = "X_eTaL-ML"
-ask = "c\"...\" reads the backslash of o_\\ and s_\\ as an escape: let the linter or the lexer's error point to c#\"...\"#"
-state = "new"
-here = ""
-
-[[ask]]
-id = "M19"
-repo = "X_eTaL-ML"
-ask = "the libm builtins t_anh, e_rf (e_rfc), s_qrt, e_xpm1, l_og1p: a builtin is what libm gives at full accuracy and a library cannot write as well; the rest of trigonometry and the special functions stay libraries"
-state = "new"
-here = ""
-
-[[ask]]
-id = "M20"
-repo = "X_eTaL-ML"
-ask = "n-wise reduction, APL2's N f/ V: f over every window of N consecutive items (2 -/ V the differences, 2 ,/ S the pairs), negative N reversing each window; a spelling for the window, since r_/ takes its function on the left"
-state = "new"
-here = ""
-```
+Nothing waiting: every ask filed here is in X_eTaL's ledger (M17 to
+M20 since 2026-10-28, M17 landed by its code strings). A new ask goes
+here first as its `docs/asks.toml` entry, ready to add there (this
+repository does not change X_eTaL), and is marked not yet taken until
+the ledger has it.
 
 ### M5, M10
 
