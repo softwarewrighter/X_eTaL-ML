@@ -1,0 +1,1 @@
+X_eTaL pinned at 623b1016 (M17 landed), full gate and bench-check ok; xetal-asks statuses from the ledger (M17 landed, M11/M14-M16/M18-M20 planned), libraries asks E1-E11 planned (Sagas 17-25); README waiting row.

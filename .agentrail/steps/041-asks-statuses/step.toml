@@ -1,8 +1,9 @@
 number = 41
 slug = "asks-statuses"
-status = "in-progress"
+status = "completed"
 description = "The user, 2026-10-29: update the asks statuses now. X_eTaL's ledger at its he..."
 role = "production"
 context_files = []
 created_at = "2026-10-29T10:27:46"
-commits = []
+completed_at = "2026-10-29T12:01:28"
+commits = ["a89622266b28c0cf410ec96a270de08f2cd0d49a"]
