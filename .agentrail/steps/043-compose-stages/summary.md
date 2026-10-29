@@ -1,0 +1,1 @@
+Compose shows its first pipeline stage by stage (drawn rows, stage chips, values and 3D in the resizable right pane); app.rs refactored into shared pieces; microscope run::printed and composer after slot; a pipeline-of-equations starter; X_eTaL-libraries pinned at 92ce936 (Equations integral; E1 landed), expansions reblessed after review.

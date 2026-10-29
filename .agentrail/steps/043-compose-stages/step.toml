@@ -1,8 +1,9 @@
 number = 43
 slug = "compose-stages"
-status = "in-progress"
+status = "completed"
 description = "The user, 2026-10-29: in Compose your own, a pipeline the user writes gets th..."
 role = "production"
 context_files = []
 created_at = "2026-10-29T13:39:48"
-commits = []
+completed_at = "2026-10-29T16:25:27"
+commits = ["0a74d1557830b69b0641ade32cc6ca855acebbe8"]
