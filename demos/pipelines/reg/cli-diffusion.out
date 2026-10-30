@@ -1,5 +1,5 @@
-Zn_{n,k} = a_{t-1} \, Z_{n,k} + b_{t-1} \, eps_{n,k} + sigma_{t-1} \, noise_{t-1,n,k}
-z0_{n,k} = zT_{n,k} + \left(\sum_{t=1}^{T} dz_{t-1,n,k}\right)
+Zn_{n,k} = a_{t-1} \, Z_{n,k} + b_{t-1} \, \epsilon_\theta(Z_{n,k}, t) + sigma_{t-1} \, noise_{t-1,n,k}
+X0_{n,k} = \mathcal{D}(zT_{n,k} + \left(\sum_{t=1}^{T} dz_{t-1,n,k}\right))
 \begin{aligned} & zT \\ \longrightarrow \; & Z0_{n,k} = zT_{n,k} + \left(\sum_{t=1}^{T} dz_{t-1,n,k}\right) \qquad \triangleright \, z0 \\ \longrightarrow \; & X0_{n,j} = \left(\sum_{k=0}^{K - 1} z0_{n,k} \, Wd_{k,j}\right) + Wd_{K,j} \end{aligned}
 ok: the equations and the pipeline of equations
 ok: the equations and the pipeline

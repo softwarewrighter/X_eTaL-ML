@@ -13,6 +13,9 @@ refresh of the vendored X_eTaL.
 
 ## 2026-10-30
 
+- `vendor` X_eTaL-libraries pinned at 6b09aad (its Saga 17): E2 (scan, prev), E3 (named functions in an equation), E12 (Plot over real x) landed (step libs-repin)
+- `demo` The diffusion sampler's networks inside its equations (E3), drawn with the paper's symbols; E13 filed (a scan seeded per element, which the sampler needs) (step libs-repin)
+- `plan` saga: step libs-repin inserted (045), activations-explorer moved before f32-tolerance (046, 047)
 - `demo` The chain rule (step chain-rule): a pipeline of equations, a layer and its loss forward then the gradient back, each stage the gradient before it times its local derivative, drawn as math beside the rule; checked against the gradient written out and against nudging each weight; on the Pipelines page with the stage view (a backward stage beside the forward values it reads)
 
 ## 2026-10-29

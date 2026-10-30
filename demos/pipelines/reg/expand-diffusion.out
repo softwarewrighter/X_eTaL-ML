@@ -12,12 +12,16 @@
 ##   X0 = D(z0) = D(zT + sum_{t=1}^{T} dz_t)
 ## The first sum is a recurrence (its term at t uses the z_t the term
 ## before made), so it is one step as the paper's summand, applied T
-## times; the second is a plain sum of the steps' differences, and
-## telescopes to the same z0.
+## times (Equations' scan takes one seed for every element, not a
+## latent per element: ask E13); the second is a plain sum of the
+## steps' differences, and telescopes to the same z0. The networks are
+## called inside the equations by name (eps_theta and D), drawn as the
+## paper draws them.
 
 "e:" u_se< "Equations"
 "flow:" u_se< "Flow"
 "nn:" u_se< "NN"
+"s:" u_se< "Strings"
 "k:" u_se< "Check"
 
 ### Data
@@ -43,14 +47,18 @@ c := 0.5 -0.5
 We := 8 4 r_eshape 0.3 * s_in f_loat r_ange 32
 Wd := 5 4 r_eshape 0.3 * c_os f_loat r_ange 20
 u:e_psTheta := { (Z, t) -> (Z c_at_2 (N c_at 3) r_eshape (f_loat t) c_at c) nn:d_ense We }
+u:d_ecode := { z -> z nn:d_ense Wd }
+## The paper's symbols for the networks in the equations' LaTeX.
+u:p_aper := { tex -> r#"\operatorname{d_ecode}"# r#"\mathcal{D}"# s:r_eplace r#"\operatorname{e_psTheta}"# r#"\epsilon_\theta"# s:r_eplace tex }
 
 ### As a paper prints it
 
 ## One step of the first sum, the paper's summand at level t: a_t z_t
 ## + b_t eps_theta(z_t, t, c) + sigma_t eps_rand, read by Equations
-## over the batch (n) and the latent (k); the level goes down one.
+## over the batch (n) and the latent (k), the denoiser called inside
+## the equation (its argument, Z over the whole grid, is the latents);
+## the level goes down one.
 u:s_tep := { (Z, t) ->
-  eps := u:e_psTheta (Z, t)
   Zn := (({ @ ->
   g3:a_t := { A i -> (1 + i) s_elect r_avel A }
   g2:c_heck := { (A, name, k, from) e ->
@@ -79,11 +87,10 @@ u:s_tep := { (Z, t) ->
       ((Z, "Z", 2, "k") g2:c_heck (0 + g7:g_rid 2)) + (2 s_elect s_hape Z) * 
       ((Z, "Z", 1, "n") g2:c_heck (0 + g7:g_rid 1)))))) + (
     ((g1:r_ank (b, "b", 1, "b[t-1]")) g3:a_t (
-      ((b, "b", 1, "t-1") g2:c_heck (t - 1)))) * 
-    ((g1:r_ank (eps, "eps", 2, "eps[n,k]")) g3:a_t ((
-      ((eps, "eps", 2, "k") g2:c_heck (0 + g7:g_rid 2)) + (2 s_elect s_hape eps)
-                  * 
-      ((eps, "eps", 1, "n") g2:c_heck (0 + g7:g_rid 1))))))) + (
+      ((b, "b", 1, "t-1") g2:c_heck (t - 1)))) * (u:e_psTheta(
+    ((g1:r_ank (Z, "Z", 2, "Z[n,k]")) g3:a_t ((
+      ((Z, "Z", 2, "k") g2:c_heck (0 + g7:g_rid 2)) + (2 s_elect s_hape Z) * 
+      ((Z, "Z", 1, "n") g2:c_heck (0 + g7:g_rid 1))))), t)))) + (
     ((g1:r_ank (sigma, "sigma", 1, "sigma[t-1]")) g3:a_t (
       ((sigma, "sigma", 1, "t-1") g2:c_heck (t - 1)))) * 
     ((g1:r_ank (noise, "noise", 3, "noise[t-1,n,k]")) g3:a_t ((
@@ -96,7 +103,7 @@ u:s_tep := { (Z, t) ->
 } @))
   (Zn, t - 1)
 }
-"Zn_{n,k} = a_{t-1} \\, Z_{n,k} + b_{t-1} \\, eps_{n,k} + sigma_{t-1} \\, noise_{t-1,n,k}"
+u:p_aper ("Zn_{n,k} = a_{t-1} \\, Z_{n,k} + b_{t-1} \\, \\operatorname{e_psTheta}(Z_{n,k}, t) + sigma_{t-1} \\, noise_{t-1,n,k}")
 
 ## The steps' differences dz_t = z_{t-1} - z_t, a row of N x K per
 ## step, collected as the T steps run; then the second form, the sum
@@ -106,7 +113,7 @@ u:c_ollect := { (Z, t, dz) ->
   (Zn, tn, dz c_at (1 c_at N c_at K) r_eshape Zn - Z)
 }
 (_, _, dz) := T 'u:c_ollect p_ower (zT, T, (0 c_at N c_at K) r_eshape 0.0)
-eq := ((({ @ ->
+eq := (({ @ ->
   g10:a_t := { A i -> (1 + i) s_elect r_avel A }
   g9:c_heck := { (A, name, k, from) e ->
     n := k s_elect s_hape A
@@ -122,10 +129,10 @@ eq := ((({ @ ->
   g12:g_rid := { k ->
     g11:grid r_eshape (o_ffsets k s_elect g11:grid) 'l_eft t_able ('* r_/ k d_rop g11:grid) r_eshape 0
   }
-  g11:grid r_eshape ((
+  g11:grid r_eshape ((u:d_ecode((
     ((g8:r_ank (zT, "zT", 2, "zT[n,k]")) g10:a_t ((
       ((zT, "zT", 2, "k") g9:c_heck (0 + g12:g_rid 2)) + (2 s_elect s_hape zT) *
-            
+                
       ((zT, "zT", 1, "n") g9:c_heck (0 + g12:g_rid 1))))) + ({ @ ->
     g13:grid := N c_at K c_at ({ v ->
       (0 <= v) ? v
@@ -141,9 +148,9 @@ eq := ((({ @ ->
       ((dz, "dz", 2, "n") g9:c_heck (0 + g14:g_rid 1)) + (2 s_elect s_hape dz) *
               
       ((dz, "dz", 1, "t-1") g9:c_heck ((1 + g14:g_rid 3) - 1)))))))
-  } @)))
-} @))) nn:d_ense Wd
-"z0_{n,k} = zT_{n,k} + \\left(\\sum_{t=1}^{T} dz_{t-1,n,k}\\right)"
+  } @)))))
+} @))
+u:p_aper ("X0_{n,k} = \\operatorname{d_ecode}(zT_{n,k} + \\left(\\sum_{t=1}^{T} dz_{t-1,n,k}\\right))")
 
 ## The second form as a pipeline of equations: the latents of noise,
 ## the steps' differences added, the decoder (a dense layer, its bias

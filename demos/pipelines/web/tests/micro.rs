@@ -78,7 +78,9 @@ fn the_diffusion_sampler_is_the_arithmetic_done_directly() {
     let e = EXAMPLES[1];
     assert_eq!(e.src, DIFFUSION);
     let r = run(&e).unwrap();
-    assert!(r.tex[0].starts_with("Zn_{n,k} = a_{t-1}") && r.tex[1].starts_with("z0_{n,k} = zT_{n,k} + "), "{:?}", r.tex);
+    // The networks inside the equations, drawn with the paper's symbols.
+    assert!(r.tex[0].starts_with("Zn_{n,k} = a_{t-1}") && r.tex[0].contains("\\epsilon_\\theta(Z_{n,k}, t)"), "{:?}", r.tex);
+    assert!(r.tex[1].starts_with("X0_{n,k} = \\mathcal{D}(zT_{n,k} + "), "{:?}", r.tex);
     // The data as diffusion.xtl makes it (r_ange counts from 1): the
     // noise of every step, the latents of noise, the networks' weights.
     let (n, k, t) = (2usize, 4usize, 3usize);

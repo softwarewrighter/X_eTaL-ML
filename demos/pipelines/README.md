@@ -76,12 +76,15 @@ X0 = D(z0) = D(zT + sum_{t=1}^{T} dz_t)
    uses the z_t the term before made), so it is one step, the paper's
    summand as one Equations call over the batch and the latent,
    `Zn[n,k] = a[t-1] * Z[n,k] + b[t-1] * eps[n,k] + sigma[t-1] * noise[t-1,n,k]`,
-   applied T times by `p_ower`; the networks (`eps_theta`, `D`) are
-   X_eTaL functions called outside the string, since an equation's
-   functions are its six (`exp`, `log`, `sqrt`, `abs`, `max`, `min`).
+   applied T times by `p_ower` (Equations' `scan` names the term before
+   as `prev`, but its seed is one value, not a latent per element: ask
+   E13). The networks are called inside the equations by name, the
+   program's own functions: `e_psTheta(Z[n,k], t)` (its argument, Z
+   over the whole grid, is the latents) and `d_ecode(...)`, drawn as
+   the paper draws them, eps_theta and a calligraphic D.
    The second form is a plain sum of the steps' differences,
-   `z0[n,k] = zT[n,k] + (sum t:=1..T | dz[t-1,n,k])`, collected as the
-   steps run; it telescopes to the same latents. Both are drawn as
+   `X0[n,k] = d_ecode(zT[n,k] + (sum t:=1..T | dz[t-1,n,k]))`,
+   collected as the steps run; it telescopes to the same latents. Both are drawn as
    math on the page.
 2. As a pipeline: the latents of noise, the T steps (`p_ower` over the
    latents and the level), the decoder with the pictures' shape `[N K]`
@@ -204,9 +207,7 @@ Gaussian CDF.
 - No implicit broadcasting: a bias is added along an axis the library
   names (`nn:b_ias`, `nn:a_ddAxis`), and a shape a stage promises is
   checked when the program runs.
-- What an equation's grammar refuses is said, not guessed: a function
-  it does not have, a sum that is really a recurrence (`t:=T..1` with
-  a term using the one before) stay outside the string, as X_eTaL
-  functions and `p_ower`; the asks for a recurrence word and the
-  caller's functions are in
+- What an equation's grammar refuses is said, not guessed: a sum
+  that is really a recurrence seeded by a latent per element stays a
+  step applied by `p_ower`; the ask for it is in
   [docs/xetal-libraries-asks.md](../../docs/xetal-libraries-asks.md).
