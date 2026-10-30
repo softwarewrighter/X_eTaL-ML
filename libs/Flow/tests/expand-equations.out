@@ -34,7 +34,10 @@ p1 := ({ @ ->
         g6:grid r_eshape (o_ffsets k s_elect g6:grid) 'l_eft t_able ('* r_/ k d_rop g6:grid) r_eshape 0
       }
       g6:grid r_eshape (({ @ ->
-        g8:grid := 2 c_at 2 c_at (1 + 2 - 0)
+        g8:grid := 2 c_at 2 c_at ({ v ->
+      (0 <= v) ? v
+      "bad-equation" []S_IGNAL "sum's range runs low..high: 0..2"
+    } (1 + 2 - 0))
         g9:g_rid := { k ->
           g8:grid r_eshape (o_ffsets k s_elect g8:grid) 'l_eft t_able ('* r_/ k d_rop g8:grid) r_eshape 0
         }
@@ -127,7 +130,10 @@ p2 := ({ @ ->
     ((g21:r_ank (e, "e", 2, "e[i,j]")) g23:a_t ((
       ((e, "e", 2, "j") g22:c_heck (0 + g25:g_rid 2)) + (2 s_elect s_hape e) * 
       ((e, "e", 1, "i") g22:c_heck (0 + g25:g_rid 1))))) / ({ @ ->
-      g26:grid := 2 c_at 3 c_at (1 + 2 - 0)
+      g26:grid := 2 c_at 3 c_at ({ v ->
+      (0 <= v) ? v
+      "bad-equation" []S_IGNAL "sum's range runs low..high: 0..2"
+    } (1 + 2 - 0))
       g27:g_rid := { k ->
         g26:grid r_eshape (o_ffsets k s_elect g26:grid) 'l_eft t_able ('* r_/ k d_rop g26:grid) r_eshape 0
       }
