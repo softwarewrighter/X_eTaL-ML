@@ -135,6 +135,19 @@ exponential), each a pipeline of equations checked equal to the
 example's own pipeline.
    [Tiny BERT](../micro-bert/README.md) applies two such layers to
    letters.
+3. **The chain rule**: a layer and its loss, then the gradient back
+   through it, in one pipeline. Forward, z = x W, y = sigmoid z
+   (written with exp), the loss half the squared error; back, each
+   stage the gradient before it times its own stage's local
+   derivative, dL/dy = y - T, dL/dz = dL/dy y (1 - y), dL/dW the sum
+   over the batch of x times dL/dz: the rule
+   dL/dW = dL/dy . dy/dz . dz/dW a row at a time. Each backward stage
+   reads by its label the forward value its derivative needs, so its
+   3D view shows them side by side. Checked equal to the gradient
+   written out (as the [Backprop microscope](../backprop/README.md)
+   writes it) and to nudging each weight (central differences, within
+   1e-7). The local derivatives are written by hand: Equations does
+   not differentiate yet (ask E8).
 
 ## What each stage gives
 

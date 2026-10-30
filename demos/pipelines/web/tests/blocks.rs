@@ -103,3 +103,20 @@ fn dragging_the_divider_left_widens_the_pane_within_its_range() {
     assert_eq!(dragged(SIDE, 1000.0, 1900.0), SIDE_RANGE.0, "never narrower than its least");
     assert_eq!(dragged(SIDE, 1000.0, 0.0), SIDE_RANGE.1, "never wider than its most");
 }
+
+#[test]
+fn the_chain_rules_backward_stages_read_the_forward_values_they_need() {
+    // 1 X, 2 Z, 3 Y, 4 L, 5 dL/dy, 6 dL/dz, 7 dL/dW.
+    let e = EXAMPLES.iter().find(|e| e.title == "The chain rule").unwrap();
+    let r = run(e).unwrap();
+    let (_, pipe, _) = calls(e);
+    let ls: Vec<(usize, String)> = r.stages.iter().filter(|v| !v.label.is_empty()).map(|v| (v.stage, v.label.clone())).collect();
+    let rs = stage_ranges(&pipe);
+    let reads = |k: usize| inputs(&pipe[rs[k - 1].0..rs[k - 1].1], k, &ls);
+    assert_eq!(rs.len(), 7);
+    assert_eq!(reads(5), vec![3], "dL/dy reads y (T is data)");
+    assert_eq!(reads(6), vec![3, 5], "dL/dz reads y for its derivative and the gradient before it");
+    assert_eq!(reads(7), vec![1, 6], "dL/dW reads x and the gradient before it");
+    let last = r.stages.iter().find(|v| v.stage == 7).unwrap();
+    assert_eq!(last.shape, vec![3, 2]);
+}

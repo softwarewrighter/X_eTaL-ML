@@ -11,6 +11,10 @@ planning and reordering, `release` milestone release, `chore`
 agentrail bookkeeping (step complete, saga archive), `vendor` a
 refresh of the vendored X_eTaL.
 
+## 2026-10-30
+
+- `demo` The chain rule (step chain-rule): a pipeline of equations, a layer and its loss forward then the gradient back, each stage the gradient before it times its local derivative, drawn as math beside the rule; checked against the gradient written out and against nudging each weight; on the Pipelines page with the stage view (a backward stage beside the forward values it reads)
+
 ## 2026-10-29
 
 - `plan` Ask E12 filed for X_eTaL-libraries (Plot's line charts over real x values, in progress there); plan rows 41 (chain-rule) and 42 (activations-explorer, superseding row 29)

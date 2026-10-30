@@ -1,6 +1,6 @@
 number = 44
 slug = "chain-rule"
-status = "pending"
+status = "in-progress"
 description = "The user, 2026-10-29: an example of the chain rule. On the Pipelines page, a ..."
 role = "production"
 context_files = []

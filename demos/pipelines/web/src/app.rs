@@ -73,9 +73,10 @@ fn math(e: &Example, r: &Run, chosen: &UseStateHandle<Option<Chosen>>) -> Html {
     if calls.is_empty() {
         return html! {};
     }
-    let paper = calls.iter().any(|c| !c.contains("flow:m_ath<"));
+    let paper = calls.iter().any(|c| !c.contains("flow:m_ath<") && !c.contains(":= r#\""));
+    let typed = calls.iter().any(|c| c.contains(":= r#\""));
     let note = format!("{}The layer as a pipeline of equations, drawn by Flow's m_ath< from the very text that computes it: a row a stage, an arrow between, each label after the stage it names (a triangle, as X_eTaL draws $, with its shape), each equation as X_eTaL-libraries' Equations draws it; checked equal to the pipeline below as the page runs.",
-        if paper { "The equation as a paper prints it first, read by Equations (e:e_q< its value, e:t_ex< its LaTeX, one reading of the same text; a sum whose term uses the one before is one step, applied by p_ower). " } else { "" });
+        if paper { "The equation as a paper prints it first, read by Equations (e:e_q< its value, e:t_ex< its LaTeX, one reading of the same text; a sum whose term uses the one before is one step, applied by p_ower). " } else if typed { "The rule as a paper writes it first, typed as LaTeX (Equations has no derivatives yet, ask E8). " } else { "" });
     panel("As math", "flow:m_ath<", &note,
         false, html! { <>
             { for calls.iter().zip(&r.tex).map(|(call, tex)| {

@@ -115,4 +115,45 @@ a0 := (g, beta) nm:l_ayer X + ((Bq, Bk, Bv) at:h_ead (X, at:a_ll n)) '+ '* i_nne
 layer0 := (g, beta) nm:l_ayer a0 + (act:g_elu a0 nn:d_ense W1) nn:d_ense W2
 r2 := "the equations are the layer written out" k:t_est layer k:n_ear layer0
 
-k:r_eport r1 k:a_nd r2
+### The chain rule
+
+## A layer and its loss, then the loss's gradient back through it, in
+## one pipeline. Forward: z = x Wc, y = sigmoid(z) (written with exp:
+## Equations has no sigmoid yet, ask E6), the loss L half the squared
+## error against the targets T. Back: each stage the gradient before it
+## times its own stage's local derivative, the chain rule a row at a
+## time: dL/dy = y - T, dL/dz = dL/dy y (1 - y), dL/dWc the sum over the
+## batch of x times dL/dz. The local derivatives are written by hand
+## until Equations differentiates (ask E8).
+Wc := 3 2 r_eshape 0.5 * c_os 2.0 * f_loat r_ange 6
+T := 4 2 r_eshape 0.0 1.0 1.0 0.0 0.0 1.0 1.0 0.0
+chain := r#"\frac{\partial L}{\partial W} = \frac{\partial L}{\partial y} \cdot \frac{\partial y}{\partial z} \cdot \frac{\partial z}{\partial W}"#
+chain
+back := @ flow:p_ipe< c#"
+   X $x
+|> "Z[i,k] | n 2" e:e_q< "sum c:=0..2 | x[i,c] * Wc[c,k]" $z
+|> "Y[i,k] | n 2" e:e_q< "1 / (1 + exp(-z[i,k]))" $y
+|> "L[] | " e:e_q< "(sum i:=0..n-1, sum k:=0..1 | (y[i,k] - T[i,k])^2) / 2" $l
+|> "Gy[i,k] | n 2" e:e_q< "y[i,k] - T[i,k]" $gy
+|> "Gz[i,k] | n 2" e:e_q< "gy[i,k] * y[i,k] * (1 - y[i,k])" $gz
+|> "Gw[c,k] | 3 2" e:e_q< "sum i:=0..n-1 | x[i,c] * gz[i,k]" $gw [3 2]"#
+backDrawn := @ flow:m_ath< c#"
+   X $x
+|> "Z[i,k] | n 2" e:e_q< "sum c:=0..2 | x[i,c] * Wc[c,k]" $z
+|> "Y[i,k] | n 2" e:e_q< "1 / (1 + exp(-z[i,k]))" $y
+|> "L[] | " e:e_q< "(sum i:=0..n-1, sum k:=0..1 | (y[i,k] - T[i,k])^2) / 2" $l
+|> "Gy[i,k] | n 2" e:e_q< "y[i,k] - T[i,k]" $gy
+|> "Gz[i,k] | n 2" e:e_q< "gy[i,k] * y[i,k] * (1 - y[i,k])" $gz
+|> "Gw[c,k] | 3 2" e:e_q< "sum i:=0..n-1 | x[i,c] * gz[i,k]" $gw [3 2]"#
+backDrawn
+## The same gradient written out (as the backprop demo writes it), and
+## by nudging each weight: the loss's change over twice the nudge.
+Y0 := 1.0 / 1.0 + e_xp n_eg X '+ '* i_nner Wc
+back0 := (o_\ X) '+ '* i_nner (Y0 - T) * Y0 * 1.0 - Y0
+u:l_oss := { w -> 0.5 * '+ r_/ r_avel ((1.0 / 1.0 + e_xp n_eg X '+ '* i_nner w) - T) ^ 2 }
+u:n_udge := { j -> 3 2 r_eshape 0.000001 * f_loat j = r_ange 6 }
+nudged := 3 2 r_eshape '{ j -> 500000.0 * (u:l_oss Wc + u:n_udge j) - u:l_oss Wc - u:n_udge j } e_ach r_ange 6
+r3 := "the chain rule, stage by stage, is the gradient written out" k:t_est back k:n_ear back0
+r4 := "and is what nudging each weight gives, within 1e-7" k:t_est k:t_rue 0.00000000000001 > (back - nudged) ^ 2
+
+k:r_eport r1 k:a_nd r2 k:a_nd r3 k:a_nd r4

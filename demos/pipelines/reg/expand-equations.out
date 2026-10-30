@@ -886,5 +886,231 @@ a0 := (g, beta) nm:l_ayer X + ((Bq, Bk, Bv) at:h_ead (X, at:a_ll n)) '+ '* i_nne
 layer0 := (g, beta) nm:l_ayer a0 + (act:g_elu a0 nn:d_ense W1) nn:d_ense W2
 r2 := "the equations are the layer written out" k:t_est layer k:n_ear layer0
 
-k:r_eport r1 k:a_nd r2
+### The chain rule
+
+## A layer and its loss, then the loss's gradient back through it, in
+## one pipeline. Forward: z = x Wc, y = sigmoid(z) (written with exp:
+## Equations has no sigmoid yet, ask E6), the loss L half the squared
+## error against the targets T. Back: each stage the gradient before it
+## times its own stage's local derivative, the chain rule a row at a
+## time: dL/dy = y - T, dL/dz = dL/dy y (1 - y), dL/dWc the sum over the
+## batch of x times dL/dz. The local derivatives are written by hand
+## until Equations differentiates (ask E8).
+Wc := 3 2 r_eshape 0.5 * c_os 2.0 * f_loat r_ange 6
+T := 4 2 r_eshape 0.0 1.0 1.0 0.0 0.0 1.0 1.0 0.0
+chain := r#"\frac{\partial L}{\partial W} = \frac{\partial L}{\partial y} \cdot \frac{\partial y}{\partial z} \cdot \frac{\partial z}{\partial W}"#
+chain
+back := ({ @ ->
+  x := X
+  z := (({ @ ->
+    g157:a_t := { A i -> (1 + i) s_elect r_avel A }
+    g156:c_heck := { (A, name, k, from) e ->
+      n := k s_elect s_hape A
+      bad := w_here n_ot r_avel (0 <= e) & e < n
+      0 = t_ally bad ? e
+      "index" []S_IGNAL name c_at " axis " c_at (f_ormat k) c_at ": index " c_at (f_ormat (f_irst bad) s_elect r_avel e) c_at " is outside 0.." c_at (f_ormat n - 1) c_at " (from " c_at from c_at ")"
+    }
+    g155:r_ank := { (A, name, q, ref) ->
+      (t_ally s_hape A) = q ? A
+      "rank" []S_IGNAL ref c_at " indexes " c_at (f_ormat q) c_at " axes, but " c_at name c_at " has rank " c_at f_ormat t_ally s_hape A
+    }
+    g158:grid := n c_at 2
+    g159:g_rid := { k ->
+      g158:grid r_eshape (o_ffsets k s_elect g158:grid) 'l_eft t_able ('* r_/ k d_rop g158:grid) r_eshape 0
+    }
+    g158:grid r_eshape (({ @ ->
+      g160:grid := n c_at 2 c_at ({ v ->
+      (0 <= v) ? v
+      "bad-equation" []S_IGNAL "sum's range runs low..high: 0..2"
+    } (1 + 2 - 0))
+      g161:g_rid := { k ->
+        g160:grid r_eshape (o_ffsets k s_elect g160:grid) 'l_eft t_able ('* r_/ k d_rop g160:grid) r_eshape 0
+      }
+      '+ r_/_3 g160:grid r_eshape ((
+    ((g155:r_ank (x, "x", 2, "x[i,c]")) g157:a_t ((
+      ((x, "x", 2, "c") g156:c_heck (0 + g161:g_rid 3)) + (2 s_elect s_hape x) *
+              
+      ((x, "x", 1, "i") g156:c_heck (0 + g161:g_rid 1))))) * 
+    ((g155:r_ank (Wc, "Wc", 2, "Wc[c,k]")) g157:a_t ((
+      ((Wc, "Wc", 2, "k") g156:c_heck (0 + g161:g_rid 2)) + (2 s_elect s_hape Wc)
+              * 
+      ((Wc, "Wc", 1, "c") g156:c_heck (0 + g161:g_rid 3)))))))
+    } @))
+  } @))
+  y := (({ @ ->
+    g164:a_t := { A i -> (1 + i) s_elect r_avel A }
+    g163:c_heck := { (A, name, k, from) e ->
+      n := k s_elect s_hape A
+      bad := w_here n_ot r_avel (0 <= e) & e < n
+      0 = t_ally bad ? e
+      "index" []S_IGNAL name c_at " axis " c_at (f_ormat k) c_at ": index " c_at (f_ormat (f_irst bad) s_elect r_avel e) c_at " is outside 0.." c_at (f_ormat n - 1) c_at " (from " c_at from c_at ")"
+    }
+    g162:r_ank := { (A, name, q, ref) ->
+      (t_ally s_hape A) = q ? A
+      "rank" []S_IGNAL ref c_at " indexes " c_at (f_ormat q) c_at " axes, but " c_at name c_at " has rank " c_at f_ormat t_ally s_hape A
+    }
+    g165:grid := n c_at 2
+    g166:g_rid := { k ->
+      g165:grid r_eshape (o_ffsets k s_elect g165:grid) 'l_eft t_able ('* r_/ k d_rop g165:grid) r_eshape 0
+    }
+    g165:grid r_eshape ((1 / ((1 + (e_xp (0 - 
+    ((g162:r_ank (z, "z", 2, "z[i,k]")) g164:a_t ((
+      ((z, "z", 2, "k") g163:c_heck (0 + g166:g_rid 2)) + (2 s_elect s_hape z) *
+                    
+      ((z, "z", 1, "i") g163:c_heck (0 + g166:g_rid 1)))))))))))
+  } @))
+  l := (({ @ ->
+    g169:a_t := { A i -> (1 + i) s_elect r_avel A }
+    g168:c_heck := { (A, name, k, from) e ->
+      n := k s_elect s_hape A
+      bad := w_here n_ot r_avel (0 <= e) & e < n
+      0 = t_ally bad ? e
+      "index" []S_IGNAL name c_at " axis " c_at (f_ormat k) c_at ": index " c_at (f_ormat (f_irst bad) s_elect r_avel e) c_at " is outside 0.." c_at (f_ormat n - 1) c_at " (from " c_at from c_at ")"
+    }
+    g167:r_ank := { (A, name, q, ref) ->
+      (t_ally s_hape A) = q ? A
+      "rank" []S_IGNAL ref c_at " indexes " c_at (f_ormat q) c_at " axes, but " c_at name c_at " has rank " c_at f_ormat t_ally s_hape A
+    }
+    ((({ @ ->
+      g172:grid := ({ v ->
+      (0 <= v) ? v
+      "bad-equation" []S_IGNAL "sum's range runs low..high: 0..n-1"
+    } (1 + (n - 1) - 0)) c_at ({ v ->
+      (0 <= v) ? v
+      "bad-equation" []S_IGNAL "sum's range runs low..high: 0..1"
+    } (1 + 1 - 0))
+      g173:g_rid := { k ->
+        g172:grid r_eshape (o_ffsets k s_elect g172:grid) 'l_eft t_able ('* r_/ k d_rop g172:grid) r_eshape 0
+      }
+      '+ r_/_1 '+ r_/_2 g172:grid r_eshape ((((
+    ((g167:r_ank (y, "y", 2, "y[i,k]")) g169:a_t ((
+      ((y, "y", 2, "k") g168:c_heck (0 + g173:g_rid 2)) + (2 s_elect s_hape y) *
+                  
+      ((y, "y", 1, "i") g168:c_heck (0 + g173:g_rid 1))))) - 
+    ((g167:r_ank (T, "T", 2, "T[i,k]")) g169:a_t ((
+      ((T, "T", 2, "k") g168:c_heck (0 + g173:g_rid 2)) + (2 s_elect s_hape T) *
+                  
+      ((T, "T", 1, "i") g168:c_heck (0 + g173:g_rid 1))))))) ^ 2))
+    } @) / 2))
+  } @))
+  gy := (({ @ ->
+    g176:a_t := { A i -> (1 + i) s_elect r_avel A }
+    g175:c_heck := { (A, name, k, from) e ->
+      n := k s_elect s_hape A
+      bad := w_here n_ot r_avel (0 <= e) & e < n
+      0 = t_ally bad ? e
+      "index" []S_IGNAL name c_at " axis " c_at (f_ormat k) c_at ": index " c_at (f_ormat (f_irst bad) s_elect r_avel e) c_at " is outside 0.." c_at (f_ormat n - 1) c_at " (from " c_at from c_at ")"
+    }
+    g174:r_ank := { (A, name, q, ref) ->
+      (t_ally s_hape A) = q ? A
+      "rank" []S_IGNAL ref c_at " indexes " c_at (f_ormat q) c_at " axes, but " c_at name c_at " has rank " c_at f_ormat t_ally s_hape A
+    }
+    g177:grid := n c_at 2
+    g178:g_rid := { k ->
+      g177:grid r_eshape (o_ffsets k s_elect g177:grid) 'l_eft t_able ('* r_/ k d_rop g177:grid) r_eshape 0
+    }
+    g177:grid r_eshape ((
+    ((g174:r_ank (y, "y", 2, "y[i,k]")) g176:a_t ((
+      ((y, "y", 2, "k") g175:c_heck (0 + g178:g_rid 2)) + (2 s_elect s_hape y) *
+            
+      ((y, "y", 1, "i") g175:c_heck (0 + g178:g_rid 1))))) - 
+    ((g174:r_ank (T, "T", 2, "T[i,k]")) g176:a_t ((
+      ((T, "T", 2, "k") g175:c_heck (0 + g178:g_rid 2)) + (2 s_elect s_hape T) *
+            
+      ((T, "T", 1, "i") g175:c_heck (0 + g178:g_rid 1)))))))
+  } @))
+  gz := (({ @ ->
+    g181:a_t := { A i -> (1 + i) s_elect r_avel A }
+    g180:c_heck := { (A, name, k, from) e ->
+      n := k s_elect s_hape A
+      bad := w_here n_ot r_avel (0 <= e) & e < n
+      0 = t_ally bad ? e
+      "index" []S_IGNAL name c_at " axis " c_at (f_ormat k) c_at ": index " c_at (f_ormat (f_irst bad) s_elect r_avel e) c_at " is outside 0.." c_at (f_ormat n - 1) c_at " (from " c_at from c_at ")"
+    }
+    g179:r_ank := { (A, name, q, ref) ->
+      (t_ally s_hape A) = q ? A
+      "rank" []S_IGNAL ref c_at " indexes " c_at (f_ormat q) c_at " axes, but " c_at name c_at " has rank " c_at f_ormat t_ally s_hape A
+    }
+    g182:grid := n c_at 2
+    g183:g_rid := { k ->
+      g182:grid r_eshape (o_ffsets k s_elect g182:grid) 'l_eft t_able ('* r_/ k d_rop g182:grid) r_eshape 0
+    }
+    g182:grid r_eshape (((
+    ((g179:r_ank (gy, "gy", 2, "gy[i,k]")) g181:a_t ((
+      ((gy, "gy", 2, "k") g180:c_heck (0 + g183:g_rid 2)) + (2 s_elect s_hape gy)
+              * 
+      ((gy, "gy", 1, "i") g180:c_heck (0 + g183:g_rid 1))))) * 
+    ((g179:r_ank (y, "y", 2, "y[i,k]")) g181:a_t ((
+      ((y, "y", 2, "k") g180:c_heck (0 + g183:g_rid 2)) + (2 s_elect s_hape y) *
+              
+      ((y, "y", 1, "i") g180:c_heck (0 + g183:g_rid 1)))))) * ((1 - 
+    ((g179:r_ank (y, "y", 2, "y[i,k]")) g181:a_t ((
+      ((y, "y", 2, "k") g180:c_heck (0 + g183:g_rid 2)) + (2 s_elect s_hape y) *
+                
+      ((y, "y", 1, "i") g180:c_heck (0 + g183:g_rid 1)))))))))
+  } @))
+  gw := (({ @ ->
+    g186:a_t := { A i -> (1 + i) s_elect r_avel A }
+    g185:c_heck := { (A, name, k, from) e ->
+      n := k s_elect s_hape A
+      bad := w_here n_ot r_avel (0 <= e) & e < n
+      0 = t_ally bad ? e
+      "index" []S_IGNAL name c_at " axis " c_at (f_ormat k) c_at ": index " c_at (f_ormat (f_irst bad) s_elect r_avel e) c_at " is outside 0.." c_at (f_ormat n - 1) c_at " (from " c_at from c_at ")"
+    }
+    g184:r_ank := { (A, name, q, ref) ->
+      (t_ally s_hape A) = q ? A
+      "rank" []S_IGNAL ref c_at " indexes " c_at (f_ormat q) c_at " axes, but " c_at name c_at " has rank " c_at f_ormat t_ally s_hape A
+    }
+    g187:grid := 3 c_at 2
+    g188:g_rid := { k ->
+      g187:grid r_eshape (o_ffsets k s_elect g187:grid) 'l_eft t_able ('* r_/ k d_rop g187:grid) r_eshape 0
+    }
+    g187:grid r_eshape (({ @ ->
+      g189:grid := 3 c_at 2 c_at ({ v ->
+      (0 <= v) ? v
+      "bad-equation" []S_IGNAL "sum's range runs low..high: 0..n-1"
+    } (1 + (n - 1) - 0))
+      g190:g_rid := { k ->
+        g189:grid r_eshape (o_ffsets k s_elect g189:grid) 'l_eft t_able ('* r_/ k d_rop g189:grid) r_eshape 0
+      }
+      '+ r_/_3 g189:grid r_eshape ((
+    ((g184:r_ank (x, "x", 2, "x[i,c]")) g186:a_t ((
+      ((x, "x", 2, "c") g185:c_heck (0 + g190:g_rid 1)) + (2 s_elect s_hape x) *
+              
+      ((x, "x", 1, "i") g185:c_heck (0 + g190:g_rid 3))))) * 
+    ((g184:r_ank (gz, "gz", 2, "gz[i,k]")) g186:a_t ((
+      ((gz, "gz", 2, "k") g185:c_heck (0 + g190:g_rid 2)) + (2 s_elect s_hape gz)
+              * 
+      ((gz, "gz", 1, "i") g185:c_heck (0 + g190:g_rid 3)))))))
+    } @))
+  } @))
+  _ := { @ ->
+    ((s_hape gw) m_atch r_avel 3 c_at 2) ? @
+    "shape" []S_IGNAL "stage 7 (gw): shape " c_at (f_ormat s_hape gw) c_at ", expected " c_at f_ormat r_avel 3 c_at 2
+  } @
+  gw
+} @)
+backDrawn := ((r#"\begin{aligned} "# c_at r#"& "# c_at r#"X"# c_at
+    r#" \qquad \triangleright \, x \\ "# c_at r#"\longrightarrow \; & "# c_at (("Z_{i,k} = \\sum_{c=0}^{2} x_{i,c} \\, Wc_{c,k}"))
+    c_at r#" \qquad \triangleright \, z \\ "# c_at r#"\longrightarrow \; & "#
+    c_at (("Y_{i,k} = \\frac{1}{1 + \\exp(-z_{i,k})}")) c_at
+    r#" \qquad \triangleright \, y \\ "# c_at r#"\longrightarrow \; & "# c_at (("L = \\frac{\\sum_{i=0}^{n - 1} \\sum_{k=0}^{1} \\left(y_{i,k} - T_{i,k}\\right)^{2}}{2}"))
+    c_at r#" \qquad \triangleright \, l \\ "# c_at r#"\longrightarrow \; & "#
+    c_at (("Gy_{i,k} = y_{i,k} - T_{i,k}")) c_at
+    r#" \qquad \triangleright \, gy \\ "# c_at r#"\longrightarrow \; & "# c_at (("Gz_{i,k} = gy_{i,k} \\, y_{i,k} \\, \\left(1 - y_{i,k}\\right)"))
+    c_at r#" \qquad \triangleright \, gz \\ "# c_at r#"\longrightarrow \; & "#
+    c_at (("Gw_{c,k} = \\sum_{i=0}^{n - 1} x_{i,c} \\, gz_{i,k}")) c_at
+    r#" \qquad \triangleright \, gw: 3 \times 2"# c_at r#" \end{aligned}"#))
+backDrawn
+## The same gradient written out (as the backprop demo writes it), and
+## by nudging each weight: the loss's change over twice the nudge.
+Y0 := 1.0 / 1.0 + e_xp n_eg X '+ '* i_nner Wc
+back0 := (o_\ X) '+ '* i_nner (Y0 - T) * Y0 * 1.0 - Y0
+u:l_oss := { w -> 0.5 * '+ r_/ r_avel ((1.0 / 1.0 + e_xp n_eg X '+ '* i_nner w) - T) ^ 2 }
+u:n_udge := { j -> 3 2 r_eshape 0.000001 * f_loat j = r_ange 6 }
+nudged := 3 2 r_eshape '{ j -> 500000.0 * (u:l_oss Wc + u:n_udge j) - u:l_oss Wc - u:n_udge j } e_ach r_ange 6
+r3 := "the chain rule, stage by stage, is the gradient written out" k:t_est back k:n_ear back0
+r4 := "and is what nudging each weight gives, within 1e-7" k:t_est k:t_rue 0.00000000000001 > (back - nudged) ^ 2
+
+k:r_eport r1 k:a_nd r2 k:a_nd r3 k:a_nd r4
 

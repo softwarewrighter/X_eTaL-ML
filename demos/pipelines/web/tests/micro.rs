@@ -22,7 +22,9 @@ fn the_page_shows_the_command_line_programs_code() {
         assert!(pipe.contains("flow:p_ipe<") && e.src.contains(&pipe), "{pipe}");
         assert!(e.src.contains(&plain) && !plain.contains("flow:"), "{plain}");
         assert_eq!(math.len(), e.math.len());
-        assert!(math.iter().all(|m| e.src.contains(m) && (m.contains("e:e_q<") || m.contains("flow:m_ath<"))), "{math:?}");
+        // Read by Equations, drawn by Flow, or a rule typed as LaTeX
+        // (the chain rule: Equations has no derivatives yet, ask E8).
+        assert!(math.iter().all(|m| e.src.contains(m) && (m.contains("e:e_q<") || m.contains("flow:m_ath<") || m.contains(":= r#\""))), "{math:?}");
         let src = program(&e);
         assert!(src.starts_with(head(e.src)) && src.contains(&pipe));
         assert!(rebound(&src).is_empty(), "{}: {:?}", e.title, rebound(&src));
