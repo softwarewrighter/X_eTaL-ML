@@ -1,0 +1,1092 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>libs/Flow/src/Flow.xtlm - X_eTaL doc</title>
+<link rel="stylesheet" href="style.css">
+<script src="theme.js"></script>
+<script defer src="search-index.js"></script>
+<script defer src="search.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.18.10/dist/katex.min.css" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.18.10/dist/katex.min.js" crossorigin="anonymous"></script>
+<script>document.addEventListener('DOMContentLoaded', function () {
+if (typeof katex === 'undefined') return;
+document.querySelectorAll('.c-notation').forEach(function (el) {
+var tex = el.textContent; if (!tex) return;
+try { katex.render(tex, el, { throwOnError: false }); } catch (e) { el.textContent = tex; }
+});
+});</script>
+</head>
+<body>
+<nav class="side">
+<a class="home" href="index.html">X_eTaL doc</a>
+<input id="search" type="search" autocomplete="off" placeholder="Search: a name, or a type" title="A name (mean finds m_ean), or a type: Num a =&gt; a -&gt; a -&gt; a finds +, m_ax ...">
+<h2>Files</h2>
+<h3>demos/attention/</h3>
+<ul>
+<li><a href="demos-attention-attention.xtl.html">attention.xtl</a></li>
+</ul>
+<h3>demos/backprop/</h3>
+<ul>
+<li><a href="demos-backprop-backprop.xtl.html">backprop.xtl</a></li>
+</ul>
+<h3>demos/cnn-backprop/</h3>
+<ul>
+<li><a href="demos-cnn-backprop-cnn-backprop.xtl.html">cnn-backprop.xtl</a></li>
+</ul>
+<h3>demos/cnn-digits/</h3>
+<ul>
+<li><a href="demos-cnn-digits-batch.xtl.html">batch.xtl</a></li>
+<li><a href="demos-cnn-digits-cnn-digits.xtl.html">cnn-digits.xtl</a></li>
+</ul>
+<h3>demos/diffusion/</h3>
+<ul>
+<li><a href="demos-diffusion-diffusion.xtl.html">diffusion.xtl</a></li>
+</ul>
+<h3>demos/embedding-explorer/</h3>
+<ul>
+<li><a href="demos-embedding-explorer-embedding-explorer.xtl.html">embedding-explorer.xtl</a></li>
+</ul>
+<h3>demos/k-means/</h3>
+<ul>
+<li><a href="demos-k-means-k-means.xtl.html">k-means.xtl</a></li>
+</ul>
+<h3>demos/micro-bert/</h3>
+<ul>
+<li><a href="demos-micro-bert-micro-bert.xtl.html">micro-bert.xtl</a></li>
+</ul>
+<h3>demos/micro-gpt/</h3>
+<ul>
+<li><a href="demos-micro-gpt-batch.xtl.html">batch.xtl</a></li>
+<li><a href="demos-micro-gpt-micro-gpt.xtl.html">micro-gpt.xtl</a></li>
+</ul>
+<h3>demos/moe-router/</h3>
+<ul>
+<li><a href="demos-moe-router-moe-router.xtl.html">moe-router.xtl</a></li>
+</ul>
+<h3>demos/net-macro/</h3>
+<ul>
+<li><a href="demos-net-macro-net-macro.xtl.html">net-macro.xtl</a></li>
+<li><a href="demos-net-macro-train-it.xtl.html">train-it.xtl</a></li>
+</ul>
+<h3>demos/pipelines/</h3>
+<ul>
+<li><a href="demos-pipelines-diffusion.xtl.html">diffusion.xtl</a></li>
+<li><a href="demos-pipelines-equations.xtl.html">equations.xtl</a></li>
+<li><a href="demos-pipelines-pipelines.xtl.html">pipelines.xtl</a></li>
+<li><a href="demos-pipelines-rosetta.xtl.html">rosetta.xtl</a></li>
+</ul>
+<h3>demos/ternary-net/</h3>
+<ul>
+<li><a href="demos-ternary-net-ternary-net.xtl.html">ternary-net.xtl</a></li>
+</ul>
+<h3>demos/train-live/</h3>
+<ul>
+<li><a href="demos-train-live-train-live.xtl.html">train-live.xtl</a></li>
+</ul>
+<h3>demos/world-model/</h3>
+<ul>
+<li><a href="demos-world-model-world-model.xtl.html">world-model.xtl</a></li>
+</ul>
+<h3>libs/Activations/demos/</h3>
+<ul>
+<li><a href="libs-Activations-demos-curves.xtl.html">curves.xtl</a></li>
+</ul>
+<h3>libs/Activations/src/</h3>
+<ul>
+<li><a href="libs-Activations-src-Activations.xtl.html">Activations.xtl</a></li>
+</ul>
+<h3>libs/Attention/demos/</h3>
+<ul>
+<li><a href="libs-Attention-demos-previous.xtl.html">previous.xtl</a></li>
+</ul>
+<h3>libs/Attention/src/</h3>
+<ul>
+<li><a href="libs-Attention-src-Attention.xtl.html">Attention.xtl</a></li>
+</ul>
+<h3>libs/Conv/demos/</h3>
+<ul>
+<li><a href="libs-Conv-demos-edges.xtl.html">edges.xtl</a></li>
+</ul>
+<h3>libs/Conv/src/</h3>
+<ul>
+<li><a href="libs-Conv-src-Conv.xtl.html">Conv.xtl</a></li>
+</ul>
+<h3>libs/Embed/demos/</h3>
+<ul>
+<li><a href="libs-Embed-demos-pets.xtl.html">pets.xtl</a></li>
+</ul>
+<h3>libs/Embed/src/</h3>
+<ul>
+<li><a href="libs-Embed-src-Embed.xtl.html">Embed.xtl</a></li>
+</ul>
+<h3>libs/Flow/demos/</h3>
+<ul>
+<li><a href="libs-Flow-demos-mlp.xtl.html">mlp.xtl</a></li>
+</ul>
+<h3>libs/Flow/src/</h3>
+<ul>
+<li><a href="libs-Flow-src-Flow.xtlm.html">Flow.xtlm</a></li>
+</ul>
+<h3>libs/Integrals/demos/</h3>
+<ul>
+<li><a href="libs-Integrals-demos-convolution.xtl.html">convolution.xtl</a></li>
+<li><a href="libs-Integrals-demos-gelu.xtl.html">gelu.xtl</a></li>
+</ul>
+<h3>libs/Integrals/src/</h3>
+<ul>
+<li><a href="libs-Integrals-src-Integrals.xtlm.html">Integrals.xtlm</a></li>
+</ul>
+<h3>libs/Learn/demos/</h3>
+<ul>
+<li><a href="libs-Learn-demos-blobs.xtl.html">blobs.xtl</a></li>
+</ul>
+<h3>libs/Learn/src/</h3>
+<ul>
+<li><a href="libs-Learn-src-Learn.xtl.html">Learn.xtl</a></li>
+</ul>
+<h3>libs/Net/demos/</h3>
+<ul>
+<li><a href="libs-Net-demos-train-xor.xtl.html">train-xor.xtl</a></li>
+<li><a href="libs-Net-demos-xor.xtl.html">xor.xtl</a></li>
+</ul>
+<h3>libs/Net/src/</h3>
+<ul>
+<li><a href="libs-Net-src-Net.xtlm.html">Net.xtlm</a></li>
+</ul>
+<h3>libs/NN/demos/</h3>
+<ul>
+<li><a href="libs-NN-demos-xor.xtl.html">xor.xtl</a></li>
+</ul>
+<h3>libs/NN/src/</h3>
+<ul>
+<li><a href="libs-NN-src-NN.xtl.html">NN.xtl</a></li>
+</ul>
+<h3>libs/Norm/demos/</h3>
+<ul>
+<li><a href="libs-Norm-demos-rows.xtl.html">rows.xtl</a></li>
+</ul>
+<h3>libs/Norm/src/</h3>
+<ul>
+<li><a href="libs-Norm-src-Norm.xtl.html">Norm.xtl</a></li>
+</ul>
+<h3>libs/Optim/demos/</h3>
+<ul>
+<li><a href="libs-Optim-demos-bowl.xtl.html">bowl.xtl</a></li>
+</ul>
+<h3>libs/Optim/src/</h3>
+<ul>
+<li><a href="libs-Optim-src-Optim.xtl.html">Optim.xtl</a></li>
+</ul>
+<h3>libs/Quant/demos/</h3>
+<ul>
+<li><a href="libs-Quant-demos-formats.xtl.html">formats.xtl</a></li>
+</ul>
+<h3>libs/Quant/src/</h3>
+<ul>
+<li><a href="libs-Quant-src-Quant.xtl.html">Quant.xtl</a></li>
+</ul>
+<h3>libs/Sample/demos/</h3>
+<ul>
+<li><a href="libs-Sample-demos-next.xtl.html">next.xtl</a></li>
+</ul>
+<h3>libs/Sample/src/</h3>
+<ul>
+<li><a href="libs-Sample-src-Sample.xtl.html">Sample.xtl</a></li>
+</ul>
+<h3>std/</h3>
+<ul>
+<li><a href="std-System.xtlm.html">System.xtlm</a></li>
+</ul>
+<h3>work/libs/Check/src/</h3>
+<ul>
+<li><a href="work-libs-Check-src-Check.xtl.html">Check.xtl</a></li>
+<li><a href="work-libs-Check-src-Check.xtlm.html">Check.xtlm</a></li>
+</ul>
+<h3>work/libs/Equations/src/</h3>
+<ul>
+<li><a href="work-libs-Equations-src-Equations.xtl.html">Equations.xtl</a></li>
+<li><a href="work-libs-Equations-src-Equations.xtlm.html">Equations.xtlm</a></li>
+</ul>
+<h3>work/libs/Lists/src/</h3>
+<ul>
+<li><a href="work-libs-Lists-src-Lists.xtl.html">Lists.xtl</a></li>
+</ul>
+<h3>work/libs/Strings/src/</h3>
+<ul>
+<li><a href="work-libs-Strings-src-Strings.xtl.html">Strings.xtl</a></li>
+</ul>
+<ul>
+<li><a href="builtins.html">built-ins</a></li>
+</ul>
+<h2>On this page</h2>
+<ul>
+<li><a href="#section-1">The macros</a></li>
+<li class="item"><a href="#m.p_ipe-3c"><span class="c-macro">ᵐp̲ipe&lt;</span></a></li>
+<li class="item"><a href="#m.t_ext-3c"><span class="c-macro">ᵐt̲ext&lt;</span></a></li>
+<li class="item"><a href="#m.m_ath-3c"><span class="c-macro">ᵐm̲ath&lt;</span></a></li>
+<li class="item"><a href="#m.s_tages-3c"><span class="c-macro">ᵐs̲tages&lt;</span></a></li>
+<li><a href="#section-2">Reading the call</a></li>
+<li class="item"><a href="#h.r_ead"><span class="c-libfunc">ʰr̲ead</span></a></li>
+<li class="item"><a href="#h.e_xpr"><span class="c-libfunc">ʰe̲xpr</span></a></li>
+<li class="item"><a href="#h.a_fter"><span class="c-libfunc">ʰa̲fter</span></a></li>
+<li class="item"><a href="#h.b_inder"><span class="c-libfunc">ʰb̲inder</span></a></li>
+<li class="item"><a href="#h.s_hapeOf"><span class="c-libfunc">ʰs̲hapeOf</span></a></li>
+<li class="item"><a href="#h.l_abel"><span class="c-libfunc">ʰl̲abel</span></a></li>
+<li class="item"><a href="#h.t_ouches-3f"><span class="c-libfunc">ʰt̲ouches?</span></a></li>
+<li class="item"><a href="#h.s_tage-3f"><span class="c-libfunc">ʰs̲tage?</span></a></li>
+<li class="item"><a href="#h.i_t-3f"><span class="c-libfunc">ʰi̲t?</span></a></li>
+<li class="item"><a href="#h.u_ses-3f"><span class="c-libfunc">ʰu̲ses?</span></a></li>
+<li class="item"><a href="#h.m_acro-3f"><span class="c-libfunc">ʰm̲acro?</span></a></li>
+<li class="item"><a href="#h.w_ord-3f"><span class="c-libfunc">ʰw̲ord?</span></a></li>
+<li class="item"><a href="#h.f_unction-3f"><span class="c-libfunc">ʰf̲unction?</span></a></li>
+<li class="item"><a href="#h.b_inder-3f"><span class="c-libfunc">ʰb̲inder?</span></a></li>
+<li class="item"><a href="#h.p_arts"><span class="c-libfunc">ʰp̲arts</span></a></li>
+<li class="item"><a href="#h.f_latten"><span class="c-libfunc">ʰf̲latten</span></a></li>
+<li class="item"><a href="#h.n_ame-3f"><span class="c-libfunc">ʰn̲ame?</span></a></li>
+<li class="item"><a href="#h.s_hapes-3f"><span class="c-libfunc">ʰs̲hapes?</span></a></li>
+<li><a href="#section-3">Writing the code</a></li>
+<li class="item"><a href="#h.w_rite"><span class="c-libfunc">ʰw̲rite</span></a></li>
+<li class="item"><a href="#h.l_ine"><span class="c-libfunc">ʰl̲ine</span></a></li>
+<li class="item"><a href="#h.a_pplied"><span class="c-libfunc">ʰa̲pplied</span></a></li>
+<li class="item"><a href="#h.c_heckOf"><span class="c-libfunc">ʰc̲heckOf</span></a></li>
+<li class="item"><a href="#h.c_heck"><span class="c-libfunc">ʰc̲heck</span></a></li>
+<li><a href="#section-4">Drawing the call</a></li>
+<li class="item"><a href="#h.d_raw"><span class="c-libfunc">ʰd̲raw</span></a></li>
+<li class="item"><a href="#h.r_ow"><span class="c-libfunc">ʰr̲ow</span></a></li>
+<li class="item"><a href="#h.i_nto"><span class="c-libfunc">ʰi̲nto</span></a></li>
+<li class="item"><a href="#h.b_reak"><span class="c-libfunc">ʰb̲reak</span></a></li>
+<li class="item"><a href="#h.n_amed"><span class="c-libfunc">ʰn̲amed</span></a></li>
+<li class="item"><a href="#h.s_hown"><span class="c-libfunc">ʰs̲hown</span></a></li>
+<li class="item"><a href="#h.i_ncoming"><span class="c-libfunc">ʰi̲ncoming</span></a></li>
+<li class="item"><a href="#h.c_hr"><span class="c-libfunc">ʰc̲hr</span></a></li>
+<li class="item"><a href="#h.a_s"><span class="c-libfunc">ʰa̲s</span></a></li>
+<li class="item"><a href="#h.d_rawn"><span class="c-libfunc">ʰd̲rawn</span></a></li>
+<li class="item"><a href="#h.t_t"><span class="c-libfunc">ʰt̲t</span></a></li>
+<li class="item"><a href="#h.l_atexChar"><span class="c-libfunc">ʰl̲atexChar</span></a></li>
+<li class="item"><a href="#h.r_aw"><span class="c-libfunc">ʰr̲aw</span></a></li>
+<li><a href="#section-5">Tracing the stages</a></li>
+<li class="item"><a href="#h.t_race"><span class="c-libfunc">ʰt̲race</span></a></li>
+<li class="item"><a href="#h.r_ecords"><span class="c-libfunc">ʰr̲ecords</span></a></li>
+<li class="item"><a href="#h.r_ecord"><span class="c-libfunc">ʰr̲ecord</span></a></li>
+<li><a href="#section-6">Writing the call back</a></li>
+<li class="item"><a href="#h.s_how"><span class="c-libfunc">ʰs̲how</span></a></li>
+<li class="item"><a href="#h.o_pt"><span class="c-libfunc">ʰo̲pt</span></a></li>
+<li class="item"><a href="#h.e_scape"><span class="c-libfunc">ʰe̲scape</span></a></li>
+<li><a href="#section-7">Text helpers</a></li>
+<li class="item"><a href="#h.r_equire"><span class="c-libfunc">ʰr̲equire</span></a></li>
+<li class="item"><a href="#nameChars">nameChars</a></li>
+<li class="item"><a href="#plainChars">plainChars</a></li>
+<li class="item"><a href="#letters">letters</a></li>
+<li class="item"><a href="#h.q_uoted"><span class="c-libfunc">ʰq̲uoted</span></a></li>
+<li class="item"><a href="#h.o_utside"><span class="c-libfunc">ʰo̲utside</span></a></li>
+<li class="item"><a href="#h.s_plit"><span class="c-libfunc">ʰs̲plit</span></a></li>
+<li class="item"><a href="#h.f_irstText"><span class="c-libfunc">ʰf̲irstText</span></a></li>
+<li class="item"><a href="#h.f_irst"><span class="c-libfunc">ʰf̲irst</span></a></li>
+<li class="item"><a href="#h.f_irstOf"><span class="c-libfunc">ʰf̲irstOf</span></a></li>
+</ul>
+</nav>
+<main>
+<button class="theme" title="Light or dark">theme</button>
+<section id="results"></section>
+<h1><span class="kind">macro library</span>libs/Flow/src/Flow.xtlm</h1>
+<div class="doc">
+<p>Flow: ML data flow written left to right, |&gt; between stages -- each stage becomes one line of X_eTaL</p>
+<p>Import it with an alias of your choice: &quot;flow:&quot; u_se&lt; &quot;Flow&quot; (flow:p_ipe&lt;).
+Put libs/Flow/src on XETAL_PATH (&quot;just path&quot;); the reference is libs/Flow/docs.
+Names with m: are macros; those under h: are private to this file.</p>
+<p>A macro is a function from the source text written left and right of
+its call to the source that replaces the call, before the program is
+compiled (X_eTaL MC10); xetal expand FILE shows the result. The
+pipeline was decided in X_eTaL (D155, its docs/spatial.md,
+&quot;Pipelines&quot;) and is built here (docs/pipeline-macro.md). Its reader
+uses all of its text or refuses it: a stage the grammar does not
+know is a compile-time error naming the text, never a wrong answer.</p>
+</div>
+<p class="meta"><a href="libs-Flow-src-Flow.xtlm.src.html">source</a> &middot; imports <code><span class="c-error">t:</span></code> <a href="work-libs-Strings-src-Strings.xtl.html">work/libs/Strings/src/Strings.xtl</a></p>
+<h2 class="section" id="section-1">The macros</h2>
+<div class="item" id="m.p_ipe-3c">
+<h3><a href="#m.p_ipe-3c"><span class="c-macro">ᵐp̲ipe&lt;</span></a> <span class="type">: Unit -&gt; Char -&gt; Char</span></h3>
+<div class="meta">macro &middot; <a href="libs-Flow-src-Flow.xtlm.src.html#L37">line 37</a> &middot; binds <code>it</code></div>
+<div class="doc">
+<p>The value of a pipeline: the data, then each stage in turn, |&gt;
+between them. A stage is a function (act:r_elu, [f_ g_], '{ x -&gt; ... }),
+applied to the previous value, or an expression naming the previous
+value it (W nn:d_ense it; the order is written, never guessed).
+&quot;$name&quot; at a stage's end names its value for the later stages, the
+$ touching the name (&quot;$(Q, K, V)&quot; takes a tuple apart, as X_eTaL's
+S14 label is written and drawn); &quot; [N O]&quot; after the name is the
+shape the value must have, checked when the program runs
+(error[shape], naming the stage, its shape and the one expected).
+The left side is @; the right is a code string c&quot;...&quot;, drawn as
+X_eTaL (|&gt; and $ as triangles), and may put one stage per line; a
+plain or raw string reads the same.</p>
+<pre class="example"><span class="prompt">      </span><span class="c-string">&quot;flow:&quot;</span> <a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="libs-Flow-src-Flow.xtlm.html" class="c-string">&quot;Flow&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span>x ← <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <span class="c-number">1</span> <span class="c-number">2</span> <span class="c-number">3</span> <span class="c-number">4</span></pre>
+<pre class="example"><span class="prompt">      </span>@ <a href="libs-Flow-src-Flow.xtlm.html#m.p_ipe-3c" class="c-macro">ᶠˡᵒʷp̲ipe&lt;</a> <span class="c-string">c&quot;</span>x ▹s ▷ <span class="c-number">2</span> <span class="c-symbol">×</span> it ▷ it <span class="c-symbol">+</span> s<span class="c-string">&quot;</span>
+3.0 6.0 9.0 12.0</pre>
+</div>
+<pre class="code"><span class="c-macro">ᵐp̲ipe&lt;</span> ← { @ text → <a href="libs-Flow-src-Flow.xtlm.html#h.w_rite" class="c-libfunc">ʰw̲rite</a> <a href="libs-Flow-src-Flow.xtlm.html#h.r_ead" class="c-libfunc">ʰr̲ead</a> text }</pre>
+<div class="uses">Used in: <a href="libs-Flow-demos-mlp.xtl.html#Y">Y</a>, <a href="libs-Flow-demos-mlp.xtl.src.html#L35">libs/Flow/demos/mlp.xtl:35</a>, <a href="libs-Flow-demos-mlp.xtl.html#H">H</a>, <a href="demos-micro-bert-micro-bert.xtl.html#u.l_ayer"><span class="c-userfunc">ᵘl̲ayer</span></a>, <a href="demos-pipelines-diffusion.xtl.html#eqpipe">eqpipe</a>, <a href="demos-pipelines-diffusion.xtl.html#pipe">pipe</a>, <a href="demos-pipelines-equations.xtl.html#head">head</a>, <a href="demos-pipelines-equations.xtl.html#layer">layer</a>, <a href="demos-pipelines-equations.xtl.html#back">back</a>, <a href="demos-pipelines-pipelines.xtl.html#dense">dense</a>, <a href="demos-pipelines-pipelines.xtl.html#dense1">dense1</a>, <a href="demos-pipelines-pipelines.xtl.html#soft">soft</a>, <a href="demos-pipelines-pipelines.xtl.html#soft1">soft1</a>, <a href="demos-pipelines-pipelines.xtl.html#norm">norm</a>, <a href="demos-pipelines-pipelines.xtl.html#norm1">norm1</a>, <a href="demos-pipelines-pipelines.xtl.html#head">head</a>, <a href="demos-pipelines-pipelines.xtl.html#head1">head1</a>, <a href="demos-pipelines-rosetta.xtl.html#eqpipe">eqpipe</a>, <a href="demos-pipelines-rosetta.xtl.html#pipe">pipe</a></div>
+</div>
+<div class="item" id="m.t_ext-3c">
+<h3><a href="#m.t_ext-3c"><span class="c-macro">ᵐt̲ext&lt;</span></a> <span class="type">: Unit -&gt; Char -&gt; Char</span></h3>
+<div class="meta">macro &middot; <a href="libs-Flow-src-Flow.xtlm.src.html#L46">line 46</a></div>
+<div class="doc">
+<p>The pipeline written back from its reading, a string: the stages
+trimmed, &quot; |&gt; &quot; between them, each name and shape as written. What
+the macro read is what was written, or the call was refused.</p>
+<pre class="example"><span class="prompt">      </span><span class="c-string">&quot;flow:&quot;</span> <a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="libs-Flow-src-Flow.xtlm.html" class="c-string">&quot;Flow&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span>@ <a href="libs-Flow-src-Flow.xtlm.html#m.t_ext-3c" class="c-macro">ᶠˡᵒʷt̲ext&lt;</a> <span class="c-string">c&quot;</span>x   ▹s ▷  <span class="c-number">2</span> <span class="c-symbol">×</span> it   ▷ it <span class="c-symbol">+</span> s<span class="c-string">&quot;</span>
+x $s |&gt; 2 * it |&gt; it + s</pre>
+</div>
+<pre class="code"><span class="c-macro">ᵐt̲ext&lt;</span> ← { @ text → <span class="c-string">&quot;\&quot;&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="libs-Flow-src-Flow.xtlm.html#h.e_scape" class="c-libfunc">ʰe̲scape</a> <a href="libs-Flow-src-Flow.xtlm.html#h.s_how" class="c-libfunc">ʰs̲how</a> <a href="libs-Flow-src-Flow.xtlm.html#h.r_ead" class="c-libfunc">ʰr̲ead</a> text) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;\&quot;&quot;</span> }</pre>
+</div>
+<div class="item" id="m.m_ath-3c">
+<h3><a href="#m.m_ath-3c"><span class="c-macro">ᵐm̲ath&lt;</span></a> <span class="type">: Unit -&gt; Char -&gt; Char</span></h3>
+<div class="meta">macro &middot; <a href="libs-Flow-src-Flow.xtlm.src.html#L59">line 59</a></div>
+<div class="doc">
+<p>The pipeline drawn as math, a LaTeX string: an aligned display of a
+row per stage, the data first, each later stage after an arrow, each
+label after its stage as X_eTaL draws $ (a triangle, the name, its
+shape); an equation stage
+(&quot;H[i,k] | n d&quot; e:e_q&lt; &quot;...&quot;) as Equations draws it (its e:t_ex&lt;,
+the same strings), any other stage as code. The call is read as
+flow:p_ipe&lt; reads it, or refused; KaTeX or LaTeX draws the result.</p>
+<pre class="example"><span class="prompt">      </span><span class="c-string">&quot;flow:&quot;</span> <a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="libs-Flow-src-Flow.xtlm.html" class="c-string">&quot;Flow&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span>@ <a href="libs-Flow-src-Flow.xtlm.html#m.m_ath-3c" class="c-macro">ᶠˡᵒʷm̲ath&lt;</a> <span class="c-string">c&quot;</span>x ▹s ▷ <span class="c-number">2</span> <span class="c-symbol">×</span> it ▷ it <span class="c-symbol">+</span> s<span class="c-string">&quot;</span>
+\begin{aligned} &amp; x \qquad \triangleright \, s \\ \longrightarrow \; &amp; \texttt{2 * it} \\ \longrightarrow \; &amp; \texttt{it + s} \end{aligned}</pre>
+</div>
+<pre class="code"><span class="c-macro">ᵐm̲ath&lt;</span> ← { @ text → <a href="libs-Flow-src-Flow.xtlm.html#h.d_raw" class="c-libfunc">ʰd̲raw</a> <a href="libs-Flow-src-Flow.xtlm.html#h.r_ead" class="c-libfunc">ʰr̲ead</a> text }</pre>
+<div class="uses">Used in: <a href="demos-pipelines-diffusion.xtl.html#drawn">drawn</a>, <a href="demos-pipelines-equations.xtl.html#drawn">drawn</a>, <a href="demos-pipelines-equations.xtl.html#shown">shown</a>, <a href="demos-pipelines-equations.xtl.html#backDrawn">backDrawn</a>, <a href="demos-pipelines-pipelines.xtl.html#denseM">denseM</a>, <a href="demos-pipelines-pipelines.xtl.html#softM">softM</a>, <a href="demos-pipelines-pipelines.xtl.html#normM">normM</a>, <a href="demos-pipelines-pipelines.xtl.html#headM">headM</a>, <a href="demos-pipelines-rosetta.xtl.html#drawn">drawn</a></div>
+</div>
+<div class="item" id="m.s_tages-3c">
+<h3><a href="#m.s_tages-3c"><span class="c-macro">ᵐs̲tages&lt;</span></a> <span class="type">: Unit -&gt; Char -&gt; Char</span></h3>
+<div class="meta">macro &middot; <a href="libs-Flow-src-Flow.xtlm.src.html#L71">line 71</a></div>
+<div class="doc">
+<p>Every stage's value, as one line of text: a record per value, &quot; | &quot;
+between them, each its stage's number, its label (&quot;&quot; for none), its
+shape, its smallest and largest item and its first 64 items, &quot;;&quot;
+between the fields; a tuple's parts a record each. For pages that
+show what each stage gives; the values are those flow:p_ipe&lt; gives.</p>
+<pre class="example"><span class="prompt">      </span><span class="c-string">&quot;flow:&quot;</span> <a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="libs-Flow-src-Flow.xtlm.html" class="c-string">&quot;Flow&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span>x ← <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <span class="c-number">1</span> <span class="c-number">2</span> <span class="c-number">3</span></pre>
+<pre class="example"><span class="prompt">      </span>@ <a href="libs-Flow-src-Flow.xtlm.html#m.s_tages-3c" class="c-macro">ᶠˡᵒʷs̲tages&lt;</a> <span class="c-string">c&quot;</span>x ▷ <span class="c-number">2</span> <span class="c-symbol">×</span> it ▹y<span class="c-string">&quot;</span>
+1;;3;1.0;3.0;1.0 2.0 3.0 | 2;y;3;2.0;6.0;2.0 4.0 6.0</pre>
+</div>
+<pre class="code"><span class="c-macro">ᵐs̲tages&lt;</span> ← { @ text → <a href="libs-Flow-src-Flow.xtlm.html#h.t_race" class="c-libfunc">ʰt̲race</a> <a href="libs-Flow-src-Flow.xtlm.html#h.r_ead" class="c-libfunc">ʰr̲ead</a> text }</pre>
+</div>
+<h2 class="section" id="section-2">Reading the call</h2>
+<div class="item" id="h.r_ead">
+<h3><a href="#h.r_ead"><span class="c-libfunc">ʰr̲ead</span></a> <span class="type">: Char -&gt; (Box Char, Box Char, Box Char)</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="libs-Flow-src-Flow.xtlm.src.html#L77">line 77</a></div>
+<div class="doc">
+<p>The stages of text as (expressions, names, shapes), each a boxed
+text per stage (&quot;&quot; for no name or no shape), every rule checked.</p>
+</div>
+<pre class="code"><span class="c-libfunc">ʰr̲ead</span> ← { text →
+  t ← <a href="work-libs-Strings-src-Strings.xtl.html#l.t_rim" class="c-libfunc">ᵗt̲rim</a> text
+  _ ← (<span class="c-number">0</span> <a href="builtins.html#-3c" class="c-symbol">&lt;</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> t) <a href="libs-Flow-src-Flow.xtlm.html#h.r_equire" class="c-libfunc">ʰr̲equire</a> <span class="c-string">&quot;an empty pipeline: write the data, then |&gt; and each stage&quot;</span>
+  parts ← <span class="c-quote">'</span>{ p → <a href="work-libs-Strings-src-Strings.xtl.html#l.t_rim" class="c-libfunc">ᵗt̲rim</a> <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> p } <a href="builtins.html#m_ap" class="c-builtin">m̲ap</a> <span class="c-string">&quot;|&gt;&quot;</span> <a href="libs-Flow-src-Flow.xtlm.html#h.s_plit" class="c-libfunc">ʰs̲plit</a> t
+  _ ← <span class="c-quote">'</span>{ p → <a href="libs-Flow-src-Flow.xtlm.html#h.t_ouches-3f" class="c-libfunc">ʰt̲ouches?</a> <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> p } <a href="builtins.html#m_ap" class="c-builtin">m̲ap</a> parts
+  _ ← (<span class="c-symbol">'</span><a href="builtins.html#-26" class="c-symbol">∧</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> <span class="c-quote">'</span>{ p → <span class="c-number">0</span> <a href="builtins.html#-3c" class="c-symbol">&lt;</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> p } <a href="builtins.html#e_ach" class="c-builtin">e̲ach</a> parts) <a href="libs-Flow-src-Flow.xtlm.html#h.r_equire" class="c-libfunc">ʰr̲equire</a> <span class="c-string">&quot;an empty stage (nothing between two |&gt;, or after the last): &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> t
+  es ← <span class="c-quote">'</span>{ p → <a href="libs-Flow-src-Flow.xtlm.html#h.e_xpr" class="c-libfunc">ʰe̲xpr</a> <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> p } <a href="builtins.html#m_ap" class="c-builtin">m̲ap</a> parts
+  bs ← <span class="c-quote">'</span>{ p → <a href="libs-Flow-src-Flow.xtlm.html#h.b_inder" class="c-libfunc">ʰb̲inder</a> <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> p } <a href="builtins.html#m_ap" class="c-builtin">m̲ap</a> parts
+  ss ← <span class="c-quote">'</span>{ p → <a href="libs-Flow-src-Flow.xtlm.html#h.s_hapeOf" class="c-libfunc">ʰs̲hapeOf</a> <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> p } <a href="builtins.html#m_ap" class="c-builtin">m̲ap</a> parts
+  _ ← <span class="c-quote">'</span>{ i → (<a href="libs-Flow-src-Flow.xtlm.html#h.f_latten" class="c-libfunc">ʰf̲latten</a> (i <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span>) <a href="builtins.html#t_ake" class="c-builtin">t̲ake</a> bs) <a href="libs-Flow-src-Flow.xtlm.html#h.s_tage-3f" class="c-libfunc">ʰs̲tage?</a> <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> i <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> es } <a href="builtins.html#m_ap" class="c-builtin">m̲ap</a> <span class="c-number">1</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> <a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> es
+  _ ← (<a href="builtins.html#n_ot" class="c-builtin">n̲ot</a> <a href="libs-Flow-src-Flow.xtlm.html#h.i_t-3f" class="c-libfunc">ʰi̲t?</a> <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> es) <a href="libs-Flow-src-Flow.xtlm.html#h.r_equire" class="c-libfunc">ʰr̲equire</a> <span class="c-string">&quot;the first stage is the data; nothing precedes it: &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> es
+  _ ← <span class="c-quote">'</span>{ b → <a href="libs-Flow-src-Flow.xtlm.html#h.b_inder-3f" class="c-libfunc">ʰb̲inder?</a> <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> b } <a href="builtins.html#m_ap" class="c-builtin">m̲ap</a> bs
+  _ ← (ss, bs) <a href="libs-Flow-src-Flow.xtlm.html#h.s_hapes-3f" class="c-libfunc">ʰs̲hapes?</a> <a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> ss
+  all ← <a href="libs-Flow-src-Flow.xtlm.html#h.f_latten" class="c-libfunc">ʰf̲latten</a> bs
+  twice ← (<span class="c-number">1</span> <a href="builtins.html#-3c" class="c-symbol">&lt;</a> <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/₂</a> <span class="c-number">0</span> <a href="builtins.html#-2b" class="c-symbol">+</a> all <span class="c-builtin">'</span><a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> all) <a href="builtins.html#r_eplicate" class="c-builtin">r̲eplicate</a> all
+  _ ← (<span class="c-number">0</span> <a href="builtins.html#-3d" class="c-symbol">=</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> twice) <a href="libs-Flow-src-Flow.xtlm.html#h.r_equire" class="c-libfunc">ʰr̲equire</a> <span class="c-string">&quot;a name is bound once in a pipeline: &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="libs-Flow-src-Flow.xtlm.html#h.f_irstText" class="c-libfunc">ʰf̲irstText</a> twice
+  (es, bs, ss)
+}</pre>
+<div class="uses">Used in: <a href="libs-Flow-src-Flow.xtlm.html#m.p_ipe-3c"><span class="c-macro">ᵐp̲ipe&lt;</span></a>, <a href="libs-Flow-src-Flow.xtlm.html#m.t_ext-3c"><span class="c-macro">ᵐt̲ext&lt;</span></a>, <a href="libs-Flow-src-Flow.xtlm.html#m.m_ath-3c"><span class="c-macro">ᵐm̲ath&lt;</span></a>, <a href="libs-Flow-src-Flow.xtlm.html#m.s_tages-3c"><span class="c-macro">ᵐs̲tages&lt;</span></a></div>
+</div>
+<div class="item" id="h.e_xpr">
+<h3><a href="#h.e_xpr"><span class="c-libfunc">ʰe̲xpr</span></a> <span class="type">: Char -&gt; Char</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="libs-Flow-src-Flow.xtlm.src.html#L97">line 97</a></div>
+<div class="doc">
+<p>A stage's expression: its text before its label's $, trimmed.</p>
+</div>
+<pre class="code"><span class="c-libfunc">ʰe̲xpr</span> ← { s →
+  c ← <a href="libs-Flow-src-Flow.xtlm.html#h.l_abel" class="c-libfunc">ʰl̲abel</a> s
+  <span class="c-number">0</span> <a href="builtins.html#-3d" class="c-symbol">=</a> c ? <a href="work-libs-Strings-src-Strings.xtl.html#l.t_rim" class="c-libfunc">ᵗt̲rim</a> s
+  <a href="work-libs-Strings-src-Strings.xtl.html#l.t_rim" class="c-libfunc">ᵗt̲rim</a> (c <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span>) <a href="builtins.html#t_ake" class="c-builtin">t̲ake</a> s
+}</pre>
+<div class="uses">Used in: <a href="libs-Flow-src-Flow.xtlm.html#h.r_ead"><span class="c-libfunc">ʰr̲ead</span></a></div>
+</div>
+<div class="item" id="h.a_fter">
+<h3><a href="#h.a_fter"><span class="c-libfunc">ʰa̲fter</span></a> <span class="type">: Char -&gt; Char</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="libs-Flow-src-Flow.xtlm.src.html#L104">line 104</a></div>
+<div class="doc">
+<p>What follows a stage's $, trimmed (&quot;&quot; for no label).</p>
+</div>
+<pre class="code"><span class="c-libfunc">ʰa̲fter</span> ← { s →
+  c ← <a href="libs-Flow-src-Flow.xtlm.html#h.l_abel" class="c-libfunc">ʰl̲abel</a> s
+  <span class="c-number">0</span> <a href="builtins.html#-3d" class="c-symbol">=</a> c ? <span class="c-string">&quot;&quot;</span>
+  <a href="work-libs-Strings-src-Strings.xtl.html#l.t_rim" class="c-libfunc">ᵗt̲rim</a> c <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> s
+}</pre>
+<div class="uses">Used in: <a href="libs-Flow-src-Flow.xtlm.html#h.b_inder"><span class="c-libfunc">ʰb̲inder</span></a>, <a href="libs-Flow-src-Flow.xtlm.html#h.s_hapeOf"><span class="c-libfunc">ʰs̲hapeOf</span></a></div>
+</div>
+<div class="item" id="h.b_inder">
+<h3><a href="#h.b_inder"><span class="c-libfunc">ʰb̲inder</span></a> <span class="type">: Char -&gt; Char</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="libs-Flow-src-Flow.xtlm.src.html#L112">line 112</a></div>
+<div class="doc">
+<p>A stage's name (or tuple of names): the text after $ up to its
+shape's [, trimmed; &quot;&quot; for none.</p>
+</div>
+<pre class="code"><span class="c-libfunc">ʰb̲inder</span> ← { s →
+  a ← <a href="libs-Flow-src-Flow.xtlm.html#h.a_fter" class="c-libfunc">ʰa̲fter</a> s
+  k ← <span class="c-string">&quot;[&quot;</span> <a href="libs-Flow-src-Flow.xtlm.html#h.f_irstOf" class="c-libfunc">ʰf̲irstOf</a> a
+  <span class="c-number">0</span> <a href="builtins.html#-3d" class="c-symbol">=</a> k ? a
+  <a href="work-libs-Strings-src-Strings.xtl.html#l.t_rim" class="c-libfunc">ᵗt̲rim</a> (k <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span>) <a href="builtins.html#t_ake" class="c-builtin">t̲ake</a> a
+}</pre>
+<div class="uses">Used in: <a href="libs-Flow-src-Flow.xtlm.html#h.r_ead"><span class="c-libfunc">ʰr̲ead</span></a></div>
+</div>
+<div class="item" id="h.s_hapeOf">
+<h3><a href="#h.s_hapeOf"><span class="c-libfunc">ʰs̲hapeOf</span></a> <span class="type">: Char -&gt; Char</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="libs-Flow-src-Flow.xtlm.src.html#L120">line 120</a></div>
+<div class="doc">
+<p>A stage's shape as written, &quot;[N O]&quot;, from its first [ on; &quot;&quot; for none.</p>
+</div>
+<pre class="code"><span class="c-libfunc">ʰs̲hapeOf</span> ← { s →
+  a ← <a href="libs-Flow-src-Flow.xtlm.html#h.a_fter" class="c-libfunc">ʰa̲fter</a> s
+  k ← <span class="c-string">&quot;[&quot;</span> <a href="libs-Flow-src-Flow.xtlm.html#h.f_irstOf" class="c-libfunc">ʰf̲irstOf</a> a
+  <span class="c-number">0</span> <a href="builtins.html#-3d" class="c-symbol">=</a> k ? <span class="c-string">&quot;&quot;</span>
+  <a href="work-libs-Strings-src-Strings.xtl.html#l.t_rim" class="c-libfunc">ᵗt̲rim</a> (k <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span>) <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> a
+}</pre>
+<div class="uses">Used in: <a href="libs-Flow-src-Flow.xtlm.html#h.r_ead"><span class="c-libfunc">ʰr̲ead</span></a></div>
+</div>
+<div class="item" id="h.l_abel">
+<h3><a href="#h.l_abel"><span class="c-libfunc">ʰl̲abel</span></a> <span class="type">: Char -&gt; Int</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="libs-Flow-src-Flow.xtlm.src.html#L128">line 128</a></div>
+<div class="doc">
+<p>Where the first $ outside brackets and strings is in s, or 0.</p>
+</div>
+<pre class="code"><span class="c-libfunc">ʰl̲abel</span> ← { s → <a href="libs-Flow-src-Flow.xtlm.html#h.f_irst" class="c-libfunc">ʰf̲irst</a> <span class="c-string">&quot;$&quot;</span> <a href="libs-Flow-src-Flow.xtlm.html#h.o_utside" class="c-libfunc">ʰo̲utside</a> s }</pre>
+<div class="uses">Used in: <a href="libs-Flow-src-Flow.xtlm.html#h.e_xpr"><span class="c-libfunc">ʰe̲xpr</span></a>, <a href="libs-Flow-src-Flow.xtlm.html#h.a_fter"><span class="c-libfunc">ʰa̲fter</span></a>, <a href="libs-Flow-src-Flow.xtlm.html#h.t_ouches-3f"><span class="c-libfunc">ʰt̲ouches?</span></a></div>
+</div>
+<div class="item" id="h.t_ouches-3f">
+<h3><a href="#h.t_ouches-3f"><span class="c-libfunc">ʰt̲ouches?</span></a> <span class="type">: Char -&gt; Char</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="libs-Flow-src-Flow.xtlm.src.html#L133">line 133</a></div>
+<div class="doc">
+<p>A stage's $ touches the name or tuple it gives ($m, $(Q, K)), as
+X_eTaL's own label does: $ m, or a $ with nothing after it, is
+refused (&quot;&quot; when the stage has no label or its $ touches).</p>
+</div>
+<pre class="code"><span class="c-libfunc">ʰt̲ouches?</span> ← { s →
+  c ← <a href="libs-Flow-src-Flow.xtlm.html#h.l_abel" class="c-libfunc">ʰl̲abel</a> s
+  <span class="c-number">0</span> <a href="builtins.html#-3d" class="c-symbol">=</a> c ? <span class="c-string">&quot;&quot;</span>
+  msg ← <span class="c-string">&quot;$ labels a stage and touches the name or tuple it gives ($m, $(Q, K)): &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> s
+  c <a href="builtins.html#-3d" class="c-symbol">=</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> s ? (<span class="c-number">0</span> <a href="builtins.html#-3d" class="c-symbol">=</a> <span class="c-number">1</span>) <a href="libs-Flow-src-Flow.xtlm.html#h.r_equire" class="c-libfunc">ʰr̲equire</a> msg
+  (((c <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">1</span>) <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> s) <a href="builtins.html#m_ember-3f" class="c-builtin">m̲ember?</a> <a href="libs-Flow-src-Flow.xtlm.html#letters">letters</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;(&quot;</span>) <a href="libs-Flow-src-Flow.xtlm.html#h.r_equire" class="c-libfunc">ʰr̲equire</a> msg
+}</pre>
+<div class="uses">Used in: <a href="libs-Flow-src-Flow.xtlm.html#h.r_ead"><span class="c-libfunc">ʰr̲ead</span></a></div>
+</div>
+<div class="item" id="h.s_tage-3f">
+<h3><a href="#h.s_tage-3f"><span class="c-libfunc">ʰs̲tage?</span></a> <span class="type">: Box Char -&gt; Char -&gt; Char</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="libs-Flow-src-Flow.xtlm.src.html#L146">line 146</a></div>
+<div class="doc">
+<p>A stage after the first is a function, or an expression naming the
+previous value it or a name bound before it (earlier, boxed); a stage
+that calls a macro (an equation, &quot;Y[i] | n&quot; e:e_q&lt; &quot;2 * it[i]&quot;) names
+them in its strings too. Else the call is refused with the text (&quot;&quot;
+when it is one of these).</p>
+</div>
+<pre class="code"><span class="c-libfunc">ʰs̲tage?</span> ← { earlier e →
+  named ← <span class="c-symbol">'</span><a href="builtins.html#-7c" class="c-symbol">∨</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> (<span class="c-number">0</span> <a href="builtins.html#-3d" class="c-symbol">=</a> <span class="c-number">1</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-quote">'</span>{ w → (<a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> w) <a href="libs-Flow-src-Flow.xtlm.html#h.u_ses-3f" class="c-libfunc">ʰu̲ses?</a> e } <a href="builtins.html#e_ach" class="c-builtin">e̲ach</a> earlier
+  ((<a href="libs-Flow-src-Flow.xtlm.html#h.i_t-3f" class="c-libfunc">ʰi̲t?</a> e) <a href="builtins.html#-7c" class="c-symbol">∨</a> (<a href="libs-Flow-src-Flow.xtlm.html#h.f_unction-3f" class="c-libfunc">ʰf̲unction?</a> e) <a href="builtins.html#-7c" class="c-symbol">∨</a> named) <a href="libs-Flow-src-Flow.xtlm.html#h.r_equire" class="c-libfunc">ʰr̲equire</a> <span class="c-string">&quot;a stage is a function (act:r_elu, [f_ g_], '{ x -&gt; ... }) or an expression naming the previous value it (or a name bound before it), in an equation's strings or out: &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> e
+}</pre>
+<div class="uses">Used in: <a href="libs-Flow-src-Flow.xtlm.html#h.r_ead"><span class="c-libfunc">ʰr̲ead</span></a></div>
+</div>
+<div class="item" id="h.i_t-3f">
+<h3><a href="#h.i_t-3f"><span class="c-libfunc">ʰi̲t?</span></a> <span class="type">: Truthy a =&gt; Char -&gt; a</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="libs-Flow-src-Flow.xtlm.src.html#L153">line 153</a></div>
+<div class="doc">
+<p>Whether e names the previous value: the word it, outside strings, or
+in the strings of a macro call.</p>
+</div>
+<pre class="code"><span class="c-libfunc">ʰi̲t?</span> ← { e → <span class="c-string">&quot;it&quot;</span> <a href="libs-Flow-src-Flow.xtlm.html#h.u_ses-3f" class="c-libfunc">ʰu̲ses?</a> e }</pre>
+<div class="uses">Used in: <a href="libs-Flow-src-Flow.xtlm.html#h.r_ead"><span class="c-libfunc">ʰr̲ead</span></a>, <a href="libs-Flow-src-Flow.xtlm.html#h.s_tage-3f"><span class="c-libfunc">ʰs̲tage?</span></a>, <a href="libs-Flow-src-Flow.xtlm.html#h.l_ine"><span class="c-libfunc">ʰl̲ine</span></a></div>
+</div>
+<div class="item" id="h.u_ses-3f">
+<h3><a href="#h.u_ses-3f"><span class="c-libfunc">ʰu̲ses?</span></a> <span class="type">: Truthy a =&gt; Char -&gt; Char -&gt; a</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="libs-Flow-src-Flow.xtlm.src.html#L157">line 157</a></div>
+<div class="doc">
+<p>Whether e uses the name w: outside strings; in a macro call's
+strings too (the names an equation reads, x[i,j]).</p>
+</div>
+<pre class="code"><span class="c-libfunc">ʰu̲ses?</span> ← { w e → (w, <a href="libs-Flow-src-Flow.xtlm.html#h.m_acro-3f" class="c-libfunc">ʰm̲acro?</a> e) <a href="libs-Flow-src-Flow.xtlm.html#h.w_ord-3f" class="c-libfunc">ʰw̲ord?</a> e }</pre>
+<div class="uses">Used in: <a href="libs-Flow-src-Flow.xtlm.html#h.s_tage-3f"><span class="c-libfunc">ʰs̲tage?</span></a>, <a href="libs-Flow-src-Flow.xtlm.html#h.i_t-3f"><span class="c-libfunc">ʰi̲t?</span></a></div>
+</div>
+<div class="item" id="h.m_acro-3f">
+<h3><a href="#h.m_acro-3f"><span class="c-libfunc">ʰm̲acro?</span></a> <span class="type">: Truthy a =&gt; Char -&gt; a</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="libs-Flow-src-Flow.xtlm.src.html#L160">line 160</a></div>
+<div class="doc">
+<p>Whether e calls a macro: a word ending in &lt; outside strings (e:e_q&lt;).</p>
+</div>
+<pre class="code"><span class="c-libfunc">ʰm̲acro?</span> ← { e →
+  ps ← <span class="c-string">&quot;&lt;&quot;</span> <a href="libs-Flow-src-Flow.xtlm.html#h.o_utside" class="c-libfunc">ʰo̲utside</a> e
+  <span class="c-symbol">'</span><a href="builtins.html#-7c" class="c-symbol">∨</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> (<span class="c-number">0</span> <a href="builtins.html#-3d" class="c-symbol">=</a> <span class="c-number">1</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-quote">'</span>{ p → p <a href="builtins.html#-3d" class="c-symbol">=</a> <span class="c-number">1</span> ? <span class="c-number">0</span> <a href="builtins.html#-3d" class="c-symbol">=</a> <span class="c-number">1</span>◆ ((p <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span>) <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> e) <a href="builtins.html#m_ember-3f" class="c-builtin">m̲ember?</a> <a href="libs-Flow-src-Flow.xtlm.html#nameChars">nameChars</a> } <a href="builtins.html#e_ach" class="c-builtin">e̲ach</a> ps
+}</pre>
+<div class="uses">Used in: <a href="libs-Flow-src-Flow.xtlm.html#h.u_ses-3f"><span class="c-libfunc">ʰu̲ses?</span></a></div>
+</div>
+<div class="item" id="h.w_ord-3f">
+<h3><a href="#h.w_ord-3f"><span class="c-libfunc">ʰw̲ord?</span></a> <span class="type">: (Truthy a, Truthy b) =&gt; (Char, a) -&gt; Char -&gt; b</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="libs-Flow-src-Flow.xtlm.src.html#L167">line 167</a></div>
+<div class="doc">
+<p>Whether the word w (a name) occurs whole in e: outside strings, or
+anywhere when inStrings holds.</p>
+</div>
+<pre class="code"><span class="c-libfunc">ʰw̲ord?</span> ← { (w, inStrings) e →
+  ps ← w <a href="work-libs-Strings-src-Strings.xtl.html#l.f_ind" class="c-libfunc">ᵗf̲ind</a> e
+  <span class="c-number">0</span> <a href="builtins.html#-3d" class="c-symbol">=</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> ps ? <span class="c-number">0</span> <a href="builtins.html#-3d" class="c-symbol">=</a> <span class="c-number">1</span>
+  q ← <a href="libs-Flow-src-Flow.xtlm.html#h.q_uoted" class="c-libfunc">ʰq̲uoted</a> e
+  n ← <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> w
+  before ← <span class="c-quote">'</span>{ p → p <a href="builtins.html#-3d" class="c-symbol">=</a> <span class="c-number">1</span> ? <span class="c-number">0</span> <a href="builtins.html#-3d" class="c-symbol">=</a> <span class="c-number">1</span>◆ ((p <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span>) <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> e) <a href="builtins.html#m_ember-3f" class="c-builtin">m̲ember?</a> <a href="libs-Flow-src-Flow.xtlm.html#nameChars">nameChars</a> } <a href="builtins.html#e_ach" class="c-builtin">e̲ach</a> ps
+  after ← <span class="c-quote">'</span>{ p → (p <a href="builtins.html#-2b" class="c-symbol">+</a> n) <a href="builtins.html#-3e" class="c-symbol">&gt;</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> e ? <span class="c-number">0</span> <a href="builtins.html#-3d" class="c-symbol">=</a> <span class="c-number">1</span>◆ ((p <a href="builtins.html#-2b" class="c-symbol">+</a> n) <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> e) <a href="builtins.html#m_ember-3f" class="c-builtin">m̲ember?</a> <a href="libs-Flow-src-Flow.xtlm.html#nameChars">nameChars</a> } <a href="builtins.html#e_ach" class="c-builtin">e̲ach</a> ps
+  <span class="c-symbol">'</span><a href="builtins.html#-7c" class="c-symbol">∨</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> (<a href="builtins.html#n_ot" class="c-builtin">n̲ot</a> before) <a href="builtins.html#-26" class="c-symbol">∧</a> (<a href="builtins.html#n_ot" class="c-builtin">n̲ot</a> after) <a href="builtins.html#-26" class="c-symbol">∧</a> inStrings <a href="builtins.html#-7c" class="c-symbol">∨</a> <span class="c-number">0</span> <a href="builtins.html#-3d" class="c-symbol">=</a> ps <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> q
+}</pre>
+<div class="uses">Used in: <a href="libs-Flow-src-Flow.xtlm.html#h.u_ses-3f"><span class="c-libfunc">ʰu̲ses?</span></a></div>
+</div>
+<div class="item" id="h.f_unction-3f">
+<h3><a href="#h.f_unction-3f"><span class="c-libfunc">ʰf̲unction?</span></a> <span class="type">: Truthy a =&gt; Char -&gt; a</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="libs-Flow-src-Flow.xtlm.src.html#L180">line 180</a></div>
+<div class="doc">
+<p>Whether e is written as a function: a quoted function or lambda
+('n_eg, '+ r_/, '{ x -&gt; ... }), a train ([f_ g_]), or one function
+name (act:r_elu, t_ally: no blanks, an underline).</p>
+</div>
+<pre class="code"><span class="c-libfunc">ʰf̲unction?</span> ← { e →
+  (<span class="c-string">&quot;'&quot;</span> <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> <span class="c-number">1</span> <a href="builtins.html#t_ake" class="c-builtin">t̲ake</a> e) <a href="builtins.html#-7c" class="c-symbol">∨</a> <span class="c-string">&quot;[&quot;</span> <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> <span class="c-number">1</span> <a href="builtins.html#t_ake" class="c-builtin">t̲ake</a> e ? <span class="c-number">0</span> <a href="builtins.html#-3d" class="c-symbol">=</a> <span class="c-number">0</span>
+  (<span class="c-number">0</span> <a href="builtins.html#-3d" class="c-symbol">=</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> <a href="builtins.html#w_here" class="c-builtin">w̲here</a> e <a href="builtins.html#m_ember-3f" class="c-builtin">m̲ember?</a> <span class="c-string">&quot; &quot;</span>) <a href="builtins.html#-26" class="c-symbol">∧</a> (<span class="c-number">0</span> <a href="builtins.html#-3c" class="c-symbol">&lt;</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> <a href="builtins.html#w_here" class="c-builtin">w̲here</a> e <a href="builtins.html#m_ember-3f" class="c-builtin">m̲ember?</a> <span class="c-string">&quot;_&quot;</span>) <a href="builtins.html#-26" class="c-symbol">∧</a> <span class="c-symbol">'</span><a href="builtins.html#-26" class="c-symbol">∧</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> e <a href="builtins.html#m_ember-3f" class="c-builtin">m̲ember?</a> <a href="libs-Flow-src-Flow.xtlm.html#nameChars">nameChars</a>
+}</pre>
+<div class="uses">Used in: <a href="libs-Flow-src-Flow.xtlm.html#h.s_tage-3f"><span class="c-libfunc">ʰs̲tage?</span></a>, <a href="libs-Flow-src-Flow.xtlm.html#h.l_ine"><span class="c-libfunc">ʰl̲ine</span></a></div>
+</div>
+<div class="item" id="h.b_inder-3f">
+<h3><a href="#h.b_inder-3f"><span class="c-libfunc">ʰb̲inder?</span></a> <span class="type">: Char -&gt; Char</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="libs-Flow-src-Flow.xtlm.src.html#L188">line 188</a></div>
+<div class="doc">
+<p>A name after $ is a plain name (letters and digits, a letter
+first) or a tuple of two or more, (Q, K, V); never it; else refused
+(&quot;&quot; when it is).</p>
+</div>
+<pre class="code"><span class="c-libfunc">ʰb̲inder?</span> ← { b →
+  <span class="c-number">0</span> <a href="builtins.html#-3d" class="c-symbol">=</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> b ? <span class="c-string">&quot;&quot;</span>
+  _ ← (<a href="builtins.html#n_ot" class="c-builtin">n̲ot</a> <span class="c-string">&quot;it&quot;</span> <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> b) <a href="libs-Flow-src-Flow.xtlm.html#h.r_equire" class="c-libfunc">ʰr̲equire</a> <span class="c-string">&quot;it is the previous value, not a name to bind: &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> b
+  ps ← <a href="libs-Flow-src-Flow.xtlm.html#h.p_arts" class="c-libfunc">ʰp̲arts</a> b
+  allNames ← <span class="c-symbol">'</span><a href="builtins.html#-26" class="c-symbol">∧</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> <span class="c-quote">'</span>{ p → <a href="libs-Flow-src-Flow.xtlm.html#h.n_ame-3f" class="c-libfunc">ʰn̲ame?</a> <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> p } <a href="builtins.html#e_ach" class="c-builtin">e̲ach</a> ps
+  tuple ← (<span class="c-string">&quot;(&quot;</span> <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> <span class="c-number">1</span> <a href="builtins.html#t_ake" class="c-builtin">t̲ake</a> b) <a href="builtins.html#-26" class="c-symbol">∧</a> (<span class="c-string">&quot;)&quot;</span> <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> <span class="c-number">-1</span> <a href="builtins.html#t_ake" class="c-builtin">t̲ake</a> b) <a href="builtins.html#-26" class="c-symbol">∧</a> <span class="c-number">2</span> <a href="builtins.html#-3c-3d" class="c-symbol">≤</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> ps
+  (allNames <a href="builtins.html#-26" class="c-symbol">∧</a> (tuple <a href="builtins.html#-7c" class="c-symbol">∨</a> <a href="builtins.html#n_ot" class="c-builtin">n̲ot</a> <span class="c-string">&quot;(&quot;</span> <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> <span class="c-number">1</span> <a href="builtins.html#t_ake" class="c-builtin">t̲ake</a> b)) <a href="libs-Flow-src-Flow.xtlm.html#h.r_equire" class="c-libfunc">ʰr̲equire</a> <span class="c-string">&quot;after $ comes a plain name, or a tuple of names (Q, K, V): &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> b
+}</pre>
+<div class="uses">Used in: <a href="libs-Flow-src-Flow.xtlm.html#h.r_ead"><span class="c-libfunc">ʰr̲ead</span></a></div>
+</div>
+<div class="item" id="h.p_arts">
+<h3><a href="#h.p_arts"><span class="c-libfunc">ʰp̲arts</span></a> <span class="type">: Char -&gt; Box Char</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="libs-Flow-src-Flow.xtlm.src.html#L198">line 198</a></div>
+<div class="doc">
+<p>The names a binder binds, boxed: the name itself, or a tuple's parts.</p>
+</div>
+<pre class="code"><span class="c-libfunc">ʰp̲arts</span> ← { b →
+  <a href="builtins.html#n_ot" class="c-builtin">n̲ot</a> <span class="c-string">&quot;(&quot;</span> <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> <span class="c-number">1</span> <a href="builtins.html#t_ake" class="c-builtin">t̲ake</a> b ? <span class="c-number">1</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <a href="builtins.html#e_nclose" class="c-builtin">e̲nclose</a> b
+  <span class="c-quote">'</span>{ p → <a href="work-libs-Strings-src-Strings.xtl.html#l.t_rim" class="c-libfunc">ᵗt̲rim</a> <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> p } <a href="builtins.html#m_ap" class="c-builtin">m̲ap</a> <span class="c-string">&quot;,&quot;</span> <a href="work-libs-Strings-src-Strings.xtl.html#l.s_plit" class="c-libfunc">ᵗs̲plit</a> <span class="c-number">1</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> <span class="c-number">-1</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> b
+}</pre>
+<div class="uses">Used in: <a href="libs-Flow-src-Flow.xtlm.html#h.b_inder-3f"><span class="c-libfunc">ʰb̲inder?</span></a>, <a href="libs-Flow-src-Flow.xtlm.html#h.f_latten"><span class="c-libfunc">ʰf̲latten</span></a>, <a href="libs-Flow-src-Flow.xtlm.html#h.r_ecords"><span class="c-libfunc">ʰr̲ecords</span></a></div>
+</div>
+<div class="item" id="h.f_latten">
+<h3><a href="#h.f_latten"><span class="c-libfunc">ʰf̲latten</span></a> <span class="type">: Box Char -&gt; Box Char</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="libs-Flow-src-Flow.xtlm.src.html#L204">line 204</a></div>
+<div class="doc">
+<p>Every name the stages bind, boxed, in order.</p>
+</div>
+<pre class="code"><span class="c-libfunc">ʰf̲latten</span> ← { bs →
+  <span class="c-number">0</span> <a href="builtins.html#-3d" class="c-symbol">=</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> bs ? <span class="c-number">0</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <a href="builtins.html#e_nclose" class="c-builtin">e̲nclose</a> <span class="c-string">&quot;&quot;</span>
+  <span class="c-number">0</span> <a href="builtins.html#-3d" class="c-symbol">=</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> bs ? <a href="libs-Flow-src-Flow.xtlm.html#h.f_latten" class="c-libfunc">ʰf̲latten</a> <span class="c-number">1</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> bs
+  (<a href="libs-Flow-src-Flow.xtlm.html#h.p_arts" class="c-libfunc">ʰp̲arts</a> <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> bs) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="libs-Flow-src-Flow.xtlm.html#h.f_latten" class="c-libfunc">ʰf̲latten</a> <span class="c-number">1</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> bs
+}</pre>
+<div class="uses">Used in: <a href="libs-Flow-src-Flow.xtlm.html#h.r_ead"><span class="c-libfunc">ʰr̲ead</span></a>, <a href="libs-Flow-src-Flow.xtlm.html#h.f_latten"><span class="c-libfunc">ʰf̲latten</span></a></div>
+</div>
+<div class="item" id="h.n_ame-3f">
+<h3><a href="#h.n_ame-3f"><span class="c-libfunc">ʰn̲ame?</span></a> <span class="type">: Truthy a =&gt; Char -&gt; a</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="libs-Flow-src-Flow.xtlm.src.html#L211">line 211</a></div>
+<div class="doc">
+<p>Whether b is a plain name: a letter, then letters or digits.</p>
+</div>
+<pre class="code"><span class="c-libfunc">ʰn̲ame?</span> ← { b →
+  <span class="c-number">0</span> <a href="builtins.html#-3d" class="c-symbol">=</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> b ? <span class="c-number">0</span> <a href="builtins.html#-3d" class="c-symbol">=</a> <span class="c-number">1</span>
+  ((<a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> b) <a href="builtins.html#m_ember-3f" class="c-builtin">m̲ember?</a> <a href="libs-Flow-src-Flow.xtlm.html#letters">letters</a>) <a href="builtins.html#-26" class="c-symbol">∧</a> <span class="c-symbol">'</span><a href="builtins.html#-26" class="c-symbol">∧</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> b <a href="builtins.html#m_ember-3f" class="c-builtin">m̲ember?</a> <a href="libs-Flow-src-Flow.xtlm.html#plainChars">plainChars</a>
+}</pre>
+<div class="uses">Used in: <a href="libs-Flow-src-Flow.xtlm.html#h.b_inder-3f"><span class="c-libfunc">ʰb̲inder?</span></a>, <a href="libs-Flow-src-Flow.xtlm.html#h.i_ncoming"><span class="c-libfunc">ʰi̲ncoming</span></a>, <a href="libs-Flow-src-Flow.xtlm.html#h.d_rawn"><span class="c-libfunc">ʰd̲rawn</span></a></div>
+</div>
+<div class="item" id="h.s_hapes-3f">
+<h3><a href="#h.s_hapes-3f"><span class="c-libfunc">ʰs̲hapes?</span></a> <span class="type">: (Box Char, Box Char) -&gt; Int -&gt; Box Char</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="libs-Flow-src-Flow.xtlm.src.html#L219">line 219</a></div>
+<div class="doc">
+<p>The shapes against their names, each stage: a shape needs a single
+name before it, is [extents] whole (names or numbers, blanks
+between) and nothing follows it; else refused with the text (&quot;&quot; each).</p>
+</div>
+<pre class="code"><span class="c-libfunc">ʰs̲hapes?</span> ← { (ss, bs) is →
+  <span class="c-quote">'</span>{ i →
+    sh ← <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> i <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> ss
+    b ← <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> i <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> bs
+    <span class="c-number">0</span> <a href="builtins.html#-3d" class="c-symbol">=</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> sh ? <span class="c-string">&quot;&quot;</span>
+    _ ← ((<span class="c-number">0</span> <a href="builtins.html#-3c" class="c-symbol">&lt;</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> b) <a href="builtins.html#-26" class="c-symbol">∧</a> <a href="builtins.html#n_ot" class="c-builtin">n̲ot</a> <span class="c-string">&quot;(&quot;</span> <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> <span class="c-number">1</span> <a href="builtins.html#t_ake" class="c-builtin">t̲ake</a> b) <a href="libs-Flow-src-Flow.xtlm.html#h.r_equire" class="c-libfunc">ʰr̲equire</a> <span class="c-string">&quot;a shape [N O] goes after the stage's name: &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> sh
+    _ ← ((<span class="c-string">&quot;]&quot;</span> <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> <span class="c-number">-1</span> <a href="builtins.html#t_ake" class="c-builtin">t̲ake</a> sh) <a href="builtins.html#-26" class="c-symbol">∧</a> (<span class="c-number">1</span> <a href="builtins.html#-3d" class="c-symbol">=</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> <a href="builtins.html#w_here" class="c-builtin">w̲here</a> sh <a href="builtins.html#m_ember-3f" class="c-builtin">m̲ember?</a> <span class="c-string">&quot;]&quot;</span>) <a href="builtins.html#-26" class="c-symbol">∧</a> <span class="c-number">1</span> <a href="builtins.html#-3d" class="c-symbol">=</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> <a href="builtins.html#w_here" class="c-builtin">w̲here</a> sh <a href="builtins.html#m_ember-3f" class="c-builtin">m̲ember?</a> <span class="c-string">&quot;[&quot;</span>) <a href="libs-Flow-src-Flow.xtlm.html#h.r_equire" class="c-libfunc">ʰr̲equire</a> <span class="c-string">&quot;a shape is [extents] at the stage's end, nothing after it: &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> sh
+    items ← <a href="work-libs-Strings-src-Strings.xtl.html#l.w_ords" class="c-libfunc">ᵗw̲ords</a> <span class="c-number">1</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> <span class="c-number">-1</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> sh
+    ((<span class="c-number">0</span> <a href="builtins.html#-3c" class="c-symbol">&lt;</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> items) <a href="builtins.html#-26" class="c-symbol">∧</a> <span class="c-symbol">'</span><a href="builtins.html#-26" class="c-symbol">∧</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> <span class="c-quote">'</span>{ w → <span class="c-symbol">'</span><a href="builtins.html#-26" class="c-symbol">∧</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> (<a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> w) <a href="builtins.html#m_ember-3f" class="c-builtin">m̲ember?</a> <a href="libs-Flow-src-Flow.xtlm.html#plainChars">plainChars</a> } <a href="builtins.html#e_ach" class="c-builtin">e̲ach</a> items) <a href="libs-Flow-src-Flow.xtlm.html#h.r_equire" class="c-libfunc">ʰr̲equire</a> <span class="c-string">&quot;a shape's extents are names or numbers, blanks between: &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> sh
+  } <a href="builtins.html#m_ap" class="c-builtin">m̲ap</a> is
+}</pre>
+<div class="uses">Used in: <a href="libs-Flow-src-Flow.xtlm.html#h.r_ead"><span class="c-libfunc">ʰr̲ead</span></a></div>
+</div>
+<h2 class="section" id="section-3">Writing the code</h2>
+<div class="item" id="h.w_rite">
+<h3><a href="#h.w_rite"><span class="c-libfunc">ʰw̲rite</span></a> <span class="type">: (Box Char, Box Char, Box Char) -&gt; Char</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="libs-Flow-src-Flow.xtlm.src.html#L236">line 236</a></div>
+<div class="doc">
+<p>The expansion: a block binding each stage's value, one line per
+stage (a fresh name from []G_ENSYM, or the name given), the shape
+checks after their stages, and the last value as the result.</p>
+</div>
+<pre class="code"><span class="c-libfunc">ʰw̲rite</span> ← { (es, bs, ss) →
+  n ← <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> es
+  names ← <span class="c-quote">'</span>{ i → b ← <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> i <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> bs◆ <span class="c-number">0</span> <a href="builtins.html#-3d" class="c-symbol">=</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> b ? <a href="builtins.html#-5b-5dG_ENSYM" class="c-builtin">⎕G̲ENSYM</a> <span class="c-string">&quot;stage&quot;</span>◆ b } <a href="builtins.html#m_ap" class="c-builtin">m̲ap</a> <a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> n
+  lines ← <span class="c-quote">'</span>{ i → (es, ss, names) <a href="libs-Flow-src-Flow.xtlm.html#h.l_ine" class="c-libfunc">ʰl̲ine</a> i } <a href="builtins.html#m_ap" class="c-builtin">m̲ap</a> <a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> n
+  <span class="c-string">&quot;{ @ -&gt;\n&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot;&quot;</span> <a href="work-libs-Strings-src-Strings.xtl.html#l.j_oin" class="c-libfunc">ᵗj̲oin</a> lines) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;  &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> n <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> names) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;\n} @&quot;</span>
+}</pre>
+<div class="uses">Used in: <a href="libs-Flow-src-Flow.xtlm.html#m.p_ipe-3c"><span class="c-macro">ᵐp̲ipe&lt;</span></a></div>
+</div>
+<div class="item" id="h.l_ine">
+<h3><a href="#h.l_ine"><span class="c-libfunc">ʰl̲ine</span></a> <span class="type">: (Box Char, Box Char, Box Char) -&gt; Int -&gt; Char</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="libs-Flow-src-Flow.xtlm.src.html#L247">line 247</a></div>
+<div class="doc">
+<p>Stage i's line: the data as written; an expression naming it in a
+block of its own (it := the previous value); a function applied to
+the previous value; an expression of earlier names as written; then
+its shape check, if any.</p>
+</div>
+<pre class="code"><span class="c-libfunc">ʰl̲ine</span> ← { (es, ss, names) i →
+  e ← <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> i <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> es
+  name ← <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> i <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> names
+  check ← (i, name) <a href="libs-Flow-src-Flow.xtlm.html#h.c_heckOf" class="c-libfunc">ʰc̲heckOf</a> <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> i <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> ss
+  i <a href="builtins.html#-3d" class="c-symbol">=</a> <span class="c-number">1</span> ? <span class="c-string">&quot;  &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> name <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; := &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> e <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;\n&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> check
+  prev ← <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> (i <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span>) <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> names
+  <a href="libs-Flow-src-Flow.xtlm.html#h.i_t-3f" class="c-libfunc">ʰi̲t?</a> e ? <span class="c-string">&quot;  &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> name <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; := { @ -&gt;\n    it := &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> prev <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;\n    &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> e <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;\n  } @\n&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> check
+  <a href="libs-Flow-src-Flow.xtlm.html#h.f_unction-3f" class="c-libfunc">ʰf̲unction?</a> e ? <span class="c-string">&quot;  &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> name <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; := &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="libs-Flow-src-Flow.xtlm.html#h.a_pplied" class="c-libfunc">ʰa̲pplied</a> e) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> prev <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;\n&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> check
+  <span class="c-string">&quot;  &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> name <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; := &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> e <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;\n&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> check
+}</pre>
+<div class="uses">Used in: <a href="libs-Flow-src-Flow.xtlm.html#h.w_rite"><span class="c-libfunc">ʰw̲rite</span></a>, <a href="libs-Flow-src-Flow.xtlm.html#h.t_race"><span class="c-libfunc">ʰt̲race</span></a></div>
+</div>
+<div class="item" id="h.a_pplied">
+<h3><a href="#h.a_pplied"><span class="c-libfunc">ʰa̲pplied</span></a> <span class="type">: Char -&gt; Char</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="libs-Flow-src-Flow.xtlm.src.html#L262">line 262</a></div>
+<div class="doc">
+<p>A function stage as applied to a value: a quoted lambda or quoted
+name loses its quote ('{ x -&gt; ... } and 'n_eg are the function
+passed, { x -&gt; ... } v and n_eg v the call); a derived function
+('+ r_/), a train and a name stay as written.</p>
+</div>
+<pre class="code"><span class="c-libfunc">ʰa̲pplied</span> ← { e →
+  <a href="builtins.html#n_ot" class="c-builtin">n̲ot</a> <span class="c-string">&quot;'&quot;</span> <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> <span class="c-number">1</span> <a href="builtins.html#t_ake" class="c-builtin">t̲ake</a> e ? e
+  (<span class="c-string">&quot;'{&quot;</span> <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> <span class="c-number">2</span> <a href="builtins.html#t_ake" class="c-builtin">t̲ake</a> e) <a href="builtins.html#-7c" class="c-symbol">∨</a> <span class="c-number">0</span> <a href="builtins.html#-3d" class="c-symbol">=</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> <a href="builtins.html#w_here" class="c-builtin">w̲here</a> e <a href="builtins.html#m_ember-3f" class="c-builtin">m̲ember?</a> <span class="c-string">&quot; &quot;</span> ? <span class="c-number">1</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> e
+  e
+}</pre>
+<div class="uses">Used in: <a href="libs-Flow-src-Flow.xtlm.html#h.l_ine"><span class="c-libfunc">ʰl̲ine</span></a></div>
+</div>
+<div class="item" id="h.c_heckOf">
+<h3><a href="#h.c_heckOf"><span class="c-libfunc">ʰc̲heckOf</span></a> <span class="type">: (Int, Char) -&gt; Char -&gt; Char</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="libs-Flow-src-Flow.xtlm.src.html#L269">line 269</a></div>
+<div class="doc">
+<p>The check of stage i's shape sh, &quot;&quot; when it has none.</p>
+</div>
+<pre class="code"><span class="c-libfunc">ʰc̲heckOf</span> ← { (i, name) sh →
+  <span class="c-number">0</span> <a href="builtins.html#-3d" class="c-symbol">=</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> sh ? <span class="c-string">&quot;&quot;</span>
+  (i, name) <a href="libs-Flow-src-Flow.xtlm.html#h.c_heck" class="c-libfunc">ʰc̲heck</a> sh
+}</pre>
+<div class="uses">Used in: <a href="libs-Flow-src-Flow.xtlm.html#h.l_ine"><span class="c-libfunc">ʰl̲ine</span></a></div>
+</div>
+<div class="item" id="h.c_heck">
+<h3><a href="#h.c_heck"><span class="c-libfunc">ʰc̲heck</span></a> <span class="type">: (Int, Char) -&gt; Char -&gt; Char</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="libs-Flow-src-Flow.xtlm.src.html#L277">line 277</a></div>
+<div class="doc">
+<p>The run-time check of a stage's shape: nothing when it matches,
+else error[shape] naming the stage, its shape and the one expected
+(the extents are the caller's values when the program runs).</p>
+</div>
+<pre class="code"><span class="c-libfunc">ʰc̲heck</span> ← { (i, name) sh →
+  expected ← <span class="c-string">&quot;r_avel &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; c_at &quot;</span> <a href="work-libs-Strings-src-Strings.xtl.html#l.j_oin" class="c-libfunc">ᵗj̲oin</a> <a href="work-libs-Strings-src-Strings.xtl.html#l.w_ords" class="c-libfunc">ᵗw̲ords</a> <span class="c-number">1</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> <span class="c-number">-1</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> sh
+  <span class="c-string">&quot;  _ := { @ -&gt;\n    ((s_hape &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> name <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;) m_atch &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> expected <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;) ? @\n    \&quot;shape\&quot; []S_IGNAL \&quot;stage &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> i) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; (&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> name <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;): shape \&quot; c_at (f_ormat s_hape &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> name <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;) c_at \&quot;, expected \&quot; c_at f_ormat &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> expected <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;\n  } @\n&quot;</span>
+}</pre>
+<div class="uses">Used in: <a href="libs-Flow-src-Flow.xtlm.html#h.c_heckOf"><span class="c-libfunc">ʰc̲heckOf</span></a></div>
+</div>
+<h2 class="section" id="section-4">Drawing the call</h2>
+<div class="item" id="h.d_raw">
+<h3><a href="#h.d_raw"><span class="c-libfunc">ʰd̲raw</span></a> <span class="type">: (Box Char, Box Char, Box Char) -&gt; Char</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="libs-Flow-src-Flow.xtlm.src.html#L287">line 287</a></div>
+<div class="doc">
+<p>The display: the rows joined, inside \begin{aligned} ... \end{aligned},
+as an expression of strings (an equation's row is its library's
+t_ex&lt; call, expanded in turn).</p>
+</div>
+<pre class="code"><span class="c-libfunc">ʰd̲raw</span> ← { (es, bs, ss) →
+  n ← <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> es
+  rows ← <span class="c-quote">'</span>{ i → (es, bs, ss) <a href="libs-Flow-src-Flow.xtlm.html#h.r_ow" class="c-libfunc">ʰr̲ow</a> i } <a href="builtins.html#m_ap" class="c-builtin">m̲ap</a> <a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> n
+  pieces ← (<a href="builtins.html#e_nclose" class="c-builtin">e̲nclose</a> <a href="libs-Flow-src-Flow.xtlm.html#h.r_aw" class="c-libfunc">ʰr̲aw</a> <span class="c-string">&quot;\\begin{aligned} &quot;</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> rows <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="builtins.html#e_nclose" class="c-builtin">e̲nclose</a> <a href="libs-Flow-src-Flow.xtlm.html#h.r_aw" class="c-libfunc">ʰr̲aw</a> <span class="c-string">&quot; \\end{aligned}&quot;</span>
+  <span class="c-string">&quot;(&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot; c_at &quot;</span> <a href="work-libs-Strings-src-Strings.xtl.html#l.j_oin" class="c-libfunc">ᵗj̲oin</a> pieces) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;)&quot;</span>
+}</pre>
+<div class="uses">Used in: <a href="libs-Flow-src-Flow.xtlm.html#m.m_ath-3c"><span class="c-macro">ᵐm̲ath&lt;</span></a></div>
+</div>
+<div class="item" id="h.r_ow">
+<h3><a href="#h.r_ow"><span class="c-libfunc">ʰr̲ow</span></a> <span class="type">: (Box Char, Box Char, Box Char) -&gt; Int -&gt; Char</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="libs-Flow-src-Flow.xtlm.src.html#L297">line 297</a></div>
+<div class="doc">
+<p>Row i: an arrow before every stage but the data, the stage drawn,
+its label after it as X_eTaL draws $ (a small triangle, the name and
+its shape), a line break after every row but the last.</p>
+</div>
+<pre class="code"><span class="c-libfunc">ʰr̲ow</span> ← { (es, bs, ss) i →
+  e ← (es, bs) <a href="libs-Flow-src-Flow.xtlm.html#h.s_hown" class="c-libfunc">ʰs̲hown</a> i
+  into ← <a href="libs-Flow-src-Flow.xtlm.html#h.i_nto" class="c-libfunc">ʰi̲nto</a> i
+  label ← <a href="libs-Flow-src-Flow.xtlm.html#h.n_amed" class="c-libfunc">ʰn̲amed</a> (<a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> i <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> bs, <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> i <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> ss)
+  (<a href="libs-Flow-src-Flow.xtlm.html#h.r_aw" class="c-libfunc">ʰr̲aw</a> into) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; c_at &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="libs-Flow-src-Flow.xtlm.html#h.d_rawn" class="c-libfunc">ʰd̲rawn</a> e) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; c_at &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="libs-Flow-src-Flow.xtlm.html#h.r_aw" class="c-libfunc">ʰr̲aw</a> label <a href="builtins.html#c_at" class="c-builtin">c̲at</a> i <a href="libs-Flow-src-Flow.xtlm.html#h.b_reak" class="c-libfunc">ʰb̲reak</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> es
+}</pre>
+<div class="uses">Used in: <a href="libs-Flow-src-Flow.xtlm.html#h.d_raw"><span class="c-libfunc">ʰd̲raw</span></a></div>
+</div>
+<div class="item" id="h.i_nto">
+<h3><a href="#h.i_nto"><span class="c-libfunc">ʰi̲nto</span></a> <span class="type">: Int -&gt; Char</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="libs-Flow-src-Flow.xtlm.src.html#L306">line 306</a></div>
+<div class="doc">
+<p>What comes before row i: the column for the data, an arrow then the
+column for each later stage.</p>
+</div>
+<pre class="code"><span class="c-libfunc">ʰi̲nto</span> ← { i →
+  i <a href="builtins.html#-3d" class="c-symbol">=</a> <span class="c-number">1</span> ? <span class="c-string">&quot;&amp; &quot;</span>
+  <span class="c-string">&quot;\\longrightarrow \\; &amp; &quot;</span>
+}</pre>
+<div class="uses">Used in: <a href="libs-Flow-src-Flow.xtlm.html#h.r_ow"><span class="c-libfunc">ʰr̲ow</span></a></div>
+</div>
+<div class="item" id="h.b_reak">
+<h3><a href="#h.b_reak"><span class="c-libfunc">ʰb̲reak</span></a> <span class="type">: Int -&gt; Int -&gt; Char</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="libs-Flow-src-Flow.xtlm.src.html#L312">line 312</a></div>
+<div class="doc">
+<p>What ends row i of n: a line break, but for the last.</p>
+</div>
+<pre class="code"><span class="c-libfunc">ʰb̲reak</span> ← { i n →
+  i <a href="builtins.html#-3d" class="c-symbol">=</a> n ? <span class="c-string">&quot;&quot;</span>
+  <span class="c-string">&quot; \\\\ &quot;</span>
+}</pre>
+<div class="uses">Used in: <a href="libs-Flow-src-Flow.xtlm.html#h.r_ow"><span class="c-libfunc">ʰr̲ow</span></a></div>
+</div>
+<div class="item" id="h.n_amed">
+<h3><a href="#h.n_amed"><span class="c-libfunc">ʰn̲amed</span></a> <span class="type">: (Char, Char) -&gt; Char</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="libs-Flow-src-Flow.xtlm.src.html#L319">line 319</a></div>
+<div class="doc">
+<p>A stage's label drawn after it: the triangle, the name, the extents
+of its shape (n \\times 16); &quot;&quot; when it has no name.</p>
+</div>
+<pre class="code"><span class="c-libfunc">ʰn̲amed</span> ← { (b, sh) →
+  <span class="c-number">0</span> <a href="builtins.html#-3d" class="c-symbol">=</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> b ? <span class="c-string">&quot;&quot;</span>
+  dims ← <span class="c-string">&quot; \\times &quot;</span> <a href="work-libs-Strings-src-Strings.xtl.html#l.j_oin" class="c-libfunc">ᵗj̲oin</a> <a href="work-libs-Strings-src-Strings.xtl.html#l.w_ords" class="c-libfunc">ᵗw̲ords</a> <span class="c-number">1</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> <span class="c-number">-1</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> sh
+  <span class="c-string">&quot; \\qquad \\triangleright \\, &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> b <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot;: &quot;</span> <a href="libs-Flow-src-Flow.xtlm.html#h.o_pt" class="c-libfunc">ʰo̲pt</a> dims)
+}</pre>
+<div class="uses">Used in: <a href="libs-Flow-src-Flow.xtlm.html#h.r_ow"><span class="c-libfunc">ʰr̲ow</span></a></div>
+</div>
+<div class="item" id="h.s_hown">
+<h3><a href="#h.s_hown"><span class="c-libfunc">ʰs̲hown</span></a> <span class="type">: (Box Char, Box Char) -&gt; Int -&gt; Char</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="libs-Flow-src-Flow.xtlm.src.html#L329">line 329</a></div>
+<div class="doc">
+<p>Stage i as drawn: in an equation, it, the previous value, under the
+name it came with when it has one (the previous stage's label, or the
+data when the data is a name), so it reads X[i,j], not it[i,j]; code
+as written.</p>
+</div>
+<pre class="code"><span class="c-libfunc">ʰs̲hown</span> ← { (es, bs) i →
+  e ← <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> i <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> es
+  (i <a href="builtins.html#-3d" class="c-symbol">=</a> <span class="c-number">1</span>) <a href="builtins.html#-7c" class="c-symbol">∨</a> <span class="c-number">0</span> <a href="builtins.html#-3d" class="c-symbol">=</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> <span class="c-string">&quot;e_q&lt;&quot;</span> <a href="libs-Flow-src-Flow.xtlm.html#h.o_utside" class="c-libfunc">ʰo̲utside</a> e ? e
+  ((es, bs) <a href="libs-Flow-src-Flow.xtlm.html#h.i_ncoming" class="c-libfunc">ʰi̲ncoming</a> i <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span>) <a href="libs-Flow-src-Flow.xtlm.html#h.a_s" class="c-libfunc">ʰa̲s</a> e
+}</pre>
+<div class="uses">Used in: <a href="libs-Flow-src-Flow.xtlm.html#h.r_ow"><span class="c-libfunc">ʰr̲ow</span></a></div>
+</div>
+<div class="item" id="h.i_ncoming">
+<h3><a href="#h.i_ncoming"><span class="c-libfunc">ʰi̲ncoming</span></a> <span class="type">: (Box Char, Box Char) -&gt; Int -&gt; Char</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="libs-Flow-src-Flow.xtlm.src.html#L337">line 337</a></div>
+<div class="doc">
+<p>The name stage i's value goes by: its label, or the data itself when
+it is a plain name; &quot;&quot; for none (a tuple label is no one name).</p>
+</div>
+<pre class="code"><span class="c-libfunc">ʰi̲ncoming</span> ← { (es, bs) i →
+  b ← <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> i <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> bs
+  <a href="libs-Flow-src-Flow.xtlm.html#h.n_ame-3f" class="c-libfunc">ʰn̲ame?</a> b ? b
+  (i <a href="builtins.html#-3d" class="c-symbol">=</a> <span class="c-number">1</span>) <a href="builtins.html#-26" class="c-symbol">∧</a> <a href="libs-Flow-src-Flow.xtlm.html#h.n_ame-3f" class="c-libfunc">ʰn̲ame?</a> <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> <span class="c-number">1</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> es ? <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> <span class="c-number">1</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> es
+  <span class="c-string">&quot;&quot;</span>
+}</pre>
+<div class="uses">Used in: <a href="libs-Flow-src-Flow.xtlm.html#h.s_hown"><span class="c-libfunc">ʰs̲hown</span></a></div>
+</div>
+<div class="item" id="h.c_hr">
+<h3><a href="#h.c_hr"><span class="c-libfunc">ʰc̲hr</span></a> <span class="type">: Char -&gt; Int -&gt; Char</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="libs-Flow-src-Flow.xtlm.src.html#L345">line 345</a></div>
+<div class="doc">
+<p>The i-th character of s, a blank before its start and past its end.</p>
+</div>
+<pre class="code"><span class="c-libfunc">ʰc̲hr</span> ← { s i → (i <a href="builtins.html#-3c" class="c-symbol">&lt;</a> <span class="c-number">1</span>) <a href="builtins.html#-7c" class="c-symbol">∨</a> i <a href="builtins.html#-3e" class="c-symbol">&gt;</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> s ? <span class="c-number">1</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <span class="c-string">&quot; &quot;</span>◆ i <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> s }</pre>
+<div class="uses">Used in: <a href="libs-Flow-src-Flow.xtlm.html#h.a_s"><span class="c-libfunc">ʰa̲s</span></a></div>
+</div>
+<div class="item" id="h.a_s">
+<h3><a href="#h.a_s"><span class="c-libfunc">ʰa̲s</span></a> <span class="type">: Char -&gt; Char -&gt; Char</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="libs-Flow-src-Flow.xtlm.src.html#L348">line 348</a></div>
+<div class="doc">
+<p>e with each whole word it written as name (e as it is for &quot;&quot;).</p>
+</div>
+<pre class="code"><span class="c-libfunc">ʰa̲s</span> ← { name e →
+  <span class="c-number">0</span> <a href="builtins.html#-3d" class="c-symbol">=</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> name ? e
+  ps ← <span class="c-string">&quot;it&quot;</span> <a href="work-libs-Strings-src-Strings.xtl.html#l.f_ind" class="c-libfunc">ᵗf̲ind</a> e
+  whole ← <span class="c-quote">'</span>{ p → <a href="builtins.html#n_ot" class="c-builtin">n̲ot</a> ((e <a href="libs-Flow-src-Flow.xtlm.html#h.c_hr" class="c-libfunc">ʰc̲hr</a> p <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span>) <a href="builtins.html#m_ember-3f" class="c-builtin">m̲ember?</a> <a href="libs-Flow-src-Flow.xtlm.html#nameChars">nameChars</a>) <a href="builtins.html#-7c" class="c-symbol">∨</a> (e <a href="libs-Flow-src-Flow.xtlm.html#h.c_hr" class="c-libfunc">ʰc̲hr</a> p <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">2</span>) <a href="builtins.html#m_ember-3f" class="c-builtin">m̲ember?</a> <a href="libs-Flow-src-Flow.xtlm.html#nameChars">nameChars</a> } <a href="builtins.html#e_ach" class="c-builtin">e̲ach</a> ps
+  <span class="c-number">0</span> <a href="builtins.html#-3d" class="c-symbol">=</a> <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> <span class="c-number">0</span> <a href="builtins.html#-2b" class="c-symbol">+</a> whole ? e
+  p ← <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> whole <a href="builtins.html#r_eplicate" class="c-builtin">r̲eplicate</a> ps
+  ((p <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span>) <a href="builtins.html#t_ake" class="c-builtin">t̲ake</a> e) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> name <a href="builtins.html#c_at" class="c-builtin">c̲at</a> name <a href="libs-Flow-src-Flow.xtlm.html#h.a_s" class="c-libfunc">ʰa̲s</a> (p <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">1</span>) <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> e
+}</pre>
+<div class="uses">Used in: <a href="libs-Flow-src-Flow.xtlm.html#h.s_hown"><span class="c-libfunc">ʰs̲hown</span></a>, <a href="libs-Flow-src-Flow.xtlm.html#h.a_s"><span class="c-libfunc">ʰa̲s</span></a></div>
+</div>
+<div class="item" id="h.d_rawn">
+<h3><a href="#h.d_rawn"><span class="c-libfunc">ʰd̲rawn</span></a> <span class="type">: Char -&gt; Char</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="libs-Flow-src-Flow.xtlm.src.html#L360">line 360</a></div>
+<div class="doc">
+<p>A stage drawn, as an expression of a string: an equation by its
+library's t_ex&lt; on the same strings (e:e_q&lt; becomes e:t_ex&lt;); a
+plain name as itself; anything else as code.</p>
+</div>
+<pre class="code"><span class="c-libfunc">ʰd̲rawn</span> ← { e →
+  ps ← <span class="c-string">&quot;e_q&lt;&quot;</span> <a href="libs-Flow-src-Flow.xtlm.html#h.o_utside" class="c-libfunc">ʰo̲utside</a> e
+  <span class="c-number">0</span> <a href="builtins.html#-3c" class="c-symbol">&lt;</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> ps ? <span class="c-string">&quot;(&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> ((<span class="c-number">-1</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> ps) <a href="builtins.html#t_ake" class="c-builtin">t̲ake</a> e) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;t_ex&lt;&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> ((<span class="c-number">3</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> ps) <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> e) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;)&quot;</span>
+  <a href="libs-Flow-src-Flow.xtlm.html#h.n_ame-3f" class="c-libfunc">ʰn̲ame?</a> e ? <a href="libs-Flow-src-Flow.xtlm.html#h.r_aw" class="c-libfunc">ʰr̲aw</a> e
+  <a href="libs-Flow-src-Flow.xtlm.html#h.r_aw" class="c-libfunc">ʰr̲aw</a> <a href="libs-Flow-src-Flow.xtlm.html#h.t_t" class="c-libfunc">ʰt̲t</a> e
+}</pre>
+<div class="uses">Used in: <a href="libs-Flow-src-Flow.xtlm.html#h.r_ow"><span class="c-libfunc">ʰr̲ow</span></a></div>
+</div>
+<div class="item" id="h.t_t">
+<h3><a href="#h.t_t"><span class="c-libfunc">ʰt̲t</span></a> <span class="type">: Char -&gt; Char</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="libs-Flow-src-Flow.xtlm.src.html#L368">line 368</a></div>
+<div class="doc">
+<p>Code as LaTeX's typewriter text, its special characters escaped.</p>
+</div>
+<pre class="code"><span class="c-libfunc">ʰt̲t</span> ← { s → <span class="c-string">&quot;\\texttt{&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot;&quot;</span> <a href="work-libs-Strings-src-Strings.xtl.html#l.j_oin" class="c-libfunc">ᵗj̲oin</a> <span class="c-quote">'</span>{ ch → <a href="libs-Flow-src-Flow.xtlm.html#h.l_atexChar" class="c-libfunc">ʰl̲atexChar</a> ch } <a href="builtins.html#m_ap" class="c-builtin">m̲ap</a> s) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;}&quot;</span> }</pre>
+<div class="uses">Used in: <a href="libs-Flow-src-Flow.xtlm.html#h.d_rawn"><span class="c-libfunc">ʰd̲rawn</span></a></div>
+</div>
+<div class="item" id="h.l_atexChar">
+<h3><a href="#h.l_atexChar"><span class="c-libfunc">ʰl̲atexChar</span></a> <span class="type">: Char -&gt; Char</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="libs-Flow-src-Flow.xtlm.src.html#L371">line 371</a></div>
+<div class="doc">
+<p>One character of code as LaTeX text.</p>
+</div>
+<pre class="code"><span class="c-libfunc">ʰl̲atexChar</span> ← { ch →
+  ch <a href="builtins.html#m_ember-3f" class="c-builtin">m̲ember?</a> <span class="c-string">&quot;\\&quot;</span> ? <span class="c-string">&quot;\\textbackslash{}&quot;</span>
+  ch <a href="builtins.html#m_ember-3f" class="c-builtin">m̲ember?</a> <span class="c-string">&quot;^&quot;</span> ? <span class="c-string">&quot;\\textasciicircum{}&quot;</span>
+  ch <a href="builtins.html#m_ember-3f" class="c-builtin">m̲ember?</a> <span class="c-string">&quot;~&quot;</span> ? <span class="c-string">&quot;\\textasciitilde{}&quot;</span>
+  ch <a href="builtins.html#m_ember-3f" class="c-builtin">m̲ember?</a> <span class="c-string">&quot;{}_$&amp;%#&quot;</span> ? <span class="c-string">&quot;\\&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> ch
+  ch
+}</pre>
+<div class="uses">Used in: <a href="libs-Flow-src-Flow.xtlm.html#h.t_t"><span class="c-libfunc">ʰt̲t</span></a></div>
+</div>
+<div class="item" id="h.r_aw">
+<h3><a href="#h.r_aw"><span class="c-libfunc">ʰr̲aw</span></a> <span class="type">: Char -&gt; Char</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="libs-Flow-src-Flow.xtlm.src.html#L380">line 380</a></div>
+<div class="doc">
+<p>s as a raw string literal, r#&quot;s&quot;#: a backslash stays a backslash.</p>
+</div>
+<pre class="code"><span class="c-libfunc">ʰr̲aw</span> ← { s → <span class="c-string">&quot;r#\&quot;&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> s <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;\&quot;#&quot;</span> }</pre>
+<div class="uses">Used in: <a href="libs-Flow-src-Flow.xtlm.html#h.d_raw"><span class="c-libfunc">ʰd̲raw</span></a>, <a href="libs-Flow-src-Flow.xtlm.html#h.r_ow"><span class="c-libfunc">ʰr̲ow</span></a>, <a href="libs-Flow-src-Flow.xtlm.html#h.d_rawn"><span class="c-libfunc">ʰd̲rawn</span></a></div>
+</div>
+<h2 class="section" id="section-5">Tracing the stages</h2>
+<div class="item" id="h.t_race">
+<h3><a href="#h.t_race"><span class="c-libfunc">ʰt̲race</span></a> <span class="type">: (Box Char, Box Char, Box Char) -&gt; Char</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="libs-Flow-src-Flow.xtlm.src.html#L386">line 386</a></div>
+<div class="doc">
+<p>The expansion as flow:p_ipe&lt; writes it, the last line the records of
+every stage's value instead of the last value.</p>
+</div>
+<pre class="code"><span class="c-libfunc">ʰt̲race</span> ← { (es, bs, ss) →
+  n ← <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> es
+  names ← <span class="c-quote">'</span>{ i → b ← <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> i <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> bs◆ <span class="c-number">0</span> <a href="builtins.html#-3d" class="c-symbol">=</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> b ? <a href="builtins.html#-5b-5dG_ENSYM" class="c-builtin">⎕G̲ENSYM</a> <span class="c-string">&quot;stage&quot;</span>◆ b } <a href="builtins.html#m_ap" class="c-builtin">m̲ap</a> <a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> n
+  lines ← <span class="c-quote">'</span>{ i → (es, ss, names) <a href="libs-Flow-src-Flow.xtlm.html#h.l_ine" class="c-libfunc">ʰl̲ine</a> i } <a href="builtins.html#m_ap" class="c-builtin">m̲ap</a> <a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> n
+  records ← <span class="c-quote">'</span>{ i → <a href="libs-Flow-src-Flow.xtlm.html#h.r_ecords" class="c-libfunc">ʰr̲ecords</a> (i, <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> i <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> bs, <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> i <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> names) } <a href="builtins.html#m_ap" class="c-builtin">m̲ap</a> <a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> n
+  <span class="c-string">&quot;{ @ -&gt;\n&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot;&quot;</span> <a href="work-libs-Strings-src-Strings.xtl.html#l.j_oin" class="c-libfunc">ᵗj̲oin</a> lines) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;  &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot; c_at \&quot; | \&quot; c_at &quot;</span> <a href="work-libs-Strings-src-Strings.xtl.html#l.j_oin" class="c-libfunc">ᵗj̲oin</a> records) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;\n} @&quot;</span>
+}</pre>
+<div class="uses">Used in: <a href="libs-Flow-src-Flow.xtlm.html#m.s_tages-3c"><span class="c-macro">ᵐs̲tages&lt;</span></a></div>
+</div>
+<div class="item" id="h.r_ecords">
+<h3><a href="#h.r_ecords"><span class="c-libfunc">ʰr̲ecords</span></a> <span class="type">: (Int, Char, Char) -&gt; Char</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="libs-Flow-src-Flow.xtlm.src.html#L396">line 396</a></div>
+<div class="doc">
+<p>The records of stage i's value (the name it is bound to): one, or
+one per part of a tuple label, as code giving text.</p>
+</div>
+<pre class="code"><span class="c-libfunc">ʰr̲ecords</span> ← { (i, b, name) →
+  <span class="c-string">&quot;(&quot;</span> <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> <span class="c-number">1</span> <a href="builtins.html#t_ake" class="c-builtin">t̲ake</a> b <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; &quot;</span> ? <span class="c-string">&quot; c_at \&quot; | \&quot; c_at &quot;</span> <a href="work-libs-Strings-src-Strings.xtl.html#l.j_oin" class="c-libfunc">ᵗj̲oin</a> <span class="c-quote">'</span>{ p → (i, <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> p) <a href="libs-Flow-src-Flow.xtlm.html#h.r_ecord" class="c-libfunc">ʰr̲ecord</a> <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> p } <a href="builtins.html#m_ap" class="c-builtin">m̲ap</a> <a href="libs-Flow-src-Flow.xtlm.html#h.p_arts" class="c-libfunc">ʰp̲arts</a> b
+  (i, b) <a href="libs-Flow-src-Flow.xtlm.html#h.r_ecord" class="c-libfunc">ʰr̲ecord</a> name
+}</pre>
+<div class="uses">Used in: <a href="libs-Flow-src-Flow.xtlm.html#h.t_race"><span class="c-libfunc">ʰt̲race</span></a></div>
+</div>
+<div class="item" id="h.r_ecord">
+<h3><a href="#h.r_ecord"><span class="c-libfunc">ʰr̲ecord</span></a> <span class="type">: (Int, Char) -&gt; Char -&gt; Char</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="libs-Flow-src-Flow.xtlm.src.html#L402">line 402</a></div>
+<div class="doc">
+<p>One value's record, as code giving text.</p>
+</div>
+<pre class="code"><span class="c-libfunc">ʰr̲ecord</span> ← { (i, label) v →
+  <span class="c-string">&quot;(\&quot;&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> i) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;;&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> label <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;;\&quot; c_at (f_ormat s_hape &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> v <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;) c_at \&quot;;\&quot; c_at (f_ormat 'm_in r_/ r_avel &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> v <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;) c_at \&quot;;\&quot; c_at (f_ormat 'm_ax r_/ r_avel &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> v <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;) c_at \&quot;;\&quot; c_at f_ormat (64 m_in t_ally r_avel &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> v <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;) t_ake r_avel &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> v <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;)&quot;</span>
+}</pre>
+<div class="uses">Used in: <a href="libs-Flow-src-Flow.xtlm.html#h.r_ecords"><span class="c-libfunc">ʰr̲ecords</span></a></div>
+</div>
+<h2 class="section" id="section-6">Writing the call back</h2>
+<div class="item" id="h.s_how">
+<h3><a href="#h.s_how"><span class="c-libfunc">ʰs̲how</span></a> <span class="type">: (Box Char, Box Char, Box Char) -&gt; Char</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="libs-Flow-src-Flow.xtlm.src.html#L410">line 410</a></div>
+<div class="doc">
+<p>The pipeline as read, one line: the stages with &quot; |&gt; &quot; between,
+&quot; $name&quot; and &quot; [shape]&quot; where given.</p>
+</div>
+<pre class="code"><span class="c-libfunc">ʰs̲how</span> ← { (es, bs, ss) →
+  one ← <span class="c-quote">'</span>{ i → (<a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> i <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> es) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot; $&quot;</span> <a href="libs-Flow-src-Flow.xtlm.html#h.o_pt" class="c-libfunc">ʰo̲pt</a> <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> i <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> bs) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; &quot;</span> <a href="libs-Flow-src-Flow.xtlm.html#h.o_pt" class="c-libfunc">ʰo̲pt</a> <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> i <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> ss } <a href="builtins.html#m_ap" class="c-builtin">m̲ap</a> <a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> es
+  <span class="c-string">&quot; |&gt; &quot;</span> <a href="work-libs-Strings-src-Strings.xtl.html#l.j_oin" class="c-libfunc">ᵗj̲oin</a> one
+}</pre>
+<div class="uses">Used in: <a href="libs-Flow-src-Flow.xtlm.html#m.t_ext-3c"><span class="c-macro">ᵐt̲ext&lt;</span></a></div>
+</div>
+<div class="item" id="h.o_pt">
+<h3><a href="#h.o_pt"><span class="c-libfunc">ʰo̲pt</span></a> <span class="type">: Char -&gt; Char -&gt; Char</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="libs-Flow-src-Flow.xtlm.src.html#L416">line 416</a></div>
+<div class="doc">
+<p>pre and x, or &quot;&quot; when x is empty.</p>
+</div>
+<pre class="code"><span class="c-libfunc">ʰo̲pt</span> ← { pre x →
+  <span class="c-number">0</span> <a href="builtins.html#-3d" class="c-symbol">=</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> x ? <span class="c-string">&quot;&quot;</span>
+  pre <a href="builtins.html#c_at" class="c-builtin">c̲at</a> x
+}</pre>
+<div class="uses">Used in: <a href="libs-Flow-src-Flow.xtlm.html#h.n_amed"><span class="c-libfunc">ʰn̲amed</span></a>, <a href="libs-Flow-src-Flow.xtlm.html#h.s_how"><span class="c-libfunc">ʰs̲how</span></a></div>
+</div>
+<div class="item" id="h.e_scape">
+<h3><a href="#h.e_scape"><span class="c-libfunc">ʰe̲scape</span></a> <span class="type">: Char -&gt; Char</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="libs-Flow-src-Flow.xtlm.src.html#L422">line 422</a></div>
+<div class="doc">
+<p>s as the inside of a string literal: a quote becomes \&quot;.</p>
+</div>
+<pre class="code"><span class="c-libfunc">ʰe̲scape</span> ← { s → <span class="c-string">&quot;&quot;</span> <a href="work-libs-Strings-src-Strings.xtl.html#l.j_oin" class="c-libfunc">ᵗj̲oin</a> <span class="c-quote">'</span>{ ch → (ch <a href="builtins.html#m_ember-3f" class="c-builtin">m̲ember?</a> <span class="c-string">&quot;\&quot;&quot;</span>) ? <span class="c-string">&quot;\\\&quot;&quot;</span>◆ ch } <a href="builtins.html#m_ap" class="c-builtin">m̲ap</a> s }</pre>
+<div class="uses">Used in: <a href="libs-Flow-src-Flow.xtlm.html#m.t_ext-3c"><span class="c-macro">ᵐt̲ext&lt;</span></a></div>
+</div>
+<h2 class="section" id="section-7">Text helpers</h2>
+<div class="item" id="h.r_equire">
+<h3><a href="#h.r_equire"><span class="c-libfunc">ʰr̲equire</span></a> <span class="type">: Truthy a =&gt; a -&gt; Char -&gt; Char</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="libs-Flow-src-Flow.xtlm.src.html#L428">line 428</a></div>
+<div class="doc">
+<p>Nothing when ok holds; else the call is refused with message, at
+its text (the right side).</p>
+</div>
+<pre class="code"><span class="c-libfunc">ʰr̲equire</span> ← { ok message →
+  ok ? <span class="c-string">&quot;&quot;</span>
+  <span class="c-string">&quot;bad-pipeline right&quot;</span> <a href="builtins.html#-5b-5dR_EJECT" class="c-builtin">⎕R̲EJECT</a> message
+}</pre>
+<div class="uses">Used in: <a href="libs-Flow-src-Flow.xtlm.html#h.r_ead"><span class="c-libfunc">ʰr̲ead</span></a>, <a href="libs-Flow-src-Flow.xtlm.html#h.t_ouches-3f"><span class="c-libfunc">ʰt̲ouches?</span></a>, <a href="libs-Flow-src-Flow.xtlm.html#h.s_tage-3f"><span class="c-libfunc">ʰs̲tage?</span></a>, <a href="libs-Flow-src-Flow.xtlm.html#h.b_inder-3f"><span class="c-libfunc">ʰb̲inder?</span></a>, <a href="libs-Flow-src-Flow.xtlm.html#h.s_hapes-3f"><span class="c-libfunc">ʰs̲hapes?</span></a></div>
+</div>
+<div class="item" id="nameChars">
+<h3><a href="#nameChars">nameChars</a> <span class="type">: Char</span></h3>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="libs-Flow-src-Flow.xtlm.src.html#L435">line 435</a></div>
+<div class="doc">
+<p>Characters of names: of values (Q, m1), of functions (act:r_elu,
+n_ame?, p_rint!), and digits.</p>
+</div>
+<pre class="code">nameChars ← <span class="c-string">&quot;abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_:?!&quot;</span></pre>
+<div class="uses">Used in: <a href="libs-Flow-src-Flow.xtlm.html#h.m_acro-3f"><span class="c-libfunc">ʰm̲acro?</span></a>, <a href="libs-Flow-src-Flow.xtlm.html#h.w_ord-3f"><span class="c-libfunc">ʰw̲ord?</span></a>, <a href="libs-Flow-src-Flow.xtlm.html#h.f_unction-3f"><span class="c-libfunc">ʰf̲unction?</span></a>, <a href="libs-Flow-src-Flow.xtlm.html#h.a_s"><span class="c-libfunc">ʰa̲s</span></a></div>
+</div>
+<div class="item" id="plainChars">
+<h3><a href="#plainChars">plainChars</a> <span class="type">: Char</span></h3>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="libs-Flow-src-Flow.xtlm.src.html#L437">line 437</a></div>
+<div class="doc">
+<p>Characters of plain names and numbers.</p>
+</div>
+<pre class="code">plainChars ← <span class="c-string">&quot;abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789&quot;</span></pre>
+<div class="uses">Used in: <a href="libs-Flow-src-Flow.xtlm.html#h.n_ame-3f"><span class="c-libfunc">ʰn̲ame?</span></a>, <a href="libs-Flow-src-Flow.xtlm.html#h.s_hapes-3f"><span class="c-libfunc">ʰs̲hapes?</span></a></div>
+</div>
+<div class="item" id="letters">
+<h3><a href="#letters">letters</a> <span class="type">: Char</span></h3>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="libs-Flow-src-Flow.xtlm.src.html#L438">line 438</a></div>
+<pre class="code">letters ← <span class="c-string">&quot;abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ&quot;</span></pre>
+<div class="uses">Used in: <a href="libs-Flow-src-Flow.xtlm.html#h.t_ouches-3f"><span class="c-libfunc">ʰt̲ouches?</span></a>, <a href="libs-Flow-src-Flow.xtlm.html#h.n_ame-3f"><span class="c-libfunc">ʰn̲ame?</span></a></div>
+</div>
+<div class="item" id="h.q_uoted">
+<h3><a href="#h.q_uoted"><span class="c-libfunc">ʰq̲uoted</span></a> <span class="type">: Char -&gt; Int</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="libs-Flow-src-Flow.xtlm.src.html#L441">line 441</a></div>
+<div class="doc">
+<p>1 at each character of s inside a string literal (its quotes included).</p>
+</div>
+<pre class="code"><span class="c-libfunc">ʰq̲uoted</span> ← { s → (<span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#s_-5c" class="c-builtin">s̲\</a> <span class="c-number">0</span> <a href="builtins.html#-2b" class="c-symbol">+</a> s <a href="builtins.html#m_ember-3f" class="c-builtin">m̲ember?</a> <span class="c-string">&quot;\&quot;&quot;</span>) <a href="builtins.html#m_od" class="c-builtin">m̲od</a> <span class="c-number">2</span> }</pre>
+<div class="uses">Used in: <a href="libs-Flow-src-Flow.xtlm.html#h.w_ord-3f"><span class="c-libfunc">ʰw̲ord?</span></a>, <a href="libs-Flow-src-Flow.xtlm.html#h.o_utside"><span class="c-libfunc">ʰo̲utside</span></a></div>
+</div>
+<div class="item" id="h.o_utside">
+<h3><a href="#h.o_utside"><span class="c-libfunc">ʰo̲utside</span></a> <span class="type">: Char -&gt; Char -&gt; Int</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="libs-Flow-src-Flow.xtlm.src.html#L445">line 445</a></div>
+<div class="doc">
+<p>The positions in s where sep starts outside brackets, braces,
+parentheses and strings.</p>
+</div>
+<pre class="code"><span class="c-libfunc">ʰo̲utside</span> ← { sep s →
+  q ← <a href="libs-Flow-src-Flow.xtlm.html#h.q_uoted" class="c-libfunc">ʰq̲uoted</a> s
+  d ← <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#s_-5c" class="c-builtin">s̲\</a> ((<span class="c-number">0</span> <a href="builtins.html#-2b" class="c-symbol">+</a> s <a href="builtins.html#m_ember-3f" class="c-builtin">m̲ember?</a> <span class="c-string">&quot;([{&quot;</span>) <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">0</span> <a href="builtins.html#-2b" class="c-symbol">+</a> s <a href="builtins.html#m_ember-3f" class="c-builtin">m̲ember?</a> <span class="c-string">&quot;)]}&quot;</span>) <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">1</span> <a href="builtins.html#-2d" class="c-symbol">−</a> q
+  ps ← sep <a href="work-libs-Strings-src-Strings.xtl.html#l.f_ind" class="c-libfunc">ᵗf̲ind</a> s
+  (((ps <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> d) <a href="builtins.html#-3d" class="c-symbol">=</a> <span class="c-number">0</span>) <a href="builtins.html#-26" class="c-symbol">∧</a> <span class="c-number">0</span> <a href="builtins.html#-3d" class="c-symbol">=</a> ps <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> q) <a href="builtins.html#r_eplicate" class="c-builtin">r̲eplicate</a> ps
+}</pre>
+<div class="uses">Used in: <a href="libs-Flow-src-Flow.xtlm.html#h.l_abel"><span class="c-libfunc">ʰl̲abel</span></a>, <a href="libs-Flow-src-Flow.xtlm.html#h.m_acro-3f"><span class="c-libfunc">ʰm̲acro?</span></a>, <a href="libs-Flow-src-Flow.xtlm.html#h.s_hown"><span class="c-libfunc">ʰs̲hown</span></a>, <a href="libs-Flow-src-Flow.xtlm.html#h.d_rawn"><span class="c-libfunc">ʰd̲rawn</span></a>, <a href="libs-Flow-src-Flow.xtlm.html#h.s_plit"><span class="c-libfunc">ʰs̲plit</span></a></div>
+</div>
+<div class="item" id="h.s_plit">
+<h3><a href="#h.s_plit"><span class="c-libfunc">ʰs̲plit</span></a> <span class="type">: Char -&gt; Char -&gt; Box Char</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="libs-Flow-src-Flow.xtlm.src.html#L454">line 454</a></div>
+<div class="doc">
+<p>s cut where sep starts outside brackets and strings: the pieces
+between, boxed (one piece when it never does).</p>
+</div>
+<pre class="code"><span class="c-libfunc">ʰs̲plit</span> ← { sep s →
+  ps ← sep <a href="libs-Flow-src-Flow.xtlm.html#h.o_utside" class="c-libfunc">ʰo̲utside</a> s
+  m ← <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> sep
+  starts ← <span class="c-number">1</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> ps <a href="builtins.html#-2b" class="c-symbol">+</a> m
+  ends ← ps <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">1</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> s
+  <span class="c-quote">'</span>{ i → ((i <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> ends) <a href="builtins.html#-2d" class="c-symbol">−</a> i <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> starts) <a href="builtins.html#t_ake" class="c-builtin">t̲ake</a> ((i <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> starts) <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span>) <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> s } <a href="builtins.html#m_ap" class="c-builtin">m̲ap</a> <a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> starts
+}</pre>
+<div class="uses">Used in: <a href="libs-Flow-src-Flow.xtlm.html#h.r_ead"><span class="c-libfunc">ʰr̲ead</span></a></div>
+</div>
+<div class="item" id="h.f_irstText">
+<h3><a href="#h.f_irstText"><span class="c-libfunc">ʰf̲irstText</span></a> <span class="type">: Box Char -&gt; Char</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="libs-Flow-src-Flow.xtlm.src.html#L463">line 463</a></div>
+<div class="doc">
+<p>The first of the boxed texts b (&quot;&quot; for none).</p>
+</div>
+<pre class="code"><span class="c-libfunc">ʰf̲irstText</span> ← { b →
+  <span class="c-number">0</span> <a href="builtins.html#-3d" class="c-symbol">=</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> b ? <span class="c-string">&quot;&quot;</span>
+  <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> b
+}</pre>
+<div class="uses">Used in: <a href="libs-Flow-src-Flow.xtlm.html#h.r_ead"><span class="c-libfunc">ʰr̲ead</span></a></div>
+</div>
+<div class="item" id="h.f_irst">
+<h3><a href="#h.f_irst"><span class="c-libfunc">ʰf̲irst</span></a> <span class="type">: Int -&gt; Int</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="libs-Flow-src-Flow.xtlm.src.html#L469">line 469</a></div>
+<div class="doc">
+<p>The first of the positions ps, or 0 for none.</p>
+</div>
+<pre class="code"><span class="c-libfunc">ʰf̲irst</span> ← { ps →
+  <span class="c-number">0</span> <a href="builtins.html#-3d" class="c-symbol">=</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> ps ? <span class="c-number">0</span>
+  <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> ps
+}</pre>
+<div class="uses">Used in: <a href="libs-Flow-src-Flow.xtlm.html#h.l_abel"><span class="c-libfunc">ʰl̲abel</span></a>, <a href="libs-Flow-src-Flow.xtlm.html#h.f_irstOf"><span class="c-libfunc">ʰf̲irstOf</span></a></div>
+</div>
+<div class="item" id="h.f_irstOf">
+<h3><a href="#h.f_irstOf"><span class="c-libfunc">ʰf̲irstOf</span></a> <span class="type">: Char -&gt; Char -&gt; Int</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="libs-Flow-src-Flow.xtlm.src.html#L475">line 475</a></div>
+<div class="doc">
+<p>Where the first ch is in s, or 0.</p>
+</div>
+<pre class="code"><span class="c-libfunc">ʰf̲irstOf</span> ← { ch s → <a href="libs-Flow-src-Flow.xtlm.html#h.f_irst" class="c-libfunc">ʰf̲irst</a> <a href="builtins.html#w_here" class="c-builtin">w̲here</a> s <a href="builtins.html#m_ember-3f" class="c-builtin">m̲ember?</a> ch }</pre>
+<div class="uses">Used in: <a href="libs-Flow-src-Flow.xtlm.html#h.b_inder"><span class="c-libfunc">ʰb̲inder</span></a>, <a href="libs-Flow-src-Flow.xtlm.html#h.s_hapeOf"><span class="c-libfunc">ʰs̲hapeOf</span></a></div>
+</div>
+</main>
+</body>
+</html>

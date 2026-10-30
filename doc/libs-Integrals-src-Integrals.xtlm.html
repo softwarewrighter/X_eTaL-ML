@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>libs/Integrals/src/Integrals.xtlm - X_eTaL doc</title>
+<link rel="stylesheet" href="style.css">
+<script src="theme.js"></script>
+<script defer src="search-index.js"></script>
+<script defer src="search.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.18.10/dist/katex.min.css" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.18.10/dist/katex.min.js" crossorigin="anonymous"></script>
+<script>document.addEventListener('DOMContentLoaded', function () {
+if (typeof katex === 'undefined') return;
+document.querySelectorAll('.c-notation').forEach(function (el) {
+var tex = el.textContent; if (!tex) return;
+try { katex.render(tex, el, { throwOnError: false }); } catch (e) { el.textContent = tex; }
+});
+});</script>
+</head>
+<body>
+<nav class="side">
+<a class="home" href="index.html">X_eTaL doc</a>
+<input id="search" type="search" autocomplete="off" placeholder="Search: a name, or a type" title="A name (mean finds m_ean), or a type: Num a =&gt; a -&gt; a -&gt; a finds +, m_ax ...">
+<h2>Files</h2>
+<h3>demos/attention/</h3>
+<ul>
+<li><a href="demos-attention-attention.xtl.html">attention.xtl</a></li>
+</ul>
+<h3>demos/backprop/</h3>
+<ul>
+<li><a href="demos-backprop-backprop.xtl.html">backprop.xtl</a></li>
+</ul>
+<h3>demos/cnn-backprop/</h3>
+<ul>
+<li><a href="demos-cnn-backprop-cnn-backprop.xtl.html">cnn-backprop.xtl</a></li>
+</ul>
+<h3>demos/cnn-digits/</h3>
+<ul>
+<li><a href="demos-cnn-digits-batch.xtl.html">batch.xtl</a></li>
+<li><a href="demos-cnn-digits-cnn-digits.xtl.html">cnn-digits.xtl</a></li>
+</ul>
+<h3>demos/diffusion/</h3>
+<ul>
+<li><a href="demos-diffusion-diffusion.xtl.html">diffusion.xtl</a></li>
+</ul>
+<h3>demos/embedding-explorer/</h3>
+<ul>
+<li><a href="demos-embedding-explorer-embedding-explorer.xtl.html">embedding-explorer.xtl</a></li>
+</ul>
+<h3>demos/k-means/</h3>
+<ul>
+<li><a href="demos-k-means-k-means.xtl.html">k-means.xtl</a></li>
+</ul>
+<h3>demos/micro-bert/</h3>
+<ul>
+<li><a href="demos-micro-bert-micro-bert.xtl.html">micro-bert.xtl</a></li>
+</ul>
+<h3>demos/micro-gpt/</h3>
+<ul>
+<li><a href="demos-micro-gpt-batch.xtl.html">batch.xtl</a></li>
+<li><a href="demos-micro-gpt-micro-gpt.xtl.html">micro-gpt.xtl</a></li>
+</ul>
+<h3>demos/moe-router/</h3>
+<ul>
+<li><a href="demos-moe-router-moe-router.xtl.html">moe-router.xtl</a></li>
+</ul>
+<h3>demos/net-macro/</h3>
+<ul>
+<li><a href="demos-net-macro-net-macro.xtl.html">net-macro.xtl</a></li>
+<li><a href="demos-net-macro-train-it.xtl.html">train-it.xtl</a></li>
+</ul>
+<h3>demos/pipelines/</h3>
+<ul>
+<li><a href="demos-pipelines-diffusion.xtl.html">diffusion.xtl</a></li>
+<li><a href="demos-pipelines-equations.xtl.html">equations.xtl</a></li>
+<li><a href="demos-pipelines-pipelines.xtl.html">pipelines.xtl</a></li>
+<li><a href="demos-pipelines-rosetta.xtl.html">rosetta.xtl</a></li>
+</ul>
+<h3>demos/ternary-net/</h3>
+<ul>
+<li><a href="demos-ternary-net-ternary-net.xtl.html">ternary-net.xtl</a></li>
+</ul>
+<h3>demos/train-live/</h3>
+<ul>
+<li><a href="demos-train-live-train-live.xtl.html">train-live.xtl</a></li>
+</ul>
+<h3>demos/world-model/</h3>
+<ul>
+<li><a href="demos-world-model-world-model.xtl.html">world-model.xtl</a></li>
+</ul>
+<h3>libs/Activations/demos/</h3>
+<ul>
+<li><a href="libs-Activations-demos-curves.xtl.html">curves.xtl</a></li>
+</ul>
+<h3>libs/Activations/src/</h3>
+<ul>
+<li><a href="libs-Activations-src-Activations.xtl.html">Activations.xtl</a></li>
+</ul>
+<h3>libs/Attention/demos/</h3>
+<ul>
+<li><a href="libs-Attention-demos-previous.xtl.html">previous.xtl</a></li>
+</ul>
+<h3>libs/Attention/src/</h3>
+<ul>
+<li><a href="libs-Attention-src-Attention.xtl.html">Attention.xtl</a></li>
+</ul>
+<h3>libs/Conv/demos/</h3>
+<ul>
+<li><a href="libs-Conv-demos-edges.xtl.html">edges.xtl</a></li>
+</ul>
+<h3>libs/Conv/src/</h3>
+<ul>
+<li><a href="libs-Conv-src-Conv.xtl.html">Conv.xtl</a></li>
+</ul>
+<h3>libs/Embed/demos/</h3>
+<ul>
+<li><a href="libs-Embed-demos-pets.xtl.html">pets.xtl</a></li>
+</ul>
+<h3>libs/Embed/src/</h3>
+<ul>
+<li><a href="libs-Embed-src-Embed.xtl.html">Embed.xtl</a></li>
+</ul>
+<h3>libs/Flow/demos/</h3>
+<ul>
+<li><a href="libs-Flow-demos-mlp.xtl.html">mlp.xtl</a></li>
+</ul>
+<h3>libs/Flow/src/</h3>
+<ul>
+<li><a href="libs-Flow-src-Flow.xtlm.html">Flow.xtlm</a></li>
+</ul>
+<h3>libs/Integrals/demos/</h3>
+<ul>
+<li><a href="libs-Integrals-demos-convolution.xtl.html">convolution.xtl</a></li>
+<li><a href="libs-Integrals-demos-gelu.xtl.html">gelu.xtl</a></li>
+</ul>
+<h3>libs/Integrals/src/</h3>
+<ul>
+<li><a href="libs-Integrals-src-Integrals.xtlm.html">Integrals.xtlm</a></li>
+</ul>
+<h3>libs/Learn/demos/</h3>
+<ul>
+<li><a href="libs-Learn-demos-blobs.xtl.html">blobs.xtl</a></li>
+</ul>
+<h3>libs/Learn/src/</h3>
+<ul>
+<li><a href="libs-Learn-src-Learn.xtl.html">Learn.xtl</a></li>
+</ul>
+<h3>libs/Net/demos/</h3>
+<ul>
+<li><a href="libs-Net-demos-train-xor.xtl.html">train-xor.xtl</a></li>
+<li><a href="libs-Net-demos-xor.xtl.html">xor.xtl</a></li>
+</ul>
+<h3>libs/Net/src/</h3>
+<ul>
+<li><a href="libs-Net-src-Net.xtlm.html">Net.xtlm</a></li>
+</ul>
+<h3>libs/NN/demos/</h3>
+<ul>
+<li><a href="libs-NN-demos-xor.xtl.html">xor.xtl</a></li>
+</ul>
+<h3>libs/NN/src/</h3>
+<ul>
+<li><a href="libs-NN-src-NN.xtl.html">NN.xtl</a></li>
+</ul>
+<h3>libs/Norm/demos/</h3>
+<ul>
+<li><a href="libs-Norm-demos-rows.xtl.html">rows.xtl</a></li>
+</ul>
+<h3>libs/Norm/src/</h3>
+<ul>
+<li><a href="libs-Norm-src-Norm.xtl.html">Norm.xtl</a></li>
+</ul>
+<h3>libs/Optim/demos/</h3>
+<ul>
+<li><a href="libs-Optim-demos-bowl.xtl.html">bowl.xtl</a></li>
+</ul>
+<h3>libs/Optim/src/</h3>
+<ul>
+<li><a href="libs-Optim-src-Optim.xtl.html">Optim.xtl</a></li>
+</ul>
+<h3>libs/Quant/demos/</h3>
+<ul>
+<li><a href="libs-Quant-demos-formats.xtl.html">formats.xtl</a></li>
+</ul>
+<h3>libs/Quant/src/</h3>
+<ul>
+<li><a href="libs-Quant-src-Quant.xtl.html">Quant.xtl</a></li>
+</ul>
+<h3>libs/Sample/demos/</h3>
+<ul>
+<li><a href="libs-Sample-demos-next.xtl.html">next.xtl</a></li>
+</ul>
+<h3>libs/Sample/src/</h3>
+<ul>
+<li><a href="libs-Sample-src-Sample.xtl.html">Sample.xtl</a></li>
+</ul>
+<h3>std/</h3>
+<ul>
+<li><a href="std-System.xtlm.html">System.xtlm</a></li>
+</ul>
+<h3>work/libs/Check/src/</h3>
+<ul>
+<li><a href="work-libs-Check-src-Check.xtl.html">Check.xtl</a></li>
+<li><a href="work-libs-Check-src-Check.xtlm.html">Check.xtlm</a></li>
+</ul>
+<h3>work/libs/Equations/src/</h3>
+<ul>
+<li><a href="work-libs-Equations-src-Equations.xtl.html">Equations.xtl</a></li>
+<li><a href="work-libs-Equations-src-Equations.xtlm.html">Equations.xtlm</a></li>
+</ul>
+<h3>work/libs/Lists/src/</h3>
+<ul>
+<li><a href="work-libs-Lists-src-Lists.xtl.html">Lists.xtl</a></li>
+</ul>
+<h3>work/libs/Strings/src/</h3>
+<ul>
+<li><a href="work-libs-Strings-src-Strings.xtl.html">Strings.xtl</a></li>
+</ul>
+<ul>
+<li><a href="builtins.html">built-ins</a></li>
+</ul>
+<h2>On this page</h2>
+<ul>
+<li><a href="#section-1">The macros</a></li>
+<li class="item"><a href="#m.i_ntegral-3c"><span class="c-macro">ᵐi̲ntegral&lt;</span></a></li>
+<li class="item"><a href="#m.t_ex-3c"><span class="c-macro">ᵐt̲ex&lt;</span></a></li>
+<li><a href="#section-2">Reading the call</a></li>
+<li class="item"><a href="#h.r_ead"><span class="c-libfunc">ʰr̲ead</span></a></li>
+<li class="item"><a href="#h.o_ption"><span class="c-libfunc">ʰo̲ption</span></a></li>
+<li class="item"><a href="#h.i_nfinite-3f"><span class="c-libfunc">ʰi̲nfinite?</span></a></li>
+<li class="item"><a href="#h.f_loat"><span class="c-libfunc">ʰf̲loat</span></a></li>
+<li><a href="#section-3">Writing the code</a></li>
+<li class="item"><a href="#h.w_rite"><span class="c-libfunc">ʰw̲rite</span></a></li>
+<li class="item"><a href="#h.w_eights"><span class="c-libfunc">ʰw̲eights</span></a></li>
+<li><a href="#section-4">The same call as LaTeX</a></li>
+<li class="item"><a href="#h.l_atex"><span class="c-libfunc">ʰl̲atex</span></a></li>
+<li class="item"><a href="#h.p_lain"><span class="c-libfunc">ʰp̲lain</span></a></li>
+<li class="item"><a href="#h.g_reek"><span class="c-libfunc">ʰg̲reek</span></a></li>
+<li class="item"><a href="#greek">greek</a></li>
+<li><a href="#section-5">Text helpers</a></li>
+<li class="item"><a href="#h.r_equire"><span class="c-libfunc">ʰr̲equire</span></a></li>
+<li class="item"><a href="#h.n_ame-3f"><span class="c-libfunc">ʰn̲ame?</span></a></li>
+<li class="item"><a href="#h.q_uoted"><span class="c-libfunc">ʰq̲uoted</span></a></li>
+<li class="item"><a href="#h.o_utside"><span class="c-libfunc">ʰo̲utside</span></a></li>
+<li class="item"><a href="#h.f_irst"><span class="c-libfunc">ʰf̲irst</span></a></li>
+<li class="item"><a href="#h.u_pTo"><span class="c-libfunc">ʰu̲pTo</span></a></li>
+<li class="item"><a href="#h.p_ast"><span class="c-libfunc">ʰp̲ast</span></a></li>
+</ul>
+</nav>
+<main>
+<button class="theme" title="Light or dark">theme</button>
+<section id="results"></section>
+<h1><span class="kind">macro library</span>libs/Integrals/src/Integrals.xtlm</h1>
+<div class="doc">
+<p>Integrals: a definite integral written as a paper prints it, computed by a quadrature rule -- &quot;integral tau:=a..b by trapezoid 64 | body&quot;</p>
+<p>Import it with an alias of your choice: &quot;integ:&quot; u_se&lt; &quot;Integrals&quot;.
+Put libs/Integrals/src on XETAL_PATH (&quot;just path&quot;); the reference is libs/Integrals/docs.
+Names with m: are macros; those under h: are private to this file.</p>
+<p>A macro is a function from the source text written left and right of
+its call to the source that replaces the call, before the program is
+compiled (X_eTaL MC10); xetal expand FILE shows the result. The call
+is X_eTaL's Saga 42 shape (its decisions 2 to 4, 2026-10-17): integral
+read like sum, the rule and the grid as option words with a documented
+default, improper integrals refused. Its reader uses all of its text
+or refuses it. Decision 1 puts integral in X_eTaL-libraries' Equations
+in the end; this library is the same call standing alone, lifted
+whole when that lands (the body here is X_eTaL, there the equation
+grammar).</p>
+</div>
+<p class="meta"><a href="libs-Integrals-src-Integrals.xtlm.src.html">source</a> &middot; imports <code><span class="c-error">t:</span></code> <a href="work-libs-Strings-src-Strings.xtl.html">work/libs/Strings/src/Strings.xtl</a></p>
+<h2 class="section" id="section-1">The macros</h2>
+<div class="item" id="m.i_ntegral-3c">
+<h3><a href="#m.i_ntegral-3c"><span class="c-macro">ᵐi̲ntegral&lt;</span></a> <span class="type">: Unit -&gt; Char -&gt; Char</span></h3>
+<div class="meta">macro &middot; <a href="libs-Integrals-src-Integrals.xtlm.src.html#L36">line 36</a></div>
+<div class="doc">
+<p>The value of a definite integral by a quadrature rule: &quot;integral
+tau:=a..b by trapezoid 64 | body&quot;. The variable and its bounds (any
+X_eTaL giving a Float; a whole-number literal is made Float), then
+the rule (trapezoid or simpson) and the grid (how many steps; simpson
+needs an even number), then | and the body: X_eTaL over the variable,
+which the macro binds to the grid's points as one vector, a, a + h,
+..., b, so the body is evaluated once for the whole grid. Without
+&quot;by&quot; the rule is trapezoid 64. A bound of inf is refused: write a
+truncation (0..20) and show the tail is small, or change variables.
+Trapezoid is exact on lines, simpson on cubics; at a jump of the
+body the sample takes the body's value at that point as written.</p>
+<pre class="example"><span class="prompt">      </span><span class="c-string">&quot;integ:&quot;</span> <a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="libs-Integrals-src-Integrals.xtlm.html" class="c-string">&quot;Integrals&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span>@ <a href="libs-Integrals-src-Integrals.xtlm.html#m.i_ntegral-3c" class="c-macro">ⁱⁿᵗᵉᵍi̲ntegral&lt;</a> <span class="c-string">&quot;integral x:=0..1 by simpson 2 | x ^ 2&quot;</span>
+0.3333333333333333</pre>
+</div>
+<pre class="code"><span class="c-macro">ᵐi̲ntegral&lt;</span> ← { @ text → <a href="libs-Integrals-src-Integrals.xtlm.html#h.w_rite" class="c-libfunc">ʰw̲rite</a> <a href="libs-Integrals-src-Integrals.xtlm.html#h.r_ead" class="c-libfunc">ʰr̲ead</a> text }</pre>
+<div class="uses">Used in: <a href="libs-Integrals-demos-convolution.xtl.html#u.c_onv"><span class="c-userfunc">ᵘc̲onv</span></a>, <a href="libs-Integrals-demos-convolution.xtl.src.html#L19">libs/Integrals/demos/convolution.xtl:19</a>, <a href="libs-Integrals-demos-gelu.xtl.html#u.g_elu"><span class="c-userfunc">ᵘg̲elu</span></a>, <a href="libs-Integrals-demos-gelu.xtl.html#kl">kl</a></div>
+</div>
+<div class="item" id="m.t_ex-3c">
+<h3><a href="#m.t_ex-3c"><span class="c-macro">ᵐt̲ex&lt;</span></a> <span class="type">: Unit -&gt; Char -&gt; Char</span></h3>
+<div class="meta">macro &middot; <a href="libs-Integrals-src-Integrals.xtlm.src.html#L43">line 43</a></div>
+<div class="doc">
+<p>The LaTeX of the same call, a string: \int_{a}^{b} body \, dx, the
+bounds and the body as written (a Greek letter's name is \tau).</p>
+<pre class="example"><span class="prompt">      </span><span class="c-string">&quot;integ:&quot;</span> <a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="libs-Integrals-src-Integrals.xtlm.html" class="c-string">&quot;Integrals&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span>@ <a href="libs-Integrals-src-Integrals.xtlm.html#m.t_ex-3c" class="c-macro">ⁱⁿᵗᵉᵍt̲ex&lt;</a> <span class="c-string">&quot;integral tau:=0..1 | e_xp tau&quot;</span>
+\int_{0}^{1} e_xp tau \, d\tau</pre>
+</div>
+<pre class="code"><span class="c-macro">ᵐt̲ex&lt;</span> ← { @ text → <span class="c-string">&quot;\&quot;&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="libs-Integrals-src-Integrals.xtlm.html#h.l_atex" class="c-libfunc">ʰl̲atex</a> <a href="libs-Integrals-src-Integrals.xtlm.html#h.r_ead" class="c-libfunc">ʰr̲ead</a> text) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;\&quot;&quot;</span> }</pre>
+<div class="uses">Used in: <a href="libs-Integrals-demos-convolution.xtl.src.html#L17">libs/Integrals/demos/convolution.xtl:17</a>, <a href="libs-Integrals-demos-convolution.xtl.src.html#L21">libs/Integrals/demos/convolution.xtl:21</a>, <a href="libs-Integrals-demos-gelu.xtl.src.html#L26">libs/Integrals/demos/gelu.xtl:26</a>, <a href="libs-Integrals-demos-gelu.xtl.src.html#L34">libs/Integrals/demos/gelu.xtl:34</a></div>
+</div>
+<h2 class="section" id="section-2">Reading the call</h2>
+<div class="item" id="h.r_ead">
+<h3><a href="#h.r_ead"><span class="c-libfunc">ʰr̲ead</span></a> <span class="type">: Char -&gt; (Char, Char, Char, Char, Char, Char)</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="libs-Integrals-src-Integrals.xtlm.src.html#L49">line 49</a></div>
+<div class="doc">
+<p>The call's parts: (variable, low, high, rule, grid, body), each text,
+every rule checked.</p>
+</div>
+<pre class="code"><span class="c-libfunc">ʰr̲ead</span> ← { text →
+  t ← <a href="work-libs-Strings-src-Strings.xtl.html#l.t_rim" class="c-libfunc">ᵗt̲rim</a> text
+  _ ← (<span class="c-number">0</span> <a href="builtins.html#-3c" class="c-symbol">&lt;</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> t) <a href="libs-Integrals-src-Integrals.xtlm.html#h.r_equire" class="c-libfunc">ʰr̲equire</a> <span class="c-string">&quot;an empty integral: write integral tau:=a..b | body&quot;</span>
+  bar ← <a href="libs-Integrals-src-Integrals.xtlm.html#h.f_irst" class="c-libfunc">ʰf̲irst</a> <span class="c-string">&quot;|&quot;</span> <a href="libs-Integrals-src-Integrals.xtlm.html#h.o_utside" class="c-libfunc">ʰo̲utside</a> t
+  _ ← (<span class="c-number">0</span> <a href="builtins.html#-3c" class="c-symbol">&lt;</a> bar) <a href="libs-Integrals-src-Integrals.xtlm.html#h.r_equire" class="c-libfunc">ʰr̲equire</a> <span class="c-string">&quot;the integral, then | and the body: &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> t
+  head ← <a href="work-libs-Strings-src-Strings.xtl.html#l.t_rim" class="c-libfunc">ᵗt̲rim</a> (bar <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span>) <a href="builtins.html#t_ake" class="c-builtin">t̲ake</a> t
+  body ← <a href="work-libs-Strings-src-Strings.xtl.html#l.t_rim" class="c-libfunc">ᵗt̲rim</a> bar <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> t
+  _ ← (<span class="c-number">0</span> <a href="builtins.html#-3c" class="c-symbol">&lt;</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> body) <a href="libs-Integrals-src-Integrals.xtlm.html#h.r_equire" class="c-libfunc">ʰr̲equire</a> <span class="c-string">&quot;an empty body after |: &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> t
+  _ ← (<span class="c-string">&quot;integral &quot;</span> <a href="work-libs-Strings-src-Strings.xtl.html#l.p_refix-3f" class="c-libfunc">ᵗp̲refix?</a> head) <a href="libs-Integrals-src-Integrals.xtlm.html#h.r_equire" class="c-libfunc">ʰr̲equire</a> <span class="c-string">&quot;an integral starts with the word integral: &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> head
+  rest ← <a href="work-libs-Strings-src-Strings.xtl.html#l.t_rim" class="c-libfunc">ᵗt̲rim</a> <span class="c-number">8</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> head
+  at ← <a href="libs-Integrals-src-Integrals.xtlm.html#h.f_irst" class="c-libfunc">ʰf̲irst</a> <span class="c-string">&quot;:=&quot;</span> <a href="libs-Integrals-src-Integrals.xtlm.html#h.o_utside" class="c-libfunc">ʰo̲utside</a> rest
+  _ ← (<span class="c-number">0</span> <a href="builtins.html#-3c" class="c-symbol">&lt;</a> at) <a href="libs-Integrals-src-Integrals.xtlm.html#h.r_equire" class="c-libfunc">ʰr̲equire</a> <span class="c-string">&quot;the variable and its bounds, tau:=a..b, not &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> rest
+  var ← <a href="work-libs-Strings-src-Strings.xtl.html#l.t_rim" class="c-libfunc">ᵗt̲rim</a> (at <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span>) <a href="builtins.html#t_ake" class="c-builtin">t̲ake</a> rest
+  _ ← (<a href="libs-Integrals-src-Integrals.xtlm.html#h.n_ame-3f" class="c-libfunc">ʰn̲ame?</a> var) <a href="libs-Integrals-src-Integrals.xtlm.html#h.r_equire" class="c-libfunc">ʰr̲equire</a> <span class="c-string">&quot;the variable is a lowercase name: &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> var
+  after ← <a href="work-libs-Strings-src-Strings.xtl.html#l.t_rim" class="c-libfunc">ᵗt̲rim</a> (at <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">1</span>) <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> rest
+  by ← <a href="libs-Integrals-src-Integrals.xtlm.html#h.f_irst" class="c-libfunc">ʰf̲irst</a> <span class="c-string">&quot; by &quot;</span> <a href="libs-Integrals-src-Integrals.xtlm.html#h.o_utside" class="c-libfunc">ʰo̲utside</a> after
+  range ← <a href="work-libs-Strings-src-Strings.xtl.html#l.t_rim" class="c-libfunc">ᵗt̲rim</a> by <a href="libs-Integrals-src-Integrals.xtlm.html#h.u_pTo" class="c-libfunc">ʰu̲pTo</a> after
+  opt ← <a href="work-libs-Strings-src-Strings.xtl.html#l.t_rim" class="c-libfunc">ᵗt̲rim</a> (by, <span class="c-number">4</span>) <a href="libs-Integrals-src-Integrals.xtlm.html#h.p_ast" class="c-libfunc">ʰp̲ast</a> after
+  dots ← <a href="libs-Integrals-src-Integrals.xtlm.html#h.f_irst" class="c-libfunc">ʰf̲irst</a> <span class="c-string">&quot;..&quot;</span> <a href="libs-Integrals-src-Integrals.xtlm.html#h.o_utside" class="c-libfunc">ʰo̲utside</a> range
+  _ ← (<span class="c-number">0</span> <a href="builtins.html#-3c" class="c-symbol">&lt;</a> dots) <a href="libs-Integrals-src-Integrals.xtlm.html#h.r_equire" class="c-libfunc">ʰr̲equire</a> <span class="c-string">&quot;the bounds are low..high: &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> range
+  low ← <a href="work-libs-Strings-src-Strings.xtl.html#l.t_rim" class="c-libfunc">ᵗt̲rim</a> (dots <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span>) <a href="builtins.html#t_ake" class="c-builtin">t̲ake</a> range
+  high ← <a href="work-libs-Strings-src-Strings.xtl.html#l.t_rim" class="c-libfunc">ᵗt̲rim</a> (dots <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">1</span>) <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> range
+  _ ← ((<span class="c-number">0</span> <a href="builtins.html#-3c" class="c-symbol">&lt;</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> low) <a href="builtins.html#-26" class="c-symbol">∧</a> <span class="c-number">0</span> <a href="builtins.html#-3c" class="c-symbol">&lt;</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> high) <a href="libs-Integrals-src-Integrals.xtlm.html#h.r_equire" class="c-libfunc">ʰr̲equire</a> <span class="c-string">&quot;a bound is missing: &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> range
+  _ ← (<a href="builtins.html#n_ot" class="c-builtin">n̲ot</a> (<a href="libs-Integrals-src-Integrals.xtlm.html#h.i_nfinite-3f" class="c-libfunc">ʰi̲nfinite?</a> low) <a href="builtins.html#-7c" class="c-symbol">∨</a> <a href="libs-Integrals-src-Integrals.xtlm.html#h.i_nfinite-3f" class="c-libfunc">ʰi̲nfinite?</a> high) <a href="libs-Integrals-src-Integrals.xtlm.html#h.r_equire" class="c-libfunc">ʰr̲equire</a> <span class="c-string">&quot;an improper integral (a bound of inf): write a truncation, 0..20 say, and show the tail is small, or change variables so the bounds are finite: &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> range
+  (rule, n) ← <a href="libs-Integrals-src-Integrals.xtlm.html#h.o_ption" class="c-libfunc">ʰo̲ption</a> opt
+  (var, <a href="libs-Integrals-src-Integrals.xtlm.html#h.f_loat" class="c-libfunc">ʰf̲loat</a> low, <a href="libs-Integrals-src-Integrals.xtlm.html#h.f_loat" class="c-libfunc">ʰf̲loat</a> high, rule, n, body)
+}</pre>
+<div class="uses">Used in: <a href="libs-Integrals-src-Integrals.xtlm.html#m.i_ntegral-3c"><span class="c-macro">ᵐi̲ntegral&lt;</span></a>, <a href="libs-Integrals-src-Integrals.xtlm.html#m.t_ex-3c"><span class="c-macro">ᵐt̲ex&lt;</span></a></div>
+</div>
+<div class="item" id="h.o_ption">
+<h3><a href="#h.o_ption"><span class="c-libfunc">ʰo̲ption</span></a> <span class="type">: Char -&gt; (Char, Char)</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="libs-Integrals-src-Integrals.xtlm.src.html#L80">line 80</a></div>
+<div class="doc">
+<p>The rule and the grid from the text after &quot;by&quot; (&quot;&quot; for none, the
+default trapezoid 64): exactly the two words, a rule the library has,
+a whole number of steps, even for simpson.</p>
+</div>
+<pre class="code"><span class="c-libfunc">ʰo̲ption</span> ← { opt →
+  <span class="c-number">0</span> <a href="builtins.html#-3d" class="c-symbol">=</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> opt ? (<span class="c-string">&quot;trapezoid&quot;</span>, <span class="c-string">&quot;64&quot;</span>)
+  ws ← <a href="work-libs-Strings-src-Strings.xtl.html#l.w_ords" class="c-libfunc">ᵗw̲ords</a> opt
+  _ ← (<span class="c-number">2</span> <a href="builtins.html#-3d" class="c-symbol">=</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> ws) <a href="libs-Integrals-src-Integrals.xtlm.html#h.r_equire" class="c-libfunc">ʰr̲equire</a> <span class="c-string">&quot;after by: the rule and the grid, trapezoid 64 or simpson 32, not &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> opt
+  rule ← <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> ws
+  n ← <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> <span class="c-number">2</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> ws
+  _ ← ((rule <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> <span class="c-string">&quot;trapezoid&quot;</span>) <a href="builtins.html#-7c" class="c-symbol">∨</a> rule <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> <span class="c-string">&quot;simpson&quot;</span>) <a href="libs-Integrals-src-Integrals.xtlm.html#h.r_equire" class="c-libfunc">ʰr̲equire</a> <span class="c-string">&quot;the rule is trapezoid or simpson, not &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> rule
+  _ ← ((<span class="c-number">0</span> <a href="builtins.html#-3c" class="c-symbol">&lt;</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> n) <a href="builtins.html#-26" class="c-symbol">∧</a> <span class="c-symbol">'</span><a href="builtins.html#-26" class="c-symbol">∧</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> n <a href="builtins.html#m_ember-3f" class="c-builtin">m̲ember?</a> <a href="builtins.html#-5b-5dD" class="c-builtin">⎕D</a>) <a href="libs-Integrals-src-Integrals.xtlm.html#h.r_equire" class="c-libfunc">ʰr̲equire</a> <span class="c-string">&quot;the grid is a whole number of steps: &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> n
+  k ← <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> <a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> <a href="builtins.html#n_umbers" class="c-builtin">n̲umbers</a> n
+  _ ← (<span class="c-number">0</span> <a href="builtins.html#-3c" class="c-symbol">&lt;</a> k) <a href="libs-Integrals-src-Integrals.xtlm.html#h.r_equire" class="c-libfunc">ʰr̲equire</a> <span class="c-string">&quot;the grid needs at least one step: &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> n
+  _ ← (<a href="builtins.html#n_ot" class="c-builtin">n̲ot</a> (rule <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> <span class="c-string">&quot;simpson&quot;</span>) <a href="builtins.html#-26" class="c-symbol">∧</a> <span class="c-number">1</span> <a href="builtins.html#-3d" class="c-symbol">=</a> k <a href="builtins.html#m_od" class="c-builtin">m̲od</a> <span class="c-number">2</span>) <a href="libs-Integrals-src-Integrals.xtlm.html#h.r_equire" class="c-libfunc">ʰr̲equire</a> <span class="c-string">&quot;simpson needs an even number of steps, not &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> n
+  (rule, n)
+}</pre>
+<div class="uses">Used in: <a href="libs-Integrals-src-Integrals.xtlm.html#h.r_ead"><span class="c-libfunc">ʰr̲ead</span></a></div>
+</div>
+<div class="item" id="h.i_nfinite-3f">
+<h3><a href="#h.i_nfinite-3f"><span class="c-libfunc">ʰi̲nfinite?</span></a> <span class="type">: Truthy a =&gt; Char -&gt; a</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="libs-Integrals-src-Integrals.xtlm.src.html#L95">line 95</a></div>
+<div class="doc">
+<p>Whether a bound is written infinite (inf, -inf, infinity, oo).</p>
+</div>
+<pre class="code"><span class="c-libfunc">ʰi̲nfinite?</span> ← { b → <span class="c-symbol">'</span><a href="builtins.html#-7c" class="c-symbol">∨</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> <span class="c-quote">'</span>{ w → (<a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> w) <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> b } <a href="builtins.html#e_ach" class="c-builtin">e̲ach</a> <a href="work-libs-Strings-src-Strings.xtl.html#l.w_ords" class="c-libfunc">ᵗw̲ords</a> <span class="c-string">&quot;inf -inf +inf infinity -infinity oo -oo&quot;</span> }</pre>
+<div class="uses">Used in: <a href="libs-Integrals-src-Integrals.xtlm.html#h.r_ead"><span class="c-libfunc">ʰr̲ead</span></a></div>
+</div>
+<div class="item" id="h.f_loat">
+<h3><a href="#h.f_loat"><span class="c-libfunc">ʰf̲loat</span></a> <span class="type">: Char -&gt; Char</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="libs-Integrals-src-Integrals.xtlm.src.html#L99">line 99</a></div>
+<div class="doc">
+<p>A bound as Float code: a whole-number literal gets f_loat, any other
+expression stands as written.</p>
+</div>
+<pre class="code"><span class="c-libfunc">ʰf̲loat</span> ← { b →
+  <span class="c-symbol">'</span><a href="builtins.html#-26" class="c-symbol">∧</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> b <a href="builtins.html#m_ember-3f" class="c-builtin">m̲ember?</a> <a href="builtins.html#-5b-5dD" class="c-builtin">⎕D</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;-&quot;</span> ? <span class="c-string">&quot;f_loat &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> b
+  b
+}</pre>
+<div class="uses">Used in: <a href="libs-Integrals-src-Integrals.xtlm.html#h.r_ead"><span class="c-libfunc">ʰr̲ead</span></a></div>
+</div>
+<h2 class="section" id="section-3">Writing the code</h2>
+<div class="item" id="h.w_rite">
+<h3><a href="#h.w_rite"><span class="c-libfunc">ʰw̲rite</span></a> <span class="type">: (Char, Char, Char, Char, Char, Char) -&gt; Char</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="libs-Integrals-src-Integrals.xtlm.src.html#L109">line 109</a></div>
+<div class="doc">
+<p>The expansion: the bounds, the step h, the variable bound to the
+grid (n + 1 points), the rule's weights, and h times the weighted
+sum of the body over the grid.</p>
+</div>
+<pre class="code"><span class="c-libfunc">ʰw̲rite</span> ← { (var, low, high, rule, n, body) →
+  a ← <a href="builtins.html#-5b-5dG_ENSYM" class="c-builtin">⎕G̲ENSYM</a> <span class="c-string">&quot;a&quot;</span>
+  b ← <a href="builtins.html#-5b-5dG_ENSYM" class="c-builtin">⎕G̲ENSYM</a> <span class="c-string">&quot;b&quot;</span>
+  h ← <a href="builtins.html#-5b-5dG_ENSYM" class="c-builtin">⎕G̲ENSYM</a> <span class="c-string">&quot;h&quot;</span>
+  w ← <a href="builtins.html#-5b-5dG_ENSYM" class="c-builtin">⎕G̲ENSYM</a> <span class="c-string">&quot;w&quot;</span>
+  k ← <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> <a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> <a href="builtins.html#n_umbers" class="c-builtin">n̲umbers</a> n
+  <span class="c-string">&quot;{ @ -&gt;\n  &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> a <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; := &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> low <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;\n  &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> b <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; := &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> high <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;\n  &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> h <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; := (&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> b <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; - &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> a <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;) / &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> n <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;.0\n  &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> var <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; := &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> a <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; + &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> h <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; * f_loat o_ffsets &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> k <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">1</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;\n  &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> w <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; := &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (rule <a href="libs-Integrals-src-Integrals.xtlm.html#h.w_eights" class="c-libfunc">ʰw̲eights</a> k) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;\n  &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> h <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; * '+ r_/ &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> w <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; * &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> body <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;\n} @&quot;</span>
+}</pre>
+<div class="uses">Used in: <a href="libs-Integrals-src-Integrals.xtlm.html#m.i_ntegral-3c"><span class="c-macro">ᵐi̲ntegral&lt;</span></a></div>
+</div>
+<div class="item" id="h.w_eights">
+<h3><a href="#h.w_eights"><span class="c-libfunc">ʰw̲eights</span></a> <span class="type">: Char -&gt; Int -&gt; Char</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="libs-Integrals-src-Integrals.xtlm.src.html#L120">line 120</a></div>
+<div class="doc">
+<p>The rule's weights over k steps (k + 1 points), as code: trapezoid
+1/2, 1, ..., 1, 1/2; simpson (1, 4, 2, 4, ..., 4, 1) / 3.</p>
+</div>
+<pre class="code"><span class="c-libfunc">ʰw̲eights</span> ← { rule k →
+  rule <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> <span class="c-string">&quot;simpson&quot;</span> ? <span class="c-string">&quot;(1.0 c_at (&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> k <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; r_eshape 4.0 2.0) c_at 1.0) / 3.0&quot;</span>
+  <span class="c-string">&quot;0.5 c_at (&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> k <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; r_eshape 1.0) c_at 0.5&quot;</span>
+}</pre>
+<div class="uses">Used in: <a href="libs-Integrals-src-Integrals.xtlm.html#h.w_rite"><span class="c-libfunc">ʰw̲rite</span></a></div>
+</div>
+<h2 class="section" id="section-4">The same call as LaTeX</h2>
+<div class="item" id="h.l_atex">
+<h3><a href="#h.l_atex"><span class="c-libfunc">ʰl̲atex</span></a> <span class="type">: (Char, Char, Char, Char, Char, Char) -&gt; Char</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="libs-Integrals-src-Integrals.xtlm.src.html#L129">line 129</a></div>
+<div class="doc">
+<p>\int_{a}^{b} body \, dvar, the parts as written; a Greek letter's
+name (tau, theta, ...) becomes its command.</p>
+</div>
+<pre class="code"><span class="c-libfunc">ʰl̲atex</span> ← { (var, low, high, rule, n, body) → <span class="c-string">&quot;\\\\int_{&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="libs-Integrals-src-Integrals.xtlm.html#h.p_lain" class="c-libfunc">ʰp̲lain</a> low) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;}^{&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="libs-Integrals-src-Integrals.xtlm.html#h.p_lain" class="c-libfunc">ʰp̲lain</a> high) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;} &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> body <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; \\\\, d&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="libs-Integrals-src-Integrals.xtlm.html#h.g_reek" class="c-libfunc">ʰg̲reek</a> var }</pre>
+<div class="uses">Used in: <a href="libs-Integrals-src-Integrals.xtlm.html#m.t_ex-3c"><span class="c-macro">ᵐt̲ex&lt;</span></a></div>
+</div>
+<div class="item" id="h.p_lain">
+<h3><a href="#h.p_lain"><span class="c-libfunc">ʰp̲lain</span></a> <span class="type">: Char -&gt; Char</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="libs-Integrals-src-Integrals.xtlm.src.html#L132">line 132</a></div>
+<div class="doc">
+<p>A bound without the f_loat the reader added to a literal.</p>
+</div>
+<pre class="code"><span class="c-libfunc">ʰp̲lain</span> ← { b →
+  <span class="c-string">&quot;f_loat &quot;</span> <a href="work-libs-Strings-src-Strings.xtl.html#l.p_refix-3f" class="c-libfunc">ᵗp̲refix?</a> b ? <span class="c-number">7</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> b
+  b
+}</pre>
+<div class="uses">Used in: <a href="libs-Integrals-src-Integrals.xtlm.html#h.l_atex"><span class="c-libfunc">ʰl̲atex</span></a></div>
+</div>
+<div class="item" id="h.g_reek">
+<h3><a href="#h.g_reek"><span class="c-libfunc">ʰg̲reek</span></a> <span class="type">: Char -&gt; Char</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="libs-Integrals-src-Integrals.xtlm.src.html#L138">line 138</a></div>
+<div class="doc">
+<p>A Greek letter's name as its LaTeX command; any other name as is.</p>
+</div>
+<pre class="code"><span class="c-libfunc">ʰg̲reek</span> ← { v →
+  <span class="c-symbol">'</span><a href="builtins.html#-7c" class="c-symbol">∨</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> <span class="c-quote">'</span>{ w → (<a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> w) <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> v } <a href="builtins.html#e_ach" class="c-builtin">e̲ach</a> <a href="work-libs-Strings-src-Strings.xtl.html#l.w_ords" class="c-libfunc">ᵗw̲ords</a> <a href="libs-Integrals-src-Integrals.xtlm.html#greek">greek</a> ? <span class="c-string">&quot;\\\\&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> v
+  v
+}</pre>
+<div class="uses">Used in: <a href="libs-Integrals-src-Integrals.xtlm.html#h.l_atex"><span class="c-libfunc">ʰl̲atex</span></a></div>
+</div>
+<div class="item" id="greek">
+<h3><a href="#greek">greek</a> <span class="type">: Char</span></h3>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="libs-Integrals-src-Integrals.xtlm.src.html#L142">line 142</a></div>
+<pre class="code">greek ← <span class="c-string">&quot;alpha beta gamma delta epsilon theta lambda mu nu xi pi rho sigma tau phi chi psi omega&quot;</span></pre>
+<div class="uses">Used in: <a href="libs-Integrals-src-Integrals.xtlm.html#h.g_reek"><span class="c-libfunc">ʰg̲reek</span></a></div>
+</div>
+<h2 class="section" id="section-5">Text helpers</h2>
+<div class="item" id="h.r_equire">
+<h3><a href="#h.r_equire"><span class="c-libfunc">ʰr̲equire</span></a> <span class="type">: Truthy a =&gt; a -&gt; Char -&gt; Char</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="libs-Integrals-src-Integrals.xtlm.src.html#L148">line 148</a></div>
+<div class="doc">
+<p>Nothing when ok holds; else the call is refused with message, at
+its text (the right side).</p>
+</div>
+<pre class="code"><span class="c-libfunc">ʰr̲equire</span> ← { ok message →
+  ok ? <span class="c-string">&quot;&quot;</span>
+  <span class="c-string">&quot;bad-integral right&quot;</span> <a href="builtins.html#-5b-5dR_EJECT" class="c-builtin">⎕R̲EJECT</a> message
+}</pre>
+<div class="uses">Used in: <a href="libs-Integrals-src-Integrals.xtlm.html#h.r_ead"><span class="c-libfunc">ʰr̲ead</span></a>, <a href="libs-Integrals-src-Integrals.xtlm.html#h.o_ption"><span class="c-libfunc">ʰo̲ption</span></a></div>
+</div>
+<div class="item" id="h.n_ame-3f">
+<h3><a href="#h.n_ame-3f"><span class="c-libfunc">ʰn̲ame?</span></a> <span class="type">: Truthy a =&gt; Char -&gt; a</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="libs-Integrals-src-Integrals.xtlm.src.html#L154">line 154</a></div>
+<div class="doc">
+<p>Whether v is a lowercase name: a lowercase letter, then letters or digits.</p>
+</div>
+<pre class="code"><span class="c-libfunc">ʰn̲ame?</span> ← { v →
+  <span class="c-number">0</span> <a href="builtins.html#-3d" class="c-symbol">=</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> v ? <span class="c-number">0</span> <a href="builtins.html#-3d" class="c-symbol">=</a> <span class="c-number">1</span>
+  ((<a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> v) <a href="builtins.html#m_ember-3f" class="c-builtin">m̲ember?</a> <span class="c-string">&quot;abcdefghijklmnopqrstuvwxyz&quot;</span>) <a href="builtins.html#-26" class="c-symbol">∧</a> <span class="c-symbol">'</span><a href="builtins.html#-26" class="c-symbol">∧</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> v <a href="builtins.html#m_ember-3f" class="c-builtin">m̲ember?</a> <span class="c-string">&quot;abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789&quot;</span>
+}</pre>
+<div class="uses">Used in: <a href="libs-Integrals-src-Integrals.xtlm.html#h.r_ead"><span class="c-libfunc">ʰr̲ead</span></a></div>
+</div>
+<div class="item" id="h.q_uoted">
+<h3><a href="#h.q_uoted"><span class="c-libfunc">ʰq̲uoted</span></a> <span class="type">: Char -&gt; Int</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="libs-Integrals-src-Integrals.xtlm.src.html#L160">line 160</a></div>
+<div class="doc">
+<p>1 at each character of s inside a string literal (its quotes included).</p>
+</div>
+<pre class="code"><span class="c-libfunc">ʰq̲uoted</span> ← { s → (<span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#s_-5c" class="c-builtin">s̲\</a> <span class="c-number">0</span> <a href="builtins.html#-2b" class="c-symbol">+</a> s <a href="builtins.html#m_ember-3f" class="c-builtin">m̲ember?</a> <span class="c-string">&quot;\&quot;&quot;</span>) <a href="builtins.html#m_od" class="c-builtin">m̲od</a> <span class="c-number">2</span> }</pre>
+<div class="uses">Used in: <a href="libs-Integrals-src-Integrals.xtlm.html#h.o_utside"><span class="c-libfunc">ʰo̲utside</span></a></div>
+</div>
+<div class="item" id="h.o_utside">
+<h3><a href="#h.o_utside"><span class="c-libfunc">ʰo̲utside</span></a> <span class="type">: Char -&gt; Char -&gt; Int</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="libs-Integrals-src-Integrals.xtlm.src.html#L164">line 164</a></div>
+<div class="doc">
+<p>The positions in s where sep starts outside brackets, braces,
+parentheses and strings.</p>
+</div>
+<pre class="code"><span class="c-libfunc">ʰo̲utside</span> ← { sep s →
+  q ← <a href="libs-Integrals-src-Integrals.xtlm.html#h.q_uoted" class="c-libfunc">ʰq̲uoted</a> s
+  d ← <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#s_-5c" class="c-builtin">s̲\</a> ((<span class="c-number">0</span> <a href="builtins.html#-2b" class="c-symbol">+</a> s <a href="builtins.html#m_ember-3f" class="c-builtin">m̲ember?</a> <span class="c-string">&quot;([{&quot;</span>) <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">0</span> <a href="builtins.html#-2b" class="c-symbol">+</a> s <a href="builtins.html#m_ember-3f" class="c-builtin">m̲ember?</a> <span class="c-string">&quot;)]}&quot;</span>) <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">1</span> <a href="builtins.html#-2d" class="c-symbol">−</a> q
+  ps ← sep <a href="work-libs-Strings-src-Strings.xtl.html#l.f_ind" class="c-libfunc">ᵗf̲ind</a> s
+  (((ps <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> d) <a href="builtins.html#-3d" class="c-symbol">=</a> <span class="c-number">0</span>) <a href="builtins.html#-26" class="c-symbol">∧</a> <span class="c-number">0</span> <a href="builtins.html#-3d" class="c-symbol">=</a> ps <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> q) <a href="builtins.html#r_eplicate" class="c-builtin">r̲eplicate</a> ps
+}</pre>
+<div class="uses">Used in: <a href="libs-Integrals-src-Integrals.xtlm.html#h.r_ead"><span class="c-libfunc">ʰr̲ead</span></a></div>
+</div>
+<div class="item" id="h.f_irst">
+<h3><a href="#h.f_irst"><span class="c-libfunc">ʰf̲irst</span></a> <span class="type">: Int -&gt; Int</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="libs-Integrals-src-Integrals.xtlm.src.html#L172">line 172</a></div>
+<div class="doc">
+<p>The first of the positions ps, or 0 for none.</p>
+</div>
+<pre class="code"><span class="c-libfunc">ʰf̲irst</span> ← { ps →
+  <span class="c-number">0</span> <a href="builtins.html#-3d" class="c-symbol">=</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> ps ? <span class="c-number">0</span>
+  <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> ps
+}</pre>
+<div class="uses">Used in: <a href="libs-Integrals-src-Integrals.xtlm.html#h.r_ead"><span class="c-libfunc">ʰr̲ead</span></a></div>
+</div>
+<div class="item" id="h.u_pTo">
+<h3><a href="#h.u_pTo"><span class="c-libfunc">ʰu̲pTo</span></a> <span class="type">: Int -&gt; Char -&gt; Char</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="libs-Integrals-src-Integrals.xtlm.src.html#L178">line 178</a></div>
+<div class="doc">
+<p>s before position k (all of s when k is 0).</p>
+</div>
+<pre class="code"><span class="c-libfunc">ʰu̲pTo</span> ← { k s →
+  <span class="c-number">0</span> <a href="builtins.html#-3d" class="c-symbol">=</a> k ? s
+  (k <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span>) <a href="builtins.html#t_ake" class="c-builtin">t̲ake</a> s
+}</pre>
+<div class="uses">Used in: <a href="libs-Integrals-src-Integrals.xtlm.html#h.r_ead"><span class="c-libfunc">ʰr̲ead</span></a></div>
+</div>
+<div class="item" id="h.p_ast">
+<h3><a href="#h.p_ast"><span class="c-libfunc">ʰp̲ast</span></a> <span class="type">: (Int, Int) -&gt; Char -&gt; Char</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="libs-Integrals-src-Integrals.xtlm.src.html#L184">line 184</a></div>
+<div class="doc">
+<p>s after a separator of length m at position k (&quot;&quot; when k is 0).</p>
+</div>
+<pre class="code"><span class="c-libfunc">ʰp̲ast</span> ← { (k, m) s →
+  <span class="c-number">0</span> <a href="builtins.html#-3d" class="c-symbol">=</a> k ? <span class="c-string">&quot;&quot;</span>
+  ((k <a href="builtins.html#-2b" class="c-symbol">+</a> m) <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span>) <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> s
+}</pre>
+<div class="uses">Used in: <a href="libs-Integrals-src-Integrals.xtlm.html#h.r_ead"><span class="c-libfunc">ʰr̲ead</span></a></div>
+</div>
+</main>
+</body>
+</html>

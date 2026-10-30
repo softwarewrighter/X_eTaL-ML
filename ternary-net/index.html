@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>1.58-bit Network</title>
+  
+<script type="module">
+import init, * as bindings from '/X_eTaL-ML/ternary-net/ternary-net-web-f2db4e2990121dc4.js';
+const wasm = await init({ module_or_path: '/X_eTaL-ML/ternary-net/ternary-net-web-f2db4e2990121dc4_bg.wasm' });
+
+
+window.wasmBindings = bindings;
+
+
+dispatchEvent(new CustomEvent("TrunkApplicationStarted", {detail: {wasm}}));
+
+</script>
+  
+  <link rel="icon" href="/X_eTaL-ML/ternary-net/favicon-a11bc0a2bcd81290.ico" integrity="sha384-xOjSLs9ZRBKy2hF6zlqNv+0U86E4BqZOJy7H7a4GXSVwDQMNie0D851/sRBSYI9a"/>
+  <link rel="stylesheet" href="/X_eTaL-ML/ternary-net/microscope-b922efafa92831ab.css" integrity="sha384-k5TG4aWhdtCr6p3wmLkWvzyiViLB+xJaEbouiR8FtRp5BmZwPsvQBt8avUHFWSha"/>
+<link rel="modulepreload" href="/X_eTaL-ML/ternary-net/ternary-net-web-f2db4e2990121dc4.js" crossorigin="anonymous" integrity="sha384-EDxVT4R9hkmlpjGLmJl6PjFOZP788AlX43V3BMG6I2wZ34QIN3upW6kiOZrsiMK3"><link rel="preload" href="/X_eTaL-ML/ternary-net/ternary-net-web-f2db4e2990121dc4_bg.wasm" crossorigin="anonymous" integrity="sha384-o/p2rCYga8WeitVyJER51GRS4Acj4cIAHZaKzYW1IlrbGmeDl7UtW/DkKYLtTNoY" as="fetch" type="application/wasm"></head>
+<body></body>
+</html>

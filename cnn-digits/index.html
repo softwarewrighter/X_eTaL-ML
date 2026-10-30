@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Tiny CNN</title>
+  
+<script type="module">
+import init, * as bindings from '/X_eTaL-ML/cnn-digits/cnn-digits-web-acbc31514ca85078.js';
+const wasm = await init({ module_or_path: '/X_eTaL-ML/cnn-digits/cnn-digits-web-acbc31514ca85078_bg.wasm' });
+
+
+window.wasmBindings = bindings;
+
+
+dispatchEvent(new CustomEvent("TrunkApplicationStarted", {detail: {wasm}}));
+
+</script>
+  
+  <link rel="icon" href="/X_eTaL-ML/cnn-digits/favicon-a11bc0a2bcd81290.ico" integrity="sha384-xOjSLs9ZRBKy2hF6zlqNv+0U86E4BqZOJy7H7a4GXSVwDQMNie0D851/sRBSYI9a"/>
+  <link rel="stylesheet" href="/X_eTaL-ML/cnn-digits/microscope-b922efafa92831ab.css" integrity="sha384-k5TG4aWhdtCr6p3wmLkWvzyiViLB+xJaEbouiR8FtRp5BmZwPsvQBt8avUHFWSha"/>
+<link rel="modulepreload" href="/X_eTaL-ML/cnn-digits/cnn-digits-web-acbc31514ca85078.js" crossorigin="anonymous" integrity="sha384-lkCloB1igu0Isazy31hg7V+NvEbvRY77TMylFN+7BguOevw2ssUOKHSFrPqdWyu5"><link rel="preload" href="/X_eTaL-ML/cnn-digits/cnn-digits-web-acbc31514ca85078_bg.wasm" crossorigin="anonymous" integrity="sha384-ghoVJxeTIziKYwsWek/f84TWkoI2pd3FVJZODWa0zt7SAUMHrjPZTnU+82+R/m5+" as="fetch" type="application/wasm"></head>
+<body></body>
+</html>

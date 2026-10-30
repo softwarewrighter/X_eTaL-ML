@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>libs/Activations/src/Activations.xtl - X_eTaL doc</title>
+<link rel="stylesheet" href="style.css">
+<script src="theme.js"></script>
+<script defer src="search-index.js"></script>
+<script defer src="search.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.18.10/dist/katex.min.css" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.18.10/dist/katex.min.js" crossorigin="anonymous"></script>
+<script>document.addEventListener('DOMContentLoaded', function () {
+if (typeof katex === 'undefined') return;
+document.querySelectorAll('.c-notation').forEach(function (el) {
+var tex = el.textContent; if (!tex) return;
+try { katex.render(tex, el, { throwOnError: false }); } catch (e) { el.textContent = tex; }
+});
+});</script>
+</head>
+<body>
+<nav class="side">
+<a class="home" href="index.html">X_eTaL doc</a>
+<input id="search" type="search" autocomplete="off" placeholder="Search: a name, or a type" title="A name (mean finds m_ean), or a type: Num a =&gt; a -&gt; a -&gt; a finds +, m_ax ...">
+<h2>Files</h2>
+<h3>demos/attention/</h3>
+<ul>
+<li><a href="demos-attention-attention.xtl.html">attention.xtl</a></li>
+</ul>
+<h3>demos/backprop/</h3>
+<ul>
+<li><a href="demos-backprop-backprop.xtl.html">backprop.xtl</a></li>
+</ul>
+<h3>demos/cnn-backprop/</h3>
+<ul>
+<li><a href="demos-cnn-backprop-cnn-backprop.xtl.html">cnn-backprop.xtl</a></li>
+</ul>
+<h3>demos/cnn-digits/</h3>
+<ul>
+<li><a href="demos-cnn-digits-batch.xtl.html">batch.xtl</a></li>
+<li><a href="demos-cnn-digits-cnn-digits.xtl.html">cnn-digits.xtl</a></li>
+</ul>
+<h3>demos/diffusion/</h3>
+<ul>
+<li><a href="demos-diffusion-diffusion.xtl.html">diffusion.xtl</a></li>
+</ul>
+<h3>demos/embedding-explorer/</h3>
+<ul>
+<li><a href="demos-embedding-explorer-embedding-explorer.xtl.html">embedding-explorer.xtl</a></li>
+</ul>
+<h3>demos/k-means/</h3>
+<ul>
+<li><a href="demos-k-means-k-means.xtl.html">k-means.xtl</a></li>
+</ul>
+<h3>demos/micro-bert/</h3>
+<ul>
+<li><a href="demos-micro-bert-micro-bert.xtl.html">micro-bert.xtl</a></li>
+</ul>
+<h3>demos/micro-gpt/</h3>
+<ul>
+<li><a href="demos-micro-gpt-batch.xtl.html">batch.xtl</a></li>
+<li><a href="demos-micro-gpt-micro-gpt.xtl.html">micro-gpt.xtl</a></li>
+</ul>
+<h3>demos/moe-router/</h3>
+<ul>
+<li><a href="demos-moe-router-moe-router.xtl.html">moe-router.xtl</a></li>
+</ul>
+<h3>demos/net-macro/</h3>
+<ul>
+<li><a href="demos-net-macro-net-macro.xtl.html">net-macro.xtl</a></li>
+<li><a href="demos-net-macro-train-it.xtl.html">train-it.xtl</a></li>
+</ul>
+<h3>demos/pipelines/</h3>
+<ul>
+<li><a href="demos-pipelines-diffusion.xtl.html">diffusion.xtl</a></li>
+<li><a href="demos-pipelines-equations.xtl.html">equations.xtl</a></li>
+<li><a href="demos-pipelines-pipelines.xtl.html">pipelines.xtl</a></li>
+<li><a href="demos-pipelines-rosetta.xtl.html">rosetta.xtl</a></li>
+</ul>
+<h3>demos/ternary-net/</h3>
+<ul>
+<li><a href="demos-ternary-net-ternary-net.xtl.html">ternary-net.xtl</a></li>
+</ul>
+<h3>demos/train-live/</h3>
+<ul>
+<li><a href="demos-train-live-train-live.xtl.html">train-live.xtl</a></li>
+</ul>
+<h3>demos/world-model/</h3>
+<ul>
+<li><a href="demos-world-model-world-model.xtl.html">world-model.xtl</a></li>
+</ul>
+<h3>libs/Activations/demos/</h3>
+<ul>
+<li><a href="libs-Activations-demos-curves.xtl.html">curves.xtl</a></li>
+</ul>
+<h3>libs/Activations/src/</h3>
+<ul>
+<li><a href="libs-Activations-src-Activations.xtl.html">Activations.xtl</a></li>
+</ul>
+<h3>libs/Attention/demos/</h3>
+<ul>
+<li><a href="libs-Attention-demos-previous.xtl.html">previous.xtl</a></li>
+</ul>
+<h3>libs/Attention/src/</h3>
+<ul>
+<li><a href="libs-Attention-src-Attention.xtl.html">Attention.xtl</a></li>
+</ul>
+<h3>libs/Conv/demos/</h3>
+<ul>
+<li><a href="libs-Conv-demos-edges.xtl.html">edges.xtl</a></li>
+</ul>
+<h3>libs/Conv/src/</h3>
+<ul>
+<li><a href="libs-Conv-src-Conv.xtl.html">Conv.xtl</a></li>
+</ul>
+<h3>libs/Embed/demos/</h3>
+<ul>
+<li><a href="libs-Embed-demos-pets.xtl.html">pets.xtl</a></li>
+</ul>
+<h3>libs/Embed/src/</h3>
+<ul>
+<li><a href="libs-Embed-src-Embed.xtl.html">Embed.xtl</a></li>
+</ul>
+<h3>libs/Flow/demos/</h3>
+<ul>
+<li><a href="libs-Flow-demos-mlp.xtl.html">mlp.xtl</a></li>
+</ul>
+<h3>libs/Flow/src/</h3>
+<ul>
+<li><a href="libs-Flow-src-Flow.xtlm.html">Flow.xtlm</a></li>
+</ul>
+<h3>libs/Integrals/demos/</h3>
+<ul>
+<li><a href="libs-Integrals-demos-convolution.xtl.html">convolution.xtl</a></li>
+<li><a href="libs-Integrals-demos-gelu.xtl.html">gelu.xtl</a></li>
+</ul>
+<h3>libs/Integrals/src/</h3>
+<ul>
+<li><a href="libs-Integrals-src-Integrals.xtlm.html">Integrals.xtlm</a></li>
+</ul>
+<h3>libs/Learn/demos/</h3>
+<ul>
+<li><a href="libs-Learn-demos-blobs.xtl.html">blobs.xtl</a></li>
+</ul>
+<h3>libs/Learn/src/</h3>
+<ul>
+<li><a href="libs-Learn-src-Learn.xtl.html">Learn.xtl</a></li>
+</ul>
+<h3>libs/Net/demos/</h3>
+<ul>
+<li><a href="libs-Net-demos-train-xor.xtl.html">train-xor.xtl</a></li>
+<li><a href="libs-Net-demos-xor.xtl.html">xor.xtl</a></li>
+</ul>
+<h3>libs/Net/src/</h3>
+<ul>
+<li><a href="libs-Net-src-Net.xtlm.html">Net.xtlm</a></li>
+</ul>
+<h3>libs/NN/demos/</h3>
+<ul>
+<li><a href="libs-NN-demos-xor.xtl.html">xor.xtl</a></li>
+</ul>
+<h3>libs/NN/src/</h3>
+<ul>
+<li><a href="libs-NN-src-NN.xtl.html">NN.xtl</a></li>
+</ul>
+<h3>libs/Norm/demos/</h3>
+<ul>
+<li><a href="libs-Norm-demos-rows.xtl.html">rows.xtl</a></li>
+</ul>
+<h3>libs/Norm/src/</h3>
+<ul>
+<li><a href="libs-Norm-src-Norm.xtl.html">Norm.xtl</a></li>
+</ul>
+<h3>libs/Optim/demos/</h3>
+<ul>
+<li><a href="libs-Optim-demos-bowl.xtl.html">bowl.xtl</a></li>
+</ul>
+<h3>libs/Optim/src/</h3>
+<ul>
+<li><a href="libs-Optim-src-Optim.xtl.html">Optim.xtl</a></li>
+</ul>
+<h3>libs/Quant/demos/</h3>
+<ul>
+<li><a href="libs-Quant-demos-formats.xtl.html">formats.xtl</a></li>
+</ul>
+<h3>libs/Quant/src/</h3>
+<ul>
+<li><a href="libs-Quant-src-Quant.xtl.html">Quant.xtl</a></li>
+</ul>
+<h3>libs/Sample/demos/</h3>
+<ul>
+<li><a href="libs-Sample-demos-next.xtl.html">next.xtl</a></li>
+</ul>
+<h3>libs/Sample/src/</h3>
+<ul>
+<li><a href="libs-Sample-src-Sample.xtl.html">Sample.xtl</a></li>
+</ul>
+<h3>std/</h3>
+<ul>
+<li><a href="std-System.xtlm.html">System.xtlm</a></li>
+</ul>
+<h3>work/libs/Check/src/</h3>
+<ul>
+<li><a href="work-libs-Check-src-Check.xtl.html">Check.xtl</a></li>
+<li><a href="work-libs-Check-src-Check.xtlm.html">Check.xtlm</a></li>
+</ul>
+<h3>work/libs/Equations/src/</h3>
+<ul>
+<li><a href="work-libs-Equations-src-Equations.xtl.html">Equations.xtl</a></li>
+<li><a href="work-libs-Equations-src-Equations.xtlm.html">Equations.xtlm</a></li>
+</ul>
+<h3>work/libs/Lists/src/</h3>
+<ul>
+<li><a href="work-libs-Lists-src-Lists.xtl.html">Lists.xtl</a></li>
+</ul>
+<h3>work/libs/Strings/src/</h3>
+<ul>
+<li><a href="work-libs-Strings-src-Strings.xtl.html">Strings.xtl</a></li>
+</ul>
+<ul>
+<li><a href="builtins.html">built-ins</a></li>
+</ul>
+<h2>On this page</h2>
+<ul>
+<li><a href="#section-1">Helpers (private)</a></li>
+<li class="item"><a href="#h.e_rf"><span class="c-libfunc">ʰe̲rf</span></a></li>
+<li class="item"><a href="#h.g_eluTanh"><span class="c-libfunc">ʰg̲eluTanh</span></a></li>
+<li><a href="#section-2">Activations</a></li>
+<li class="item"><a href="#l.r_elu"><span class="c-libfunc">ˡr̲elu</span></a></li>
+<li class="item"><a href="#l.l_eaky"><span class="c-libfunc">ˡl̲eaky</span></a></li>
+<li class="item"><a href="#l.p_relu"><span class="c-libfunc">ˡp̲relu</span></a></li>
+<li class="item"><a href="#l.e_lu"><span class="c-libfunc">ˡe̲lu</span></a></li>
+<li class="item"><a href="#l.s_elu"><span class="c-libfunc">ˡs̲elu</span></a></li>
+<li class="item"><a href="#l.s_igmoid"><span class="c-libfunc">ˡs̲igmoid</span></a></li>
+<li class="item"><a href="#l.t_anh"><span class="c-libfunc">ˡt̲anh</span></a></li>
+<li class="item"><a href="#l.s_oftplus"><span class="c-libfunc">ˡs̲oftplus</span></a></li>
+<li class="item"><a href="#l.s_ilu"><span class="c-libfunc">ˡs̲ilu</span></a></li>
+<li class="item"><a href="#l.s_wish"><span class="c-libfunc">ˡs̲wish</span></a></li>
+<li class="item"><a href="#l.g_elu"><span class="c-libfunc">ˡg̲elu</span></a></li>
+<li class="item"><a href="#l.g_eluErf"><span class="c-libfunc">ˡg̲eluErf</span></a></li>
+<li class="item"><a href="#l.m_ish"><span class="c-libfunc">ˡm̲ish</span></a></li>
+<li class="item"><a href="#l.h_ardSigmoid"><span class="c-libfunc">ˡh̲ardSigmoid</span></a></li>
+<li class="item"><a href="#l.h_ardSwish"><span class="c-libfunc">ˡh̲ardSwish</span></a></li>
+<li><a href="#section-3">The gated layers</a></li>
+<li class="item"><a href="#l.g_lu"><span class="c-libfunc">ˡg̲lu</span></a></li>
+<li class="item"><a href="#l.r_eglu"><span class="c-libfunc">ˡr̲eglu</span></a></li>
+<li class="item"><a href="#l.g_eglu"><span class="c-libfunc">ˡg̲eglu</span></a></li>
+<li class="item"><a href="#l.s_wiglu"><span class="c-libfunc">ˡs̲wiglu</span></a></li>
+<li><a href="#section-4">Derivatives, in terms of each function's input</a></li>
+<li class="item"><a href="#l.d_relu"><span class="c-libfunc">ˡd̲relu</span></a></li>
+<li class="item"><a href="#l.d_leaky"><span class="c-libfunc">ˡd̲leaky</span></a></li>
+<li class="item"><a href="#l.d_prelu"><span class="c-libfunc">ˡd̲prelu</span></a></li>
+<li class="item"><a href="#l.d_elu"><span class="c-libfunc">ˡd̲elu</span></a></li>
+<li class="item"><a href="#l.d_selu"><span class="c-libfunc">ˡd̲selu</span></a></li>
+<li class="item"><a href="#l.d_sigmoid"><span class="c-libfunc">ˡd̲sigmoid</span></a></li>
+<li class="item"><a href="#l.d_tanh"><span class="c-libfunc">ˡd̲tanh</span></a></li>
+<li class="item"><a href="#l.d_softplus"><span class="c-libfunc">ˡd̲softplus</span></a></li>
+<li class="item"><a href="#l.d_silu"><span class="c-libfunc">ˡd̲silu</span></a></li>
+<li class="item"><a href="#l.d_swish"><span class="c-libfunc">ˡd̲swish</span></a></li>
+<li class="item"><a href="#l.d_gelu"><span class="c-libfunc">ˡd̲gelu</span></a></li>
+<li class="item"><a href="#l.d_geluErf"><span class="c-libfunc">ˡd̲geluErf</span></a></li>
+<li class="item"><a href="#l.d_mish"><span class="c-libfunc">ˡd̲mish</span></a></li>
+<li class="item"><a href="#l.d_hardSigmoid"><span class="c-libfunc">ˡd̲hardSigmoid</span></a></li>
+<li class="item"><a href="#l.d_hardSwish"><span class="c-libfunc">ˡd̲hardSwish</span></a></li>
+</ul>
+</nav>
+<main>
+<button class="theme" title="Light or dark">theme</button>
+<section id="results"></section>
+<h1><span class="kind">library</span>libs/Activations/src/Activations.xtl</h1>
+<div class="doc">
+<p>Activations: activation functions, a derivative for each, and the gated layers (GLU, ReGLU, GEGLU, SwiGLU)</p>
+<p>Import it with an alias of your choice: &quot;act:&quot; u_se&lt; &quot;Activations&quot;.
+Put libs/Activations/src on XETAL_PATH (&quot;just path&quot;); the reference is libs/Activations/docs.
+Names with l: are exported; h: names are private to this file.</p>
+<p>Every activation works item by item on a Float array of any shape,
+so a batch (one example per row) goes through in one call. A
+setting comes first (<code><span class="c-number">0.1</span> <span class="c-libfunc">ᵃᶜᵗl̲eaky</span> x</code>, <code><span class="c-number">1.5</span> <span class="c-libfunc">ᵃᶜᵗs̲wish</span> x</code>); PReLU's
+slopes are one per column (the last axis), as a bias is. Each
+function f has its derivative d_f written in terms of f's input
+(<code><span class="c-libfunc">ᵃᶜᵗd̲gelu</span> z</code>, not of its output): X_eTaL has no automatic
+differentiation, and the smooth activations cannot be written at
+their output as ReLU, tanh and sigmoid can. A gated layer takes its
+two weight arrays as a tuple, <code>(W, V) <span class="c-libfunc">ᵃᶜᵗs̲wiglu</span> x</code>: the activation
+on x W, times the linear x V (Shazeer 2020's order).</p>
+<p>tanh and erf are built here from e_xp (X_eTaL has no t_anh or e_rf
+builtin: docs/xetal-asks.md M19): tanh as 2 sigmoid(2x) - 1, which
+does not overflow at either end but loses digits near 0; erf by
+Abramowitz and Stegun 7.1.26, within 1.5e-7. Both go the day the
+builtins land (X_eTaL-libraries' Trig and Special, E4 and E5).</p>
+</div>
+<p class="meta"><a href="libs-Activations-src-Activations.xtl.src.html">source</a></p>
+<h2 class="section" id="section-1">Helpers (private)</h2>
+<div class="item" id="h.e_rf">
+<h3><a href="#h.e_rf"><span class="c-libfunc">ʰe̲rf</span></a> <span class="type">: Float -&gt; Float</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="libs-Activations-src-Activations.xtl.src.html#L27">line 27</a></div>
+<div class="doc">
+<p>The error function, A&amp;S 7.1.26 (|error| &lt; 1.5e-7), odd in x.</p>
+</div>
+<pre class="code"><span class="c-libfunc">ʰe̲rf</span> ← { x →
+  t ← <span class="c-number">1.0</span> <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-number">1.0</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">0.3275911</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#a_bs" class="c-builtin">a̲bs</a> x
+  p ← t <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">0.254829592</span> <a href="builtins.html#-2b" class="c-symbol">+</a> t <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">-0.284496736</span> <a href="builtins.html#-2b" class="c-symbol">+</a> t <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">1.421413741</span> <a href="builtins.html#-2b" class="c-symbol">+</a> t <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">-1.453152027</span> <a href="builtins.html#-2b" class="c-symbol">+</a> t <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">1.061405429</span>
+  ((<span class="c-number">2.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> x <a href="builtins.html#-3e-3d" class="c-symbol">≥</a> <span class="c-number">0.0</span>) <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1.0</span>) <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">1.0</span> <a href="builtins.html#-2d" class="c-symbol">−</a> p <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#e_xp" class="c-builtin">e̲xp</a> <a href="builtins.html#n_eg" class="c-builtin">n̲eg</a> x <a href="builtins.html#-2a" class="c-symbol">×</a> x
+}</pre>
+<div class="uses">Used in: <a href="libs-Activations-src-Activations.xtl.html#l.g_eluErf"><span class="c-libfunc">ˡg̲eluErf</span></a>, <a href="libs-Activations-src-Activations.xtl.html#l.d_geluErf"><span class="c-libfunc">ˡd̲geluErf</span></a></div>
+</div>
+<div class="item" id="h.g_eluTanh">
+<h3><a href="#h.g_eluTanh"><span class="c-libfunc">ʰg̲eluTanh</span></a> <span class="type">: Float -&gt; Float</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="libs-Activations-src-Activations.xtl.src.html#L34">line 34</a></div>
+<div class="doc">
+<p>The inner tanh of GELU's approximation, at the point u(x) = sqrt(2/pi) (x + 0.044715 x^3).</p>
+</div>
+<pre class="code"><span class="c-libfunc">ʰg̲eluTanh</span> ← { x → <a href="libs-Activations-src-Activations.xtl.html#l.t_anh" class="c-libfunc">ˡt̲anh</a> <span class="c-number">0.7978845608028654</span> <a href="builtins.html#-2a" class="c-symbol">×</a> x <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">0.044715</span> <a href="builtins.html#-2a" class="c-symbol">×</a> x <a href="builtins.html#-2a" class="c-symbol">×</a> x <a href="builtins.html#-2a" class="c-symbol">×</a> x }</pre>
+<div class="uses">Used in: <a href="libs-Activations-src-Activations.xtl.html#l.g_elu"><span class="c-libfunc">ˡg̲elu</span></a>, <a href="libs-Activations-src-Activations.xtl.html#l.d_gelu"><span class="c-libfunc">ˡd̲gelu</span></a></div>
+</div>
+<h2 class="section" id="section-2">Activations</h2>
+<div class="item" id="l.r_elu">
+<h3><a href="#l.r_elu"><span class="c-libfunc">ˡr̲elu</span></a> <span class="type">: Float -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="libs-Activations-src-Activations.xtl.src.html#L42">line 42</a></div>
+<div class="doc">
+<p><code><span class="c-builtin">r̲elu</span> x</code>: max(x, 0), item by item.</p>
+<pre class="example"><span class="prompt">      </span><span class="c-string">&quot;act:&quot;</span> <a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="libs-Activations-src-Activations.xtl.html" class="c-string">&quot;Activations&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span><a href="libs-Activations-src-Activations.xtl.html#l.r_elu" class="c-libfunc">ᵃᶜᵗr̲elu</a> <span class="c-number">-1.5</span> <span class="c-number">0.0</span> <span class="c-number">2.0</span>
+0.0 0.0 2.0</pre>
+</div>
+<pre class="code"><span class="c-libfunc">ˡr̲elu</span> ← { x → x <a href="builtins.html#m_ax" class="c-builtin">m̲ax</a> <span class="c-number">0.0</span> }</pre>
+<div class="uses">Used in: <a href="libs-Activations-src-Activations.xtl.html#l.r_eglu"><span class="c-libfunc">ˡr̲eglu</span></a>, <a href="libs-Activations-demos-curves.xtl.html#values">values</a>, <a href="libs-Flow-demos-mlp.xtl.html#Y">Y</a>, <a href="libs-Flow-demos-mlp.xtl.src.html#L28">libs/Flow/demos/mlp.xtl:28</a>, <a href="libs-Flow-demos-mlp.xtl.html#H">H</a>, <a href="libs-Net-demos-xor.xtl.html#u.x_or"><span class="c-userfunc">ᵘx̲or</span></a>, <a href="libs-NN-demos-xor.xtl.html#h">h</a>, <a href="demos-cnn-backprop-cnn-backprop.xtl.html#u.p_robs"><span class="c-userfunc">ᵘp̲robs</span></a>, <a href="demos-cnn-backprop-cnn-backprop.xtl.html#u.g_rad"><span class="c-userfunc">ᵘg̲rad</span></a>, <a href="demos-cnn-digits-batch.xtl.html#u.r_ead"><span class="c-userfunc">ᵘr̲ead</span></a>, <a href="demos-cnn-digits-cnn-digits.xtl.html#u.c_lassify"><span class="c-userfunc">ᵘc̲lassify</span></a>, <a href="demos-cnn-digits-cnn-digits.xtl.html#c">c</a>, <a href="demos-diffusion-diffusion.xtl.html#u.n_et"><span class="c-userfunc">ᵘn̲et</span></a>, <a href="demos-net-macro-net-macro.xtl.html#c1">c1</a>, <a href="demos-net-macro-train-it.xtl.html#u.s_tep"><span class="c-userfunc">ᵘs̲tep</span></a>, <a href="demos-net-macro-train-it.xtl.html#u.s_tart"><span class="c-userfunc">ᵘs̲tart</span></a>, <a href="demos-net-macro-train-it.xtl.html#u.t_rained"><span class="c-userfunc">ᵘt̲rained</span></a>, <a href="demos-pipelines-rosetta.xtl.html#pipe">pipe</a>, <a href="demos-pipelines-rosetta.xtl.html#plain">plain</a>, <a href="demos-world-model-world-model.xtl.html#u.p_redict"><span class="c-userfunc">ᵘp̲redict</span></a></div>
+</div>
+<div class="item" id="l.l_eaky">
+<h3><a href="#l.l_eaky"><span class="c-libfunc">ˡl̲eaky</span></a> <span class="type">: Float -&gt; Float -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="libs-Activations-src-Activations.xtl.src.html#L48">line 48</a></div>
+<div class="doc">
+<p><code>a <span class="c-builtin">l̲eaky</span> x</code>: leaky ReLU, x where positive and a times x elsewhere.</p>
+<pre class="example"><span class="prompt">      </span><span class="c-string">&quot;act:&quot;</span> <a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="libs-Activations-src-Activations.xtl.html" class="c-string">&quot;Activations&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span><span class="c-number">0.1</span> <a href="libs-Activations-src-Activations.xtl.html#l.l_eaky" class="c-libfunc">ᵃᶜᵗl̲eaky</a> <span class="c-number">-2.0</span> <span class="c-number">3.0</span>
+-0.2 3.0</pre>
+</div>
+<pre class="code"><span class="c-libfunc">ˡl̲eaky</span> ← { a x → (x <a href="builtins.html#m_ax" class="c-builtin">m̲ax</a> <span class="c-number">0.0</span>) <a href="builtins.html#-2b" class="c-symbol">+</a> a <a href="builtins.html#-2a" class="c-symbol">×</a> x <a href="builtins.html#m_in" class="c-builtin">m̲in</a> <span class="c-number">0.0</span> }</pre>
+<div class="uses">Used in: <a href="libs-Activations-demos-curves.xtl.html#values">values</a></div>
+</div>
+<div class="item" id="l.p_relu">
+<h3><a href="#l.p_relu"><span class="c-libfunc">ˡp̲relu</span></a> <span class="type">: Float -&gt; Float -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="libs-Activations-src-Activations.xtl.src.html#L57">line 57</a></div>
+<div class="doc">
+<p><code>a <span class="c-builtin">p̲relu</span> x</code>: PReLU (He et al. 2015), a leaky ReLU whose slope a is
+one number per column (a's length is x's last extent; a scalar is
+l_eaky). The slopes are learned; the library only applies them.</p>
+<pre class="example"><span class="prompt">      </span><span class="c-string">&quot;act:&quot;</span> <a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="libs-Activations-src-Activations.xtl.html" class="c-string">&quot;Activations&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span><span class="c-number">0.0</span> <span class="c-number">0.5</span> <a href="libs-Activations-src-Activations.xtl.html#l.p_relu" class="c-libfunc">ᵃᶜᵗp̲relu</a> <span class="c-number">2</span> <span class="c-number">2</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">-2.0</span> <span class="c-number">-2.0</span> <span class="c-number">1.0</span> <span class="c-number">-4.0</span>
+0.0 -1.0
+1.0 -2.0</pre>
+</div>
+<pre class="code"><span class="c-libfunc">ˡp̲relu</span> ← { a x → (x <a href="builtins.html#m_ax" class="c-builtin">m̲ax</a> <span class="c-number">0.0</span>) <a href="builtins.html#-2b" class="c-symbol">+</a> ((<a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> x) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> a) <a href="builtins.html#-2a" class="c-symbol">×</a> x <a href="builtins.html#m_in" class="c-builtin">m̲in</a> <span class="c-number">0.0</span> }</pre>
+<div class="uses">Used in: <a href="libs-Activations-demos-curves.xtl.html#values">values</a></div>
+</div>
+<div class="item" id="l.e_lu">
+<h3><a href="#l.e_lu"><span class="c-libfunc">ˡe̲lu</span></a> <span class="type">: Float -&gt; Float -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="libs-Activations-src-Activations.xtl.src.html#L64">line 64</a></div>
+<div class="doc">
+<p><code>a <span class="c-builtin">e̲lu</span> x</code>: ELU (Clevert et al. 2016), x where positive and
+a (e^x - 1) elsewhere: smooth at 0 when a is 1, bounded below by -a.</p>
+<pre class="example"><span class="prompt">      </span><span class="c-string">&quot;act:&quot;</span> <a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="libs-Activations-src-Activations.xtl.html" class="c-string">&quot;Activations&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span><span class="c-number">1.0</span> <a href="libs-Activations-src-Activations.xtl.html#l.e_lu" class="c-libfunc">ᵃᶜᵗe̲lu</a> <span class="c-number">-1.0</span> <span class="c-number">2.0</span>
+-0.6321205588285577 2.0</pre>
+</div>
+<pre class="code"><span class="c-libfunc">ˡe̲lu</span> ← { a x → (x <a href="builtins.html#m_ax" class="c-builtin">m̲ax</a> <span class="c-number">0.0</span>) <a href="builtins.html#-2b" class="c-symbol">+</a> a <a href="builtins.html#-2a" class="c-symbol">×</a> (<a href="builtins.html#e_xp" class="c-builtin">e̲xp</a> x <a href="builtins.html#m_in" class="c-builtin">m̲in</a> <span class="c-number">0.0</span>) <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1.0</span> }</pre>
+<div class="uses">Used in: <a href="libs-Activations-src-Activations.xtl.html#l.s_elu"><span class="c-libfunc">ˡs̲elu</span></a>, <a href="libs-Activations-demos-curves.xtl.html#values">values</a>, <a href="libs-Activations-demos-curves.xtl.src.html#L18">libs/Activations/demos/curves.xtl:18</a></div>
+</div>
+<div class="item" id="l.s_elu">
+<h3><a href="#l.s_elu"><span class="c-libfunc">ˡs̲elu</span></a> <span class="type">: Float -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="libs-Activations-src-Activations.xtl.src.html#L73">line 73</a></div>
+<div class="doc">
+<p><code><span class="c-builtin">s̲elu</span> x</code>: SELU (Klambauer et al. 2017), lambda times an ELU with
+alpha, the two constants that keep a standard-normal input's mean 0
+and variance 1 through a layer (a self-normalizing network needs no
+norm layer).</p>
+<pre class="example"><span class="prompt">      </span><span class="c-string">&quot;act:&quot;</span> <a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="libs-Activations-src-Activations.xtl.html" class="c-string">&quot;Activations&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span><a href="libs-Activations-src-Activations.xtl.html#l.s_elu" class="c-libfunc">ᵃᶜᵗs̲elu</a> <span class="c-number">0.0</span> <span class="c-number">1.0</span>
+0.0 1.0507009873554805</pre>
+</div>
+<pre class="code"><span class="c-libfunc">ˡs̲elu</span> ← { x → <span class="c-number">1.0507009873554805</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">1.6732632423543772</span> <a href="libs-Activations-src-Activations.xtl.html#l.e_lu" class="c-libfunc">ˡe̲lu</a> x }</pre>
+<div class="uses">Used in: <a href="libs-Activations-demos-curves.xtl.html#values">values</a></div>
+</div>
+<div class="item" id="l.s_igmoid">
+<h3><a href="#l.s_igmoid"><span class="c-libfunc">ˡs̲igmoid</span></a> <span class="type">: Float -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="libs-Activations-src-Activations.xtl.src.html#L79">line 79</a></div>
+<div class="doc">
+<p><code><span class="c-builtin">s̲igmoid</span> x</code>: 1 / (1 + e^-x), item by item.</p>
+<pre class="example"><span class="prompt">      </span><span class="c-string">&quot;act:&quot;</span> <a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="libs-Activations-src-Activations.xtl.html" class="c-string">&quot;Activations&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span><a href="libs-Activations-src-Activations.xtl.html#l.s_igmoid" class="c-libfunc">ᵃᶜᵗs̲igmoid</a> <span class="c-number">0.0</span> <span class="c-number">2.0</span>
+0.5 0.8807970779778823</pre>
+</div>
+<pre class="code"><span class="c-libfunc">ˡs̲igmoid</span> ← { x → <span class="c-number">1.0</span> <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-number">1.0</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#e_xp" class="c-builtin">e̲xp</a> <a href="builtins.html#n_eg" class="c-builtin">n̲eg</a> x }</pre>
+<div class="uses">Used in: <a href="libs-Activations-src-Activations.xtl.html#l.t_anh"><span class="c-libfunc">ˡt̲anh</span></a>, <a href="libs-Activations-src-Activations.xtl.html#l.s_ilu"><span class="c-libfunc">ˡs̲ilu</span></a>, <a href="libs-Activations-src-Activations.xtl.html#l.s_wish"><span class="c-libfunc">ˡs̲wish</span></a>, <a href="libs-Activations-src-Activations.xtl.html#l.g_lu"><span class="c-libfunc">ˡg̲lu</span></a>, <a href="libs-Activations-src-Activations.xtl.html#l.d_sigmoid"><span class="c-libfunc">ˡd̲sigmoid</span></a>, <a href="libs-Activations-src-Activations.xtl.html#l.d_softplus"><span class="c-libfunc">ˡd̲softplus</span></a>, <a href="libs-Activations-src-Activations.xtl.html#l.d_silu"><span class="c-libfunc">ˡd̲silu</span></a>, <a href="libs-Activations-src-Activations.xtl.html#l.d_swish"><span class="c-libfunc">ˡd̲swish</span></a>, <a href="libs-Activations-src-Activations.xtl.html#l.d_mish"><span class="c-libfunc">ˡd̲mish</span></a>, <a href="libs-Activations-demos-curves.xtl.html#values">values</a>, <a href="demos-diffusion-diffusion.xtl.html#u.n_et"><span class="c-userfunc">ᵘn̲et</span></a>, <a href="demos-world-model-world-model.xtl.html#u.p_redict"><span class="c-userfunc">ᵘp̲redict</span></a></div>
+</div>
+<div class="item" id="l.t_anh">
+<h3><a href="#l.t_anh"><span class="c-libfunc">ˡt̲anh</span></a> <span class="type">: Float -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="libs-Activations-src-Activations.xtl.src.html#L85">line 85</a></div>
+<div class="doc">
+<p><code><span class="c-builtin">t̲anh</span> x</code>: the hyperbolic tangent, as 2 sigmoid(2x) - 1 (see the file's note).</p>
+<pre class="example"><span class="prompt">      </span><span class="c-string">&quot;act:&quot;</span> <a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="libs-Activations-src-Activations.xtl.html" class="c-string">&quot;Activations&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span><a href="libs-Activations-src-Activations.xtl.html#l.t_anh" class="c-libfunc">ᵃᶜᵗt̲anh</a> <span class="c-number">0.0</span> <span class="c-number">1.0</span>
+0.0 0.7615941559557646</pre>
+</div>
+<pre class="code"><span class="c-libfunc">ˡt̲anh</span> ← { x → (<span class="c-number">2.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="libs-Activations-src-Activations.xtl.html#l.s_igmoid" class="c-libfunc">ˡs̲igmoid</a> <span class="c-number">2.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> x) <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1.0</span> }</pre>
+<div class="uses">Used in: <a href="libs-Activations-src-Activations.xtl.html#h.g_eluTanh"><span class="c-libfunc">ʰg̲eluTanh</span></a>, <a href="libs-Activations-src-Activations.xtl.html#l.m_ish"><span class="c-libfunc">ˡm̲ish</span></a>, <a href="libs-Activations-src-Activations.xtl.html#l.d_tanh"><span class="c-libfunc">ˡd̲tanh</span></a>, <a href="libs-Activations-src-Activations.xtl.html#l.d_mish"><span class="c-libfunc">ˡd̲mish</span></a>, <a href="libs-Activations-demos-curves.xtl.html#values">values</a>, <a href="libs-Integrals-demos-gelu.xtl.html#u.a_pprox"><span class="c-userfunc">ᵘa̲pprox</span></a>, <a href="libs-Net-demos-train-xor.xtl.html#u.s_tep"><span class="c-userfunc">ᵘs̲tep</span></a>, <a href="libs-Net-demos-train-xor.xtl.html#u.b_efore"><span class="c-userfunc">ᵘb̲efore</span></a>, <a href="libs-Net-demos-train-xor.xtl.html#u.a_fter"><span class="c-userfunc">ᵘa̲fter</span></a>, <a href="demos-backprop-backprop.xtl.html#H">H</a>, <a href="demos-backprop-backprop.xtl.html#u.l_oss"><span class="c-userfunc">ᵘl̲oss</span></a>, <a href="demos-net-macro-net-macro.xtl.html#b1">b1</a>, <a href="demos-train-live-train-live.xtl.html#u.f_orward"><span class="c-userfunc">ᵘf̲orward</span></a>, <a href="demos-train-live-train-live.xtl.html#u.g_rad"><span class="c-userfunc">ᵘg̲rad</span></a></div>
+</div>
+<div class="item" id="l.s_oftplus">
+<h3><a href="#l.s_oftplus"><span class="c-libfunc">ˡs̲oftplus</span></a> <span class="type">: Float -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="libs-Activations-src-Activations.xtl.src.html#L92">line 92</a></div>
+<div class="doc">
+<p><code><span class="c-builtin">s̲oftplus</span> x</code>: log(1 + e^x), a smooth ReLU, in the form that does
+not overflow: max(x, 0) + log(1 + e^-|x|).</p>
+<pre class="example"><span class="prompt">      </span><span class="c-string">&quot;act:&quot;</span> <a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="libs-Activations-src-Activations.xtl.html" class="c-string">&quot;Activations&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span><a href="libs-Activations-src-Activations.xtl.html#l.s_oftplus" class="c-libfunc">ᵃᶜᵗs̲oftplus</a> <span class="c-number">0.0</span> <span class="c-number">1000.0</span>
+0.6931471805599453 1000.0</pre>
+</div>
+<pre class="code"><span class="c-libfunc">ˡs̲oftplus</span> ← { x → (x <a href="builtins.html#m_ax" class="c-builtin">m̲ax</a> <span class="c-number">0.0</span>) <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#l_og" class="c-builtin">l̲og</a> <span class="c-number">1.0</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#e_xp" class="c-builtin">e̲xp</a> <a href="builtins.html#n_eg" class="c-builtin">n̲eg</a> <a href="builtins.html#a_bs" class="c-builtin">a̲bs</a> x }</pre>
+<div class="uses">Used in: <a href="libs-Activations-src-Activations.xtl.html#l.m_ish"><span class="c-libfunc">ˡm̲ish</span></a>, <a href="libs-Activations-src-Activations.xtl.html#l.d_mish"><span class="c-libfunc">ˡd̲mish</span></a>, <a href="libs-Activations-demos-curves.xtl.html#values">values</a></div>
+</div>
+<div class="item" id="l.s_ilu">
+<h3><a href="#l.s_ilu"><span class="c-libfunc">ˡs̲ilu</span></a> <span class="type">: Float -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="libs-Activations-src-Activations.xtl.src.html#L99">line 99</a></div>
+<div class="doc">
+<p><code><span class="c-builtin">s̲ilu</span> x</code>: SiLU, x sigmoid(x) (Hendrycks and Gimpel 2016; Swish with
+beta 1, Ramachandran et al. 2017): smooth, dips to -0.278 below 0.</p>
+<pre class="example"><span class="prompt">      </span><span class="c-string">&quot;act:&quot;</span> <a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="libs-Activations-src-Activations.xtl.html" class="c-string">&quot;Activations&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span><a href="libs-Activations-src-Activations.xtl.html#l.s_ilu" class="c-libfunc">ᵃᶜᵗs̲ilu</a> <span class="c-number">-1.0</span> <span class="c-number">1.0</span>
+-0.2689414213699951 0.7310585786300049</pre>
+</div>
+<pre class="code"><span class="c-libfunc">ˡs̲ilu</span> ← { x → x <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="libs-Activations-src-Activations.xtl.html#l.s_igmoid" class="c-libfunc">ˡs̲igmoid</a> x }</pre>
+<div class="uses">Used in: <a href="libs-Activations-src-Activations.xtl.html#l.s_wiglu"><span class="c-libfunc">ˡs̲wiglu</span></a>, <a href="libs-Activations-demos-curves.xtl.html#values">values</a>, <a href="libs-Activations-demos-curves.xtl.src.html#L18">libs/Activations/demos/curves.xtl:18</a></div>
+</div>
+<div class="item" id="l.s_wish">
+<h3><a href="#l.s_wish"><span class="c-libfunc">ˡs̲wish</span></a> <span class="type">: Float -&gt; Float -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="libs-Activations-src-Activations.xtl.src.html#L106">line 106</a></div>
+<div class="doc">
+<p><code>b <span class="c-builtin">s̲wish</span> x</code>: Swish, x sigmoid(b x); b = 1 is s_ilu, a large b tends
+to ReLU, b = 1.702 is close to GELU.</p>
+<pre class="example"><span class="prompt">      </span><span class="c-string">&quot;act:&quot;</span> <a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="libs-Activations-src-Activations.xtl.html" class="c-string">&quot;Activations&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span><span class="c-number">1.702</span> <a href="libs-Activations-src-Activations.xtl.html#l.s_wish" class="c-libfunc">ᵃᶜᵗs̲wish</a> <span class="c-number">1.0</span>
+0.8457957659328212</pre>
+</div>
+<pre class="code"><span class="c-libfunc">ˡs̲wish</span> ← { b x → x <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="libs-Activations-src-Activations.xtl.html#l.s_igmoid" class="c-libfunc">ˡs̲igmoid</a> b <a href="builtins.html#-2a" class="c-symbol">×</a> x }</pre>
+<div class="uses">Used in: <a href="libs-Activations-demos-curves.xtl.html#values">values</a></div>
+</div>
+<div class="item" id="l.g_elu">
+<h3><a href="#l.g_elu"><span class="c-libfunc">ˡg̲elu</span></a> <span class="type">: Float -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="libs-Activations-src-Activations.xtl.src.html#L114">line 114</a></div>
+<div class="doc">
+<p><code><span class="c-builtin">g̲elu</span> x</code>: GELU (Hendrycks and Gimpel 2016) in the tanh form the
+frameworks compute, x/2 (1 + tanh(sqrt(2/pi) (x + 0.044715 x^3))),
+within 4.73e-4 of the exact g_eluErf.</p>
+<pre class="example"><span class="prompt">      </span><span class="c-string">&quot;act:&quot;</span> <a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="libs-Activations-src-Activations.xtl.html" class="c-string">&quot;Activations&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span><a href="libs-Activations-src-Activations.xtl.html#l.g_elu" class="c-libfunc">ᵃᶜᵗg̲elu</a> <span class="c-number">-1.0</span> <span class="c-number">1.0</span>
+-0.15880800939172324 0.8411919906082768</pre>
+</div>
+<pre class="code"><span class="c-libfunc">ˡg̲elu</span> ← { x → <span class="c-number">0.5</span> <a href="builtins.html#-2a" class="c-symbol">×</a> x <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">1.0</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="libs-Activations-src-Activations.xtl.html#h.g_eluTanh" class="c-libfunc">ʰg̲eluTanh</a> x }</pre>
+<div class="uses">Used in: <a href="libs-Activations-src-Activations.xtl.html#l.g_eglu"><span class="c-libfunc">ˡg̲eglu</span></a>, <a href="libs-Activations-demos-curves.xtl.html#values">values</a>, <a href="libs-Activations-demos-curves.xtl.src.html#L18">libs/Activations/demos/curves.xtl:18</a>, <a href="demos-micro-bert-micro-bert.xtl.html#u.l_ayer"><span class="c-userfunc">ᵘl̲ayer</span></a>, <a href="demos-micro-bert-micro-bert.xtl.html#u.p_lain"><span class="c-userfunc">ᵘp̲lain</span></a>, <a href="demos-pipelines-equations.xtl.html#layer0">layer0</a></div>
+</div>
+<div class="item" id="l.g_eluErf">
+<h3><a href="#l.g_eluErf"><span class="c-libfunc">ˡg̲eluErf</span></a> <span class="type">: Float -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="libs-Activations-src-Activations.xtl.src.html#L121">line 121</a></div>
+<div class="doc">
+<p><code><span class="c-builtin">g̲eluErf</span> x</code>: the exact GELU, x Phi(x) = x/2 (1 + erf(x / sqrt 2)),
+Phi the normal CDF (erf as this file's note says).</p>
+<pre class="example"><span class="prompt">      </span><span class="c-string">&quot;act:&quot;</span> <a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="libs-Activations-src-Activations.xtl.html" class="c-string">&quot;Activations&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span><a href="libs-Activations-src-Activations.xtl.html#l.g_eluErf" class="c-libfunc">ᵃᶜᵗg̲eluErf</a> <span class="c-number">1.0</span>
+0.8413447361676363</pre>
+</div>
+<pre class="code"><span class="c-libfunc">ˡg̲eluErf</span> ← { x → <span class="c-number">0.5</span> <a href="builtins.html#-2a" class="c-symbol">×</a> x <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">1.0</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="libs-Activations-src-Activations.xtl.html#h.e_rf" class="c-libfunc">ʰe̲rf</a> x <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-number">1.4142135623730951</span> }</pre>
+<div class="uses">Used in: <a href="libs-Activations-demos-curves.xtl.html#values">values</a></div>
+</div>
+<div class="item" id="l.m_ish">
+<h3><a href="#l.m_ish"><span class="c-libfunc">ˡm̲ish</span></a> <span class="type">: Float -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="libs-Activations-src-Activations.xtl.src.html#L128">line 128</a></div>
+<div class="doc">
+<p><code><span class="c-builtin">m̲ish</span> x</code>: Mish (Misra 2019), x tanh(softplus(x)): smooth, dips to
+-0.309 below 0, finite at any x.</p>
+<pre class="example"><span class="prompt">      </span><span class="c-string">&quot;act:&quot;</span> <a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="libs-Activations-src-Activations.xtl.html" class="c-string">&quot;Activations&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span><a href="libs-Activations-src-Activations.xtl.html#l.m_ish" class="c-libfunc">ᵃᶜᵗm̲ish</a> <span class="c-number">-1.0</span> <span class="c-number">1.0</span>
+-0.30340146137410895 0.8650983882673104</pre>
+</div>
+<pre class="code"><span class="c-libfunc">ˡm̲ish</span> ← { x → x <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="libs-Activations-src-Activations.xtl.html#l.t_anh" class="c-libfunc">ˡt̲anh</a> <a href="libs-Activations-src-Activations.xtl.html#l.s_oftplus" class="c-libfunc">ˡs̲oftplus</a> x }</pre>
+<div class="uses">Used in: <a href="libs-Activations-demos-curves.xtl.html#values">values</a>, <a href="libs-Activations-demos-curves.xtl.src.html#L18">libs/Activations/demos/curves.xtl:18</a></div>
+</div>
+<div class="item" id="l.h_ardSigmoid">
+<h3><a href="#l.h_ardSigmoid"><span class="c-libfunc">ˡh̲ardSigmoid</span></a> <span class="type">: Float -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="libs-Activations-src-Activations.xtl.src.html#L135">line 135</a></div>
+<div class="doc">
+<p><code><span class="c-builtin">h̲ardSigmoid</span> x</code>: min(max(x + 3, 0), 6) / 6 (Howard et al. 2019,
+MobileNetV3): a sigmoid of three straight lines, no e_xp.</p>
+<pre class="example"><span class="prompt">      </span><span class="c-string">&quot;act:&quot;</span> <a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="libs-Activations-src-Activations.xtl.html" class="c-string">&quot;Activations&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span><a href="libs-Activations-src-Activations.xtl.html#l.h_ardSigmoid" class="c-libfunc">ᵃᶜᵗh̲ardSigmoid</a> <span class="c-number">-4.0</span> <span class="c-number">0.0</span> <span class="c-number">1.5</span>
+0.0 0.5 0.75</pre>
+</div>
+<pre class="code"><span class="c-libfunc">ˡh̲ardSigmoid</span> ← { x → (<span class="c-number">6.0</span> <a href="builtins.html#m_in" class="c-builtin">m̲in</a> <span class="c-number">0.0</span> <a href="builtins.html#m_ax" class="c-builtin">m̲ax</a> x <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">3.0</span>) <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-number">6.0</span> }</pre>
+<div class="uses">Used in: <a href="libs-Activations-src-Activations.xtl.html#l.h_ardSwish"><span class="c-libfunc">ˡh̲ardSwish</span></a>, <a href="libs-Activations-demos-curves.xtl.html#values">values</a></div>
+</div>
+<div class="item" id="l.h_ardSwish">
+<h3><a href="#l.h_ardSwish"><span class="c-libfunc">ˡh̲ardSwish</span></a> <span class="type">: Float -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="libs-Activations-src-Activations.xtl.src.html#L142">line 142</a></div>
+<div class="doc">
+<p><code><span class="c-builtin">h̲ardSwish</span> x</code>: x h_ardSigmoid(x), the same paper's SiLU of straight
+lines, within 0.15 of s_ilu everywhere.</p>
+<pre class="example"><span class="prompt">      </span><span class="c-string">&quot;act:&quot;</span> <a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="libs-Activations-src-Activations.xtl.html" class="c-string">&quot;Activations&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span><a href="libs-Activations-src-Activations.xtl.html#l.h_ardSwish" class="c-libfunc">ᵃᶜᵗh̲ardSwish</a> <span class="c-number">-4.0</span> <span class="c-number">1.0</span> <span class="c-number">4.0</span>
+-0.0 0.6666666666666666 4.0</pre>
+</div>
+<pre class="code"><span class="c-libfunc">ˡh̲ardSwish</span> ← { x → x <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="libs-Activations-src-Activations.xtl.html#l.h_ardSigmoid" class="c-libfunc">ˡh̲ardSigmoid</a> x }</pre>
+<div class="uses">Used in: <a href="libs-Activations-demos-curves.xtl.html#values">values</a></div>
+</div>
+<h2 class="section" id="section-3">The gated layers</h2>
+<div class="item" id="l.g_lu">
+<h3><a href="#l.g_lu"><span class="c-libfunc">ˡg̲lu</span></a> <span class="type">: (Float, Float) -&gt; Float -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="libs-Activations-src-Activations.xtl.src.html#L153">line 153</a></div>
+<div class="doc">
+<p><code>(W, V) <span class="c-builtin">g̲lu</span> x</code>: GLU (Dauphin et al. 2017), sigmoid(x W) * (x V):
+the activation on one projection of each row of x, times the other
+(a gate), item by item. x is a batch (one row each), W and V both
+inputs by hidden.</p>
+<pre class="example"><span class="prompt">      </span><span class="c-string">&quot;act:&quot;</span> <a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="libs-Activations-src-Activations.xtl.html" class="c-string">&quot;Activations&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span>(<span class="c-number">2</span> <span class="c-number">2</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">1.0</span> <span class="c-number">0.0</span> <span class="c-number">0.0</span> <span class="c-number">1.0</span>, <span class="c-number">2</span> <span class="c-number">2</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">2.0</span> <span class="c-number">0.0</span> <span class="c-number">0.0</span> <span class="c-number">2.0</span>) <a href="libs-Activations-src-Activations.xtl.html#l.g_lu" class="c-libfunc">ᵃᶜᵗg̲lu</a> <span class="c-number">1</span> <span class="c-number">2</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.0</span> <span class="c-number">1.0</span>
+0.0 1.4621171572600098</pre>
+</div>
+<pre class="code"><span class="c-libfunc">ˡg̲lu</span> ← { (W, V) x → (<a href="libs-Activations-src-Activations.xtl.html#l.s_igmoid" class="c-libfunc">ˡs̲igmoid</a> x <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#i_nner" class="c-builtin">i̲nner</a> W) <a href="builtins.html#-2a" class="c-symbol">×</a> x <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#i_nner" class="c-builtin">i̲nner</a> V }</pre>
+</div>
+<div class="item" id="l.r_eglu">
+<h3><a href="#l.r_eglu"><span class="c-libfunc">ˡr̲eglu</span></a> <span class="type">: (Float, Float) -&gt; Float -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="libs-Activations-src-Activations.xtl.src.html#L156">line 156</a></div>
+<div class="doc">
+<p><code>(W, V) <span class="c-builtin">r̲eglu</span> x</code>: relu(x W) * (x V) (Shazeer 2020).</p>
+</div>
+<pre class="code"><span class="c-libfunc">ˡr̲eglu</span> ← { (W, V) x → (<a href="libs-Activations-src-Activations.xtl.html#l.r_elu" class="c-libfunc">ˡr̲elu</a> x <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#i_nner" class="c-builtin">i̲nner</a> W) <a href="builtins.html#-2a" class="c-symbol">×</a> x <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#i_nner" class="c-builtin">i̲nner</a> V }</pre>
+</div>
+<div class="item" id="l.g_eglu">
+<h3><a href="#l.g_eglu"><span class="c-libfunc">ˡg̲eglu</span></a> <span class="type">: (Float, Float) -&gt; Float -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="libs-Activations-src-Activations.xtl.src.html#L159">line 159</a></div>
+<div class="doc">
+<p><code>(W, V) <span class="c-builtin">g̲eglu</span> x</code>: gelu(x W) * (x V) (Shazeer 2020).</p>
+</div>
+<pre class="code"><span class="c-libfunc">ˡg̲eglu</span> ← { (W, V) x → (<a href="libs-Activations-src-Activations.xtl.html#l.g_elu" class="c-libfunc">ˡg̲elu</a> x <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#i_nner" class="c-builtin">i̲nner</a> W) <a href="builtins.html#-2a" class="c-symbol">×</a> x <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#i_nner" class="c-builtin">i̲nner</a> V }</pre>
+</div>
+<div class="item" id="l.s_wiglu">
+<h3><a href="#l.s_wiglu"><span class="c-libfunc">ˡs̲wiglu</span></a> <span class="type">: (Float, Float) -&gt; Float -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="libs-Activations-src-Activations.xtl.src.html#L167">line 167</a></div>
+<div class="doc">
+<p><code>(W, V) <span class="c-builtin">s̲wiglu</span> x</code>: silu(x W) * (x V) (Shazeer 2020; LLaMA's
+feed-forward layer, with a hidden width of 2/3 the usual to keep
+the parameter count).</p>
+<pre class="example"><span class="prompt">      </span><span class="c-string">&quot;act:&quot;</span> <a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="libs-Activations-src-Activations.xtl.html" class="c-string">&quot;Activations&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span>(<span class="c-number">2</span> <span class="c-number">2</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">1.0</span> <span class="c-number">0.0</span> <span class="c-number">0.0</span> <span class="c-number">1.0</span>, <span class="c-number">2</span> <span class="c-number">2</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">2.0</span> <span class="c-number">0.0</span> <span class="c-number">0.0</span> <span class="c-number">2.0</span>) <a href="libs-Activations-src-Activations.xtl.html#l.s_wiglu" class="c-libfunc">ᵃᶜᵗs̲wiglu</a> <span class="c-number">1</span> <span class="c-number">2</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.0</span> <span class="c-number">1.0</span>
+0.0 1.4621171572600098</pre>
+</div>
+<pre class="code"><span class="c-libfunc">ˡs̲wiglu</span> ← { (W, V) x → (<a href="libs-Activations-src-Activations.xtl.html#l.s_ilu" class="c-libfunc">ˡs̲ilu</a> x <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#i_nner" class="c-builtin">i̲nner</a> W) <a href="builtins.html#-2a" class="c-symbol">×</a> x <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#i_nner" class="c-builtin">i̲nner</a> V }</pre>
+</div>
+<h2 class="section" id="section-4">Derivatives, in terms of each function's input</h2>
+<div class="item" id="l.d_relu">
+<h3><a href="#l.d_relu"><span class="c-libfunc">ˡd̲relu</span></a> <span class="type">: Float -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="libs-Activations-src-Activations.xtl.src.html#L175">line 175</a></div>
+<div class="doc">
+<p><code><span class="c-builtin">d̲relu</span> x</code>: 1 where x is positive, else 0.</p>
+<pre class="example"><span class="prompt">      </span><span class="c-string">&quot;act:&quot;</span> <a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="libs-Activations-src-Activations.xtl.html" class="c-string">&quot;Activations&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span><a href="libs-Activations-src-Activations.xtl.html#l.d_relu" class="c-libfunc">ᵃᶜᵗd̲relu</a> <span class="c-number">-1.5</span> <span class="c-number">0.0</span> <span class="c-number">2.0</span>
+0.0 0.0 1.0</pre>
+</div>
+<pre class="code"><span class="c-libfunc">ˡd̲relu</span> ← { x → <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> x <a href="builtins.html#-3e" class="c-symbol">&gt;</a> <span class="c-number">0.0</span> }</pre>
+<div class="uses">Used in: <a href="libs-Activations-demos-curves.xtl.html#slopes">slopes</a></div>
+</div>
+<div class="item" id="l.d_leaky">
+<h3><a href="#l.d_leaky"><span class="c-libfunc">ˡd̲leaky</span></a> <span class="type">: Float -&gt; Float -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="libs-Activations-src-Activations.xtl.src.html#L178">line 178</a></div>
+<div class="doc">
+<p><code>a <span class="c-builtin">d̲leaky</span> x</code>: 1 where x is positive, else a.</p>
+</div>
+<pre class="code"><span class="c-libfunc">ˡd̲leaky</span> ← { a x → <span class="c-number">1.0</span> <a href="builtins.html#-2b" class="c-symbol">+</a> (a <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1.0</span>) <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> x <a href="builtins.html#-3c-3d" class="c-symbol">≤</a> <span class="c-number">0.0</span> }</pre>
+<div class="uses">Used in: <a href="libs-Activations-demos-curves.xtl.html#slopes">slopes</a></div>
+</div>
+<div class="item" id="l.d_prelu">
+<h3><a href="#l.d_prelu"><span class="c-libfunc">ˡd̲prelu</span></a> <span class="type">: Float -&gt; Float -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="libs-Activations-src-Activations.xtl.src.html#L181">line 181</a></div>
+<div class="doc">
+<p><code>a <span class="c-builtin">d̲prelu</span> x</code>: 1 where x is positive, else the column's slope.</p>
+</div>
+<pre class="code"><span class="c-libfunc">ˡd̲prelu</span> ← { a x → <span class="c-number">1.0</span> <a href="builtins.html#-2b" class="c-symbol">+</a> (((<a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> x) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> a) <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1.0</span>) <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> x <a href="builtins.html#-3c-3d" class="c-symbol">≤</a> <span class="c-number">0.0</span> }</pre>
+<div class="uses">Used in: <a href="libs-Activations-demos-curves.xtl.html#slopes">slopes</a></div>
+</div>
+<div class="item" id="l.d_elu">
+<h3><a href="#l.d_elu"><span class="c-libfunc">ˡd̲elu</span></a> <span class="type">: Float -&gt; Float -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="libs-Activations-src-Activations.xtl.src.html#L184">line 184</a></div>
+<div class="doc">
+<p><code>a <span class="c-builtin">d̲elu</span> x</code>: 1 where x is positive, else a e^x.</p>
+</div>
+<pre class="code"><span class="c-libfunc">ˡd̲elu</span> ← { a x → (<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> x <a href="builtins.html#-3e" class="c-symbol">&gt;</a> <span class="c-number">0.0</span>) <a href="builtins.html#-2b" class="c-symbol">+</a> a <a href="builtins.html#-2a" class="c-symbol">×</a> (<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> x <a href="builtins.html#-3c-3d" class="c-symbol">≤</a> <span class="c-number">0.0</span>) <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#e_xp" class="c-builtin">e̲xp</a> x <a href="builtins.html#m_in" class="c-builtin">m̲in</a> <span class="c-number">0.0</span> }</pre>
+<div class="uses">Used in: <a href="libs-Activations-src-Activations.xtl.html#l.d_selu"><span class="c-libfunc">ˡd̲selu</span></a>, <a href="libs-Activations-demos-curves.xtl.html#slopes">slopes</a></div>
+</div>
+<div class="item" id="l.d_selu">
+<h3><a href="#l.d_selu"><span class="c-libfunc">ˡd̲selu</span></a> <span class="type">: Float -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="libs-Activations-src-Activations.xtl.src.html#L187">line 187</a></div>
+<div class="doc">
+<p><code><span class="c-builtin">d̲selu</span> x</code>: lambda where x is positive, else lambda alpha e^x.</p>
+</div>
+<pre class="code"><span class="c-libfunc">ˡd̲selu</span> ← { x → <span class="c-number">1.0507009873554805</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">1.6732632423543772</span> <a href="libs-Activations-src-Activations.xtl.html#l.d_elu" class="c-libfunc">ˡd̲elu</a> x }</pre>
+<div class="uses">Used in: <a href="libs-Activations-demos-curves.xtl.html#slopes">slopes</a></div>
+</div>
+<div class="item" id="l.d_sigmoid">
+<h3><a href="#l.d_sigmoid"><span class="c-libfunc">ˡd̲sigmoid</span></a> <span class="type">: Float -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="libs-Activations-src-Activations.xtl.src.html#L193">line 193</a></div>
+<div class="doc">
+<p><code><span class="c-builtin">d̲sigmoid</span> x</code>: s (1 - s) for s = sigmoid(x): at most 1/4, at 0.</p>
+<pre class="example"><span class="prompt">      </span><span class="c-string">&quot;act:&quot;</span> <a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="libs-Activations-src-Activations.xtl.html" class="c-string">&quot;Activations&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span><a href="libs-Activations-src-Activations.xtl.html#l.d_sigmoid" class="c-libfunc">ᵃᶜᵗd̲sigmoid</a> <span class="c-number">0.0</span>
+0.25</pre>
+</div>
+<pre class="code"><span class="c-libfunc">ˡd̲sigmoid</span> ← { x → s ← <a href="libs-Activations-src-Activations.xtl.html#l.s_igmoid" class="c-libfunc">ˡs̲igmoid</a> x◆ s <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">1.0</span> <a href="builtins.html#-2d" class="c-symbol">−</a> s }</pre>
+<div class="uses">Used in: <a href="libs-Activations-demos-curves.xtl.html#slopes">slopes</a></div>
+</div>
+<div class="item" id="l.d_tanh">
+<h3><a href="#l.d_tanh"><span class="c-libfunc">ˡd̲tanh</span></a> <span class="type">: Float -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="libs-Activations-src-Activations.xtl.src.html#L196">line 196</a></div>
+<div class="doc">
+<p><code><span class="c-builtin">d̲tanh</span> x</code>: 1 - tanh(x)^2.</p>
+</div>
+<pre class="code"><span class="c-libfunc">ˡd̲tanh</span> ← { x → t ← <a href="libs-Activations-src-Activations.xtl.html#l.t_anh" class="c-libfunc">ˡt̲anh</a> x◆ <span class="c-number">1.0</span> <a href="builtins.html#-2d" class="c-symbol">−</a> t <a href="builtins.html#-2a" class="c-symbol">×</a> t }</pre>
+<div class="uses">Used in: <a href="libs-Activations-demos-curves.xtl.html#slopes">slopes</a></div>
+</div>
+<div class="item" id="l.d_softplus">
+<h3><a href="#l.d_softplus"><span class="c-libfunc">ˡd̲softplus</span></a> <span class="type">: Float -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="libs-Activations-src-Activations.xtl.src.html#L199">line 199</a></div>
+<div class="doc">
+<p><code><span class="c-builtin">d̲softplus</span> x</code>: sigmoid(x).</p>
+</div>
+<pre class="code"><span class="c-libfunc">ˡd̲softplus</span> ← { x → <a href="libs-Activations-src-Activations.xtl.html#l.s_igmoid" class="c-libfunc">ˡs̲igmoid</a> x }</pre>
+<div class="uses">Used in: <a href="libs-Activations-demos-curves.xtl.html#slopes">slopes</a></div>
+</div>
+<div class="item" id="l.d_silu">
+<h3><a href="#l.d_silu"><span class="c-libfunc">ˡd̲silu</span></a> <span class="type">: Float -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="libs-Activations-src-Activations.xtl.src.html#L202">line 202</a></div>
+<div class="doc">
+<p><code><span class="c-builtin">d̲silu</span> x</code>: s (1 + x (1 - s)) for s = sigmoid(x).</p>
+</div>
+<pre class="code"><span class="c-libfunc">ˡd̲silu</span> ← { x → s ← <a href="libs-Activations-src-Activations.xtl.html#l.s_igmoid" class="c-libfunc">ˡs̲igmoid</a> x◆ s <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">1.0</span> <a href="builtins.html#-2b" class="c-symbol">+</a> x <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">1.0</span> <a href="builtins.html#-2d" class="c-symbol">−</a> s }</pre>
+<div class="uses">Used in: <a href="libs-Activations-demos-curves.xtl.html#slopes">slopes</a></div>
+</div>
+<div class="item" id="l.d_swish">
+<h3><a href="#l.d_swish"><span class="c-libfunc">ˡd̲swish</span></a> <span class="type">: Float -&gt; Float -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="libs-Activations-src-Activations.xtl.src.html#L205">line 205</a></div>
+<div class="doc">
+<p><code>b <span class="c-builtin">d̲swish</span> x</code>: s + b x s (1 - s) for s = sigmoid(b x).</p>
+</div>
+<pre class="code"><span class="c-libfunc">ˡd̲swish</span> ← { b x → s ← <a href="libs-Activations-src-Activations.xtl.html#l.s_igmoid" class="c-libfunc">ˡs̲igmoid</a> b <a href="builtins.html#-2a" class="c-symbol">×</a> x◆ s <a href="builtins.html#-2b" class="c-symbol">+</a> b <a href="builtins.html#-2a" class="c-symbol">×</a> x <a href="builtins.html#-2a" class="c-symbol">×</a> s <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">1.0</span> <a href="builtins.html#-2d" class="c-symbol">−</a> s }</pre>
+<div class="uses">Used in: <a href="libs-Activations-demos-curves.xtl.html#slopes">slopes</a></div>
+</div>
+<div class="item" id="l.d_gelu">
+<h3><a href="#l.d_gelu"><span class="c-libfunc">ˡd̲gelu</span></a> <span class="type">: Float -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="libs-Activations-src-Activations.xtl.src.html#L211">line 211</a></div>
+<div class="doc">
+<p><code><span class="c-builtin">d̲gelu</span> x</code>: the tanh form's derivative, (1 + t)/2 + x/2 (1 - t^2) sqrt(2/pi) (1 + 3 * 0.044715 x^2), t the inner tanh.</p>
+<pre class="example"><span class="prompt">      </span><span class="c-string">&quot;act:&quot;</span> <a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="libs-Activations-src-Activations.xtl.html" class="c-string">&quot;Activations&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span><a href="libs-Activations-src-Activations.xtl.html#l.d_gelu" class="c-libfunc">ᵃᶜᵗd̲gelu</a> <span class="c-number">0.0</span>
+0.5</pre>
+</div>
+<pre class="code"><span class="c-libfunc">ˡd̲gelu</span> ← { x → t ← <a href="libs-Activations-src-Activations.xtl.html#h.g_eluTanh" class="c-libfunc">ʰg̲eluTanh</a> x◆ (<span class="c-number">0.5</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">1.0</span> <a href="builtins.html#-2b" class="c-symbol">+</a> t) <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">0.5</span> <a href="builtins.html#-2a" class="c-symbol">×</a> x <a href="builtins.html#-2a" class="c-symbol">×</a> (<span class="c-number">1.0</span> <a href="builtins.html#-2d" class="c-symbol">−</a> t <a href="builtins.html#-2a" class="c-symbol">×</a> t) <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">0.7978845608028654</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">1.0</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">0.134145</span> <a href="builtins.html#-2a" class="c-symbol">×</a> x <a href="builtins.html#-2a" class="c-symbol">×</a> x }</pre>
+<div class="uses">Used in: <a href="libs-Activations-demos-curves.xtl.html#slopes">slopes</a></div>
+</div>
+<div class="item" id="l.d_geluErf">
+<h3><a href="#l.d_geluErf"><span class="c-libfunc">ˡd̲geluErf</span></a> <span class="type">: Float -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="libs-Activations-src-Activations.xtl.src.html#L214">line 214</a></div>
+<div class="doc">
+<p><code><span class="c-builtin">d̲geluErf</span> x</code>: Phi(x) + x phi(x), the normal CDF and density.</p>
+</div>
+<pre class="code"><span class="c-libfunc">ˡd̲geluErf</span> ← { x → (<span class="c-number">0.5</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">1.0</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="libs-Activations-src-Activations.xtl.html#h.e_rf" class="c-libfunc">ʰe̲rf</a> x <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-number">1.4142135623730951</span>) <a href="builtins.html#-2b" class="c-symbol">+</a> x <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">0.3989422804014327</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#e_xp" class="c-builtin">e̲xp</a> <a href="builtins.html#n_eg" class="c-builtin">n̲eg</a> x <a href="builtins.html#-2a" class="c-symbol">×</a> x <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-number">2.0</span> }</pre>
+<div class="uses">Used in: <a href="libs-Activations-demos-curves.xtl.html#slopes">slopes</a></div>
+</div>
+<div class="item" id="l.d_mish">
+<h3><a href="#l.d_mish"><span class="c-libfunc">ˡd̲mish</span></a> <span class="type">: Float -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="libs-Activations-src-Activations.xtl.src.html#L217">line 217</a></div>
+<div class="doc">
+<p><code><span class="c-builtin">d̲mish</span> x</code>: t + x (1 - t^2) sigmoid(x) for t = tanh(softplus(x)).</p>
+</div>
+<pre class="code"><span class="c-libfunc">ˡd̲mish</span> ← { x → t ← <a href="libs-Activations-src-Activations.xtl.html#l.t_anh" class="c-libfunc">ˡt̲anh</a> <a href="libs-Activations-src-Activations.xtl.html#l.s_oftplus" class="c-libfunc">ˡs̲oftplus</a> x◆ t <a href="builtins.html#-2b" class="c-symbol">+</a> x <a href="builtins.html#-2a" class="c-symbol">×</a> (<span class="c-number">1.0</span> <a href="builtins.html#-2d" class="c-symbol">−</a> t <a href="builtins.html#-2a" class="c-symbol">×</a> t) <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="libs-Activations-src-Activations.xtl.html#l.s_igmoid" class="c-libfunc">ˡs̲igmoid</a> x }</pre>
+<div class="uses">Used in: <a href="libs-Activations-demos-curves.xtl.html#slopes">slopes</a></div>
+</div>
+<div class="item" id="l.d_hardSigmoid">
+<h3><a href="#l.d_hardSigmoid"><span class="c-libfunc">ˡd̲hardSigmoid</span></a> <span class="type">: Float -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="libs-Activations-src-Activations.xtl.src.html#L220">line 220</a></div>
+<div class="doc">
+<p><code><span class="c-builtin">d̲hardSigmoid</span> x</code>: 1/6 where |x| &lt; 3, else 0.</p>
+</div>
+<pre class="code"><span class="c-libfunc">ˡd̲hardSigmoid</span> ← { x → (<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> (<a href="builtins.html#a_bs" class="c-builtin">a̲bs</a> x) <a href="builtins.html#-3c" class="c-symbol">&lt;</a> <span class="c-number">3.0</span>) <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-number">6.0</span> }</pre>
+<div class="uses">Used in: <a href="libs-Activations-demos-curves.xtl.html#slopes">slopes</a></div>
+</div>
+<div class="item" id="l.d_hardSwish">
+<h3><a href="#l.d_hardSwish"><span class="c-libfunc">ˡd̲hardSwish</span></a> <span class="type">: Float -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="libs-Activations-src-Activations.xtl.src.html#L223">line 223</a></div>
+<div class="doc">
+<p><code><span class="c-builtin">d̲hardSwish</span> x</code>: (2x + 3)/6 where |x| &lt; 3; 0 below, 1 from 3 on.</p>
+</div>
+<pre class="code"><span class="c-libfunc">ˡd̲hardSwish</span> ← { x → (<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> x <a href="builtins.html#-3e-3d" class="c-symbol">≥</a> <span class="c-number">3.0</span>) <a href="builtins.html#-2b" class="c-symbol">+</a> (<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> (<a href="builtins.html#a_bs" class="c-builtin">a̲bs</a> x) <a href="builtins.html#-3c" class="c-symbol">&lt;</a> <span class="c-number">3.0</span>) <a href="builtins.html#-2a" class="c-symbol">×</a> ((<span class="c-number">2.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> x) <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">3.0</span>) <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-number">6.0</span> }</pre>
+<div class="uses">Used in: <a href="libs-Activations-demos-curves.xtl.html#slopes">slopes</a></div>
+</div>
+</main>
+</body>
+</html>

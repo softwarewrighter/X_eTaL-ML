@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>demos/micro-bert/micro-bert.xtl - X_eTaL doc</title>
+<link rel="stylesheet" href="style.css">
+<script src="theme.js"></script>
+<script defer src="search-index.js"></script>
+<script defer src="search.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.18.10/dist/katex.min.css" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.18.10/dist/katex.min.js" crossorigin="anonymous"></script>
+<script>document.addEventListener('DOMContentLoaded', function () {
+if (typeof katex === 'undefined') return;
+document.querySelectorAll('.c-notation').forEach(function (el) {
+var tex = el.textContent; if (!tex) return;
+try { katex.render(tex, el, { throwOnError: false }); } catch (e) { el.textContent = tex; }
+});
+});</script>
+</head>
+<body>
+<nav class="side">
+<a class="home" href="index.html">X_eTaL doc</a>
+<input id="search" type="search" autocomplete="off" placeholder="Search: a name, or a type" title="A name (mean finds m_ean), or a type: Num a =&gt; a -&gt; a -&gt; a finds +, m_ax ...">
+<h2>Files</h2>
+<h3>demos/attention/</h3>
+<ul>
+<li><a href="demos-attention-attention.xtl.html">attention.xtl</a></li>
+</ul>
+<h3>demos/backprop/</h3>
+<ul>
+<li><a href="demos-backprop-backprop.xtl.html">backprop.xtl</a></li>
+</ul>
+<h3>demos/cnn-backprop/</h3>
+<ul>
+<li><a href="demos-cnn-backprop-cnn-backprop.xtl.html">cnn-backprop.xtl</a></li>
+</ul>
+<h3>demos/cnn-digits/</h3>
+<ul>
+<li><a href="demos-cnn-digits-batch.xtl.html">batch.xtl</a></li>
+<li><a href="demos-cnn-digits-cnn-digits.xtl.html">cnn-digits.xtl</a></li>
+</ul>
+<h3>demos/diffusion/</h3>
+<ul>
+<li><a href="demos-diffusion-diffusion.xtl.html">diffusion.xtl</a></li>
+</ul>
+<h3>demos/embedding-explorer/</h3>
+<ul>
+<li><a href="demos-embedding-explorer-embedding-explorer.xtl.html">embedding-explorer.xtl</a></li>
+</ul>
+<h3>demos/k-means/</h3>
+<ul>
+<li><a href="demos-k-means-k-means.xtl.html">k-means.xtl</a></li>
+</ul>
+<h3>demos/micro-bert/</h3>
+<ul>
+<li><a href="demos-micro-bert-micro-bert.xtl.html">micro-bert.xtl</a></li>
+</ul>
+<h3>demos/micro-gpt/</h3>
+<ul>
+<li><a href="demos-micro-gpt-batch.xtl.html">batch.xtl</a></li>
+<li><a href="demos-micro-gpt-micro-gpt.xtl.html">micro-gpt.xtl</a></li>
+</ul>
+<h3>demos/moe-router/</h3>
+<ul>
+<li><a href="demos-moe-router-moe-router.xtl.html">moe-router.xtl</a></li>
+</ul>
+<h3>demos/net-macro/</h3>
+<ul>
+<li><a href="demos-net-macro-net-macro.xtl.html">net-macro.xtl</a></li>
+<li><a href="demos-net-macro-train-it.xtl.html">train-it.xtl</a></li>
+</ul>
+<h3>demos/pipelines/</h3>
+<ul>
+<li><a href="demos-pipelines-diffusion.xtl.html">diffusion.xtl</a></li>
+<li><a href="demos-pipelines-equations.xtl.html">equations.xtl</a></li>
+<li><a href="demos-pipelines-pipelines.xtl.html">pipelines.xtl</a></li>
+<li><a href="demos-pipelines-rosetta.xtl.html">rosetta.xtl</a></li>
+</ul>
+<h3>demos/ternary-net/</h3>
+<ul>
+<li><a href="demos-ternary-net-ternary-net.xtl.html">ternary-net.xtl</a></li>
+</ul>
+<h3>demos/train-live/</h3>
+<ul>
+<li><a href="demos-train-live-train-live.xtl.html">train-live.xtl</a></li>
+</ul>
+<h3>demos/world-model/</h3>
+<ul>
+<li><a href="demos-world-model-world-model.xtl.html">world-model.xtl</a></li>
+</ul>
+<h3>libs/Activations/demos/</h3>
+<ul>
+<li><a href="libs-Activations-demos-curves.xtl.html">curves.xtl</a></li>
+</ul>
+<h3>libs/Activations/src/</h3>
+<ul>
+<li><a href="libs-Activations-src-Activations.xtl.html">Activations.xtl</a></li>
+</ul>
+<h3>libs/Attention/demos/</h3>
+<ul>
+<li><a href="libs-Attention-demos-previous.xtl.html">previous.xtl</a></li>
+</ul>
+<h3>libs/Attention/src/</h3>
+<ul>
+<li><a href="libs-Attention-src-Attention.xtl.html">Attention.xtl</a></li>
+</ul>
+<h3>libs/Conv/demos/</h3>
+<ul>
+<li><a href="libs-Conv-demos-edges.xtl.html">edges.xtl</a></li>
+</ul>
+<h3>libs/Conv/src/</h3>
+<ul>
+<li><a href="libs-Conv-src-Conv.xtl.html">Conv.xtl</a></li>
+</ul>
+<h3>libs/Embed/demos/</h3>
+<ul>
+<li><a href="libs-Embed-demos-pets.xtl.html">pets.xtl</a></li>
+</ul>
+<h3>libs/Embed/src/</h3>
+<ul>
+<li><a href="libs-Embed-src-Embed.xtl.html">Embed.xtl</a></li>
+</ul>
+<h3>libs/Flow/demos/</h3>
+<ul>
+<li><a href="libs-Flow-demos-mlp.xtl.html">mlp.xtl</a></li>
+</ul>
+<h3>libs/Flow/src/</h3>
+<ul>
+<li><a href="libs-Flow-src-Flow.xtlm.html">Flow.xtlm</a></li>
+</ul>
+<h3>libs/Integrals/demos/</h3>
+<ul>
+<li><a href="libs-Integrals-demos-convolution.xtl.html">convolution.xtl</a></li>
+<li><a href="libs-Integrals-demos-gelu.xtl.html">gelu.xtl</a></li>
+</ul>
+<h3>libs/Integrals/src/</h3>
+<ul>
+<li><a href="libs-Integrals-src-Integrals.xtlm.html">Integrals.xtlm</a></li>
+</ul>
+<h3>libs/Learn/demos/</h3>
+<ul>
+<li><a href="libs-Learn-demos-blobs.xtl.html">blobs.xtl</a></li>
+</ul>
+<h3>libs/Learn/src/</h3>
+<ul>
+<li><a href="libs-Learn-src-Learn.xtl.html">Learn.xtl</a></li>
+</ul>
+<h3>libs/Net/demos/</h3>
+<ul>
+<li><a href="libs-Net-demos-train-xor.xtl.html">train-xor.xtl</a></li>
+<li><a href="libs-Net-demos-xor.xtl.html">xor.xtl</a></li>
+</ul>
+<h3>libs/Net/src/</h3>
+<ul>
+<li><a href="libs-Net-src-Net.xtlm.html">Net.xtlm</a></li>
+</ul>
+<h3>libs/NN/demos/</h3>
+<ul>
+<li><a href="libs-NN-demos-xor.xtl.html">xor.xtl</a></li>
+</ul>
+<h3>libs/NN/src/</h3>
+<ul>
+<li><a href="libs-NN-src-NN.xtl.html">NN.xtl</a></li>
+</ul>
+<h3>libs/Norm/demos/</h3>
+<ul>
+<li><a href="libs-Norm-demos-rows.xtl.html">rows.xtl</a></li>
+</ul>
+<h3>libs/Norm/src/</h3>
+<ul>
+<li><a href="libs-Norm-src-Norm.xtl.html">Norm.xtl</a></li>
+</ul>
+<h3>libs/Optim/demos/</h3>
+<ul>
+<li><a href="libs-Optim-demos-bowl.xtl.html">bowl.xtl</a></li>
+</ul>
+<h3>libs/Optim/src/</h3>
+<ul>
+<li><a href="libs-Optim-src-Optim.xtl.html">Optim.xtl</a></li>
+</ul>
+<h3>libs/Quant/demos/</h3>
+<ul>
+<li><a href="libs-Quant-demos-formats.xtl.html">formats.xtl</a></li>
+</ul>
+<h3>libs/Quant/src/</h3>
+<ul>
+<li><a href="libs-Quant-src-Quant.xtl.html">Quant.xtl</a></li>
+</ul>
+<h3>libs/Sample/demos/</h3>
+<ul>
+<li><a href="libs-Sample-demos-next.xtl.html">next.xtl</a></li>
+</ul>
+<h3>libs/Sample/src/</h3>
+<ul>
+<li><a href="libs-Sample-src-Sample.xtl.html">Sample.xtl</a></li>
+</ul>
+<h3>std/</h3>
+<ul>
+<li><a href="std-System.xtlm.html">System.xtlm</a></li>
+</ul>
+<h3>work/libs/Check/src/</h3>
+<ul>
+<li><a href="work-libs-Check-src-Check.xtl.html">Check.xtl</a></li>
+<li><a href="work-libs-Check-src-Check.xtlm.html">Check.xtlm</a></li>
+</ul>
+<h3>work/libs/Equations/src/</h3>
+<ul>
+<li><a href="work-libs-Equations-src-Equations.xtl.html">Equations.xtl</a></li>
+<li><a href="work-libs-Equations-src-Equations.xtlm.html">Equations.xtlm</a></li>
+</ul>
+<h3>work/libs/Lists/src/</h3>
+<ul>
+<li><a href="work-libs-Lists-src-Lists.xtl.html">Lists.xtl</a></li>
+</ul>
+<h3>work/libs/Strings/src/</h3>
+<ul>
+<li><a href="work-libs-Strings-src-Strings.xtl.html">Strings.xtl</a></li>
+</ul>
+<ul>
+<li><a href="builtins.html">built-ins</a></li>
+</ul>
+<h2>On this page</h2>
+<ul>
+<li><a href="#section-1">The model, read from data/ (just micro-bert-data)</a></li>
+<li class="item"><a href="#chars">chars</a></li>
+<li class="item"><a href="#L">L</a></li>
+<li class="item"><a href="#wte">wte</a></li>
+<li class="item"><a href="#wpe">wpe</a></li>
+<li class="item"><a href="#ln0">ln0</a></li>
+<li class="item"><a href="#Wq">Wq</a></li>
+<li class="item"><a href="#Wk">Wk</a></li>
+<li class="item"><a href="#Wv">Wv</a></li>
+<li class="item"><a href="#Wo">Wo</a></li>
+<li class="item"><a href="#ln1">ln1</a></li>
+<li class="item"><a href="#W1">W1</a></li>
+<li class="item"><a href="#W2">W2</a></li>
+<li class="item"><a href="#ln2">ln2</a></li>
+<li class="item"><a href="#lm">lm</a></li>
+<li><a href="#section-2">The forward pass</a></li>
+<li class="item"><a href="#u.c_ols"><span class="c-userfunc">ᵘc̲ols</span></a></li>
+<li class="item"><a href="#u.h_ead"><span class="c-userfunc">ᵘh̲ead</span></a></li>
+<li class="item"><a href="#u.l_ooks"><span class="c-userfunc">ᵘl̲ooks</span></a></li>
+<li class="item"><a href="#u.a_ttention"><span class="c-userfunc">ᵘa̲ttention</span></a></li>
+<li class="item"><a href="#u.n_orm"><span class="c-userfunc">ᵘn̲orm</span></a></li>
+<li class="item"><a href="#u.l_ayer"><span class="c-userfunc">ᵘl̲ayer</span></a></li>
+<li class="item"><a href="#u.e_mbed"><span class="c-userfunc">ᵘe̲mbed</span></a></li>
+<li class="item"><a href="#u.b_ert"><span class="c-userfunc">ᵘb̲ert</span></a></li>
+<li class="item"><a href="#u.t_okens"><span class="c-userfunc">ᵘt̲okens</span></a></li>
+<li class="item"><a href="#u.f_ill"><span class="c-userfunc">ᵘf̲ill</span></a></li>
+<li><a href="#section-3">Four ways to write it</a></li>
+<li class="item"><a href="#ids">ids</a></li>
+<li class="item"><a href="#n">n</a></li>
+<li class="item"><a href="#X">X</a></li>
+<li class="item"><a href="#c">c</a></li>
+<li class="item"><a href="#Q">Q</a></li>
+<li class="item"><a href="#K">K</a></li>
+<li class="item"><a href="#V">V</a></li>
+<li class="item"><a href="#S">S</a></li>
+<li class="item"><a href="#A">A</a></li>
+<li class="item"><a href="#Y">Y</a></li>
+<li class="item"><a href="#u.p_lain"><span class="c-userfunc">ᵘp̲lain</span></a></li>
+<li><a href="#section-4">The checks</a></li>
+<li class="item"><a href="#expected">expected</a></li>
+<li class="item"><a href="#looks">looks</a></li>
+<li class="item"><a href="#h1">h1</a></li>
+<li class="item"><a href="#hP">hP</a></li>
+<li class="item"><a href="#hF">hF</a></li>
+<li class="item"><a href="#mine">mine</a></li>
+<li class="item"><a href="#r1">r1</a></li>
+<li class="item"><a href="#r2">r2</a></li>
+<li class="item"><a href="#u.c_lose"><span class="c-userfunc">ᵘc̲lose</span></a></li>
+<li class="item"><a href="#r3">r3</a></li>
+<li class="item"><a href="#r4">r4</a></li>
+<li><a href="#section-5">Blanks filled: the three likeliest letters and their probabilities</a></li>
+<li class="item"><a href="#u.t_op"><span class="c-userfunc">ᵘt̲op</span></a></li>
+</ul>
+</nav>
+<main>
+<button class="theme" title="Light or dark">theme</button>
+<section id="results"></section>
+<h1><span class="kind">program</span>demos/micro-bert/micro-bert.xtl</h1>
+<div class="doc">
+<p>A tiny BERT in X_eTaL: the encoder half of a transformer (Devlin et
+al. 2019), 2 layers, 16 numbers wide, 2 attention heads, 7,594
+weights, trained offline to fill a blank letter in baby names. Every
+letter sees every other, before it and after it, which a GPT's causal
+mask forbids. One encoder layer is a pipeline (Flow), applied L times
+by p_ower; the forward pass gives the same scores as the Rust model it
+was trained in, and the same as the layer written out, and the
+attention as Equations writes it.</p>
+</div>
+<p class="meta"><a href="demos-micro-bert-micro-bert.xtl.src.html">source</a> &middot; imports <code><span class="c-error">nn:</span></code> <a href="libs-NN-src-NN.xtl.html">libs/NN/src/NN.xtl</a>; <code><span class="c-error">act:</span></code> <a href="libs-Activations-src-Activations.xtl.html">libs/Activations/src/Activations.xtl</a>; <code><span class="c-error">nm:</span></code> <a href="libs-Norm-src-Norm.xtl.html">libs/Norm/src/Norm.xtl</a>; <code><span class="c-error">at:</span></code> <a href="libs-Attention-src-Attention.xtl.html">libs/Attention/src/Attention.xtl</a>; <code><span class="c-error">flow:</span></code> <a href="libs-Flow-src-Flow.xtlm.html">libs/Flow/src/Flow.xtlm</a>; <code><span class="c-error">e:</span></code> <a href="work-libs-Equations-src-Equations.xtl.html">work/libs/Equations/src/Equations.xtl</a> <a href="work-libs-Equations-src-Equations.xtlm.html">work/libs/Equations/src/Equations.xtlm</a>; <code><span class="c-error">k:</span></code> <a href="work-libs-Check-src-Check.xtl.html">work/libs/Check/src/Check.xtl</a> <a href="work-libs-Check-src-Check.xtlm.html">work/libs/Check/src/Check.xtlm</a>; <code><span class="c-error">t:</span></code> <a href="work-libs-Strings-src-Strings.xtl.html">work/libs/Strings/src/Strings.xtl</a></p>
+<h2 class="section" id="section-1">The model, read from data/ (just micro-bert-data)</h2>
+<div class="item" id="chars">
+<h3><a href="#chars">chars</a> <span class="type">: Char</span></h3>
+<div class="meta">value &middot; <a href="demos-micro-bert-micro-bert.xtl.src.html#L22">line 22</a></div>
+<div class="doc">
+<p>The 26 letters; the token 27 is the mask, the blank to fill.</p>
+</div>
+<pre class="code">chars ← <span class="c-number">-1</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;data/chars.txt&quot;</span></pre>
+<div class="uses">Used in: <a href="demos-micro-bert-micro-bert.xtl.html#u.t_okens"><span class="c-userfunc">ᵘt̲okens</span></a>, <a href="demos-micro-bert-micro-bert.xtl.html#u.t_op"><span class="c-userfunc">ᵘt̲op</span></a></div>
+</div>
+<div class="item" id="L">
+<h3><a href="#L">L</a> <span class="type">: Int</span></h3>
+<div class="meta">value &middot; <a href="demos-micro-bert-micro-bert.xtl.src.html#L23">line 23</a></div>
+<pre class="code">L ← <span class="c-number">2</span></pre>
+<div class="uses">Used in: <a href="demos-micro-bert-micro-bert.xtl.html#u.b_ert"><span class="c-userfunc">ᵘb̲ert</span></a>, <a href="demos-micro-bert-micro-bert.xtl.html#hP">hP</a>, <a href="demos-micro-bert-micro-bert.xtl.html#hF">hF</a></div>
+</div>
+<div class="item" id="wte">
+<h3><a href="#wte">wte</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-micro-bert-micro-bert.xtl.src.html#L27">line 27</a></div>
+<div class="doc">
+<p>Each matrix a row per input, as x times it is written; a dense layer
+with its bias as one more row (NN's d_ense); a layer norm as two rows,
+its gain and its bias; a layer's weights stacked, layer 1 first.</p>
+</div>
+<pre class="code">wte ← <span class="c-number">27</span> <span class="c-number">16</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <a href="builtins.html#n_umbers" class="c-builtin">n̲umbers</a> <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;data/wte.txt&quot;</span></pre>
+<div class="uses">Used in: <a href="demos-micro-bert-micro-bert.xtl.html#u.e_mbed"><span class="c-userfunc">ᵘe̲mbed</span></a></div>
+</div>
+<div class="item" id="wpe">
+<h3><a href="#wpe">wpe</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-micro-bert-micro-bert.xtl.src.html#L28">line 28</a></div>
+<pre class="code">wpe ← <span class="c-number">16</span> <span class="c-number">16</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <a href="builtins.html#n_umbers" class="c-builtin">n̲umbers</a> <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;data/wpe.txt&quot;</span></pre>
+<div class="uses">Used in: <a href="demos-micro-bert-micro-bert.xtl.html#u.e_mbed"><span class="c-userfunc">ᵘe̲mbed</span></a></div>
+</div>
+<div class="item" id="ln0">
+<h3><a href="#ln0">ln0</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-micro-bert-micro-bert.xtl.src.html#L29">line 29</a></div>
+<pre class="code">ln0 ← <span class="c-number">2</span> <span class="c-number">16</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <a href="builtins.html#n_umbers" class="c-builtin">n̲umbers</a> <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;data/ln0.txt&quot;</span></pre>
+<div class="uses">Used in: <a href="demos-micro-bert-micro-bert.xtl.html#u.e_mbed"><span class="c-userfunc">ᵘe̲mbed</span></a></div>
+</div>
+<div class="item" id="Wq">
+<h3><a href="#Wq">Wq</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-micro-bert-micro-bert.xtl.src.html#L30">line 30</a></div>
+<pre class="code">Wq ← <span class="c-number">2</span> <span class="c-number">16</span> <span class="c-number">16</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <a href="builtins.html#n_umbers" class="c-builtin">n̲umbers</a> <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;data/wq.txt&quot;</span></pre>
+<div class="uses">Used in: <a href="demos-micro-bert-micro-bert.xtl.html#u.h_ead"><span class="c-userfunc">ᵘh̲ead</span></a>, <a href="demos-micro-bert-micro-bert.xtl.html#u.l_ooks"><span class="c-userfunc">ᵘl̲ooks</span></a>, <a href="demos-micro-bert-micro-bert.xtl.html#Q">Q</a></div>
+</div>
+<div class="item" id="Wk">
+<h3><a href="#Wk">Wk</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-micro-bert-micro-bert.xtl.src.html#L31">line 31</a></div>
+<pre class="code">Wk ← <span class="c-number">2</span> <span class="c-number">16</span> <span class="c-number">16</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <a href="builtins.html#n_umbers" class="c-builtin">n̲umbers</a> <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;data/wk.txt&quot;</span></pre>
+<div class="uses">Used in: <a href="demos-micro-bert-micro-bert.xtl.html#u.h_ead"><span class="c-userfunc">ᵘh̲ead</span></a>, <a href="demos-micro-bert-micro-bert.xtl.html#u.l_ooks"><span class="c-userfunc">ᵘl̲ooks</span></a>, <a href="demos-micro-bert-micro-bert.xtl.html#K">K</a></div>
+</div>
+<div class="item" id="Wv">
+<h3><a href="#Wv">Wv</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-micro-bert-micro-bert.xtl.src.html#L32">line 32</a></div>
+<pre class="code">Wv ← <span class="c-number">2</span> <span class="c-number">16</span> <span class="c-number">16</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <a href="builtins.html#n_umbers" class="c-builtin">n̲umbers</a> <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;data/wv.txt&quot;</span></pre>
+<div class="uses">Used in: <a href="demos-micro-bert-micro-bert.xtl.html#u.h_ead"><span class="c-userfunc">ᵘh̲ead</span></a>, <a href="demos-micro-bert-micro-bert.xtl.html#V">V</a></div>
+</div>
+<div class="item" id="Wo">
+<h3><a href="#Wo">Wo</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-micro-bert-micro-bert.xtl.src.html#L33">line 33</a></div>
+<pre class="code">Wo ← <span class="c-number">2</span> <span class="c-number">16</span> <span class="c-number">16</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <a href="builtins.html#n_umbers" class="c-builtin">n̲umbers</a> <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;data/wo.txt&quot;</span></pre>
+<div class="uses">Used in: <a href="demos-micro-bert-micro-bert.xtl.html#u.a_ttention"><span class="c-userfunc">ᵘa̲ttention</span></a></div>
+</div>
+<div class="item" id="ln1">
+<h3><a href="#ln1">ln1</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-micro-bert-micro-bert.xtl.src.html#L34">line 34</a></div>
+<pre class="code">ln1 ← <span class="c-number">2</span> <span class="c-number">2</span> <span class="c-number">16</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <a href="builtins.html#n_umbers" class="c-builtin">n̲umbers</a> <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;data/ln1.txt&quot;</span></pre>
+<div class="uses">Used in: <a href="demos-micro-bert-micro-bert.xtl.html#u.l_ayer"><span class="c-userfunc">ᵘl̲ayer</span></a>, <a href="demos-micro-bert-micro-bert.xtl.html#u.p_lain"><span class="c-userfunc">ᵘp̲lain</span></a></div>
+</div>
+<div class="item" id="W1">
+<h3><a href="#W1">W1</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-micro-bert-micro-bert.xtl.src.html#L35">line 35</a></div>
+<pre class="code">W1 ← <span class="c-number">2</span> <span class="c-number">17</span> <span class="c-number">64</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <a href="builtins.html#n_umbers" class="c-builtin">n̲umbers</a> <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;data/w1.txt&quot;</span></pre>
+<div class="uses">Used in: <a href="demos-micro-bert-micro-bert.xtl.html#u.l_ayer"><span class="c-userfunc">ᵘl̲ayer</span></a>, <a href="demos-micro-bert-micro-bert.xtl.html#u.p_lain"><span class="c-userfunc">ᵘp̲lain</span></a></div>
+</div>
+<div class="item" id="W2">
+<h3><a href="#W2">W2</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-micro-bert-micro-bert.xtl.src.html#L36">line 36</a></div>
+<pre class="code">W2 ← <span class="c-number">2</span> <span class="c-number">65</span> <span class="c-number">16</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <a href="builtins.html#n_umbers" class="c-builtin">n̲umbers</a> <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;data/w2.txt&quot;</span></pre>
+<div class="uses">Used in: <a href="demos-micro-bert-micro-bert.xtl.html#u.l_ayer"><span class="c-userfunc">ᵘl̲ayer</span></a>, <a href="demos-micro-bert-micro-bert.xtl.html#u.p_lain"><span class="c-userfunc">ᵘp̲lain</span></a></div>
+</div>
+<div class="item" id="ln2">
+<h3><a href="#ln2">ln2</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-micro-bert-micro-bert.xtl.src.html#L37">line 37</a></div>
+<pre class="code">ln2 ← <span class="c-number">2</span> <span class="c-number">2</span> <span class="c-number">16</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <a href="builtins.html#n_umbers" class="c-builtin">n̲umbers</a> <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;data/ln2.txt&quot;</span></pre>
+<div class="uses">Used in: <a href="demos-micro-bert-micro-bert.xtl.html#u.l_ayer"><span class="c-userfunc">ᵘl̲ayer</span></a>, <a href="demos-micro-bert-micro-bert.xtl.html#u.p_lain"><span class="c-userfunc">ᵘp̲lain</span></a></div>
+</div>
+<div class="item" id="lm">
+<h3><a href="#lm">lm</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-micro-bert-micro-bert.xtl.src.html#L38">line 38</a></div>
+<pre class="code">lm ← <span class="c-number">17</span> <span class="c-number">26</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <a href="builtins.html#n_umbers" class="c-builtin">n̲umbers</a> <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;data/lm.txt&quot;</span></pre>
+<div class="uses">Used in: <a href="demos-micro-bert-micro-bert.xtl.html#u.b_ert"><span class="c-userfunc">ᵘb̲ert</span></a></div>
+</div>
+<h2 class="section" id="section-2">The forward pass</h2>
+<div class="item" id="u.c_ols">
+<h3><a href="#u.c_ols"><span class="c-userfunc">ᵘc̲ols</span></a> <span class="type">: Int -&gt; a -&gt; a</span></h3>
+<div class="meta">function &middot; <a href="demos-micro-bert-micro-bert.xtl.src.html#L42">line 42</a></div>
+<div class="doc">
+<p>The columns r of a matrix.</p>
+</div>
+<pre class="code"><span class="c-userfunc">ᵘc̲ols</span> ← { r W → <a href="builtins.html#o_-5c" class="c-builtin">o̲\</a> r <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="builtins.html#o_-5c" class="c-builtin">o̲\</a> W }</pre>
+<div class="uses">Used in: <a href="demos-micro-bert-micro-bert.xtl.html#u.h_ead"><span class="c-userfunc">ᵘh̲ead</span></a>, <a href="demos-micro-bert-micro-bert.xtl.html#u.l_ooks"><span class="c-userfunc">ᵘl̲ooks</span></a>, <a href="demos-micro-bert-micro-bert.xtl.html#Q">Q</a>, <a href="demos-micro-bert-micro-bert.xtl.html#K">K</a>, <a href="demos-micro-bert-micro-bert.xtl.html#V">V</a></div>
+</div>
+<div class="item" id="u.h_ead">
+<h3><a href="#u.h_ead"><span class="c-userfunc">ᵘh̲ead</span></a> <span class="type">: (Int, Int) -&gt; Float -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="demos-micro-bert-micro-bert.xtl.src.html#L45">line 45</a></div>
+<div class="doc">
+<p>Head j of layer l: its eight columns of the layer's projections; every
+letter sees every letter (at:a_ll, not a causal mask).</p>
+</div>
+<pre class="code"><span class="c-userfunc">ᵘh̲ead</span> ← { (l, j) H →
+  r ← (<span class="c-number">8</span> <a href="builtins.html#-2a" class="c-symbol">×</a> j <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span>) <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <span class="c-number">8</span>
+  (r <a href="demos-micro-bert-micro-bert.xtl.html#u.c_ols" class="c-userfunc">ᵘc̲ols</a> l <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="demos-micro-bert-micro-bert.xtl.html#Wq">Wq</a>, r <a href="demos-micro-bert-micro-bert.xtl.html#u.c_ols" class="c-userfunc">ᵘc̲ols</a> l <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="demos-micro-bert-micro-bert.xtl.html#Wk">Wk</a>, r <a href="demos-micro-bert-micro-bert.xtl.html#u.c_ols" class="c-userfunc">ᵘc̲ols</a> l <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="demos-micro-bert-micro-bert.xtl.html#Wv">Wv</a>) <a href="libs-Attention-src-Attention.xtl.html#l.h_ead" class="c-libfunc">ᵃᵗh̲ead</a> (H, <a href="libs-Attention-src-Attention.xtl.html#l.a_ll" class="c-libfunc">ᵃᵗa̲ll</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> H)
+}</pre>
+<div class="uses">Used in: <a href="demos-micro-bert-micro-bert.xtl.html#u.a_ttention"><span class="c-userfunc">ᵘa̲ttention</span></a>, <a href="demos-micro-bert-micro-bert.xtl.html#r1">r1</a></div>
+</div>
+<div class="item" id="u.l_ooks">
+<h3><a href="#u.l_ooks"><span class="c-userfunc">ᵘl̲ooks</span></a> <span class="type">: (Int, Int) -&gt; Float -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="demos-micro-bert-micro-bert.xtl.src.html#L50">line 50</a></div>
+<div class="doc">
+<p>Where head j of layer l looks: its attention weights, n x n.</p>
+</div>
+<pre class="code"><span class="c-userfunc">ᵘl̲ooks</span> ← { (l, j) H →
+  r ← (<span class="c-number">8</span> <a href="builtins.html#-2a" class="c-symbol">×</a> j <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span>) <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <span class="c-number">8</span>
+  (<a href="libs-Attention-src-Attention.xtl.html#l.a_ll" class="c-libfunc">ᵃᵗa̲ll</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> H) <a href="libs-Attention-src-Attention.xtl.html#l.w_eights" class="c-libfunc">ᵃᵗw̲eights</a> (r <a href="demos-micro-bert-micro-bert.xtl.html#u.c_ols" class="c-userfunc">ᵘc̲ols</a> l <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="demos-micro-bert-micro-bert.xtl.html#Wq">Wq</a>, r <a href="demos-micro-bert-micro-bert.xtl.html#u.c_ols" class="c-userfunc">ᵘc̲ols</a> l <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="demos-micro-bert-micro-bert.xtl.html#Wk">Wk</a>) <a href="libs-Attention-src-Attention.xtl.html#l.s_cores" class="c-libfunc">ᵃᵗs̲cores</a> H
+}</pre>
+<div class="uses">Used in: <a href="demos-micro-bert-micro-bert.xtl.html#mine">mine</a></div>
+</div>
+<div class="item" id="u.a_ttention">
+<h3><a href="#u.a_ttention"><span class="c-userfunc">ᵘa̲ttention</span></a> <span class="type">: Int -&gt; Float -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="demos-micro-bert-micro-bert.xtl.src.html#L55">line 55</a></div>
+<div class="doc">
+<p>Layer l's attention: its two heads side by side, times Wo.</p>
+</div>
+<pre class="code"><span class="c-userfunc">ᵘa̲ttention</span> ← { l H → (((l, <span class="c-number">1</span>) <a href="demos-micro-bert-micro-bert.xtl.html#u.h_ead" class="c-userfunc">ᵘh̲ead</a> H) <a href="builtins.html#c_at" class="c-builtin">c̲at₂</a> (l, <span class="c-number">2</span>) <a href="demos-micro-bert-micro-bert.xtl.html#u.h_ead" class="c-userfunc">ᵘh̲ead</a> H) <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#i_nner" class="c-builtin">i̲nner</a> l <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="demos-micro-bert-micro-bert.xtl.html#Wo">Wo</a> }</pre>
+<div class="uses">Used in: <a href="demos-micro-bert-micro-bert.xtl.html#u.l_ayer"><span class="c-userfunc">ᵘl̲ayer</span></a>, <a href="demos-micro-bert-micro-bert.xtl.html#u.p_lain"><span class="c-userfunc">ᵘp̲lain</span></a></div>
+</div>
+<div class="item" id="u.n_orm">
+<h3><a href="#u.n_orm"><span class="c-userfunc">ᵘn̲orm</span></a> <span class="type">: Float -&gt; Float -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="demos-micro-bert-micro-bert.xtl.src.html#L57">line 57</a></div>
+<div class="doc">
+<p>Layer norm by its two rows.</p>
+</div>
+<pre class="code"><span class="c-userfunc">ᵘn̲orm</span> ← { G X → (<span class="c-number">1</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> G, <span class="c-number">2</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> G) <a href="libs-Norm-src-Norm.xtl.html#l.l_ayer" class="c-libfunc">ⁿᵐl̲ayer</a> X }</pre>
+<div class="uses">Used in: <a href="demos-micro-bert-micro-bert.xtl.html#u.l_ayer"><span class="c-userfunc">ᵘl̲ayer</span></a>, <a href="demos-micro-bert-micro-bert.xtl.html#u.e_mbed"><span class="c-userfunc">ᵘe̲mbed</span></a>, <a href="demos-micro-bert-micro-bert.xtl.html#u.p_lain"><span class="c-userfunc">ᵘp̲lain</span></a></div>
+</div>
+<div class="item" id="u.l_ayer">
+<h3><a href="#u.l_ayer"><span class="c-userfunc">ᵘl̲ayer</span></a> <span class="type">: (Float, Int) -&gt; (Float, Int)</span></h3>
+<div class="meta">function &middot; <a href="demos-micro-bert-micro-bert.xtl.src.html#L61">line 61</a></div>
+<div class="doc">
+<p>Encoder layer l as a pipeline: attention, added back ($h) and normed,
+the GELU feed-forward layer, added back ($a) and normed; the shapes
+checked. It takes and gives the layer number too, for p_ower.</p>
+</div>
+<pre class="code"><span class="c-userfunc">ᵘl̲ayer</span> ← { (H, l) →
+  n ← <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> H
+  y ← @ <a href="libs-Flow-src-Flow.xtlm.html#m.p_ipe-3c" class="c-macro">ᶠˡᵒʷp̲ipe&lt;</a> <span class="c-string">c&quot;</span>
+     H ▹h
+  ▷ l <span class="c-userfunc">ᵘa̲ttention</span> it
+  ▷ (l <span class="c-builtin">s̲elect</span> ln1) <span class="c-userfunc">ᵘn̲orm</span> it <span class="c-symbol">+</span> h ▹a [n <span class="c-number">16</span>]
+  ▷ <span class="c-libfunc">ᵃᶜᵗg̲elu</span> it <span class="c-libfunc">ⁿⁿd̲ense</span> l <span class="c-builtin">s̲elect</span> W1
+  ▷ it <span class="c-libfunc">ⁿⁿd̲ense</span> l <span class="c-builtin">s̲elect</span> W2
+  ▷ (l <span class="c-builtin">s̲elect</span> ln2) <span class="c-userfunc">ᵘn̲orm</span> it <span class="c-symbol">+</span> a ▹out [n <span class="c-number">16</span>]<span class="c-string">&quot;</span>
+  (y, l <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">1</span>)
+}</pre>
+<details class="expansion"><summary><code><a href="libs-Flow-src-Flow.xtlm.html#m.p_ipe-3c" class="c-macro">ᶠˡᵒʷp̲ipe&lt;</a></code> expands to</summary><pre class="code">({ @ →
+  h ← H
+  g1:stage ← { @ →
+    it ← h
+    l <a href="demos-micro-bert-micro-bert.xtl.html#u.a_ttention" class="c-userfunc">ᵘa̲ttention</a> it
+  } @
+  a ← { @ →
+    it ← g1:stage
+    (l <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="demos-micro-bert-micro-bert.xtl.html#ln1">ln1</a>) <a href="demos-micro-bert-micro-bert.xtl.html#u.n_orm" class="c-userfunc">ᵘn̲orm</a> it <a href="builtins.html#-2b" class="c-symbol">+</a> h
+  } @
+  _ ← { @ →
+    ((<a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> a) <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> <a href="demos-micro-bert-micro-bert.xtl.html#n">n</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">16</span>) ? @
+    <span class="c-string">&quot;shape&quot;</span> <a href="builtins.html#-5b-5dS_IGNAL" class="c-builtin">⎕S̲IGNAL</a> <span class="c-string">&quot;stage 3 (a): shape &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> a) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;, expected &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> <a href="demos-micro-bert-micro-bert.xtl.html#n">n</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">16</span>
+  } @
+  g2:stage ← { @ →
+    it ← a
+    <a href="libs-Activations-src-Activations.xtl.html#l.g_elu" class="c-libfunc">ᵃᶜᵗg̲elu</a> it <a href="libs-NN-src-NN.xtl.html#l.d_ense" class="c-libfunc">ⁿⁿd̲ense</a> l <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="demos-micro-bert-micro-bert.xtl.html#W1">W1</a>
+  } @
+  g3:stage ← { @ →
+    it ← g2:stage
+    it <a href="libs-NN-src-NN.xtl.html#l.d_ense" class="c-libfunc">ⁿⁿd̲ense</a> l <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="demos-micro-bert-micro-bert.xtl.html#W2">W2</a>
+  } @
+  out ← { @ →
+    it ← g3:stage
+    (l <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="demos-micro-bert-micro-bert.xtl.html#ln2">ln2</a>) <a href="demos-micro-bert-micro-bert.xtl.html#u.n_orm" class="c-userfunc">ᵘn̲orm</a> it <a href="builtins.html#-2b" class="c-symbol">+</a> a
+  } @
+  _ ← { @ →
+    ((<a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> out) <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> <a href="demos-micro-bert-micro-bert.xtl.html#n">n</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">16</span>) ? @
+    <span class="c-string">&quot;shape&quot;</span> <a href="builtins.html#-5b-5dS_IGNAL" class="c-builtin">⎕S̲IGNAL</a> <span class="c-string">&quot;stage 6 (out): shape &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> out) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;, expected &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> <a href="demos-micro-bert-micro-bert.xtl.html#n">n</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">16</span>
+  } @
+  out
+} @)</pre></details>
+<div class="uses">Used in: <a href="demos-micro-bert-micro-bert.xtl.html#u.b_ert"><span class="c-userfunc">ᵘb̲ert</span></a>, <a href="demos-micro-bert-micro-bert.xtl.html#h1">h1</a>, <a href="demos-micro-bert-micro-bert.xtl.html#hF">hF</a></div>
+</div>
+<div class="item" id="u.e_mbed">
+<h3><a href="#u.e_mbed"><span class="c-userfunc">ᵘe̲mbed</span></a> <span class="type">: Int -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="demos-micro-bert-micro-bert.xtl.src.html#L73">line 73</a></div>
+<div class="doc">
+<p>The letters' embeddings and their places', normed.</p>
+</div>
+<pre class="code"><span class="c-userfunc">ᵘe̲mbed</span> ← { ids → <a href="demos-micro-bert-micro-bert.xtl.html#ln0">ln0</a> <a href="demos-micro-bert-micro-bert.xtl.html#u.n_orm" class="c-userfunc">ᵘn̲orm</a> (ids <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="demos-micro-bert-micro-bert.xtl.html#wte">wte</a>) <a href="builtins.html#-2b" class="c-symbol">+</a> (<a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> ids) <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="demos-micro-bert-micro-bert.xtl.html#wpe">wpe</a> }</pre>
+<div class="uses">Used in: <a href="demos-micro-bert-micro-bert.xtl.html#u.b_ert"><span class="c-userfunc">ᵘb̲ert</span></a>, <a href="demos-micro-bert-micro-bert.xtl.html#X">X</a></div>
+</div>
+<div class="item" id="u.b_ert">
+<h3><a href="#u.b_ert"><span class="c-userfunc">ᵘb̲ert</span></a> <span class="type">: Int -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="demos-micro-bert-micro-bert.xtl.src.html#L75">line 75</a></div>
+<div class="doc">
+<p>The scores over the 26 letters at every place of the tokens ids: L layers, then the dense layer.</p>
+</div>
+<pre class="code"><span class="c-userfunc">ᵘb̲ert</span> ← { ids →
+  (hL, _) ← <a href="demos-micro-bert-micro-bert.xtl.html#L">L</a> <span class="c-userfunc">'</span><a href="demos-micro-bert-micro-bert.xtl.html#u.l_ayer" class="c-userfunc">ᵘl̲ayer</a> <a href="builtins.html#p_ower" class="c-builtin">p̲ower</a> (<a href="demos-micro-bert-micro-bert.xtl.html#u.e_mbed" class="c-userfunc">ᵘe̲mbed</a> ids, <span class="c-number">1</span>)
+  hL <a href="libs-NN-src-NN.xtl.html#l.d_ense" class="c-libfunc">ⁿⁿd̲ense</a> <a href="demos-micro-bert-micro-bert.xtl.html#lm">lm</a>
+}</pre>
+<div class="uses">Used in: <a href="demos-micro-bert-micro-bert.xtl.html#u.f_ill"><span class="c-userfunc">ᵘf̲ill</span></a>, <a href="demos-micro-bert-micro-bert.xtl.html#r3">r3</a></div>
+</div>
+<div class="item" id="u.t_okens">
+<h3><a href="#u.t_okens"><span class="c-userfunc">ᵘt̲okens</span></a> <span class="type">: Char -&gt; Int</span></h3>
+<div class="meta">function &middot; <a href="demos-micro-bert-micro-bert.xtl.src.html#L81">line 81</a></div>
+<div class="doc">
+<p>A name with a blank, &quot;ma_y&quot;, as tokens: the blank is the mask (27,
+past the letters).</p>
+</div>
+<pre class="code"><span class="c-userfunc">ᵘt̲okens</span> ← { s → <a href="demos-micro-bert-micro-bert.xtl.html#chars">chars</a> <a href="builtins.html#i_ndexOf" class="c-builtin">i̲ndexOf</a> s }</pre>
+<div class="uses">Used in: <a href="demos-micro-bert-micro-bert.xtl.html#u.f_ill"><span class="c-userfunc">ᵘf̲ill</span></a>, <a href="demos-micro-bert-micro-bert.xtl.html#ids">ids</a></div>
+</div>
+<div class="item" id="u.f_ill">
+<h3><a href="#u.f_ill"><span class="c-userfunc">ᵘf̲ill</span></a> <span class="type">: Char -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="demos-micro-bert-micro-bert.xtl.src.html#L83">line 83</a></div>
+<div class="doc">
+<p>The probability of each letter for the blank.</p>
+</div>
+<pre class="code"><span class="c-userfunc">ᵘf̲ill</span> ← { s → <a href="libs-NN-src-NN.xtl.html#l.s_oftmax" class="c-libfunc">ⁿⁿs̲oftmax</a> (<a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> <a href="builtins.html#w_here" class="c-builtin">w̲here</a> <span class="c-number">27</span> <a href="builtins.html#-3d" class="c-symbol">=</a> <a href="demos-micro-bert-micro-bert.xtl.html#u.t_okens" class="c-userfunc">ᵘt̲okens</a> s) <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="demos-micro-bert-micro-bert.xtl.html#u.b_ert" class="c-userfunc">ᵘb̲ert</a> <a href="demos-micro-bert-micro-bert.xtl.html#u.t_okens" class="c-userfunc">ᵘt̲okens</a> s }</pre>
+<div class="uses">Used in: <a href="demos-micro-bert-micro-bert.xtl.html#u.t_op"><span class="c-userfunc">ᵘt̲op</span></a></div>
+</div>
+<h2 class="section" id="section-3">Four ways to write it</h2>
+<div class="item" id="ids">
+<h3><a href="#ids">ids</a> <span class="type">: Int</span></h3>
+<div class="meta">value &middot; <a href="demos-micro-bert-micro-bert.xtl.src.html#L99">line 99</a></div>
+<div class="doc">
+<p>2. The attention of head 1 of layer 1 as Equations reads it, for the
+blank of &quot;em_a&quot;: the scores, the softmax written out (exp over the
+row's sum: not shifted by the row's largest, fine at these sizes),
+the values weighted. GELU, the layer and its L repeats stay outside
+the strings (asks E6, E3, E2 in docs/xetal-libraries-asks.md).</p>
+</div>
+<pre class="code">ids ← <a href="demos-micro-bert-micro-bert.xtl.html#u.t_okens" class="c-userfunc">ᵘt̲okens</a> <span class="c-string">&quot;em_a&quot;</span></pre>
+<div class="uses">Used in: <a href="demos-micro-bert-micro-bert.xtl.html#n">n</a>, <a href="demos-micro-bert-micro-bert.xtl.html#X">X</a>, <a href="demos-micro-bert-micro-bert.xtl.html#r3">r3</a></div>
+</div>
+<div class="item" id="n">
+<h3><a href="#n">n</a> <span class="type">: Int</span></h3>
+<div class="meta">value &middot; <a href="demos-micro-bert-micro-bert.xtl.src.html#L100">line 100</a></div>
+<pre class="code">n ← <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> <a href="demos-micro-bert-micro-bert.xtl.html#ids">ids</a></pre>
+<div class="uses">Used in: <a href="demos-micro-bert-micro-bert.xtl.html#u.l_ayer"><span class="c-userfunc">ᵘl̲ayer</span></a>, <a href="demos-micro-bert-micro-bert.xtl.html#S">S</a>, <a href="demos-micro-bert-micro-bert.xtl.html#A">A</a>, <a href="demos-micro-bert-micro-bert.xtl.html#Y">Y</a></div>
+</div>
+<div class="item" id="X">
+<h3><a href="#X">X</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-micro-bert-micro-bert.xtl.src.html#L101">line 101</a></div>
+<pre class="code">X ← <a href="demos-micro-bert-micro-bert.xtl.html#u.e_mbed" class="c-userfunc">ᵘe̲mbed</a> <a href="demos-micro-bert-micro-bert.xtl.html#ids">ids</a></pre>
+<div class="uses">Used in: <a href="demos-micro-bert-micro-bert.xtl.html#Q">Q</a>, <a href="demos-micro-bert-micro-bert.xtl.html#K">K</a>, <a href="demos-micro-bert-micro-bert.xtl.html#V">V</a>, <a href="demos-micro-bert-micro-bert.xtl.html#h1">h1</a>, <a href="demos-micro-bert-micro-bert.xtl.html#hP">hP</a>, <a href="demos-micro-bert-micro-bert.xtl.html#hF">hF</a>, <a href="demos-micro-bert-micro-bert.xtl.html#mine">mine</a>, <a href="demos-micro-bert-micro-bert.xtl.html#r1">r1</a></div>
+</div>
+<div class="item" id="c">
+<h3><a href="#c">c</a> <span class="type">: Int</span></h3>
+<div class="meta">value &middot; <a href="demos-micro-bert-micro-bert.xtl.src.html#L102">line 102</a></div>
+<pre class="code">c ← <a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <span class="c-number">8</span></pre>
+<div class="uses">Used in: <a href="demos-micro-bert-micro-bert.xtl.html#Q">Q</a>, <a href="demos-micro-bert-micro-bert.xtl.html#K">K</a>, <a href="demos-micro-bert-micro-bert.xtl.html#V">V</a></div>
+</div>
+<div class="item" id="Q">
+<h3><a href="#Q">Q</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-micro-bert-micro-bert.xtl.src.html#L103">line 103</a></div>
+<pre class="code">Q ← <a href="demos-micro-bert-micro-bert.xtl.html#X">X</a> <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#i_nner" class="c-builtin">i̲nner</a> <a href="demos-micro-bert-micro-bert.xtl.html#c">c</a> <a href="demos-micro-bert-micro-bert.xtl.html#u.c_ols" class="c-userfunc">ᵘc̲ols</a> <span class="c-number">1</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="demos-micro-bert-micro-bert.xtl.html#Wq">Wq</a></pre>
+<div class="uses">Used in: <a href="demos-micro-bert-micro-bert.xtl.html#S">S</a></div>
+</div>
+<div class="item" id="K">
+<h3><a href="#K">K</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-micro-bert-micro-bert.xtl.src.html#L104">line 104</a></div>
+<pre class="code">K ← <a href="demos-micro-bert-micro-bert.xtl.html#X">X</a> <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#i_nner" class="c-builtin">i̲nner</a> <a href="demos-micro-bert-micro-bert.xtl.html#c">c</a> <a href="demos-micro-bert-micro-bert.xtl.html#u.c_ols" class="c-userfunc">ᵘc̲ols</a> <span class="c-number">1</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="demos-micro-bert-micro-bert.xtl.html#Wk">Wk</a></pre>
+<div class="uses">Used in: <a href="demos-micro-bert-micro-bert.xtl.html#S">S</a></div>
+</div>
+<div class="item" id="V">
+<h3><a href="#V">V</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-micro-bert-micro-bert.xtl.src.html#L105">line 105</a></div>
+<pre class="code">V ← <a href="demos-micro-bert-micro-bert.xtl.html#X">X</a> <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#i_nner" class="c-builtin">i̲nner</a> <a href="demos-micro-bert-micro-bert.xtl.html#c">c</a> <a href="demos-micro-bert-micro-bert.xtl.html#u.c_ols" class="c-userfunc">ᵘc̲ols</a> <span class="c-number">1</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="demos-micro-bert-micro-bert.xtl.html#Wv">Wv</a></pre>
+<div class="uses">Used in: <a href="demos-micro-bert-micro-bert.xtl.html#Y">Y</a></div>
+</div>
+<div class="item" id="S">
+<h3><a href="#S">S</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-micro-bert-micro-bert.xtl.src.html#L106">line 106</a></div>
+<pre class="code">S ← <span class="c-notation"></span> <a href="work-libs-Equations-src-Equations.xtlm.html#m.e_q-3c" class="c-macro">ᵉe̲q&lt;</a> <span class="c-notation">S_{i,j} = \frac{\sum_{k=0}^{7} Q_{i,k} \, K_{j,k}}{\sqrt{8.0}}</span></pre>
+<details class="expansion"><summary><code><a href="work-libs-Equations-src-Equations.xtlm.html#m.e_q-3c" class="c-macro">ᵉe̲q&lt;</a></code> expands to</summary><pre class="code">(({ @ →
+  <span class="c-libfunc">g6:a̲t</span> ← { A i → (<span class="c-number">1</span> <a href="builtins.html#-2b" class="c-symbol">+</a> i) <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> A }
+  <span class="c-libfunc">g5:c̲heck</span> ← { (<a href="demos-micro-bert-micro-bert.xtl.html#A">A</a>, name, k, from) e →
+    n ← k <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> <a href="demos-micro-bert-micro-bert.xtl.html#A">A</a>
+    bad ← <a href="builtins.html#w_here" class="c-builtin">w̲here</a> <a href="builtins.html#n_ot" class="c-builtin">n̲ot</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> (<span class="c-number">0</span> <a href="builtins.html#-3c-3d" class="c-symbol">≤</a> e) <a href="builtins.html#-26" class="c-symbol">∧</a> e <a href="builtins.html#-3c" class="c-symbol">&lt;</a> n
+    <span class="c-number">0</span> <a href="builtins.html#-3d" class="c-symbol">=</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> bad ? e
+    <span class="c-string">&quot;index&quot;</span> <a href="builtins.html#-5b-5dS_IGNAL" class="c-builtin">⎕S̲IGNAL</a> name <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; axis &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> k) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;: index &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> (<a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> bad) <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> e) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; is outside 0..&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> n <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; (from &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> from <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;)&quot;</span>
+  }
+  <span class="c-libfunc">g4:r̲ank</span> ← { (<a href="demos-micro-bert-micro-bert.xtl.html#A">A</a>, name, q, ref) →
+    (<a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> <a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> <a href="demos-micro-bert-micro-bert.xtl.html#A">A</a>) <a href="builtins.html#-3d" class="c-symbol">=</a> q ? <a href="demos-micro-bert-micro-bert.xtl.html#A">A</a>
+    <span class="c-string">&quot;rank&quot;</span> <a href="builtins.html#-5b-5dS_IGNAL" class="c-builtin">⎕S̲IGNAL</a> ref <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; indexes &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> q) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; axes, but &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> name <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; has rank &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> <a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> <a href="demos-micro-bert-micro-bert.xtl.html#A">A</a>
+  }
+  g7:grid ← <a href="demos-micro-bert-micro-bert.xtl.html#n">n</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="demos-micro-bert-micro-bert.xtl.html#n">n</a>
+  <span class="c-libfunc">g8:g̲rid</span> ← { k → g7:grid <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> (<a href="builtins.html#o_ffsets" class="c-builtin">o̲ffsets</a> k <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> g7:grid) <span class="c-builtin">'</span><a href="builtins.html#l_eft" class="c-builtin">l̲eft</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> (<span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> k <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> g7:grid) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0</span> }
+  g7:grid <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> ((({ @ →
+  g9:grid ← <a href="demos-micro-bert-micro-bert.xtl.html#n">n</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="demos-micro-bert-micro-bert.xtl.html#n">n</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> ({ v → (<span class="c-number">0</span> <a href="builtins.html#-3c-3d" class="c-symbol">≤</a> v) ? v◆ <span class="c-string">&quot;bad-equation&quot;</span> <a href="builtins.html#-5b-5dS_IGNAL" class="c-builtin">⎕S̲IGNAL</a> <span class="c-string">&quot;sum's range runs low..high: 0..7&quot;</span> } (<span class="c-number">1</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">7</span> <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">0</span>))
+  <span class="c-libfunc">g10:g̲rid</span> ← { k → g9:grid <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> (<a href="builtins.html#o_ffsets" class="c-builtin">o̲ffsets</a> k <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> g9:grid) <span class="c-builtin">'</span><a href="builtins.html#l_eft" class="c-builtin">l̲eft</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> (<span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> k <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> g9:grid) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0</span> }
+  <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/₃</a> g9:grid <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> ((
+    ((<span class="c-libfunc">g4:r̲ank</span> (<a href="demos-micro-bert-micro-bert.xtl.html#Q">Q</a>, <span class="c-string">&quot;Q&quot;</span>, <span class="c-number">2</span>, <span class="c-string">&quot;Q[i,k]&quot;</span>)) <span class="c-libfunc">g6:a̲t</span> ((
+      ((<a href="demos-micro-bert-micro-bert.xtl.html#Q">Q</a>, <span class="c-string">&quot;Q&quot;</span>, <span class="c-number">2</span>, <span class="c-string">&quot;k&quot;</span>) <span class="c-libfunc">g5:c̲heck</span> (<span class="c-number">0</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-libfunc">g10:g̲rid</span> <span class="c-number">3</span>)) <a href="builtins.html#-2b" class="c-symbol">+</a> (<span class="c-number">2</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> <a href="demos-micro-bert-micro-bert.xtl.html#Q">Q</a>) <a href="builtins.html#-2a" class="c-symbol">×</a> 
+      ((<a href="demos-micro-bert-micro-bert.xtl.html#Q">Q</a>, <span class="c-string">&quot;Q&quot;</span>, <span class="c-number">1</span>, <span class="c-string">&quot;i&quot;</span>) <span class="c-libfunc">g5:c̲heck</span> (<span class="c-number">0</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-libfunc">g10:g̲rid</span> <span class="c-number">1</span>))))) <a href="builtins.html#-2a" class="c-symbol">×</a> 
+    ((<span class="c-libfunc">g4:r̲ank</span> (<a href="demos-micro-bert-micro-bert.xtl.html#K">K</a>, <span class="c-string">&quot;K&quot;</span>, <span class="c-number">2</span>, <span class="c-string">&quot;K[j,k]&quot;</span>)) <span class="c-libfunc">g6:a̲t</span> ((
+      ((<a href="demos-micro-bert-micro-bert.xtl.html#K">K</a>, <span class="c-string">&quot;K&quot;</span>, <span class="c-number">2</span>, <span class="c-string">&quot;k&quot;</span>) <span class="c-libfunc">g5:c̲heck</span> (<span class="c-number">0</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-libfunc">g10:g̲rid</span> <span class="c-number">3</span>)) <a href="builtins.html#-2b" class="c-symbol">+</a> (<span class="c-number">2</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> <a href="demos-micro-bert-micro-bert.xtl.html#K">K</a>) <a href="builtins.html#-2a" class="c-symbol">×</a> 
+      ((<a href="demos-micro-bert-micro-bert.xtl.html#K">K</a>, <span class="c-string">&quot;K&quot;</span>, <span class="c-number">1</span>, <span class="c-string">&quot;j&quot;</span>) <span class="c-libfunc">g5:c̲heck</span> (<span class="c-number">0</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-libfunc">g10:g̲rid</span> <span class="c-number">2</span>)))))))
+} @) <a href="builtins.html#-2f" class="c-symbol">÷</a> (<span class="c-number">8.0</span> <a href="builtins.html#-5e" class="c-symbol">^</a> <span class="c-number">0.5</span>)))
+} @))</pre></details>
+<div class="uses">Used in: <a href="demos-micro-bert-micro-bert.xtl.html#A">A</a></div>
+</div>
+<div class="item" id="A">
+<h3><a href="#A">A</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-micro-bert-micro-bert.xtl.src.html#L107">line 107</a></div>
+<pre class="code">A ← <span class="c-notation"></span> <a href="work-libs-Equations-src-Equations.xtlm.html#m.e_q-3c" class="c-macro">ᵉe̲q&lt;</a> <span class="c-notation">A_{i,j} = \frac{\exp(S_{i,j})}{\sum_{m=0}^{n - 1} \exp(S_{i,m})}</span></pre>
+<details class="expansion"><summary><code><a href="work-libs-Equations-src-Equations.xtlm.html#m.e_q-3c" class="c-macro">ᵉe̲q&lt;</a></code> expands to</summary><pre class="code">(({ @ →
+  <span class="c-libfunc">g13:a̲t</span> ← { A i → (<span class="c-number">1</span> <a href="builtins.html#-2b" class="c-symbol">+</a> i) <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> A }
+  <span class="c-libfunc">g12:c̲heck</span> ← { (<a href="demos-micro-bert-micro-bert.xtl.html#A">A</a>, name, k, from) e →
+    n ← k <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> <a href="demos-micro-bert-micro-bert.xtl.html#A">A</a>
+    bad ← <a href="builtins.html#w_here" class="c-builtin">w̲here</a> <a href="builtins.html#n_ot" class="c-builtin">n̲ot</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> (<span class="c-number">0</span> <a href="builtins.html#-3c-3d" class="c-symbol">≤</a> e) <a href="builtins.html#-26" class="c-symbol">∧</a> e <a href="builtins.html#-3c" class="c-symbol">&lt;</a> n
+    <span class="c-number">0</span> <a href="builtins.html#-3d" class="c-symbol">=</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> bad ? e
+    <span class="c-string">&quot;index&quot;</span> <a href="builtins.html#-5b-5dS_IGNAL" class="c-builtin">⎕S̲IGNAL</a> name <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; axis &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> k) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;: index &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> (<a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> bad) <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> e) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; is outside 0..&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> n <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; (from &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> from <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;)&quot;</span>
+  }
+  <span class="c-libfunc">g11:r̲ank</span> ← { (<a href="demos-micro-bert-micro-bert.xtl.html#A">A</a>, name, q, ref) →
+    (<a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> <a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> <a href="demos-micro-bert-micro-bert.xtl.html#A">A</a>) <a href="builtins.html#-3d" class="c-symbol">=</a> q ? <a href="demos-micro-bert-micro-bert.xtl.html#A">A</a>
+    <span class="c-string">&quot;rank&quot;</span> <a href="builtins.html#-5b-5dS_IGNAL" class="c-builtin">⎕S̲IGNAL</a> ref <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; indexes &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> q) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; axes, but &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> name <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; has rank &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> <a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> <a href="demos-micro-bert-micro-bert.xtl.html#A">A</a>
+  }
+  g14:grid ← <a href="demos-micro-bert-micro-bert.xtl.html#n">n</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="demos-micro-bert-micro-bert.xtl.html#n">n</a>
+  <span class="c-libfunc">g15:g̲rid</span> ← { k → g14:grid <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> (<a href="builtins.html#o_ffsets" class="c-builtin">o̲ffsets</a> k <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> g14:grid) <span class="c-builtin">'</span><a href="builtins.html#l_eft" class="c-builtin">l̲eft</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> (<span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> k <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> g14:grid) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0</span> }
+  g14:grid <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> (((<a href="builtins.html#e_xp" class="c-builtin">e̲xp</a> 
+    ((<span class="c-libfunc">g11:r̲ank</span> (<a href="demos-micro-bert-micro-bert.xtl.html#S">S</a>, <span class="c-string">&quot;S&quot;</span>, <span class="c-number">2</span>, <span class="c-string">&quot;S[i,j]&quot;</span>)) <span class="c-libfunc">g13:a̲t</span> ((
+      ((<a href="demos-micro-bert-micro-bert.xtl.html#S">S</a>, <span class="c-string">&quot;S&quot;</span>, <span class="c-number">2</span>, <span class="c-string">&quot;j&quot;</span>) <span class="c-libfunc">g12:c̲heck</span> (<span class="c-number">0</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-libfunc">g15:g̲rid</span> <span class="c-number">2</span>)) <a href="builtins.html#-2b" class="c-symbol">+</a> (<span class="c-number">2</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> <a href="demos-micro-bert-micro-bert.xtl.html#S">S</a>) <a href="builtins.html#-2a" class="c-symbol">×</a> 
+      ((<a href="demos-micro-bert-micro-bert.xtl.html#S">S</a>, <span class="c-string">&quot;S&quot;</span>, <span class="c-number">1</span>, <span class="c-string">&quot;i&quot;</span>) <span class="c-libfunc">g12:c̲heck</span> (<span class="c-number">0</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-libfunc">g15:g̲rid</span> <span class="c-number">1</span>)))))) <a href="builtins.html#-2f" class="c-symbol">÷</a> ({ @ →
+  g16:grid ← <a href="demos-micro-bert-micro-bert.xtl.html#n">n</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="demos-micro-bert-micro-bert.xtl.html#n">n</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> ({ v → (<span class="c-number">0</span> <a href="builtins.html#-3c-3d" class="c-symbol">≤</a> v) ? v◆ <span class="c-string">&quot;bad-equation&quot;</span> <a href="builtins.html#-5b-5dS_IGNAL" class="c-builtin">⎕S̲IGNAL</a> <span class="c-string">&quot;sum's range runs low..high: 0..n-1&quot;</span> } (<span class="c-number">1</span> <a href="builtins.html#-2b" class="c-symbol">+</a> (<a href="demos-micro-bert-micro-bert.xtl.html#n">n</a> <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span>) <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">0</span>))
+  <span class="c-libfunc">g17:g̲rid</span> ← { k → g16:grid <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> (<a href="builtins.html#o_ffsets" class="c-builtin">o̲ffsets</a> k <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> g16:grid) <span class="c-builtin">'</span><a href="builtins.html#l_eft" class="c-builtin">l̲eft</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> (<span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> k <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> g16:grid) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0</span> }
+  <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/₃</a> g16:grid <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> ((<a href="builtins.html#e_xp" class="c-builtin">e̲xp</a> 
+    ((<span class="c-libfunc">g11:r̲ank</span> (<a href="demos-micro-bert-micro-bert.xtl.html#S">S</a>, <span class="c-string">&quot;S&quot;</span>, <span class="c-number">2</span>, <span class="c-string">&quot;S[i,m]&quot;</span>)) <span class="c-libfunc">g13:a̲t</span> ((
+      ((<a href="demos-micro-bert-micro-bert.xtl.html#S">S</a>, <span class="c-string">&quot;S&quot;</span>, <span class="c-number">2</span>, <span class="c-string">&quot;m&quot;</span>) <span class="c-libfunc">g12:c̲heck</span> (<span class="c-number">0</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-libfunc">g17:g̲rid</span> <span class="c-number">3</span>)) <a href="builtins.html#-2b" class="c-symbol">+</a> (<span class="c-number">2</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> <a href="demos-micro-bert-micro-bert.xtl.html#S">S</a>) <a href="builtins.html#-2a" class="c-symbol">×</a> 
+      ((<a href="demos-micro-bert-micro-bert.xtl.html#S">S</a>, <span class="c-string">&quot;S&quot;</span>, <span class="c-number">1</span>, <span class="c-string">&quot;i&quot;</span>) <span class="c-libfunc">g12:c̲heck</span> (<span class="c-number">0</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-libfunc">g17:g̲rid</span> <span class="c-number">1</span>)))))))
+} @)))
+} @))</pre></details>
+<div class="uses">Used in: <a href="demos-micro-bert-micro-bert.xtl.html#S">S</a>, <a href="demos-micro-bert-micro-bert.xtl.html#A">A</a>, <a href="demos-micro-bert-micro-bert.xtl.html#Y">Y</a></div>
+</div>
+<div class="item" id="Y">
+<h3><a href="#Y">Y</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-micro-bert-micro-bert.xtl.src.html#L108">line 108</a></div>
+<pre class="code">Y ← <span class="c-notation"></span> <a href="work-libs-Equations-src-Equations.xtlm.html#m.e_q-3c" class="c-macro">ᵉe̲q&lt;</a> <span class="c-notation">Y_{i,d} = \sum_{j=0}^{n - 1} A_{i,j} \, V_{j,d}</span></pre>
+<details class="expansion"><summary><code><a href="work-libs-Equations-src-Equations.xtlm.html#m.e_q-3c" class="c-macro">ᵉe̲q&lt;</a></code> expands to</summary><pre class="code">(({ @ →
+  <span class="c-libfunc">g20:a̲t</span> ← { A i → (<span class="c-number">1</span> <a href="builtins.html#-2b" class="c-symbol">+</a> i) <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> A }
+  <span class="c-libfunc">g19:c̲heck</span> ← { (<a href="demos-micro-bert-micro-bert.xtl.html#A">A</a>, name, k, from) e →
+    n ← k <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> <a href="demos-micro-bert-micro-bert.xtl.html#A">A</a>
+    bad ← <a href="builtins.html#w_here" class="c-builtin">w̲here</a> <a href="builtins.html#n_ot" class="c-builtin">n̲ot</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> (<span class="c-number">0</span> <a href="builtins.html#-3c-3d" class="c-symbol">≤</a> e) <a href="builtins.html#-26" class="c-symbol">∧</a> e <a href="builtins.html#-3c" class="c-symbol">&lt;</a> n
+    <span class="c-number">0</span> <a href="builtins.html#-3d" class="c-symbol">=</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> bad ? e
+    <span class="c-string">&quot;index&quot;</span> <a href="builtins.html#-5b-5dS_IGNAL" class="c-builtin">⎕S̲IGNAL</a> name <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; axis &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> k) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;: index &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> (<a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> bad) <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> e) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; is outside 0..&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> n <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; (from &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> from <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;)&quot;</span>
+  }
+  <span class="c-libfunc">g18:r̲ank</span> ← { (<a href="demos-micro-bert-micro-bert.xtl.html#A">A</a>, name, q, ref) →
+    (<a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> <a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> <a href="demos-micro-bert-micro-bert.xtl.html#A">A</a>) <a href="builtins.html#-3d" class="c-symbol">=</a> q ? <a href="demos-micro-bert-micro-bert.xtl.html#A">A</a>
+    <span class="c-string">&quot;rank&quot;</span> <a href="builtins.html#-5b-5dS_IGNAL" class="c-builtin">⎕S̲IGNAL</a> ref <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; indexes &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> q) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; axes, but &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> name <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; has rank &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> <a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> <a href="demos-micro-bert-micro-bert.xtl.html#A">A</a>
+  }
+  g21:grid ← <a href="demos-micro-bert-micro-bert.xtl.html#n">n</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">8</span>
+  <span class="c-libfunc">g22:g̲rid</span> ← { k → g21:grid <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> (<a href="builtins.html#o_ffsets" class="c-builtin">o̲ffsets</a> k <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> g21:grid) <span class="c-builtin">'</span><a href="builtins.html#l_eft" class="c-builtin">l̲eft</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> (<span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> k <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> g21:grid) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0</span> }
+  g21:grid <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> (({ @ →
+  g23:grid ← <a href="demos-micro-bert-micro-bert.xtl.html#n">n</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">8</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> ({ v → (<span class="c-number">0</span> <a href="builtins.html#-3c-3d" class="c-symbol">≤</a> v) ? v◆ <span class="c-string">&quot;bad-equation&quot;</span> <a href="builtins.html#-5b-5dS_IGNAL" class="c-builtin">⎕S̲IGNAL</a> <span class="c-string">&quot;sum's range runs low..high: 0..n-1&quot;</span> } (<span class="c-number">1</span> <a href="builtins.html#-2b" class="c-symbol">+</a> (<a href="demos-micro-bert-micro-bert.xtl.html#n">n</a> <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span>) <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">0</span>))
+  <span class="c-libfunc">g24:g̲rid</span> ← { k → g23:grid <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> (<a href="builtins.html#o_ffsets" class="c-builtin">o̲ffsets</a> k <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> g23:grid) <span class="c-builtin">'</span><a href="builtins.html#l_eft" class="c-builtin">l̲eft</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> (<span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> k <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> g23:grid) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0</span> }
+  <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/₃</a> g23:grid <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> ((
+    ((<span class="c-libfunc">g18:r̲ank</span> (<a href="demos-micro-bert-micro-bert.xtl.html#A">A</a>, <span class="c-string">&quot;A&quot;</span>, <span class="c-number">2</span>, <span class="c-string">&quot;A[i,j]&quot;</span>)) <span class="c-libfunc">g20:a̲t</span> ((
+      ((<a href="demos-micro-bert-micro-bert.xtl.html#A">A</a>, <span class="c-string">&quot;A&quot;</span>, <span class="c-number">2</span>, <span class="c-string">&quot;j&quot;</span>) <span class="c-libfunc">g19:c̲heck</span> (<span class="c-number">0</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-libfunc">g24:g̲rid</span> <span class="c-number">3</span>)) <a href="builtins.html#-2b" class="c-symbol">+</a> (<span class="c-number">2</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> <a href="demos-micro-bert-micro-bert.xtl.html#A">A</a>) <a href="builtins.html#-2a" class="c-symbol">×</a> 
+      ((<a href="demos-micro-bert-micro-bert.xtl.html#A">A</a>, <span class="c-string">&quot;A&quot;</span>, <span class="c-number">1</span>, <span class="c-string">&quot;i&quot;</span>) <span class="c-libfunc">g19:c̲heck</span> (<span class="c-number">0</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-libfunc">g24:g̲rid</span> <span class="c-number">1</span>))))) <a href="builtins.html#-2a" class="c-symbol">×</a> 
+    ((<span class="c-libfunc">g18:r̲ank</span> (<a href="demos-micro-bert-micro-bert.xtl.html#V">V</a>, <span class="c-string">&quot;V&quot;</span>, <span class="c-number">2</span>, <span class="c-string">&quot;V[j,d]&quot;</span>)) <span class="c-libfunc">g20:a̲t</span> ((
+      ((<a href="demos-micro-bert-micro-bert.xtl.html#V">V</a>, <span class="c-string">&quot;V&quot;</span>, <span class="c-number">2</span>, <span class="c-string">&quot;d&quot;</span>) <span class="c-libfunc">g19:c̲heck</span> (<span class="c-number">0</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-libfunc">g24:g̲rid</span> <span class="c-number">2</span>)) <a href="builtins.html#-2b" class="c-symbol">+</a> (<span class="c-number">2</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> <a href="demos-micro-bert-micro-bert.xtl.html#V">V</a>) <a href="builtins.html#-2a" class="c-symbol">×</a> 
+      ((<a href="demos-micro-bert-micro-bert.xtl.html#V">V</a>, <span class="c-string">&quot;V&quot;</span>, <span class="c-number">1</span>, <span class="c-string">&quot;j&quot;</span>) <span class="c-libfunc">g19:c̲heck</span> (<span class="c-number">0</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-libfunc">g24:g̲rid</span> <span class="c-number">3</span>)))))))
+} @))
+} @))</pre></details>
+<div class="uses">Used in: <a href="demos-micro-bert-micro-bert.xtl.html#r1">r1</a></div>
+</div>
+<div class="item" id="u.p_lain">
+<h3><a href="#u.p_lain"><span class="c-userfunc">ᵘp̲lain</span></a> <span class="type">: (Float, Int) -&gt; (Float, Int)</span></h3>
+<div class="meta">function &middot; <a href="demos-micro-bert-micro-bert.xtl.src.html#L116">line 116</a></div>
+<div class="doc">
+<p>4. As plain X_eTaL: the same layer written out.</p>
+</div>
+<pre class="code"><span class="c-userfunc">ᵘp̲lain</span> ← { (H, l) →
+  a ← (l <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="demos-micro-bert-micro-bert.xtl.html#ln1">ln1</a>) <a href="demos-micro-bert-micro-bert.xtl.html#u.n_orm" class="c-userfunc">ᵘn̲orm</a> H <a href="builtins.html#-2b" class="c-symbol">+</a> l <a href="demos-micro-bert-micro-bert.xtl.html#u.a_ttention" class="c-userfunc">ᵘa̲ttention</a> H
+  ((l <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="demos-micro-bert-micro-bert.xtl.html#ln2">ln2</a>) <a href="demos-micro-bert-micro-bert.xtl.html#u.n_orm" class="c-userfunc">ᵘn̲orm</a> a <a href="builtins.html#-2b" class="c-symbol">+</a> (<a href="libs-Activations-src-Activations.xtl.html#l.g_elu" class="c-libfunc">ᵃᶜᵗg̲elu</a> a <a href="libs-NN-src-NN.xtl.html#l.d_ense" class="c-libfunc">ⁿⁿd̲ense</a> l <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="demos-micro-bert-micro-bert.xtl.html#W1">W1</a>) <a href="libs-NN-src-NN.xtl.html#l.d_ense" class="c-libfunc">ⁿⁿd̲ense</a> l <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="demos-micro-bert-micro-bert.xtl.html#W2">W2</a>, l <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">1</span>)
+}</pre>
+<div class="uses">Used in: <a href="demos-micro-bert-micro-bert.xtl.html#hP">hP</a></div>
+</div>
+<h2 class="section" id="section-4">The checks</h2>
+<div class="item" id="expected">
+<h3><a href="#expected">expected</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-micro-bert-micro-bert.xtl.src.html#L125">line 125</a></div>
+<div class="doc">
+<p>The Rust model's scores for &quot;em_a&quot; at every place (data/expected.txt)
+and its heads' attention, layer by layer (data/expected-looks.txt),
+written by the trainer.</p>
+</div>
+<pre class="code">expected ← <span class="c-number">4</span> <span class="c-number">26</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <a href="builtins.html#n_umbers" class="c-builtin">n̲umbers</a> <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;data/expected.txt&quot;</span></pre>
+<div class="uses">Used in: <a href="demos-micro-bert-micro-bert.xtl.html#r3">r3</a></div>
+</div>
+<div class="item" id="looks">
+<h3><a href="#looks">looks</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-micro-bert-micro-bert.xtl.src.html#L126">line 126</a></div>
+<pre class="code">looks ← <span class="c-number">4</span> <span class="c-number">16</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <a href="builtins.html#n_umbers" class="c-builtin">n̲umbers</a> <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;data/expected-looks.txt&quot;</span></pre>
+<div class="uses">Used in: <a href="demos-micro-bert-micro-bert.xtl.html#r4">r4</a></div>
+</div>
+<div class="item" id="h1">
+<h3><a href="#h1">h1</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-micro-bert-micro-bert.xtl.src.html#L127">line 127</a></div>
+<pre class="code">(<a href="demos-micro-bert-micro-bert.xtl.html#h1">h1</a>, _) ← <a href="demos-micro-bert-micro-bert.xtl.html#u.l_ayer" class="c-userfunc">ᵘl̲ayer</a> (<a href="demos-micro-bert-micro-bert.xtl.html#X">X</a>, <span class="c-number">1</span>)</pre>
+<div class="uses">Used in: <a href="demos-micro-bert-micro-bert.xtl.html#h1">h1</a>, <a href="demos-micro-bert-micro-bert.xtl.html#mine">mine</a></div>
+</div>
+<div class="item" id="hP">
+<h3><a href="#hP">hP</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-micro-bert-micro-bert.xtl.src.html#L128">line 128</a></div>
+<pre class="code">(<a href="demos-micro-bert-micro-bert.xtl.html#hP">hP</a>, _) ← <a href="demos-micro-bert-micro-bert.xtl.html#L">L</a> <span class="c-userfunc">'</span><a href="demos-micro-bert-micro-bert.xtl.html#u.p_lain" class="c-userfunc">ᵘp̲lain</a> <a href="builtins.html#p_ower" class="c-builtin">p̲ower</a> (<a href="demos-micro-bert-micro-bert.xtl.html#X">X</a>, <span class="c-number">1</span>)</pre>
+<div class="uses">Used in: <a href="demos-micro-bert-micro-bert.xtl.html#hP">hP</a>, <a href="demos-micro-bert-micro-bert.xtl.html#r2">r2</a></div>
+</div>
+<div class="item" id="hF">
+<h3><a href="#hF">hF</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-micro-bert-micro-bert.xtl.src.html#L129">line 129</a></div>
+<pre class="code">(<a href="demos-micro-bert-micro-bert.xtl.html#hF">hF</a>, _) ← <a href="demos-micro-bert-micro-bert.xtl.html#L">L</a> <span class="c-userfunc">'</span><a href="demos-micro-bert-micro-bert.xtl.html#u.l_ayer" class="c-userfunc">ᵘl̲ayer</a> <a href="builtins.html#p_ower" class="c-builtin">p̲ower</a> (<a href="demos-micro-bert-micro-bert.xtl.html#X">X</a>, <span class="c-number">1</span>)</pre>
+<div class="uses">Used in: <a href="demos-micro-bert-micro-bert.xtl.html#hF">hF</a>, <a href="demos-micro-bert-micro-bert.xtl.html#r2">r2</a></div>
+</div>
+<div class="item" id="mine">
+<h3><a href="#mine">mine</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-micro-bert-micro-bert.xtl.src.html#L130">line 130</a></div>
+<pre class="code">mine ← <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> ((<span class="c-number">1</span>, <span class="c-number">1</span>) <a href="demos-micro-bert-micro-bert.xtl.html#u.l_ooks" class="c-userfunc">ᵘl̲ooks</a> <a href="demos-micro-bert-micro-bert.xtl.html#X">X</a>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> ((<span class="c-number">1</span>, <span class="c-number">2</span>) <a href="demos-micro-bert-micro-bert.xtl.html#u.l_ooks" class="c-userfunc">ᵘl̲ooks</a> <a href="demos-micro-bert-micro-bert.xtl.html#X">X</a>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> ((<span class="c-number">2</span>, <span class="c-number">1</span>) <a href="demos-micro-bert-micro-bert.xtl.html#u.l_ooks" class="c-userfunc">ᵘl̲ooks</a> <a href="demos-micro-bert-micro-bert.xtl.html#h1">h1</a>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-number">2</span>, <span class="c-number">2</span>) <a href="demos-micro-bert-micro-bert.xtl.html#u.l_ooks" class="c-userfunc">ᵘl̲ooks</a> <a href="demos-micro-bert-micro-bert.xtl.html#h1">h1</a></pre>
+<div class="uses">Used in: <a href="demos-micro-bert-micro-bert.xtl.html#r4">r4</a></div>
+</div>
+<div class="item" id="r1">
+<h3><a href="#r1">r1</a> <span class="type">: Char</span></h3>
+<div class="meta">value &middot; <a href="demos-micro-bert-micro-bert.xtl.src.html#L131">line 131</a></div>
+<pre class="code">r1 ← <span class="c-string">&quot;the attention as Equations reads it is head 1's&quot;</span> <a href="work-libs-Check-src-Check.xtl.html#l.t_est" class="c-libfunc">ᵏt̲est</a> <a href="demos-micro-bert-micro-bert.xtl.html#Y">Y</a> <a href="work-libs-Check-src-Check.xtl.html#l.n_ear" class="c-libfunc">ᵏn̲ear</a> (<span class="c-number">1</span>, <span class="c-number">1</span>) <a href="demos-micro-bert-micro-bert.xtl.html#u.h_ead" class="c-userfunc">ᵘh̲ead</a> <a href="demos-micro-bert-micro-bert.xtl.html#X">X</a></pre>
+<div class="uses">Used in: <a href="demos-micro-bert-micro-bert.xtl.src.html#L136">demos/micro-bert/micro-bert.xtl:136</a></div>
+</div>
+<div class="item" id="r2">
+<h3><a href="#r2">r2</a> <span class="type">: Char</span></h3>
+<div class="meta">value &middot; <a href="demos-micro-bert-micro-bert.xtl.src.html#L132">line 132</a></div>
+<pre class="code">r2 ← <span class="c-string">&quot;the pipeline, L times, is the layer written out&quot;</span> <a href="work-libs-Check-src-Check.xtl.html#l.t_est" class="c-libfunc">ᵏt̲est</a> <a href="demos-micro-bert-micro-bert.xtl.html#hF">hF</a> <a href="work-libs-Check-src-Check.xtl.html#l.n_ear" class="c-libfunc">ᵏn̲ear</a> <a href="demos-micro-bert-micro-bert.xtl.html#hP">hP</a></pre>
+<div class="uses">Used in: <a href="demos-micro-bert-micro-bert.xtl.src.html#L136">demos/micro-bert/micro-bert.xtl:136</a></div>
+</div>
+<div class="item" id="u.c_lose">
+<h3><a href="#u.c_lose"><span class="c-userfunc">ᵘc̲lose</span></a> <span class="type">: Float -&gt; Float -&gt; Char</span></h3>
+<div class="meta">function &middot; <a href="demos-micro-bert-micro-bert.xtl.src.html#L133">line 133</a></div>
+<pre class="code"><span class="c-userfunc">ᵘc̲lose</span> ← { a b → <a href="work-libs-Check-src-Check.xtl.html#l.t_rue" class="c-libfunc">ᵏt̲rue</a> <span class="c-number">1e-9</span> <a href="builtins.html#-3e" class="c-symbol">&gt;</a> <span class="c-builtin">'</span><a href="builtins.html#m_ax" class="c-builtin">m̲ax</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> <a href="builtins.html#a_bs" class="c-builtin">a̲bs</a> a <a href="builtins.html#-2d" class="c-symbol">−</a> b }</pre>
+<div class="uses">Used in: <a href="demos-micro-bert-micro-bert.xtl.html#r3">r3</a>, <a href="demos-micro-bert-micro-bert.xtl.html#r4">r4</a></div>
+</div>
+<div class="item" id="r3">
+<h3><a href="#r3">r3</a> <span class="type">: Char</span></h3>
+<div class="meta">value &middot; <a href="demos-micro-bert-micro-bert.xtl.src.html#L134">line 134</a></div>
+<pre class="code">r3 ← <span class="c-string">&quot;the scores are the Rust model's, within 1e-9&quot;</span> <a href="work-libs-Check-src-Check.xtl.html#l.t_est" class="c-libfunc">ᵏt̲est</a> <a href="demos-micro-bert-micro-bert.xtl.html#expected">expected</a> <a href="demos-micro-bert-micro-bert.xtl.html#u.c_lose" class="c-userfunc">ᵘc̲lose</a> <a href="demos-micro-bert-micro-bert.xtl.html#u.b_ert" class="c-userfunc">ᵘb̲ert</a> <a href="demos-micro-bert-micro-bert.xtl.html#ids">ids</a></pre>
+<div class="uses">Used in: <a href="demos-micro-bert-micro-bert.xtl.src.html#L136">demos/micro-bert/micro-bert.xtl:136</a></div>
+</div>
+<div class="item" id="r4">
+<h3><a href="#r4">r4</a> <span class="type">: Char</span></h3>
+<div class="meta">value &middot; <a href="demos-micro-bert-micro-bert.xtl.src.html#L135">line 135</a></div>
+<pre class="code">r4 ← <span class="c-string">&quot;and so is where each head looks&quot;</span> <a href="work-libs-Check-src-Check.xtl.html#l.t_est" class="c-libfunc">ᵏt̲est</a> (<a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> <a href="demos-micro-bert-micro-bert.xtl.html#looks">looks</a>) <a href="demos-micro-bert-micro-bert.xtl.html#u.c_lose" class="c-userfunc">ᵘc̲lose</a> <a href="demos-micro-bert-micro-bert.xtl.html#mine">mine</a></pre>
+<div class="uses">Used in: <a href="demos-micro-bert-micro-bert.xtl.src.html#L136">demos/micro-bert/micro-bert.xtl:136</a></div>
+</div>
+<h2 class="section" id="section-5">Blanks filled: the three likeliest letters and their probabilities</h2>
+<div class="item" id="u.t_op">
+<h3><a href="#u.t_op"><span class="c-userfunc">ᵘt̲op</span></a> <span class="type">: Char -&gt; Char</span></h3>
+<div class="meta">function &middot; <a href="demos-micro-bert-micro-bert.xtl.src.html#L139">line 139</a></div>
+<pre class="code"><span class="c-userfunc">ᵘt̲op</span> ← { s →
+  p ← <a href="demos-micro-bert-micro-bert.xtl.html#u.f_ill" class="c-userfunc">ᵘf̲ill</a> s
+  o ← <span class="c-number">3</span> <a href="builtins.html#t_ake" class="c-builtin">t̲ake</a> <a href="builtins.html#r_ev" class="c-builtin">r̲ev</a> <a href="builtins.html#g_rade" class="c-builtin">g̲rade</a> p
+  s <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;  &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; &quot;</span> <a href="work-libs-Strings-src-Strings.xtl.html#l.j_oin" class="c-libfunc">ᵗj̲oin</a> <span class="c-quote">'</span>{ i → (i <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="demos-micro-bert-micro-bert.xtl.html#chars">chars</a>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> (<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> <span class="c-number">0.5</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">1000.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> i <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> p) <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-number">1000.0</span> } <a href="builtins.html#m_ap" class="c-builtin">m̲ap</a> o
+}</pre>
+<div class="uses">Used in: <a href="demos-micro-bert-micro-bert.xtl.src.html#L144">demos/micro-bert/micro-bert.xtl:144</a>, <a href="demos-micro-bert-micro-bert.xtl.src.html#L145">demos/micro-bert/micro-bert.xtl:145</a>, <a href="demos-micro-bert-micro-bert.xtl.src.html#L146">demos/micro-bert/micro-bert.xtl:146</a>, <a href="demos-micro-bert-micro-bert.xtl.src.html#L147">demos/micro-bert/micro-bert.xtl:147</a>, <a href="demos-micro-bert-micro-bert.xtl.src.html#L148">demos/micro-bert/micro-bert.xtl:148</a>, <a href="demos-micro-bert-micro-bert.xtl.src.html#L149">demos/micro-bert/micro-bert.xtl:149</a></div>
+</div>
+</main>
+</body>
+</html>

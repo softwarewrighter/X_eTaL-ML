@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>demos/world-model/world-model.xtl - X_eTaL doc</title>
+<link rel="stylesheet" href="style.css">
+<script src="theme.js"></script>
+<script defer src="search-index.js"></script>
+<script defer src="search.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.18.10/dist/katex.min.css" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.18.10/dist/katex.min.js" crossorigin="anonymous"></script>
+<script>document.addEventListener('DOMContentLoaded', function () {
+if (typeof katex === 'undefined') return;
+document.querySelectorAll('.c-notation').forEach(function (el) {
+var tex = el.textContent; if (!tex) return;
+try { katex.render(tex, el, { throwOnError: false }); } catch (e) { el.textContent = tex; }
+});
+});</script>
+</head>
+<body>
+<nav class="side">
+<a class="home" href="index.html">X_eTaL doc</a>
+<input id="search" type="search" autocomplete="off" placeholder="Search: a name, or a type" title="A name (mean finds m_ean), or a type: Num a =&gt; a -&gt; a -&gt; a finds +, m_ax ...">
+<h2>Files</h2>
+<h3>demos/attention/</h3>
+<ul>
+<li><a href="demos-attention-attention.xtl.html">attention.xtl</a></li>
+</ul>
+<h3>demos/backprop/</h3>
+<ul>
+<li><a href="demos-backprop-backprop.xtl.html">backprop.xtl</a></li>
+</ul>
+<h3>demos/cnn-backprop/</h3>
+<ul>
+<li><a href="demos-cnn-backprop-cnn-backprop.xtl.html">cnn-backprop.xtl</a></li>
+</ul>
+<h3>demos/cnn-digits/</h3>
+<ul>
+<li><a href="demos-cnn-digits-batch.xtl.html">batch.xtl</a></li>
+<li><a href="demos-cnn-digits-cnn-digits.xtl.html">cnn-digits.xtl</a></li>
+</ul>
+<h3>demos/diffusion/</h3>
+<ul>
+<li><a href="demos-diffusion-diffusion.xtl.html">diffusion.xtl</a></li>
+</ul>
+<h3>demos/embedding-explorer/</h3>
+<ul>
+<li><a href="demos-embedding-explorer-embedding-explorer.xtl.html">embedding-explorer.xtl</a></li>
+</ul>
+<h3>demos/k-means/</h3>
+<ul>
+<li><a href="demos-k-means-k-means.xtl.html">k-means.xtl</a></li>
+</ul>
+<h3>demos/micro-bert/</h3>
+<ul>
+<li><a href="demos-micro-bert-micro-bert.xtl.html">micro-bert.xtl</a></li>
+</ul>
+<h3>demos/micro-gpt/</h3>
+<ul>
+<li><a href="demos-micro-gpt-batch.xtl.html">batch.xtl</a></li>
+<li><a href="demos-micro-gpt-micro-gpt.xtl.html">micro-gpt.xtl</a></li>
+</ul>
+<h3>demos/moe-router/</h3>
+<ul>
+<li><a href="demos-moe-router-moe-router.xtl.html">moe-router.xtl</a></li>
+</ul>
+<h3>demos/net-macro/</h3>
+<ul>
+<li><a href="demos-net-macro-net-macro.xtl.html">net-macro.xtl</a></li>
+<li><a href="demos-net-macro-train-it.xtl.html">train-it.xtl</a></li>
+</ul>
+<h3>demos/pipelines/</h3>
+<ul>
+<li><a href="demos-pipelines-diffusion.xtl.html">diffusion.xtl</a></li>
+<li><a href="demos-pipelines-equations.xtl.html">equations.xtl</a></li>
+<li><a href="demos-pipelines-pipelines.xtl.html">pipelines.xtl</a></li>
+<li><a href="demos-pipelines-rosetta.xtl.html">rosetta.xtl</a></li>
+</ul>
+<h3>demos/ternary-net/</h3>
+<ul>
+<li><a href="demos-ternary-net-ternary-net.xtl.html">ternary-net.xtl</a></li>
+</ul>
+<h3>demos/train-live/</h3>
+<ul>
+<li><a href="demos-train-live-train-live.xtl.html">train-live.xtl</a></li>
+</ul>
+<h3>demos/world-model/</h3>
+<ul>
+<li><a href="demos-world-model-world-model.xtl.html">world-model.xtl</a></li>
+</ul>
+<h3>libs/Activations/demos/</h3>
+<ul>
+<li><a href="libs-Activations-demos-curves.xtl.html">curves.xtl</a></li>
+</ul>
+<h3>libs/Activations/src/</h3>
+<ul>
+<li><a href="libs-Activations-src-Activations.xtl.html">Activations.xtl</a></li>
+</ul>
+<h3>libs/Attention/demos/</h3>
+<ul>
+<li><a href="libs-Attention-demos-previous.xtl.html">previous.xtl</a></li>
+</ul>
+<h3>libs/Attention/src/</h3>
+<ul>
+<li><a href="libs-Attention-src-Attention.xtl.html">Attention.xtl</a></li>
+</ul>
+<h3>libs/Conv/demos/</h3>
+<ul>
+<li><a href="libs-Conv-demos-edges.xtl.html">edges.xtl</a></li>
+</ul>
+<h3>libs/Conv/src/</h3>
+<ul>
+<li><a href="libs-Conv-src-Conv.xtl.html">Conv.xtl</a></li>
+</ul>
+<h3>libs/Embed/demos/</h3>
+<ul>
+<li><a href="libs-Embed-demos-pets.xtl.html">pets.xtl</a></li>
+</ul>
+<h3>libs/Embed/src/</h3>
+<ul>
+<li><a href="libs-Embed-src-Embed.xtl.html">Embed.xtl</a></li>
+</ul>
+<h3>libs/Flow/demos/</h3>
+<ul>
+<li><a href="libs-Flow-demos-mlp.xtl.html">mlp.xtl</a></li>
+</ul>
+<h3>libs/Flow/src/</h3>
+<ul>
+<li><a href="libs-Flow-src-Flow.xtlm.html">Flow.xtlm</a></li>
+</ul>
+<h3>libs/Integrals/demos/</h3>
+<ul>
+<li><a href="libs-Integrals-demos-convolution.xtl.html">convolution.xtl</a></li>
+<li><a href="libs-Integrals-demos-gelu.xtl.html">gelu.xtl</a></li>
+</ul>
+<h3>libs/Integrals/src/</h3>
+<ul>
+<li><a href="libs-Integrals-src-Integrals.xtlm.html">Integrals.xtlm</a></li>
+</ul>
+<h3>libs/Learn/demos/</h3>
+<ul>
+<li><a href="libs-Learn-demos-blobs.xtl.html">blobs.xtl</a></li>
+</ul>
+<h3>libs/Learn/src/</h3>
+<ul>
+<li><a href="libs-Learn-src-Learn.xtl.html">Learn.xtl</a></li>
+</ul>
+<h3>libs/Net/demos/</h3>
+<ul>
+<li><a href="libs-Net-demos-train-xor.xtl.html">train-xor.xtl</a></li>
+<li><a href="libs-Net-demos-xor.xtl.html">xor.xtl</a></li>
+</ul>
+<h3>libs/Net/src/</h3>
+<ul>
+<li><a href="libs-Net-src-Net.xtlm.html">Net.xtlm</a></li>
+</ul>
+<h3>libs/NN/demos/</h3>
+<ul>
+<li><a href="libs-NN-demos-xor.xtl.html">xor.xtl</a></li>
+</ul>
+<h3>libs/NN/src/</h3>
+<ul>
+<li><a href="libs-NN-src-NN.xtl.html">NN.xtl</a></li>
+</ul>
+<h3>libs/Norm/demos/</h3>
+<ul>
+<li><a href="libs-Norm-demos-rows.xtl.html">rows.xtl</a></li>
+</ul>
+<h3>libs/Norm/src/</h3>
+<ul>
+<li><a href="libs-Norm-src-Norm.xtl.html">Norm.xtl</a></li>
+</ul>
+<h3>libs/Optim/demos/</h3>
+<ul>
+<li><a href="libs-Optim-demos-bowl.xtl.html">bowl.xtl</a></li>
+</ul>
+<h3>libs/Optim/src/</h3>
+<ul>
+<li><a href="libs-Optim-src-Optim.xtl.html">Optim.xtl</a></li>
+</ul>
+<h3>libs/Quant/demos/</h3>
+<ul>
+<li><a href="libs-Quant-demos-formats.xtl.html">formats.xtl</a></li>
+</ul>
+<h3>libs/Quant/src/</h3>
+<ul>
+<li><a href="libs-Quant-src-Quant.xtl.html">Quant.xtl</a></li>
+</ul>
+<h3>libs/Sample/demos/</h3>
+<ul>
+<li><a href="libs-Sample-demos-next.xtl.html">next.xtl</a></li>
+</ul>
+<h3>libs/Sample/src/</h3>
+<ul>
+<li><a href="libs-Sample-src-Sample.xtl.html">Sample.xtl</a></li>
+</ul>
+<h3>std/</h3>
+<ul>
+<li><a href="std-System.xtlm.html">System.xtlm</a></li>
+</ul>
+<h3>work/libs/Check/src/</h3>
+<ul>
+<li><a href="work-libs-Check-src-Check.xtl.html">Check.xtl</a></li>
+<li><a href="work-libs-Check-src-Check.xtlm.html">Check.xtlm</a></li>
+</ul>
+<h3>work/libs/Equations/src/</h3>
+<ul>
+<li><a href="work-libs-Equations-src-Equations.xtl.html">Equations.xtl</a></li>
+<li><a href="work-libs-Equations-src-Equations.xtlm.html">Equations.xtlm</a></li>
+</ul>
+<h3>work/libs/Lists/src/</h3>
+<ul>
+<li><a href="work-libs-Lists-src-Lists.xtl.html">Lists.xtl</a></li>
+</ul>
+<h3>work/libs/Strings/src/</h3>
+<ul>
+<li><a href="work-libs-Strings-src-Strings.xtl.html">Strings.xtl</a></li>
+</ul>
+<ul>
+<li><a href="builtins.html">built-ins</a></li>
+</ul>
+<h2>On this page</h2>
+<ul>
+<li class="item"><a href="#L17"><span class="c-userfunc">ᵘs̲tep</span></a></li>
+<li class="item"><a href="#L26"><span class="c-userfunc">ᵘi̲n</span></a></li>
+<li class="item"><a href="#L28"><span class="c-userfunc">ᵘf̲rames</span></a></li>
+<li class="item"><a href="#L34"><span class="c-userfunc">ᵘw̲indow</span></a></li>
+<li class="item"><a href="#L43">wb1</a></li>
+<li class="item"><a href="#L44">wb2</a></li>
+<li class="item"><a href="#L46"><span class="c-userfunc">ᵘp̲redict</span></a></li>
+<li class="item"><a href="#L48"><span class="c-userfunc">ᵘe̲xact</span></a></li>
+<li class="item"><a href="#L51"><span class="c-userfunc">ᵘp̲lace</span></a></li>
+<li class="item"><a href="#L60">i</a></li>
+<li class="item"><a href="#L61">all</a></li>
+<li class="item"><a href="#L62">held</a></li>
+<li class="item"><a href="#L63">X</a></li>
+<li class="item"><a href="#L63">T</a></li>
+<li class="item"><a href="#L64">Xh</a></li>
+<li class="item"><a href="#L64">Th</a></li>
+<li class="item"><a href="#L66">x1</a></li>
+<li class="item"><a href="#L74">s</a></li>
+<li class="item"><a href="#L75">xs</a></li>
+<li class="item"><a href="#L75">ts</a></li>
+<li class="item"><a href="#L76">p</a></li>
+<li class="item"><a href="#L84">dream</a></li>
+<li class="item"><a href="#L88">truth</a></li>
+</ul>
+</nav>
+<main>
+<button class="theme" title="Light or dark">theme</button>
+<section id="results"></section>
+<h1><span class="kind">source</span><a href="demos-world-model-world-model.xtl.html">demos/world-model/world-model.xtl</a></h1>
+<div class="source"><span class="line" id="L1"><a class="ln" href="#L1">1</a><span class="c-comment">⍝</span><span class="c-comment">!/usr/bin/env xetal</span></span>
+<span class="line" id="L2"><a class="ln" href="#L2">2</a><span class="c-doc">⍝│</span><span class="c-doc"> A tiny world model: a network that has watched a ball bounce in a box</span></span>
+<span class="line" id="L3"><a class="ln" href="#L3">3</a><span class="c-doc">⍝│</span><span class="c-doc"> predicts the next frame from the last three. The world is a 2 x 2</span></span>
+<span class="line" id="L4"><a class="ln" href="#L4">4</a><span class="c-doc">⍝│</span><span class="c-doc"> ball in a 12 x 12 box, moving 1 or 2 cells a step on each axis and</span></span>
+<span class="line" id="L5"><a class="ln" href="#L5">5</a><span class="c-doc">⍝│</span><span class="c-doc"> bouncing off the walls: 1,936 states in all. The network (432 pixels</span></span>
+<span class="line" id="L6"><a class="ln" href="#L6">6</a><span class="c-doc">⍝│</span><span class="c-doc"> in, 64 ReLU units, 144 pixels out) was trained offline on four fifths</span></span>
+<span class="line" id="L7"><a class="ln" href="#L7">7</a><span class="c-doc">⍝│</span><span class="c-doc"> of them (train/); the other fifth it never saw. Here it predicts the</span></span>
+<span class="line" id="L8"><a class="ln" href="#L8">8</a><span class="c-doc">⍝│</span><span class="c-doc"> next frame of every state at once, as one batch, then dreams: fed</span></span>
+<span class="line" id="L9"><a class="ln" href="#L9">9</a><span class="c-doc">⍝│</span><span class="c-doc"> its own predictions, it plays the ball forward on its own.</span></span>
+<span class="line" id="L10"><a class="ln" href="#L10">10</a></span>
+<span class="line" id="L11"><a class="ln" href="#L11">11</a><span class="c-string">&quot;nn:&quot;</span> <a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="libs-NN-src-NN.xtl.html" class="c-string">&quot;NN&quot;</a></span>
+<span class="line" id="L12"><a class="ln" href="#L12">12</a><span class="c-string">&quot;act:&quot;</span> <a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="libs-Activations-src-Activations.xtl.html" class="c-string">&quot;Activations&quot;</a></span>
+<span class="line" id="L13"><a class="ln" href="#L13">13</a></span>
+<span class="line" id="L14"><a class="ln" href="#L14">14</a><span class="c-heading">⍝━━</span><span class="c-heading"> The world</span></span>
+<span class="line" id="L15"><a class="ln" href="#L15">15</a><span class="c-doc">⍝│</span><span class="c-doc"> One step of the states s (rows of x y vx vy): move, and bounce off a</span></span>
+<span class="line" id="L16"><a class="ln" href="#L16">16</a><span class="c-doc">⍝│</span><span class="c-doc"> wall at 0 or 10 (the ball is 2 wide in a box of 12).</span></span>
+<span class="line" id="L17"><a class="ln" href="#L17">17</a><span class="c-userfunc">ᵘs̲tep</span> ← { s →</span>
+<span class="line" id="L18"><a class="ln" href="#L18">18</a>  P ← <span class="c-number">2</span> <a href="builtins.html#t_ake" class="c-builtin">t̲ake</a> <a href="builtins.html#o_-5c" class="c-builtin">o̲\</a> s</span>
+<span class="line" id="L19"><a class="ln" href="#L19">19</a>  V ← <span class="c-number">-2</span> <a href="builtins.html#t_ake" class="c-builtin">t̲ake</a> <a href="builtins.html#o_-5c" class="c-builtin">o̲\</a> s</span>
+<span class="line" id="L20"><a class="ln" href="#L20">20</a>  n ← P <a href="builtins.html#-2b" class="c-symbol">+</a> V</span>
+<span class="line" id="L21"><a class="ln" href="#L21">21</a>  lo ← n <a href="builtins.html#-3c" class="c-symbol">&lt;</a> <span class="c-number">0</span></span>
+<span class="line" id="L22"><a class="ln" href="#L22">22</a>  hi ← n <a href="builtins.html#-3e" class="c-symbol">&gt;</a> <span class="c-number">10</span></span>
+<span class="line" id="L23"><a class="ln" href="#L23">23</a>  <a href="builtins.html#o_-5c" class="c-builtin">o̲\</a> (n <a href="builtins.html#-2b" class="c-symbol">+</a> ((<a href="builtins.html#n_eg" class="c-builtin">n̲eg</a> <span class="c-number">2</span> <a href="builtins.html#-2a" class="c-symbol">×</a> n) <a href="builtins.html#-2a" class="c-symbol">×</a> lo) <a href="builtins.html#-2b" class="c-symbol">+</a> (<span class="c-number">20</span> <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">2</span> <a href="builtins.html#-2a" class="c-symbol">×</a> n) <a href="builtins.html#-2a" class="c-symbol">×</a> hi) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> V <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">1</span> <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">2</span> <a href="builtins.html#-2a" class="c-symbol">×</a> lo <a href="builtins.html#-2b" class="c-symbol">+</a> hi</span>
+<span class="line" id="L24"><a class="ln" href="#L24">24</a>}</span>
+<span class="line" id="L25"><a class="ln" href="#L25">25</a><span class="c-doc">⍝│</span><span class="c-doc"> 1.0 where a ball's corner is at the place or one before it (D is -1 or 0).</span></span>
+<span class="line" id="L26"><a class="ln" href="#L26">26</a><span class="c-userfunc">ᵘi̲n</span> ← { D → <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> (D <a href="builtins.html#-3c-3d" class="c-symbol">≤</a> <span class="c-number">0</span>) <a href="builtins.html#-2a" class="c-symbol">×</a> D <a href="builtins.html#-3e-3d" class="c-symbol">≥</a> <span class="c-number">-1</span> }</span>
+<span class="line" id="L27"><a class="ln" href="#L27">27</a><span class="c-doc">⍝│</span><span class="c-doc"> The frames of the balls at xy (rows of x y), one row of 144 pixels each.</span></span>
+<span class="line" id="L28"><a class="ln" href="#L28">28</a><span class="c-userfunc">ᵘf̲rames</span> ← { xy →</span>
+<span class="line" id="L29"><a class="ln" href="#L29">29</a>  c ← <a href="builtins.html#o_ffsets" class="c-builtin">o̲ffsets</a> <span class="c-number">144</span></span>
+<span class="line" id="L30"><a class="ln" href="#L30">30</a>  (<a href="demos-world-model-world-model.xtl.html#u.i_n" class="c-userfunc">ᵘi̲n</a> (<span class="c-number">2</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="builtins.html#o_-5c" class="c-builtin">o̲\</a> xy) <span class="c-symbol">'</span><a href="builtins.html#-2d" class="c-symbol">−</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> c <a href="builtins.html#d_iv" class="c-builtin">d̲iv</a> <span class="c-number">12</span>) <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="demos-world-model-world-model.xtl.html#u.i_n" class="c-userfunc">ᵘi̲n</a> (<span class="c-number">1</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="builtins.html#o_-5c" class="c-builtin">o̲\</a> xy) <span class="c-symbol">'</span><a href="builtins.html#-2d" class="c-symbol">−</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> c <a href="builtins.html#m_od" class="c-builtin">m̲od</a> <span class="c-number">12</span></span>
+<span class="line" id="L31"><a class="ln" href="#L31">31</a>}</span>
+<span class="line" id="L32"><a class="ln" href="#L32">32</a><span class="c-doc">⍝│</span><span class="c-doc"> The window of the states s: their frame and the next two, side by</span></span>
+<span class="line" id="L33"><a class="ln" href="#L33">33</a><span class="c-doc">⍝│</span><span class="c-doc"> side (432 pixels a row), then the frame after them.</span></span>
+<span class="line" id="L34"><a class="ln" href="#L34">34</a><span class="c-userfunc">ᵘw̲indow</span> ← { s →</span>
+<span class="line" id="L35"><a class="ln" href="#L35">35</a>  s1 ← <a href="demos-world-model-world-model.xtl.html#u.s_tep" class="c-userfunc">ᵘs̲tep</a> s</span>
+<span class="line" id="L36"><a class="ln" href="#L36">36</a>  s2 ← <a href="demos-world-model-world-model.xtl.html#u.s_tep" class="c-userfunc">ᵘs̲tep</a> s1</span>
+<span class="line" id="L37"><a class="ln" href="#L37">37</a>  s3 ← <a href="demos-world-model-world-model.xtl.html#u.s_tep" class="c-userfunc">ᵘs̲tep</a> s2</span>
+<span class="line" id="L38"><a class="ln" href="#L38">38</a>  ((<a href="demos-world-model-world-model.xtl.html#u.f_rames" class="c-userfunc">ᵘf̲rames</a> <span class="c-number">2</span> <a href="builtins.html#t_ake" class="c-builtin">t̲ake₂</a> s) <a href="builtins.html#c_at" class="c-builtin">c̲at₂</a> (<a href="demos-world-model-world-model.xtl.html#u.f_rames" class="c-userfunc">ᵘf̲rames</a> <span class="c-number">2</span> <a href="builtins.html#t_ake" class="c-builtin">t̲ake₂</a> s1) <a href="builtins.html#c_at" class="c-builtin">c̲at₂</a> <a href="demos-world-model-world-model.xtl.html#u.f_rames" class="c-userfunc">ᵘf̲rames</a> <span class="c-number">2</span> <a href="builtins.html#t_ake" class="c-builtin">t̲ake₂</a> s2, <a href="demos-world-model-world-model.xtl.html#u.f_rames" class="c-userfunc">ᵘf̲rames</a> <span class="c-number">2</span> <a href="builtins.html#t_ake" class="c-builtin">t̲ake₂</a> s3)</span>
+<span class="line" id="L39"><a class="ln" href="#L39">39</a>}</span>
+<span class="line" id="L40"><a class="ln" href="#L40">40</a></span>
+<span class="line" id="L41"><a class="ln" href="#L41">41</a><span class="c-heading">⍝━━</span><span class="c-heading"> The network, read from data/ (just world-model-data)</span></span>
+<span class="line" id="L42"><a class="ln" href="#L42">42</a><span class="c-doc">⍝│</span><span class="c-doc"> Each layer's weights with its bias as one more row, as NN's d_ense takes them.</span></span>
+<span class="line" id="L43"><a class="ln" href="#L43">43</a>wb1 ← <span class="c-number">433</span> <span class="c-number">64</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> (<a href="builtins.html#n_umbers" class="c-builtin">n̲umbers</a> <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;data/w1.txt&quot;</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="builtins.html#n_umbers" class="c-builtin">n̲umbers</a> <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;data/b1.txt&quot;</span></span>
+<span class="line" id="L44"><a class="ln" href="#L44">44</a>wb2 ← <span class="c-number">65</span> <span class="c-number">144</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> (<a href="builtins.html#n_umbers" class="c-builtin">n̲umbers</a> <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;data/w2.txt&quot;</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="builtins.html#n_umbers" class="c-builtin">n̲umbers</a> <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;data/b2.txt&quot;</span></span>
+<span class="line" id="L45"><a class="ln" href="#L45">45</a><span class="c-doc">⍝│</span><span class="c-doc"> Each window's next frame, a probability per pixel.</span></span>
+<span class="line" id="L46"><a class="ln" href="#L46">46</a><span class="c-userfunc">ᵘp̲redict</span> ← { X → <a href="libs-Activations-src-Activations.xtl.html#l.s_igmoid" class="c-libfunc">ᵃᶜᵗs̲igmoid</a> (<a href="libs-Activations-src-Activations.xtl.html#l.r_elu" class="c-libfunc">ᵃᶜᵗr̲elu</a> X <a href="libs-NN-src-NN.xtl.html#l.d_ense" class="c-libfunc">ⁿⁿd̲ense</a> <a href="demos-world-model-world-model.xtl.html#wb1">wb1</a>) <a href="libs-NN-src-NN.xtl.html#l.d_ense" class="c-libfunc">ⁿⁿd̲ense</a> <a href="demos-world-model-world-model.xtl.html#wb2">wb2</a> }</span>
+<span class="line" id="L47"><a class="ln" href="#L47">47</a><span class="c-doc">⍝│</span><span class="c-doc"> How many rows of P are the frames T exactly: every pixel on the right side of one half.</span></span>
+<span class="line" id="L48"><a class="ln" href="#L48">48</a><span class="c-userfunc">ᵘe̲xact</span> ← { P T → <a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> <span class="c-builtin">'</span><a href="builtins.html#m_in" class="c-builtin">m̲in</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/₂</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> (P <a href="builtins.html#-3e" class="c-symbol">&gt;</a> <span class="c-number">0.5</span>) <a href="builtins.html#-3d" class="c-symbol">=</a> T <a href="builtins.html#-3e" class="c-symbol">&gt;</a> <span class="c-number">0.5</span> }</span>
+<span class="line" id="L49"><a class="ln" href="#L49">49</a><span class="c-doc">⍝│</span><span class="c-doc"> The likeliest place for the ball in a predicted frame p: the 2 x 2</span></span>
+<span class="line" id="L50"><a class="ln" href="#L50">50</a><span class="c-doc">⍝│</span><span class="c-doc"> block with the most probability, as x y.</span></span>
+<span class="line" id="L51"><a class="ln" href="#L51">51</a><span class="c-userfunc">ᵘp̲lace</span> ← { p →</span>
+<span class="line" id="L52"><a class="ln" href="#L52">52</a>  M ← <span class="c-number">12</span> <span class="c-number">12</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> p</span>
+<span class="line" id="L53"><a class="ln" href="#L53">53</a>  S ← (<span class="c-number">11</span> <a href="builtins.html#t_ake" class="c-builtin">t̲ake</a> <span class="c-number">11</span> <a href="builtins.html#t_ake" class="c-builtin">t̲ake₂</a> M) <a href="builtins.html#-2b" class="c-symbol">+</a> (<span class="c-number">11</span> <a href="builtins.html#t_ake" class="c-builtin">t̲ake</a> <span class="c-number">11</span> <a href="builtins.html#t_ake" class="c-builtin">t̲ake₂</a> <span class="c-number">1</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> M) <a href="builtins.html#-2b" class="c-symbol">+</a> (<span class="c-number">11</span> <a href="builtins.html#t_ake" class="c-builtin">t̲ake</a> <span class="c-number">11</span> <a href="builtins.html#t_ake" class="c-builtin">t̲ake₂</a> <span class="c-number">1</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop₂</a> M) <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">11</span> <a href="builtins.html#t_ake" class="c-builtin">t̲ake</a> <span class="c-number">11</span> <a href="builtins.html#t_ake" class="c-builtin">t̲ake₂</a> <span class="c-number">1</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> <span class="c-number">1</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop₂</a> M</span>
+<span class="line" id="L54"><a class="ln" href="#L54">54</a>  k ← (<a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> S) <a href="builtins.html#i_ndexOf" class="c-builtin">i̲ndexOf</a> <span class="c-builtin">'</span><a href="builtins.html#m_ax" class="c-builtin">m̲ax</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> S</span>
+<span class="line" id="L55"><a class="ln" href="#L55">55</a>  <span class="c-number">1</span> <span class="c-number">2</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> ((k <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span>) <a href="builtins.html#m_od" class="c-builtin">m̲od</a> <span class="c-number">11</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (k <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span>) <a href="builtins.html#d_iv" class="c-builtin">d̲iv</a> <span class="c-number">11</span></span>
+<span class="line" id="L56"><a class="ln" href="#L56">56</a>}</span>
+<span class="line" id="L57"><a class="ln" href="#L57">57</a><span class="c-comment">⍝</span><span class="c-comment"> -- end of the core ------------------------------------------</span></span>
+<span class="line" id="L58"><a class="ln" href="#L58">58</a></span>
+<span class="line" id="L59"><a class="ln" href="#L59">59</a><span class="c-heading">⍝━━</span><span class="c-heading"> Every state at once</span></span>
+<span class="line" id="L60"><a class="ln" href="#L60">60</a>i ← <a href="builtins.html#o_ffsets" class="c-builtin">o̲ffsets</a> <span class="c-number">1936</span></span>
+<span class="line" id="L61"><a class="ln" href="#L61">61</a>all ← <a href="builtins.html#o_-5c" class="c-builtin">o̲\</a> <span class="c-number">4</span> <span class="c-number">1936</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> (<a href="demos-world-model-world-model.xtl.html#i">i</a> <a href="builtins.html#d_iv" class="c-builtin">d̲iv</a> <span class="c-number">176</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> ((<a href="demos-world-model-world-model.xtl.html#i">i</a> <a href="builtins.html#d_iv" class="c-builtin">d̲iv</a> <span class="c-number">16</span>) <a href="builtins.html#m_od" class="c-builtin">m̲od</a> <span class="c-number">11</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> ((<span class="c-number">1</span> <a href="builtins.html#-2b" class="c-symbol">+</a> (<a href="demos-world-model-world-model.xtl.html#i">i</a> <a href="builtins.html#d_iv" class="c-builtin">d̲iv</a> <span class="c-number">4</span>) <a href="builtins.html#m_od" class="c-builtin">m̲od</a> <span class="c-number">4</span>) <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <span class="c-number">-2</span> <span class="c-number">-1</span> <span class="c-number">1</span> <span class="c-number">2</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-number">1</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="demos-world-model-world-model.xtl.html#i">i</a> <a href="builtins.html#m_od" class="c-builtin">m̲od</a> <span class="c-number">4</span>) <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <span class="c-number">-2</span> <span class="c-number">-1</span> <span class="c-number">1</span> <span class="c-number">2</span></span>
+<span class="line" id="L62"><a class="ln" href="#L62">62</a>held ← <span class="c-number">387</span> <span class="c-number">4</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> <a href="builtins.html#n_umbers" class="c-builtin">n̲umbers</a> <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;data/held-out.txt&quot;</span></span>
+<span class="line" id="L63"><a class="ln" href="#L63">63</a>(<a href="demos-world-model-world-model.xtl.html#X">X</a>, <a href="demos-world-model-world-model.xtl.html#T">T</a>) ← <a href="demos-world-model-world-model.xtl.html#u.w_indow" class="c-userfunc">ᵘw̲indow</a> <a href="demos-world-model-world-model.xtl.html#all">all</a></span>
+<span class="line" id="L64"><a class="ln" href="#L64">64</a>(<a href="demos-world-model-world-model.xtl.html#Xh">Xh</a>, <a href="demos-world-model-world-model.xtl.html#Th">Th</a>) ← <a href="demos-world-model-world-model.xtl.html#u.w_indow" class="c-userfunc">ᵘw̲indow</a> <a href="demos-world-model-world-model.xtl.html#held">held</a></span>
+<span class="line" id="L65"><a class="ln" href="#L65">65</a><span class="c-comment">⍝</span><span class="c-comment"> The same pixels as the trainer's Rust model, for one window.</span></span>
+<span class="line" id="L66"><a class="ln" href="#L66">66</a>(<a href="demos-world-model-world-model.xtl.html#x1">x1</a>, _) ← <a href="demos-world-model-world-model.xtl.html#u.w_indow" class="c-userfunc">ᵘw̲indow</a> <span class="c-number">1</span> <span class="c-number">4</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">3</span> <span class="c-number">7</span> <span class="c-number">2</span> <span class="c-number">-1</span></span>
+<span class="line" id="L67"><a class="ln" href="#L67">67</a><span class="c-number">1e-6</span> <a href="builtins.html#-3e" class="c-symbol">&gt;</a> <span class="c-builtin">'</span><a href="builtins.html#m_ax" class="c-builtin">m̲ax</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> <a href="builtins.html#a_bs" class="c-builtin">a̲bs</a> (<a href="demos-world-model-world-model.xtl.html#u.p_redict" class="c-userfunc">ᵘp̲redict</a> <a href="demos-world-model-world-model.xtl.html#x1">x1</a>) <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span> <span class="c-number">144</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <a href="builtins.html#n_umbers" class="c-builtin">n̲umbers</a> <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;data/expected.txt&quot;</span></span>
+<span class="line" id="L68"><a class="ln" href="#L68">68</a><span class="c-comment">⍝</span><span class="c-comment"> Next frames predicted exactly: of all 1,936 states, and of the 387 it never saw.</span></span>
+<span class="line" id="L69"><a class="ln" href="#L69">69</a>(<a href="demos-world-model-world-model.xtl.html#u.p_redict" class="c-userfunc">ᵘp̲redict</a> <a href="demos-world-model-world-model.xtl.html#X">X</a>) <a href="demos-world-model-world-model.xtl.html#u.e_xact" class="c-userfunc">ᵘe̲xact</a> <a href="demos-world-model-world-model.xtl.html#T">T</a></span>
+<span class="line" id="L70"><a class="ln" href="#L70">70</a>(<a href="demos-world-model-world-model.xtl.html#u.p_redict" class="c-userfunc">ᵘp̲redict</a> <a href="demos-world-model-world-model.xtl.html#Xh">Xh</a>) <a href="demos-world-model-world-model.xtl.html#u.e_xact" class="c-userfunc">ᵘe̲xact</a> <a href="demos-world-model-world-model.xtl.html#Th">Th</a></span>
+<span class="line" id="L71"><a class="ln" href="#L71">71</a></span>
+<span class="line" id="L72"><a class="ln" href="#L72">72</a><span class="c-heading">⍝━━</span><span class="c-heading"> One it never saw</span></span>
+<span class="line" id="L73"><a class="ln" href="#L73">73</a><span class="c-comment">⍝</span><span class="c-comment"> Three frames, the true next one, and the network's (# above one half, + above a tenth).</span></span>
+<span class="line" id="L74"><a class="ln" href="#L74">74</a>s ← <span class="c-number">1</span> <span class="c-number">4</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">1</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="demos-world-model-world-model.xtl.html#held">held</a></span>
+<span class="line" id="L75"><a class="ln" href="#L75">75</a>(<a href="demos-world-model-world-model.xtl.html#xs">xs</a>, <a href="demos-world-model-world-model.xtl.html#ts">ts</a>) ← <a href="demos-world-model-world-model.xtl.html#u.w_indow" class="c-userfunc">ᵘw̲indow</a> <a href="demos-world-model-world-model.xtl.html#s">s</a></span>
+<span class="line" id="L76"><a class="ln" href="#L76">76</a>p ← <a href="demos-world-model-world-model.xtl.html#u.p_redict" class="c-userfunc">ᵘp̲redict</a> <a href="demos-world-model-world-model.xtl.html#xs">xs</a></span>
+<span class="line" id="L77"><a class="ln" href="#L77">77</a><span class="c-number">12</span> <span class="c-number">12</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> (<span class="c-number">1</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> <a href="demos-world-model-world-model.xtl.html#ts">ts</a>) <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <span class="c-string">&quot;.#&quot;</span></span>
+<span class="line" id="L78"><a class="ln" href="#L78">78</a><span class="c-number">12</span> <span class="c-number">12</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> (<span class="c-number">1</span> <a href="builtins.html#-2b" class="c-symbol">+</a> (<a href="demos-world-model-world-model.xtl.html#p">p</a> <a href="builtins.html#-3e" class="c-symbol">&gt;</a> <span class="c-number">0.5</span>) <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="demos-world-model-world-model.xtl.html#p">p</a> <a href="builtins.html#-3e" class="c-symbol">&gt;</a> <span class="c-number">0.1</span>) <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <span class="c-string">&quot;.+#&quot;</span></span>
+<span class="line" id="L79"><a class="ln" href="#L79">79</a></span>
+<span class="line" id="L80"><a class="ln" href="#L80">80</a><span class="c-heading">⍝━━</span><span class="c-heading"> Dreaming</span></span>
+<span class="line" id="L81"><a class="ln" href="#L81">81</a><span class="c-comment">⍝</span><span class="c-comment"> Fed its own predictions: each step keeps only the likeliest place</span></span>
+<span class="line" id="L82"><a class="ln" href="#L82">82</a><span class="c-comment">⍝</span><span class="c-comment"> for the ball and moves the window on.</span></span>
+<span class="line" id="L83"><a class="ln" href="#L83">83</a><span class="c-comment">⍝</span><span class="c-comment"> Twelve steps on from the window xs: where the dreamed ball is, and the true one.</span></span>
+<span class="line" id="L84"><a class="ln" href="#L84">84</a>(_, <a href="demos-world-model-world-model.xtl.html#dream">dream</a>) ← <span class="c-number">12</span> <span class="c-quote">'</span>{ (w, xys) →</span>
+<span class="line" id="L85"><a class="ln" href="#L85">85</a>  xy ← <a href="demos-world-model-world-model.xtl.html#u.p_lace" class="c-userfunc">ᵘp̲lace</a> <a href="demos-world-model-world-model.xtl.html#u.p_redict" class="c-userfunc">ᵘp̲redict</a> w</span>
+<span class="line" id="L86"><a class="ln" href="#L86">86</a>  ((<span class="c-number">144</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop₂</a> w) <a href="builtins.html#c_at" class="c-builtin">c̲at₂</a> <a href="demos-world-model-world-model.xtl.html#u.f_rames" class="c-userfunc">ᵘf̲rames</a> xy, xys <a href="builtins.html#c_at" class="c-builtin">c̲at</a> xy)</span>
+<span class="line" id="L87"><a class="ln" href="#L87">87</a>} <a href="builtins.html#p_ower" class="c-builtin">p̲ower</a> (<a href="demos-world-model-world-model.xtl.html#xs">xs</a>, <span class="c-number">0</span> <span class="c-number">2</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0</span>)</span>
+<span class="line" id="L88"><a class="ln" href="#L88">88</a>(_, <a href="demos-world-model-world-model.xtl.html#truth">truth</a>) ← <span class="c-number">12</span> <span class="c-quote">'</span>{ (t, xys) → (<a href="demos-world-model-world-model.xtl.html#u.s_tep" class="c-userfunc">ᵘs̲tep</a> t, xys <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">2</span> <a href="builtins.html#t_ake" class="c-builtin">t̲ake₂</a> t) } <a href="builtins.html#p_ower" class="c-builtin">p̲ower</a> (<a href="demos-world-model-world-model.xtl.html#u.s_tep" class="c-userfunc">ᵘs̲tep</a> <a href="demos-world-model-world-model.xtl.html#u.s_tep" class="c-userfunc">ᵘs̲tep</a> <a href="demos-world-model-world-model.xtl.html#u.s_tep" class="c-userfunc">ᵘs̲tep</a> <a href="demos-world-model-world-model.xtl.html#s">s</a>, <span class="c-number">0</span> <span class="c-number">2</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0</span>)</span>
+<span class="line" id="L89"><a class="ln" href="#L89">89</a><a href="builtins.html#o_-5c" class="c-builtin">o̲\</a> <a href="demos-world-model-world-model.xtl.html#dream">dream</a></span>
+<span class="line" id="L90"><a class="ln" href="#L90">90</a><a href="builtins.html#o_-5c" class="c-builtin">o̲\</a> <a href="demos-world-model-world-model.xtl.html#truth">truth</a></span>
+<span class="line" id="L91"><a class="ln" href="#L91">91</a><span class="c-comment">⍝</span><span class="c-comment"> Steps where the dream has the ball where it really is.</span></span>
+<span class="line" id="L92"><a class="ln" href="#L92">92</a><span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> <span class="c-builtin">'</span><a href="builtins.html#m_in" class="c-builtin">m̲in</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/₂</a> <a href="demos-world-model-world-model.xtl.html#dream">dream</a> <a href="builtins.html#-3d" class="c-symbol">=</a> <a href="demos-world-model-world-model.xtl.html#truth">truth</a></span>
+</div>
+</main>
+</body>
+</html>

@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Pipelines</title>
+  
+<script type="module">
+import init, * as bindings from '/X_eTaL-ML/pipelines/pipelines-web-88d5bb536d8cc7c4.js';
+const wasm = await init({ module_or_path: '/X_eTaL-ML/pipelines/pipelines-web-88d5bb536d8cc7c4_bg.wasm' });
+
+
+window.wasmBindings = bindings;
+
+
+dispatchEvent(new CustomEvent("TrunkApplicationStarted", {detail: {wasm}}));
+
+</script>
+  
+  <link rel="icon" href="/X_eTaL-ML/pipelines/favicon-a11bc0a2bcd81290.ico" integrity="sha384-xOjSLs9ZRBKy2hF6zlqNv+0U86E4BqZOJy7H7a4GXSVwDQMNie0D851/sRBSYI9a"/>
+  <link rel="stylesheet" href="/X_eTaL-ML/pipelines/microscope-b922efafa92831ab.css" integrity="sha384-k5TG4aWhdtCr6p3wmLkWvzyiViLB+xJaEbouiR8FtRp5BmZwPsvQBt8avUHFWSha"/>
+  <!-- KaTeX (shared/katex) draws the equation's LaTeX; where it has not
+       loaded, the LaTeX shows as text. -->
+  
+  <link rel="stylesheet" href="katex/katex.min.css" />
+  <script defer src="katex/katex.min.js"></script>
+  <script>
+    function drawTex() {
+      if (!window.katex) return;
+      document.querySelectorAll(".tex[data-tex]").forEach(function (el) {
+        if (el.dataset.drawn === el.dataset.tex) return;
+        try { katex.render(el.dataset.tex, el, { displayMode: true, throwOnError: false, trust: function (c) { return c.command === "\\htmlClass"; } }); el.dataset.drawn = el.dataset.tex; } catch (e) {}
+      });
+    }
+    // data-tex changed in place too (a choice redrawn, nothing added).
+    new MutationObserver(drawTex).observe(document.documentElement, { childList: true, subtree: true, attributes: true, attributeFilter: ["data-tex"] });
+    window.addEventListener("load", drawTex);
+  </script>
+  <style>
+    /* A stage of a pipeline drawn as math, clickable; the one chosen. */
+    .st { cursor: pointer; border-radius: 3px; padding: 0 2px; position: relative; z-index: 1; }
+    .st:hover { outline: 1px dashed var(--accent); }
+    .st-on { background: rgba(255, 138, 76, 0.22); outline: 1px solid var(--sel); }
+    .stages { display: flex; flex-wrap: wrap; gap: 4px; margin: 6px 0; }
+    .stages button { background: var(--off); color: var(--on); border: 1px solid rgba(128, 128, 128, 0.5); border-radius: 6px; padding: 2px 8px; font: inherit; font-size: 0.85em; cursor: pointer; }
+    .stages button:hover { border-color: var(--accent); }
+    .stages button.on { border-color: var(--sel); color: var(--sel); }
+    table.items { margin: 0 0 6px 0; }
+    .solids { touch-action: none; cursor: grab; user-select: none; }
+    .solids .row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+    .solids figure.solid { margin: 0; max-width: 100%; }
+    .solids svg { max-width: 100%; height: auto; }
+    .solids svg .edge { stroke: rgba(128, 128, 128, 0.7); stroke-dasharray: 3 3; fill: none; }
+    .solids svg text { fill: var(--on); font-size: 11px; }
+    .solids figcaption { font-size: 0.8em; max-width: 240px; }
+    .solids .arrow { font-size: 1.6em; color: var(--accent); }
+    table.items td { padding: 2px 6px; text-align: right; font-variant-numeric: tabular-nums; color: #111; }
+    /* The page on the left; the chosen stage on the right, in view as the
+       page scrolls; the divider between them dragged to resize. */
+    body:has(main > .wide) :is(header, main, footer) { max-width: 1720px; }
+    .work { display: grid; grid-template-columns: minmax(0, 1fr) 12px var(--side, 460px); gap: 0 4px; align-items: start; }
+    .work > .left { min-width: 0; }
+    .work .layout.three { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+    .divider { align-self: stretch; cursor: col-resize; touch-action: none; border-radius: 4px;
+      background: linear-gradient(to right, transparent 5px, var(--line) 5px, var(--line) 7px, transparent 7px); }
+    .divider:hover, .divider.drag { background: linear-gradient(to right, transparent 3px, var(--accent) 3px, var(--accent) 9px, transparent 9px); }
+    .side { position: sticky; top: 8px; max-height: calc(100vh - 16px); overflow: auto; }
+    .side .close { float: right; margin: 10px 6px 0 0; background: var(--off); color: var(--on); border: 1px solid var(--line); border-radius: 6px; font: inherit; font-size: 1.1em; line-height: 1; padding: 2px 8px; cursor: pointer; }
+    .running { display: flex; align-items: center; gap: 12px; padding: 28px 4px; font-size: 1.05em; }
+    .spinner { width: 26px; height: 26px; border-radius: 50%; border: 3px solid var(--line); border-top-color: var(--accent); animation: spin 0.8s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    @media (max-width: 900px) {
+      .work { grid-template-columns: minmax(0, 1fr); }
+      .divider { display: none; }
+      .side { position: fixed; left: 0; right: 0; bottom: 0; top: auto; max-height: 45vh; z-index: 5; background: var(--bg); border-top: 2px solid var(--accent); padding: 0 12px; }
+      .work.idle .side { display: none; }
+      .work:not(.idle) { padding-bottom: 46vh; }
+    }
+  </style>
+<link rel="modulepreload" href="/X_eTaL-ML/pipelines/pipelines-web-88d5bb536d8cc7c4.js" crossorigin="anonymous" integrity="sha384-duCgPV3vkLOQI64F67OfCDCcMcAIrozOIKaVJjcGjPTydQe6n9Dg05n/Yno2Nu/i"><link rel="preload" href="/X_eTaL-ML/pipelines/pipelines-web-88d5bb536d8cc7c4_bg.wasm" crossorigin="anonymous" integrity="sha384-MqYXtLxwkrqwsb7isQQNeMKAWlAVPVEMY4wHshRXf4OfBrGD2vV1NzdFSeWmBoIy" as="fetch" type="application/wasm"></head>
+<body></body>
+</html>

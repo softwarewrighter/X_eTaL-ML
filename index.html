@@ -1,0 +1,268 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>X_eTaL ML</title>
+<link rel="icon" href="favicon.ico">
+<style>
+:root { --bg:#fbfaf7; --fg:#1d1d1f; --muted:#5f6368; --card:#ffffff; --line:#e3e0d8;
+  --accent:#2457c5; --chip:#eef2fb; --live:#1f7a3a; --draft:#9a6200; --deferred:#8a8a8a;
+  --t-builtin:#1c5fd4; --t-user:#2b8a3e; --t-num:#9c6500; --t-sym:#0b7285; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg:#141518; --fg:#e8e6e3; --muted:#a0a4ab; --card:#1d1f23; --line:#30333a;
+  --accent:#8fb0ff; --chip:#262b36; --live:#5fcf7f; --draft:#e0a84a; --deferred:#8d9097;
+  --t-builtin:#8fb0ff; --t-user:#8ce99a; --t-num:#ffd43b; --t-sym:#66d9e8; } }
+:root[data-theme="dark"] { --bg:#141518; --fg:#e8e6e3; --muted:#a0a4ab; --card:#1d1f23;
+  --line:#30333a; --accent:#8fb0ff; --chip:#262b36; --live:#5fcf7f; --draft:#e0a84a; --deferred:#8d9097;
+  --t-builtin:#8fb0ff; --t-user:#8ce99a; --t-num:#ffd43b; --t-sym:#66d9e8; }
+* { box-sizing: border-box; }
+body { margin:0; background:var(--bg); color:var(--fg);
+  font: 16px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; }
+main, footer { max-width: 980px; margin: 0 auto; padding: 0 16px; }
+header { padding: 48px 0 24px; }
+h1 { font-size: 2rem; margin: 0 0 8px; letter-spacing: -0.01em; }
+.lede { color: var(--muted); max-width: 46rem; margin: 0; }
+.lede a, footer a { color: var(--accent); }
+.grid { display:grid; grid-template-columns: repeat(auto-fill, minmax(400px, 1fr)); gap:16px; padding: 8px 0 40px; }
+.card { background:var(--card); border:1px solid var(--line); border-radius:12px; padding:18px;
+  display:flex; flex-direction:column; gap:10px; }
+.card h2 { font-size:1.15rem; margin:0; }
+.shot img { width:100%; aspect-ratio: 13 / 9; object-fit: cover; object-position: top; border-radius:8px; border:1px solid var(--line); display:block; }
+.card p { margin:0; color:var(--muted); }
+.status { font-size:.8rem; font-weight:600; }
+.status.live { color:var(--live); } .status.draft { color:var(--draft); } .status.deferred { color:var(--deferred); }
+.chips { display:flex; flex-wrap:wrap; gap:6px; }
+.chip { background:var(--chip); border-radius:999px; padding:2px 10px; font-size:.8rem; }
+.links { margin-top:auto; display:flex; gap:16px; font-weight:600; }
+.links a { color:var(--accent); text-decoration:none; }
+.links a:hover { text-decoration:underline; }
+.empty { color:var(--muted); padding: 24px 0 48px; }
+footer { border-top:1px solid var(--line); padding-top:16px; padding-bottom:32px; color:var(--muted); font-size:.85rem; }
+footer .sep { margin: 0 8px; }
+.brand { display:flex; align-items:center; gap:16px; margin-bottom: 8px; }
+.brand h1 { margin: 0; }
+.logo { height: 60px; width: auto; border-radius: 8px; }
+.brand h1.ml { color: #ff7a00; font-weight: 800; }
+code { font-family: ui-monospace, "JuliaMono", Menlo, monospace; }
+pre { background:var(--card); border:1px solid var(--line); border-radius:8px; padding:12px 14px;
+  overflow-x:auto; font: 14px/1.5 ui-monospace, Menlo, monospace; }
+.rec { background:var(--card); border:1px solid var(--line); border-radius:12px; padding:18px; margin: 0 0 24px; }
+.rec h2 { margin:0 0 6px; font-size:1.2rem; } .rec p { margin:0 0 12px; color:var(--muted); }
+.rec img { width:100%; height:auto; border-radius:8px; display:block; background:#282a36; }
+.howto h2 { font-size:1.2rem; margin: 8px 0; }
+.card pre.xtl { margin:0; padding:8px 10px; font-size:.8rem; white-space:pre-wrap; overflow-wrap:anywhere; }
+.card p.why { font-size:.9rem; }
+.c-builtin { color: var(--t-builtin); } .c-userfunc, .c-libfunc, .c-macro { color: var(--t-user); }
+.c-number { color: var(--t-num); } .c-symbol { color: var(--t-sym); } .c-comment { color: var(--muted); font-style: italic; }
+/* the catalog's table of contents: a sidebar at the top left, above the cards on a phone */
+.with-toc { display: grid; grid-template-columns: 200px minmax(0, 1fr); gap: 28px; max-width: 1240px; margin: 0 auto; padding: 0 16px; }
+.with-toc main { max-width: none; margin: 0; padding: 0; }
+nav.toc { position: sticky; top: 16px; align-self: start; padding-top: 24px; font-size: .92rem; }
+nav.toc h2 { font-size: 1rem; margin: 0 0 8px; }
+nav.toc h3 { font-size: .8rem; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); margin: 14px 0 4px; }
+nav.toc ul { list-style: none; padding: 0; margin: 0; }
+nav.toc li { margin: 3px 0; }
+nav.toc a { color: var(--accent); text-decoration: none; }
+nav.toc a:hover { text-decoration: underline; }
+@media (max-width: 760px) { .with-toc { grid-template-columns: 1fr; gap: 0; } nav.toc { position: static; padding-top: 12px; } }
+.start { max-width: 46rem; margin: 14px 0 0; padding: 0; list-style: none; color: var(--muted); }
+.start li { margin: 6px 0; } .start b { color: var(--fg); } .start a { color: var(--accent); }
+</style>
+</head>
+<body>
+<div class="with-toc">
+<nav class="toc" aria-label="Demos"><h2>Demos</h2><ul><li><a href="#ternary-net">1.58-bit network</a></li><li><a href="#attention">Attention microscope</a></li><li><a href="#backprop">Backprop microscope</a></li><li><a href="#cnn-backprop">CNN training</a></li><li><a href="#embedding-explorer">Embedding explorer</a></li><li><a href="#k-means">k-means</a></li><li><a href="#diffusion">Learned denoiser</a></li><li><a href="#moe-router">MoE routing microscope</a></li><li><a href="#net-macro">Network macro</a></li><li><a href="#pipelines">Pipelines</a></li><li><a href="#micro-bert">Tiny BERT</a></li><li><a href="#cnn-digits">Tiny CNN</a></li><li><a href="#micro-gpt">Tiny GPT</a></li><li><a href="#train-live">Training live</a></li><li><a href="#world-model">World model</a></li></ul><h3>More</h3><ul><li><a href="recorded/">Run them yourself</a></li><li><a href="libs/">The libraries</a></li><li><a href="doc/">The cross-reference</a></li><li><a href="https://github.com/softwarewrighter/X_eTaL-ML">The repository</a></li></ul></nav>
+<main>
+<header>
+<div class="brand"><img class="logo" src="xetal-logo-orange.png" alt="X_eTaL logo"><h1 class="ml">X_eTaL ML</h1></div>
+<p class="lede">Machine learning in <a href="https://github.com/softwarewrighter/X_eTaL">X_eTaL</a>, a typed array language:
+small models you can watch think.</p>
+<ul class="start">
+<li><b>What you are looking at.</b> Each demo is a short X_eTaL program running in your browser
+(WebAssembly). Its page shows the model's arrays beside the program that computed them, and all
+the code it runs.</li>
+<li><b>Why an array language.</b> A convolution, a router, a quantizer or an attention head is
+one expression over whole arrays, where other code has nested loops. Each card shows that line,
+as X_eTaL draws it.</li>
+<li><b>Where to start.</b> <a href="cnn-digits/">Draw a digit</a> and watch a tiny network read
+it. Then <a href="recorded/">run the demos yourself</a>, or see more X_eTaL:
+<a href="https://softwarewrighter.github.io/X_eTaL/">the language</a>,
+<a href="https://softwarewrighter.github.io/X_eTaL-demos/">visual demos</a>,
+<a href="https://softwarewrighter.github.io/X_eTaL-games/">games</a>,
+<a href="https://softwarewrighter.github.io/X_eTaL-libraries/">libraries</a>,
+<a href="https://softwarewrighter.github.io/X_eTaL-extensions/">extensions</a>.</li>
+<li><b>The libraries.</b> <a href="libs/">The ML libraries</a> the demos are built from
+(networks, transformers, convolution, quantization, classic learning), each with its reference
+and demos you can edit and run.</li>
+<li><b>Read the code.</b> <a href="doc/">The cross-reference</a> (made by <code>xetal doc</code>):
+every demo program and library here, its documentation and sections, its source drawn as
+X_eTaL draws it, every name linked to where it is defined and used, into the NN and Net
+libraries and the built-ins.</li>
+</ul>
+</header>
+<section class="grid">
+<article class="card" id="cnn-digits">
+<a class="shot" href="cnn-digits/"><img src="cnn-digits/screenshot.png" alt="Tiny CNN" loading="lazy"></a>
+<span class="status live">Live</span>
+<h2>Tiny CNN</h2>
+<p>A tiny convolutional network trained on MNIST reads a handwritten digit: convolution as the picture&#x27;s nine shifted copies times eight filters, ReLU, 2 x 2 max-pooling by reshape, a dense layer and softmax, every stage an array program.</p>
+<pre class="xtl"><span class="c-number">-1</span> <span class="c-number">0</span> <span class="c-number">1</span> <span class="c-builtin">o̲-₂</span> <span class="c-number">-1</span> <span class="c-number">0</span> <span class="c-number">1</span> <span class="c-builtin">o̲-₂</span> x</pre>
+<p class="why">Every 3 x 3 window of the picture at once: the picture rotated by all nine offsets, then one matrix product with all eight filters, where other code needs four nested loops.</p>
+<div class="chips"><span class="chip">windows by rotation</span><span class="chip">inner product</span><span class="chip">reshape for pooling</span><span class="chip">softmax</span></div>
+<div class="links"><a href="cnn-digits/">Open the demo</a> <a href="https://github.com/softwarewrighter/X_eTaL-ML/tree/main/demos/cnn-digits#readme">How it works</a> <a href="doc/demos-cnn-digits-cnn-digits.xtl.html">Read the code</a></div>
+</article>
+<article class="card" id="backprop">
+<a class="shot" href="backprop/"><img src="backprop/screenshot.png" alt="Backprop microscope" loading="lazy"></a>
+<span class="status live">Live</span>
+<h2>Backprop microscope</h2>
+<p>One step of training a small network, every array shown: the forward pass, the loss, each layer&#x27;s gradient as one expression, the step. Each of the 27 gradients is checked by nudging its weight and watching the loss. Take steps and watch the loss fall.</p>
+<pre class="xtl">G1 ← (<span class="c-builtin">o̲\</span> <span class="c-userfunc">ᵘo̲nes</span> X) <span class="c-symbol">'+</span> <span class="c-symbol">'×</span> <span class="c-builtin">i̲nner</span> D1</pre>
+<p class="why">A layer&#x27;s gradient is its input transposed times what comes back from the layer above: one matrix product, for every weight and every example at once, where other code loops over each weight&#x27;s contribution.</p>
+<div class="chips"><span class="chip">backpropagation</span><span class="chip">matrix product with a transpose</span><span class="chip">finite differences</span><span class="chip">gradient descent</span></div>
+<div class="links"><a href="backprop/">Open the demo</a> <a href="https://github.com/softwarewrighter/X_eTaL-ML/tree/main/demos/backprop#readme">How it works</a> <a href="doc/demos-backprop-backprop.xtl.html">Read the code</a></div>
+</article>
+<article class="card" id="train-live">
+<a class="shot" href="train-live/"><img src="train-live/screenshot.png" alt="Training live" loading="lazy"></a>
+<span class="status live">Live</span>
+<h2>Training live</h2>
+<p>X_eTaL trains a small network in your browser: 300 points of a three-arm spiral made in X_eTaL, the backprop microscope&#x27;s gradient, Adam written out, 25 steps a frame. Watch the decision regions bend to follow the spiral and the loss fall.</p>
+<pre class="xtl">s ← <span class="c-number">25</span> <span class="c-userfunc">'ᵘa̲dam</span> <span class="c-builtin">p̲ower</span> s</pre>
+<p class="why">Training is a function iterated: one Adam step maps the state (the weights and two running averages) to the next, and p_ower repeats it, with no loop written; every step updates all 99 weights at once.</p>
+<div class="chips"><span class="chip">training</span><span class="chip">Adam</span><span class="chip">p_ower for iteration</span><span class="chip">backpropagation</span></div>
+<div class="links"><a href="train-live/">Open the demo</a> <a href="https://github.com/softwarewrighter/X_eTaL-ML/tree/main/demos/train-live#readme">How it works</a> <a href="doc/demos-train-live-train-live.xtl.html">Read the code</a></div>
+</article>
+<article class="card" id="cnn-backprop">
+<a class="shot" href="cnn-backprop/"><img src="cnn-backprop/screenshot.png" alt="CNN training" loading="lazy"></a>
+<span class="status live">Live</span>
+<h2>CNN training</h2>
+<p>X_eTaL trains a tiny convolutional network in your browser, from random weights, on 600 handwritten digits: the backward pass through softmax, the dense layer, max-pooling, ReLU and the convolution, checked against finite differences; Adam, 20 digits a step. Watch the filters form and the test digits come to be read right, from 12% to about 90% in 40 steps.</p>
+<pre class="xtl">DC ← (A <span class="c-libfunc">ᶜᵛu̲npool</span> DQ) <span class="c-symbol">×</span> <span class="c-builtin">f̲loat</span> C <span class="c-symbol">&gt;</span> <span class="c-number">0.0</span></pre>
+<p class="why">Back through max-pooling and ReLU for a whole batch at once: each 2 x 2 block&#x27;s gradient goes to its first largest item, and only where the convolution&#x27;s output was positive; then one matrix product with the same windows gives every filter&#x27;s gradient.</p>
+<div class="chips"><span class="chip">training</span><span class="chip">backpropagation</span><span class="chip">convolution</span><span class="chip">max-pooling</span><span class="chip">tuples</span></div>
+<div class="links"><a href="cnn-backprop/">Open the demo</a> <a href="https://github.com/softwarewrighter/X_eTaL-ML/tree/main/demos/cnn-backprop#readme">How it works</a> <a href="doc/demos-cnn-backprop-cnn-backprop.xtl.html">Read the code</a></div>
+</article>
+<article class="card" id="attention">
+<a class="shot" href="attention/"><img src="attention/screenshot.png" alt="Attention microscope" loading="lazy"></a>
+<span class="status live">Live</span>
+<h2>Attention microscope</h2>
+<p>One head of attention as array algebra: every query against every key in one matrix product with a transpose, softmax by row, the output as a weighted mix. The head is set by hand so a word looks for what it can describe: tired finds the animal, wide the street. A causal mask; click a word to see its query against every key.</p>
+<pre class="xtl"><span class="c-userfunc">ᵘs̲cores</span> ← { X → ((X <span class="c-symbol">'+</span> <span class="c-symbol">'×</span> <span class="c-builtin">i̲nner</span> Wq) <span class="c-symbol">'+</span> <span class="c-symbol">'×</span> <span class="c-builtin">i̲nner</span> <span class="c-builtin">o̲\</span> X <span class="c-symbol">'+</span> <span class="c-symbol">'×</span> <span class="c-builtin">i̲nner</span> Wk) <span class="c-symbol">÷</span> <span class="c-number">2.0</span> <span class="c-symbol">^</span> <span class="c-number">0.5</span> }</pre>
+<p class="why">Every word&#x27;s query against every word&#x27;s key is one matrix product with a transpose; softmax by row and the weighted mix follow, with no loop over words.</p>
+<div class="chips"><span class="chip">matrix product</span><span class="chip">transpose</span><span class="chip">softmax by row</span><span class="chip">masks</span></div>
+<div class="links"><a href="attention/">Open the demo</a> <a href="https://github.com/softwarewrighter/X_eTaL-ML/tree/main/demos/attention#readme">How it works</a> <a href="doc/demos-attention-attention.xtl.html">Read the code</a></div>
+</article>
+<article class="card" id="micro-gpt">
+<a class="shot" href="micro-gpt/"><img src="micro-gpt/screenshot.png" alt="Tiny GPT" loading="lazy"></a>
+<span class="status live">Live</span>
+<h2>Tiny GPT</h2>
+<p>Karpathy&#x27;s microgpt in X_eTaL: one transformer layer, 16 numbers wide, 4 attention heads, 4,192 weights trained on 32,033 baby names, inventing new names a letter at a time in your browser. Set the temperature and the first letters; look into a name: the five likeliest next letters at each step, and where each head looks.</p>
+<pre class="xtl">x1 ← x0 <span class="c-symbol">+</span> heads <span class="c-userfunc">ᵘl̲inear</span> Wo</pre>
+<p class="why">The whole name goes through attention at once: every position&#x27;s four heads computed together under a causal mask, joined and projected, then added back to what came in. The same scores microgpt computes one token at a time with its cache.</p>
+<div class="chips"><span class="chip">transformer</span><span class="chip">attention heads</span><span class="chip">RMS norm</span><span class="chip">sampling</span><span class="chip">causal mask</span></div>
+<div class="links"><a href="micro-gpt/">Open the demo</a> <a href="https://github.com/softwarewrighter/X_eTaL-ML/tree/main/demos/micro-gpt#readme">How it works</a> <a href="doc/demos-micro-gpt-micro-gpt.xtl.html">Read the code</a></div>
+</article>
+<article class="card" id="micro-bert">
+<a class="shot" href="micro-bert/"><img src="micro-bert/screenshot.png" alt="Tiny BERT" loading="lazy"></a>
+<span class="status live">Live</span>
+<h2>Tiny BERT</h2>
+<p>The encoder half of a transformer in X_eTaL: 2 layers, 16 numbers wide, 2 attention heads, 7,594 weights trained to fill a blank letter in baby names, each letter looking both ways. Type a name with a blank and see the letters it would put there and where each head looks; one encoder layer is a pipeline applied twice, and the model is drawn in one line of math.</p>
+<pre class="xtl">(hL, _) ← L <span class="c-userfunc">'ᵘl̲ayer</span> <span class="c-builtin">p̲ower</span> (<span class="c-userfunc">ᵘe̲mbed</span> ids, <span class="c-number">1</span>)</pre>
+<p class="why">BERT is L copies of one layer: the layer is a pipeline (attention, added back and normed, the GELU feed-forward layer, added back and normed), and p_ower applies it L times, carrying the layer number to pick each layer&#x27;s weights.</p>
+<div class="chips"><span class="chip">transformer encoder</span><span class="chip">masked language model</span><span class="chip">attention both ways</span><span class="chip">layer norm</span><span class="chip">GELU</span><span class="chip">pipelines</span><span class="chip">p_ower over layers</span><span class="chip">equations as macros</span></div>
+<div class="links"><a href="micro-bert/">Open the demo</a> <a href="https://github.com/softwarewrighter/X_eTaL-ML/tree/main/demos/micro-bert#readme">How it works</a> <a href="doc/demos-micro-bert-micro-bert.xtl.html">Read the code</a></div>
+</article>
+<article class="card" id="moe-router">
+<a class="shot" href="moe-router/"><img src="moe-router/screenshot.png" alt="MoE routing microscope" loading="lazy"></a>
+<span class="status live">Live</span>
+<h2>MoE routing microscope</h2>
+<p>A mixture-of-experts router: a sentence&#x27;s tokens scored against 16 experts by one matrix product, softmax, top-2 by masks, gates and the experts&#x27; load; words route by meaning. Nudge a token towards another word and watch the experts switch abruptly where two scores tie.</p>
+<pre class="xtl">gates ← <span class="c-userfunc">ᵘt̲op2</span> <span class="c-userfunc">ᵘs̲oftmax</span> <span class="c-userfunc">ᵘs̲cores</span> x</pre>
+<p class="why">Every token against every expert is one matrix product, softmax works on every row at once, and top-2 is two masks over the whole score matrix: no sort per token.</p>
+<div class="chips"><span class="chip">inner product</span><span class="chip">softmax by row</span><span class="chip">top-k by masks</span><span class="chip">reduce</span><span class="chip">outer product for a path and a plane of inputs</span></div>
+<div class="links"><a href="moe-router/">Open the demo</a> <a href="https://github.com/softwarewrighter/X_eTaL-ML/tree/main/demos/moe-router#readme">How it works</a> <a href="doc/demos-moe-router-moe-router.xtl.html">Read the code</a></div>
+</article>
+<article class="card" id="ternary-net">
+<a class="shot" href="ternary-net/"><img src="ternary-net/screenshot.png" alt="1.58-bit network" loading="lazy"></a>
+<span class="status live">Live</span>
+<h2>1.58-bit network</h2>
+<p>One tiny classifier run with its weights stored four ways (FP32, FP16, INT8, ternary -1/0/+1) and compared: maps, accuracy, error, storage, operations. A ternary layer is additions and subtractions only; ternary works when the network was trained for it.</p>
+<pre class="xtl">(<span class="c-builtin">f̲loat</span> x <span class="c-symbol">&gt;</span> s) <span class="c-symbol">−</span> <span class="c-builtin">f̲loat</span> x <span class="c-symbol">&lt;</span> <span class="c-builtin">n̲eg</span> s</pre>
+<p class="why">Quantizing a whole layer to -1, 0 and +1 is one comparison over the weight array, not a loop over weights; a ternary layer then needs only additions and subtractions.</p>
+<div class="chips"><span class="chip">inner product</span><span class="chip">quantization as array expressions</span><span class="chip">reduce over two axes</span><span class="chip">masks</span></div>
+<div class="links"><a href="ternary-net/">Open the demo</a> <a href="https://github.com/softwarewrighter/X_eTaL-ML/tree/main/demos/ternary-net#readme">How it works</a> <a href="doc/demos-ternary-net-ternary-net.xtl.html">Read the code</a></div>
+</article>
+<article class="card" id="k-means">
+<a class="shot" href="k-means/"><img src="k-means/screenshot.png" alt="k-means" loading="lazy"></a>
+<span class="status live">Live</span>
+<h2>k-means</h2>
+<p>Clustering without labels, step by step: 300 points in five blobs, every point given its nearest center, each center moved to the mean of its points. From a poor start three centers crowd one blob and k-means settles there; from a farthest-first start they find all five. Change k and the start.</p>
+<pre class="xtl">(((<span class="c-builtin">o̲\</span> O) <span class="c-symbol">'+</span> <span class="c-symbol">'×</span> <span class="c-builtin">i̲nner</span> X) <span class="c-symbol">+</span> C <span class="c-symbol">×</span> <span class="c-builtin">f̲loat</span> n <span class="c-symbol">=</span> <span class="c-number">0.0</span>) <span class="c-symbol">÷</span> <span class="c-number">1.0</span> <span class="c-builtin">m̲ax</span> n</pre>
+<p class="why">A whole step&#x27;s new centers at once: O is each point&#x27;s nearest center as one-hot rows, so O&#x27;s columns times the points sum each cluster&#x27;s points; divided by each cluster&#x27;s count, a center with no points kept where it was.</p>
+<div class="chips"><span class="chip">k-means</span><span class="chip">one-hot as a matrix</span><span class="chip">p_ower</span><span class="chip">the Learn library</span></div>
+<div class="links"><a href="k-means/">Open the demo</a> <a href="https://github.com/softwarewrighter/X_eTaL-ML/tree/main/demos/k-means#readme">How it works</a> <a href="doc/demos-k-means-k-means.xtl.html">Read the code</a></div>
+</article>
+<article class="card" id="embedding-explorer">
+<a class="shot" href="embedding-explorer/"><img src="embedding-explorer/screenshot.png" alt="Embedding explorer" loading="lazy"></a>
+<span class="status live">Live</span>
+<h2>Embedding explorer</h2>
+<p>Word embeddings made from counts, in X_eTaL: 4,000 short sentences over 70 words, each word&#x27;s embedding 64 numbers from which words occur near it. Turn the cloud in 3-D (Learn&#x27;s PCA) and click a word for its nearest: the animals, foods, colors, numbers and places gather, and k-means finds them without being told.</p>
+<pre class="xtl">E ← <span class="c-libfunc">ᵉᵐu̲nit</span> <span class="c-number">64</span> <span class="c-libfunc">ᵉᵐp̲roject</span> <span class="c-libfunc">ᵉᵐp̲pmi</span> (v, <span class="c-number">2</span>) <span class="c-libfunc">ᵉᵐc̲ooccur</span> ids</pre>
+<p class="why">A whole embedding table in one line read right to left: count which words occur near which, weight the counts by how much more often than chance, project every row to 64 numbers, scale to length 1. No loop over words or sentences.</p>
+<div class="chips"><span class="chip">embeddings</span><span class="chip">co-occurrence</span><span class="chip">PPMI</span><span class="chip">PCA</span><span class="chip">sorting to count</span></div>
+<div class="links"><a href="embedding-explorer/">Open the demo</a> <a href="https://github.com/softwarewrighter/X_eTaL-ML/tree/main/demos/embedding-explorer#readme">How it works</a> <a href="doc/demos-embedding-explorer-embedding-explorer.xtl.html">Read the code</a></div>
+</article>
+<article class="card" id="net-macro">
+<a class="shot" href="net-macro/"><img src="net-macro/screenshot.png" alt="Network macro" loading="lazy"></a>
+<span class="status live">Live</span>
+<h2>Network macro</h2>
+<p>A network written as one line: a macro library reads a spec such as &quot;2 16 relu 16 relu 3 softmax&quot; when the program is compiled and writes the forward function in its place, as ordinary code you can read. Three networks on one task, a spiral: a line, a small network, a deep one. Type a spec of your own and see what the macro writes, or refuses; then train it in your browser from random weights, by the training step the macro writes from the same spec.</p>
+<pre class="xtl"><span class="c-string">&quot;u:d_eep c&quot;</span> <span class="c-macro">ⁿᵉᵗm̲odel&lt;</span> <span class="c-string">&quot;2 16 relu 16 relu 3 softmax&quot;</span></pre>
+<p class="why">The line is a macro call: before the program is compiled it becomes the loading of three weight files, shaped and checked as the spec says, and the forward function written out, three matrix products and their activations, type-checked like any code. The spec is the one place the network is described.</p>
+<div class="chips"><span class="chip">macro libraries (.xtlm)</span><span class="chip">xetal expand</span><span class="chip">matrix product</span><span class="chip">softmax by row</span><span class="chip">backpropagation</span><span class="chip">p_ower</span></div>
+<div class="links"><a href="net-macro/">Open the demo</a> <a href="https://github.com/softwarewrighter/X_eTaL-ML/tree/main/demos/net-macro#readme">How it works</a> <a href="doc/demos-net-macro-net-macro.xtl.html">Read the code</a></div>
+</article>
+<article class="card" id="world-model">
+<a class="shot" href="world-model/"><img src="world-model/screenshot.png" alt="World model" loading="lazy"></a>
+<span class="status live">Live</span>
+<h2>World model</h2>
+<p>A tiny world model: a network that has watched a 2 x 2 ball bounce in a 12 x 12 box predicts the next frame from the last three, 432 pixels in and 144 out, trained offline on four fifths of the world&#x27;s 1,936 states. It gets 1,897 next frames exactly, 348 of the 387 it never saw. Place the ball, pick its speed, and let it dream: fed its own predictions, it plays the ball forward, bounces included.</p>
+<pre class="xtl"><span class="c-userfunc">ᵘp̲redict</span> ← { X → <span class="c-libfunc">ᵃᶜᵗs̲igmoid</span> (<span class="c-libfunc">ᵃᶜᵗr̲elu</span> X <span class="c-libfunc">ⁿⁿd̲ense</span> wb1) <span class="c-libfunc">ⁿⁿd̲ense</span> wb2 }</pre>
+<p class="why">The whole world at once: X is 1,936 windows, one row per state, three frames side by side; two dense layers give every state&#x27;s next frame together, a probability per pixel, and one count says how many are exactly right.</p>
+<div class="chips"><span class="chip">world model</span><span class="chip">next-frame prediction</span><span class="chip">a batch through dense layers</span><span class="chip">dreaming on its own output</span></div>
+<div class="links"><a href="world-model/">Open the demo</a> <a href="https://github.com/softwarewrighter/X_eTaL-ML/tree/main/demos/world-model#readme">How it works</a> <a href="doc/demos-world-model-world-model.xtl.html">Read the code</a></div>
+</article>
+<article class="card" id="pipelines">
+<a class="shot" href="pipelines/"><img src="pipelines/screenshot.png" alt="Pipelines" loading="lazy"></a>
+<span class="status live">Live</span>
+<h2>Pipelines</h2>
+<p>Layers written as data flow, left to right: a dense layer with its bias, a stable softmax, layer norm and one attention head as Flow pipelines on this repository&#x27;s libraries, each beside what the macro wrote and the same layer in plain X_eTaL. A CNN layer and a latent diffusion sampler are each shown four ways, as a paper prints them (equations, drawn as math; the sampler&#x27;s sum from T down to 1 is a recurrence, one step applied T times), as a pipeline, as its expansion and as plain X_eTaL; all compute the same values, checked as the page runs. Every example is also a pipeline of equations, drawn as math a row a stage, an attention head and a BERT layer among them. Compose your own from a palette of the notations&#x27; parts and see it run, drawn as math and expanded.</p>
+<pre class="xtl">@ <span class="c-macro">ᶠˡᵒʷp̲ipe&lt;</span> <span class="c-string">c&quot;</span>z ▷ <span class="c-builtin">'m̲ax</span> <span class="c-builtin">r̲/</span> it ▹m ▷ <span class="c-builtin">e̲xp</span> z <span class="c-symbol">−</span> m ▹e ▷ e <span class="c-symbol">÷</span> <span class="c-symbol">'+</span> <span class="c-builtin">r̲/</span> e<span class="c-string">&quot;</span></pre>
+<p class="why">A stable softmax as data flow: each stage takes the one before as it, a label names a stage&#x27;s value for later stages, and the macro writes it out as ordinary code, a line per stage, before the program is compiled.</p>
+<div class="chips"><span class="chip">macro libraries (.xtlm)</span><span class="chip">code strings</span><span class="chip">xetal expand</span><span class="chip">|&gt; and $ labels</span><span class="chip">equations as macros</span><span class="chip">convolution</span><span class="chip">diffusion sampling</span><span class="chip">a palette of the notations&#x27; parts</span><span class="chip">pipelines of equations, drawn as math</span></div>
+<div class="links"><a href="pipelines/">Open the demo</a> <a href="https://github.com/softwarewrighter/X_eTaL-ML/tree/main/demos/pipelines#readme">How it works</a> <a href="doc/demos-pipelines-pipelines.xtl.html">Read the code</a></div>
+</article>
+<article class="card" id="diffusion">
+<a class="shot" href="diffusion/"><img src="diffusion/screenshot.png" alt="Learned denoiser" loading="lazy"></a>
+<span class="status live">Live</span>
+<h2>Learned denoiser</h2>
+<p>Pictures from noise, step by step: a small network trained to see the clean picture in a noisy one at ten levels of noise, run backward from pure noise (DDIM: no new noise, so the same noise always gives the same picture). Eight 10 x 10 pictures at a time, every level of the way shown; the shapes it learned are a disk, a hollow square and a cross.</p>
+<pre class="xtl">(((b <span class="c-symbol">^</span> <span class="c-number">0.5</span>) <span class="c-symbol">×</span> C) <span class="c-symbol">+</span> ((<span class="c-number">1.0</span> <span class="c-symbol">−</span> b) <span class="c-symbol">^</span> <span class="c-number">0.5</span>) <span class="c-symbol">×</span> (X <span class="c-symbol">−</span> (a <span class="c-symbol">^</span> <span class="c-number">0.5</span>) <span class="c-symbol">×</span> C) <span class="c-symbol">÷</span> (<span class="c-number">1.0</span> <span class="c-symbol">−</span> a) <span class="c-symbol">^</span> <span class="c-number">0.5</span>, t <span class="c-symbol">−</span> <span class="c-number">1</span>)</pre>
+<p class="why">One denoising step for all the pictures at once: C is what the network sees in the noisy pictures X at level t; the noise that would make X of it is inferred and mixed back at the next level&#x27;s share. Ten of these, by p_ower over the tuple, turn noise into shapes.</p>
+<div class="chips"><span class="chip">diffusion</span><span class="chip">a learned denoiser</span><span class="chip">a noise schedule</span><span class="chip">DDIM sampling</span><span class="chip">p_ower over a tuple</span></div>
+<div class="links"><a href="diffusion/">Open the demo</a> <a href="https://github.com/softwarewrighter/X_eTaL-ML/tree/main/demos/diffusion#readme">How it works</a> <a href="doc/demos-diffusion-diffusion.xtl.html">Read the code</a></div>
+</article>
+</section>
+</main>
+</div>
+<footer>
+<span>Copyright (c) 2026 Michael A Wright</span><span class="sep">&middot;</span>
+<span>MIT License</span><span class="sep">&middot;</span>
+<a href="https://github.com/softwarewrighter/X_eTaL-ML" target="_blank">Repository</a><span class="sep">&middot;</span>
+<a href="libs/">Libraries</a><span class="sep">&middot;</span>
+<a href="doc/">Cross-reference</a><span class="sep">&middot;</span>
+<span>X_eTaL <a href="https://github.com/softwarewrighter/X_eTaL/commit/623b1016f30472016e5981eed7b77ab48ac80af4" target="_blank">623b101</a></span><span class="sep">&middot;</span>
+<span>build (host max, sha 2653246, 20261030T224724)</span>
+</footer>
+</body>
+</html>

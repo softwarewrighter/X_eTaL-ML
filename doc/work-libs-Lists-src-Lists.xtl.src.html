@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>work/libs/Lists/src/Lists.xtl - X_eTaL doc</title>
+<link rel="stylesheet" href="style.css">
+<script src="theme.js"></script>
+<script defer src="search-index.js"></script>
+<script defer src="search.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.18.10/dist/katex.min.css" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.18.10/dist/katex.min.js" crossorigin="anonymous"></script>
+<script>document.addEventListener('DOMContentLoaded', function () {
+if (typeof katex === 'undefined') return;
+document.querySelectorAll('.c-notation').forEach(function (el) {
+var tex = el.textContent; if (!tex) return;
+try { katex.render(tex, el, { throwOnError: false }); } catch (e) { el.textContent = tex; }
+});
+});</script>
+</head>
+<body>
+<nav class="side">
+<a class="home" href="index.html">X_eTaL doc</a>
+<input id="search" type="search" autocomplete="off" placeholder="Search: a name, or a type" title="A name (mean finds m_ean), or a type: Num a =&gt; a -&gt; a -&gt; a finds +, m_ax ...">
+<h2>Files</h2>
+<h3>demos/attention/</h3>
+<ul>
+<li><a href="demos-attention-attention.xtl.html">attention.xtl</a></li>
+</ul>
+<h3>demos/backprop/</h3>
+<ul>
+<li><a href="demos-backprop-backprop.xtl.html">backprop.xtl</a></li>
+</ul>
+<h3>demos/cnn-backprop/</h3>
+<ul>
+<li><a href="demos-cnn-backprop-cnn-backprop.xtl.html">cnn-backprop.xtl</a></li>
+</ul>
+<h3>demos/cnn-digits/</h3>
+<ul>
+<li><a href="demos-cnn-digits-batch.xtl.html">batch.xtl</a></li>
+<li><a href="demos-cnn-digits-cnn-digits.xtl.html">cnn-digits.xtl</a></li>
+</ul>
+<h3>demos/diffusion/</h3>
+<ul>
+<li><a href="demos-diffusion-diffusion.xtl.html">diffusion.xtl</a></li>
+</ul>
+<h3>demos/embedding-explorer/</h3>
+<ul>
+<li><a href="demos-embedding-explorer-embedding-explorer.xtl.html">embedding-explorer.xtl</a></li>
+</ul>
+<h3>demos/k-means/</h3>
+<ul>
+<li><a href="demos-k-means-k-means.xtl.html">k-means.xtl</a></li>
+</ul>
+<h3>demos/micro-bert/</h3>
+<ul>
+<li><a href="demos-micro-bert-micro-bert.xtl.html">micro-bert.xtl</a></li>
+</ul>
+<h3>demos/micro-gpt/</h3>
+<ul>
+<li><a href="demos-micro-gpt-batch.xtl.html">batch.xtl</a></li>
+<li><a href="demos-micro-gpt-micro-gpt.xtl.html">micro-gpt.xtl</a></li>
+</ul>
+<h3>demos/moe-router/</h3>
+<ul>
+<li><a href="demos-moe-router-moe-router.xtl.html">moe-router.xtl</a></li>
+</ul>
+<h3>demos/net-macro/</h3>
+<ul>
+<li><a href="demos-net-macro-net-macro.xtl.html">net-macro.xtl</a></li>
+<li><a href="demos-net-macro-train-it.xtl.html">train-it.xtl</a></li>
+</ul>
+<h3>demos/pipelines/</h3>
+<ul>
+<li><a href="demos-pipelines-diffusion.xtl.html">diffusion.xtl</a></li>
+<li><a href="demos-pipelines-equations.xtl.html">equations.xtl</a></li>
+<li><a href="demos-pipelines-pipelines.xtl.html">pipelines.xtl</a></li>
+<li><a href="demos-pipelines-rosetta.xtl.html">rosetta.xtl</a></li>
+</ul>
+<h3>demos/ternary-net/</h3>
+<ul>
+<li><a href="demos-ternary-net-ternary-net.xtl.html">ternary-net.xtl</a></li>
+</ul>
+<h3>demos/train-live/</h3>
+<ul>
+<li><a href="demos-train-live-train-live.xtl.html">train-live.xtl</a></li>
+</ul>
+<h3>demos/world-model/</h3>
+<ul>
+<li><a href="demos-world-model-world-model.xtl.html">world-model.xtl</a></li>
+</ul>
+<h3>libs/Activations/demos/</h3>
+<ul>
+<li><a href="libs-Activations-demos-curves.xtl.html">curves.xtl</a></li>
+</ul>
+<h3>libs/Activations/src/</h3>
+<ul>
+<li><a href="libs-Activations-src-Activations.xtl.html">Activations.xtl</a></li>
+</ul>
+<h3>libs/Attention/demos/</h3>
+<ul>
+<li><a href="libs-Attention-demos-previous.xtl.html">previous.xtl</a></li>
+</ul>
+<h3>libs/Attention/src/</h3>
+<ul>
+<li><a href="libs-Attention-src-Attention.xtl.html">Attention.xtl</a></li>
+</ul>
+<h3>libs/Conv/demos/</h3>
+<ul>
+<li><a href="libs-Conv-demos-edges.xtl.html">edges.xtl</a></li>
+</ul>
+<h3>libs/Conv/src/</h3>
+<ul>
+<li><a href="libs-Conv-src-Conv.xtl.html">Conv.xtl</a></li>
+</ul>
+<h3>libs/Embed/demos/</h3>
+<ul>
+<li><a href="libs-Embed-demos-pets.xtl.html">pets.xtl</a></li>
+</ul>
+<h3>libs/Embed/src/</h3>
+<ul>
+<li><a href="libs-Embed-src-Embed.xtl.html">Embed.xtl</a></li>
+</ul>
+<h3>libs/Flow/demos/</h3>
+<ul>
+<li><a href="libs-Flow-demos-mlp.xtl.html">mlp.xtl</a></li>
+</ul>
+<h3>libs/Flow/src/</h3>
+<ul>
+<li><a href="libs-Flow-src-Flow.xtlm.html">Flow.xtlm</a></li>
+</ul>
+<h3>libs/Integrals/demos/</h3>
+<ul>
+<li><a href="libs-Integrals-demos-convolution.xtl.html">convolution.xtl</a></li>
+<li><a href="libs-Integrals-demos-gelu.xtl.html">gelu.xtl</a></li>
+</ul>
+<h3>libs/Integrals/src/</h3>
+<ul>
+<li><a href="libs-Integrals-src-Integrals.xtlm.html">Integrals.xtlm</a></li>
+</ul>
+<h3>libs/Learn/demos/</h3>
+<ul>
+<li><a href="libs-Learn-demos-blobs.xtl.html">blobs.xtl</a></li>
+</ul>
+<h3>libs/Learn/src/</h3>
+<ul>
+<li><a href="libs-Learn-src-Learn.xtl.html">Learn.xtl</a></li>
+</ul>
+<h3>libs/Net/demos/</h3>
+<ul>
+<li><a href="libs-Net-demos-train-xor.xtl.html">train-xor.xtl</a></li>
+<li><a href="libs-Net-demos-xor.xtl.html">xor.xtl</a></li>
+</ul>
+<h3>libs/Net/src/</h3>
+<ul>
+<li><a href="libs-Net-src-Net.xtlm.html">Net.xtlm</a></li>
+</ul>
+<h3>libs/NN/demos/</h3>
+<ul>
+<li><a href="libs-NN-demos-xor.xtl.html">xor.xtl</a></li>
+</ul>
+<h3>libs/NN/src/</h3>
+<ul>
+<li><a href="libs-NN-src-NN.xtl.html">NN.xtl</a></li>
+</ul>
+<h3>libs/Norm/demos/</h3>
+<ul>
+<li><a href="libs-Norm-demos-rows.xtl.html">rows.xtl</a></li>
+</ul>
+<h3>libs/Norm/src/</h3>
+<ul>
+<li><a href="libs-Norm-src-Norm.xtl.html">Norm.xtl</a></li>
+</ul>
+<h3>libs/Optim/demos/</h3>
+<ul>
+<li><a href="libs-Optim-demos-bowl.xtl.html">bowl.xtl</a></li>
+</ul>
+<h3>libs/Optim/src/</h3>
+<ul>
+<li><a href="libs-Optim-src-Optim.xtl.html">Optim.xtl</a></li>
+</ul>
+<h3>libs/Quant/demos/</h3>
+<ul>
+<li><a href="libs-Quant-demos-formats.xtl.html">formats.xtl</a></li>
+</ul>
+<h3>libs/Quant/src/</h3>
+<ul>
+<li><a href="libs-Quant-src-Quant.xtl.html">Quant.xtl</a></li>
+</ul>
+<h3>libs/Sample/demos/</h3>
+<ul>
+<li><a href="libs-Sample-demos-next.xtl.html">next.xtl</a></li>
+</ul>
+<h3>libs/Sample/src/</h3>
+<ul>
+<li><a href="libs-Sample-src-Sample.xtl.html">Sample.xtl</a></li>
+</ul>
+<h3>std/</h3>
+<ul>
+<li><a href="std-System.xtlm.html">System.xtlm</a></li>
+</ul>
+<h3>work/libs/Check/src/</h3>
+<ul>
+<li><a href="work-libs-Check-src-Check.xtl.html">Check.xtl</a></li>
+<li><a href="work-libs-Check-src-Check.xtlm.html">Check.xtlm</a></li>
+</ul>
+<h3>work/libs/Equations/src/</h3>
+<ul>
+<li><a href="work-libs-Equations-src-Equations.xtl.html">Equations.xtl</a></li>
+<li><a href="work-libs-Equations-src-Equations.xtlm.html">Equations.xtlm</a></li>
+</ul>
+<h3>work/libs/Lists/src/</h3>
+<ul>
+<li><a href="work-libs-Lists-src-Lists.xtl.html">Lists.xtl</a></li>
+</ul>
+<h3>work/libs/Strings/src/</h3>
+<ul>
+<li><a href="work-libs-Strings-src-Strings.xtl.html">Strings.xtl</a></li>
+</ul>
+<ul>
+<li><a href="builtins.html">built-ins</a></li>
+</ul>
+<h2>On this page</h2>
+<ul>
+<li class="item"><a href="#L13"><span class="c-libfunc">ˡd̲eltas</span></a></li>
+<li class="item"><a href="#L16"><span class="c-libfunc">ˡw̲indows</span></a></li>
+<li class="item"><a href="#L24"><span class="c-libfunc">ˡm̲ovingMean</span></a></li>
+<li class="item"><a href="#L29"><span class="c-libfunc">ʰs̲tarts</span></a></li>
+<li class="item"><a href="#L32"><span class="c-libfunc">ˡr̲unValues</span></a></li>
+<li class="item"><a href="#L35"><span class="c-libfunc">ˡr̲unLengths</span></a></li>
+<li class="item"><a href="#L40"><span class="c-libfunc">ˡc̲hunks</span></a></li>
+<li class="item"><a href="#L48"><span class="c-libfunc">ˡr̲aze</span></a></li>
+<li class="item"><a href="#L55"><span class="c-libfunc">ˡs̲hift</span></a></li>
+<li class="item"><a href="#L58"><span class="c-libfunc">ˡi̲nterleave</span></a></li>
+<li class="item"><a href="#L63"><span class="c-libfunc">ʰb̲s</span></a></li>
+<li class="item"><a href="#L72"><span class="c-libfunc">ˡb̲search</span></a></li>
+</ul>
+</nav>
+<main>
+<button class="theme" title="Light or dark">theme</button>
+<section id="results"></section>
+<h1><span class="kind">source</span><a href="work-libs-Lists-src-Lists.xtl.html">work/libs/Lists/src/Lists.xtl</a></h1>
+<div class="source"><span class="line" id="L1"><a class="ln" href="#L1">1</a><span class="c-doc">⍝│</span><span class="c-doc"> Lists: list functions -- differences, windows, moving means, run</span></span>
+<span class="line" id="L2"><a class="ln" href="#L2">2</a><span class="c-doc">⍝│</span><span class="c-doc"> lengths, chunks, shifts, interleaving, binary search, raze.</span></span>
+<span class="line" id="L3"><a class="ln" href="#L3">3</a><span class="c-doc">⍝│</span><span class="c-doc"> Import it with an alias of your choice: &quot;li:&quot; u_se&lt; &quot;Lists&quot;.</span></span>
+<span class="line" id="L4"><a class="ln" href="#L4">4</a><span class="c-doc">⍝│</span><span class="c-doc"> Put libs/Lists/src on XETAL_PATH (&quot;just path&quot;); the reference is libs/Lists/docs.</span></span>
+<span class="line" id="L5"><a class="ln" href="#L5">5</a><span class="c-doc">⍝│</span><span class="c-doc"> Names with l: are exported; those under h: are private to this file.</span></span>
+<span class="line" id="L6"><a class="ln" href="#L6">6</a><span class="c-doc">⍝│</span></span>
+<span class="line" id="L7"><a class="ln" href="#L7">7</a><span class="c-doc">⍝│</span><span class="c-doc"> Counts and sizes go on the left, the list on the right, as for the</span></span>
+<span class="line" id="L8"><a class="ln" href="#L8">8</a><span class="c-doc">⍝│</span><span class="c-doc"> built-ins: 3 li:w_indows v.</span></span>
+<span class="line" id="L9"><a class="ln" href="#L9">9</a></span>
+<span class="line" id="L10"><a class="ln" href="#L10">10</a><span class="c-heading">⍝━━</span><span class="c-heading"> Differences and windows</span></span>
+<span class="line" id="L11"><a class="ln" href="#L11">11</a></span>
+<span class="line" id="L12"><a class="ln" href="#L12">12</a><span class="c-doc">⍝│</span><span class="c-doc"> d_eltas v: each item minus the one before (one fewer item).</span></span>
+<span class="line" id="L13"><a class="ln" href="#L13">13</a><span class="c-libfunc">ˡd̲eltas</span> ← { v → (<span class="c-number">1</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> v) <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">-1</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> v }</span>
+<span class="line" id="L14"><a class="ln" href="#L14">14</a></span>
+<span class="line" id="L15"><a class="ln" href="#L15">15</a><span class="c-doc">⍝│</span><span class="c-doc"> n w_indows v: every run of n consecutive items, one per row.</span></span>
+<span class="line" id="L16"><a class="ln" href="#L16">16</a><span class="c-libfunc">ˡw̲indows</span> ← { n v →</span>
+<span class="line" id="L17"><a class="ln" href="#L17">17</a>  n <a href="builtins.html#-3c" class="c-symbol">&lt;</a> <span class="c-number">1</span> ? @ <a href="std-System.xtlm.html#s.p_anic-3c" class="c-macro">p̲anic&lt;</a> <span class="c-string">&quot;a window holds 1 item or more, not {n}&quot;</span></span>
+<details class="expansion"><summary><code><a href="std-System.xtlm.html#s.p_anic-3c" class="c-macro">p̲anic&lt;</a></code> expands to</summary><pre class="code">(<a href="builtins.html#-5b-5dP_ANIC" class="c-builtin">⎕P̲ANIC</a> (<span class="c-string">&quot;a window holds 1 item or more, not &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> (n))))</pre></details>
+<span class="line" id="L18"><a class="ln" href="#L18">18</a>  k ← <span class="c-number">1</span> <a href="builtins.html#-2b" class="c-symbol">+</a> (<a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> v) <a href="builtins.html#-2d" class="c-symbol">−</a> n</span>
+<span class="line" id="L19"><a class="ln" href="#L19">19</a>  k <a href="builtins.html#-3c" class="c-symbol">&lt;</a> <span class="c-number">1</span> ? (<span class="c-number">0</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> n) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> v</span>
+<span class="line" id="L20"><a class="ln" href="#L20">20</a>  ((<a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> k) <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> <a href="builtins.html#o_ffsets" class="c-builtin">o̲ffsets</a> n) <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> v</span>
+<span class="line" id="L21"><a class="ln" href="#L21">21</a>}</span>
+<span class="line" id="L22"><a class="ln" href="#L22">22</a></span>
+<span class="line" id="L23"><a class="ln" href="#L23">23</a><span class="c-doc">⍝│</span><span class="c-doc"> n m_ovingMean v: the mean of each window of n (a Float each).</span></span>
+<span class="line" id="L24"><a class="ln" href="#L24">24</a><span class="c-libfunc">ˡm̲ovingMean</span> ← { n v → (<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/₂</a> n <a href="work-libs-Lists-src-Lists.xtl.html#l.w_indows" class="c-libfunc">ˡw̲indows</a> v) <a href="builtins.html#-2f" class="c-symbol">÷</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> n }</span>
+<span class="line" id="L25"><a class="ln" href="#L25">25</a></span>
+<span class="line" id="L26"><a class="ln" href="#L26">26</a><span class="c-heading">⍝━━</span><span class="c-heading"> Runs</span></span>
+<span class="line" id="L27"><a class="ln" href="#L27">27</a></span>
+<span class="line" id="L28"><a class="ln" href="#L28">28</a><span class="c-doc">⍝│</span><span class="c-doc"> Where each run of equal items starts (a 0/1 mask).</span></span>
+<span class="line" id="L29"><a class="ln" href="#L29">29</a><span class="c-libfunc">ʰs̲tarts</span> ← { v → <span class="c-number">0</span> <a href="builtins.html#-3d" class="c-symbol">=</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> v ? <span class="c-number">0</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">1</span> <a href="builtins.html#-3d" class="c-symbol">=</a> <span class="c-number">1</span>◆ <span class="c-number">1</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-number">1</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> v) <a href="builtins.html#-21-3d" class="c-symbol">≠</a> <span class="c-number">-1</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> v }</span>
+<span class="line" id="L30"><a class="ln" href="#L30">30</a></span>
+<span class="line" id="L31"><a class="ln" href="#L31">31</a><span class="c-doc">⍝│</span><span class="c-doc"> r_unValues v: the item of each run of equal items (&quot;aaabcc&quot; is &quot;abc&quot;).</span></span>
+<span class="line" id="L32"><a class="ln" href="#L32">32</a><span class="c-libfunc">ˡr̲unValues</span> ← { v → (<a href="work-libs-Lists-src-Lists.xtl.html#h.s_tarts" class="c-libfunc">ʰs̲tarts</a> v) <a href="builtins.html#r_eplicate" class="c-builtin">r̲eplicate</a> v }</span>
+<span class="line" id="L33"><a class="ln" href="#L33">33</a></span>
+<span class="line" id="L34"><a class="ln" href="#L34">34</a><span class="c-doc">⍝│</span><span class="c-doc"> r_unLengths v: the length of each run (&quot;aaabcc&quot; is 3 1 2).</span></span>
+<span class="line" id="L35"><a class="ln" href="#L35">35</a><span class="c-libfunc">ˡr̲unLengths</span> ← { v → <a href="work-libs-Lists-src-Lists.xtl.html#l.d_eltas" class="c-libfunc">ˡd̲eltas</a> (<a href="builtins.html#w_here" class="c-builtin">w̲here</a> <a href="work-libs-Lists-src-Lists.xtl.html#h.s_tarts" class="c-libfunc">ʰs̲tarts</a> v) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">1</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> v }</span>
+<span class="line" id="L36"><a class="ln" href="#L36">36</a></span>
+<span class="line" id="L37"><a class="ln" href="#L37">37</a><span class="c-heading">⍝━━</span><span class="c-heading"> Reshaping</span></span>
+<span class="line" id="L38"><a class="ln" href="#L38">38</a></span>
+<span class="line" id="L39"><a class="ln" href="#L39">39</a><span class="c-doc">⍝│</span><span class="c-doc"> n c_hunks v: v cut into pieces of n (the last may be shorter), as a list.</span></span>
+<span class="line" id="L40"><a class="ln" href="#L40">40</a><span class="c-libfunc">ˡc̲hunks</span> ← { n v →</span>
+<span class="line" id="L41"><a class="ln" href="#L41">41</a>  n <a href="builtins.html#-3c" class="c-symbol">&lt;</a> <span class="c-number">1</span> ? @ <a href="std-System.xtlm.html#s.p_anic-3c" class="c-macro">p̲anic&lt;</a> <span class="c-string">&quot;a chunk holds 1 item or more, not {n}&quot;</span></span>
+<details class="expansion"><summary><code><a href="std-System.xtlm.html#s.p_anic-3c" class="c-macro">p̲anic&lt;</a></code> expands to</summary><pre class="code">(<a href="builtins.html#-5b-5dP_ANIC" class="c-builtin">⎕P̲ANIC</a> (<span class="c-string">&quot;a chunk holds 1 item or more, not &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> (n))))</pre></details>
+<span class="line" id="L42"><a class="ln" href="#L42">42</a>  (<span class="c-number">1</span> <a href="builtins.html#-2b" class="c-symbol">+</a> (<a href="builtins.html#o_ffsets" class="c-builtin">o̲ffsets</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> v) <a href="builtins.html#d_iv" class="c-builtin">d̲iv</a> n) <a href="builtins.html#p_artition" class="c-builtin">p̲artition</a> v</span>
+<span class="line" id="L43"><a class="ln" href="#L43">43</a>}</span>
+<span class="line" id="L44"><a class="ln" href="#L44">44</a></span>
+<span class="line" id="L45"><a class="ln" href="#L45">45</a><span class="c-doc">⍝│</span><span class="c-doc"> r_aze list: the items of a list of lists joined into one list (APL2's</span></span>
+<span class="line" id="L46"><a class="ln" href="#L46">46</a><span class="c-doc">⍝│</span><span class="c-doc"> enlist of a simple list). An empty list has no items to take a type's</span></span>
+<span class="line" id="L47"><a class="ln" href="#L47">47</a><span class="c-doc">⍝│</span><span class="c-doc"> fill from: error[no-identity].</span></span>
+<span class="line" id="L48"><a class="ln" href="#L48">48</a><span class="c-libfunc">ˡr̲aze</span> ← { b →</span>
+<span class="line" id="L49"><a class="ln" href="#L49">49</a>  <span class="c-number">0</span> <a href="builtins.html#-3d" class="c-symbol">=</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> b ? @ <a href="std-System.xtlm.html#s.p_anic-3c" class="c-macro">p̲anic&lt;</a> <span class="c-string">&quot;r_aze needs at least one list: an empty list has no items to join (nor a type to make an empty result of)&quot;</span></span>
+<details class="expansion"><summary><code><a href="std-System.xtlm.html#s.p_anic-3c" class="c-macro">p̲anic&lt;</a></code> expands to</summary><pre class="code">(<a href="builtins.html#-5b-5dP_ANIC" class="c-builtin">⎕P̲ANIC</a> (<span class="c-string">&quot;r_aze needs at least one list: an empty list has no items to join (nor a type to make an empty result of)&quot;</span>))</pre></details>
+<span class="line" id="L50"><a class="ln" href="#L50">50</a>  <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> <span class="c-quote">'</span>{ <a href="builtins.html#e_nclose" class="c-builtin">e̲nclose</a> (<a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> <span class="c-lambdaarg">⍺</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> <span class="c-lambdaarg">⍵</span> } <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> b</span>
+<span class="line" id="L51"><a class="ln" href="#L51">51</a>}</span>
+<span class="line" id="L52"><a class="ln" href="#L52">52</a></span>
+<span class="line" id="L53"><a class="ln" href="#L53">53</a><span class="c-doc">⍝│</span><span class="c-doc"> n s_hift v: v moved n places toward the front (back for negative n),</span></span>
+<span class="line" id="L54"><a class="ln" href="#L54">54</a><span class="c-doc">⍝│</span><span class="c-doc"> without wrapping: the places left empty get the fill (0, or a space).</span></span>
+<span class="line" id="L55"><a class="ln" href="#L55">55</a><span class="c-libfunc">ˡs̲hift</span> ← { n v → t ← <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> v◆ n <a href="builtins.html#-3e-3d" class="c-symbol">≥</a> <span class="c-number">0</span> ? t <a href="builtins.html#t_ake" class="c-builtin">t̲ake</a> n <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> v◆ (<a href="builtins.html#n_eg" class="c-builtin">n̲eg</a> t) <a href="builtins.html#t_ake" class="c-builtin">t̲ake</a> n <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> v }</span>
+<span class="line" id="L56"><a class="ln" href="#L56">56</a></span>
+<span class="line" id="L57"><a class="ln" href="#L57">57</a><span class="c-doc">⍝│</span><span class="c-doc"> a i_nterleave b: a1 b1 a2 b2 ... (a and b of one length).</span></span>
+<span class="line" id="L58"><a class="ln" href="#L58">58</a><span class="c-libfunc">ˡi̲nterleave</span> ← { a b → <a href="builtins.html#r_avel" class="c-builtin">r̲avel₂</a> (<span class="c-number">2</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> a) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> a <a href="builtins.html#c_at" class="c-builtin">c̲at</a> b }</span>
+<span class="line" id="L59"><a class="ln" href="#L59">59</a></span>
+<span class="line" id="L60"><a class="ln" href="#L60">60</a><span class="c-heading">⍝━━</span><span class="c-heading"> Searching</span></span>
+<span class="line" id="L61"><a class="ln" href="#L61">61</a></span>
+<span class="line" id="L62"><a class="ln" href="#L62">62</a><span class="c-doc">⍝│</span><span class="c-doc"> Binary search in sorted v between lo and hi: how many items are &lt;= x.</span></span>
+<span class="line" id="L63"><a class="ln" href="#L63">63</a><span class="c-libfunc">ʰb̲s</span> ← { v x lo hi →</span>
+<span class="line" id="L64"><a class="ln" href="#L64">64</a>  lo <a href="builtins.html#-3e-3d" class="c-symbol">≥</a> hi ? lo</span>
+<span class="line" id="L65"><a class="ln" href="#L65">65</a>  m ← (lo <a href="builtins.html#-2b" class="c-symbol">+</a> hi <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">1</span>) <a href="builtins.html#d_iv" class="c-builtin">d̲iv</a> <span class="c-number">2</span></span>
+<span class="line" id="L66"><a class="ln" href="#L66">66</a>  (<a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> m <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> v) <a href="builtins.html#-3c-3d" class="c-symbol">≤</a> x ? (((v <a href="work-libs-Lists-src-Lists.xtl.html#h.b_s" class="c-libfunc">ʰb̲s</a> x)_ m)_ hi)</span>
+<span class="line" id="L67"><a class="ln" href="#L67">67</a>  ((v <a href="work-libs-Lists-src-Lists.xtl.html#h.b_s" class="c-libfunc">ʰb̲s</a> x)_ lo)_ m <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span></span>
+<span class="line" id="L68"><a class="ln" href="#L68">68</a>}</span>
+<span class="line" id="L69"><a class="ln" href="#L69">69</a></span>
+<span class="line" id="L70"><a class="ln" href="#L70">70</a><span class="c-doc">⍝│</span><span class="c-doc"> v b_search x: in a sorted list v, how many items are &lt;= each item of</span></span>
+<span class="line" id="L71"><a class="ln" href="#L71">71</a><span class="c-doc">⍝│</span><span class="c-doc"> x: the place x would go after its equals (dfns bsearch).</span></span>
+<span class="line" id="L72"><a class="ln" href="#L72">72</a><span class="c-libfunc">ˡb̲search</span> ← { v x → <span class="c-quote">'</span>{ y → (((v <a href="work-libs-Lists-src-Lists.xtl.html#h.b_s" class="c-libfunc">ʰb̲s</a> y)_ <span class="c-number">0</span>)_ <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> v) } <a href="builtins.html#e_ach" class="c-builtin">e̲ach</a> x }</span>
+</div>
+</main>
+</body>
+</html>

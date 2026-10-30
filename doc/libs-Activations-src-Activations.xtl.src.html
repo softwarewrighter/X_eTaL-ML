@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>libs/Activations/src/Activations.xtl - X_eTaL doc</title>
+<link rel="stylesheet" href="style.css">
+<script src="theme.js"></script>
+<script defer src="search-index.js"></script>
+<script defer src="search.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.18.10/dist/katex.min.css" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.18.10/dist/katex.min.js" crossorigin="anonymous"></script>
+<script>document.addEventListener('DOMContentLoaded', function () {
+if (typeof katex === 'undefined') return;
+document.querySelectorAll('.c-notation').forEach(function (el) {
+var tex = el.textContent; if (!tex) return;
+try { katex.render(tex, el, { throwOnError: false }); } catch (e) { el.textContent = tex; }
+});
+});</script>
+</head>
+<body>
+<nav class="side">
+<a class="home" href="index.html">X_eTaL doc</a>
+<input id="search" type="search" autocomplete="off" placeholder="Search: a name, or a type" title="A name (mean finds m_ean), or a type: Num a =&gt; a -&gt; a -&gt; a finds +, m_ax ...">
+<h2>Files</h2>
+<h3>demos/attention/</h3>
+<ul>
+<li><a href="demos-attention-attention.xtl.html">attention.xtl</a></li>
+</ul>
+<h3>demos/backprop/</h3>
+<ul>
+<li><a href="demos-backprop-backprop.xtl.html">backprop.xtl</a></li>
+</ul>
+<h3>demos/cnn-backprop/</h3>
+<ul>
+<li><a href="demos-cnn-backprop-cnn-backprop.xtl.html">cnn-backprop.xtl</a></li>
+</ul>
+<h3>demos/cnn-digits/</h3>
+<ul>
+<li><a href="demos-cnn-digits-batch.xtl.html">batch.xtl</a></li>
+<li><a href="demos-cnn-digits-cnn-digits.xtl.html">cnn-digits.xtl</a></li>
+</ul>
+<h3>demos/diffusion/</h3>
+<ul>
+<li><a href="demos-diffusion-diffusion.xtl.html">diffusion.xtl</a></li>
+</ul>
+<h3>demos/embedding-explorer/</h3>
+<ul>
+<li><a href="demos-embedding-explorer-embedding-explorer.xtl.html">embedding-explorer.xtl</a></li>
+</ul>
+<h3>demos/k-means/</h3>
+<ul>
+<li><a href="demos-k-means-k-means.xtl.html">k-means.xtl</a></li>
+</ul>
+<h3>demos/micro-bert/</h3>
+<ul>
+<li><a href="demos-micro-bert-micro-bert.xtl.html">micro-bert.xtl</a></li>
+</ul>
+<h3>demos/micro-gpt/</h3>
+<ul>
+<li><a href="demos-micro-gpt-batch.xtl.html">batch.xtl</a></li>
+<li><a href="demos-micro-gpt-micro-gpt.xtl.html">micro-gpt.xtl</a></li>
+</ul>
+<h3>demos/moe-router/</h3>
+<ul>
+<li><a href="demos-moe-router-moe-router.xtl.html">moe-router.xtl</a></li>
+</ul>
+<h3>demos/net-macro/</h3>
+<ul>
+<li><a href="demos-net-macro-net-macro.xtl.html">net-macro.xtl</a></li>
+<li><a href="demos-net-macro-train-it.xtl.html">train-it.xtl</a></li>
+</ul>
+<h3>demos/pipelines/</h3>
+<ul>
+<li><a href="demos-pipelines-diffusion.xtl.html">diffusion.xtl</a></li>
+<li><a href="demos-pipelines-equations.xtl.html">equations.xtl</a></li>
+<li><a href="demos-pipelines-pipelines.xtl.html">pipelines.xtl</a></li>
+<li><a href="demos-pipelines-rosetta.xtl.html">rosetta.xtl</a></li>
+</ul>
+<h3>demos/ternary-net/</h3>
+<ul>
+<li><a href="demos-ternary-net-ternary-net.xtl.html">ternary-net.xtl</a></li>
+</ul>
+<h3>demos/train-live/</h3>
+<ul>
+<li><a href="demos-train-live-train-live.xtl.html">train-live.xtl</a></li>
+</ul>
+<h3>demos/world-model/</h3>
+<ul>
+<li><a href="demos-world-model-world-model.xtl.html">world-model.xtl</a></li>
+</ul>
+<h3>libs/Activations/demos/</h3>
+<ul>
+<li><a href="libs-Activations-demos-curves.xtl.html">curves.xtl</a></li>
+</ul>
+<h3>libs/Activations/src/</h3>
+<ul>
+<li><a href="libs-Activations-src-Activations.xtl.html">Activations.xtl</a></li>
+</ul>
+<h3>libs/Attention/demos/</h3>
+<ul>
+<li><a href="libs-Attention-demos-previous.xtl.html">previous.xtl</a></li>
+</ul>
+<h3>libs/Attention/src/</h3>
+<ul>
+<li><a href="libs-Attention-src-Attention.xtl.html">Attention.xtl</a></li>
+</ul>
+<h3>libs/Conv/demos/</h3>
+<ul>
+<li><a href="libs-Conv-demos-edges.xtl.html">edges.xtl</a></li>
+</ul>
+<h3>libs/Conv/src/</h3>
+<ul>
+<li><a href="libs-Conv-src-Conv.xtl.html">Conv.xtl</a></li>
+</ul>
+<h3>libs/Embed/demos/</h3>
+<ul>
+<li><a href="libs-Embed-demos-pets.xtl.html">pets.xtl</a></li>
+</ul>
+<h3>libs/Embed/src/</h3>
+<ul>
+<li><a href="libs-Embed-src-Embed.xtl.html">Embed.xtl</a></li>
+</ul>
+<h3>libs/Flow/demos/</h3>
+<ul>
+<li><a href="libs-Flow-demos-mlp.xtl.html">mlp.xtl</a></li>
+</ul>
+<h3>libs/Flow/src/</h3>
+<ul>
+<li><a href="libs-Flow-src-Flow.xtlm.html">Flow.xtlm</a></li>
+</ul>
+<h3>libs/Integrals/demos/</h3>
+<ul>
+<li><a href="libs-Integrals-demos-convolution.xtl.html">convolution.xtl</a></li>
+<li><a href="libs-Integrals-demos-gelu.xtl.html">gelu.xtl</a></li>
+</ul>
+<h3>libs/Integrals/src/</h3>
+<ul>
+<li><a href="libs-Integrals-src-Integrals.xtlm.html">Integrals.xtlm</a></li>
+</ul>
+<h3>libs/Learn/demos/</h3>
+<ul>
+<li><a href="libs-Learn-demos-blobs.xtl.html">blobs.xtl</a></li>
+</ul>
+<h3>libs/Learn/src/</h3>
+<ul>
+<li><a href="libs-Learn-src-Learn.xtl.html">Learn.xtl</a></li>
+</ul>
+<h3>libs/Net/demos/</h3>
+<ul>
+<li><a href="libs-Net-demos-train-xor.xtl.html">train-xor.xtl</a></li>
+<li><a href="libs-Net-demos-xor.xtl.html">xor.xtl</a></li>
+</ul>
+<h3>libs/Net/src/</h3>
+<ul>
+<li><a href="libs-Net-src-Net.xtlm.html">Net.xtlm</a></li>
+</ul>
+<h3>libs/NN/demos/</h3>
+<ul>
+<li><a href="libs-NN-demos-xor.xtl.html">xor.xtl</a></li>
+</ul>
+<h3>libs/NN/src/</h3>
+<ul>
+<li><a href="libs-NN-src-NN.xtl.html">NN.xtl</a></li>
+</ul>
+<h3>libs/Norm/demos/</h3>
+<ul>
+<li><a href="libs-Norm-demos-rows.xtl.html">rows.xtl</a></li>
+</ul>
+<h3>libs/Norm/src/</h3>
+<ul>
+<li><a href="libs-Norm-src-Norm.xtl.html">Norm.xtl</a></li>
+</ul>
+<h3>libs/Optim/demos/</h3>
+<ul>
+<li><a href="libs-Optim-demos-bowl.xtl.html">bowl.xtl</a></li>
+</ul>
+<h3>libs/Optim/src/</h3>
+<ul>
+<li><a href="libs-Optim-src-Optim.xtl.html">Optim.xtl</a></li>
+</ul>
+<h3>libs/Quant/demos/</h3>
+<ul>
+<li><a href="libs-Quant-demos-formats.xtl.html">formats.xtl</a></li>
+</ul>
+<h3>libs/Quant/src/</h3>
+<ul>
+<li><a href="libs-Quant-src-Quant.xtl.html">Quant.xtl</a></li>
+</ul>
+<h3>libs/Sample/demos/</h3>
+<ul>
+<li><a href="libs-Sample-demos-next.xtl.html">next.xtl</a></li>
+</ul>
+<h3>libs/Sample/src/</h3>
+<ul>
+<li><a href="libs-Sample-src-Sample.xtl.html">Sample.xtl</a></li>
+</ul>
+<h3>std/</h3>
+<ul>
+<li><a href="std-System.xtlm.html">System.xtlm</a></li>
+</ul>
+<h3>work/libs/Check/src/</h3>
+<ul>
+<li><a href="work-libs-Check-src-Check.xtl.html">Check.xtl</a></li>
+<li><a href="work-libs-Check-src-Check.xtlm.html">Check.xtlm</a></li>
+</ul>
+<h3>work/libs/Equations/src/</h3>
+<ul>
+<li><a href="work-libs-Equations-src-Equations.xtl.html">Equations.xtl</a></li>
+<li><a href="work-libs-Equations-src-Equations.xtlm.html">Equations.xtlm</a></li>
+</ul>
+<h3>work/libs/Lists/src/</h3>
+<ul>
+<li><a href="work-libs-Lists-src-Lists.xtl.html">Lists.xtl</a></li>
+</ul>
+<h3>work/libs/Strings/src/</h3>
+<ul>
+<li><a href="work-libs-Strings-src-Strings.xtl.html">Strings.xtl</a></li>
+</ul>
+<ul>
+<li><a href="builtins.html">built-ins</a></li>
+</ul>
+<h2>On this page</h2>
+<ul>
+<li class="item"><a href="#L27"><span class="c-libfunc">ʰe̲rf</span></a></li>
+<li class="item"><a href="#L34"><span class="c-libfunc">ʰg̲eluTanh</span></a></li>
+<li class="item"><a href="#L42"><span class="c-libfunc">ˡr̲elu</span></a></li>
+<li class="item"><a href="#L48"><span class="c-libfunc">ˡl̲eaky</span></a></li>
+<li class="item"><a href="#L57"><span class="c-libfunc">ˡp̲relu</span></a></li>
+<li class="item"><a href="#L64"><span class="c-libfunc">ˡe̲lu</span></a></li>
+<li class="item"><a href="#L73"><span class="c-libfunc">ˡs̲elu</span></a></li>
+<li class="item"><a href="#L79"><span class="c-libfunc">ˡs̲igmoid</span></a></li>
+<li class="item"><a href="#L85"><span class="c-libfunc">ˡt̲anh</span></a></li>
+<li class="item"><a href="#L92"><span class="c-libfunc">ˡs̲oftplus</span></a></li>
+<li class="item"><a href="#L99"><span class="c-libfunc">ˡs̲ilu</span></a></li>
+<li class="item"><a href="#L106"><span class="c-libfunc">ˡs̲wish</span></a></li>
+<li class="item"><a href="#L114"><span class="c-libfunc">ˡg̲elu</span></a></li>
+<li class="item"><a href="#L121"><span class="c-libfunc">ˡg̲eluErf</span></a></li>
+<li class="item"><a href="#L128"><span class="c-libfunc">ˡm̲ish</span></a></li>
+<li class="item"><a href="#L135"><span class="c-libfunc">ˡh̲ardSigmoid</span></a></li>
+<li class="item"><a href="#L142"><span class="c-libfunc">ˡh̲ardSwish</span></a></li>
+<li class="item"><a href="#L153"><span class="c-libfunc">ˡg̲lu</span></a></li>
+<li class="item"><a href="#L156"><span class="c-libfunc">ˡr̲eglu</span></a></li>
+<li class="item"><a href="#L159"><span class="c-libfunc">ˡg̲eglu</span></a></li>
+<li class="item"><a href="#L167"><span class="c-libfunc">ˡs̲wiglu</span></a></li>
+<li class="item"><a href="#L175"><span class="c-libfunc">ˡd̲relu</span></a></li>
+<li class="item"><a href="#L178"><span class="c-libfunc">ˡd̲leaky</span></a></li>
+<li class="item"><a href="#L181"><span class="c-libfunc">ˡd̲prelu</span></a></li>
+<li class="item"><a href="#L184"><span class="c-libfunc">ˡd̲elu</span></a></li>
+<li class="item"><a href="#L187"><span class="c-libfunc">ˡd̲selu</span></a></li>
+<li class="item"><a href="#L193"><span class="c-libfunc">ˡd̲sigmoid</span></a></li>
+<li class="item"><a href="#L196"><span class="c-libfunc">ˡd̲tanh</span></a></li>
+<li class="item"><a href="#L199"><span class="c-libfunc">ˡd̲softplus</span></a></li>
+<li class="item"><a href="#L202"><span class="c-libfunc">ˡd̲silu</span></a></li>
+<li class="item"><a href="#L205"><span class="c-libfunc">ˡd̲swish</span></a></li>
+<li class="item"><a href="#L211"><span class="c-libfunc">ˡd̲gelu</span></a></li>
+<li class="item"><a href="#L214"><span class="c-libfunc">ˡd̲geluErf</span></a></li>
+<li class="item"><a href="#L217"><span class="c-libfunc">ˡd̲mish</span></a></li>
+<li class="item"><a href="#L220"><span class="c-libfunc">ˡd̲hardSigmoid</span></a></li>
+<li class="item"><a href="#L223"><span class="c-libfunc">ˡd̲hardSwish</span></a></li>
+</ul>
+</nav>
+<main>
+<button class="theme" title="Light or dark">theme</button>
+<section id="results"></section>
+<h1><span class="kind">source</span><a href="libs-Activations-src-Activations.xtl.html">libs/Activations/src/Activations.xtl</a></h1>
+<div class="source"><span class="line" id="L1"><a class="ln" href="#L1">1</a><span class="c-doc">⍝│</span><span class="c-doc"> Activations: activation functions, a derivative for each, and the gated layers (GLU, ReGLU, GEGLU, SwiGLU)</span></span>
+<span class="line" id="L2"><a class="ln" href="#L2">2</a><span class="c-doc">⍝│</span></span>
+<span class="line" id="L3"><a class="ln" href="#L3">3</a><span class="c-doc">⍝│</span><span class="c-doc"> Import it with an alias of your choice: &quot;act:&quot; u_se&lt; &quot;Activations&quot;.</span></span>
+<span class="line" id="L4"><a class="ln" href="#L4">4</a><span class="c-doc">⍝│</span><span class="c-doc"> Put libs/Activations/src on XETAL_PATH (&quot;just path&quot;); the reference is libs/Activations/docs.</span></span>
+<span class="line" id="L5"><a class="ln" href="#L5">5</a><span class="c-doc">⍝│</span><span class="c-doc"> Names with l: are exported; h: names are private to this file.</span></span>
+<span class="line" id="L6"><a class="ln" href="#L6">6</a><span class="c-doc">⍝│</span></span>
+<span class="line" id="L7"><a class="ln" href="#L7">7</a><span class="c-doc">⍝│</span><span class="c-doc"> Every activation works item by item on a Float array of any shape,</span></span>
+<span class="line" id="L8"><a class="ln" href="#L8">8</a><span class="c-doc">⍝│</span><span class="c-doc"> so a batch (one example per row) goes through in one call. A</span></span>
+<span class="line" id="L9"><a class="ln" href="#L9">9</a><span class="c-doc">⍝│</span><span class="c-doc"> setting comes first (</span><span class="c-doc"></span><span class="c-number">0.1</span> <span class="c-libfunc">ᵃᶜᵗl̲eaky</span> x<span class="c-doc"></span><span class="c-doc">, </span><span class="c-doc"></span><span class="c-number">1.5</span> <span class="c-libfunc">ᵃᶜᵗs̲wish</span> x<span class="c-doc"></span><span class="c-doc">); PReLU's</span></span>
+<span class="line" id="L10"><a class="ln" href="#L10">10</a><span class="c-doc">⍝│</span><span class="c-doc"> slopes are one per column (the last axis), as a bias is. Each</span></span>
+<span class="line" id="L11"><a class="ln" href="#L11">11</a><span class="c-doc">⍝│</span><span class="c-doc"> function f has its derivative d_f written in terms of f's input</span></span>
+<span class="line" id="L12"><a class="ln" href="#L12">12</a><span class="c-doc">⍝│</span><span class="c-doc"> (</span><span class="c-doc"></span><span class="c-libfunc">ᵃᶜᵗd̲gelu</span> z<span class="c-doc"></span><span class="c-doc">, not of its output): X_eTaL has no automatic</span></span>
+<span class="line" id="L13"><a class="ln" href="#L13">13</a><span class="c-doc">⍝│</span><span class="c-doc"> differentiation, and the smooth activations cannot be written at</span></span>
+<span class="line" id="L14"><a class="ln" href="#L14">14</a><span class="c-doc">⍝│</span><span class="c-doc"> their output as ReLU, tanh and sigmoid can. A gated layer takes its</span></span>
+<span class="line" id="L15"><a class="ln" href="#L15">15</a><span class="c-doc">⍝│</span><span class="c-doc"> two weight arrays as a tuple, </span><span class="c-doc"></span>(W, V) <span class="c-libfunc">ᵃᶜᵗs̲wiglu</span> x<span class="c-doc"></span><span class="c-doc">: the activation</span></span>
+<span class="line" id="L16"><a class="ln" href="#L16">16</a><span class="c-doc">⍝│</span><span class="c-doc"> on x W, times the linear x V (Shazeer 2020's order).</span></span>
+<span class="line" id="L17"><a class="ln" href="#L17">17</a><span class="c-doc">⍝│</span></span>
+<span class="line" id="L18"><a class="ln" href="#L18">18</a><span class="c-doc">⍝│</span><span class="c-doc"> tanh and erf are built here from e_xp (X_eTaL has no t_anh or e_rf</span></span>
+<span class="line" id="L19"><a class="ln" href="#L19">19</a><span class="c-doc">⍝│</span><span class="c-doc"> builtin: docs/xetal-asks.md M19): tanh as 2 sigmoid(2x) - 1, which</span></span>
+<span class="line" id="L20"><a class="ln" href="#L20">20</a><span class="c-doc">⍝│</span><span class="c-doc"> does not overflow at either end but loses digits near 0; erf by</span></span>
+<span class="line" id="L21"><a class="ln" href="#L21">21</a><span class="c-doc">⍝│</span><span class="c-doc"> Abramowitz and Stegun 7.1.26, within 1.5e-7. Both go the day the</span></span>
+<span class="line" id="L22"><a class="ln" href="#L22">22</a><span class="c-doc">⍝│</span><span class="c-doc"> builtins land (X_eTaL-libraries' Trig and Special, E4 and E5).</span></span>
+<span class="line" id="L23"><a class="ln" href="#L23">23</a></span>
+<span class="line" id="L24"><a class="ln" href="#L24">24</a><span class="c-heading">⍝━━</span><span class="c-heading"> Helpers (private)</span></span>
+<span class="line" id="L25"><a class="ln" href="#L25">25</a></span>
+<span class="line" id="L26"><a class="ln" href="#L26">26</a><span class="c-doc">⍝│</span><span class="c-doc"> The error function, A&amp;S 7.1.26 (|error| &lt; 1.5e-7), odd in x.</span></span>
+<span class="line" id="L27"><a class="ln" href="#L27">27</a><span class="c-libfunc">ʰe̲rf</span> ← { x →</span>
+<span class="line" id="L28"><a class="ln" href="#L28">28</a>  t ← <span class="c-number">1.0</span> <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-number">1.0</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">0.3275911</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#a_bs" class="c-builtin">a̲bs</a> x</span>
+<span class="line" id="L29"><a class="ln" href="#L29">29</a>  p ← t <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">0.254829592</span> <a href="builtins.html#-2b" class="c-symbol">+</a> t <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">-0.284496736</span> <a href="builtins.html#-2b" class="c-symbol">+</a> t <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">1.421413741</span> <a href="builtins.html#-2b" class="c-symbol">+</a> t <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">-1.453152027</span> <a href="builtins.html#-2b" class="c-symbol">+</a> t <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">1.061405429</span></span>
+<span class="line" id="L30"><a class="ln" href="#L30">30</a>  ((<span class="c-number">2.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> x <a href="builtins.html#-3e-3d" class="c-symbol">≥</a> <span class="c-number">0.0</span>) <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1.0</span>) <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">1.0</span> <a href="builtins.html#-2d" class="c-symbol">−</a> p <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#e_xp" class="c-builtin">e̲xp</a> <a href="builtins.html#n_eg" class="c-builtin">n̲eg</a> x <a href="builtins.html#-2a" class="c-symbol">×</a> x</span>
+<span class="line" id="L31"><a class="ln" href="#L31">31</a>}</span>
+<span class="line" id="L32"><a class="ln" href="#L32">32</a></span>
+<span class="line" id="L33"><a class="ln" href="#L33">33</a><span class="c-doc">⍝│</span><span class="c-doc"> The inner tanh of GELU's approximation, at the point u(x) = sqrt(2/pi) (x + 0.044715 x^3).</span></span>
+<span class="line" id="L34"><a class="ln" href="#L34">34</a><span class="c-libfunc">ʰg̲eluTanh</span> ← { x → <a href="libs-Activations-src-Activations.xtl.html#l.t_anh" class="c-libfunc">ˡt̲anh</a> <span class="c-number">0.7978845608028654</span> <a href="builtins.html#-2a" class="c-symbol">×</a> x <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">0.044715</span> <a href="builtins.html#-2a" class="c-symbol">×</a> x <a href="builtins.html#-2a" class="c-symbol">×</a> x <a href="builtins.html#-2a" class="c-symbol">×</a> x }</span>
+<span class="line" id="L35"><a class="ln" href="#L35">35</a></span>
+<span class="line" id="L36"><a class="ln" href="#L36">36</a><span class="c-heading">⍝━━</span><span class="c-heading"> Activations</span></span>
+<span class="line" id="L37"><a class="ln" href="#L37">37</a></span>
+<span class="line" id="L38"><a class="ln" href="#L38">38</a><span class="c-doc">⍝│</span><span class="c-doc"> </span><span class="c-doc"></span><span class="c-builtin">r̲elu</span> x<span class="c-doc"></span><span class="c-doc">: max(x, 0), item by item.</span></span>
+<span class="line" id="L39"><a class="ln" href="#L39">39</a><span class="c-doc">⍝│</span><span class="c-doc"> &gt;&gt; &quot;act:&quot; u_se&lt; &quot;Activations&quot;</span></span>
+<span class="line" id="L40"><a class="ln" href="#L40">40</a><span class="c-doc">⍝│</span><span class="c-doc"> &gt;&gt; act:r_elu -1.5 0.0 2.0</span></span>
+<span class="line" id="L41"><a class="ln" href="#L41">41</a><span class="c-doc">⍝│</span><span class="c-doc"> 0.0 0.0 2.0</span></span>
+<span class="line" id="L42"><a class="ln" href="#L42">42</a><span class="c-libfunc">ˡr̲elu</span> ← { x → x <a href="builtins.html#m_ax" class="c-builtin">m̲ax</a> <span class="c-number">0.0</span> }</span>
+<span class="line" id="L43"><a class="ln" href="#L43">43</a></span>
+<span class="line" id="L44"><a class="ln" href="#L44">44</a><span class="c-doc">⍝│</span><span class="c-doc"> </span><span class="c-doc"></span>a <span class="c-builtin">l̲eaky</span> x<span class="c-doc"></span><span class="c-doc">: leaky ReLU, x where positive and a times x elsewhere.</span></span>
+<span class="line" id="L45"><a class="ln" href="#L45">45</a><span class="c-doc">⍝│</span><span class="c-doc"> &gt;&gt; &quot;act:&quot; u_se&lt; &quot;Activations&quot;</span></span>
+<span class="line" id="L46"><a class="ln" href="#L46">46</a><span class="c-doc">⍝│</span><span class="c-doc"> &gt;&gt; 0.1 act:l_eaky -2.0 3.0</span></span>
+<span class="line" id="L47"><a class="ln" href="#L47">47</a><span class="c-doc">⍝│</span><span class="c-doc"> -0.2 3.0</span></span>
+<span class="line" id="L48"><a class="ln" href="#L48">48</a><span class="c-libfunc">ˡl̲eaky</span> ← { a x → (x <a href="builtins.html#m_ax" class="c-builtin">m̲ax</a> <span class="c-number">0.0</span>) <a href="builtins.html#-2b" class="c-symbol">+</a> a <a href="builtins.html#-2a" class="c-symbol">×</a> x <a href="builtins.html#m_in" class="c-builtin">m̲in</a> <span class="c-number">0.0</span> }</span>
+<span class="line" id="L49"><a class="ln" href="#L49">49</a></span>
+<span class="line" id="L50"><a class="ln" href="#L50">50</a><span class="c-doc">⍝│</span><span class="c-doc"> </span><span class="c-doc"></span>a <span class="c-builtin">p̲relu</span> x<span class="c-doc"></span><span class="c-doc">: PReLU (He et al. 2015), a leaky ReLU whose slope a is</span></span>
+<span class="line" id="L51"><a class="ln" href="#L51">51</a><span class="c-doc">⍝│</span><span class="c-doc"> one number per column (a's length is x's last extent; a scalar is</span></span>
+<span class="line" id="L52"><a class="ln" href="#L52">52</a><span class="c-doc">⍝│</span><span class="c-doc"> l_eaky). The slopes are learned; the library only applies them.</span></span>
+<span class="line" id="L53"><a class="ln" href="#L53">53</a><span class="c-doc">⍝│</span><span class="c-doc"> &gt;&gt; &quot;act:&quot; u_se&lt; &quot;Activations&quot;</span></span>
+<span class="line" id="L54"><a class="ln" href="#L54">54</a><span class="c-doc">⍝│</span><span class="c-doc"> &gt;&gt; 0.0 0.5 act:p_relu 2 2 r_eshape -2.0 -2.0 1.0 -4.0</span></span>
+<span class="line" id="L55"><a class="ln" href="#L55">55</a><span class="c-doc">⍝│</span><span class="c-doc"> 0.0 -1.0</span></span>
+<span class="line" id="L56"><a class="ln" href="#L56">56</a><span class="c-doc">⍝│</span><span class="c-doc"> 1.0 -2.0</span></span>
+<span class="line" id="L57"><a class="ln" href="#L57">57</a><span class="c-libfunc">ˡp̲relu</span> ← { a x → (x <a href="builtins.html#m_ax" class="c-builtin">m̲ax</a> <span class="c-number">0.0</span>) <a href="builtins.html#-2b" class="c-symbol">+</a> ((<a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> x) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> a) <a href="builtins.html#-2a" class="c-symbol">×</a> x <a href="builtins.html#m_in" class="c-builtin">m̲in</a> <span class="c-number">0.0</span> }</span>
+<span class="line" id="L58"><a class="ln" href="#L58">58</a></span>
+<span class="line" id="L59"><a class="ln" href="#L59">59</a><span class="c-doc">⍝│</span><span class="c-doc"> </span><span class="c-doc"></span>a <span class="c-builtin">e̲lu</span> x<span class="c-doc"></span><span class="c-doc">: ELU (Clevert et al. 2016), x where positive and</span></span>
+<span class="line" id="L60"><a class="ln" href="#L60">60</a><span class="c-doc">⍝│</span><span class="c-doc"> a (e^x - 1) elsewhere: smooth at 0 when a is 1, bounded below by -a.</span></span>
+<span class="line" id="L61"><a class="ln" href="#L61">61</a><span class="c-doc">⍝│</span><span class="c-doc"> &gt;&gt; &quot;act:&quot; u_se&lt; &quot;Activations&quot;</span></span>
+<span class="line" id="L62"><a class="ln" href="#L62">62</a><span class="c-doc">⍝│</span><span class="c-doc"> &gt;&gt; 1.0 act:e_lu -1.0 2.0</span></span>
+<span class="line" id="L63"><a class="ln" href="#L63">63</a><span class="c-doc">⍝│</span><span class="c-doc"> -0.6321205588285577 2.0</span></span>
+<span class="line" id="L64"><a class="ln" href="#L64">64</a><span class="c-libfunc">ˡe̲lu</span> ← { a x → (x <a href="builtins.html#m_ax" class="c-builtin">m̲ax</a> <span class="c-number">0.0</span>) <a href="builtins.html#-2b" class="c-symbol">+</a> a <a href="builtins.html#-2a" class="c-symbol">×</a> (<a href="builtins.html#e_xp" class="c-builtin">e̲xp</a> x <a href="builtins.html#m_in" class="c-builtin">m̲in</a> <span class="c-number">0.0</span>) <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1.0</span> }</span>
+<span class="line" id="L65"><a class="ln" href="#L65">65</a></span>
+<span class="line" id="L66"><a class="ln" href="#L66">66</a><span class="c-doc">⍝│</span><span class="c-doc"> </span><span class="c-doc"></span><span class="c-builtin">s̲elu</span> x<span class="c-doc"></span><span class="c-doc">: SELU (Klambauer et al. 2017), lambda times an ELU with</span></span>
+<span class="line" id="L67"><a class="ln" href="#L67">67</a><span class="c-doc">⍝│</span><span class="c-doc"> alpha, the two constants that keep a standard-normal input's mean 0</span></span>
+<span class="line" id="L68"><a class="ln" href="#L68">68</a><span class="c-doc">⍝│</span><span class="c-doc"> and variance 1 through a layer (a self-normalizing network needs no</span></span>
+<span class="line" id="L69"><a class="ln" href="#L69">69</a><span class="c-doc">⍝│</span><span class="c-doc"> norm layer).</span></span>
+<span class="line" id="L70"><a class="ln" href="#L70">70</a><span class="c-doc">⍝│</span><span class="c-doc"> &gt;&gt; &quot;act:&quot; u_se&lt; &quot;Activations&quot;</span></span>
+<span class="line" id="L71"><a class="ln" href="#L71">71</a><span class="c-doc">⍝│</span><span class="c-doc"> &gt;&gt; act:s_elu 0.0 1.0</span></span>
+<span class="line" id="L72"><a class="ln" href="#L72">72</a><span class="c-doc">⍝│</span><span class="c-doc"> 0.0 1.0507009873554805</span></span>
+<span class="line" id="L73"><a class="ln" href="#L73">73</a><span class="c-libfunc">ˡs̲elu</span> ← { x → <span class="c-number">1.0507009873554805</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">1.6732632423543772</span> <a href="libs-Activations-src-Activations.xtl.html#l.e_lu" class="c-libfunc">ˡe̲lu</a> x }</span>
+<span class="line" id="L74"><a class="ln" href="#L74">74</a></span>
+<span class="line" id="L75"><a class="ln" href="#L75">75</a><span class="c-doc">⍝│</span><span class="c-doc"> </span><span class="c-doc"></span><span class="c-builtin">s̲igmoid</span> x<span class="c-doc"></span><span class="c-doc">: 1 / (1 + e^-x), item by item.</span></span>
+<span class="line" id="L76"><a class="ln" href="#L76">76</a><span class="c-doc">⍝│</span><span class="c-doc"> &gt;&gt; &quot;act:&quot; u_se&lt; &quot;Activations&quot;</span></span>
+<span class="line" id="L77"><a class="ln" href="#L77">77</a><span class="c-doc">⍝│</span><span class="c-doc"> &gt;&gt; act:s_igmoid 0.0 2.0</span></span>
+<span class="line" id="L78"><a class="ln" href="#L78">78</a><span class="c-doc">⍝│</span><span class="c-doc"> 0.5 0.8807970779778823</span></span>
+<span class="line" id="L79"><a class="ln" href="#L79">79</a><span class="c-libfunc">ˡs̲igmoid</span> ← { x → <span class="c-number">1.0</span> <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-number">1.0</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#e_xp" class="c-builtin">e̲xp</a> <a href="builtins.html#n_eg" class="c-builtin">n̲eg</a> x }</span>
+<span class="line" id="L80"><a class="ln" href="#L80">80</a></span>
+<span class="line" id="L81"><a class="ln" href="#L81">81</a><span class="c-doc">⍝│</span><span class="c-doc"> </span><span class="c-doc"></span><span class="c-builtin">t̲anh</span> x<span class="c-doc"></span><span class="c-doc">: the hyperbolic tangent, as 2 sigmoid(2x) - 1 (see the file's note).</span></span>
+<span class="line" id="L82"><a class="ln" href="#L82">82</a><span class="c-doc">⍝│</span><span class="c-doc"> &gt;&gt; &quot;act:&quot; u_se&lt; &quot;Activations&quot;</span></span>
+<span class="line" id="L83"><a class="ln" href="#L83">83</a><span class="c-doc">⍝│</span><span class="c-doc"> &gt;&gt; act:t_anh 0.0 1.0</span></span>
+<span class="line" id="L84"><a class="ln" href="#L84">84</a><span class="c-doc">⍝│</span><span class="c-doc"> 0.0 0.7615941559557646</span></span>
+<span class="line" id="L85"><a class="ln" href="#L85">85</a><span class="c-libfunc">ˡt̲anh</span> ← { x → (<span class="c-number">2.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="libs-Activations-src-Activations.xtl.html#l.s_igmoid" class="c-libfunc">ˡs̲igmoid</a> <span class="c-number">2.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> x) <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1.0</span> }</span>
+<span class="line" id="L86"><a class="ln" href="#L86">86</a></span>
+<span class="line" id="L87"><a class="ln" href="#L87">87</a><span class="c-doc">⍝│</span><span class="c-doc"> </span><span class="c-doc"></span><span class="c-builtin">s̲oftplus</span> x<span class="c-doc"></span><span class="c-doc">: log(1 + e^x), a smooth ReLU, in the form that does</span></span>
+<span class="line" id="L88"><a class="ln" href="#L88">88</a><span class="c-doc">⍝│</span><span class="c-doc"> not overflow: max(x, 0) + log(1 + e^-|x|).</span></span>
+<span class="line" id="L89"><a class="ln" href="#L89">89</a><span class="c-doc">⍝│</span><span class="c-doc"> &gt;&gt; &quot;act:&quot; u_se&lt; &quot;Activations&quot;</span></span>
+<span class="line" id="L90"><a class="ln" href="#L90">90</a><span class="c-doc">⍝│</span><span class="c-doc"> &gt;&gt; act:s_oftplus 0.0 1000.0</span></span>
+<span class="line" id="L91"><a class="ln" href="#L91">91</a><span class="c-doc">⍝│</span><span class="c-doc"> 0.6931471805599453 1000.0</span></span>
+<span class="line" id="L92"><a class="ln" href="#L92">92</a><span class="c-libfunc">ˡs̲oftplus</span> ← { x → (x <a href="builtins.html#m_ax" class="c-builtin">m̲ax</a> <span class="c-number">0.0</span>) <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#l_og" class="c-builtin">l̲og</a> <span class="c-number">1.0</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#e_xp" class="c-builtin">e̲xp</a> <a href="builtins.html#n_eg" class="c-builtin">n̲eg</a> <a href="builtins.html#a_bs" class="c-builtin">a̲bs</a> x }</span>
+<span class="line" id="L93"><a class="ln" href="#L93">93</a></span>
+<span class="line" id="L94"><a class="ln" href="#L94">94</a><span class="c-doc">⍝│</span><span class="c-doc"> </span><span class="c-doc"></span><span class="c-builtin">s̲ilu</span> x<span class="c-doc"></span><span class="c-doc">: SiLU, x sigmoid(x) (Hendrycks and Gimpel 2016; Swish with</span></span>
+<span class="line" id="L95"><a class="ln" href="#L95">95</a><span class="c-doc">⍝│</span><span class="c-doc"> beta 1, Ramachandran et al. 2017): smooth, dips to -0.278 below 0.</span></span>
+<span class="line" id="L96"><a class="ln" href="#L96">96</a><span class="c-doc">⍝│</span><span class="c-doc"> &gt;&gt; &quot;act:&quot; u_se&lt; &quot;Activations&quot;</span></span>
+<span class="line" id="L97"><a class="ln" href="#L97">97</a><span class="c-doc">⍝│</span><span class="c-doc"> &gt;&gt; act:s_ilu -1.0 1.0</span></span>
+<span class="line" id="L98"><a class="ln" href="#L98">98</a><span class="c-doc">⍝│</span><span class="c-doc"> -0.2689414213699951 0.7310585786300049</span></span>
+<span class="line" id="L99"><a class="ln" href="#L99">99</a><span class="c-libfunc">ˡs̲ilu</span> ← { x → x <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="libs-Activations-src-Activations.xtl.html#l.s_igmoid" class="c-libfunc">ˡs̲igmoid</a> x }</span>
+<span class="line" id="L100"><a class="ln" href="#L100">100</a></span>
+<span class="line" id="L101"><a class="ln" href="#L101">101</a><span class="c-doc">⍝│</span><span class="c-doc"> </span><span class="c-doc"></span>b <span class="c-builtin">s̲wish</span> x<span class="c-doc"></span><span class="c-doc">: Swish, x sigmoid(b x); b = 1 is s_ilu, a large b tends</span></span>
+<span class="line" id="L102"><a class="ln" href="#L102">102</a><span class="c-doc">⍝│</span><span class="c-doc"> to ReLU, b = 1.702 is close to GELU.</span></span>
+<span class="line" id="L103"><a class="ln" href="#L103">103</a><span class="c-doc">⍝│</span><span class="c-doc"> &gt;&gt; &quot;act:&quot; u_se&lt; &quot;Activations&quot;</span></span>
+<span class="line" id="L104"><a class="ln" href="#L104">104</a><span class="c-doc">⍝│</span><span class="c-doc"> &gt;&gt; 1.702 act:s_wish 1.0</span></span>
+<span class="line" id="L105"><a class="ln" href="#L105">105</a><span class="c-doc">⍝│</span><span class="c-doc"> 0.8457957659328212</span></span>
+<span class="line" id="L106"><a class="ln" href="#L106">106</a><span class="c-libfunc">ˡs̲wish</span> ← { b x → x <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="libs-Activations-src-Activations.xtl.html#l.s_igmoid" class="c-libfunc">ˡs̲igmoid</a> b <a href="builtins.html#-2a" class="c-symbol">×</a> x }</span>
+<span class="line" id="L107"><a class="ln" href="#L107">107</a></span>
+<span class="line" id="L108"><a class="ln" href="#L108">108</a><span class="c-doc">⍝│</span><span class="c-doc"> </span><span class="c-doc"></span><span class="c-builtin">g̲elu</span> x<span class="c-doc"></span><span class="c-doc">: GELU (Hendrycks and Gimpel 2016) in the tanh form the</span></span>
+<span class="line" id="L109"><a class="ln" href="#L109">109</a><span class="c-doc">⍝│</span><span class="c-doc"> frameworks compute, x/2 (1 + tanh(sqrt(2/pi) (x + 0.044715 x^3))),</span></span>
+<span class="line" id="L110"><a class="ln" href="#L110">110</a><span class="c-doc">⍝│</span><span class="c-doc"> within 4.73e-4 of the exact g_eluErf.</span></span>
+<span class="line" id="L111"><a class="ln" href="#L111">111</a><span class="c-doc">⍝│</span><span class="c-doc"> &gt;&gt; &quot;act:&quot; u_se&lt; &quot;Activations&quot;</span></span>
+<span class="line" id="L112"><a class="ln" href="#L112">112</a><span class="c-doc">⍝│</span><span class="c-doc"> &gt;&gt; act:g_elu -1.0 1.0</span></span>
+<span class="line" id="L113"><a class="ln" href="#L113">113</a><span class="c-doc">⍝│</span><span class="c-doc"> -0.15880800939172324 0.8411919906082768</span></span>
+<span class="line" id="L114"><a class="ln" href="#L114">114</a><span class="c-libfunc">ˡg̲elu</span> ← { x → <span class="c-number">0.5</span> <a href="builtins.html#-2a" class="c-symbol">×</a> x <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">1.0</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="libs-Activations-src-Activations.xtl.html#h.g_eluTanh" class="c-libfunc">ʰg̲eluTanh</a> x }</span>
+<span class="line" id="L115"><a class="ln" href="#L115">115</a></span>
+<span class="line" id="L116"><a class="ln" href="#L116">116</a><span class="c-doc">⍝│</span><span class="c-doc"> </span><span class="c-doc"></span><span class="c-builtin">g̲eluErf</span> x<span class="c-doc"></span><span class="c-doc">: the exact GELU, x Phi(x) = x/2 (1 + erf(x / sqrt 2)),</span></span>
+<span class="line" id="L117"><a class="ln" href="#L117">117</a><span class="c-doc">⍝│</span><span class="c-doc"> Phi the normal CDF (erf as this file's note says).</span></span>
+<span class="line" id="L118"><a class="ln" href="#L118">118</a><span class="c-doc">⍝│</span><span class="c-doc"> &gt;&gt; &quot;act:&quot; u_se&lt; &quot;Activations&quot;</span></span>
+<span class="line" id="L119"><a class="ln" href="#L119">119</a><span class="c-doc">⍝│</span><span class="c-doc"> &gt;&gt; act:g_eluErf 1.0</span></span>
+<span class="line" id="L120"><a class="ln" href="#L120">120</a><span class="c-doc">⍝│</span><span class="c-doc"> 0.8413447361676363</span></span>
+<span class="line" id="L121"><a class="ln" href="#L121">121</a><span class="c-libfunc">ˡg̲eluErf</span> ← { x → <span class="c-number">0.5</span> <a href="builtins.html#-2a" class="c-symbol">×</a> x <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">1.0</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="libs-Activations-src-Activations.xtl.html#h.e_rf" class="c-libfunc">ʰe̲rf</a> x <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-number">1.4142135623730951</span> }</span>
+<span class="line" id="L122"><a class="ln" href="#L122">122</a></span>
+<span class="line" id="L123"><a class="ln" href="#L123">123</a><span class="c-doc">⍝│</span><span class="c-doc"> </span><span class="c-doc"></span><span class="c-builtin">m̲ish</span> x<span class="c-doc"></span><span class="c-doc">: Mish (Misra 2019), x tanh(softplus(x)): smooth, dips to</span></span>
+<span class="line" id="L124"><a class="ln" href="#L124">124</a><span class="c-doc">⍝│</span><span class="c-doc"> -0.309 below 0, finite at any x.</span></span>
+<span class="line" id="L125"><a class="ln" href="#L125">125</a><span class="c-doc">⍝│</span><span class="c-doc"> &gt;&gt; &quot;act:&quot; u_se&lt; &quot;Activations&quot;</span></span>
+<span class="line" id="L126"><a class="ln" href="#L126">126</a><span class="c-doc">⍝│</span><span class="c-doc"> &gt;&gt; act:m_ish -1.0 1.0</span></span>
+<span class="line" id="L127"><a class="ln" href="#L127">127</a><span class="c-doc">⍝│</span><span class="c-doc"> -0.30340146137410895 0.8650983882673104</span></span>
+<span class="line" id="L128"><a class="ln" href="#L128">128</a><span class="c-libfunc">ˡm̲ish</span> ← { x → x <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="libs-Activations-src-Activations.xtl.html#l.t_anh" class="c-libfunc">ˡt̲anh</a> <a href="libs-Activations-src-Activations.xtl.html#l.s_oftplus" class="c-libfunc">ˡs̲oftplus</a> x }</span>
+<span class="line" id="L129"><a class="ln" href="#L129">129</a></span>
+<span class="line" id="L130"><a class="ln" href="#L130">130</a><span class="c-doc">⍝│</span><span class="c-doc"> </span><span class="c-doc"></span><span class="c-builtin">h̲ardSigmoid</span> x<span class="c-doc"></span><span class="c-doc">: min(max(x + 3, 0), 6) / 6 (Howard et al. 2019,</span></span>
+<span class="line" id="L131"><a class="ln" href="#L131">131</a><span class="c-doc">⍝│</span><span class="c-doc"> MobileNetV3): a sigmoid of three straight lines, no e_xp.</span></span>
+<span class="line" id="L132"><a class="ln" href="#L132">132</a><span class="c-doc">⍝│</span><span class="c-doc"> &gt;&gt; &quot;act:&quot; u_se&lt; &quot;Activations&quot;</span></span>
+<span class="line" id="L133"><a class="ln" href="#L133">133</a><span class="c-doc">⍝│</span><span class="c-doc"> &gt;&gt; act:h_ardSigmoid -4.0 0.0 1.5</span></span>
+<span class="line" id="L134"><a class="ln" href="#L134">134</a><span class="c-doc">⍝│</span><span class="c-doc"> 0.0 0.5 0.75</span></span>
+<span class="line" id="L135"><a class="ln" href="#L135">135</a><span class="c-libfunc">ˡh̲ardSigmoid</span> ← { x → (<span class="c-number">6.0</span> <a href="builtins.html#m_in" class="c-builtin">m̲in</a> <span class="c-number">0.0</span> <a href="builtins.html#m_ax" class="c-builtin">m̲ax</a> x <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">3.0</span>) <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-number">6.0</span> }</span>
+<span class="line" id="L136"><a class="ln" href="#L136">136</a></span>
+<span class="line" id="L137"><a class="ln" href="#L137">137</a><span class="c-doc">⍝│</span><span class="c-doc"> </span><span class="c-doc"></span><span class="c-builtin">h̲ardSwish</span> x<span class="c-doc"></span><span class="c-doc">: x h_ardSigmoid(x), the same paper's SiLU of straight</span></span>
+<span class="line" id="L138"><a class="ln" href="#L138">138</a><span class="c-doc">⍝│</span><span class="c-doc"> lines, within 0.15 of s_ilu everywhere.</span></span>
+<span class="line" id="L139"><a class="ln" href="#L139">139</a><span class="c-doc">⍝│</span><span class="c-doc"> &gt;&gt; &quot;act:&quot; u_se&lt; &quot;Activations&quot;</span></span>
+<span class="line" id="L140"><a class="ln" href="#L140">140</a><span class="c-doc">⍝│</span><span class="c-doc"> &gt;&gt; act:h_ardSwish -4.0 1.0 4.0</span></span>
+<span class="line" id="L141"><a class="ln" href="#L141">141</a><span class="c-doc">⍝│</span><span class="c-doc"> -0.0 0.6666666666666666 4.0</span></span>
+<span class="line" id="L142"><a class="ln" href="#L142">142</a><span class="c-libfunc">ˡh̲ardSwish</span> ← { x → x <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="libs-Activations-src-Activations.xtl.html#l.h_ardSigmoid" class="c-libfunc">ˡh̲ardSigmoid</a> x }</span>
+<span class="line" id="L143"><a class="ln" href="#L143">143</a></span>
+<span class="line" id="L144"><a class="ln" href="#L144">144</a><span class="c-heading">⍝━━</span><span class="c-heading"> The gated layers</span></span>
+<span class="line" id="L145"><a class="ln" href="#L145">145</a></span>
+<span class="line" id="L146"><a class="ln" href="#L146">146</a><span class="c-doc">⍝│</span><span class="c-doc"> </span><span class="c-doc"></span>(W, V) <span class="c-builtin">g̲lu</span> x<span class="c-doc"></span><span class="c-doc">: GLU (Dauphin et al. 2017), sigmoid(x W) * (x V):</span></span>
+<span class="line" id="L147"><a class="ln" href="#L147">147</a><span class="c-doc">⍝│</span><span class="c-doc"> the activation on one projection of each row of x, times the other</span></span>
+<span class="line" id="L148"><a class="ln" href="#L148">148</a><span class="c-doc">⍝│</span><span class="c-doc"> (a gate), item by item. x is a batch (one row each), W and V both</span></span>
+<span class="line" id="L149"><a class="ln" href="#L149">149</a><span class="c-doc">⍝│</span><span class="c-doc"> inputs by hidden.</span></span>
+<span class="line" id="L150"><a class="ln" href="#L150">150</a><span class="c-doc">⍝│</span><span class="c-doc"> &gt;&gt; &quot;act:&quot; u_se&lt; &quot;Activations&quot;</span></span>
+<span class="line" id="L151"><a class="ln" href="#L151">151</a><span class="c-doc">⍝│</span><span class="c-doc"> &gt;&gt; (2 2 r_eshape 1.0 0.0 0.0 1.0, 2 2 r_eshape 2.0 0.0 0.0 2.0) act:g_lu 1 2 r_eshape 0.0 1.0</span></span>
+<span class="line" id="L152"><a class="ln" href="#L152">152</a><span class="c-doc">⍝│</span><span class="c-doc"> 0.0 1.4621171572600098</span></span>
+<span class="line" id="L153"><a class="ln" href="#L153">153</a><span class="c-libfunc">ˡg̲lu</span> ← { (W, V) x → (<a href="libs-Activations-src-Activations.xtl.html#l.s_igmoid" class="c-libfunc">ˡs̲igmoid</a> x <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#i_nner" class="c-builtin">i̲nner</a> W) <a href="builtins.html#-2a" class="c-symbol">×</a> x <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#i_nner" class="c-builtin">i̲nner</a> V }</span>
+<span class="line" id="L154"><a class="ln" href="#L154">154</a></span>
+<span class="line" id="L155"><a class="ln" href="#L155">155</a><span class="c-doc">⍝│</span><span class="c-doc"> </span><span class="c-doc"></span>(W, V) <span class="c-builtin">r̲eglu</span> x<span class="c-doc"></span><span class="c-doc">: relu(x W) * (x V) (Shazeer 2020).</span></span>
+<span class="line" id="L156"><a class="ln" href="#L156">156</a><span class="c-libfunc">ˡr̲eglu</span> ← { (W, V) x → (<a href="libs-Activations-src-Activations.xtl.html#l.r_elu" class="c-libfunc">ˡr̲elu</a> x <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#i_nner" class="c-builtin">i̲nner</a> W) <a href="builtins.html#-2a" class="c-symbol">×</a> x <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#i_nner" class="c-builtin">i̲nner</a> V }</span>
+<span class="line" id="L157"><a class="ln" href="#L157">157</a></span>
+<span class="line" id="L158"><a class="ln" href="#L158">158</a><span class="c-doc">⍝│</span><span class="c-doc"> </span><span class="c-doc"></span>(W, V) <span class="c-builtin">g̲eglu</span> x<span class="c-doc"></span><span class="c-doc">: gelu(x W) * (x V) (Shazeer 2020).</span></span>
+<span class="line" id="L159"><a class="ln" href="#L159">159</a><span class="c-libfunc">ˡg̲eglu</span> ← { (W, V) x → (<a href="libs-Activations-src-Activations.xtl.html#l.g_elu" class="c-libfunc">ˡg̲elu</a> x <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#i_nner" class="c-builtin">i̲nner</a> W) <a href="builtins.html#-2a" class="c-symbol">×</a> x <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#i_nner" class="c-builtin">i̲nner</a> V }</span>
+<span class="line" id="L160"><a class="ln" href="#L160">160</a></span>
+<span class="line" id="L161"><a class="ln" href="#L161">161</a><span class="c-doc">⍝│</span><span class="c-doc"> </span><span class="c-doc"></span>(W, V) <span class="c-builtin">s̲wiglu</span> x<span class="c-doc"></span><span class="c-doc">: silu(x W) * (x V) (Shazeer 2020; LLaMA's</span></span>
+<span class="line" id="L162"><a class="ln" href="#L162">162</a><span class="c-doc">⍝│</span><span class="c-doc"> feed-forward layer, with a hidden width of 2/3 the usual to keep</span></span>
+<span class="line" id="L163"><a class="ln" href="#L163">163</a><span class="c-doc">⍝│</span><span class="c-doc"> the parameter count).</span></span>
+<span class="line" id="L164"><a class="ln" href="#L164">164</a><span class="c-doc">⍝│</span><span class="c-doc"> &gt;&gt; &quot;act:&quot; u_se&lt; &quot;Activations&quot;</span></span>
+<span class="line" id="L165"><a class="ln" href="#L165">165</a><span class="c-doc">⍝│</span><span class="c-doc"> &gt;&gt; (2 2 r_eshape 1.0 0.0 0.0 1.0, 2 2 r_eshape 2.0 0.0 0.0 2.0) act:s_wiglu 1 2 r_eshape 0.0 1.0</span></span>
+<span class="line" id="L166"><a class="ln" href="#L166">166</a><span class="c-doc">⍝│</span><span class="c-doc"> 0.0 1.4621171572600098</span></span>
+<span class="line" id="L167"><a class="ln" href="#L167">167</a><span class="c-libfunc">ˡs̲wiglu</span> ← { (W, V) x → (<a href="libs-Activations-src-Activations.xtl.html#l.s_ilu" class="c-libfunc">ˡs̲ilu</a> x <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#i_nner" class="c-builtin">i̲nner</a> W) <a href="builtins.html#-2a" class="c-symbol">×</a> x <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#i_nner" class="c-builtin">i̲nner</a> V }</span>
+<span class="line" id="L168"><a class="ln" href="#L168">168</a></span>
+<span class="line" id="L169"><a class="ln" href="#L169">169</a><span class="c-heading">⍝━━</span><span class="c-heading"> Derivatives, in terms of each function's input</span></span>
+<span class="line" id="L170"><a class="ln" href="#L170">170</a></span>
+<span class="line" id="L171"><a class="ln" href="#L171">171</a><span class="c-doc">⍝│</span><span class="c-doc"> </span><span class="c-doc"></span><span class="c-builtin">d̲relu</span> x<span class="c-doc"></span><span class="c-doc">: 1 where x is positive, else 0.</span></span>
+<span class="line" id="L172"><a class="ln" href="#L172">172</a><span class="c-doc">⍝│</span><span class="c-doc"> &gt;&gt; &quot;act:&quot; u_se&lt; &quot;Activations&quot;</span></span>
+<span class="line" id="L173"><a class="ln" href="#L173">173</a><span class="c-doc">⍝│</span><span class="c-doc"> &gt;&gt; act:d_relu -1.5 0.0 2.0</span></span>
+<span class="line" id="L174"><a class="ln" href="#L174">174</a><span class="c-doc">⍝│</span><span class="c-doc"> 0.0 0.0 1.0</span></span>
+<span class="line" id="L175"><a class="ln" href="#L175">175</a><span class="c-libfunc">ˡd̲relu</span> ← { x → <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> x <a href="builtins.html#-3e" class="c-symbol">&gt;</a> <span class="c-number">0.0</span> }</span>
+<span class="line" id="L176"><a class="ln" href="#L176">176</a></span>
+<span class="line" id="L177"><a class="ln" href="#L177">177</a><span class="c-doc">⍝│</span><span class="c-doc"> </span><span class="c-doc"></span>a <span class="c-builtin">d̲leaky</span> x<span class="c-doc"></span><span class="c-doc">: 1 where x is positive, else a.</span></span>
+<span class="line" id="L178"><a class="ln" href="#L178">178</a><span class="c-libfunc">ˡd̲leaky</span> ← { a x → <span class="c-number">1.0</span> <a href="builtins.html#-2b" class="c-symbol">+</a> (a <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1.0</span>) <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> x <a href="builtins.html#-3c-3d" class="c-symbol">≤</a> <span class="c-number">0.0</span> }</span>
+<span class="line" id="L179"><a class="ln" href="#L179">179</a></span>
+<span class="line" id="L180"><a class="ln" href="#L180">180</a><span class="c-doc">⍝│</span><span class="c-doc"> </span><span class="c-doc"></span>a <span class="c-builtin">d̲prelu</span> x<span class="c-doc"></span><span class="c-doc">: 1 where x is positive, else the column's slope.</span></span>
+<span class="line" id="L181"><a class="ln" href="#L181">181</a><span class="c-libfunc">ˡd̲prelu</span> ← { a x → <span class="c-number">1.0</span> <a href="builtins.html#-2b" class="c-symbol">+</a> (((<a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> x) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> a) <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1.0</span>) <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> x <a href="builtins.html#-3c-3d" class="c-symbol">≤</a> <span class="c-number">0.0</span> }</span>
+<span class="line" id="L182"><a class="ln" href="#L182">182</a></span>
+<span class="line" id="L183"><a class="ln" href="#L183">183</a><span class="c-doc">⍝│</span><span class="c-doc"> </span><span class="c-doc"></span>a <span class="c-builtin">d̲elu</span> x<span class="c-doc"></span><span class="c-doc">: 1 where x is positive, else a e^x.</span></span>
+<span class="line" id="L184"><a class="ln" href="#L184">184</a><span class="c-libfunc">ˡd̲elu</span> ← { a x → (<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> x <a href="builtins.html#-3e" class="c-symbol">&gt;</a> <span class="c-number">0.0</span>) <a href="builtins.html#-2b" class="c-symbol">+</a> a <a href="builtins.html#-2a" class="c-symbol">×</a> (<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> x <a href="builtins.html#-3c-3d" class="c-symbol">≤</a> <span class="c-number">0.0</span>) <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#e_xp" class="c-builtin">e̲xp</a> x <a href="builtins.html#m_in" class="c-builtin">m̲in</a> <span class="c-number">0.0</span> }</span>
+<span class="line" id="L185"><a class="ln" href="#L185">185</a></span>
+<span class="line" id="L186"><a class="ln" href="#L186">186</a><span class="c-doc">⍝│</span><span class="c-doc"> </span><span class="c-doc"></span><span class="c-builtin">d̲selu</span> x<span class="c-doc"></span><span class="c-doc">: lambda where x is positive, else lambda alpha e^x.</span></span>
+<span class="line" id="L187"><a class="ln" href="#L187">187</a><span class="c-libfunc">ˡd̲selu</span> ← { x → <span class="c-number">1.0507009873554805</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">1.6732632423543772</span> <a href="libs-Activations-src-Activations.xtl.html#l.d_elu" class="c-libfunc">ˡd̲elu</a> x }</span>
+<span class="line" id="L188"><a class="ln" href="#L188">188</a></span>
+<span class="line" id="L189"><a class="ln" href="#L189">189</a><span class="c-doc">⍝│</span><span class="c-doc"> </span><span class="c-doc"></span><span class="c-builtin">d̲sigmoid</span> x<span class="c-doc"></span><span class="c-doc">: s (1 - s) for s = sigmoid(x): at most 1/4, at 0.</span></span>
+<span class="line" id="L190"><a class="ln" href="#L190">190</a><span class="c-doc">⍝│</span><span class="c-doc"> &gt;&gt; &quot;act:&quot; u_se&lt; &quot;Activations&quot;</span></span>
+<span class="line" id="L191"><a class="ln" href="#L191">191</a><span class="c-doc">⍝│</span><span class="c-doc"> &gt;&gt; act:d_sigmoid 0.0</span></span>
+<span class="line" id="L192"><a class="ln" href="#L192">192</a><span class="c-doc">⍝│</span><span class="c-doc"> 0.25</span></span>
+<span class="line" id="L193"><a class="ln" href="#L193">193</a><span class="c-libfunc">ˡd̲sigmoid</span> ← { x → s ← <a href="libs-Activations-src-Activations.xtl.html#l.s_igmoid" class="c-libfunc">ˡs̲igmoid</a> x◆ s <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">1.0</span> <a href="builtins.html#-2d" class="c-symbol">−</a> s }</span>
+<span class="line" id="L194"><a class="ln" href="#L194">194</a></span>
+<span class="line" id="L195"><a class="ln" href="#L195">195</a><span class="c-doc">⍝│</span><span class="c-doc"> </span><span class="c-doc"></span><span class="c-builtin">d̲tanh</span> x<span class="c-doc"></span><span class="c-doc">: 1 - tanh(x)^2.</span></span>
+<span class="line" id="L196"><a class="ln" href="#L196">196</a><span class="c-libfunc">ˡd̲tanh</span> ← { x → t ← <a href="libs-Activations-src-Activations.xtl.html#l.t_anh" class="c-libfunc">ˡt̲anh</a> x◆ <span class="c-number">1.0</span> <a href="builtins.html#-2d" class="c-symbol">−</a> t <a href="builtins.html#-2a" class="c-symbol">×</a> t }</span>
+<span class="line" id="L197"><a class="ln" href="#L197">197</a></span>
+<span class="line" id="L198"><a class="ln" href="#L198">198</a><span class="c-doc">⍝│</span><span class="c-doc"> </span><span class="c-doc"></span><span class="c-builtin">d̲softplus</span> x<span class="c-doc"></span><span class="c-doc">: sigmoid(x).</span></span>
+<span class="line" id="L199"><a class="ln" href="#L199">199</a><span class="c-libfunc">ˡd̲softplus</span> ← { x → <a href="libs-Activations-src-Activations.xtl.html#l.s_igmoid" class="c-libfunc">ˡs̲igmoid</a> x }</span>
+<span class="line" id="L200"><a class="ln" href="#L200">200</a></span>
+<span class="line" id="L201"><a class="ln" href="#L201">201</a><span class="c-doc">⍝│</span><span class="c-doc"> </span><span class="c-doc"></span><span class="c-builtin">d̲silu</span> x<span class="c-doc"></span><span class="c-doc">: s (1 + x (1 - s)) for s = sigmoid(x).</span></span>
+<span class="line" id="L202"><a class="ln" href="#L202">202</a><span class="c-libfunc">ˡd̲silu</span> ← { x → s ← <a href="libs-Activations-src-Activations.xtl.html#l.s_igmoid" class="c-libfunc">ˡs̲igmoid</a> x◆ s <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">1.0</span> <a href="builtins.html#-2b" class="c-symbol">+</a> x <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">1.0</span> <a href="builtins.html#-2d" class="c-symbol">−</a> s }</span>
+<span class="line" id="L203"><a class="ln" href="#L203">203</a></span>
+<span class="line" id="L204"><a class="ln" href="#L204">204</a><span class="c-doc">⍝│</span><span class="c-doc"> </span><span class="c-doc"></span>b <span class="c-builtin">d̲swish</span> x<span class="c-doc"></span><span class="c-doc">: s + b x s (1 - s) for s = sigmoid(b x).</span></span>
+<span class="line" id="L205"><a class="ln" href="#L205">205</a><span class="c-libfunc">ˡd̲swish</span> ← { b x → s ← <a href="libs-Activations-src-Activations.xtl.html#l.s_igmoid" class="c-libfunc">ˡs̲igmoid</a> b <a href="builtins.html#-2a" class="c-symbol">×</a> x◆ s <a href="builtins.html#-2b" class="c-symbol">+</a> b <a href="builtins.html#-2a" class="c-symbol">×</a> x <a href="builtins.html#-2a" class="c-symbol">×</a> s <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">1.0</span> <a href="builtins.html#-2d" class="c-symbol">−</a> s }</span>
+<span class="line" id="L206"><a class="ln" href="#L206">206</a></span>
+<span class="line" id="L207"><a class="ln" href="#L207">207</a><span class="c-doc">⍝│</span><span class="c-doc"> </span><span class="c-doc"></span><span class="c-builtin">d̲gelu</span> x<span class="c-doc"></span><span class="c-doc">: the tanh form's derivative, (1 + t)/2 + x/2 (1 - t^2) sqrt(2/pi) (1 + 3 * 0.044715 x^2), t the inner tanh.</span></span>
+<span class="line" id="L208"><a class="ln" href="#L208">208</a><span class="c-doc">⍝│</span><span class="c-doc"> &gt;&gt; &quot;act:&quot; u_se&lt; &quot;Activations&quot;</span></span>
+<span class="line" id="L209"><a class="ln" href="#L209">209</a><span class="c-doc">⍝│</span><span class="c-doc"> &gt;&gt; act:d_gelu 0.0</span></span>
+<span class="line" id="L210"><a class="ln" href="#L210">210</a><span class="c-doc">⍝│</span><span class="c-doc"> 0.5</span></span>
+<span class="line" id="L211"><a class="ln" href="#L211">211</a><span class="c-libfunc">ˡd̲gelu</span> ← { x → t ← <a href="libs-Activations-src-Activations.xtl.html#h.g_eluTanh" class="c-libfunc">ʰg̲eluTanh</a> x◆ (<span class="c-number">0.5</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">1.0</span> <a href="builtins.html#-2b" class="c-symbol">+</a> t) <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">0.5</span> <a href="builtins.html#-2a" class="c-symbol">×</a> x <a href="builtins.html#-2a" class="c-symbol">×</a> (<span class="c-number">1.0</span> <a href="builtins.html#-2d" class="c-symbol">−</a> t <a href="builtins.html#-2a" class="c-symbol">×</a> t) <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">0.7978845608028654</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">1.0</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">0.134145</span> <a href="builtins.html#-2a" class="c-symbol">×</a> x <a href="builtins.html#-2a" class="c-symbol">×</a> x }</span>
+<span class="line" id="L212"><a class="ln" href="#L212">212</a></span>
+<span class="line" id="L213"><a class="ln" href="#L213">213</a><span class="c-doc">⍝│</span><span class="c-doc"> </span><span class="c-doc"></span><span class="c-builtin">d̲geluErf</span> x<span class="c-doc"></span><span class="c-doc">: Phi(x) + x phi(x), the normal CDF and density.</span></span>
+<span class="line" id="L214"><a class="ln" href="#L214">214</a><span class="c-libfunc">ˡd̲geluErf</span> ← { x → (<span class="c-number">0.5</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">1.0</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="libs-Activations-src-Activations.xtl.html#h.e_rf" class="c-libfunc">ʰe̲rf</a> x <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-number">1.4142135623730951</span>) <a href="builtins.html#-2b" class="c-symbol">+</a> x <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">0.3989422804014327</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#e_xp" class="c-builtin">e̲xp</a> <a href="builtins.html#n_eg" class="c-builtin">n̲eg</a> x <a href="builtins.html#-2a" class="c-symbol">×</a> x <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-number">2.0</span> }</span>
+<span class="line" id="L215"><a class="ln" href="#L215">215</a></span>
+<span class="line" id="L216"><a class="ln" href="#L216">216</a><span class="c-doc">⍝│</span><span class="c-doc"> </span><span class="c-doc"></span><span class="c-builtin">d̲mish</span> x<span class="c-doc"></span><span class="c-doc">: t + x (1 - t^2) sigmoid(x) for t = tanh(softplus(x)).</span></span>
+<span class="line" id="L217"><a class="ln" href="#L217">217</a><span class="c-libfunc">ˡd̲mish</span> ← { x → t ← <a href="libs-Activations-src-Activations.xtl.html#l.t_anh" class="c-libfunc">ˡt̲anh</a> <a href="libs-Activations-src-Activations.xtl.html#l.s_oftplus" class="c-libfunc">ˡs̲oftplus</a> x◆ t <a href="builtins.html#-2b" class="c-symbol">+</a> x <a href="builtins.html#-2a" class="c-symbol">×</a> (<span class="c-number">1.0</span> <a href="builtins.html#-2d" class="c-symbol">−</a> t <a href="builtins.html#-2a" class="c-symbol">×</a> t) <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="libs-Activations-src-Activations.xtl.html#l.s_igmoid" class="c-libfunc">ˡs̲igmoid</a> x }</span>
+<span class="line" id="L218"><a class="ln" href="#L218">218</a></span>
+<span class="line" id="L219"><a class="ln" href="#L219">219</a><span class="c-doc">⍝│</span><span class="c-doc"> </span><span class="c-doc"></span><span class="c-builtin">d̲hardSigmoid</span> x<span class="c-doc"></span><span class="c-doc">: 1/6 where |x| &lt; 3, else 0.</span></span>
+<span class="line" id="L220"><a class="ln" href="#L220">220</a><span class="c-libfunc">ˡd̲hardSigmoid</span> ← { x → (<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> (<a href="builtins.html#a_bs" class="c-builtin">a̲bs</a> x) <a href="builtins.html#-3c" class="c-symbol">&lt;</a> <span class="c-number">3.0</span>) <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-number">6.0</span> }</span>
+<span class="line" id="L221"><a class="ln" href="#L221">221</a></span>
+<span class="line" id="L222"><a class="ln" href="#L222">222</a><span class="c-doc">⍝│</span><span class="c-doc"> </span><span class="c-doc"></span><span class="c-builtin">d̲hardSwish</span> x<span class="c-doc"></span><span class="c-doc">: (2x + 3)/6 where |x| &lt; 3; 0 below, 1 from 3 on.</span></span>
+<span class="line" id="L223"><a class="ln" href="#L223">223</a><span class="c-libfunc">ˡd̲hardSwish</span> ← { x → (<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> x <a href="builtins.html#-3e-3d" class="c-symbol">≥</a> <span class="c-number">3.0</span>) <a href="builtins.html#-2b" class="c-symbol">+</a> (<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> (<a href="builtins.html#a_bs" class="c-builtin">a̲bs</a> x) <a href="builtins.html#-3c" class="c-symbol">&lt;</a> <span class="c-number">3.0</span>) <a href="builtins.html#-2a" class="c-symbol">×</a> ((<span class="c-number">2.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> x) <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">3.0</span>) <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-number">6.0</span> }</span>
+</div>
+</main>
+</body>
+</html>

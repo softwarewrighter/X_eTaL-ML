@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>work/libs/Check/src/Check.xtl - X_eTaL doc</title>
+<link rel="stylesheet" href="style.css">
+<script src="theme.js"></script>
+<script defer src="search-index.js"></script>
+<script defer src="search.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.18.10/dist/katex.min.css" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.18.10/dist/katex.min.js" crossorigin="anonymous"></script>
+<script>document.addEventListener('DOMContentLoaded', function () {
+if (typeof katex === 'undefined') return;
+document.querySelectorAll('.c-notation').forEach(function (el) {
+var tex = el.textContent; if (!tex) return;
+try { katex.render(tex, el, { throwOnError: false }); } catch (e) { el.textContent = tex; }
+});
+});</script>
+</head>
+<body>
+<nav class="side">
+<a class="home" href="index.html">X_eTaL doc</a>
+<input id="search" type="search" autocomplete="off" placeholder="Search: a name, or a type" title="A name (mean finds m_ean), or a type: Num a =&gt; a -&gt; a -&gt; a finds +, m_ax ...">
+<h2>Files</h2>
+<h3>demos/attention/</h3>
+<ul>
+<li><a href="demos-attention-attention.xtl.html">attention.xtl</a></li>
+</ul>
+<h3>demos/backprop/</h3>
+<ul>
+<li><a href="demos-backprop-backprop.xtl.html">backprop.xtl</a></li>
+</ul>
+<h3>demos/cnn-backprop/</h3>
+<ul>
+<li><a href="demos-cnn-backprop-cnn-backprop.xtl.html">cnn-backprop.xtl</a></li>
+</ul>
+<h3>demos/cnn-digits/</h3>
+<ul>
+<li><a href="demos-cnn-digits-batch.xtl.html">batch.xtl</a></li>
+<li><a href="demos-cnn-digits-cnn-digits.xtl.html">cnn-digits.xtl</a></li>
+</ul>
+<h3>demos/diffusion/</h3>
+<ul>
+<li><a href="demos-diffusion-diffusion.xtl.html">diffusion.xtl</a></li>
+</ul>
+<h3>demos/embedding-explorer/</h3>
+<ul>
+<li><a href="demos-embedding-explorer-embedding-explorer.xtl.html">embedding-explorer.xtl</a></li>
+</ul>
+<h3>demos/k-means/</h3>
+<ul>
+<li><a href="demos-k-means-k-means.xtl.html">k-means.xtl</a></li>
+</ul>
+<h3>demos/micro-bert/</h3>
+<ul>
+<li><a href="demos-micro-bert-micro-bert.xtl.html">micro-bert.xtl</a></li>
+</ul>
+<h3>demos/micro-gpt/</h3>
+<ul>
+<li><a href="demos-micro-gpt-batch.xtl.html">batch.xtl</a></li>
+<li><a href="demos-micro-gpt-micro-gpt.xtl.html">micro-gpt.xtl</a></li>
+</ul>
+<h3>demos/moe-router/</h3>
+<ul>
+<li><a href="demos-moe-router-moe-router.xtl.html">moe-router.xtl</a></li>
+</ul>
+<h3>demos/net-macro/</h3>
+<ul>
+<li><a href="demos-net-macro-net-macro.xtl.html">net-macro.xtl</a></li>
+<li><a href="demos-net-macro-train-it.xtl.html">train-it.xtl</a></li>
+</ul>
+<h3>demos/pipelines/</h3>
+<ul>
+<li><a href="demos-pipelines-diffusion.xtl.html">diffusion.xtl</a></li>
+<li><a href="demos-pipelines-equations.xtl.html">equations.xtl</a></li>
+<li><a href="demos-pipelines-pipelines.xtl.html">pipelines.xtl</a></li>
+<li><a href="demos-pipelines-rosetta.xtl.html">rosetta.xtl</a></li>
+</ul>
+<h3>demos/ternary-net/</h3>
+<ul>
+<li><a href="demos-ternary-net-ternary-net.xtl.html">ternary-net.xtl</a></li>
+</ul>
+<h3>demos/train-live/</h3>
+<ul>
+<li><a href="demos-train-live-train-live.xtl.html">train-live.xtl</a></li>
+</ul>
+<h3>demos/world-model/</h3>
+<ul>
+<li><a href="demos-world-model-world-model.xtl.html">world-model.xtl</a></li>
+</ul>
+<h3>libs/Activations/demos/</h3>
+<ul>
+<li><a href="libs-Activations-demos-curves.xtl.html">curves.xtl</a></li>
+</ul>
+<h3>libs/Activations/src/</h3>
+<ul>
+<li><a href="libs-Activations-src-Activations.xtl.html">Activations.xtl</a></li>
+</ul>
+<h3>libs/Attention/demos/</h3>
+<ul>
+<li><a href="libs-Attention-demos-previous.xtl.html">previous.xtl</a></li>
+</ul>
+<h3>libs/Attention/src/</h3>
+<ul>
+<li><a href="libs-Attention-src-Attention.xtl.html">Attention.xtl</a></li>
+</ul>
+<h3>libs/Conv/demos/</h3>
+<ul>
+<li><a href="libs-Conv-demos-edges.xtl.html">edges.xtl</a></li>
+</ul>
+<h3>libs/Conv/src/</h3>
+<ul>
+<li><a href="libs-Conv-src-Conv.xtl.html">Conv.xtl</a></li>
+</ul>
+<h3>libs/Embed/demos/</h3>
+<ul>
+<li><a href="libs-Embed-demos-pets.xtl.html">pets.xtl</a></li>
+</ul>
+<h3>libs/Embed/src/</h3>
+<ul>
+<li><a href="libs-Embed-src-Embed.xtl.html">Embed.xtl</a></li>
+</ul>
+<h3>libs/Flow/demos/</h3>
+<ul>
+<li><a href="libs-Flow-demos-mlp.xtl.html">mlp.xtl</a></li>
+</ul>
+<h3>libs/Flow/src/</h3>
+<ul>
+<li><a href="libs-Flow-src-Flow.xtlm.html">Flow.xtlm</a></li>
+</ul>
+<h3>libs/Integrals/demos/</h3>
+<ul>
+<li><a href="libs-Integrals-demos-convolution.xtl.html">convolution.xtl</a></li>
+<li><a href="libs-Integrals-demos-gelu.xtl.html">gelu.xtl</a></li>
+</ul>
+<h3>libs/Integrals/src/</h3>
+<ul>
+<li><a href="libs-Integrals-src-Integrals.xtlm.html">Integrals.xtlm</a></li>
+</ul>
+<h3>libs/Learn/demos/</h3>
+<ul>
+<li><a href="libs-Learn-demos-blobs.xtl.html">blobs.xtl</a></li>
+</ul>
+<h3>libs/Learn/src/</h3>
+<ul>
+<li><a href="libs-Learn-src-Learn.xtl.html">Learn.xtl</a></li>
+</ul>
+<h3>libs/Net/demos/</h3>
+<ul>
+<li><a href="libs-Net-demos-train-xor.xtl.html">train-xor.xtl</a></li>
+<li><a href="libs-Net-demos-xor.xtl.html">xor.xtl</a></li>
+</ul>
+<h3>libs/Net/src/</h3>
+<ul>
+<li><a href="libs-Net-src-Net.xtlm.html">Net.xtlm</a></li>
+</ul>
+<h3>libs/NN/demos/</h3>
+<ul>
+<li><a href="libs-NN-demos-xor.xtl.html">xor.xtl</a></li>
+</ul>
+<h3>libs/NN/src/</h3>
+<ul>
+<li><a href="libs-NN-src-NN.xtl.html">NN.xtl</a></li>
+</ul>
+<h3>libs/Norm/demos/</h3>
+<ul>
+<li><a href="libs-Norm-demos-rows.xtl.html">rows.xtl</a></li>
+</ul>
+<h3>libs/Norm/src/</h3>
+<ul>
+<li><a href="libs-Norm-src-Norm.xtl.html">Norm.xtl</a></li>
+</ul>
+<h3>libs/Optim/demos/</h3>
+<ul>
+<li><a href="libs-Optim-demos-bowl.xtl.html">bowl.xtl</a></li>
+</ul>
+<h3>libs/Optim/src/</h3>
+<ul>
+<li><a href="libs-Optim-src-Optim.xtl.html">Optim.xtl</a></li>
+</ul>
+<h3>libs/Quant/demos/</h3>
+<ul>
+<li><a href="libs-Quant-demos-formats.xtl.html">formats.xtl</a></li>
+</ul>
+<h3>libs/Quant/src/</h3>
+<ul>
+<li><a href="libs-Quant-src-Quant.xtl.html">Quant.xtl</a></li>
+</ul>
+<h3>libs/Sample/demos/</h3>
+<ul>
+<li><a href="libs-Sample-demos-next.xtl.html">next.xtl</a></li>
+</ul>
+<h3>libs/Sample/src/</h3>
+<ul>
+<li><a href="libs-Sample-src-Sample.xtl.html">Sample.xtl</a></li>
+</ul>
+<h3>std/</h3>
+<ul>
+<li><a href="std-System.xtlm.html">System.xtlm</a></li>
+</ul>
+<h3>work/libs/Check/src/</h3>
+<ul>
+<li><a href="work-libs-Check-src-Check.xtl.html">Check.xtl</a></li>
+<li><a href="work-libs-Check-src-Check.xtlm.html">Check.xtlm</a></li>
+</ul>
+<h3>work/libs/Equations/src/</h3>
+<ul>
+<li><a href="work-libs-Equations-src-Equations.xtl.html">Equations.xtl</a></li>
+<li><a href="work-libs-Equations-src-Equations.xtlm.html">Equations.xtlm</a></li>
+</ul>
+<h3>work/libs/Lists/src/</h3>
+<ul>
+<li><a href="work-libs-Lists-src-Lists.xtl.html">Lists.xtl</a></li>
+</ul>
+<h3>work/libs/Strings/src/</h3>
+<ul>
+<li><a href="work-libs-Strings-src-Strings.xtl.html">Strings.xtl</a></li>
+</ul>
+<ul>
+<li><a href="builtins.html">built-ins</a></li>
+</ul>
+<h2>On this page</h2>
+<ul>
+<li class="item"><a href="#h.n_l"><span class="c-libfunc">ʰn̲l</span></a></li>
+<li class="item"><a href="#h.o_neLine"><span class="c-libfunc">ʰo̲neLine</span></a></li>
+<li class="item"><a href="#h.s_hown"><span class="c-libfunc">ʰs̲hown</span></a></li>
+<li class="item"><a href="#h.f_ail"><span class="c-libfunc">ʰf̲ail</span></a></li>
+<li><a href="#section-1">Checks</a></li>
+<li class="item"><a href="#l.i_s"><span class="c-libfunc">ˡi̲s</span></a></li>
+<li class="item"><a href="#l.n_ear"><span class="c-libfunc">ˡn̲ear</span></a></li>
+<li class="item"><a href="#l.t_rue"><span class="c-libfunc">ˡt̲rue</span></a></li>
+<li><a href="#section-2">Naming a check</a></li>
+<li class="item"><a href="#l.t_est"><span class="c-libfunc">ˡt̲est</span></a></li>
+<li><a href="#section-3">Reports</a></li>
+<li class="item"><a href="#l.a_nd"><span class="c-libfunc">ˡa̲nd</span></a></li>
+<li class="item"><a href="#l.c_ount"><span class="c-libfunc">ˡc̲ount</span></a></li>
+<li class="item"><a href="#l.f_ailures"><span class="c-libfunc">ˡf̲ailures</span></a></li>
+<li class="item"><a href="#l.p_assed-3f"><span class="c-libfunc">ˡp̲assed?</span></a></li>
+<li class="item"><a href="#l.r_eport"><span class="c-libfunc">ˡr̲eport</span></a></li>
+</ul>
+</nav>
+<main>
+<button class="theme" title="Light or dark">theme</button>
+<section id="results"></section>
+<h1><span class="kind">library</span>work/libs/Check/src/Check.xtl</h1>
+<div class="doc">
+<p>Check: assertions that report as text, for tests and teaching.
+Import it with an alias of your choice: &quot;ch:&quot; u_se&lt; &quot;Check&quot;.
+Put libs/Check/src on XETAL_PATH (&quot;just path&quot;); the reference is libs/Check/docs.
+Names with l: are exported; those under h: are private to this file.</p>
+<p>A check is a line of text, &quot;ok&quot; or &quot;FAIL: ...&quot; (X_eTaL has no
+assert and no way to stop with an error of your own yet): it prints
+when it is a statement, and checks join into a report with a_nd.
+  6 ch:i_s '+ r_/ 1 2 3                     # ok
+  &quot;sum&quot; ch:t_est 5 ch:i_s '+ r_/ 1 2 3       # FAIL: sum: expected 5, got 6
+  ch:r_eport (a ch:a_nd b ch:a_nd c)          # the lines, then &quot;3 checks, all passed&quot;</p>
+</div>
+<p class="meta"><a href="work-libs-Check-src-Check.xtl.src.html">source</a></p>
+<div class="item" id="h.n_l">
+<h3><a href="#h.n_l"><span class="c-libfunc">ʰn̲l</span></a> <span class="type">: Unit -&gt; Char</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="work-libs-Check-src-Check.xtl.src.html#L13">line 13</a></div>
+<pre class="code"><span class="c-libfunc">ʰn̲l</span> ← { @ → <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> <span class="c-string">&quot;\n&quot;</span> }                       <span class="c-comment">⍝</span><span class="c-comment"> the newline character</span></pre>
+<div class="uses">Used in: <a href="work-libs-Check-src-Check.xtl.html#h.o_neLine"><span class="c-libfunc">ʰo̲neLine</span></a>, <a href="work-libs-Check-src-Check.xtl.html#l.c_ount"><span class="c-libfunc">ˡc̲ount</span></a>, <a href="work-libs-Check-src-Check.xtl.html#l.f_ailures"><span class="c-libfunc">ˡf̲ailures</span></a></div>
+</div>
+<div class="item" id="h.o_neLine">
+<h3><a href="#h.o_neLine"><span class="c-libfunc">ʰo̲neLine</span></a> <span class="type">: Char -&gt; Char</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="work-libs-Check-src-Check.xtl.src.html#L16">line 16</a></div>
+<div class="doc">
+<p>t, its newlines shown as &quot;;&quot;, so a value takes one line.</p>
+</div>
+<pre class="code"><span class="c-libfunc">ʰo̲neLine</span> ← { t →
+  m ← t <a href="builtins.html#-3d" class="c-symbol">=</a> <a href="work-libs-Check-src-Check.xtl.html#h.n_l" class="c-libfunc">ʰn̲l</a> @
+  ((<a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> t) <a href="builtins.html#-2b" class="c-symbol">+</a> m <a href="builtins.html#-2a" class="c-symbol">×</a> (<span class="c-number">1</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> t) <a href="builtins.html#-2d" class="c-symbol">−</a> <a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> t) <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;;&quot;</span>
+}</pre>
+<div class="uses">Used in: <a href="work-libs-Check-src-Check.xtl.html#h.s_hown"><span class="c-libfunc">ʰs̲hown</span></a></div>
+</div>
+<div class="item" id="h.s_hown">
+<h3><a href="#h.s_hown"><span class="c-libfunc">ʰs̲hown</span></a> <span class="type">: a -&gt; Char</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="work-libs-Check-src-Check.xtl.src.html#L23">line 23</a></div>
+<div class="doc">
+<p>t on one line; when longer than 60 characters, its start and its
+shape: &quot;1 2 3 ... (shape 100)&quot;.</p>
+</div>
+<pre class="code"><span class="c-libfunc">ʰs̲hown</span> ← { t →
+  s ← <a href="work-libs-Check-src-Check.xtl.html#h.o_neLine" class="c-libfunc">ʰo̲neLine</a> <a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> t
+  <span class="c-number">60</span> <a href="builtins.html#-3e-3d" class="c-symbol">≥</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> s ? s
+  (<span class="c-number">48</span> <a href="builtins.html#t_ake" class="c-builtin">t̲ake</a> s) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; ... (shape &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> t) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;)&quot;</span>
+}</pre>
+<div class="uses">Used in: <a href="work-libs-Check-src-Check.xtl.html#h.f_ail"><span class="c-libfunc">ʰf̲ail</span></a>, <a href="work-libs-Check-src-Check.xtl.html#l.t_rue"><span class="c-libfunc">ˡt̲rue</span></a></div>
+</div>
+<div class="item" id="h.f_ail">
+<h3><a href="#h.f_ail"><span class="c-libfunc">ʰf̲ail</span></a> <span class="type">: a -&gt; b -&gt; Char</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="work-libs-Check-src-Check.xtl.src.html#L29">line 29</a></div>
+<pre class="code"><span class="c-libfunc">ʰf̲ail</span> ← { w g → <span class="c-string">&quot;FAIL: expected &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="work-libs-Check-src-Check.xtl.html#h.s_hown" class="c-libfunc">ʰs̲hown</a> w) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;, got &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="work-libs-Check-src-Check.xtl.html#h.s_hown" class="c-libfunc">ʰs̲hown</a> g }</pre>
+<div class="uses">Used in: <a href="work-libs-Check-src-Check.xtl.html#l.i_s"><span class="c-libfunc">ˡi̲s</span></a>, <a href="work-libs-Check-src-Check.xtl.html#l.n_ear"><span class="c-libfunc">ˡn̲ear</span></a></div>
+</div>
+<h2 class="section" id="section-1">Checks</h2>
+<div class="item" id="l.i_s">
+<h3><a href="#l.i_s"><span class="c-libfunc">ˡi̲s</span></a> <span class="type">: Match a =&gt; a -&gt; a -&gt; Char</span></h3>
+<div class="meta">function &middot; <a href="work-libs-Check-src-Check.xtl.src.html#L34">line 34</a></div>
+<div class="doc">
+<p>want i_s got: ok when got has want's shape and items (m_atch).</p>
+</div>
+<pre class="code"><span class="c-libfunc">ˡi̲s</span> ← { w g → w <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> g ? <span class="c-string">&quot;ok&quot;</span>◆ w <a href="work-libs-Check-src-Check.xtl.html#h.f_ail" class="c-libfunc">ʰf̲ail</a> g }</pre>
+</div>
+<div class="item" id="l.n_ear">
+<h3><a href="#l.n_ear"><span class="c-libfunc">ˡn̲ear</span></a> <span class="type">: Num a =&gt; a -&gt; a -&gt; Char</span></h3>
+<div class="meta">function &middot; <a href="work-libs-Check-src-Check.xtl.src.html#L39">line 39</a></div>
+<div class="doc">
+<p>want n_ear got: ok when the shapes match and every item is equal
+within e_q~'s relative tolerance, or within 1e-12 of it (so a
+computed 1e-17 is near an exact 0, which e_q~ alone never allows).</p>
+</div>
+<pre class="code"><span class="c-libfunc">ˡn̲ear</span> ← { w g →
+  <a href="builtins.html#n_ot" class="c-builtin">n̲ot</a> (<a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> w) <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> <a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> g ? w <a href="work-libs-Check-src-Check.xtl.html#h.f_ail" class="c-libfunc">ʰf̲ail</a> g
+  <span class="c-symbol">'</span><a href="builtins.html#-26" class="c-symbol">∧</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> (w <a href="builtins.html#e_q-7e" class="c-builtin">e̲q~</a> g) <a href="builtins.html#-7c" class="c-symbol">∨</a> <span class="c-number">0.000000000001</span> <a href="builtins.html#-3e-3d" class="c-symbol">≥</a> <a href="builtins.html#a_bs" class="c-builtin">a̲bs</a> (<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> w) <a href="builtins.html#-2d" class="c-symbol">−</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> g ? <span class="c-string">&quot;ok&quot;</span>
+  w <a href="work-libs-Check-src-Check.xtl.html#h.f_ail" class="c-libfunc">ʰf̲ail</a> g
+}</pre>
+<div class="uses">Used in: <a href="demos-micro-bert-micro-bert.xtl.html#r1">r1</a>, <a href="demos-micro-bert-micro-bert.xtl.html#r2">r2</a>, <a href="demos-pipelines-diffusion.xtl.html#r0">r0</a>, <a href="demos-pipelines-diffusion.xtl.html#r1">r1</a>, <a href="demos-pipelines-diffusion.xtl.html#r2">r2</a>, <a href="demos-pipelines-equations.xtl.html#r1">r1</a>, <a href="demos-pipelines-equations.xtl.html#r2">r2</a>, <a href="demos-pipelines-equations.xtl.html#r3">r3</a>, <a href="demos-pipelines-pipelines.xtl.html#c1">c1</a>, <a href="demos-pipelines-pipelines.xtl.html#c1b">c1b</a>, <a href="demos-pipelines-pipelines.xtl.html#c2">c2</a>, <a href="demos-pipelines-pipelines.xtl.html#c2b">c2b</a>, <a href="demos-pipelines-pipelines.xtl.html#c3">c3</a>, <a href="demos-pipelines-pipelines.xtl.html#c3b">c3b</a>, <a href="demos-pipelines-pipelines.xtl.html#c4">c4</a>, <a href="demos-pipelines-pipelines.xtl.html#c4b">c4b</a>, <a href="demos-pipelines-rosetta.xtl.html#r0">r0</a>, <a href="demos-pipelines-rosetta.xtl.html#r1">r1</a>, <a href="demos-pipelines-rosetta.xtl.html#r2">r2</a></div>
+</div>
+<div class="item" id="l.t_rue">
+<h3><a href="#l.t_rue"><span class="c-libfunc">ˡt̲rue</span></a> <span class="type">: Truthy a =&gt; a -&gt; Char</span></h3>
+<div class="meta">function &middot; <a href="work-libs-Check-src-Check.xtl.src.html#L46">line 46</a></div>
+<div class="doc">
+<p>t_rue c: ok when every item of the condition c is true (1).</p>
+</div>
+<pre class="code"><span class="c-libfunc">ˡt̲rue</span> ← { c → <span class="c-symbol">'</span><a href="builtins.html#-26" class="c-symbol">∧</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> c ? <span class="c-string">&quot;ok&quot;</span>◆ <span class="c-string">&quot;FAIL: expected true, got &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="work-libs-Check-src-Check.xtl.html#h.s_hown" class="c-libfunc">ʰs̲hown</a> c }</pre>
+<div class="uses">Used in: <a href="demos-micro-bert-micro-bert.xtl.html#u.c_lose"><span class="c-userfunc">ᵘc̲lose</span></a>, <a href="demos-pipelines-equations.xtl.html#r4">r4</a></div>
+</div>
+<h2 class="section" id="section-2">Naming a check</h2>
+<div class="item" id="l.t_est">
+<h3><a href="#l.t_est"><span class="c-libfunc">ˡt̲est</span></a> <span class="type">: Char -&gt; Char -&gt; Char</span></h3>
+<div class="meta">function &middot; <a href="work-libs-Check-src-Check.xtl.src.html#L51">line 51</a></div>
+<div class="doc">
+<p>name t_est line: the check's line, named: &quot;ok: name&quot; or &quot;FAIL: name: ...&quot;.</p>
+</div>
+<pre class="code"><span class="c-libfunc">ˡt̲est</span> ← { name line →
+  <span class="c-string">&quot;ok&quot;</span> <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> <span class="c-number">2</span> <a href="builtins.html#t_ake" class="c-builtin">t̲ake</a> line ? <span class="c-string">&quot;ok: &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> name
+  <span class="c-string">&quot;FAIL: &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> name <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;: &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">6</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> line
+}</pre>
+<div class="uses">Used in: <a href="demos-micro-bert-micro-bert.xtl.html#r1">r1</a>, <a href="demos-micro-bert-micro-bert.xtl.html#r2">r2</a>, <a href="demos-micro-bert-micro-bert.xtl.html#r3">r3</a>, <a href="demos-micro-bert-micro-bert.xtl.html#r4">r4</a>, <a href="demos-pipelines-diffusion.xtl.html#r0">r0</a>, <a href="demos-pipelines-diffusion.xtl.html#r1">r1</a>, <a href="demos-pipelines-diffusion.xtl.html#r2">r2</a>, <a href="demos-pipelines-equations.xtl.html#r1">r1</a>, <a href="demos-pipelines-equations.xtl.html#r2">r2</a>, <a href="demos-pipelines-equations.xtl.html#r3">r3</a>, <a href="demos-pipelines-equations.xtl.html#r4">r4</a>, <a href="demos-pipelines-pipelines.xtl.html#c1">c1</a>, <a href="demos-pipelines-pipelines.xtl.html#c1b">c1b</a>, <a href="demos-pipelines-pipelines.xtl.html#c2">c2</a>, <a href="demos-pipelines-pipelines.xtl.html#c2b">c2b</a>, <a href="demos-pipelines-pipelines.xtl.html#c3">c3</a>, <a href="demos-pipelines-pipelines.xtl.html#c3b">c3b</a>, <a href="demos-pipelines-pipelines.xtl.html#c4">c4</a>, <a href="demos-pipelines-pipelines.xtl.html#c4b">c4b</a>, <a href="demos-pipelines-rosetta.xtl.html#r0">r0</a>, <a href="demos-pipelines-rosetta.xtl.html#r1">r1</a>, <a href="demos-pipelines-rosetta.xtl.html#r2">r2</a></div>
+</div>
+<h2 class="section" id="section-3">Reports</h2>
+<div class="item" id="l.a_nd">
+<h3><a href="#l.a_nd"><span class="c-libfunc">ˡa̲nd</span></a> <span class="type">: Char -&gt; Char -&gt; Char</span></h3>
+<div class="meta">function &middot; <a href="work-libs-Check-src-Check.xtl.src.html#L59">line 59</a></div>
+<div class="doc">
+<p>a a_nd b: two checks (or reports) as one text, a line each.</p>
+</div>
+<pre class="code"><span class="c-libfunc">ˡa̲nd</span> ← { a b → a <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;\n&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> b }</pre>
+<div class="uses">Used in: <a href="demos-micro-bert-micro-bert.xtl.src.html#L136">demos/micro-bert/micro-bert.xtl:136</a>, <a href="work-libs-Check-src-Check.xtl.html#l.r_eport"><span class="c-libfunc">ˡr̲eport</span></a>, <a href="demos-pipelines-diffusion.xtl.src.html#L113">demos/pipelines/diffusion.xtl:113</a>, <a href="demos-pipelines-equations.xtl.src.html#L159">demos/pipelines/equations.xtl:159</a>, <a href="demos-pipelines-pipelines.xtl.src.html#L126">demos/pipelines/pipelines.xtl:126</a>, <a href="demos-pipelines-rosetta.xtl.src.html#L71">demos/pipelines/rosetta.xtl:71</a></div>
+</div>
+<div class="item" id="l.c_ount">
+<h3><a href="#l.c_ount"><span class="c-libfunc">ˡc̲ount</span></a> <span class="type">: Char -&gt; Int</span></h3>
+<div class="meta">function &middot; <a href="work-libs-Check-src-Check.xtl.src.html#L62">line 62</a></div>
+<div class="doc">
+<p>c_ount t: how many checks a text holds (its lines).</p>
+</div>
+<pre class="code"><span class="c-libfunc">ˡc̲ount</span> ← { t → <span class="c-number">1</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> <a href="builtins.html#w_here" class="c-builtin">w̲here</a> t <a href="builtins.html#-3d" class="c-symbol">=</a> <a href="work-libs-Check-src-Check.xtl.html#h.n_l" class="c-libfunc">ʰn̲l</a> @ }</pre>
+<div class="uses">Used in: <a href="work-libs-Check-src-Check.xtl.html#l.r_eport"><span class="c-libfunc">ˡr̲eport</span></a></div>
+</div>
+<div class="item" id="l.f_ailures">
+<h3><a href="#l.f_ailures"><span class="c-libfunc">ˡf̲ailures</span></a> <span class="type">: Char -&gt; Int</span></h3>
+<div class="meta">function &middot; <a href="work-libs-Check-src-Check.xtl.src.html#L65">line 65</a></div>
+<div class="doc">
+<p>f_ailures t: how many of its checks failed (lines starting FAIL).</p>
+</div>
+<pre class="code"><span class="c-libfunc">ˡf̲ailures</span> ← { t →
+  s ← (<a href="work-libs-Check-src-Check.xtl.html#h.n_l" class="c-libfunc">ʰn̲l</a> @) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> t
+  <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> <a href="builtins.html#w_here" class="c-builtin">w̲here</a> (<span class="c-number">-1</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> s <a href="builtins.html#-3d" class="c-symbol">=</a> <a href="work-libs-Check-src-Check.xtl.html#h.n_l" class="c-libfunc">ʰn̲l</a> @) <a href="builtins.html#-26" class="c-symbol">∧</a> (<span class="c-number">1</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> s) <a href="builtins.html#-3d" class="c-symbol">=</a> <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> <span class="c-string">&quot;F&quot;</span>
+}</pre>
+<div class="uses">Used in: <a href="work-libs-Check-src-Check.xtl.html#l.p_assed-3f"><span class="c-libfunc">ˡp̲assed?</span></a>, <a href="work-libs-Check-src-Check.xtl.html#l.r_eport"><span class="c-libfunc">ˡr̲eport</span></a></div>
+</div>
+<div class="item" id="l.p_assed-3f">
+<h3><a href="#l.p_assed-3f"><span class="c-libfunc">ˡp̲assed?</span></a> <span class="type">: Truthy a =&gt; Char -&gt; a</span></h3>
+<div class="meta">function &middot; <a href="work-libs-Check-src-Check.xtl.src.html#L71">line 71</a></div>
+<div class="doc">
+<p>p_assed? t: whether every check passed.</p>
+</div>
+<pre class="code"><span class="c-libfunc">ˡp̲assed?</span> ← { t → <span class="c-number">0</span> <a href="builtins.html#-3d" class="c-symbol">=</a> <a href="work-libs-Check-src-Check.xtl.html#l.f_ailures" class="c-libfunc">ˡf̲ailures</a> t }</pre>
+</div>
+<div class="item" id="l.r_eport">
+<h3><a href="#l.r_eport"><span class="c-libfunc">ˡr̲eport</span></a> <span class="type">: Char -&gt; Char</span></h3>
+<div class="meta">function &middot; <a href="work-libs-Check-src-Check.xtl.src.html#L74">line 74</a></div>
+<div class="doc">
+<p>r_eport t: the checks, then a summary line.</p>
+</div>
+<pre class="code"><span class="c-libfunc">ˡr̲eport</span> ← { t →
+  n ← <a href="work-libs-Check-src-Check.xtl.html#l.c_ount" class="c-libfunc">ˡc̲ount</a> t
+  f ← <a href="work-libs-Check-src-Check.xtl.html#l.f_ailures" class="c-libfunc">ˡf̲ailures</a> t
+  s ← (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> n) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; check&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (n <a href="builtins.html#-21-3d" class="c-symbol">≠</a> <span class="c-number">1</span>) <a href="builtins.html#r_eplicate" class="c-builtin">r̲eplicate</a> <span class="c-string">&quot;s&quot;</span>
+  f <a href="builtins.html#-3d" class="c-symbol">=</a> <span class="c-number">0</span> ? t <a href="work-libs-Check-src-Check.xtl.html#l.a_nd" class="c-libfunc">ˡa̲nd</a> s <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;, all passed&quot;</span>
+  t <a href="work-libs-Check-src-Check.xtl.html#l.a_nd" class="c-libfunc">ˡa̲nd</a> s <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;, &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> f) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; FAILED&quot;</span>
+}</pre>
+<div class="uses">Used in: <a href="demos-micro-bert-micro-bert.xtl.src.html#L136">demos/micro-bert/micro-bert.xtl:136</a>, <a href="demos-pipelines-diffusion.xtl.src.html#L113">demos/pipelines/diffusion.xtl:113</a>, <a href="demos-pipelines-equations.xtl.src.html#L159">demos/pipelines/equations.xtl:159</a>, <a href="demos-pipelines-pipelines.xtl.src.html#L126">demos/pipelines/pipelines.xtl:126</a>, <a href="demos-pipelines-rosetta.xtl.src.html#L71">demos/pipelines/rosetta.xtl:71</a></div>
+</div>
+</main>
+</body>
+</html>
