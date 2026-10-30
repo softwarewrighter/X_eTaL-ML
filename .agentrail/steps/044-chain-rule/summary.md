@@ -1,0 +1,1 @@
+The chain rule: a pipeline of equations forward (z, sigmoid, loss) then back (dL/dy, dL/dz, dL/dW), drawn beside the typed rule, checked against the written-out gradient and central differences; on the Pipelines page with the stage view; tests pin the backward reads.
