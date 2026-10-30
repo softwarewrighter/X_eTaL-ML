@@ -1,0 +1,1 @@
+X_eTaL-libraries pinned at 6b09aad (E2, E3, E12 landed); the diffusion sampler's networks inside its equations with the paper's symbols; E13 filed (scan seeded per element); Flow and pipelines baselines reblessed after review; full gate stages and bench-check ok.
