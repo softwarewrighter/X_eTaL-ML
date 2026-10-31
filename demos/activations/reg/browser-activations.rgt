@@ -1,0 +1,3 @@
+command = "scripts/browser-check.sh activations"
+exit_code = 0
+desc = "activations: the built page run in headless Chrome shows X_eTaL's results"

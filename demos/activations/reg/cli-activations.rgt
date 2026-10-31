@@ -1,0 +1,3 @@
+command = '"$XETAL" run --seed 1 --draw "$XETAL_DRAW" activations.xtl 2>&1 | sed "s#$XETAL_DRAW/##"'
+exit_code = 0
+desc = "activations: activations.xtl run by the pinned xetal CLI (the charts it draws named without the machine's path)"

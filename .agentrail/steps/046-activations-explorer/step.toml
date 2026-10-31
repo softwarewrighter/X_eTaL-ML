@@ -1,6 +1,6 @@
 number = 46
 slug = "activations-explorer"
-status = "pending"
+status = "in-progress"
 description = "The user, 2026-10-29 (from X_eTaL-libraries' docs/research2.txt: plotting the..."
 role = "production"
 context_files = []

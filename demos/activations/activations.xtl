@@ -1,0 +1,74 @@
+#!/usr/bin/env xetal
+## Activation functions, graphed: every function of this repository's
+## Activations library and its derivative over x from -6 to 6, two
+## charts a family (the functions, their slopes), drawn by
+## X_eTaL-libraries' Plot with an x axis of real values
+## (p:f_unctionChart!). The live page adds sliders for the parameters
+## and an editor for an activation of your own.
+
+"act:" u_se< "Activations"
+"p:" u_se< "Plot"
+
+### Data
+
+## The x values: 241 from -6 to 6, a twentieth apart. The parameters:
+## leaky ReLU's slope, ELU's alpha, Swish's beta.
+xs := 241 p:l_inspace (-6.0, 6.0)
+leak := 0.1
+alpha := 1.0
+beta := 1.5
+
+## A family's chart: the title, the axes' names and a name per curve,
+## then the curves, a row each over xs.
+u:c_hart := { labels ys -> labels p:f_unctionChart! '{ i -> 2 241 r_eshape xs c_at i s_elect ys } m_ap r_ange t_ally ys }
+## A slope by central differences, for the gates, of which Activations
+## gives no derivative.
+u:s_lope := { f_ x -> 5000.0 * (f_ x + 0.0001) - f_ x - 0.0001 }
+## The gates as one-number layers, W = V = 1: x times its gate.
+one := (1 1 r_eshape 1.0, 1 1 r_eshape 1.0)
+u:g_lu1 := { x -> r_avel one act:g_lu 241 1 r_eshape x }
+u:r_eglu1 := { x -> r_avel one act:r_eglu 241 1 r_eshape x }
+u:g_eglu1 := { x -> r_avel one act:g_eglu 241 1 r_eshape x }
+u:s_wiglu1 := { x -> r_avel one act:s_wiglu 241 1 r_eshape x }
+
+### Classical
+
+## The squashing functions: sigmoid, tanh, hard sigmoid.
+classical := 3 241 r_eshape (act:s_igmoid xs) c_at (act:t_anh xs) c_at act:h_ardSigmoid xs
+dClassical := 3 241 r_eshape (act:d_sigmoid xs) c_at (act:d_tanh xs) c_at act:d_hardSigmoid xs
+_ := ("Classical" "x" "f(x)" "sigmoid" "tanh" "hard sigmoid") u:c_hart classical
+_ := ("Slopes" "x" "f'(x)" "sigmoid" "tanh" "hard sigmoid") u:c_hart dClassical
+
+### Rectifiers
+
+## ReLU, leaky ReLU (its slope leak), ELU (alpha), SELU.
+rect := 4 241 r_eshape (act:r_elu xs) c_at (leak act:l_eaky xs) c_at (alpha act:e_lu xs) c_at act:s_elu xs
+dRect := 4 241 r_eshape (act:d_relu xs) c_at (leak act:d_leaky xs) c_at (alpha act:d_elu xs) c_at act:d_selu xs
+_ := ("Rectifiers" "x" "f(x)" "ReLU" "leaky ReLU" "ELU" "SELU") u:c_hart rect
+_ := ("Slopes" "x" "f'(x)" "ReLU" "leaky ReLU" "ELU" "SELU") u:c_hart dRect
+
+### Smooth
+
+## Softplus, SiLU, Swish (beta), GELU (the tanh form and the exact
+## one), Mish, hard swish.
+smooth := 7 241 r_eshape (act:s_oftplus xs) c_at (act:s_ilu xs) c_at (beta act:s_wish xs) c_at (act:g_elu xs) c_at (act:g_eluErf xs) c_at (act:m_ish xs) c_at act:h_ardSwish xs
+dSmooth := 7 241 r_eshape (act:d_softplus xs) c_at (act:d_silu xs) c_at (beta act:d_swish xs) c_at (act:d_gelu xs) c_at (act:d_geluErf xs) c_at (act:d_mish xs) c_at act:d_hardSwish xs
+_ := ("Smooth" "x" "f(x)" "softplus" "SiLU" "Swish" "GELU" "GELU (erf)" "Mish" "hard swish") u:c_hart smooth
+_ := ("Slopes" "x" "f'(x)" "softplus" "SiLU" "Swish" "GELU" "GELU (erf)" "Mish" "hard swish") u:c_hart dSmooth
+
+### Gated
+
+## The gated layers on one number, W = V = 1: x times sigmoid, ReLU,
+## GELU or SiLU of x; their slopes by central differences.
+gated := 4 241 r_eshape (u:g_lu1 xs) c_at (u:r_eglu1 xs) c_at (u:g_eglu1 xs) c_at u:s_wiglu1 xs
+dGated := 4 241 r_eshape ('u:g_lu1 u:s_lope xs) c_at ('u:r_eglu1 u:s_lope xs) c_at ('u:g_eglu1 u:s_lope xs) c_at 'u:s_wiglu1 u:s_lope xs
+_ := ("Gated (W = V = 1)" "x" "f(x)" "GLU" "ReGLU" "GEGLU" "SwiGLU") u:c_hart gated
+_ := ("Slopes (by differences)" "x" "f'(x)" "GLU" "ReGLU" "GEGLU" "SwiGLU") u:c_hart dGated
+
+### The ranges
+
+## Each family's least and greatest values over -6..6, a row a family
+## (classical, rectifiers, smooth, gated); then its slopes'.
+u:s_pan := { f -> ('m_in r_/ r_avel f) c_at 'm_ax r_/ r_avel f }
+4 2 r_eshape (u:s_pan classical) c_at (u:s_pan rect) c_at (u:s_pan smooth) c_at u:s_pan gated
+4 2 r_eshape (u:s_pan dClassical) c_at (u:s_pan dRect) c_at (u:s_pan dSmooth) c_at u:s_pan dGated

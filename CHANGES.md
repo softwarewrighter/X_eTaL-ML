@@ -11,6 +11,11 @@ planning and reordering, `release` milestone release, `chore`
 agentrail bookkeeping (step complete, saga archive), `vendor` a
 refresh of the vendored X_eTaL.
 
+## 2026-10-31
+
+- `demo` Activation functions (step activations-explorer): `demos/activations`, live: every Activations function and its slope over -6..6 a family at a time, drawn by Plot's `p:f_unctionChart!`; sliders for the parameters; an activation of your own edited, run and drawn beside a built-in, errors placed in your text, a value not finite said
+- `plan` saga: step m19-builtins inserted (047; X_eTaL landed M19); f32-tolerance is 048
+
 ## 2026-10-30
 
 - `vendor` X_eTaL-libraries pinned at 6b09aad (its Saga 17): E2 (scan, prev), E3 (named functions in an equation), E12 (Plot over real x) landed (step libs-repin)

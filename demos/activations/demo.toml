@@ -1,0 +1,11 @@
+# One demo's description: read by scripts/demos.py for the tests, the
+# README's demo list and the live catalog (pages/index.html).
+slug = "activations"            # the directory name, demos/<slug>/
+title = "Activation functions"
+summary = "Every activation of the Activations library and its slope, graphed over -6..6 by X_eTaL with X_eTaL-libraries' Plot, a family at a time: classical, rectifiers, smooth, gated. Move a slider to change a parameter; write an activation of your own and see it beside a built-in."
+concepts = ["activation functions", "derivatives", "function plots with a real x axis", "a function passed to a function"]        # the X_eTaL ideas it shows
+status = "live"             # draft | live | deferred
+order = 14                  # position in the catalog (lower first)
+needs = []                   # asks in docs/xetal-asks.md it waits on or works around
+line = "u:s_lope := { f_ x -> 5000.0 * (f_ x + 0.0001) - f_ x - 0.0001 }"
+why = "A slope by central differences for any function: the function is the left argument (a name ending in _), so one line serves every gate and the reader's own activation."

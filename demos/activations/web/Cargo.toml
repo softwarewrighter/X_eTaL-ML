@@ -1,0 +1,16 @@
+[package]
+name = "activations-web"
+description = "Activation functions graphed by X_eTaL: every function of the Activations library and its slope, parameters on sliders, an activation of your own"
+version = "0.1.0"
+edition = "2021"
+license = "MIT"
+publish = false
+
+[dependencies]
+microscope = { path = "../../../shared/microscope" }
+yew = { version = "0.21", features = ["csr"] }
+web-sys = { version = "0.3", features = ["HtmlInputElement", "HtmlSelectElement", "HtmlTextAreaElement"] }
+gloo-timers = "0.3"
+console_error_panic_hook = "0.1"
+
+[workspace]
