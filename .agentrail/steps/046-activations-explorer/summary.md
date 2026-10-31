@@ -1,0 +1,1 @@
+demos/activations, live: every Activations function and slope over -6..6 by Plot's f_unctionChart! a family at a time, sliders for parameters, an editor for your own activation drawn beside a built-in with errors placed and non-finite values said; 8 tests; Chrome-checked.
