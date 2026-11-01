@@ -1,0 +1,1 @@
+(docs/fine-tune-moe-demo-plan.md, step 5; L2954-3162) Quant gains blockwise uniform 4-bit quantization (a scale per block, clip, round), the NF4 codebook (the nearest of 16 levels), double quantization of the scales; the error and the bytes against FP32 and FP16; the explorer's quantization panel.

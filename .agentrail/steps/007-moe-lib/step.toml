@@ -1,0 +1,8 @@
+number = 7
+slug = "moe-lib"
+status = "pending"
+description = "(docs/fine-tune-moe-demo-plan.md, step 7; L3180-3274, L675) libs/MoE (moe:): ..."
+role = "production"
+context_files = []
+created_at = "2026-11-01T15:15:40"
+commits = []

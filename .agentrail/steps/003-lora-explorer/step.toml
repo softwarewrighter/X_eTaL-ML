@@ -1,0 +1,8 @@
+number = 3
+slug = "lora-explorer"
+status = "pending"
+description = "(docs/fine-tune-moe-demo-plan.md, step 3; L3283-3345, L3473-3585) demos/lora-..."
+role = "production"
+context_files = []
+created_at = "2026-11-01T15:15:40"
+commits = []

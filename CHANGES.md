@@ -11,6 +11,10 @@ planning and reordering, `release` milestone release, `chore`
 agentrail bookkeeping (step complete, saga archive), `vendor` a
 refresh of the vendored X_eTaL.
 
+## 2026-11-01
+
+- `plan` Saga 5 (libraries-and-demos) archived, its parked f32-tolerance and the unscheduled activation-compare and glu-ffn put in a Backlog; Saga 6 (moe-finetune) begun: `docs/fine-tune-moe-demo-plan.md` from `docs/fine-tune-moe-research.txt`, twelve steps in the research's recommended order (LoRA, LoRA-FA, QLoRA, a tiny MoE fine-tuned by each policy, VeRA, deployment)
+
 ## 2026-10-31
 
 - `vendor` X_eTaL pinned at abdd371d: M19 landed (t_anh, e_rf, s_qrt, e_xpm1, l_og1p, e_rfc built in) (step m19-builtins)

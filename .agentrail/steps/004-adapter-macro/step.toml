@@ -1,0 +1,8 @@
+number = 4
+slug = "adapter-macro"
+status = "pending"
+description = "(docs/fine-tune-moe-demo-plan.md, step 4; L2629-2659) lo:a_dapter<: a spec st..."
+role = "production"
+context_files = []
+created_at = "2026-11-01T15:15:40"
+commits = []

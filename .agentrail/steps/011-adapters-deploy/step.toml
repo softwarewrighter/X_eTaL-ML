@@ -1,0 +1,8 @@
+number = 11
+slug = "adapters-deploy"
+status = "pending"
+description = "(docs/fine-tune-moe-demo-plan.md, step 11; L381-460, L1103-1150, L4447) adapt..."
+role = "production"
+context_files = []
+created_at = "2026-11-01T15:15:40"
+commits = []

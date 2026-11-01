@@ -1,0 +1,1 @@
+(docs/fine-tune-moe-demo-plan.md, step 6; L172-218, L460, L2465-2525, L3471) QLoRA in the library and the explorer: the base dequantized on the fly, the adapter in full precision; checked against the real dequantized computation; trained as LoRA is; the merge shown not bit-exact (dequantize, add, quantize again).

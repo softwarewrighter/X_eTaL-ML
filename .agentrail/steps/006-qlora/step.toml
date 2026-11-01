@@ -1,0 +1,8 @@
+number = 6
+slug = "qlora"
+status = "pending"
+description = "(docs/fine-tune-moe-demo-plan.md, step 6; L172-218, L460, L2465-2525, L3471) ..."
+role = "production"
+context_files = []
+created_at = "2026-11-01T15:15:40"
+commits = []

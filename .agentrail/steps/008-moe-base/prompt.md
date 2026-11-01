@@ -1,0 +1,1 @@
+(docs/fine-tune-moe-demo-plan.md, step 8; L294, L620-664, L1370, L1774-1831) the base model: a synthetic task made in X_eTaL (tokens of feature vectors in a few kinds, moe-router's world), a tiny MoE (a shared layer, 4 experts, top-2) trained in X_eTaL with fixed seeds; its checkpoint in data/; its routing statistics with the router frozen, the baseline for every method.

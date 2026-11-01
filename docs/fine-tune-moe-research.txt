@@ -1,0 +1,4470 @@
+
+how does LoRA or QLoRA work with an MoE model.  Which open-weights MoE models can be fine tuned?  What does this mean exactly?  Do each expert's pre-trained weights remain unchanged and these approaches add fine-tuned weights per-expert?  Where is the fine tune training stored exactly?
+LoRA and QLoRA for Mixture-of-Experts (MoE) models
+Yes, you can fine-tune an MoE model using LoRA or QLoRA without modifying its original pretrained expert weights. Depending on the configuration, you can attach separate trainable adapters to individual experts, shared attention layers, the router, or some combination.
+
+The interesting part is that MoE models offer several fine-tuning strategies that dense models do not. You can specialize individual experts, train shared components, modify routing behavior, or even add new experts.
+
+This distinction is especially important for your work on MoE expert offloading, tiered memory, and inference on GPUs with limited VRAM.
+
+1. How LoRA works in an MoE model
+Consider a transformer with a conventional sparse MoE layer:
+
+
+Conceptual MoE layer with four independently adapted experts. The router typically selects a subset, rather than executing all four.
+Each expert is generally a feed-forward network containing several weight matrices. For example, a SwiGLU expert may have:
+
+gate_proj: gating projection
+
+up_proj: expansion projection
+
+down_proj: contraction projection
+
+LoRA can attach a low-rank update to any or all of these matrices.
+
+For a pretrained matrix 
+W
+e
+W 
+e
+​
+  belonging to expert 
+e
+e:
+
+W
+e
+effective
+=
+W
+e
++
+α
+r
+B
+e
+A
+e
+W 
+e
+effective
+​
+ =W 
+e
+​
+ + 
+r
+α
+​
+ B 
+e
+​
+ A 
+e
+​
+ 
+where:
+
+Component
+
+Meaning
+
+During LoRA training
+
+W
+e
+W 
+e
+​
+ 
+
+Original pretrained expert weights
+
+Frozen
+
+A
+e
+A 
+e
+​
+ 
+
+Low-rank projection, shape 
+r
+×
+d
+in
+r×d 
+in
+​
+ 
+
+Trainable
+
+B
+e
+B 
+e
+​
+ 
+
+Low-rank projection, shape 
+d
+out
+×
+r
+d 
+out
+​
+ ×r
+
+Trainable
+
+r
+r
+
+LoRA rank, often 8–64
+
+Hyperparameter
+
+α
+α
+
+Scaling parameter
+
+Usually fixed
+
+The original expert's weights remain unchanged, while the LoRA matrices learn the task-specific adjustments.
+
+Importantly, the effective matrix generally isn't materialized during training or inference. Instead:
+
+y
+=
+W
+e
+x
++
+α
+r
+B
+e
+(
+A
+e
+x
+)
+y=W 
+e
+​
+ x+ 
+r
+α
+​
+ B 
+e
+​
+ (A 
+e
+​
+ x)
+This makes the adjustment relatively inexpensive.
+
+2. What is different about QLoRA?
+QLoRA combines two techniques:
+
+Quantization of pretrained weights, usually to 4-bit NF4, to reduce memory usage.
+
+LoRA adapters, usually trained in BF16 or FP16 while the quantized pretrained weights remain frozen.
+
+For an MoE expert:
+
+y
+=
+Dequant
+⁡
+(
+W
+e
+,
+4
+)
+x
++
+α
+r
+B
+e
+(
+A
+e
+x
+)
+y=Dequant(W 
+e,4
+​
+ )x+ 
+r
+α
+​
+ B 
+e
+​
+ (A 
+e
+​
+ x)
+QLoRA does not mean that the adapter itself is necessarily 4-bit. Usually the pretrained model is quantized, while the adapter parameters and optimizer states use higher precision.
+
+This distinction matters for your hardware: QLoRA can substantially reduce the resident base-model memory, but training still requires activation memory, gradient buffers, adapter optimizer state, and temporary computation buffers.
+
+3. Where can fine-tuning happen in an MoE model?
+There are several choices, and they produce different behavior.
+
+Strategy
+
+What gets trained
+
+Primary advantage
+
+Attention-only LoRA
+
+Shared Q/K/V/O attention projections
+
+Small adapters; simplest
+
+Expert LoRA
+
+Separate low-rank updates for each expert
+
+Adapt expert computation
+
+Shared + expert LoRA
+
+Attention and expert projections
+
+Greater adaptation capacity
+
+Router tuning
+
+Router parameters
+
+Change which experts get selected
+
+Selected-expert LoRA
+
+Only certain experts
+
+Reduce training and storage
+
+New experts
+
+Newly added expert parameters
+
+Increase model capacity
+
+A subtle but important point: fine-tuning experts does not automatically make them subject-matter experts.
+
+For example, suppose you fine-tune an MoE model on Rust programming examples. The model's router may send Rust-related tokens to many different experts, depending on their hidden representations.
+
+If you attach adapters to all experts, the training signal is distributed according to which experts are activated.
+
+You don't necessarily get an identifiable Rust expert afterward.
+
+Creating an explicitly specialized expert requires additional architecture or training decisions, such as controlled routing, expert isolation, or training a new expert.
+
+How gradients flow
+Suppose an MoE layer has 64 experts and activates four for each token.
+
+During a training step:
+
+The router selects experts for each token.
+
+Selected experts participate in the forward pass.
+
+Gradients update LoRA adapters attached to those experts.
+
+Unselected experts receive no expert-specific gradient contribution from that token.
+
+Shared attention adapters receive gradients through the usual network paths.
+
+Across a batch containing many tokens, potentially most or all experts may be activated.
+
+If the router is frozen, it still determines which experts get training opportunities. This can lead to uneven adaptation, particularly with small datasets.
+
+For this reason, I would start with a frozen router and collect expert-activation statistics before experimenting with router fine-tuning.
+
+4. How much storage does an expert LoRA require?
+Consider an illustrative SwiGLU expert with:
+
+Hidden dimension 
+d
+=
+4096
+d=4096
+
+Intermediate dimension 
+f
+=
+14336
+f=14336
+
+Three matrices: gate, up, down
+
+LoRA rank 
+r
+=
+16
+r=16
+
+For one matrix of shape 
+m
+×
+n
+m×n, LoRA adds:
+
+P
+LoRA
+=
+r
+(
+m
++
+n
+)
+P 
+LoRA
+​
+ =r(m+n)
+For all three expert matrices:
+
+P
+expert
+=
+3
+r
+(
+d
++
+f
+)
+P 
+expert
+​
+ =3r(d+f)
+=
+3
+(
+16
+)
+(
+4096
++
+14336
+)
+=
+884,736
+=3(16)(4096+14336)=884,736
+Illustrative adapter storage
+
+1.69 MiB
+Per expert, BF16
+108 MiB
+64 experts, BF16
+Adapter weights only; excludes shared-layer adapters, metadata, optimizer state, and training activations.
+
+These figures are per MoE layer. If a model contains 24 such layers, 64 experts in each, the expert adapters alone would require about 2.53 GiB.
+
+This reveals an important tradeoff: MoE computation is sparse, but an all-expert LoRA adapter is not necessarily small, because it can contain updates for every expert in every layer.
+
+For your expert-streaming work, this creates an opportunity to treat each expert's adapter as a separate cacheable object.
+
+5. Where exactly are the fine-tuned weights stored?
+There are three distinct meanings of stored.
+
+A. During training
+The adapter matrices reside in GPU memory when actively used, alongside their gradients and optimizer state.
+
+The original pretrained weights are typically loaded in GPU memory, CPU RAM, or an offloaded storage hierarchy, depending on the training framework.
+
+For AdamW with BF16 adapter parameters and FP32 optimizer moments, a rough steady-state budget is:
+
+Data
+
+Bytes per trainable parameter
+
+BF16 adapter weight
+
+2
+
+BF16 gradient
+
+2
+
+FP32 first moment
+
+4
+
+FP32 second moment
+
+4
+
+Total
+
+12
+
+Actual memory can differ due to master weights, mixed precision, optimizer implementations, and temporary buffers.
+
+B. After training
+A typical Hugging Face PEFT adapter checkpoint looks like this:
+
+rust-moe-adapter/
+├── adapter_config.json
+├── adapter_model.safetensors
+└── README.md
+adapter_model.safetensors contains the trained adapter tensors, generally not the pretrained model weights.
+
+For example, conceptually, the tensor keys might resemble:
+
+model.layers.0.mlp.experts.3.gate_proj.lora_A
+model.layers.0.mlp.experts.3.gate_proj.lora_B
+
+model.layers.0.mlp.experts.3.up_proj.lora_A
+model.layers.0.mlp.experts.3.up_proj.lora_B
+
+model.layers.0.mlp.experts.3.down_proj.lora_A
+model.layers.0.mlp.experts.3.down_proj.lora_B
+Actual tensor names depend on the model and framework. Some MoE implementations pack all experts into a single 3D tensor, so the adapter may also be stored as packed tensors rather than separately named expert files.
+
+The configuration records information such as rank, scaling, targeted modules, and base-model identity.
+
+C. During inference
+You have two deployment options.
+
+Option A
+Keep the adapter separate
+
+
+Switch between adapters without duplicating the pretrained model. This is ideal for experimenting with multiple specializations.
+
+Option B
+Merge the adapter into the expert
+
+
+Merge the learned update into the original weight matrix and save a new model checkpoint. This can simplify and accelerate inference but eliminates cheap adapter switching for that merged copy.
+
+Merging is particularly relevant for MoE implementations. Hugging Face warns that some packed-expert LoRA paths materialize updates for experts that were not selected, causing significant inference overhead. Its documentation recommends merging when appropriate. 
+
+Hugging Face
++1
+
+For QLoRA, merging generally requires dequantizing or reconstructing weights at suitable precision, applying the updates, and optionally requantizing. The resulting quantized weights need not be bit-for-bit equivalent to dynamically applying the original adapters.
+
+6. Which open-weight MoE models can be fine-tuned?
+The following are useful candidates. In principle, all can be adapted, but the practical difficulty varies considerably with architecture, quantization format, and training framework.
+
+Model
+
+Total parameters
+
+Active parameters
+
+Fine-tuning practicality
+
+Qwen3-30B-A3B
+
+30.5B
+
+3.3B
+
+Excellent research candidate
+
+gpt-oss-20b
+
+~21B
+
+~3.6B
+
+Good consumer-GPU candidate
+
+Mixtral-8x7B
+
+~47B
+
+~13B
+
+Mature, well-understood
+
+Qwen3-235B-A22B
+
+~235B
+
+~22B
+
+Multi-GPU/offloading
+
+gpt-oss-120b
+
+~117B
+
+~5.1B
+
+Advanced hardware setup
+
+DeepSeek-V3
+
+671B
+
+37B
+
+Distributed training
+
+The Qwen3-30B-A3B model has 128 routed experts, with eight selected per token. Its Apache-2.0 base checkpoint is particularly attractive for controlled experiments. 
+
+Hugging Face
++1
+
+OpenAI explicitly supports fine-tuning gpt-oss-20b and gpt-oss-120b. Their native MXFP4 format introduces additional considerations for training-framework compatibility. 
+
+Hugging Face
++1
+
+Mixtral is useful because it has extensive existing fine-tuning examples, while DeepSeek-V3 is more appropriate for studying large-scale MoE architectures than for a first local fine-tuning experiment. 
+
+Hugging Face
++1
+
+Important: The number of active parameters determines much of the inference computation, but the total parameter count remains relevant for model storage and training. A 30B MoE model does not automatically have the training memory requirements of a 3B dense model.
+
+7. What does MoE-specific LoRA look like in code?
+Hugging Face PEFT supports MoE expert tensors using target_parameters. This is important because some models represent all experts in a packed 3D nn.Parameter rather than separate nn.Linear modules. 
+
+Hugging Face
++1
+
+A representative configuration is:
+
+
+from peft import LoraConfig
+
+config = LoraConfig(
+    r=16,
+    lora_alpha=32,
+    target_modules=["q_proj", "v_proj"],
+    target_parameters=[
+        "mlp.experts.gate_up_proj",
+        "mlp.experts.down_proj",
+    ],
+    task_type="CAUSAL_LM",
+)
+
+
+This illustrates shared attention adaptation plus expert adaptation. Exact parameter names must be checked against the loaded model.
+
+One issue is that applying rank 16 to every expert can produce a substantial adapter. For a large expert count, you may want lower per-expert ranks, while retaining a higher rank for shared attention.
+
+A more sophisticated implementation could allocate different ranks according to expert usage or measured importance.
+
+8. Implications for your MoE expert-offloading architecture
+This is where I think the approach becomes particularly interesting for your moe-microscope and MLOS work.
+
+You could organize model storage into three independent layers:
+
+Immutable pretrained model
+
+Shared attention, routers, expert weight shards
+
+Persistent HDD, SSD, or optical archive
+Versioned adapter store
+
+Rust adapter, ML adapter, FORTH adapter, etc.
+
+SSD or system RAM, indexed by model/layer/expert
+Active execution cache
+
+Selected expert weights + selected adapters
+
+GPU VRAM; optionally prefetch from RAM
+Instead of storing complete fine-tuned copies of a 30B model, you could store one immutable base model and multiple adapter sets.
+
+A possible logical cache key would be:
+
+(
+  base_model_hash,
+  adapter_id,
+  layer_id,
+  expert_id,
+  projection_id,
+  adapter_version
+)
+This would allow you to experiment with:
+
+Loading only the adapters associated with selected experts.
+
+Sharing immutable expert weights among several specialized model variants.
+
+Measuring adapter cache-hit rates separately from base-expert cache-hit rates.
+
+Switching specialization without reloading the entire model.
+
+Prefetching expert weights and their adapters together.
+
+There is one complication: ordinary PEFT checkpoints and runtimes do not necessarily support independently loading each expert's adapter on demand. You would need an adapter-sharding layer and runtime integration, especially for fused expert kernels.
+
+The biggest optimization opportunity may not be adapter storage itself, which is comparatively small, but coordinating adapter loading with expert loading so you avoid additional transfers and synchronization.
+
+9. A practical experiment on your hardware
+Given your RTX 3090 24GB, RTX 5060 16GB, and RTX 3060 12GB, I would start with Qwen3-30B-A3B, using a quantized base model and an attention-only adapter as the control experiment.
+
+Then expand to expert adaptation.
+
+Phase
+
+Experiment
+
+What to measure
+
+1
+
+Quantized pretrained baseline
+
+Quality, VRAM, tokens/sec
+
+2
+
+Attention-only QLoRA
+
+Training memory, loss, quality
+
+3
+
+Expert-only LoRA
+
+Expert utilization, adapter size
+
+4
+
+Shared + expert LoRA
+
+Quality improvement vs. cost
+
+5
+
+Per-expert adapter offload
+
+Transfer bytes, latency, cache hits
+
+6
+
+Adapter switching
+
+Switching overhead, memory savings
+
+For phase 2, the 24GB RTX 3090 is the natural starting point. Qwen3-30B-A3B's roughly 15GB raw 4-bit weight payload leaves limited room for everything else, so CPU offload, short sequences, gradient checkpointing, and small microbatches may be needed. The exact memory requirement depends on the quantization and training implementation.
+
+For phase 3, you can begin with a subset of layers or a smaller MoE model rather than immediately adapting all 128 experts across the network.
+
+An additional experiment worth considering
+Compare three training policies on the same dataset:
+
+Frozen router, all-expert LoRA: Every expert can learn when selected.
+
+Frozen router, selected-expert LoRA: Only designated experts have trainable adapters.
+
+Trainable router plus expert LoRA: Routing and expert computation both adapt.
+
+Measure not only training loss and task accuracy, but also routing entropy, expert selection frequency, load balance, and how often the adapted experts are actually used.
+
+This could become a useful visual demonstration in your X_eTaL-ML work: show which experts activate before and after fine-tuning, along with the magnitude of each expert's learned LoRA update.
+
+10. Key distinctions to retain
+Question
+
+Answer
+
+Are original expert weights modified by LoRA?
+
+No, normally frozen
+
+Does every expert receive an adapter?
+
+Only if the configuration targets every expert
+
+Are adapters separate for each expert?
+
+They can be, including within packed tensors
+
+Is the router fine-tuned?
+
+Not by default
+
+Does QLoRA quantize the adapters?
+
+Normally no; it quantizes the pretrained weights
+
+Is the training stored inside the original model?
+
+No, normally in separate adapter checkpoint files
+
+Can adapters be merged?
+
+Yes, subject to architecture and quantization support
+
+Can different adapters share one pretrained model?
+
+Yes
+
+Can individual expert adapters be independently offloaded?
+
+Architecturally yes; requires runtime support
+
+My suggested direction: Treat the pretrained MoE model as immutable, its expert weights as individually cacheable objects, and LoRA adapters as versioned overlays. That gives you a natural separation between model storage, task-specific adaptation, and runtime execution.
+
+The especially interesting research question is whether expert-specific adapter caching and selective fine-tuning can make very large MoE models practical on your heterogeneous GPU hardware, without needing to train, store, or keep resident a complete adapted copy of every expert.
+
+does LoRA-FA change anything?
+LoRA-FA changes the training economics of MoE fine-tuning
+Yes. LoRA-FA (LoRA with Frozen-A) is particularly interesting for MoE models, although it doesn't fundamentally change how adapters are stored or applied during inference.
+
+The key difference is that conventional LoRA trains both low-rank matrices 
+A
+A and 
+B
+B, whereas LoRA-FA freezes 
+A
+A and trains only 
+B
+B.
+
+That reduces the training memory associated with LoRA activations and makes larger LoRA ranks more practical.
+
+1. Conventional LoRA vs. LoRA-FA
+Recall the LoRA update for expert 
+e
+e:
+
+W
+e
+′
+=
+W
+e
++
+α
+r
+B
+e
+A
+e
+W 
+e
+′
+​
+ =W 
+e
+​
+ + 
+r
+α
+​
+ B 
+e
+​
+ A 
+e
+​
+ 
+Property
+
+LoRA
+
+LoRA-FA
+
+Pretrained expert 
+W
+e
+W 
+e
+​
+ 
+
+Frozen
+
+Frozen
+
+Adapter matrix 
+A
+e
+A 
+e
+​
+ 
+
+Trainable
+
+Frozen
+
+Adapter matrix 
+B
+e
+B 
+e
+​
+ 
+
+Trainable
+
+Trainable
+
+Gradient for 
+A
+e
+A 
+e
+​
+ 
+
+Required
+
+Not required
+
+Gradient for 
+B
+e
+B 
+e
+​
+ 
+
+Required
+
+Required
+
+Optimizer state for 
+A
+e
+A 
+e
+​
+ 
+
+Required
+
+Not required
+
+Rank-dependent saved activations
+
+Typically yes
+
+Can largely avoid
+
+Inference formula
+
+W
+x
++
+B
+A
+x
+Wx+BAx
+
+W
+x
++
+B
+A
+x
+Wx+BAx
+
+Adapter switching
+
+Supported
+
+Supported
+
+The most important distinction is that LoRA-FA is primarily a training optimization, not a new inference architecture.
+
+After training, you still have a low-rank update for each adapted weight matrix. The frozen 
+A
+A matrix is still needed for inference unless the update is merged into the base weights.
+
+2. Why freezing A saves memory
+In conventional LoRA:
+
+z
+=
+A
+e
+x
+,
+y
+=
+W
+e
+x
++
+B
+e
+z
+z=A 
+e
+​
+ x,y=W 
+e
+​
+ x+B 
+e
+​
+ z
+Backpropagation must compute gradients for both 
+A
+e
+A 
+e
+​
+  and 
+B
+e
+B 
+e
+​
+ . To calculate the gradient for 
+A
+e
+A 
+e
+​
+ , the backward pass generally needs the original input activation 
+x
+x.
+
+With LoRA-FA, 
+A
+e
+A 
+e
+​
+  is fixed, so:
+
+∂
+L
+∂
+A
+e
+∂A 
+e
+​
+ 
+∂L
+​
+ 
+is not required.
+
+Instead, the backward pass primarily needs the much smaller projected activation 
+z
+=
+A
+e
+x
+z=A 
+e
+​
+ x to calculate the gradient for 
+B
+e
+B 
+e
+​
+ .
+
+This can substantially reduce the memory needed to save activations for adapter training, particularly at higher ranks.
+
+One caveat: the entire transformer still needs to propagate gradients through its layers. Freezing 
+A
+A doesn't eliminate all activation storage, and the exact savings depend on the kernels, checkpointing strategy, and framework.
+
+3. How much does LoRA-FA save for MoE experts?
+Using our previous example of a SwiGLU expert with 
+d
+=
+4096
+d=4096, 
+f
+=
+14336
+f=14336, and rank 16:
+
+Metric per expert
+
+LoRA
+
+LoRA-FA
+
+Total adapter parameters
+
+884,736
+
+884,736
+
+Trainable parameters
+
+884,736
+
+688,128
+
+Frozen adapter parameters
+
+0
+
+196,608
+
+BF16 adapter checkpoint
+
+1.69 MiB
+
+1.69 MiB
+
+AdamW optimizer moments, FP32
+
+6.75 MiB
+
+5.25 MiB
+
+Why isn't the reduction in trainable parameters exactly 50%?
+
+Because the two LoRA matrices have different shapes. For a SwiGLU expert, the total trainable 
+B
+B parameters are:
+
+P
+B
+=
+r
+(
+2
+f
++
+d
+)
+P 
+B
+​
+ =r(2f+d)
+while frozen 
+A
+A parameters are:
+
+P
+A
+=
+r
+(
+2
+d
++
+f
+)
+P 
+A
+​
+ =r(2d+f)
+Thus, LoRA-FA reduces trainable parameters by about 22.2% for this particular architecture, not 50%.
+
+The potentially larger savings come from activation memory. The original LoRA-FA research reports up to a 1.4× reduction in overall memory cost in its experiments, although this should not be interpreted as a guaranteed MoE-specific improvement. 
+
+arXiv
++1
+
+4. Does LoRA-FA change the expert-offloading design?
+Not fundamentally.
+
+For your MLOS and moe-microscope architecture, you still have:
+
+Pretrained expert W
+    +
+Frozen adapter A
+    +
+Fine-tuned adapter B
+    =
+Adapted expert
+But there is an interesting additional optimization.
+
+Because 
+A
+A never changes during LoRA-FA training, you could theoretically generate it deterministically from a seed, rather than storing a complete copy for every adapter.
+
+That would allow an adapter representation such as:
+
+expert-adapter/
+    metadata.json
+    frozen-A-seed
+    trained-B.safetensors
+This is a proposed custom format, not the default PEFT checkpoint format. Exact reconstruction requires recording the initialization algorithm, tensor shape, numerical format, and random-number generator behavior.
+
+You could also share a frozen 
+A
+A across several fine-tuning tasks and store only their different 
+B
+B matrices.
+
+That suggests:
+
+W
+e
+,
+t
+′
+=
+W
+e
++
+α
+r
+B
+e
+,
+t
+A
+e
+W 
+e,t
+′
+​
+ =W 
+e
+​
+ + 
+r
+α
+​
+ B 
+e,t
+​
+ A 
+e
+​
+ 
+where 
+t
+t identifies the task-specific adapter.
+
+This could make multi-adapter storage and switching more efficient.
+
+5. What about combining QLoRA and LoRA-FA?
+They address different memory costs and can be conceptually combined.
+
+Technique
+
+Main memory saving
+
+LoRA
+
+Gradients and optimizer state for pretrained weights
+
+QLoRA
+
+Storage of pretrained weights in accelerator memory
+
+LoRA-FA
+
+Adapter-training activation memory and optimizer state
+
+QLoRA + LoRA-FA
+
+Both quantized base weights and reduced adapter-training memory
+
+However, combining them in a particular MoE implementation is not guaranteed to work out of the box. Hugging Face PEFT provides a create_lorafa_optimizer, but packed expert parameters, custom MoE kernels, and quantized layers require compatibility testing. 
+
+Hugging Face
++1
+
+6. One more technique worth investigating: ACE
+A particularly relevant 2026 development is ACE: Adapter Consolidation across Experts.
+
+ACE identifies redundant expert-specific adapters and consolidates them into group-shared, higher-rank adapters. Its reported experiments show training speedups of 1.31–1.48× compared with expert-wise LoRA, without increasing peak memory. 
+
+ACL Anthology
+
+This is complementary to the LoRA-FA idea:
+
+LoRA-FA reduces the memory cost of training adapter matrices.
+
+ACE reduces redundant adapter specialization and fragmented execution across experts.
+
+Combining their underlying ideas could potentially reduce training memory, adapter storage, and execution overhead, but would require a new implementation and validation.
+
+7. What I would change in the proposed experiments
+For your RTX 3090 and heterogeneous GPU environment, I would revise the experimental matrix to include:
+
+Experiment
+
+Base weights
+
+Adapter training
+
+Expert layout
+
+Baseline LoRA
+
+BF16
+
+A + B
+
+All experts
+
+QLoRA
+
+4-bit
+
+A + B
+
+All experts
+
+LoRA-FA
+
+BF16
+
+B only
+
+All experts
+
+QLoRA-FA
+
+4-bit
+
+B only
+
+All experts
+
+Selective LoRA-FA
+
+4-bit
+
+B only
+
+Selected experts
+
+Group-shared adapters
+
+4-bit
+
+Group adapters
+
+Expert groups
+
+Measure peak VRAM, tokens/sec during training, activation memory, adapter checkpoint size, and downstream quality at ranks 8, 16, 32, and 64.
+
+The critical test is whether LoRA-FA's activation-memory advantage survives the particular MoE kernels and expert-offloading mechanism being used.
+
+My recommendation: Add LoRA-FA as a first-class experimental fine-tuning strategy in moe-microscope. Its frozen-
+A
+A design is especially appealing for versioned, task-specific adapter storage, and it may enable higher-rank expert adapters without proportionally increasing activation memory. I would investigate ACE-style adapter grouping next, since that directly addresses the large number of separate expert adapters that sparse MoE models create.
+
+How could I take an MoE model and fine tune it to be "better" at coding modern Rust, and then how can I measure/prove/demo that I succeeded?
+Fine-tuning an MoE model to become demonstrably better at modern Rust
+I would approach this as a controlled machine-learning experiment, rather than simply fine-tuning a model on Rust code and hoping it improves.
+
+The goal is to produce an open-weight MoE model that is measurably better at writing, understanding, debugging, and modernizing Rust code, while preserving its existing general programming capabilities.
+
+For your hardware and projects, I'd also want to demonstrate that the improvement can be achieved using LoRA, QLoRA, or LoRA-FA, without retraining the original experts.
+
+The essential requirement is that the improvement be reproducible, statistically defensible, and visible in a live demonstration.
+
+1. Define what "better at modern Rust" means
+Rust is a particularly good target for fine-tuning experiments because the compiler, Clippy, Miri, and test frameworks provide unusually strong automated feedback.
+
+However, compilation alone is not enough. A model that generates todo!(), excessive unwrap(), or incorrect implementations that merely type-check should not receive a high score.
+
+I'd define six independent dimensions of Rust proficiency.
+
+Dimension
+
+What the model must demonstrate
+
+Verification
+
+Correctness
+
+Generate working Rust
+
+Hidden unit/integration tests
+
+Modern idioms
+
+Use contemporary Rust patterns and APIs
+
+Clippy, expert review
+
+Safety
+
+Avoid unnecessary unsafe, panics, UB
+
+Miri, sanitizers where supported
+
+Async/concurrency
+
+Correct ownership, Send, cancellation, lifetimes
+
+Tokio tests, Loom
+
+Refactoring
+
+Improve existing code without regressions
+
+Before/after tests and diff review
+
+Rust ecosystem
+
+Use Cargo, workspaces, features, traits, crates
+
+Build and integration tests
+
+I would distinguish three classes of Rust knowledge:
+
+Language knowledge: ownership, borrowing, lifetimes, generics, traits, macros, async, pinning, associated types, const generics, and so on.
+
+Modern practices: current stable-edition conventions, Rust 2024 edition migration, linting, error handling, dependency hygiene, and contemporary standard-library features.
+
+Engineering judgment: choosing between iterators and loops, static versus dynamic dispatch, Arc versus borrowing, avoiding needless allocation, and using unsafe only with a sound justification.
+
+The last category is the hardest to measure automatically.
+
+Proposed success criteria
+Before training, establish quantitative thresholds.
+
+Illustrative experiment acceptance criteria
+
+Hidden-test pass-rate improvement
+
++10–30%
+
+Rust 2024 task pass rate
+
+≥70%
+
+Clippy-clean solutions
+
+≥80%
+
+Regression on general coding
+
+≤3%
+
+These are proposed experimental targets, not measured results or expected guarantees. Actual baselines must be established before setting final thresholds.
+I'd make hidden-test pass rate on previously unseen Rust problems the primary metric. The other measurements help explain whether the improvement is genuinely useful.
+
+2. Choose a base MoE model
+My first candidate would be Qwen3-30B-A3B.
+
+It has 30.5B total parameters, approximately 3.3B active parameters per token, 128 routed experts, and eight activated experts per token. 
+
+Hugging Face
+
+The model is large enough to make expert-specific fine-tuning interesting, but not so large that experiments become impractical on your equipment.
+
+I would compare two possible starting checkpoints:
+
+Qwen3-30B-A3B-Base: Better suited to investigating what can be learned from a new Rust corpus, but requires more instruction-tuning work.
+
+Qwen3-30B-A3B: Already instruction-tuned, making it a better first candidate for improving coding-assistant behavior.
+
+The critical point is to fine-tune and evaluate the exact same base checkpoint. Don't compare an adapted base model against an unrelated instruct checkpoint and attribute the differences to LoRA.
+
+Hardware feasibility
+Your RTX 3090 24GB would be the primary training device. The RTX 5060 16GB and RTX 3060 12GB could be useful for separate experiments, preprocessing, or evaluation.
+
+For a 30.5B model:
+
+Raw 4-bit weights occupy approximately 14.2 GiB before quantization metadata.
+
+Training adds activations, adapters, gradients, optimizer state, and temporary buffers.
+
+QLoRA with short sequences and gradient checkpointing is a plausible starting point, but fitting it into 24GB is not guaranteed.
+
+LoRA-FA may help with activation memory, although compatibility with the model's packed expert tensors needs verification.
+
+I would first demonstrate a successful single-step forward/backward training run before preparing a large dataset.
+
+3. Build a Rust training corpus
+This is probably the most important part of the project.
+
+You want to teach the model things that its existing training did not adequately teach, rather than simply expose it to more Rust syntax.
+
+I'd use four sources of examples.
+
+A. Curated modern Rust examples
+Build a corpus around topics such as:
+
+Category
+
+Training examples
+
+Rust 2024
+
+Edition migration, new keyword considerations, unsafe attributes
+
+Ownership
+
+Borrowing, lifetimes, Cow, Arc, interior mutability
+
+Async
+
+Tokio tasks, cancellation, Send, channels
+
+Error handling
+
+Result, ?, typed errors, context propagation
+
+Generics
+
+Traits, associated types, GATs, const generics
+
+Performance
+
+Avoiding allocations, zero-copy parsing, iterator tradeoffs
+
+Tooling
+
+Cargo workspaces, features, Clippy, rustfmt
+
+Interoperability
+
+C FFI, WASM, embedded Rust
+
+Use examples from official Rust documentation and appropriately licensed repositories. Record the compiler version, crate versions, source provenance, and applicable licenses.
+
+Rust 2024 should be a major focus, but I would not equate "modern" exclusively with edition 2024. A modern Rust expert should know which features are stable in a particular toolchain and avoid inventing APIs.
+
+B. Compiler-guided repair examples
+These are especially valuable because correctness can be checked mechanically.
+
+Start with an intentionally broken Rust program:
+
+fn longest<'a>(x: &'a str, y: &'a str) -> &'a str {
+    if x.len() > y.len() {
+        x
+    } else {
+        y
+    }
+}
+
+The program above is valid. Now create a broken variant by removing the required lifetime relationships, and ask the model to repair it.
+
+Training pairs can contain:
+
+Input:
+    User request
+    Broken Rust source
+    Compiler diagnostics
+
+Output:
+    Corrected Rust source
+    Explanation of the underlying error
+For each generated repair, validate that the result compiles and passes its tests.
+
+This allows you to create a relatively large supervised dataset from automatically mutated code.
+
+C. Your existing Rust projects
+Your COR24 emulator, assemblers, X_eTaL implementation, and Rust/WASM work provide useful domain-specific material.
+
+I would use selected portions as training examples, but reserve entire modules, commits, or repositories for evaluation.
+
+Otherwise, you risk demonstrating that the model memorized your code rather than learned transferable Rust engineering skills.
+
+Also consider withholding your most recent Rust code completely. That could form a particularly valuable private benchmark.
+
+D. Preference examples
+Beyond supervised fine-tuning, create pairs of valid solutions where one is preferable.
+
+For example:
+
+Both compile, but one unnecessarily clones large data structures.
+
+Both pass tests, but one uses unwrap() in a library API.
+
+Both work, but one uses obsolete APIs.
+
+Both are correct, but one has unnecessarily complex lifetime annotations.
+
+These pairs can later support DPO or another preference-optimization method.
+
+I would not begin with preference training. First establish that ordinary supervised fine-tuning improves correctness.
+
+4. Training architecture
+Rust examples and repair tasks
+
+Versioned source corpus
+Validation and dataset preparation
+
+cargo test · Clippy · deduplication · train/validation split
+Frozen MoE base
+
+Quantized pretrained weights
+Trainable adapters
+
+LoRA / QLoRA / LoRA-FA
+Rust-adapted MoE checkpoint
+
+Original weights unchanged; adapter saved separately
+Blind evaluation against original model
+
+Identical prompts, decoding settings, tool access, and hidden tests
+Training experiments
+I would run four experiments, with one fixed dataset and validation protocol.
+
+Run
+
+Adapted components
+
+Purpose
+
+A
+
+None
+
+Original model baseline
+
+B
+
+Shared attention, QLoRA
+
+Cheap fine-tuning baseline
+
+C
+
+Attention + expert adapters, QLoRA
+
+Determine whether expert adaptation helps
+
+D
+
+Attention + expert adapters, LoRA-FA
+
+Test memory/quality tradeoffs
+
+Keep the router frozen initially.
+
+Hugging Face PEFT supports MoE expert parameters through target_parameters, including packed expert tensors. It also provides a LoRA-FA optimizer. However, expert adaptation can add inference overhead, so benchmark both unmerged and merged deployments. 
+
+Hugging Face
+
+For each run, log the exact training configuration: model revision, adapter rank, scaling, optimizer, learning rate, sequence length, number of tokens, GPU memory, wall-clock time, and random seed.
+
+I would also add a retrieval-only baseline: give the unmodified model relevant modern Rust documentation. If retrieval produces the same improvement as fine-tuning, you have learned something important about whether the task needs changed weights at all.
+
+5. Build an evaluation suite that can prove improvement
+I would build a Rust-specific evaluation harness with approximately 200–500 held-out tasks initially.
+
+The benchmark should contain a mixture of isolated functions, multi-file Cargo projects, bug repairs, refactoring requests, and repository-level changes.
+
+A representative distribution might be:
+
+Test category
+
+Tasks
+
+Rust fundamentals and ownership
+
+60
+
+Rust 2024 and modern APIs
+
+50
+
+Async and concurrency
+
+50
+
+Generics, traits, macros
+
+40
+
+Debugging and compiler repairs
+
+60
+
+Performance and allocation
+
+40
+
+Cargo and multi-crate projects
+
+40
+
+Total
+
+340
+
+These numbers are a proposed benchmark design.
+
+Evaluation pipeline
+For each model-generated solution:
+
+Place the code into an isolated Cargo workspace.
+
+Run cargo fmt --check.
+
+Run cargo check --locked.
+
+Run cargo clippy --all-targets -- -D warnings using a pinned lint configuration.
+
+Run hidden unit and integration tests.
+
+Run Miri where applicable.
+
+Record execution time and memory usage for performance tasks.
+
+Store the output, diagnostics, and scores.
+
+For async code, add deterministic concurrency tests where possible. Loom is useful for exploring concurrency interleavings, although it is not a general substitute for all Tokio testing.
+
+Use a sandbox without network access for generated code, with CPU, memory, and execution-time limits. Build dependencies from a preapproved cache to avoid executing arbitrary dependency build scripts from the internet.
+
+Define a primary metric
+I would use pass@1 on hidden tests as the primary measure.
+
+pass@1
+⁡
+=
+tasks passing all required tests
+total tasks
+pass@1= 
+total tasks
+tasks passing all required tests
+​
+ 
+For example, suppose the baseline passes 180 of 340 tasks and the fine-tuned model passes 224.
+
+Original
+
+52.9%
+180 / 340
+Fine-tuned
+
+65.9%
+224 / 340
+Improvement
+
++13.0 pp
+24.4% relative
+Illustrative results only, not actual experimental measurements.
+But a single aggregate score is insufficient.
+
+Use paired evaluation: both models attempt the same tasks, with identical prompt formats and decoding budgets. Count tasks where the adapted model succeeds and the base model fails, as well as the reverse.
+
+Then calculate a confidence interval for the paired difference, preferably using a bootstrap over independent task families or repositories. McNemar's test can also be useful for paired binary outcomes.
+
+Run multiple training seeds if resources permit, and report variance. Avoid selecting the best checkpoint based on the final hidden test set.
+
+6. Demonstrate that it really learned modern Rust
+I would create three public-facing demonstrations.
+
+Demo A: Side-by-side Rust coding
+Example task
+
+Implement an async bounded worker pool with graceful cancellation, structured error handling, and no unnecessary shared mutable state.
+
+Original MoE
+
+Generated Rust source
+
+Compiler and tests
+
+Results appear after execution
+
+Rust-adapted MoE
+
+Generated Rust source
+
+Compiler and tests
+
+Results appear after execution
+
+Comparison output
+
+Compilation status, hidden tests, Clippy diagnostics, execution time, and source diff.
+
+The live demo should let viewers submit their own Rust problem, run both models, and compare outputs.
+
+For public demonstrations, show the generated code and actual compiler output, not just a score or model-generated explanation.
+
+Demo B: Rust modernization
+Give both models a real Rust 2018 or 2021 project and ask them to migrate it to Rust 2024.
+
+Measure whether they:
+
+Complete the edition migration.
+
+Preserve behavior.
+
+Correctly handle edition-related changes.
+
+Avoid introducing unnecessary dependencies or unsafe code.
+
+Pass the original regression tests.
+
+This is more convincing than asking a model to write a trivial function.
+
+Demo C: MoE expert visualization
+This is particularly relevant to your moe-microscope project.
+
+Capture expert routing statistics before and after fine-tuning.
+
+Illustrative expert activation frequency
+Synthetic example, not measured model behavior.
+
+Before
+After
+0
+5
+10
+15
+20
+E0
+E1
+E2
+E3
+E4
+E5
+E0: Before 14, After 9
+E1: Before 10, After 17
+E2: Before 18, After 13
+E3: Before 8, After 15
+E4: Before 12, After 11
+E5: Before 16, After 10
+With a frozen router, expert selection can still change because upstream adapted attention layers change the hidden states entering the router.
+
+But routing changes are not themselves proof of better Rust capability. The meaningful result is the relationship between routing, adapter updates, and actual task performance.
+
+I would show expert activation heatmaps alongside adapter-update norms and test outcomes.
+
+7. Suggested repository architecture
+I would create a dedicated experiment repository rather than adding training infrastructure directly to X_eTaL or COR24.
+
+A possible name is sw-ml-study/moe-rust-finetune.
+
+moe-rust-finetune/
+├── README.md
+├── configs/
+│   ├── qwen3-attention-qlora.yaml
+│   ├── qwen3-expert-qlora.yaml
+│   └── qwen3-expert-lorafa.yaml
+├── datasets/
+│   ├── manifests/
+│   ├── generators/
+│   └── validators/
+├── training/
+│   ├── train.py
+│   └── inspect_experts.py
+├── evaluation/
+│   ├── tasks/
+│   ├── runner/
+│   ├── scoring/
+│   └── reports/
+├── adapters/
+│   └── manifests/
+├── web/
+│   └── demo/
+└── results/
+For tooling, I would use Python only where the training ecosystem requires it, such as PyTorch, Transformers, PEFT, and TRL.
+
+The Rust evaluation harness, dataset validators, benchmark runner, and potentially the web frontend can be written in Rust. That would make the system itself a useful demonstration of the language you're trying to improve.
+
+Keep large datasets, model weights, and checkpoints outside Git, with manifests containing hashes and provenance.
+
+8. Recommended phased plan
+Phase
+
+Deliverable
+
+Completion criterion
+
+0. Feasibility
+
+Quantized MoE training smoke test
+
+Forward/backward step succeeds
+
+1. Baseline
+
+Frozen evaluation suite
+
+Original model scored reproducibly
+
+2. Dataset
+
+Curated Rust SFT corpus
+
+Validated, deduplicated, licensed
+
+3. First tuning
+
+Attention-only QLoRA
+
+Adapter trains and reloads
+
+4. Expert tuning
+
+MoE-specific LoRA
+
+Experts receive measurable updates
+
+5. LoRA-FA
+
+Frozen-A experiment
+
+Memory and quality compared
+
+6. Validation
+
+Blind benchmark results
+
+Paired improvement with uncertainty
+
+7. Demo
+
+Browser-based side-by-side test
+
+Users can run real Rust tasks
+
+I would deliberately avoid starting with thousands of GPU-hours of training.
+
+Start with a small, high-quality corpus of perhaps 2,000–5,000 examples, a fixed validation set, and a short training run. The purpose is to establish whether the learning signal is useful before scaling.
+
+9. What would count as convincing evidence?
+I would consider the experiment successful if the adapted model satisfies four conditions:
+
+Correctness improves: It passes substantially more unseen Rust tasks than the original model, with uncertainty estimates that support a real difference.
+
+Modern Rust improves specifically: It performs better on Rust 2024, contemporary APIs, async patterns, and compiler-guided repairs, not merely on generic programming questions.
+
+General capabilities are preserved: Performance on a separate Python, C++, and general instruction-following regression suite does not materially deteriorate.
+
+Results reproduce: Another person can download the base model
+
+Actually, I want my Rust coders to use pure functions, design patterns, delegation, composition, separation of concerns, modularity, loose coupling, and agressive cyclometric complexity thresholds.   So I have a tool that grades the complexity with warns and fails.  A fine tuned agent should produce code that has fewer failures and warnings and uses the desired strategies when coding.
+Fine-tuning an MoE to follow your Rust engineering standards
+That changes the objective substantially—and makes the experiment more interesting.
+
+You're not primarily trying to create a model that knows more Rust syntax or standard-library APIs. You're trying to produce a Rust coding agent that consistently follows a particular software engineering philosophy:
+
+Prefer pure functions and immutable data.
+
+Use composition and delegation instead of inheritance-like structures or monolithic implementations.
+
+Apply appropriate design patterns without unnecessary abstraction.
+
+Enforce separation of concerns, modularity, and loose coupling.
+
+Keep cyclomatic complexity aggressively low.
+
+Produce code that passes your existing complexity grader with fewer warnings and failures.
+
+The critical distinction is that you already have a machine-readable quality signal. That makes this a much more tractable fine-tuning problem than teaching an LLM an abstract concept such as "good software design."
+
+I would organize the work around a central hypothesis:
+
+A LoRA-adapted MoE coding model can learn to generate Rust code that satisfies strict architectural and complexity constraints on its first attempt, reducing the number of repair iterations required by an agent.
+
+1. Make your existing grader the centerpiece
+Your complexity grader should be treated as an executable specification of part of your coding standard.
+
+The experiment should measure three separate outcomes:
+
+Outcome
+
+Measurement
+
+Why it matters
+
+First-pass quality
+
+Warnings and failures before repairs
+
+Did fine-tuning improve generation?
+
+Repair efficiency
+
+Iterations and tokens needed to pass
+
+Did the agent become more efficient?
+
+Final quality
+
+Tests, architecture, complexity, maintainability
+
+Did it produce genuinely better software?
+
+The first is particularly important. If an agent repeatedly generates poor code and eventually fixes it through a compiler/grader feedback loop, that doesn't establish that its underlying model has learned your preferences.
+
+You should compare both the original model and the fine-tuned model under identical conditions, including identical tools, prompts, budgets, and repair limits.
+
+2. Define an engineering-quality score
+I would not simply count warnings and failures. Their severity and context matter.
+
+For example, a function with cyclomatic complexity 20 is worse than one that narrowly exceeds a threshold of 5, even if both produce one warning.
+
+A proposed scoring function:
+
+Q
+=
+100
+−
+w
+f
+F
+−
+w
+w
+W
+−
+w
+c
+C
+−
+w
+a
+A
+Q=100−w 
+f
+​
+ F−w 
+w
+​
+ W−w 
+c
+​
+ C−w 
+a
+​
+ A
+where:
+
+F
+F: normalized count of grader failures
+
+W
+W: normalized count of grader warnings
+
+C
+C: aggregate excess complexity above configured thresholds
+
+A
+A: architectural violations detected by other checks
+
+The score should be gated by functional correctness. A solution that fails hidden tests should not be rewarded for having beautifully simple code.
+
+For training, I would use a lexicographic ranking instead of relying entirely on a weighted sum:
+
+Correctness and safety.
+
+Grader failures.
+
+Grader warnings.
+
+Excess complexity.
+
+Architectural and design preferences.
+
+Code size and unnecessary abstractions.
+
+That prevents the model from learning to optimize your grader by splitting functions into meaningless wrappers, suppressing warnings, or eliminating functionality.
+
+3. Training examples should demonstrate architectural transformation
+A good dataset should contain more than Rust snippets labeled "good" or "bad."
+
+I would construct examples that show a poor implementation being transformed into a better one while preserving behavior.
+
+Example: complexity reduction through pure functions
+
+Before: mixed validation, business rules, and output formatting
+
+
+fn price(order: &Order) -> Result<String, Error> {
+    // validation, discounts, tax,
+    // formatting, logging, and I/O
+    // all intertwined
+    todo!()
+}
+  
+
+Refactor
+
+After: functional core, imperative shell
+
+
+fn validate(order: &Order) -> Result<(), Error> {
+    // pure validation
+    todo!()
+}
+
+fn subtotal(order: &Order) -> Money {
+    // pure calculation
+    todo!()
+}
+
+fn discount(order: &Order, amount: Money) -> Money {
+    // pure calculation
+    todo!()
+}
+
+fn calculate_total(order: &Order) -> Result<Money, Error> {
+    validate(order)?;
+    Ok(discount(order, subtotal(order)))
+}
+
+// Formatting and I/O remain at the boundary.
+  
+
+Conceptual refactoring only. Real training examples must contain complete, compiling implementations and behavior-preserving tests—not todo!() placeholders.
+For every training example, I would preserve the original request, baseline solution, grader output, corrected solution, tests, and an explanation of the architectural changes.
+
+This enables several kinds of training.
+
+4. Use a three-stage training pipeline
+
+Stage A: Supervised fine-tuning (SFT)
+Train the model on examples of well-structured Rust implementations and successful refactorings.
+
+This teaches the model what your preferred solutions look like.
+
+Stage B: Preference optimization (DPO)
+Construct pairs of solutions for the same request:
+
+Preferred: correct, low complexity, well-separated responsibilities.
+
+Rejected: correct but unnecessarily complex, tightly coupled, or impure.
+
+The important part is that both should ideally pass functional tests. Otherwise, the model may merely learn to distinguish working code from broken code rather than learning your architectural preferences.
+
+DPO can train the model to prefer the solutions that meet your standards without requiring a separate learned reward model.
+
+Stage C: Optional reinforcement learning
+Your grader provides an opportunity to use execution-based rewards.
+
+For example, generate several solutions, run tests and grading, and reward successful implementations with fewer architectural violations.
+
+This is more involved than SFT or DPO, so I would postpone it until you've demonstrated a measurable improvement from the simpler methods.
+
+5. Separate measurable rules from architectural preferences
+Your complexity tool can enforce hard limits, but concepts such as loose coupling and good delegation need additional evaluation.
+
+Preference
+
+Potential measurable proxy
+
+Important caveat
+
+Pure functions
+
+No I/O, global mutation, or externally visible side effects
+
+Rust's type system does not directly label purity
+
+Low cyclomatic complexity
+
+Maximum complexity per function
+
+Excessive function splitting can game the metric
+
+Modularity
+
+Module boundaries, public API surface
+
+More modules are not necessarily better
+
+Loose coupling
+
+Cross-module dependencies, dependency cycles
+
+Some coupling is unavoidable
+
+Composition
+
+Trait-based delegation, small composed components
+
+Too many traits can overcomplicate a design
+
+Separation of concerns
+
+I/O isolated from business logic
+
+Requires some semantic analysis
+
+Design patterns
+
+Appropriate strategy, adapter, builder, etc.
+
+Patterns should solve problems, not be mandatory
+
+I would classify these as either hard constraints or soft preferences.
+
+For example, cyclomatic complexity exceeding a configured threshold could be a hard failure. Using a pure function where practical would be a preference unless the task explicitly requires it.
+
+An architectural evaluator could combine static analysis with an LLM judge, but the latter should be calibrated against human-reviewed examples and should never be the sole proof of success.
+
+6. Prove the fine-tuning works with an ablation study
+This is the experiment I'd actually run.
+
+Configuration
+
+Model
+
+Engineering guidance
+
+Fine-tuned?
+
+A
+
+Base MoE
+
+Minimal prompt
+
+No
+
+B
+
+Base MoE
+
+Detailed standards prompt
+
+No
+
+C
+
+Base MoE
+
+Detailed standards + grader repair loop
+
+No
+
+D
+
+SFT MoE
+
+Same standards prompt
+
+Yes
+
+E
+
+SFT + DPO MoE
+
+Same standards prompt
+
+Yes
+
+F
+
+SFT + DPO MoE
+
+Same prompt + repair loop
+
+Yes
+
+This answers two different questions:
+
+Does the model learn your engineering preferences? Compare B against D and E, without giving any model repair opportunities.
+
+Does the fine-tuned agent deliver better practical results? Compare C against F, with identical repair budgets.
+
+This distinction matters because prompt engineering and feedback loops might already achieve much of the desired improvement without training.
+
+Primary measurements
+I'd publish these metrics for every configuration:
+
+First-attempt percentage passing all functional tests and grader rules.
+
+Average and maximum cyclomatic complexity per function.
+
+Grader failures and warnings per 1,000 nonblank lines of Rust.
+
+Percentage of solutions requiring no repairs.
+
+Mean repair iterations, inference tokens, and elapsed time.
+
+Percentage of previously passing tests preserved during refactoring.
+
+For a credible result, use a held-out benchmark of perhaps 100–200 tasks, drawn from multiple Rust project types, with paired evaluation using the same tasks for each model. Report bootstrap confidence intervals for the difference in pass rates and failure counts.
+
+Keep training and evaluation repositories separate, and remove near-duplicate tasks to prevent data leakage.
+
+7. A concrete first proof of concept
+I would build a relatively small experimental pipeline before attempting full expert-specific MoE adaptation.
+
+Proposed implementation
+
+Component
+
+Choice
+
+Base model
+
+Qwen3-30B-A3B, or smaller MoE if memory requires
+
+Initial adaptation
+
+Attention-only QLoRA
+
+Alternative adaptation
+
+LoRA-FA, after kernel compatibility testing
+
+Fine-tuning
+
+Hugging Face PEFT + TRL
+
+Preference training
+
+DPO
+
+Code execution
+
+Sandboxed Cargo workspace
+
+Complexity assessment
+
+Your existing grader
+
+Results database
+
+SQLite
+
+Dashboard
+
+Rust + Yew/WASM
+
+Hugging Face TRL currently supports SFT, DPO, and PEFT adapter training, making this a reasonable starting toolchain. 
+
+Hugging Face
++1
+ PEFT also provides a LoRA-FA optimizer for a later comparison. 
+
+Hugging Face
+
+For the first dataset, I'd target approximately 500–1,000 carefully validated Rust refactoring examples, not tens of thousands of ungraded snippets.
+
+A useful record would include:
+
+{
+  "task_id": "refactor-0042",
+  "category": "separation_of_concerns",
+  "prompt": "Refactor this Rust module...",
+  "before": {
+    "compiles": true,
+    "tests_pass": true,
+    "complexity_failures": 3,
+    "complexity_warnings": 7
+  },
+  "after": {
+    "compiles": true,
+    "tests_pass": true,
+    "complexity_failures": 0,
+    "complexity_warnings": 0
+  },
+  "review": {
+    "behavior_preserved": true,
+    "pure_core": true,
+    "io_boundary_separated": true
+  }
+}
+
+This record is useful for data generation and auditing. The actual SFT and DPO training datasets would be derived from it in the formats expected by the trainers.
+
+8. The live demonstration
+A compelling demonstration would let someone select a Rust coding task and watch several model configurations solve it independently.
+
+Rust coding quality lab
+Illustrative
+Hypothetical results showing the proposed comparison, not measured outcomes
+
+0%
+25%
+50%
+75%
+100%
+Base
+Prompted
+SFT
+SFT + DPO
+Base: First-pass compliance 28%
+Prompted: First-pass compliance 47%
+SFT: First-pass compliance 62%
+SFT + DPO: First-pass compliance 76%
+Illustrative benchmark of 100 held-out Rust tasks
+
+Grader failures
+
+−64%
+Warnings
+
+−52%
+Repair iterations
+
+−41%
+All numbers are placeholders to illustrate the dashboard layout. The experiment would populate these from actual grader and test results.
+I'd also include a side-by-side source diff, the grader's diagnostics, and a visualization of module dependencies. A particularly useful demo would show a previously monolithic Rust implementation being refactored into a functional core with explicit I/O boundaries.
+
+9. Where the MoE-specific research comes in
+Once you have evidence that adapter fine-tuning improves engineering compliance, you can ask a second question:
+
+Is expert-specific LoRA actually better than adapting only shared attention layers?
+
+Compare attention-only LoRA, all-expert LoRA, selective-expert LoRA, and LoRA-FA at matched training budgets.
+
+Record router activation frequencies before and after training. With a frozen router, the routing decisions may still change because upstream adapted attention layers alter hidden states, even though the router's own weights remain unchanged.
+
+You could discover that your engineering preferences are best learned through shared layers rather than by specializing particular experts. That would be an important result in itself.
+
+For your expert-offloading work, it would also determine whether maintaining many separately cacheable expert adapters is worthwhile.
+
+10. One architectural decision I would make early
+Keep the grader independent of the model and the training framework.
+
+I'd design a Rust-based evaluation service with a stable interface:
+
+Task + generated Rust source
+           |
+           v
+     Rust evaluation service
+           |
+      +----+----+
+      |         |
+   Correctness  Quality
+      |         |
+   Cargo tests  Your grader
+   Clippy       Architecture checks
+   Miri         Complexity thresholds
+      |         |
+      +----+----+
+           |
+           v
+    Structured results
+           |
+     +-----+-----+
+     |           |
+ Training data  Dashboard
+That allows the same service to evaluate local Ollama models, llama.cpp models, cloud coding agents, and fine-tuned MoE variants.
+
+It also keeps the evaluator reusable for your X_eTaL, COR24, and other Rust-heavy projects.
+
+The next thing I'd want to inspect
+Which repository contains your Rust complexity grader, and what are its warning/failure rules?
+
+That is the most valuable starting point. Rather than inventing a generic Rust quality rubric, I'd like to examine your actual tool, its thresholds, output format, and whether it measures just cyclomatic complexity or also cognitive complexity, nesting, function size, coupling, and related metrics.
+
+From that, we can design a precise training-data generator, preference-pair selection algorithm, evaluation harness, and initial MoE fine-tuning experiment built around the engineering standards you already enforce.
+
+How can I express the Math behind LoRA, QLoRA, and LoRA-FA?  I have initial support in github.com/softwarewrighter/X_eTaL{-ML} that can express/show the Math and left-to-right Tensor Pipelines of equations, and expand macros to generate APL-like right-to-left code.
+Expressing LoRA, QLoRA, and LoRA-FA as X_eTaL equations and tensor pipelines
+I would implement these as three closely related mathematical programs in your X_eTaL ecosystem, using the same underlying tensor operations but different parameter representations and training rules.
+
+This is an excellent application for the equation and pipeline macros you've been developing: one mathematical definition could generate a rendered equation, a left-to-right explanatory pipeline, and executable right-to-left APL-style X_eTaL code.
+
+I'd also extend the demonstrations to Mixture-of-Experts (MoE), because the mathematics becomes particularly interesting when LoRA adapters are attached to individual experts.
+
+1. Start with one common mathematical model
+Use column vectors and define:
+
+x
+∈
+R
+d
+in
+W
+∈
+R
+d
+out
+×
+d
+in
+A
+∈
+R
+r
+×
+d
+in
+B
+∈
+R
+d
+out
+×
+r
+x
+W
+A
+B
+​
+  
+∈R 
+d 
+in
+​
+ 
+ 
+∈R 
+d 
+out
+​
+ ×d 
+in
+​
+ 
+ 
+∈R 
+r×d 
+in
+​
+ 
+ 
+∈R 
+d 
+out
+​
+ ×r
+ 
+​
+ 
+Here, 
+r
+r is the low rank, normally much smaller than the input and output dimensions.
+
+The fundamental LoRA equation is:
+
+y
+=
+W
+x
++
+α
+r
+B
+(
+A
+x
+)
+y=Wx+ 
+r
+α
+​
+ B(Ax)
+​
+ 
+This naturally separates into two branches:
+
+
+Frozen base branch
+
+Low-rank adapter branch
+
+That diagram should be generated from the same representation used by your equation and pipeline renderer—not maintained as a separate manually authored drawing.
+
+2. The three variants differ in only a few operations
+Let 
+s
+=
+α
+/
+r
+s=α/r, and let 
+Q
+4
+Q 
+4
+​
+  denote 4-bit quantization.
+
+Technique
+
+Forward equation
+
+Trainable parameters
+
+LoRA
+
+W
+x
++
+s
+B
+(
+A
+x
+)
+Wx+sB(Ax)
+
+A
+,
+B
+A,B
+
+QLoRA
+
+dequant
+⁡
+(
+Q
+4
+(
+W
+)
+)
+x
++
+s
+B
+(
+A
+x
+)
+dequant(Q 
+4
+​
+ (W))x+sB(Ax)
+
+A
+,
+B
+A,B
+
+LoRA-FA
+
+W
+x
++
+s
+B
+(
+A
+0
+x
+)
+Wx+sB(A 
+0
+​
+ x)
+
+B
+B only
+
+QLoRA-FA
+
+dequant
+⁡
+(
+Q
+4
+(
+W
+)
+)
+x
++
+s
+B
+(
+A
+0
+x
+)
+dequant(Q 
+4
+​
+ (W))x+sB(A 
+0
+​
+ x)
+
+B
+B only
+
+A
+0
+A 
+0
+​
+  is initialized and then frozen.
+
+Notice that QLoRA and LoRA-FA are orthogonal:
+
+QLoRA changes how the frozen base weights are represented.
+
+LoRA-FA changes which adapter parameters are trainable.
+
+Neither requires changing the fundamental forward computation of the adapter.
+
+That suggests implementing them as composable configuration options, not four unrelated algorithms.
+
+3. Fit this into your existing X_eTaL libraries
+Your published Equations and Flow work already provides much of the required foundation.
+
+From your Equations article and ML Pipelines article, the existing division is:
+
+Repository
+
+Existing or proposed responsibility
+
+X_eTaL
+
+Core array language, macro expansion, interpreter
+
+X_eTaL-libraries
+
+Existing Equations macros; general tensor and numerical primitives
+
+X_eTaL-ML
+
+Existing Flow library; new LoRA/QLoRA/LoRA-FA algorithms and demos
+
+X_eTaL-extensions
+
+Optional GPU execution, large matrix operations, Blender visualizations
+
+X_eTaL-fpga
+
+Future hardware-oriented experiments
+
+Your existing equation macros provide e_q<, t_ex<, and b_oth< for computation, LaTeX, and both together. The Flow library already supports named stages, shapes, and left-to-right descriptions that expand to ordinary X_eTaL. 
+
+Software Wrighter Lab Blog
++1
+
+I would not add special LoRA syntax to the core language. First determine how much can be expressed with these existing macros.
+
+Proposed API
+Conceptually:
+
+"e:" u_se< "Equations"
+"f:" u_se< "Flow"
+"l:" u_se< "LoRA"
+LoRA would be a new library in X_eTaL-ML, using the existing general-purpose Equations and Flow facilities.
+
+The following pipeline notation is a proposed design sketch, not verified current X_eTaL syntax:
+
+x
+  -> l:base W
+  -> l:combine (
+       x
+         -> l:project A
+         -> l:project B
+         -> l:scale alpha/r
+     )
+  -> y
+The compiler should lower this into a graph with a shared input and two branches.
+
+That's important because ordinary sequential pipelines cannot directly express the LoRA computation without introducing a fork and join.
+
+I would prefer adding a general fork/join combinator to Flow, rather than a LoRA-specific workaround.
+
+4. The right-to-left APL-style computation
+At the array level, the computation is remarkably simple.
+
+Assuming a general matrix-product operation mm:
+
+base    ← W mm x
+low     ← A mm x
+update  ← B mm low
+result  ← base + (alpha ÷ rank) × update
+These lines are pseudocode with X_eTaL-like assignment; mm is a placeholder for the actual supported matrix-product operator.
+
+The corresponding expression tree is:
+
+add
+├── matmul(W, x)
+└── multiply
+    ├── alpha / rank
+    └── matmul
+        ├── B
+        └── matmul(A, x)
+The tree can be lowered into right-to-left array expressions using the existing X_eTaL operators.
+
+This also gives you a useful compiler optimization exercise:
+
+B
+(
+A
+x
+)
+versus
+(
+B
+A
+)
+x
+B(Ax)versus(BA)x
+These are mathematically equivalent over real arithmetic, but their costs differ significantly.
+
+For one input vector:
+
+cost
+⁡
+(
+B
+(
+A
+x
+)
+)
+≈
+r
+(
+d
+in
++
+d
+out
+)
+cost(B(Ax))≈r(d 
+in
+​
+ +d 
+out
+​
+ )
+while precomputing 
+B
+A
+BA requires approximately:
+
+r
+d
+in
+d
+out
+rd 
+in
+​
+ d 
+out
+​
+ 
+multiply-accumulate operations and a dense intermediate matrix.
+
+The compiler should normally preserve the factored representation for dynamic LoRA inference.
+
+For merged adapters, computing 
+B
+A
+BA once can make sense.
+
+5. The training mathematics: what the macros should express
+The forward equation is only half the story. To demonstrate the differences among LoRA, QLoRA, and LoRA-FA, I would add the backward equations.
+
+Let:
+
+z
+=
+A
+x
+,
+u
+=
+B
+z
+,
+y
+=
+W
+x
++
+s
+u
+z=Ax,u=Bz,y=Wx+su
+and let 
+g
+=
+∂
+L
+/
+∂
+y
+g=∂L/∂y.
+
+Then:
+
+∂
+L
+∂
+B
+=
+s
+ 
+g
+z
+T
+∂B
+∂L
+​
+ =sgz 
+T
+ 
+​
+ 
+∂
+L
+∂
+A
+=
+s
+(
+B
+T
+g
+)
+x
+T
+∂A
+∂L
+​
+ =s(B 
+T
+ g)x 
+T
+ 
+​
+ 
+The gradient propagated to the input is:
+
+∂
+L
+∂
+x
+=
+W
+T
+g
++
+s
+A
+T
+B
+T
+g
+∂x
+∂L
+​
+ =W 
+T
+ g+sA 
+T
+ B 
+T
+ g
+These formulas are for a single example and a frozen 
+W
+W. For batches, the parameter gradients sum over examples; a mean-reduced loss supplies the corresponding normalization.
+
+LoRA-FA removes the need to compute and store the gradient for 
+A
+A, but does not eliminate the need to propagate gradients through 
+A
+A when earlier layers are trainable.
+
+This is an important point to demonstrate.
+
+Backward-pass comparison
+Operation	LoRA	LoRA-FA
+Compute 
+g
+B
+g 
+B
+​
+ 
+
+Compute 
+g
+A
+g 
+A
+​
+ 
+
+Propagate 
+g
+x
+g 
+x
+​
+ 
+
+Update 
+A
+A
+
+Update 
+B
+B
+
+The corresponding gradient-descent equations are:
+
+A
+t
++
+1
+=
+A
+t
+−
+η
+∇
+A
+L
+A 
+t+1
+​
+ =A 
+t
+​
+ −η∇ 
+A
+​
+ L
+B
+t
++
+1
+=
+B
+t
+−
+η
+∇
+B
+L
+B 
+t+1
+​
+ =B 
+t
+​
+ −η∇ 
+B
+​
+ L
+For LoRA-FA, only the second update executes.
+
+That suggests a general X_eTaL-ML representation of trainable and frozen tensors, instead of separate hand-written training implementations for each algorithm.
+
+6. QLoRA requires quantization operators
+QLoRA needs an additional family of tensor primitives.
+
+For a simple symmetric block quantizer:
+
+q
+i
+=
+clip
+⁡
+(
+round
+⁡
+(
+w
+i
+s
+b
+)
+,
+q
+min
+⁡
+,
+q
+max
+⁡
+)
+q 
+i
+​
+ =clip(round( 
+s 
+b
+​
+ 
+w 
+i
+​
+ 
+​
+ ),q 
+min
+​
+ ,q 
+max
+​
+ )
+w
+^
+i
+=
+s
+b
+q
+i
+w
+^
+  
+i
+​
+ =s 
+b
+​
+ q 
+i
+​
+ 
+where 
+s
+b
+s 
+b
+​
+  is the scale for block 
+b
+b.
+
+But production QLoRA commonly uses NF4, which is not simply uniform integer quantization.
+
+For NF4, a more appropriate abstraction is:
+
+q
+i
+=
+arg
+⁡
+min
+⁡
+j
+∈
+{
+0
+,
+…
+,
+15
+}
+∣
+w
+i
+s
+b
+−
+c
+j
+∣
+q 
+i
+​
+ =arg 
+j∈{0,…,15}
+min
+​
+  
+​
+  
+s 
+b
+​
+ 
+w 
+i
+​
+ 
+​
+ −c 
+j
+​
+  
+​
+ 
+w
+^
+i
+=
+s
+b
+c
+q
+i
+w
+^
+  
+i
+​
+ =s 
+b
+​
+ c 
+q 
+i
+​
+ 
+​
+ 
+where 
+c
+j
+c 
+j
+​
+  are the 16 values of the NF4 codebook.
+
+This separates:
+
+Quantization into codebook indices.
+
+Block-scale storage.
+
+Dequantization into computation precision.
+
+Application of LoRA updates.
+
+The QLoRA forward equation becomes:
+
+y
+=
+W
+^
+x
++
+s
+B
+(
+A
+x
+)
+y= 
+W
+^
+ x+sB(Ax)
+with 
+W
+^
+=
+D
+(
+Q
+4
+(
+W
+)
+)
+W
+^
+ =D(Q 
+4
+​
+ (W)).
+
+I would implement simple uniform 4-bit quantization first for teaching, followed by NF4 and double quantization for a more faithful QLoRA demonstration.
+
+QLoRA also commonly uses paged optimizers for memory management, which are an execution/runtime concern rather than an additional term in the forward equation.
+
+7. Extend the equations to MoE
+Now introduce expert index 
+e
+e and router weights 
+p
+e
+(
+x
+)
+p 
+e
+​
+ (x).
+
+For a top-
+k
+k MoE layer:
+
+S
+(
+x
+)
+=
+TopK
+⁡
+(
+Router
+⁡
+(
+x
+)
+)
+S(x)=TopK(Router(x))
+y
+=
+∑
+e
+∈
+S
+(
+x
+)
+p
+e
+(
+x
+)
+[
+W
+e
+x
++
+s
+e
+B
+e
+(
+A
+e
+x
+)
+]
+y= 
+e∈S(x)
+∑
+​
+ p 
+e
+​
+ (x)[W 
+e
+​
+ x+s 
+e
+​
+ B 
+e
+​
+ (A 
+e
+​
+ x)]
+​
+ 
+Here 
+p
+e
+(
+x
+)
+p 
+e
+​
+ (x) denotes the routing weight actually used by the model, including any applicable normalization.
+
+This is the central equation I'd use for an MoE-LoRA demonstration. Real MoE experts are often nonlinear SwiGLU networks, so the displayed linear expression represents an adapted projection within an expert. For a complete expert, substitute the adapted projections into its gate, up, and down operations.
+
+A left-to-right MoE pipeline
+Input x
+  → Router
+  → TopK experts
+  → Dispatch tokens
+  → For each selected expert:
+       Base projection
+       +
+       LoRA / QLoRA / LoRA-FA projection
+  → Weighted combine
+  → Output
+The interesting general-purpose Flow operators are topk, dispatch, map_selected, and weighted_reduce.
+
+These could support other MoE demonstrations beyond LoRA.
+
+PEFT's current MoE support explicitly handles expert parameters represented as 3D tensors, where the leading dimension identifies experts. This is a useful reference when choosing your tensor shapes and layouts. 
+
+Hugging Face
+
+8. Build an interactive mathematical demonstration
+I'd make the first demonstration small enough to execute entirely in X_eTaL, without Rust extensions or a GPU.
+
+LoRA mathematical explorer
+Interactive configuration preview for a proposed X_eTaL-ML demo
+
+LoRA
+QLoRA
+LoRA-FA
+Adapter rank
+
+3
+148
+Forward equation
+
+y
+=
+W
+x
++
+α
+3
+B
+A
+x
+y=Wx+ 
+3
+α
+​
+ BAx
+Adapter parameters
+
+48
+Trainable parameters
+
+48
+Illustrative 8×8 base matrix; 
+A
+A is 3×8 and 
+B
+B is 8×3. QLoRA quantizes the base, not these adapter matrices.
+Trainability: W frozen, A trainable, B trainable.
+
+The actual X_eTaL demo should go further, allowing users to:
+
+Inspect 
+W
+W, 
+A
+A, 
+B
+B, and their shapes.
+
+Step through the forward and backward tensor pipelines.
+
+Compare LoRA with LoRA-FA on identical inputs.
+
+Display quantization error and storage costs.
+
+Expand every equation and pipeline into executable X_eTaL.
+
+Verify numerical results against a reference implementation.
+
+For the first version, use a tiny 4×4 or 8×8 projection, then add a four-expert MoE.
+
+9. Suggested implementation sequence
+Phase
+
+Repository
+
+Deliverable
+
+1
+
+X_eTaL-ML
+
+Pure X_eTaL LoRA forward computation
+
+2
+
+X_eTaL-ML
+
+LoRA gradients and gradient-descent step
+
+3
+
+X_eTaL-libraries
+
+Reusable Flow fork/join if existing combinators are insufficient
+
+4
+
+X_eTaL-ML
+
+LoRA-FA with frozen 
+A
+A
+
+5
+
+X_eTaL-libraries
+
+General quantization/codebook primitives
+
+6
+
+X_eTaL-ML
+
+QLoRA, NF4, and quantization-error demos
+
+7
+
+X_eTaL-ML
+
+Sparse MoE with independently adapted experts
+
+8
+
+X_eTaL-extensions
+
+Optional accelerated execution and Blender animation
+
+Each phase should include mathematical identities, shape checks, finite-difference gradient checks, and comparisons with an independent reference.
+
+For example, verify the equivalence:
+
+W
+x
++
+s
+B
+(
+A
+x
+)
+=
+(
+W
++
+s
+B
+A
+)
+x
+Wx+sB(Ax)=(W+sBA)x
+within floating-point tolerance.
+
+For gradients, compare analytical results with central finite differences:
+
+∂
+L
+∂
+θ
+i
+≈
+L
+(
+θ
+i
++
+ϵ
+)
+−
+L
+(
+θ
+i
+−
+ϵ
+)
+2
+ϵ
+∂θ 
+i
+​
+ 
+∂L
+​
+ ≈ 
+2ϵ
+L(θ 
+i
+​
+ +ϵ)−L(θ 
+i
+​
+ −ϵ)
+​
+ 
+For QLoRA, compare the actual dequantized-base computation rather than assuming it equals the full-precision result.
+
+10. One more mathematical demonstration: rank versus approximation quality
+This would connect directly to the Rust coding-agent fine-tuning experiment.
+
+LoRA constrains the weight update:
+
+Δ
+W
+=
+s
+B
+A
+ΔW=sBA
+Therefore:
+
+rank
+⁡
+(
+Δ
+W
+)
+≤
+r
+rank(ΔW)≤r
+You could demonstrate how increasing 
+r
+r increases the space of possible updates, while increasing adapter parameters and computation.
+
+For a target update 
+Δ
+W
+∗
+ΔW 
+∗
+ , the best rank-
+r
+r approximation in Frobenius norm comes from the truncated singular-value decomposition:
+
+Δ
+W
+∗
+=
+U
+Σ
+V
+T
+ΔW 
+∗
+ =UΣV 
+T
+ 
+Δ
+W
+r
+=
+U
+r
+Σ
+r
+V
+r
+T
+ΔW 
+r
+​
+ =U 
+r
+​
+ Σ 
+r
+​
+ V 
+r
+T
+​
+ 
+∥
+Δ
+W
+∗
+−
+Δ
+W
+r
+∥
+F
+2
+=
+∑
+i
+>
+r
+σ
+i
+2
+∥ΔW 
+∗
+ −ΔW 
+r
+​
+ ∥ 
+F
+2
+​
+ = 
+i>r
+∑
+​
+ σ 
+i
+2
+​
+ 
+This gives you a clean numerical experiment: generate a known target matrix update, vary the LoRA rank, and measure approximation error.
+
+LoRA-FA adds another dimension: with 
+A
+A frozen, the trainable 
+B
+B can only produce updates whose row space lies within the row space of 
+A
+A. Even at the same rank, LoRA-FA has a more restricted set of attainable updates than ordinary LoRA.
+
+That distinction is particularly valuable to illustrate mathematically.
+
+Recommendation
+I'd build a Parameter-Efficient Fine-Tuning section within X_eTaL-ML, initially containing LoRA, QLoRA, and LoRA-FA.
+
+The important architectural principle is to keep three things separate:
+
+Mathematical representation — the equations, tensor shapes, gradients, and trainability annotations.
+
+Execution representation — the left-to-right Flow graph and expanded right-to-left X_eTaL.
+
+Visualization — LaTeX, tensor diagrams, gradient flow, and interactive parameter exploration.
+
+Your existing Equations and Flow work is already pointed in that direction. The next step is to establish whether their current macro grammars can represent branching computations, matrix products, and gradient equations directly, and extend the general libraries only where a genuinely reusable primitive is missing.
+
+That would produce more than a LoRA tutorial: it would be a demonstration that X_eTaL can express a machine-learning algorithm mathematically, compile its tensor computation, execute it, and explain the result from the same source definition.
+
+how can we take advantage of VeRA?
+VeRA: An especially interesting alternative for X_eTaL-ML and MoE fine-tuning
+VeRA (Vector-based Random Matrix Adaptation) is worth adding alongside LoRA, QLoRA, and LoRA-FA because it takes parameter sharing much further.
+
+Instead of learning low-rank matrices for each adapted layer, VeRA uses shared, frozen random projection matrices and learns small scaling vectors.
+
+For your projects, that creates three opportunities:
+
+X_eTaL-ML: Express VeRA as matrix equations and left-to-right tensor pipelines, then expand them into executable APL-style code.
+
+MoE fine-tuning: Share projection matrices across experts while allowing each expert to learn its own small adaptation vectors.
+
+MoE expert offloading: Store extremely small expert-specific adaptations separately from the pretrained expert weights.
+
+The third is particularly appealing. You could potentially have hundreds or thousands of adapted experts while keeping their task-specific parameter storage very small.
+
+1. VeRA versus LoRA and LoRA-FA
+Recall ordinary LoRA:
+
+W
+′
+=
+W
++
+α
+r
+B
+A
+W 
+′
+ =W+ 
+r
+α
+​
+ BA
+where both 
+A
+A and 
+B
+B are learned.
+
+LoRA-FA freezes 
+A
+A, but still learns 
+B
+B.
+
+VeRA goes further:
+
+W
+′
+=
+W
++
+Λ
+b
+B
+0
+Λ
+d
+A
+0
+W 
+′
+ =W+Λ 
+b
+​
+ B 
+0
+​
+ Λ 
+d
+​
+ A 
+0
+​
+ 
+​
+ 
+where:
+
+W
+∈
+R
+m
+×
+n
+W∈R 
+m×n
+ : frozen pretrained weight matrix.
+
+A
+0
+∈
+R
+r
+×
+n
+A 
+0
+​
+ ∈R 
+r×n
+ : frozen random projection.
+
+B
+0
+∈
+R
+m
+×
+r
+B 
+0
+​
+ ∈R 
+m×r
+ : frozen random projection.
+
+Λ
+d
+=
+diag
+⁡
+(
+d
+)
+Λ 
+d
+​
+ =diag(d): trainable rank-dimension scaling.
+
+Λ
+b
+=
+diag
+⁡
+(
+b
+)
+Λ 
+b
+​
+ =diag(b): trainable output-dimension scaling.
+
+Unlike LoRA, VeRA trains neither of its large projection matrices.
+
+Method
+
+Frozen parameters
+
+Trainable parameters per adapted matrix
+
+LoRA
+
+W
+W
+
+r
+(
+n
++
+m
+)
+r(n+m)
+
+LoRA-FA
+
+W
+,
+A
+0
+W,A 
+0
+​
+ 
+
+m
+r
+mr
+
+VeRA
+
+W
+,
+A
+0
+,
+B
+0
+W,A 
+0
+​
+ ,B 
+0
+​
+ 
+
+r
++
+m
+r+m
+
+VeRA's parameter count is dramatically smaller, especially for large matrices.
+
+The tradeoff is expressiveness: ordinary LoRA can learn the projection directions, while VeRA can only rescale combinations of fixed random projections.
+
+2. Why VeRA becomes especially attractive for MoE
+Suppose an MoE layer has 
+E
+E experts.
+
+Ordinary expert-wise LoRA requires:
+
+P
+LoRA
+=
+E
+ 
+r
+(
+n
++
+m
+)
+P 
+LoRA
+​
+ =Er(n+m)
+With VeRA, the same frozen projection matrices can be shared across the experts:
+
+W
+e
+′
+=
+W
+e
++
+diag
+⁡
+(
+b
+e
+)
+B
+0
+diag
+⁡
+(
+d
+e
+)
+A
+0
+W 
+e
+′
+​
+ =W 
+e
+​
+ +diag(b 
+e
+​
+ )B 
+0
+​
+ diag(d 
+e
+​
+ )A 
+0
+​
+ 
+​
+ 
+Each expert learns only its own 
+b
+e
+b 
+e
+​
+  and 
+d
+e
+d 
+e
+​
+ .
+
+Thus:
+
+P
+VeRA,trainable
+=
+E
+(
+m
++
+r
+)
+P 
+VeRA,trainable
+​
+ =E(m+r)
+The frozen shared matrices require an additional 
+r
+(
+n
++
+m
+)
+r(n+m) parameters in memory, but they can be reused rather than duplicated for every expert.
+
+This is a proposed MoE adaptation architecture; it is not a claim that the standard PEFT VeRA implementation supports packed MoE expert tensors automatically.
+
+Example: 64 experts, rank 16
+Using our earlier dimensions 
+n
+=
+4096
+n=4096, 
+m
+=
+14336
+m=14336:
+
+Property
+
+Expert LoRA
+
+Shared VeRA
+
+Trainable parameters per expert
+
+294,912
+
+14,352
+
+Trainable parameters, 64 experts
+
+18.87M
+
+918,528
+
+BF16 trainable weights
+
+36 MiB
+
+1.75 MiB
+
+Frozen shared projections
+
+None
+
+0.56 MiB
+
+That's roughly 20.5 times fewer trainable parameters for this one projection across 64 experts.
+
+For an MoE with many layers and experts, the storage reduction could be substantial.
+
+However, VeRA often uses larger ranks than LoRA to recover adaptation capacity, so rank-16 comparisons are best treated as parameter-count illustrations rather than quality-matched configurations.
+
+3. VeRA is particularly elegant as an X_eTaL tensor pipeline
+The forward pass is:
+
+z
+1
+=
+A
+0
+x
+z
+2
+=
+d
+⊙
+z
+1
+z
+3
+=
+B
+0
+z
+2
+z
+4
+=
+b
+⊙
+z
+3
+y
+=
+W
+x
++
+z
+4
+z 
+1
+​
+ 
+z 
+2
+​
+ 
+z 
+3
+​
+ 
+z 
+4
+​
+ 
+y
+​
+  
+=A 
+0
+​
+ x
+=d⊙z 
+1
+​
+ 
+=B 
+0
+​
+ z 
+2
+​
+ 
+=b⊙z 
+3
+​
+ 
+=Wx+z 
+4
+​
+ 
+​
+ 
+where 
+⊙
+⊙ denotes elementwise multiplication.
+
+VeRA left-to-right tensor pipeline
+Input 
+x
+x
+
+Project 
+A
+0
+x
+A 
+0
+​
+ x
+
+Scale rank dimensions 
+d
+⊙
+z
+1
+d⊙z 
+1
+​
+ 
+
+Project 
+B
+0
+z
+2
+B 
+0
+​
+ z 
+2
+​
+ 
+
+Scale output dimensions 
+b
+⊙
+z
+3
+b⊙z 
+3
+​
+ 
+
+Add frozen base output 
+W
+x
+Wx
+
+This is arguably an even better educational example than LoRA because the trainable parameters are explicitly visible as vectors.
+
+Proposed X_eTaL-ML representation
+The following is conceptual pipeline syntax, not verified against the current X_eTaL macro grammar:
+
+x
+  → project A0
+  → multiply d
+  → project B0
+  → multiply b
+  → add (project W x)
+Its APL-like expansion could be represented as:
+
+(W mm x) + b × (B0 mm (d × (A0 mm x)))
+Here mm stands for the existing matrix-product operation, and × is elementwise multiplication.
+
+One advantage is that VeRA needs no explicit diagonal matrices. Broadcasting a vector over the appropriate tensor axis is sufficient; for your current scalar-extension-only broadcasting policy, the library should implement these as explicit shape-aware operations.
+
+4. The gradients are straightforward
+Define:
+
+z
+=
+A
+0
+x
+,
+u
+=
+d
+⊙
+z
+,
+v
+=
+B
+0
+u
+z=A 
+0
+​
+ x,u=d⊙z,v=B 
+0
+​
+ u
+and let 
+g
+=
+∂
+L
+/
+∂
+y
+g=∂L/∂y.
+
+Then:
+
+∇
+b
+L
+=
+g
+⊙
+v
+∇ 
+b
+​
+ L=g⊙v
+​
+ 
+∇
+d
+L
+=
+(
+B
+0
+T
+(
+g
+⊙
+b
+)
+)
+⊙
+z
+∇ 
+d
+​
+ L=(B 
+0
+T
+​
+ (g⊙b))⊙z
+​
+ 
+Both frozen projection matrices participate in gradient propagation, but neither receives parameter updates.
+
+The input gradient is:
+
+∇
+x
+L
+=
+W
+T
+g
++
+A
+0
+T
+[
+d
+⊙
+B
+0
+T
+(
+g
+⊙
+b
+)
+]
+∇ 
+x
+​
+ L=W 
+T
+ g+A 
+0
+T
+​
+ [d⊙B 
+0
+T
+​
+ (g⊙b)]
+These expressions make VeRA a good candidate for your equation-to-code system: all operations are matrix products, elementwise products, and additions.
+
+You can validate each analytical gradient against finite differences in a tiny X_eTaL model.
+
+5. An important storage optimization: regenerate the frozen matrices
+VeRA's shared projections can be reconstructed from a recorded random seed rather than saved in each adapter checkpoint.
+
+Hugging Face PEFT exposes this using:
+
+from peft import VeraConfig
+
+config = VeraConfig(
+    r=256,
+    target_modules=["q_proj", "v_proj"],
+    projection_prng_key=42,
+    save_projection=False,
+)
+
+The PEFT documentation warns that seed-only regeneration may not be reproducible across every device and future framework version. For robust storage, save the projection matrices or define and version a deterministic generator. 
+
+GitHub
++1
+
+For MLOS, I'd consider:
+
+model/
+  base/
+    expert-weights/
+  vera/
+    projection-manifest.json
+    shared-A.bin
+    shared-B.bin
+    tasks/
+      rust-engineering/
+        expert-vectors/
+      rust-performance/
+        expert-vectors/
+      general-coding/
+        expert-vectors/
+If the shared projections are identical across tasks, they can be cached once, while the small task-specific vectors are switched independently.
+
+The model's base weights remain immutable.
+
+6. Where VeRA may not be as good as LoRA
+VeRA's efficiency comes with tradeoffs.
+
+Expressiveness: The fixed random projections restrict which weight updates can be represented. A sufficiently high-rank LoRA can learn directions that VeRA cannot.
+
+Runtime computation: VeRA still performs two projections and two vector-scaling operations. Tiny checkpoint size does not automatically mean faster inference.
+
+Quantization compatibility: A 4-bit base with VeRA is mathematically straightforward, but the particular PEFT backend and MoE implementation must support it. Do not assume that a QLoRA-style VeRA configuration works with every quantized model.
+
+Expert specialization: Sharing random projections across experts may constrain their adaptations. The degree to which that hurts your Rust-specific fine-tuning is an empirical question.
+
+Hugging Face currently documents VeRA for linear modules; support for packed MoE expert parameters should be verified separately. 
+
+GitHub
+
+7. The experiment I'd add to your Rust coding project
+Compare four adaptation approaches on the same base MoE and the same Rust engineering-quality dataset.
+
+Approach
+
+What it learns
+
+Main question
+
+Attention LoRA
+
+Shared attention adapters
+
+Is expert adaptation necessary?
+
+Expert LoRA
+
+Expert-specific matrices
+
+Does expert specialization help?
+
+LoRA-FA
+
+Frozen 
+A
+A, learned 
+B
+B
+
+Can training memory be reduced?
+
+Shared VeRA
+
+Expert-specific scaling vectors
+
+Can tiny adapters achieve comparable quality?
+
+Use your complexity grader to evaluate the generated Rust code, with hidden functional tests as a prerequisite.
+
+The primary outcome should be the percentage of tasks that pass both correctness and your architectural/complexity rules on the first attempt.
+
+Then compare the gain against adapter size and training cost.
+
+For example:
+
+Efficiency
+=
+Improvement in first-pass compliance
+Trainable adapter parameters
+Efficiency= 
+Trainable adapter parameters
+Improvement in first-pass compliance
+​
+ 
+This is useful as a secondary metric, but should never replace absolute quality: a tiny adapter with negligible improvement is not necessarily a good adapter.
+
+8. A follow-on idea: group-shared VeRA
+I'd also investigate a hybrid design between fully shared VeRA and independent expert LoRA.
+
+Instead of one shared projection pair for the entire model, use one pair per expert group:
+
+W
+e
+′
+=
+W
+e
++
+diag
+⁡
+(
+b
+e
+)
+B
+g
+(
+e
+)
+diag
+⁡
+(
+d
+e
+)
+A
+g
+(
+e
+)
+W 
+e
+′
+​
+ =W 
+e
+​
+ +diag(b 
+e
+​
+ )B 
+g(e)
+​
+ diag(d 
+e
+​
+ )A 
+g(e)
+​
+ 
+where 
+g
+(
+e
+)
+g(e) identifies an expert group.
+
+This could allow different groups of experts to adapt in different subspaces, while still sharing projections within each group.
+
+The tradeoff is that additional frozen projection pairs increase storage and cache pressure. You could compare global sharing, per-layer sharing, per-group sharing, and independent projections.
+
+That is a research extension rather than standard VeRA.
+
+9. Suggested X_eTaL-ML demonstrations
+I'd build these in sequence:
+
+VeRA versus LoRA: Display the same matrix transformation, parameter counts, and forward outputs.
+
+VeRA gradients: Show why only 
+b
+b and 
+d
+d are updated.
+
+Rank exploration: Vary rank and visualize approximation error.
+
+Shared projections: Show multiple layers reusing the same frozen matrices.
+
+MoE-VeRA: Show selected experts applying their own learned vectors to shared projections.
+
+Adapter caching: Compare bytes transferred for LoRA versus VeRA in an expert-offloading simulation.
+
+The rank experiment should compare both training methods under equal parameter budgets and equal ranks. Those answer different questions.
+
+Recommendation
+Add VeRA as a fourth parameter-efficient fine-tuning method in X_eTaL-ML, and make shared projection matrices a reusable abstraction.
+
+I would use three progressively more ambitious demonstrations:
+
+A tiny dense VeRA model, fully expressed and trained in X_eTaL.
+
+A four-expert MoE model with shared frozen projections and expert-specific trainable vectors.
+
+A Rust coding MoE fine-tuning experiment comparing VeRA against LoRA and LoRA-FA using your existing complexity grader.
+
+The original VeRA paper establishes the parameter-efficiency motivation, and Hugging Face's VeRA documentation provides a practical implementation reference.
+
+For your broader architecture, VeRA suggests an appealing separation: immutable pretrained experts, shared immutable random projections, and tiny independently versioned task/expert adaptation vectors. That could be useful not only for Rust coding specialization, but also for your experiments in model caching, adapter switching, and memory-constrained MoE inference.
+
+
+
+
+0%
+

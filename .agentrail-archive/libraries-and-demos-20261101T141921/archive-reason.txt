@@ -1,0 +1,1 @@
+Saga 5 (libraries-and-demos) done through step 047; step 048 f32-tolerance (parked) moved to docs/plan.md's Backlog with activation-compare and glu-ffn (the user, 2026-11-01); Saga 6 moe-finetune follows

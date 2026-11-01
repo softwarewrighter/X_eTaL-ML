@@ -1,0 +1,8 @@
+number = 2
+slug = "lora-grads"
+status = "pending"
+description = "(docs/fine-tune-moe-demo-plan.md, step 2; L728-1150, L2755-2947, L3587-3593) ..."
+role = "production"
+context_files = []
+created_at = "2026-11-01T15:15:40"
+commits = []

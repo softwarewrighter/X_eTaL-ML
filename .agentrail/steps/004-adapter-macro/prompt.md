@@ -1,0 +1,1 @@
+(docs/fine-tune-moe-demo-plan.md, step 4; L2629-2659) lo:a_dapter<: a spec string ("W | r 3 | train B") written as forward and backward code for LoRA or LoRA-FA; expansions pinned (expand-*.rgt), checked equal to the library and to finite differences; used by the explorer.

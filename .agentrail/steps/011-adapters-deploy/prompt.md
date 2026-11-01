@@ -1,0 +1,1 @@
+(docs/fine-tune-moe-demo-plan.md, step 11; L381-460, L1103-1150, L4447) adapters kept apart against merged: the same answers (exactly for LoRA, not for QLoRA), switching two tasks' adapters on one base, the bytes each keeps; an adapter-cache simulation for the experts a batch uses.

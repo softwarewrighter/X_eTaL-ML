@@ -1,0 +1,1 @@
+(docs/fine-tune-moe-demo-plan.md, step 12, optional; L1475-1490, L2023-2046) supervised fine-tuning then preference pairs (DPO) on the toy task, both answers of each pair valid; reinforcement learning left out, as the research waits for SFT and DPO to show a gain.

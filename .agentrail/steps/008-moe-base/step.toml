@@ -1,0 +1,8 @@
+number = 8
+slug = "moe-base"
+status = "pending"
+description = "(docs/fine-tune-moe-demo-plan.md, step 8; L294, L620-664, L1370, L1774-1831) ..."
+role = "production"
+context_files = []
+created_at = "2026-11-01T15:15:40"
+commits = []

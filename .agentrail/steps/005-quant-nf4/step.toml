@@ -1,0 +1,8 @@
+number = 5
+slug = "quant-nf4"
+status = "pending"
+description = "(docs/fine-tune-moe-demo-plan.md, step 5; L2954-3162) Quant gains blockwise u..."
+role = "production"
+context_files = []
+created_at = "2026-11-01T15:15:40"
+commits = []

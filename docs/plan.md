@@ -187,7 +187,7 @@ For this repo that means:
 | 5 | asks-audit | DONE: pinned X_eTaL v0.1.0 (512b3ee, 163 commits on from abb8274; its own commit); every baseline unchanged; the ML workloads 4 to 6 times faster (`just bench-check`; new baseline, docs/speed.md); asks re-run: M1 `.xtlm`, M2 `xetal expand`, M3 speed and M9 bound Bool landed, M4 grade per row and M5 arrays in and out still open, M10 (`e_ach` returning arrays) added; no workaround was left to remove (ternary-net and cnn-digits READMEs no longer call the matrix product slow); promotion blockers for the cross-repo audit: none from this repo (M4, M5, M10 are conveniences); tagged v0.1.1, built against X_eTaL v0.1.0. Planned: move the pin (after upstream's Saga 30 and terminal work), re-run every ask's repro, mark landed asks and remove their workarounds, list this repo's promotion blockers for the cross-repo audit |
 | 6 | release-1 | catalog, docs, retrospective; the X_eTaL commit this release is known to work with, for the six-repo tag |
 
-## Saga 3 -- macros  [ACTIVE]
+## Saga 3 -- macros  [DONE, archived]
 
 `.xtlm` macro libraries and `xetal expand` are in the X_eTaL this
 repo pins since 2026-10-05. The launch being delayed (the user,
@@ -223,7 +223,7 @@ weights' last row), the function's name is bound by the caller, and
 two companions: `net:p_arams<` (the parameter count, a number written
 at compile time) and `net:s_hapes<` (the weights against the spec).
 
-## Saga 4 -- training in X_eTaL  [ACTIVE]
+## Saga 4 -- training in X_eTaL  [DONE, archived]
 
 After the APL Wiki's neural-network resources (2026-10-07, the
 user's request to look for more demos): every APL work it lists
@@ -254,7 +254,7 @@ Left out for now: MENACE (it fits X_eTaL-games, and X_eTaL ships
 TTTML, which learns tic-tac-toe by self-play); a U-Net (a tiny one on
 synthetic shapes is a later stretch).
 
-## Saga 5 -- libraries and demos
+## Saga 5 -- libraries and demos  [DONE, archived 2026-11-01; three steps to the Backlog]
 
 The libraries the demos were written ahead of, the demos built on
 them, and the research demos (from research4). Begun 2026-10-09 as
@@ -297,8 +297,8 @@ until there is enough progress across all the X_eTaL repositories:
 | 27 | activations-lib | DONE (2026-10-23, the user's go; X_eTaL-libraries planned E4 to E9 as its Sagas 17 to 23 and X_eTaL M19 as its step 169 the same day, so the library carries its own tanh and erf meanwhile): `libs/Activations` (`act:`): 15 activations (ReLU, leaky, PReLU with a slope per column, ELU, SELU, sigmoid, tanh, the stable softplus, SiLU, Swish, GELU in the tanh form and exact through a private A&S 7.1.26 erf, Mish, hard sigmoid, hard swish), the four gated layers as `(W, V) act:s_wiglu x` (the activation on x W times x V), 15 derivatives in terms of the input; 20 doc examples run by the gate; 37 checks (the relations, the bounds and extremes, where the smooth ones dip, the two GELUs within 4.73e-4 and the exact one agreeing with the Integrals demo's quadrature, hard swish within 0.15 of SiLU, SELU's fixed point on 4,000 Box-Muller normals, the gates written out, every derivative against central differences within 1e-5); the pinned types; the curves demo (15 x 13 tables of values and slopes); the page with the comparison table (cost in transcendental calls, monotone, bounded, the dip, the slope's range, who uses it) and the papers; the site's Networks group. Planned: `libs/Activations` (`act:`) as the libraries table says: the functions, the gates, a derivative each; tests first: 16 property checks (values at known points from the papers, the smooth ones below zero where they dip, hard swish equal to swish within its bound, SELU's fixed point: mean 0 and variance 1 kept through a layer of standard-normal weights), every derivative against central differences, the exact GELU against the Integrals demo's integral (its tanh form off by at most 4.73e-4), softplus and Mish finite at 1e3 and -1e3; the pinned types; the page; a demo (one picture of every curve, drawn by X_eTaL as SVG) |
 | 28 | activations-move | DONE (2026-10-27): NN's `r_elu`, `l_eaky`, `s_igmoid`, `t_anh` removed (its header, page, basics and checks c7 to c9, now Activations' own); every caller on `act:` with the import beside NN's (14 programs, Integrals' gelu demo importing only Activations; the pages, READMEs, the palette, microscope's tests), Flow's examples and refusal message say `act:r_elu`; Net's words are relu, sigmoid, tanh, softplus, silu, gelu, mish, selu, hardSigmoid, hardSwish (Activations) and softmax, logSoftmax (NN), the expansion calls both libraries (programs import both); the slopes of relu, tanh and sigmoid stay at the output, the smooth ones are Activations' derivatives of the dense layer computed again (`act:d_gelu A0 nn:d_ense W1`), checked against finite differences within 1e-7 for three new networks (gelu and mish, silu and softplus, selu and hard swish); the refusal tests use swiglu (a gated layer, not a word). Every CLI output unchanged; the expansion and error goldens re-blessed after review: names, the added import's line numbers, NN's error line (112 to 87), the wider word list. `bench/activations.xtl` (the fifteen on 65,536 Floats, 200 ms here) in bench-check; the per-function cost is the page's (row 29). Planned: NN loses `r_elu`, `l_eaky`, `s_igmoid`, `t_anh` (its page and plan row say where they went); every caller moves to `act:` (about 40 files, programs, pages, READMEs and the goldens that print the names: backprop, cnn-digits, cnn-backprop, diffusion, pipelines, train-live, world-model, Flow's demo, docs and refusal goldens, Integrals' gelu demo, Net and its tests, NN's own tests and xor demo, the palette's Stages group, the pages' heads; Learn, Sample and Attention use only softmax and stay); values unchanged, so only Net's expansion goldens (which print the names) are re-blessed on purpose; Net's activation words widened (`"2 16 gelu 3 softmax"`, the slope table taking the pre-activation for the smooth ones); `bench/activations.xtl` (ms per million elements, each function) in bench-check and docs/speed.md |
 | 29 | activations-page | SUPERSEDED by row 42 (activations-explorer, 2026-10-29): `demos/activations`, live: every function and its derivative on one axis, drawn from the numbers X_eTaL computes (SVG), sliders for alpha and beta, a table measured not asserted: transcendental calls per element (0 for relu, leaky, PReLU, hard sigmoid, hard swish; 1 exp for sigmoid, tanh, SiLU, ELU, SELU; 2 for softplus and GELU; 3 for Mish), monotone or not, bounded below, zero-centered, the slope's range (sigmoid's 0.25 at most: vanishing; ReLU's 0 for x < 0: dying), the bench's ms, and where each is used (GELU: BERT, GPT-2; SwiGLU: LLaMA, at 8/3 d hidden to keep the parameter count; Swish: EfficientNet; Mish: YOLO; hard swish: MobileNetV3; SELU: deep MLPs without a norm layer); all code shown |
-| 30 | activation-compare | the same network, every activation: train-live's spiral net (2-4-3) trained with each activation in the browser, the loss curves side by side; at width 4 ReLU dies (units at zero: shown), sigmoid saturates, tanh, leaky, ELU and SELU train; the choice of activation for a small network made visible; the trainer's slope from `act:d_*`, so the step is one expression per activation |
-| 31 | glu-ffn | the gates in a transformer's feed-forward layer: micro-gpt's FFN as GELU (`x W1 -> gelu -> W2`) beside SwiGLU (`(x W) * silu(x V) -> W2`, V the extra weights at 2/3 the hidden width, the same parameter count), the two trained offline by train/ from the same seed, their held-out loss and a generated name each on one page; the cost of the gate as a count of multiply-adds, measured |
+| 30 | activation-compare | BACKLOG (2026-11-01, the user): the same network, every activation: train-live's spiral net (2-4-3) trained with each activation in the browser, the loss curves side by side; at width 4 ReLU dies (units at zero: shown), sigmoid saturates, tanh, leaky, ELU and SELU train; the choice of activation for a small network made visible; the trainer's slope from `act:d_*`, so the step is one expression per activation |
+| 31 | glu-ffn | BACKLOG (2026-11-01, the user): the gates in a transformer's feed-forward layer: micro-gpt's FFN as GELU (`x W1 -> gelu -> W2`) beside SwiGLU (`(x W) * silu(x V) -> W2`, V the extra weights at 2/3 the hidden width, the same parameter count), the two trained offline by train/ from the same seed, their held-out loss and a generated name each on one page; the cost of the gate as a count of multiply-adds, measured |
 | 32 | micro-bert | DONE (2026-10-27, the user: BERT as a one-line equation and a demo of it as a tensor pipeline; top-level, its twin micro-gpt): `demos/micro-bert`, live: a tiny BERT (2 layers, 16 wide, 2 heads of 8, a GELU feed-forward layer of 64, post-LN, 7,594 weights; no [CLS]/[SEP], segments, attention biases or 80/10/10 masking, said on its page) trained offline by train/ (micro-gpt's tape autograd with tanh for GELU, a fixed seed; each name with each letter masked in turn, 4 names a step, 6,000 steps, Adam, 3 minutes; `just micro-bert-data`): on 1,000 held-out names 35% of blanks right, 65% in its top three, against 17% for always a. micro-bert.xtl writes it four ways: BERT in one line as LaTeX (Equations has no composition, so by hand), one head's attention as Equations calls (scores, the softmax written out, the weighted values; GELU, the layer and its repeats outside the strings: E6, E3, E2), one encoder layer as a Flow pipeline (`$h`, `$a` for the residuals, `[n 16]` contracts) applied L times by `p_ower` carrying the layer number, and the layer written out; checked: the equations are head 1's, the pipeline is the written-out layer, the scores and every head's attention are the Rust model's within 1e-9; six blanks filled. The page: a name with a blank, the eight likeliest fills, each layer's heads (both ways), the model drawn by KaTeX, all code shown with the pipeline highlighted; 7 native tests (the blank as the Rust model scores it to 1e-9, heads not causal, the math, beating the guess); checked in Chrome |
 | 33 | equation-pipelines | DONE (2026-10-27, the user: the pipeline demos lacked a math-like tensor pipeline of equations; a pipeline drawn as LaTeX; a BERT layer example): Flow: a stage that calls a macro (an Equations e:e_q< in a raw code string c#"..."#) counts the names in its strings too, `it` among them (the stage then gets the previous value as it), Equations still checking each; `flow:m_ath<` draws a pipeline as math by the same reading: an aligned display of a row a stage, an arrow before each stage after the data, each label after the stage it names (a triangle as X_eTaL draws $, with its shape), an equation drawn by its library's t_ex< on the same strings (a macro's expansion may call another macro: checked first), `it` under the name the value came with, code as \texttt. Tests first: Flow's equations.xtl (a dense layer and ReLU as equations, a softmax by row with code and equations mixed, both against the written-out forms and drawn), a refusal (an equation naming none of the pipeline's values), the doc example, every expansion pinned; the old refusal's wording rebased. The pipelines demo: equations.xtl, an attention head as a pipeline of equations (fan-out from the data's label, fan-in at the scores and the weighted values) checked against at:h_ead, and a BERT encoder layer with made-up weights checked against the layer written out, both drawn; the page's two new examples (the drawing panel, a sentence each, the BERT layer linking to Tiny BERT), a test that each drawing reads the text its pipeline computes. Asked by the user next: an equation as a paper writes it (inside out) rewritten as a pipeline of equations, with each part highlighted across the equation, the pipeline, the macro's input and output and a 3D view of each stage's tensors |
 | 34 | bert-layer-math | DONE (2026-10-27, the user: the BERT layer drawn as math showed X_eTaL code as typed, not math; then: every example on the Pipelines page shown as math): the BERT layer rewritten with every stage an equation (one head of attention, the output projection and residual, layer norm as mean, variance and normalized, the dense layers with their bias rows, GELU written with exp as f / (1 + exp(-2u)), the second residual and layer norm), equal to the layer written out with the libraries; every other example gains a pipeline of equations checked equal to its own pipeline and drawn: the CNN layer (the convolution with its bias, ReLU), the diffusion sampler (the telescoped sum, the decoder), the dense layer, the softmax (exp(z_j - max_i z_i) over the sum), layer norm, the causal attention head (the mask multiplying each exponential); the page's panel is As math for all eight; a test that every example draws one pipeline of equations, every stage an equation and no code, from the text of a pipeline it computes; it caught the page taking eqpipe's expansion for pipe's (the name now matched at a line's start). Flow's page says a code stage is drawn as code |
@@ -391,6 +391,50 @@ k+1 is at step t-1), the case for parallel stages; both keep their
 decision (the counts; the same pictures) whatever the chunking. A
 program here need not change for it: the batch is an input, and
 how it is cut is the schedule's.
+
+## Saga 6 -- moe-finetune  [ACTIVE, begun 2026-11-01]
+
+The user, 2026-11-01: demonstrate the ways of fine-tuning
+mixture-of-experts models, with new macros, libraries and demos, in
+the order the research recommends. The research is
+`docs/fine-tune-moe-research.txt`; the plan, with its reasons and the
+research's line numbers, is `docs/fine-tune-moe-demo-plan.md`. In
+short: adapters (LoRA, LoRA-FA, QLoRA, VeRA) on one projection first,
+then on a tiny MoE's experts, the router frozen before it is trained,
+every method on the same base model, measured by the new task, the
+regression of the old, the trainable numbers and bytes, and the
+routing.
+
+| # | Step slug | Delivers |
+| - | --------- | -------- |
+| 1 | lora-lib | libs/LoRA (`lo:`): the adapted forward pass in factored form, the merge, parameter and byte counts; the merge identity and the counts checked |
+| 2 | lora-grads | LoRA's gradients and a step (SGD, Adam through Optim); LoRA-FA (A frozen, seeded); finite-difference checks |
+| 3 | lora-explorer | demos/lora-explorer, live: an 8 x 8 projection adapted, the pipeline drawn as math with the stage view, a backward step, LoRA beside LoRA-FA fitting a known update, the rank sweep against the truncated-SVD optimum |
+| 4 | adapter-macro | `lo:a_dapter<`: a spec string to forward and backward code for a policy, expansions pinned, checked against the library |
+| 5 | quant-nf4 | Quant: blockwise uniform 4 bits, the NF4 codebook, double quantization; error and bytes |
+| 6 | qlora | QLoRA in the library and the explorer, against the dequantized computation; the merge not bit-exact |
+| 7 | moe-lib | libs/MoE (`moe:`): scores, softmax, top-k, dispatch, apply, combine; gradients with the selection fixed; routing statistics; against a dense reference |
+| 8 | moe-base | the base model: a synthetic task, a tiny MoE (shared layer, 4 experts, top-2) trained in X_eTaL; its checkpoint and frozen-router statistics |
+| 9 | moe-finetune | demos/moe-finetune, live: the base fine-tuned to a shifted task by each policy in order (none, shared only, every expert, shared and expert, selected experts, the router too): accuracy, regression, trainable numbers and bytes, routing before and after, each expert's update, over seeds |
+| 10 | vera | VeRA in the library, the macro and both demos; the four-way comparison at equal ranks and equal budgets |
+| 11 | adapters-deploy | adapters apart against merged, switching tasks on one base, the bytes; an adapter cache for the experts a batch uses |
+| 12 | preference | optional: supervised fine-tuning then preference pairs (DPO) on the toy task |
+
+Later, beyond the research (a saga of its own when planned, each
+topic cited from its paper): load balancing and the router's z-loss,
+capacity and dropped tokens, upcycling, merging and pruning experts,
+distillation.
+
+## Backlog
+
+Steps planned and left waiting (the user, 2026-11-01), each to go into
+a saga when its time comes:
+
+| Slug | From | What |
+| ---- | ---- | ---- |
+| f32-tolerance | Saga 5, step 048 (parked) | X_eTaL-gpu's finding (2026-10-16): diffusion.xtl's 1e-6 check against data/expected.txt fails on a float32 device (a difference of 8.5e-6); loosen the expected-output checks to a tolerance 32-bit floats meet (1e-4) in diffusion.xtl, world-model.xtl and micro-gpt/batch.xtl's mean loss, the integer decisions exact; docs/gpu-asks.md's finite-tolerance rule |
+| activation-compare | Saga 5, row 30 | train-live's spiral net trained with each activation in the browser, the loss curves side by side |
+| glu-ffn | Saga 5, row 31 | Tiny GPT's feed-forward layer as GELU beside SwiGLU, the extra weights at 2/3 the hidden width |
 
 ## Cross-cutting
 

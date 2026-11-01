@@ -1,25 +1,23 @@
-# post-launch
+# moe-finetune
 
-Saga 5 of X_eTaL-ML (docs/plan.md): the follow-up stream after the
-launch, which the user has postponed further (2026-10-09), so it goes
-first. The libraries the demos were written ahead of (Quant, Conv,
-Attention, Norm, Sample, Embed, Optim), then a tiny GPT, an embedding
-explorer, the libraries on the live site, and the deferred research
-demos. Every step: tests, the gate, docs, a commit, a push, a publish
-when a page changes, a report.
+Saga 6 of X_eTaL-ML (docs/plan.md): the user, 2026-11-01, demonstrate
+the ways of fine-tuning mixture-of-experts models with new macros,
+libraries and demos, in the order the research recommends. The
+research: docs/fine-tune-moe-research.txt; the plan with its reasons
+and the research's line numbers: docs/fine-tune-moe-demo-plan.md.
 
-0. xetal-091 -- pin X_eTaL past its step 091 (names bound once; the
-   repository is already clean, step bound-once) and X_eTaL-libraries
-   at its latest; every baseline re-run, bench-check.
-1. quant -- the Quant library (qz:); ternary-net moved onto it, its
-   baselines unchanged.
-2. conv -- Conv (cv:); cnn-digits and cnn-backprop moved onto it.
-3. attention-lib -- Attention (at:); the attention demo keeps its lesson.
-4. norm-sample -- Norm (nm:), Sample (sm:).
-5. micro-gpt -- microgpt inference in X_eTaL on offline-trained weights.
-6. embedding-explorer -- Embed (em:); 64 dimensions to a rotatable 3-D
-   cloud by Learn's PCA.
-7. optim -- Optim (op:): Adam and SGD as library steps (Net's t_rain<
-   and the demos' hand-written Adam onto it).
-8. lib-site -- the libraries on the live site, as X_eTaL-libraries' site.
-9. research -- the deferred research demos (world model, diffusion).
+Adapters (LoRA, LoRA-FA, QLoRA, VeRA) on one projection first, then on
+a tiny MoE's experts, the router frozen before it is trained; every
+method on the same base model, measured by the new task, the
+regression of the old, the trainable numbers and bytes, and the
+routing. Everything in X_eTaL on a CPU, at the command line and live
+in the browser; tiny sizes; shapes, the merge identity and finite
+differences checked; no special LoRA syntax in the language.
+
+Every step: tests, the gate, docs (README, the library or demo pages,
+CHANGES, docs/plan.md, the asks), a commit, a push, a publish when a
+page changes, a report.
+
+1. lora-lib  2. lora-grads  3. lora-explorer  4. adapter-macro
+5. quant-nf4  6. qlora  7. moe-lib  8. moe-base  9. moe-finetune
+10. vera  11. adapters-deploy  12. preference (optional)
