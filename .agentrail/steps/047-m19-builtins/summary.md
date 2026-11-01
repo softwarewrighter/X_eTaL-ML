@@ -1,0 +1,1 @@
+X_eTaL pinned at abdd371d (M19 landed); Activations uses the builtins t_anh and e_rf, private tanh/erf removed; baselines and doc examples updated after review; M19 landed in the asks; full gate and bench-check ok.
