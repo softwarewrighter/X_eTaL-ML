@@ -13,6 +13,8 @@ refresh of the vendored X_eTaL.
 
 ## 2026-10-31
 
+- `vendor` X_eTaL pinned at abdd371d: M19 landed (t_anh, e_rf, s_qrt, e_xpm1, l_og1p, e_rfc built in) (step m19-builtins)
+- `lib` Activations on the builtins: `act:t_anh` is X_eTaL's `t_anh`, the exact GELU uses `e_rf`; the private tanh and erf gone (step m19-builtins)
 - `demo` Activation functions (step activations-explorer): `demos/activations`, live: every Activations function and its slope over -6..6 a family at a time, drawn by Plot's `p:f_unctionChart!`; sliders for the parameters; an activation of your own edited, run and drawn beside a built-in, errors placed in your text, a value not finite said
 - `plan` saga: step m19-builtins inserted (047; X_eTaL landed M19); f32-tolerance is 048
 

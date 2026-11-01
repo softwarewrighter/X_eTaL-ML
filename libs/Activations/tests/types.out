@@ -3,7 +3,7 @@ l:l_eaky : Float -> Float -> Float
 l:p_relu : Float -> Float -> Float
 l:e_lu : Float -> Float -> Float
 l:s_elu : Float -> Float
-l:s_igmoid : Float -> Float
+l:s_igmoid : Num a => a -> Float
 l:t_anh : Float -> Float
 l:s_oftplus : Float -> Float
 l:s_ilu : Float -> Float
@@ -22,9 +22,9 @@ l:d_leaky : Float -> Float -> Float
 l:d_prelu : Float -> Float -> Float
 l:d_elu : Float -> Float -> Float
 l:d_selu : Float -> Float
-l:d_sigmoid : Float -> Float
+l:d_sigmoid : Num a => a -> Float
 l:d_tanh : Float -> Float
-l:d_softplus : Float -> Float
+l:d_softplus : Num a => a -> Float
 l:d_silu : Float -> Float
 l:d_swish : Float -> Float -> Float
 l:d_gelu : Float -> Float

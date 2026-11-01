@@ -15,20 +15,11 @@
 ## two weight arrays as a tuple, `(W, V) act:s_wiglu x`: the activation
 ## on x W, times the linear x V (Shazeer 2020's order).
 ##
-## tanh and erf are built here from e_xp (X_eTaL has no t_anh or e_rf
-## builtin: docs/xetal-asks.md M19): tanh as 2 sigmoid(2x) - 1, which
-## does not overflow at either end but loses digits near 0; erf by
-## Abramowitz and Stegun 7.1.26, within 1.5e-7. Both go the day the
-## builtins land (X_eTaL-libraries' Trig and Special, E4 and E5).
+## tanh and erf are X_eTaL's builtins, `t_anh` and `e_rf` (libm's, at
+## full accuracy: docs/xetal-asks.md M19, landed); `act:t_anh` is the
+## builtin under this library's name, beside its other activations.
 
 ### Helpers (private)
-
-## The error function, A&S 7.1.26 (|error| < 1.5e-7), odd in x.
-h:e_rf := { x ->
-  t := 1.0 / 1.0 + 0.3275911 * a_bs x
-  p := t * 0.254829592 + t * -0.284496736 + t * 1.421413741 + t * -1.453152027 + t * 1.061405429
-  ((2.0 * f_loat x >= 0.0) - 1.0) * 1.0 - p * e_xp n_eg x * x
-}
 
 ## The inner tanh of GELU's approximation, at the point u(x) = sqrt(2/pi) (x + 0.044715 x^3).
 h:g_eluTanh := { x -> l:t_anh 0.7978845608028654 * x + 0.044715 * x * x * x }
@@ -78,11 +69,12 @@ l:s_elu := { x -> 1.0507009873554805 * 1.6732632423543772 l:e_lu x }
 ## 0.5 0.8807970779778823
 l:s_igmoid := { x -> 1.0 / 1.0 + e_xp n_eg x }
 
-## `t_anh x`: the hyperbolic tangent, as 2 sigmoid(2x) - 1 (see the file's note).
+## `t_anh x`: the hyperbolic tangent, X_eTaL's builtin (exact near 0,
+## 1 without overflow far out).
 ## >> "act:" u_se< "Activations"
 ## >> act:t_anh 0.0 1.0
-## 0.0 0.7615941559557646
-l:t_anh := { x -> (2.0 * l:s_igmoid 2.0 * x) - 1.0 }
+## 0.0 0.7615941559557649
+l:t_anh := { x -> t_anh x }
 
 ## `s_oftplus x`: log(1 + e^x), a smooth ReLU, in the form that does
 ## not overflow: max(x, 0) + log(1 + e^-|x|).
@@ -110,21 +102,21 @@ l:s_wish := { b x -> x * l:s_igmoid b * x }
 ## within 4.73e-4 of the exact g_eluErf.
 ## >> "act:" u_se< "Activations"
 ## >> act:g_elu -1.0 1.0
-## -0.15880800939172324 0.8411919906082768
+## -0.1588080093917233 0.8411919906082768
 l:g_elu := { x -> 0.5 * x * 1.0 + h:g_eluTanh x }
 
 ## `g_eluErf x`: the exact GELU, x Phi(x) = x/2 (1 + erf(x / sqrt 2)),
-## Phi the normal CDF (erf as this file's note says).
+## Phi the normal CDF (erf X_eTaL's builtin).
 ## >> "act:" u_se< "Activations"
 ## >> act:g_eluErf 1.0
-## 0.8413447361676363
-l:g_eluErf := { x -> 0.5 * x * 1.0 + h:e_rf x / 1.4142135623730951 }
+## 0.8413447460685429
+l:g_eluErf := { x -> 0.5 * x * 1.0 + e_rf x / 1.4142135623730951 }
 
 ## `m_ish x`: Mish (Misra 2019), x tanh(softplus(x)): smooth, dips to
 ## -0.309 below 0, finite at any x.
 ## >> "act:" u_se< "Activations"
 ## >> act:m_ish -1.0 1.0
-## -0.30340146137410895 0.8650983882673104
+## -0.30340146137410895 0.8650983882673103
 l:m_ish := { x -> x * l:t_anh l:s_oftplus x }
 
 ## `h_ardSigmoid x`: min(max(x + 3, 0), 6) / 6 (Howard et al. 2019,
@@ -211,7 +203,7 @@ l:d_swish := { b x -> s := l:s_igmoid b * x; s + b * x * s * 1.0 - s }
 l:d_gelu := { x -> t := h:g_eluTanh x; (0.5 * 1.0 + t) + 0.5 * x * (1.0 - t * t) * 0.7978845608028654 * 1.0 + 0.134145 * x * x }
 
 ## `d_geluErf x`: Phi(x) + x phi(x), the normal CDF and density.
-l:d_geluErf := { x -> (0.5 * 1.0 + h:e_rf x / 1.4142135623730951) + x * 0.3989422804014327 * e_xp n_eg x * x / 2.0 }
+l:d_geluErf := { x -> (0.5 * 1.0 + e_rf x / 1.4142135623730951) + x * 0.3989422804014327 * e_xp n_eg x * x / 2.0 }
 
 ## `d_mish x`: t + x (1 - t^2) sigmoid(x) for t = tanh(softplus(x)).
 l:d_mish := { x -> t := l:t_anh l:s_oftplus x; t + x * (1.0 - t * t) * l:s_igmoid x }

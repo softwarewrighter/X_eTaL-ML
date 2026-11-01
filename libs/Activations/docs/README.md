@@ -32,15 +32,12 @@ the libraries without setup.
   hidden; no bias (LLaMA has none; add one with `nn:b_ias`).
 - Everything is Float: `act:r_elu` of an Int array is a type error;
   write `act:r_elu f_loat x`.
-- tanh and erf are built here from `e_xp`, since X_eTaL has no
-  `t_anh` or `e_rf` builtin ([docs/xetal-asks.md](../../../docs/xetal-asks.md)
-  M19): tanh as `2 sigmoid(2x) - 1`, which does not overflow at either
-  end but loses digits near 0 (about 1e-6 relative at 1e-10); erf by
-  Abramowitz and Stegun 7.1.26, within 1.5e-7 (so `d_geluErf 0.0` is
-  0.5000000005, not 0.5). Both are replaced the day the builtins, or
-  X_eTaL-libraries' Trig and Special
-  ([docs/xetal-libraries-asks.md](../../../docs/xetal-libraries-asks.md)
-  E4, E5), land.
+- tanh and erf are X_eTaL's builtins, `t_anh` and `e_rf` (libm's, at
+  full accuracy: [docs/xetal-asks.md](../../../docs/xetal-asks.md) M19,
+  landed); `act:t_anh` is the builtin under this library's name. Until
+  M19 landed they were written here from `e_xp`: tanh as
+  `2 sigmoid(2x) - 1` (about 1e-6 relative off at 1e-10), erf by
+  Abramowitz and Stegun 7.1.26 (within 1.5e-7).
 
 ## Functions
 
@@ -134,7 +131,7 @@ From `../tests/basics.xtl`, on `x := -3.0 -1.0 -0.5 0.0 0.5 1.0 3.0`:
       act:r_elu x
 0.0 0.0 0.0 0.0 0.5 1.0 3.0
       act:g_elu x
--0.0036373920817729943 -0.15880800939172324 -0.15428599017485609 0.0 0.34571400982514394 0.8411919906082768 2.9963626079182273
+-0.0036373920817729943 -0.1588080093917233 -0.15428599017485606 0.0 0.34571400982514394 0.8411919906082768 2.996362607918227
       act:s_ilu x
 -0.14227761953270035 -0.2689414213699951 -0.1887703343990727 0.0 0.3112296656009273 0.7310585786300049 2.8577223804673
       act:d_sigmoid x
@@ -183,5 +180,4 @@ Hinton (2010); leaky ReLU, Maas et al. (2013); PReLU, He et al.
 et al. (2017); GELU and SiLU, Hendrycks and Gimpel (2016); Swish,
 Ramachandran et al. (2017); Mish, Misra (2019); hard sigmoid and hard
 swish, Howard et al. (2019, MobileNetV3); GLU, Dauphin et al. (2017);
-ReGLU, GEGLU and SwiGLU, Shazeer (2020). The erf approximation is
-Abramowitz and Stegun, Handbook of Mathematical Functions, 7.1.26.
+ReGLU, GEGLU and SwiGLU, Shazeer (2020).
