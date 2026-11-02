@@ -11,6 +11,10 @@ planning and reordering, `release` milestone release, `chore`
 agentrail bookkeeping (step complete, saga archive), `vendor` a
 refresh of the vendored X_eTaL.
 
+## 2026-11-02
+
+- 13:49 `docs` docs/reg-rs-improvements.md: an audit of the 200 reg-rs baselines (read whole, and mutation-tested: 96 of 104 one-line mutants of the libraries caught). Two bugs (Sample's t_op with ties above the k-th; Integrals' LaTeX sets the body in math mode), Flow's refusals the lexer now takes first, weak and tautological checks, bare 1s and static browser goldens, 33 duplicate expansion goldens, float noise that fails on Linux; each with its fix. Nothing changed yet.
+
 ## 2026-11-01
 
 - `plan` Saga 5 (libraries-and-demos) archived, its parked f32-tolerance and the unscheduled activation-compare and glu-ffn put in a Backlog; Saga 6 (moe-finetune) begun: `docs/fine-tune-moe-demo-plan.md` from `docs/fine-tune-moe-research.txt`, twelve steps in the research's recommended order (LoRA, LoRA-FA, QLoRA, a tiny MoE fine-tuned by each policy, VeRA, deployment)
