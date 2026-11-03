@@ -13,6 +13,7 @@ refresh of the vendored X_eTaL.
 
 ## 2026-11-03
 
+- `chore` saga step lora-lib closed
 - `lib` libs/LoRA (`lo:`): low-rank adapters, the forward pass W x + s B (A x) in factored form, `d_elta` and `m_erge`, `r_ank` by Gram-Schmidt, `p_arams`, `e_xpert`, `b_ytes`, `c_osts`; 9 doc examples, 12 checks (the merge identity, the update's rank r for r = 1 .. 5, B at 0 is the base, the research's 884,736 numbers, 1.69 MiB, 108 MiB and 2.53 GiB), a sizes demo (step lora-lib)
 
 ## 2026-11-01

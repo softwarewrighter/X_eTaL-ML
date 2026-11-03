@@ -1,0 +1,1 @@
+libs/LoRA (lo:): 9 functions (s_caling, f_orward factored, d_elta, m_erge, r_ank by Gram-Schmidt, p_arams, e_xpert, b_ytes, c_osts); 9 doc examples, 12 checks (merge identity, rank(sBA)=r for r=1..5, B=0 is the base, research numbers 884,736 / 1.69 MiB / 108 MiB / 2.53 GiB); demos/sizes.xtl; libs site Fine-tuning group, 14 libraries; gate ok
