@@ -1,0 +1,106 @@
+## LoRA: low-rank adapters: the adapted forward pass in factored form, the merge, the counts
+##
+## Import it with an alias of your choice: "lo:" u_se< "LoRA".
+## Put libs/LoRA/src on XETAL_PATH ("just path"); the reference is libs/LoRA/docs.
+## Names with l: are exported; h: names are private to this file.
+##
+## A frozen weight matrix W (m x n: m outputs, n inputs) is adapted by
+## a low-rank update s B A: A is r x n, B is m x r, the rank r much
+## smaller than m and n, s the scale alpha / r. An adapter is the tuple
+## (W, A, B, s). The inputs are columns: x is one input of n numbers or
+## an n x N matrix of N inputs, and W x is `W '+ '* i_nner x`. The
+## forward pass keeps the factors apart, B (A x), as training does:
+## the merged matrix W + s B A is made only to deploy it.
+
+### The forward pass
+
+## `alpha s_caling r`: the adapter's scale s, alpha / r (so that a
+## change of rank keeps the update's size).
+## >> "lo:" u_se< "LoRA"
+## >> 16.0 lo:s_caling 8
+## 2.0
+l:s_caling := { alpha r -> alpha / f_loat r }
+
+## `(W, A, B, s) f_orward x`: the adapted layer, W x + s B (A x), the
+## update in its factored form: A x (r numbers per input), then B of
+## that, never the m x n matrix B A.
+## >> "lo:" u_se< "LoRA"
+## >> (2 2 r_eshape 1.0 0.0 0.0 1.0, 1 2 r_eshape 1.0 1.0, 2 1 r_eshape 1.0 -1.0, 0.5) lo:f_orward 2.0 4.0
+## 5.0 1.0
+l:f_orward := { (W, A, B, s) x -> (W '+ '* i_nner x) + s * B '+ '* i_nner A '+ '* i_nner x }
+
+### The merge
+
+## `d_elta (A, B, s)`: the update itself, s B A, an m x n matrix of
+## rank r at most.
+## >> "lo:" u_se< "LoRA"
+## >> lo:d_elta (1 2 r_eshape 1.0 1.0, 2 1 r_eshape 1.0 -1.0, 0.5)
+##  0.5  0.5
+## -0.5 -0.5
+l:d_elta := { (A, B, s) -> s * B '+ '* i_nner A }
+
+## `m_erge (W, A, B, s)`: the adapter folded into the weights, W + s B
+## A: one matrix again, as fast as the base layer, for one task.
+## >> "lo:" u_se< "LoRA"
+## >> lo:m_erge (2 2 r_eshape 1.0 0.0 0.0 1.0, 1 2 r_eshape 1.0 1.0, 2 1 r_eshape 1.0 -1.0, 0.5)
+##  1.5 0.5
+## -0.5 0.5
+l:m_erge := { (W, A, B, s) -> W + l:d_elta (A, B, s) }
+
+### Rank
+
+## One step of Gram-Schmidt on the rows: the k-th row's remainder R[k],
+## if larger than tol, becomes a direction and is taken out of every
+## row, and the count c goes up.
+h:s_tep := { tol (R, k, c) ->
+  v := k s_elect R
+  n := s_qrt '+ r_/ v * v
+  n <= tol ? (R, k + 1, c)
+  (R - (R '+ '* i_nner v / n) '* t_able v / n, k + 1, c + 1)
+}
+
+## `r_ank M`: the number of independent rows of the matrix M (its
+## rank), by Gram-Schmidt: a row counts when what is left of it, after
+## the directions of the rows before it are taken out, is larger than
+## 1e-9 times the largest row.
+## >> "lo:" u_se< "LoRA"
+## >> lo:r_ank 3 3 r_eshape 1.0 2.0 3.0 2.0 4.0 6.0 0.0 1.0 1.0
+## 2
+l:r_ank := { M ->
+  tol := 0.000000001 * s_qrt 'm_ax r_/ '+ r_/_2 M * M
+  (_, _, c) := (f_irst s_hape M) '{ R -> tol h:s_tep R } p_ower (M, 1, 0)
+  c
+}
+
+### Counts
+
+## `r p_arams m n`: the numbers an adapter of rank r on an m x n matrix
+## trains, r (m + n) (B's m r and A's r n), against the m n of the
+## matrix itself.
+## >> "lo:" u_se< "LoRA"
+## >> 16 lo:p_arams 4096 14336
+## 294912
+l:p_arams := { r mn -> r * '+ r_/ mn }
+
+## `r e_xpert d f`: the numbers rank-r adapters train on one SwiGLU
+## expert of hidden size d and inner size f: its three matrices (gate
+## and up, f x d; down, d x f), 3 r (d + f).
+## >> "lo:" u_se< "LoRA"
+## >> 16 lo:e_xpert 4096 14336
+## 884736
+l:e_xpert := { r df -> 3 * r l:p_arams df }
+
+## `b b_ytes n`: the bytes n numbers take at b bits each (16 for BF16
+## and FP16, 32 for FP32, 4 for NF4).
+## >> "lo:" u_se< "LoRA"
+## >> 16 lo:b_ytes 884736
+## 1769472.0
+l:b_ytes := { b n -> (f_loat b * n) / 8.0 }
+
+## `r c_osts m n`: the multiply-adds for one input through rank-r
+## factors on an m x n matrix, B (A x) as r (m + n), then what making
+## the matrix B A first costs, r m n.
+## >> "lo:" u_se< "LoRA"
+## >> 8 lo:c_osts 64 64
+## 1024 32768
+l:c_osts := { r mn -> (r l:p_arams mn) c_at r * '* r_/ mn }

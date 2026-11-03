@@ -1,0 +1,2 @@
+command = "../../../scripts/xt type ../src/LoRA.xtl"
+exit_code = 0

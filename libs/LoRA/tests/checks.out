@@ -1,0 +1,13 @@
+ok: W x + s B (A x) is (W + s B A) x
+ok: the factored form is W x plus the update times x
+ok: rank(s B A) is r for r = 1 .. 5
+ok: the base is of full rank, 6
+ok: an outer product has rank 1
+ok: with B at 0, the layer is W x
+ok: the scale is alpha / r
+ok: rank 16 on one SwiGLU expert trains 884,736 numbers
+ok: which take 1.69 MiB in BF16
+ok: 64 experts take 108 MiB, 24 layers of them 2.53 GiB
+ok: an 8 x 8 adapter at rank 3 trains 48 numbers
+ok: B (A x) costs r (m + n); making B A costs r m n
+12 checks, all passed

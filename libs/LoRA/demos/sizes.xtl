@@ -1,0 +1,33 @@
+#!/usr/bin/env xetal
+## One projection adapted, then what adapters cost on a large MoE. Run
+## with "just demo LoRA sizes".
+
+"lo:" u_se< "LoRA"
+
+### An 8 x 8 projection at rank 3
+
+## A frozen W, A 3 x 8, B 8 x 3 at alpha 6 (s = 2), and one input, by a
+## fixed ripple (no chance).
+i := f_loat r_ange 64
+W := 8 8 r_eshape s_in 0.7 * i * i
+a := (W, 3 8 r_eshape 0.2 * c_os 0.3 * 24 t_ake i * i, 8 3 r_eshape 0.1 * s_in 0.5 * 24 t_ake i * i, 6.0 lo:s_caling 3)
+x := c_os 0.4 * 8 t_ake i
+## The adapted output, the factors apart, then the same by the merged
+## matrix: they agree within 1e-12 (1).
+y := a lo:f_orward x
+y
+0.000000000001 > 'm_ax r_/ a_bs y - (lo:m_erge a) '+ '* i_nner x
+## The numbers trained against the matrix's, and the update's rank.
+(3 lo:p_arams 8 8) c_at 64
+(_, A, B, s) := a
+lo:r_ank lo:d_elta (A, B, s)
+
+### A SwiGLU expert, d 4096, f 14336
+
+## For ranks 8, 16, 32 and 64 (a row each): the numbers one expert's adapters train,
+## and the MiB they take in BF16 for one expert and for 64.
+r := 8 16 32 64
+u:e_xpert := { k -> k lo:e_xpert 4096 14336 }
+n := 'u:e_xpert e_ach r
+mib := (16 lo:b_ytes n) / 1048576.0
+o_\ 4 4 r_eshape (f_loat r) c_at (f_loat n) c_at mib c_at 64.0 * mib

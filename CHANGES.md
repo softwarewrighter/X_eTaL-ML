@@ -11,6 +11,10 @@ planning and reordering, `release` milestone release, `chore`
 agentrail bookkeeping (step complete, saga archive), `vendor` a
 refresh of the vendored X_eTaL.
 
+## 2026-11-03
+
+- `lib` libs/LoRA (`lo:`): low-rank adapters, the forward pass W x + s B (A x) in factored form, `d_elta` and `m_erge`, `r_ank` by Gram-Schmidt, `p_arams`, `e_xpert`, `b_ytes`, `c_osts`; 9 doc examples, 12 checks (the merge identity, the update's rank r for r = 1 .. 5, B at 0 is the base, the research's 884,736 numbers, 1.69 MiB, 108 MiB and 2.53 GiB), a sizes demo (step lora-lib)
+
 ## 2026-11-01
 
 - `plan` Saga 5 (libraries-and-demos) archived, its parked f32-tolerance and the unscheduled activation-compare and glu-ffn put in a Backlog; Saga 6 (moe-finetune) begun: `docs/fine-tune-moe-demo-plan.md` from `docs/fine-tune-moe-research.txt`, twelve steps in the research's recommended order (LoRA, LoRA-FA, QLoRA, a tiny MoE fine-tuned by each policy, VeRA, deployment)

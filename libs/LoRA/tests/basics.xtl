@@ -1,0 +1,33 @@
+#!/usr/bin/env xetal
+## LoRA: each function's answers on small arrays, pinned. Run with
+## "just run LoRA basics".
+
+"lo:" u_se< "LoRA"
+
+## A 4 x 3 base, a rank-2 adapter (A 2 x 3, B 4 x 2) at alpha 4, and two
+## inputs as the columns of x, by a fixed ripple, the sine of a square
+## (no chance).
+i := f_loat r_ange 12
+W := 4 3 r_eshape 0.5 * s_in 0.7 * i * i
+A := 2 3 r_eshape 0.3 * c_os 0.7 * f_loat r_ange 6
+B := 4 2 r_eshape 0.2 * s_in 2.1 * f_loat r_ange 8
+s := 4.0 lo:s_caling 2
+x := 3 2 r_eshape 1.0 -0.5 0.25 2.0 -1.0 0.5
+s
+(W, A, B, s) lo:f_orward x
+lo:d_elta (A, B, s)
+lo:m_erge (W, A, B, s)
+## Ranks: the base's, the update's (at most 2).
+lo:r_ank W
+lo:r_ank lo:d_elta (A, B, s)
+## Counts: this adapter, an 8 x 8 one at rank 3, the costs of B (A x)
+## and of B A.
+2 lo:p_arams s_hape W
+3 lo:p_arams 8 8
+8 lo:c_osts 64 64
+16 lo:e_xpert 4096 14336
+16 lo:b_ytes 16 lo:e_xpert 4096 14336
+## The reference page's examples.
+(2 2 r_eshape 1.0 0.0 0.0 1.0, 1 2 r_eshape 1.0 1.0, 2 1 r_eshape 1.0 -1.0, 0.5) lo:f_orward 2.0 4.0
+lo:m_erge (2 2 r_eshape 1.0 0.0 0.0 1.0, 1 2 r_eshape 1.0 1.0, 2 1 r_eshape 1.0 -1.0, 0.5)
+lo:r_ank 3 3 r_eshape 1.0 2.0 3.0 2.0 4.0 6.0 0.0 1.0 1.0

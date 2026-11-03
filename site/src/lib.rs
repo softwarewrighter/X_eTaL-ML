@@ -39,6 +39,7 @@ pub const GROUPS: &[(&str, &[&str])] = &[
     ("Networks", &["NN", "Activations", "Net", "Flow", "Optim"]),
     ("Transformers", &["Attention", "Norm", "Sample"]),
     ("Pictures and weights", &["Conv", "Quant"]),
+    ("Fine-tuning", &["LoRA"]),
     ("Classic machine learning", &["Learn", "Embed"]),
     ("Mathematics", &["Integrals"]),
 ];

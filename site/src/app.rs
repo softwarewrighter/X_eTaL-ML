@@ -220,7 +220,7 @@ pub fn app() -> Html {
         html! {
             <div class="landing">
                 <h2>{ "Start here" }</h2>
-                <p class="lead">{ format!("{} machine-learning libraries written in X_eTaL itself, the ones the ML demos are made of: networks and their training, attention and sampling for a tiny GPT, convolution and quantized weights, classic methods and embeddings. Pick one below: its demos run here, in your browser. Press Run, then Edit the program; every library can be imported by it.", LIBRARIES.len()) }</p>
+                <p class="lead">{ format!("{} machine-learning libraries written in X_eTaL itself, the ones the ML demos are made of: networks and their training, attention and sampling for a tiny GPT, convolution and quantized weights, low-rank adapters for fine-tuning, classic methods and embeddings. Pick one below: its demos run here, in your browser. Press Run, then Edit the program; every library can be imported by it.", LIBRARIES.len()) }</p>
                 <p>{ "In a program of your own, one line imports a library under an alias of your choice, and its functions then read like the built-ins:" }</p>
                 { rendered("\"nn:\" u_se< \"NN\"\nnn:s_oftmax 1.0 2.0 3.0           # 0.09 0.24 0.67") }
                 <p>{ "X_eTaL extends in three ways:" }</p>

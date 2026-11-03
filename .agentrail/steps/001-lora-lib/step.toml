@@ -1,6 +1,6 @@
 number = 1
 slug = "lora-lib"
-status = "pending"
+status = "in-progress"
 description = "(docs/fine-tune-moe-demo-plan.md, step 1; research L25-170, L296-375, L2434-2..."
 role = "production"
 context_files = []
