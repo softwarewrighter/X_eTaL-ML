@@ -1,4 +1,4 @@
-number = 3
+number = 4
 slug = "lora-explorer"
 status = "pending"
 description = "(docs/fine-tune-moe-demo-plan.md, step 3; L3283-3345, L3473-3585) demos/lora-..."

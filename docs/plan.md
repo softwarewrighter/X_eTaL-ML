@@ -409,6 +409,7 @@ routing.
 | # | Step slug | Delivers |
 | - | --------- | -------- |
 | 1 | lora-lib | DONE: libs/LoRA (`lo:`, 9 functions): the adapted forward pass in factored form, the update and the merge, a rank by Gram-Schmidt, parameter, byte and cost counts; 12 checks (the merge identity, rank(s B A) = r for r = 1 .. 5, B at 0 is the base, the research's 884,736, 1.69 MiB, 108 MiB, 2.53 GiB); demos/sizes.xtl |
+| 1a | lora-first-page | (inserted 2026-11-03, the user: something to demo in a couple of hours) demos/lora-explorer live without training: the adapted layer as a pipeline of equations drawn as math, each stage clickable; a rank slider; the update, the merge and its rank; a sizes calculator |
 | 2 | lora-grads | LoRA's gradients and a step (SGD, Adam through Optim); LoRA-FA (A frozen, seeded); finite-difference checks |
 | 3 | lora-explorer | demos/lora-explorer, live: an 8 x 8 projection adapted, the pipeline drawn as math with the stage view, a backward step, LoRA beside LoRA-FA fitting a known update, the rank sweep against the truncated-SVD optimum |
 | 4 | adapter-macro | `lo:a_dapter<`: a spec string to forward and backward code for a policy, expansions pinned, checked against the library |
