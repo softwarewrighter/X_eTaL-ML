@@ -6,17 +6,15 @@
 use std::rc::Rc;
 
 use gloo_timers::callback::Timeout;
-use wasm_bindgen::JsCast;
 use yew::prelude::*;
 
 use microscope::chrome::{footer, header, panel};
-use microscope::color::{ramp, DIVERGE};
 use microscope::palette::Composer;
 use microscope::source::{between, block, code, NONE};
 
-use crate::blocks::{dragged, inputs, picture, SIDE, SIZE};
+use microscope::stageview::{no_stage, row_picker, stage_view, Split, Turn};
 use crate::explore::Stages;
-use crate::micro::{calls, chosen_row, clickable, expansion_ranges, program, run, stage_ranges, Example, Run, Value, EXAMPLES, STARTERS};
+use crate::micro::{calls, clickable, expansion_ranges, program, run, stage_ranges, Example, Run, EXAMPLES, STARTERS};
 
 /// The stage chosen: of the pipeline of equations (drawn as math) or of
 /// the pipeline, its number from 1 (the data first).
@@ -36,27 +34,6 @@ fn picker(picked: &UseStateHandle<usize>, chosen: &UseStateHandle<Option<Chosen>
             }) }
         </div>
     }
-}
-
-/// A click on a drawn pipeline's row: its stage (its class st-K) given
-/// to `chose`, the row by where the click falls (chosen_row).
-pub fn row_picker(chose: Callback<usize>) -> Callback<MouseEvent> {
-    Callback::from(move |ev: MouseEvent| {
-        let Some(tex) = ev.current_target().and_then(|t| t.dyn_into::<web_sys::Element>().ok()) else { return };
-        let Ok(found) = tex.query_selector_all(".st") else { return };
-        let rows: Vec<(usize, f64, f64)> = (0..found.length())
-            .filter_map(|i| found.item(i)?.dyn_into::<web_sys::Element>().ok())
-            .filter_map(|el| {
-                let k = el.class_name().split_whitespace().find_map(|w| w.strip_prefix("st-").and_then(|n| n.parse::<usize>().ok()))?;
-                let r = el.get_bounding_client_rect();
-                let x = ev.client_x() as f64;
-                (r.left() <= x && x <= r.right()).then(|| (k, r.top(), r.bottom()))
-            })
-            .collect();
-        if let Some(k) = chosen_row(&rows, ev.client_y() as f64) {
-            chose.emit(k);
-        }
-    })
 }
 
 /// The equations, each drawn as math where KaTeX has loaded
@@ -130,21 +107,6 @@ fn columns(e: &Example, r: &Run, chosen: &UseStateHandle<Option<Chosen>>) -> Htm
     }
 }
 
-/// How the blocks are turned (yaw, pitch), and a drag in progress
-/// (where it started, the turn then).
-#[derive(Clone, Copy, Debug, PartialEq)]
-pub struct Turn {
-    pub yaw: f64,
-    pub pitch: f64,
-    pub from: Option<(f64, f64, f64, f64)>,
-}
-
-impl Default for Turn {
-    fn default() -> Self {
-        Turn { yaw: -0.55, pitch: 0.5, from: None }
-    }
-}
-
 /// What the chosen stage gives: each value (a tuple's parts each), its
 /// shape, its numbers as a table colored by sign and size when it fits
 /// (64 items at most, slices of a rank-3 array), else its range and its
@@ -159,95 +121,6 @@ fn gives(e: &Example, r: &Run, chosen: &UseStateHandle<Option<Chosen>>, turn: &U
     stage_view(trace, &text, k, whose, turn)
 }
 
-/// The hint the right pane shows until a stage is chosen.
-pub fn no_stage() -> Html {
-    panel("What a stage gives", "flow:s_tages<", "Click a row of the pipeline drawn as math, or a stage under the pipeline, to see here what it gives: its shape, its numbers, and in 3D the stages it reads and what it gives.", false, html! {})
-}
-
-/// Stage `k` of a pipeline (`text`, its call as written) with its
-/// values `trace` (flow:s_tages<): what it gives, then in 3D what it
-/// reads and gives.
-pub fn stage_view(trace: &[Value], text: &str, k: usize, whose: &str, turn: &UseStateHandle<Turn>) -> Html {
-    let vs: Vec<&Value> = trace.iter().filter(|v| v.stage == k).collect();
-    let labels: Vec<(usize, String)> = trace.iter().filter(|v| !v.label.is_empty()).map(|v| (v.stage, v.label.clone())).collect();
-    let reads = stage_ranges(text).get(k - 1).map(|&(a, b)| inputs(&text[a..b], k, &labels)).unwrap_or_default();
-    let title = format!("Stage {k} {whose} gives");
-    panel(&title, "flow:s_tages<", "Computed as the page runs, the same values the pipeline passes on (Flow's s_tages< keeps every stage's value).", false, html! { <>
-        { for vs.iter().map(|v| value(v)) }
-        { solids(trace, &reads, &vs, turn) }
-    </> })
-}
-
-/// The stage in 3D: the values of the stages it reads, an arrow, what
-/// it gives; a cube an item, colored as the tables are; drag to turn.
-fn solids(trace: &[Value], reads: &[usize], out: &[&Value], turn: &UseStateHandle<Turn>) -> Html {
-    let t = **turn;
-    let (t1, t2, t3) = (turn.clone(), turn.clone(), turn.clone());
-    let down = Callback::from(move |e: PointerEvent| {
-        let t = *t1;
-        t1.set(Turn { from: Some((e.client_x() as f64, e.client_y() as f64, t.yaw, t.pitch)), ..t });
-    });
-    let mv = Callback::from(move |e: PointerEvent| {
-        let t = *t2;
-        if let Some((x, y, yaw, pitch)) = t.from {
-            let (dx, dy) = (e.client_x() as f64 - x, e.client_y() as f64 - y);
-            t2.set(Turn { yaw: yaw + 0.01 * dx, pitch: (pitch + 0.01 * dy).clamp(-1.5, 1.5), from: t.from });
-        }
-    });
-    let up = Callback::from(move |_: PointerEvent| t3.set(Turn { from: None, ..*t3 }));
-    let figure = |v: &Value, role: &str| {
-        let p = picture(&v.shape, v.items.len(), t.yaw, t.pitch);
-        let size = v.items.iter().fold(0.0f64, |m, x| m.max(x.abs())).max(1e-300);
-        let name = if v.label.is_empty() { format!("stage {}", v.stage) } else { format!("stage {} ({})", v.stage, v.label) };
-        let shape = if v.shape.is_empty() { "one number".to_string() } else { v.shape.iter().map(|n| n.to_string()).collect::<Vec<_>>().join(" \u{00d7} ") };
-        let shown = if v.items.len() < v.count() { format!(", its first {} items", v.items.len()) } else { String::new() };
-        html! { <figure class="solid">
-            <svg viewBox={format!("0 0 {SIZE} {SIZE}")} width={SIZE.to_string()} height={SIZE.to_string()} role="img" aria-label={format!("{role} {name} in 3-D")}>
-                { for p.edges.iter().map(|&((x1, y1), (x2, y2))| html! { <line x1={format!("{x1:.1}")} y1={format!("{y1:.1}")} x2={format!("{x2:.1}")} y2={format!("{y2:.1}")} class="edge" /> }) }
-                { for p.faces.iter().map(|f| {
-                    let c = ramp(&DIVERGE, 0.5 + 0.5 * v.items[f.item] / size);
-                    let pts = f.pts.iter().map(|(x, y)| format!("{x:.1},{y:.1}")).collect::<Vec<_>>().join(" ");
-                    let fill = format!("rgb({:.0}, {:.0}, {:.0})", c[0] as f64 * f.light, c[1] as f64 * f.light, c[2] as f64 * f.light);
-                    html! { <polygon points={pts} fill={fill} /> }
-                }) }
-                { for p.labels.iter().map(|(x, y, s)| html! { <text x={format!("{x:.1}")} y={format!("{y:.1}")} text-anchor="middle" dominant-baseline="middle">{s.clone()}</text> }) }
-            </svg>
-            <figcaption>{format!("{role} {name}: {shape}{shown}")}</figcaption>
-        </figure> }
-    };
-    let ins: Vec<&Value> = reads.iter().flat_map(|&s| trace.iter().filter(move |v| v.stage == s)).collect();
-    html! { <div class="solids" onpointerdown={down} onpointermove={mv} onpointerup={up.clone()} onpointerleave={up}>
-        <p class="note">{"In 3D, a cube an item: the stages it reads, then what it gives. Drag to turn."}</p>
-        <div class="row">
-            { for ins.iter().map(|v| figure(v, "reads")) }
-            { if ins.is_empty() { html! {} } else { html! { <span class="arrow">{"\u{2192}"}</span> } } }
-            { for out.iter().map(|v| figure(v, "gives")) }
-        </div>
-    </div> }
-}
-
-fn value(v: &Value) -> Html {
-    let name = if v.label.is_empty() { String::new() } else { format!("{}: ", v.label) };
-    let shape = if v.shape.is_empty() { "one number".to_string() } else { v.shape.iter().map(|n| n.to_string()).collect::<Vec<_>>().join(" \u{00d7} ") };
-    let size = v.items.iter().fold(0.0f64, |m, x| m.max(x.abs())).max(1e-300);
-    let cell = |x: f64| {
-        let c = ramp(&DIVERGE, 0.5 + 0.5 * x / size);
-        html! { <td style={format!("background: rgb({}, {}, {})", c[0], c[1], c[2])}>{format!("{x:.3}")}</td> }
-    };
-    let table = |rows: usize, cols: usize, from: usize| html! { <table class="items">
-        { for (0..rows).map(|i| html! { <tr>{ for (0..cols).map(|j| cell(v.items[from + i * cols + j])) }</tr> }) }
-    </table> };
-    let fits = v.count() <= 64 && v.items.len() == v.count();
-    let body = match (fits, v.shape.as_slice()) {
-        (true, []) => table(1, 1, 0),
-        (true, [n]) => table(1, *n, 0),
-        (true, [r, c]) => table(*r, *c, 0),
-        (true, [s, r, c]) => html! { <>{ for (0..*s).map(|i| table(*r, *c, i * r * c)) }</> },
-        _ => html! { <p class="calc">{format!("from {:.4} to {:.4}; the first numbers: {}", v.min, v.max, v.items.iter().take(8).map(|x| format!("{x:.4}")).collect::<Vec<_>>().join(" "))}</p> },
-    };
-    html! { <div class="value"><p class="calc">{ code(&format!("{name}{shape}")) }</p>{ body }</div> }
-}
-
 fn agree(e: &Example, r: &Run) -> Html {
     let shown: Vec<String> = r.value.iter().take(12).map(|v| format!("{v:.4}")).collect();
     let more = if r.value.len() > 12 { " ..." } else { "" };
@@ -255,49 +128,6 @@ fn agree(e: &Example, r: &Run) -> Html {
         { for r.checks.iter().map(|c| html! { <p class="calc">{c.clone()}</p> }) }
         <p class="calc">{code(&format!("r_avel {}", e.pipe))}{format!(" = {}{more}", shown.join(" "))}</p>
     </> })
-}
-
-#[derive(Properties, PartialEq)]
-pub struct SplitProps {
-    pub left: Html,
-    pub right: Html,
-    /// No stage chosen: on a narrow screen the right pane is hidden.
-    pub idle: bool,
-    /// The right pane's close button (shown when a stage is chosen).
-    pub close: Callback<()>,
-}
-
-/// Two panes: `left`, and `right` in view as the page scrolls; the
-/// divider between them dragged to resize the right (`dragged`).
-#[function_component(Split)]
-pub fn split(p: &SplitProps) -> Html {
-    let side = use_state(|| SIDE);
-    let drag = use_state(|| None::<(f64, f64)>);
-    let (s1, d1, s2, d2, d3) = (side.clone(), drag.clone(), side.clone(), drag.clone(), drag.clone());
-    let down = Callback::from(move |e: PointerEvent| {
-        if let Some(el) = e.target_dyn_into::<web_sys::Element>() {
-            let _ = el.set_pointer_capture(e.pointer_id());
-        }
-        d1.set(Some((e.client_x() as f64, *s1)));
-    });
-    let mv = Callback::from(move |e: PointerEvent| {
-        if let Some((x, w)) = *d2 {
-            s2.set(dragged(w, x, e.client_x() as f64));
-        }
-    });
-    let up = Callback::from(move |_: PointerEvent| d3.set(None));
-    let close = p.close.reform(|_: MouseEvent| ());
-    html! {
-        <div class={classes!("work", p.idle.then_some("idle"))} style={format!("--side: {:.0}px", *side)}>
-            <div class="left">{ p.left.clone() }</div>
-            <div class={classes!("divider", drag.is_some().then_some("drag"))} title="drag to resize"
-                onpointerdown={down} onpointermove={mv} onpointerup={up.clone()} onpointercancel={up}></div>
-            <aside class="side">
-                { if p.idle { html! {} } else { html! { <button class="close" title="close" aria-label="close the stage" onclick={close}>{"\u{00d7}"}</button> } } }
-                { p.right.clone() }
-            </aside>
-        </div>
-    }
 }
 
 #[function_component(App)]

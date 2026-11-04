@@ -3,8 +3,9 @@
 //! them, the program the page runs for one example, what it printed and
 //! what the pipeline became. Nothing here knows about the browser.
 
-use microscope::run::{expanded, numbers, output, printed, section};
+use microscope::run::{expanded, numbers, output, section};
 use microscope::source::Range;
+pub use microscope::stages::{chosen_row, clickable, explore, first_pipeline, stage_ranges, values, Explored, Value};
 
 /// The command-line programs.
 pub const PIPELINES: &str = include_str!("../../pipelines.xtl");
@@ -86,64 +87,6 @@ fn after(s: &str, word: &str) -> String {
     s.find(word).map_or(String::new(), |i| s[i + word.len()..].to_string())
 }
 
-/// One value a stage gives, as flow:s_tages< writes it: its stage's
-/// number (from 1, the data first), its label ("" for none), its shape,
-/// its smallest and largest item, its first items (64 at most).
-#[derive(Clone, Debug, PartialEq)]
-pub struct Value {
-    pub stage: usize,
-    pub label: String,
-    pub shape: Vec<usize>,
-    pub min: f64,
-    pub max: f64,
-    pub items: Vec<f64>,
-}
-
-impl Value {
-    /// How many items it holds.
-    pub fn count(&self) -> usize {
-        self.shape.iter().product()
-    }
-}
-
-/// The records of a flow:s_tages< line.
-pub fn values(line: &str) -> Result<Vec<Value>, String> {
-    line.split(" | ")
-        .map(|r| {
-            let f: Vec<&str> = r.split(';').collect();
-            if f.len() != 6 {
-                return Err(format!("a stage's record has {} fields: {r}", f.len()));
-            }
-            let num = |s: &str| s.trim().parse::<f64>().map_err(|_| format!("not a number: {s}"));
-            Ok(Value {
-                stage: f[0].trim().parse().map_err(|_| format!("not a stage: {}", f[0]))?,
-                label: f[1].to_string(),
-                shape: f[2].split_whitespace().map(|w| w.parse().map_err(|_| format!("not an extent: {w}"))).collect::<Result<_, _>>()?,
-                min: num(f[3])?,
-                max: num(f[4])?,
-                items: f[5].split_whitespace().map(num).collect::<Result<_, _>>()?,
-            })
-        })
-        .collect()
-}
-
-/// Where each stage's text is in a pipeline's statement (the data
-/// first): the pieces between |>, their blanks trimmed.
-pub fn stage_ranges(statement: &str) -> Vec<Range> {
-    let open = statement.find("c#\"").map(|i| i + 3).or_else(|| statement.find("c\"").map(|i| i + 2)).unwrap_or(0);
-    let close = statement.rfind('"').filter(|&c| c > open).unwrap_or(statement.len());
-    let body = &statement[open..close];
-    let mut out = Vec::new();
-    let mut start = 0;
-    for (i, _) in body.match_indices("|>").chain(std::iter::once((body.len(), ""))) {
-        let piece = &body[start..i];
-        let lead = piece.len() - piece.trim_start().len();
-        out.push((open + start + lead, open + start + piece.trim_end().len()));
-        start = i + 2;
-    }
-    out
-}
-
 /// Where each stage's lines are in a pipeline's expansion: the lines
 /// binding its value (two blanks in, not a shape check's _ :=) through
 /// the line before the next stage's, a stage's check included.
@@ -158,35 +101,6 @@ pub fn expansion_ranges(expansion: &str) -> Vec<Range> {
     }
     let end = expansion.rfind("\n  ").map_or(expansion.len(), |i| i);
     starts.iter().enumerate().map(|(k, &s)| (s, starts.get(k + 1).map_or(end, |&n| n - 1))).collect()
-}
-
-/// A pipeline drawn as math, each row's stage clickable: the part after
-/// each row's & wrapped as \htmlClass{st st-K}{...} (K from 1, the data
-/// first), the row `on` also of class st-on.
-pub fn clickable(tex: &str, on: Option<usize>) -> String {
-    let (head, tail) = ("\\begin{aligned} ", " \\end{aligned}");
-    let Some(body) = tex.strip_prefix(head).and_then(|b| b.strip_suffix(tail)) else { return tex.to_string() };
-    let rows: Vec<String> = body
-        .split(" \\\\ ")
-        .enumerate()
-        .map(|(k, row)| match row.find("& ") {
-            Some(i) => format!("{}& \\htmlClass{{st st-{}{}}}{{{}}}", &row[..i], k + 1, if on == Some(k + 1) { " st-on" } else { "" }, &row[i + 2..]),
-            None => row.to_string(),
-        })
-        .collect();
-    format!("{head}{}{tail}", rows.join(" \\\\ "))
-}
-
-/// The stage a click at height `y` chose, of the drawn rows (stage, top,
-/// bottom) on the page: of the rows under the pointer, the one whose
-/// middle is nearest (a fraction reaches over the row above it). By
-/// place, not by the element clicked: KaTeX's column box lies over the
-/// later rows of a tall drawing.
-pub fn chosen_row(rows: &[(usize, f64, f64)], y: f64) -> Option<usize> {
-    rows.iter()
-        .filter(|&&(_, top, bottom)| top <= y && y <= bottom)
-        .min_by(|a, b| ((a.1 + a.2) / 2.0 - y).abs().total_cmp(&((b.1 + b.2) / 2.0 - y).abs()))
-        .map(|&(k, _, _)| k)
 }
 
 /// What one run gave.
@@ -234,55 +148,6 @@ pub fn run(e: &Example) -> Result<Run, String> {
 /// X_eTaL.
 pub fn calls(e: &Example) -> (Vec<String>, String, String) {
     (e.math.iter().map(|m| statement(e.src, m)).collect(), statement(e.src, e.pipe), statement(e.src, e.plain))
-}
-
-/// The first pipeline in a program a person wrote: the call as
-/// written, from its macro's name (`flow:p_ipe<`, else `flow:m_ath<`)
-/// through the code string's closing quote, and that code string
-/// (`c"..."` or `c#"..."#`).
-pub fn first_pipeline(src: &str) -> Option<(String, String)> {
-    let at = src.find("flow:p_ipe<").or_else(|| src.find("flow:m_ath<"))?;
-    let after = at + "flow:p_ipe<".len();
-    let rest = &src[after..];
-    let open = after + (rest.len() - rest.trim_start().len());
-    let close = if src[open..].starts_with("c#\"") {
-        open + 3 + src[open + 3..].find("\"#")? + 2
-    } else if src[open..].starts_with("c\"") {
-        let b = src.as_bytes();
-        let mut i = open + 2;
-        while i < b.len() && b[i] != b'"' {
-            i += if b[i] == b'\\' { 2 } else { 1 };
-        }
-        (i < b.len()).then_some(i + 1)?
-    } else {
-        return None;
-    };
-    Some((src[at..close].to_string(), src[open..close].to_string()))
-}
-
-/// What the stages of a person's pipeline give: the program run with
-/// two lines more, the pipeline drawn as math (Flow's m_ath<) and every
-/// stage's value (s_tages<), both of the same code string.
-#[derive(Clone, Debug, PartialEq)]
-pub struct Explored {
-    /// The pipeline's call as written (first_pipeline).
-    pub call: String,
-    /// The pipeline drawn as math, a row a stage.
-    pub tex: String,
-    /// Every stage's value.
-    pub trace: Vec<Value>,
-}
-
-/// Run `src` for its first pipeline's stages; None when it has none, the
-/// Err when the run stops (the pipeline inside a function, its names
-/// not bound at the top, among the reasons).
-pub fn explore(src: &str) -> Option<Result<Explored, String>> {
-    let (call, lit) = first_pipeline(src)?;
-    let program = format!("{}\n@ flow:m_ath< {lit}\n@ flow:s_tages< {lit}\n", src.trim_end());
-    Some(printed(&program).and_then(|out| match out.as_slice() {
-        [.., tex, stages] => Ok(Explored { call, tex: tex.clone(), trace: values(stages)? }),
-        _ => Err("the stages printed nothing".to_string()),
-    }))
 }
 
 /// What Compose starts from: an equation with its LaTeX (the dense

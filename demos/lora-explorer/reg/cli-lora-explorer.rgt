@@ -1,0 +1,3 @@
+command = '"$XETAL" run --seed 1 --draw "$XETAL_DRAW" lora-explorer.xtl'
+exit_code = 0
+desc = "lora-explorer: lora-explorer.xtl run by the pinned xetal CLI"

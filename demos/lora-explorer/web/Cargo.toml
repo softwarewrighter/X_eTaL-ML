@@ -1,0 +1,16 @@
+[package]
+name = "lora-explorer-web"
+description = "LoRA explorer: one 8 x 8 projection adapted at a rank you choose, the adapted layer as a pipeline of equations, the update and the merge, and what adapters cost on a large MoE"
+version = "0.1.0"
+edition = "2021"
+license = "MIT"
+publish = false
+
+[dependencies]
+microscope = { path = "../../../shared/microscope" }
+yew = { version = "0.21", features = ["csr"] }
+web-sys = { version = "0.3", features = ["HtmlInputElement"] }
+gloo-timers = "0.3"
+console_error_panic_hook = "0.1"
+
+[workspace]

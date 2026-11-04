@@ -1,0 +1,11 @@
+# One demo's description: read by scripts/demos.py for the tests, the
+# README's demo list and the live catalog (pages/index.html).
+slug = "lora-explorer"            # the directory name, demos/<slug>/
+title = "LoRA explorer"
+summary = "Low-rank adaptation of one 8 x 8 projection: choose the rank, see the adapted layer y = W x + s B (A x) as a pipeline of equations drawn as math and each stage's arrays, the update s B A and its rank, the merge, and what adapters cost on a large mixture-of-experts model."
+concepts = ["LoRA", "low-rank updates", "a pipeline of equations", "rank by Gram-Schmidt", "tuples as arguments"]        # the X_eTaL ideas it shows
+status = "live"             # draft | live | deferred
+order = 15                  # position in the catalog (lower first)
+needs = []                   # asks in docs/xetal-asks.md it waits on or works around
+line = "l:f_orward := { (W, A, B, s) x -> (W '+ '* i_nner x) + s * B '+ '* i_nner A '+ '* i_nner x }"
+why = "The adapted layer in one line: right to left, A x first, then B of that, so the m x n matrix B A is never made."

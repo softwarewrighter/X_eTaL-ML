@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>LoRA Explorer</title>
+  <link data-trunk rel="rust" data-bin="lora-explorer-web" />
+  <link data-trunk rel="copy-file" href="../../../images/xetal-logo-orange.png" />
+  <link data-trunk rel="icon" href="../../../images/favicon.ico" />
+  <link data-trunk rel="css" href="../../../shared/microscope/microscope.css" />
+  <!-- KaTeX (shared/katex) draws the pipeline's LaTeX; where it has not
+       loaded, the LaTeX shows as text. -->
+  <link data-trunk rel="copy-dir" href="../../../shared/katex" />
+  <link rel="stylesheet" href="katex/katex.min.css" />
+  <script defer src="katex/katex.min.js"></script>
+  <script>
+    function drawTex() {
+      if (!window.katex) return;
+      document.querySelectorAll(".tex[data-tex]").forEach(function (el) {
+        if (el.dataset.drawn === el.dataset.tex) return;
+        try { katex.render(el.dataset.tex, el, { displayMode: true, throwOnError: false, trust: function (c) { return c.command === "\\htmlClass"; } }); el.dataset.drawn = el.dataset.tex; } catch (e) {}
+      });
+    }
+    // data-tex changed in place too (a new rank, nothing added).
+    new MutationObserver(drawTex).observe(document.documentElement, { childList: true, subtree: true, attributes: true, attributeFilter: ["data-tex"] });
+    window.addEventListener("load", drawTex);
+  </script>
+  <style>
+    .controls { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; }
+    .slider { display: flex; align-items: center; gap: 8px; font-size: 0.95em; }
+    .slider input[type=number] { width: 7em; font: inherit; }
+    .muted { color: var(--muted); font-size: 0.9em; }
+    .row { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin: 8px 0; }
+    .op { font-size: 1.4em; color: var(--accent); }
+    figure.heat { margin: 0; }
+    figure.heat svg { display: block; max-width: 100%; height: auto; }
+    figure.heat .frame { fill: none; stroke: var(--line); }
+    figure.heat .cell { stroke: var(--line); stroke-width: 0.5; }
+    figure.heat figcaption { font-size: 0.8em; color: var(--muted); max-width: 200px; }
+    table.facts td { padding: 3px 10px 3px 0; }
+    table.facts td:last-child { font-variant-numeric: tabular-nums; font-weight: 600; }
+    .tex { overflow-x: auto; }
+    pre.err { color: var(--c-error, #c92a2a); white-space: pre-wrap; }
+  </style>
+</head>
+<body></body>
+</html>

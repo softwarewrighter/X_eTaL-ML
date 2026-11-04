@@ -1,0 +1,72 @@
+#!/usr/bin/env xetal
+## LoRA explorer: one 8 x 8 projection adapted by a rank-r update. The
+## frozen W, the trainable A (r x 8) and B (8 x r); the adapted layer
+## y = W x + s B (A x) as a pipeline of equations, drawn as math, its
+## factors kept apart; the update s B A, its rank and the merge; then
+## what adapters cost on a large mixture-of-experts model.
+
+"e:" u_se< "Equations"
+"flow:" u_se< "Flow"
+"lo:" u_se< "LoRA"
+
+### Data
+
+## The rank, alpha (the scale s is alpha / r), and the sizes for the
+## costs: a SwiGLU expert (d 4096, f 14336), 64 experts a layer, 24 layers.
+r := 3
+alpha := 6.0
+d := 4096
+f := 14336
+experts := 64
+layers := 24
+## W, A, B and the input x by a fixed ripple, the sine of a square (no
+## chance). A real adapter starts with B at 0 and learns it; these are
+## made up, to show the arrays.
+i := f_loat r_ange 64
+W := 8 8 r_eshape s_in 0.7 * i * i
+j := f_loat r_ange r * 8
+A := (r c_at 8) r_eshape 0.4 * c_os 1.1 * j * j
+B := (8 c_at r) r_eshape 0.3 * s_in 0.9 * j * j
+X := c_os 0.4 * 8 t_ake i
+s := alpha lo:s_caling r
+q := r - 1
+
+### The adapted layer
+
+## x goes two ways: through the frozen W, and through the adapter, A
+## first (r numbers), then B (8); the two are added.
+y := @ flow:p_ipe< c#"
+   X $x
+|> "h[k] | r" e:e_q< "sum j:=0..7 | A[k,j] * x[j]" $h
+|> "u[i] | 8" e:e_q< "sum k:=0..q | B[i,k] * h[k]" $u
+|> "y[i] | 8" e:e_q< "(sum j:=0..7 | W[i,j] * x[j]) + s * u[i]""#
+## The same pipeline, drawn as math, a row a stage.
+drawn := @ flow:m_ath< c#"
+   X $x
+|> "h[k] | r" e:e_q< "sum j:=0..7 | A[k,j] * x[j]" $h
+|> "u[i] | 8" e:e_q< "sum k:=0..q | B[i,k] * h[k]" $u
+|> "y[i] | 8" e:e_q< "(sum j:=0..7 | W[i,j] * x[j]) + s * u[i]""#
+y
+
+### The update and the merge
+
+## The update s B A (8 x 8, of rank r at most), the merged matrix W + s
+## B A, the update's rank, and how far the merged layer's output is from
+## the factored one (under 1e-12: 1).
+delta := lo:d_elta (A, B, s)
+merged := lo:m_erge (W, A, B, s)
+lo:r_ank delta
+0.000000000001 > 'm_ax r_/ a_bs y - merged '+ '* i_nner X
+## The numbers trained, against W's 64; the multiply-adds for one input,
+## factored, and to make B A first.
+(r lo:p_arams 8 8) c_at 64
+r lo:c_osts 8 8
+
+### On a large model
+
+## One expert's adapters (gate, up, down), then their MiB in BF16: one
+## expert, a layer of experts, every layer.
+n := r lo:e_xpert d c_at f
+mib := (16 lo:b_ytes n) / 1048576.0
+n
+mib c_at (mib * f_loat experts) c_at mib * f_loat experts * layers
