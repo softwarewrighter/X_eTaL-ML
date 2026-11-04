@@ -13,6 +13,7 @@ refresh of the vendored X_eTaL.
 
 ## 2026-11-03
 
+- `chore` saga step lora-first-page closed
 - `demo` demos/lora-explorer, live: one 8 x 8 projection adapted at rank 1..8 (a slider), the adapted layer as a pipeline of equations drawn as math, each stage clickable in the math for its numbers and a 3D view of what it reads and gives (the stage view moved from the pipelines demo into shared/microscope: `stages`, `stageview`, its styles in microscope.css; pipelines unchanged), each stage's arrays as heat maps, the update s B A with its rank (lo:r_ank) and the merge, a sizes calculator for a large MoE (884,736 at rank 16); 5 native tests (every rank's stages against the arithmetic, the merge, the research's numbers); no training yet (step lora-first-page)
 - `plan` step lora-first-page inserted after lora-lib: a first LoRA explorer page, without training, for a demo today (the user)
 - `chore` saga step lora-lib closed

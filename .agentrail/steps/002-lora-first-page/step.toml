@@ -1,8 +1,9 @@
 number = 2
 slug = "lora-first-page"
-status = "pending"
+status = "completed"
 description = "(the user, 2026-11-03: something to demo in a couple of hours) demos/lora-exp..."
 role = "production"
 context_files = []
 created_at = "2026-11-03T14:16:46"
-commits = []
+completed_at = "2026-11-03T18:33:29"
+commits = ["ee867f77e691bbb56da8558b14c82f3ba1dbc054"]
