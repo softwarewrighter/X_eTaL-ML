@@ -1,4 +1,4 @@
-## LoRA: low-rank adapters: the adapted forward pass in factored form, the merge, the counts
+## LoRA: low-rank adapters: the adapted forward pass in factored form, the merge, the counts, the gradients and steps, LoRA-FA
 ##
 ## Import it with an alias of your choice: "lo:" u_se< "LoRA".
 ## Put libs/LoRA/src on XETAL_PATH ("just path"); the reference is libs/LoRA/docs.
@@ -11,6 +11,12 @@
 ## an n x N matrix of N inputs, and W x is `W '+ '* i_nner x`. The
 ## forward pass keeps the factors apart, B (A x), as training does:
 ## the merged matrix W + s B A is made only to deploy it.
+##
+## Training moves A and B by the gradients of the squared error
+## (g_rads, s_gd, a_dam through the Optim library); LoRA-FA freezes A
+## (regenerated from a seed, s_eeded) and trains B alone.
+
+"op:" u_se< "Optim"
 
 ### The forward pass
 
@@ -46,6 +52,114 @@ l:d_elta := { (A, B, s) -> s * B '+ '* i_nner A }
 ##  1.5 0.5
 ## -0.5 0.5
 l:m_erge := { (W, A, B, s) -> W + l:d_elta (A, B, s) }
+
+### Gradients
+
+## `(W, A, B, s) l_oss (x, y)`: the squared error of the adapted layer
+## on the inputs x (columns) against the wanted outputs y, half the sum
+## of the squared differences, so that its gradient at the output, g,
+## is the difference itself.
+## >> "lo:" u_se< "LoRA"
+## >> (2 2 r_eshape 1.0 0.0 0.0 1.0, 1 2 r_eshape 1.0 1.0, 2 1 r_eshape 1.0 -1.0, 0.5) lo:l_oss (2 1 r_eshape 2.0 4.0, 2 1 r_eshape 4.0 2.0)
+## 1.0
+l:l_oss := { a (x, y) ->
+  e := (a l:f_orward x) - y
+  0.5 * '+ r_/ r_avel e * e
+}
+
+## `(W, A, B, s) g_rads (x, g)`: the gradients for the inputs x (an n x
+## N matrix, one input per column) and g, the loss's gradient at the
+## output (m x N): with z = A x, dL/dA = s (B' g) x', dL/dB = s g z' and
+## dL/dx = W' g + s A' (B' g), as the tuple (dA, dB, dx). B' g is made
+## once and used twice; no m x n matrix but W's own is made.
+## >> "lo:" u_se< "LoRA"
+## >> (dA, dB, dx) := (2 2 r_eshape 1.0 0.0 0.0 1.0, 1 2 r_eshape 1.0 1.0, 2 1 r_eshape 1.0 -1.0, 0.5) lo:g_rads (2 1 r_eshape 2.0 4.0, 2 1 r_eshape 1.0 -1.0)
+## >> dB
+##  3.0
+## -3.0
+l:g_rads := { (W, A, B, s) (x, g) ->
+  b := (o_\ B) '+ '* i_nner g
+  (s * b '+ '* i_nner o_\ x, s * g '+ '* i_nner o_\ A '+ '* i_nner x, ((o_\ W) '+ '* i_nner g) + s * (o_\ A) '+ '* i_nner b)
+}
+
+### Training steps
+
+## `lr s_gd ((W, A, B, s), (x, y))`: one step of gradient descent on
+## the squared error (l_oss) at the rate lr, A and B moved by Optim's
+## s_gd, W and s left as they are: the adapter after the step. p_ower
+## repeats it.
+## >> "lo:" u_se< "LoRA"
+## >> (_, A, B, _) := 0.1 lo:s_gd ((2 2 r_eshape 1.0 0.0 0.0 1.0, 1 2 r_eshape 1.0 1.0, 2 1 r_eshape 1.0 -1.0, 0.5), (2 1 r_eshape 2.0 4.0, 2 1 r_eshape 4.0 2.0))
+## >> B
+##  0.7
+## -0.7
+l:s_gd := { lr ((W, A, B, s), (x, y)) ->
+  (dA, dB, _) := (W, A, B, s) l:g_rads (x, ((W, A, B, s) l:f_orward x) - y)
+  (W, lr op:s_gd (A, dA), lr op:s_gd (B, dB), s)
+}
+
+## `a_damStart (W, A, B, s)`: what Adam starts from: the adapter, its
+## four running averages at 0 (A's two, then B's) and the step count 1.
+l:a_damStart := { (W, A, B, s) -> ((W, A, B, s), (0.0 * A, 0.0 * A, 0.0 * B, 0.0 * B), 1) }
+
+## `lr a_dam (((W, A, B, s), (mA, vA, mB, vB), t), (x, y))`: Adam's step
+## t on the squared error, A and B moved by Optim's a_dam at the rate
+## lr; the next state, the step count one more.
+## >> "lo:" u_se< "LoRA"
+## >> ((_, _, B, _), _, _) := 0.1 lo:a_dam ((lo:a_damStart (2 2 r_eshape 1.0 0.0 0.0 1.0, 1 2 r_eshape 1.0 1.0, 2 1 r_eshape 1.0 -1.0, 0.5)), (2 1 r_eshape 2.0 4.0, 2 1 r_eshape 4.0 2.0))
+## >> B
+##  0.9000000003333333
+## -0.9000000003333333
+l:a_dam := { lr (((W, A, B, s), (mA, vA, mB, vB), t), (x, y)) ->
+  (dA, dB, _) := (W, A, B, s) l:g_rads (x, ((W, A, B, s) l:f_orward x) - y)
+  (A2, mA2, vA2) := (lr, t) op:a_dam (A, mA, vA, dA)
+  (B2, mB2, vB2) := (lr, t) op:a_dam (B, mB, vB, dB)
+  ((W, A2, B2, s), (mA2, vA2, mB2, vB2), t + 1)
+}
+
+### LoRA-FA: A frozen
+
+## `seed s_eeded r n`: an r x n matrix regenerated from a whole-number
+## seed (LoRA-FA's frozen A, which a checkpoint then need not hold):
+## sin(seed k k) for k = 1 .. r n, over the square root of n (the
+## inputs' count, so A x keeps x's size). No chance: the same seed
+## gives the same matrix everywhere.
+## >> "lo:" u_se< "LoRA"
+## >> 7 lo:s_eeded 2 4
+## 0.32849329935939453 0.13545289415393452  0.08367785015140346 -0.44499780218341667
+## -0.4005672975890204  0.3115061055018265 -0.26829917759428185  0.47413628607807934
+l:s_eeded := { seed rn ->
+  k := f_loat r_ange '* r_/ rn
+  rn r_eshape (s_in (f_loat seed) * k * k) / s_qrt f_loat 2 s_elect rn
+}
+
+## `(W, A, B, s) g_radsFA (x, g)`: LoRA-FA's gradients, (dB, dx): A is
+## frozen, so its gradient is skipped, but x's still flows back through
+## A, dx = W' g + s A' (B' g).
+l:g_radsFA := { (W, A, B, s) (x, g) ->
+  (s * g '+ '* i_nner o_\ A '+ '* i_nner x, ((o_\ W) '+ '* i_nner g) + s * (o_\ A) '+ '* i_nner (o_\ B) '+ '* i_nner g)
+}
+
+## `lr s_gdFA ((W, A, B, s), (x, y))`: LoRA-FA's step of gradient
+## descent: B alone moves. Every update s B A it reaches has its rows
+## in A's row space.
+l:s_gdFA := { lr ((W, A, B, s), (x, y)) ->
+  (dB, _) := (W, A, B, s) l:g_radsFA (x, ((W, A, B, s) l:f_orward x) - y)
+  (W, A, lr op:s_gd (B, dB), s)
+}
+
+## `a_damStartFA (W, A, B, s)`: LoRA-FA's Adam state: the adapter, B's
+## two running averages at 0 (A has none: half of LoRA's optimizer
+## memory on a square layer), the step 1.
+l:a_damStartFA := { (W, A, B, s) -> ((W, A, B, s), (0.0 * B, 0.0 * B), 1) }
+
+## `lr a_damFA (((W, A, B, s), (mB, vB), t), (x, y))`: LoRA-FA's Adam
+## step: B alone moves; the next state.
+l:a_damFA := { lr (((W, A, B, s), (mB, vB), t), (x, y)) ->
+  (dB, _) := (W, A, B, s) l:g_radsFA (x, ((W, A, B, s) l:f_orward x) - y)
+  (B2, mB2, vB2) := (lr, t) op:a_dam (B, mB, vB, dB)
+  ((W, A, B2, s), (mB2, vB2), t + 1)
+}
 
 ### Rank
 
@@ -89,6 +203,17 @@ l:p_arams := { r mn -> r * '+ r_/ mn }
 ## >> 16 lo:e_xpert 4096 14336
 ## 884736
 l:e_xpert := { r df -> 3 * r l:p_arams df }
+
+## `r e_xpertFA d f`: the same expert under LoRA-FA: the numbers it
+## trains (the B's, r (2f + d)), then the frozen A's it regenerates
+## (r (2d + f)); together r e_xpert d f.
+## >> "lo:" u_se< "LoRA"
+## >> 16 lo:e_xpertFA 4096 14336
+## 524288 360448
+l:e_xpertFA := { r df ->
+  (d, f) := (f_irst df, 2 s_elect df)
+  (r * f + f + d) c_at r * d + d + f
+}
 
 ## `b b_ytes n`: the bytes n numbers take at b bits each (16 for BF16
 ## and FP16, 32 for FP32, 4 for NF4).

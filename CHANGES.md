@@ -11,6 +11,10 @@ planning and reordering, `release` milestone release, `chore`
 agentrail bookkeeping (step complete, saga archive), `vendor` a
 refresh of the vendored X_eTaL.
 
+## 2026-11-04
+
+- `lib` LoRA's training (step lora-grads): `l_oss` (half the squared error), `g_rads` (dL/dA = s (B' g) x', dL/dB = s g z', dL/dx = W' g + s A' (B' g), B' g made once), `s_gd` and `a_damStart`/`a_dam` through Optim; LoRA-FA: `s_eeded` (A regenerated from a seed), `g_radsFA` (A's gradient skipped, x's still through A), `s_gdFA`, `a_damStartFA`/`a_damFA`, `e_xpertFA` (r (2f + d) trained, r (2d + f) frozen); 6 doc examples; tests/gradients.xtl, 17 checks (every gradient against central finite differences, FA's dB and dx equal LoRA's, the steps lower the loss, FA's update stays in A's row space and LoRA's leaves it, 524,288 and 360,448 on the research's expert, Adam's 4 MiB against 6.75); basics and types reblessed after review (additions only). The research's LoRA-FA table (688,128 trained) contradicts its formulas; the reference page says which the checks follow
+
 ## 2026-11-03
 
 - `chore` saga step lora-first-page closed

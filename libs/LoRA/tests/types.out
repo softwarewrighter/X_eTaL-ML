@@ -2,8 +2,19 @@ l:s_caling : Num a => Float -> a -> Float
 l:f_orward : Num a => (a, a, a, a) -> a -> a
 l:d_elta : Num a => (a, a, a) -> a
 l:m_erge : Num a => (a, a, a, a) -> a
+l:l_oss : (Float, Float, Float, Float) -> (Float, Float) -> Float
+l:g_rads : Num a => (a, a, a, a) -> (a, a) -> (a, a, a)
+l:s_gd : Num a => a -> ((a, a, a, a), (a, a)) -> (a, a, a, a)
+l:a_damStart : (Any a, Any b, Num c) => (a, Float, Float, b) -> ((a, Float, Float, b), (Float, Float, Float, Float), c)
+l:a_dam : Float -> (((Float, Float, Float, Float), (Float, Float, Float, Float), Float), (Float, Float)) -> ((Float, Float, Float, Float), (Float, Float, Float, Float), Float)
+l:s_eeded : Num a => a -> Int -> Float
+l:g_radsFA : Num a => (a, a, a, a) -> (a, a) -> (a, a)
+l:s_gdFA : Num a => a -> ((a, a, a, a), (a, a)) -> (a, a, a, a)
+l:a_damStartFA : (Any a, Any b, Any c, Num d) => (a, b, Float, c) -> ((a, b, Float, c), (Float, Float), d)
+l:a_damFA : Float -> (((Float, Float, Float, Float), (Float, Float), Float), (Float, Float)) -> ((Float, Float, Float, Float), (Float, Float), Float)
 l:r_ank : Num a => Float -> a
 l:p_arams : Num a => a -> a -> a
 l:e_xpert : Num a => a -> a -> a
+l:e_xpertFA : Num a => a -> a -> a
 l:b_ytes : Num a => a -> a -> Float
 l:c_osts : Num a => a -> a -> a

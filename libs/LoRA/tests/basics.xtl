@@ -31,3 +31,20 @@ lo:r_ank lo:d_elta (A, B, s)
 (2 2 r_eshape 1.0 0.0 0.0 1.0, 1 2 r_eshape 1.0 1.0, 2 1 r_eshape 1.0 -1.0, 0.5) lo:f_orward 2.0 4.0
 lo:m_erge (2 2 r_eshape 1.0 0.0 0.0 1.0, 1 2 r_eshape 1.0 1.0, 2 1 r_eshape 1.0 -1.0, 0.5)
 lo:r_ank 3 3 r_eshape 1.0 2.0 3.0 2.0 4.0 6.0 0.0 1.0 1.0
+## Gradients and steps: the loss, the gradients for g = y - wanted,
+## one step of each kind (the adapter's B, or A and B, after it).
+y := 4 2 r_eshape 0.5 -1.0 1.0 0.0 -0.5 2.0 0.25 1.0
+g := ((W, A, B, s) lo:f_orward x) - y
+(W, A, B, s) lo:l_oss (x, y)
+(W, A, B, s) lo:g_rads (x, g)
+(W, A, B, s) lo:g_radsFA (x, g)
+0.1 lo:s_gd ((W, A, B, s), (x, y))
+0.1 lo:s_gdFA ((W, A, B, s), (x, y))
+0.1 lo:a_dam ((lo:a_damStart (W, A, B, s)), (x, y))
+0.1 lo:a_damFA ((lo:a_damStartFA (W, A, B, s)), (x, y))
+## A seeded A, and LoRA-FA's counts on a SwiGLU expert.
+7 lo:s_eeded 2 3
+16 lo:e_xpertFA 4096 14336
+## The reference page's gradient examples.
+(2 2 r_eshape 1.0 0.0 0.0 1.0, 1 2 r_eshape 1.0 1.0, 2 1 r_eshape 1.0 -1.0, 0.5) lo:g_rads (2 1 r_eshape 2.0 4.0, 2 1 r_eshape 1.0 -1.0)
+0.1 lo:s_gd ((2 2 r_eshape 1.0 0.0 0.0 1.0, 1 2 r_eshape 1.0 1.0, 2 1 r_eshape 1.0 -1.0, 0.5), (2 1 r_eshape 2.0 4.0, 2 1 r_eshape 4.0 2.0))

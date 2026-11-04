@@ -1,0 +1,18 @@
+ok: dL/dA = s (B' g) x' is the finite differences
+ok: dL/dB = s g z' is the finite differences
+ok: dL/dx = W' g + s A' B' g is the finite differences
+ok: each gradient has its array's shape
+ok: LoRA-FA's dB and dx are LoRA's
+ok: a step of gradient descent lowers the loss
+ok: 200 steps of LoRA, LoRA-FA, Adam and Adam-FA all lower it
+ok: Adam counts its steps
+ok: LoRA-FA leaves A as it was
+ok: LoRA-FA's update lies in A's row space
+ok: LoRA's does not
+ok: a seed regenerates A
+ok: another seed gives another A
+ok: a seeded A is r x n, of rank r
+ok: LoRA-FA trains r (2f + d) and regenerates r (2d + f)
+ok: which together are LoRA's 884,736
+ok: Adam's FP32 averages: 6.75 MiB for LoRA, 4 MiB for LoRA-FA
+17 checks, all passed

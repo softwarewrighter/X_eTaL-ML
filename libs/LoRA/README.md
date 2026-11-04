@@ -1,6 +1,6 @@
 # LoRA
 
-Low-rank adapters (LoRA): the adapted forward pass in factored form, the merge, the counts
+Low-rank adapters (LoRA): the adapted forward pass in factored form, the merge, the counts, the gradients and steps, LoRA-FA
 
 ```
 "lo:" u_se< "LoRA"
