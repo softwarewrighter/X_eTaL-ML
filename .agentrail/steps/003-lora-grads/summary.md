@@ -1,0 +1,1 @@
+libs/LoRA gains training: l_oss, g_rads (dA, dB, dx), s_gd and a_dam through Optim; LoRA-FA (s_eeded, g_radsFA, s_gdFA, a_damFA, e_xpertFA); tests/gradients.xtl 17 checks incl. central finite differences and FA's row-space property; research's FA table found inconsistent with its formulas, documented
