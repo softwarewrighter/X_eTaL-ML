@@ -1,4 +1,4 @@
-number = 6
+number = 7
 slug = "adapter-macro"
 status = "pending"
 description = "(docs/fine-tune-moe-demo-plan.md, step 4; L2629-2659) lo:a_dapter<: a spec st..."

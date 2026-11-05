@@ -1,4 +1,4 @@
-number = 7
+number = 8
 slug = "quant-nf4"
 status = "pending"
 description = "(docs/fine-tune-moe-demo-plan.md, step 5; L2954-3162) Quant gains blockwise u..."

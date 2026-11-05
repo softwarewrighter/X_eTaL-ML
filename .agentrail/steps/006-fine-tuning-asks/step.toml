@@ -1,0 +1,8 @@
+number = 6
+slug = "fine-tuning-asks"
+status = "in-progress"
+description = "(the user, 2026-11-05) Take X_eTaL-fine-tuning's quick asks (its docs/xetal-M..."
+role = "production"
+context_files = []
+created_at = "2026-11-05T14:35:54"
+commits = []
