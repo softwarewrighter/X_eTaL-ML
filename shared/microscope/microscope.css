@@ -316,3 +316,6 @@ body:has(main > .wide) :is(header, main, footer) { max-width: 1720px; }
   .work.idle .side { display: none; }
   .work:not(.idle) { padding-bottom: 46vh; }
 }
+
+/* A notation call typeset in place in the Rendered pane (source::rendered). */
+pre.rendered .texi { font-size: 1.15em; padding: 0 2px; color: var(--fg); }

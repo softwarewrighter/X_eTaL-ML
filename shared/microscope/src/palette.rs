@@ -9,7 +9,7 @@ use web_sys::HtmlTextAreaElement;
 use yew::prelude::*;
 
 use crate::run::expanded;
-use crate::source::{block, NONE};
+use crate::source::{block, rendered, NONE};
 
 /// One part of the palette: its group, the label on its button, the
 /// text it inserts and how far back from the text's end the caret lands.
@@ -167,7 +167,7 @@ pub fn composer(props: &Props) -> Html {
     html! {
         <section class="panel compose">
             <h2>{"Compose"}</h2>
-            <p class="note">{"Start from a program, then type, or put a part at the caret from the palette: the equation's grammar (as a paper prints it), the pipeline's, a library's functions as stages, the imports. Run shows what it printed (a line between $$ drawn as math), any error placed in the text, and Expand what the macros became. The macro's rule, every part of its text used or the call refused, is the lint of the notation."}</p>
+            <p class="note">{"Start from a program, then type, or put a part at the caret from the palette: the equation's grammar (as a paper prints it), the pipeline's, a library's functions as stages, the imports. Rendered draws an equation's call as math in place, as X_eTaL's live demo does. Run shows what it printed (a line between $$ drawn as math), any error placed in the text, and Expand what the macros became. The macro's rule, every part of its text used or the call refused, is the lint of the notation."}</p>
             <div class="controls"><span>{"Start from: "}</span>{ for starters }</div>
             <div class="palette">{ for palette }</div>
             <div class="edit">
@@ -177,7 +177,7 @@ pub fn composer(props: &Props) -> Html {
                 </div>
                 <div class="pane">
                     <div class="label">{"Rendered"}</div>
-                    { block(&text, NONE) }
+                    { rendered(&text) }
                 </div>
             </div>
             <div class="controls">

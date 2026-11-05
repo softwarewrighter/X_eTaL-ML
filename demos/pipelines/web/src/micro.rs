@@ -151,10 +151,13 @@ pub fn calls(e: &Example) -> (Vec<String>, String, String) {
 }
 
 /// What Compose starts from: an equation with its LaTeX (the dense
-/// layer with its bias), a pipeline (the stable softmax), and a
-/// pipeline of equations (a dense layer and its ReLU, drawn as math).
-pub const STARTERS: [(&str, &str); 3] = [
+/// layer with its bias), a pipeline (the stable softmax), a pipeline of
+/// equations (a dense layer and its ReLU, drawn as math), and an
+/// integral (GELU as x times the Gaussian CDF, after X_eTaL-libraries'
+/// Equations demo integrals.xtl).
+pub const STARTERS: [(&str, &str); 4] = [
     ("An equation", "\"e:\" u_se< \"Equations\"\nW := f_loat 2 3 r_eshape 1 2 3 4 5 6\nx := f_loat 1 1 1\nb := f_loat 10 20\n\"$$\" c_at (\"z[i] | 2\" e:t_ex< \"(sum j:=0..2 | W[i,j] * x[j]) + b[i]\") c_at \"$$\"\n\"z[i] | 2\" e:e_q< \"(sum j:=0..2 | W[i,j] * x[j]) + b[i]\"\n"),
     ("A pipeline", "\"flow:\" u_se< \"Flow\"\n\"nn:\" u_se< \"NN\"\nz := 1.0 2.0 3.0\n@ flow:p_ipe< c\"\n   z\n|> 'm_ax r_/ it $m\n|> e_xp z - m $e\n|> e / '+ r_/ e\"\n"),
     ("A pipeline of equations", "\"e:\" u_se< \"Equations\"\n\"flow:\" u_se< \"Flow\"\nX := f_loat 3 2 r_eshape 1 -2 3 4 -5 6\nW := f_loat 2 2 r_eshape 1 2 -1 1\n\"$$\" c_at (@ flow:m_ath< c#\"\n   X $x\n|> \"Z[i,k] | 3 2\" e:e_q< \"sum c:=0..1 | x[i,c] * W[c,k]\" $z\n|> \"Y[i,k] | 3 2\" e:e_q< \"max(z[i,k], 0)\"\"#) c_at \"$$\"\n@ flow:p_ipe< c#\"\n   X $x\n|> \"Z[i,k] | 3 2\" e:e_q< \"sum c:=0..1 | x[i,c] * W[c,k]\" $z\n|> \"Y[i,k] | 3 2\" e:e_q< \"max(z[i,k], 0)\"\"#\n"),
+    ("An integral", "## GELU, the activation of BERT and GPT, is x Phi(x), Phi the Gaussian\n## CDF: 1/2 plus the integral of the density from 0 to x (Simpson's\n## rule on 32 steps). After X_eTaL-libraries' Equations demo integrals.xtl.\n\"e:\" u_se< \"Equations\"\npi := 3.141592653589793\nu:g_elu := { x -> x * 0.5 + \"L[] | \" e:e_q< \"integral u:=0..x by simpson 32 | exp(-(u^2) / 2) / sqrt(2 * pi)\" }\n(f_loat f_loor 0.5 + 10000.0 * 'u:g_elu e_ach -2.0 -1.0 0.0 1.0 2.0) / 10000.0\n## What the paper writes, drawn as math under Run.\n\"$$\" c_at (\"GELU[] | \" e:t_ex< \"x * (1 / 2 + (integral u:=0..x | exp(-(u^2) / 2) / sqrt(2 * pi)))\") c_at \"$$\"\n"),
 ];

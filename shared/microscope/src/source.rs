@@ -1,7 +1,10 @@
 //! X_eTaL source drawn decorated (as X_eTaL renders it, colored), with
-//! a range highlighted as one continuous block, and shapes as s_hape.
+//! a range highlighted as one continuous block, and shapes as s_hape;
+//! and a program drawn as X_eTaL's Rendered pane draws it, its notation
+//! calls typeset in place.
 
-use xetal_play::{decorate, Class};
+pub use xetal_play::Class;
+use xetal_play::{decorate, decorated};
 use yew::prelude::*;
 
 /// A byte range of a source; `NONE` highlights nothing.
@@ -57,6 +60,30 @@ pub fn line(src: &str, range: Range) -> Html {
 /// A program (several lines, with comments), `range` highlighted.
 pub fn block(src: &str, range: Range) -> Html {
     html! { <pre class="source">{ segments(src, range) }</pre> }
+}
+
+/// The pieces of a program as the Rendered pane draws them: decorated
+/// text, a notation call's strings (X_eTaL MC32, D178: a macro whose
+/// contract has `## draws:`, as Equations' `e:e_q<`) replaced by the
+/// LaTeX its drawing macro wrote, and its other string by nothing. The
+/// libraries are this page's (`libs::install`); a program that does not
+/// load is drawn as typed.
+pub fn pieces(src: &str) -> Vec<(Class, String)> {
+    crate::libs::install();
+    decorated(src).into_iter().filter(|s| !(s.class == Class::Notation && s.text.is_empty())).map(|s| (s.class, s.text)).collect()
+}
+
+/// A program drawn as X_eTaL's Rendered pane draws it: each notation
+/// call as math in place (a `texi` span the page's KaTeX typesets
+/// inline), the rest decorated. The block is keyed by the text, so an
+/// edit draws it anew: KaTeX has replaced what Yew put in a math span,
+/// and patching those nodes would leave an earlier drawing behind.
+pub fn rendered(src: &str) -> Html {
+    let spans = pieces(src).into_iter().map(|(class, text)| match class {
+        Class::Notation => html! { <span class="texi" data-tex={text.clone()}>{text}</span> },
+        class => html! { <span class={css(class)}>{text}</span> },
+    });
+    html! { <pre key={src.to_string()} class="source rendered">{ for spans }</pre> }
 }
 
 /// The range of `src` from `from` to the end of the line holding the

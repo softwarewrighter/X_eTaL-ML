@@ -254,3 +254,34 @@ fn compose_reads_an_integral_inside_an_equation() {
     let g: Vec<f64> = c.out[0].split_whitespace().map(|w| w.parse().unwrap()).collect();
     assert!((g[0] - 0.8413447).abs() < 1e-6 && (g[1] - 1.9544997).abs() < 1e-6, "{g:?}");
 }
+
+#[test]
+fn the_integral_starter_computes_gelu_and_draws_its_call_as_math_in_place() {
+    use microscope::palette::compose;
+    use microscope::source::{pieces, Class};
+    let (title, src) = STARTERS[3];
+    assert_eq!(title, "An integral");
+    // x Phi(x) at -2, -1, 0, 1, 2: Phi(1) = 0.8413, Phi(2) = 0.9772.
+    let c = compose(src);
+    assert_eq!(c.out, ["-0.0455 -0.1587 0.0 0.8413 1.9545"]);
+    // Run draws the paper's form too: GELU = x (1/2 + the integral).
+    assert_eq!(c.tex.len(), 1, "{:?}", c.tex);
+    assert!(c.tex[0].starts_with("\\mathrm{GELU} = ") || c.tex[0].contains("GELU"), "{}", c.tex[0]);
+    assert!(c.tex[0].contains("\\int_{0}^{x}"), "{}", c.tex[0]);
+    // The e:e_q< call's two strings are one math box, its LaTeX the
+    // library's drawing (an integral sign from 0 to x); the rest is text.
+    let p = pieces(src);
+    let math: Vec<&String> = p.iter().filter(|(c, _)| *c == Class::Notation).map(|(_, t)| t).collect();
+    assert_eq!(math.len(), 1, "{math:?}");
+    assert!(math[0].contains("\\int") && math[0].contains("L"), "{}", math[0]);
+    let text: String = p.iter().filter(|(c, _)| *c != Class::Notation).map(|(_, t)| t.as_str()).collect();
+    assert!(text.contains("Equations") && !text.contains("simpson 32"), "{text}");
+    // A program whose library does not load is drawn as typed.
+    let bad = "y := \"L[] | \" e:e_q< \"integral u:=0..1 | u\"\n";
+    assert!(pieces(bad).iter().all(|(c, _)| *c != Class::Notation));
+    // The equation starter's e:e_q< call is drawn as math too (e:t_ex<
+    // takes text, not a notation); the equations inside a pipeline's
+    // code string are its text, not calls, and stay as typed.
+    let boxes = |src: &str| pieces(src).iter().filter(|(c, _)| *c == Class::Notation).count();
+    assert_eq!(STARTERS.map(|(_, src)| boxes(src)), [1, 0, 0, 1]);
+}

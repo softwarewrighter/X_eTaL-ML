@@ -11,6 +11,10 @@ planning and reordering, `release` milestone release, `chore`
 agentrail bookkeeping (step complete, saga archive), `vendor` a
 refresh of the vendored X_eTaL.
 
+## 2026-11-05
+
+- `demo` pipelines' Compose your own draws equations as math while you edit (step composer-integrals, X_eTaL's agent's request): a starter An integral, GELU as x Phi(x) after X_eTaL-libraries' Equations demo integrals.xtl (-0.0455 -0.1587 0.0 0.8413 1.9545 at -2 .. 2); the Rendered pane is `microscope::source::rendered`, xetal-play's `decorated` (X_eTaL D178: a `## draws:` macro's call typeset in place by KaTeX, inline), keyed by the text so an edit leaves no earlier drawing behind; a test (the values, one math box, its LaTeX an integral, a program that does not load drawn as typed); checked in Chrome
+
 ## 2026-11-04
 
 - `demo` lora-explorer trains (step lora-explorer): a backward step as a second pipeline of equations (g, b = B' g, dA = s b x', dB = s g h', dx), drawn as math and switched with the forward pass in the stage view, its dx checked against `lo:g_rads`; LoRA beside LoRA-FA (300 Adam steps, the same seeded A, B at 0) fitting a known rank-4 update, the loss curves against the truncated SVD's optimum (T's singular values by power iteration with deflation): LoRA reaches it (0.014665 at rank 3), LoRA-FA stops at 1.44; the rank sweep 1 .. 8 after `# -- end of the explorer at rank r`, run once by the page; 3 new page tests, the browser check's two new texts; CLI and browser baselines reblessed after review (additions only); a new screenshot

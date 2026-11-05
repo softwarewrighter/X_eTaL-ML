@@ -174,12 +174,17 @@ come from Flow's `flow:s_tages<`, every stage's value in one run.
 ## Compose your own
 
 The page's last choice is a composer: a program to start from (an
-equation with its LaTeX, or a pipeline), a palette of the notations'
+equation with its LaTeX, a pipeline, a pipeline of equations, or an
+integral), a palette of the notations'
 parts put in at the caret (the equation grammar's `sum i:=0..N-1 | `,
 `A[i,j]`, its functions and Greek names; the pipeline's `|>`, `it`,
 `$name`, `$(a, b)`, `[N K]`; this repository's libraries as stages;
 the imports), the program typed in ASCII beside its rendered form,
-then Run and Expand: what it printed (a line between `$$` drawn as
+where each equation's call (`e:e_q<`) is typeset as math in place
+while you edit, as X_eTaL's live demo draws it (the Equations
+library's `## draws:` contract, X_eTaL D178; an equation inside a
+pipeline's code string stays text, and a program that does not load
+is drawn as typed), then Run and Expand: what it printed (a line between `$$` drawn as
 math), any error placed in the text as X_eTaL places it, and what the
 macros became. The input is the grammar, not LaTeX: the LaTeX comes
 out of the same reading, and a notation with a part the grammar does
@@ -194,9 +199,11 @@ gives in the right pane, its numbers and in 3D what it reads and gives
 (the page runs the program again with `flow:m_ath<` and `flow:s_tages<`
 of the same text, so the pipeline's names must be bound at the top).
 The starters include a pipeline of equations, a dense layer and its
-ReLU. An equation may hold an integral, `"L[] | " e:e_q< "integral
-u:=0..x by simpson 32 | exp(-(u^2) / 2) / sqrt(2 * pi)"`, GELU's
-Gaussian CDF.
+ReLU, and an integral after X_eTaL-libraries' Equations demo
+`integrals.xtl`: GELU as x Phi(x), Phi the Gaussian CDF, `"L[] | "
+e:e_q< "integral u:=0..x by simpson 32 | exp(-(u^2) / 2) / sqrt(2 *
+pi)"`, which the Rendered pane shows as the integral it is and Run
+evaluates at -2 .. 2 (-0.0455 -0.1587 0.0 0.8413 1.9545).
 
 ## What it shows about X_eTaL
 
