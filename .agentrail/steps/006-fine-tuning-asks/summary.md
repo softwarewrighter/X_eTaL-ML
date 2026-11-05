@@ -1,0 +1,1 @@
+FM1 MICROSCOPE_LIBS roots + libs::names, FM2 chrome::Site/header_of/footer_of/provenance, FM3 lo:s_calingRs, FM5 microscope::heat; docs/fine-tuning-asks.md ledger for FM1-FM10; tests; gate --full ok
