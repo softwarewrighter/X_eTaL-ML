@@ -1,4 +1,4 @@
-number = 8
+number = 9
 slug = "moe-lib"
 status = "pending"
 description = "(docs/fine-tune-moe-demo-plan.md, step 7; L3180-3274, L675) libs/MoE (moe:): ..."

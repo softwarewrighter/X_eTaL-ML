@@ -1,0 +1,1 @@
+(X_eTaL's agent, relayed by the user 2026-11-05) demos/pipelines' Compose your own: a starter from X_eTaL-libraries' Equations integrals demo (GELU as an integral); the composer's rendered form typesets an e:e_q< call in place (the library's draws: notation, X_eTaL D178, as X_eTaL's live demo does), so the integral reads as math while it is edited. Tests, browser check, docs.
