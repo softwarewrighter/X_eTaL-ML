@@ -1,0 +1,1 @@
+pipelines Compose: integral starter (GELU) and Rendered pane typesetting e:e_q< calls in place via xetal-play decorated (D178), keyed redraw; Run shows the paper's formula; test + Chrome check; full gate ok
