@@ -3,7 +3,7 @@
 //! update's rank, the costs at the research's sizes, and the program
 //! the page shows.
 
-use lora_explorer_web::micro::{pipeline, program, run, with, Explored, Matrix, Settings, PROGRAM};
+use lora_explorer_web::micro::{pipeline, program, run, with, Explored, Matrix, Settings, END, PROGRAM};
 use microscope::source::rebound;
 
 /// M v for a matrix and a vector.
@@ -83,9 +83,70 @@ fn the_sizes_are_the_pages() {
 #[test]
 fn the_page_shows_the_command_line_programs_code() {
     let src = program(Settings::default());
-    assert!(src.starts_with(PROGRAM.trim_end()), "the program itself, unchanged at the defaults");
+    assert!(src.starts_with(PROGRAM[..PROGRAM.find(END).unwrap()].trim_end()), "the program itself up to the sweep, unchanged at the defaults");
     assert!(src.contains(pipeline()) && pipeline().starts_with(" c#\""), "{}", pipeline());
     assert!(rebound(&src).is_empty(), "{:?}", rebound(&src));
     assert!(program(Settings { r: 5, ..Settings::default() }).contains("\nr := 5\n"));
     assert!(at(3).tex.starts_with("\\begin{aligned}"));
+}
+
+#[test]
+fn the_backward_stages_are_the_gradients() {
+    for r in [1, 3, 8] {
+        let e = at(r);
+        let s = 6.0 / r as f64;
+        assert!(e.back_same, "rank {r}: the pipeline's dx is lo:g_rads's");
+        assert_eq!(e.back_stages.iter().map(|v| v.label.as_str()).collect::<Vec<_>>(), ["g", "b", "dA", "dB", ""], "rank {r}");
+        let x = &e.stages[0].items;
+        let h = &e.stages[1].items;
+        // g = y - (W + T) x.
+        let wt = Matrix { rows: 8, cols: 8, items: e.w.items.iter().zip(&e.t.items).map(|(w, t)| w + t).collect() };
+        let g: Vec<f64> = e.y.iter().zip(times(&wt, x)).map(|(y, w)| y - w).collect();
+        near(&e.back_stages[0].items, &g, 1e-12, "g");
+        // b = B' g; dA = s b x'; dB = s g h'; dx = W' g + s A' b.
+        let b: Vec<f64> = (0..r).map(|k| (0..8).map(|i| e.b.items[i * r + k] * g[i]).sum()).collect();
+        near(&e.back_stages[1].items, &b, 1e-12, "b = B' g");
+        assert_eq!(e.back_stages[2].shape, [r, 8]);
+        let da: Vec<f64> = (0..r * 8).map(|t| s * b[t / 8] * x[t % 8]).collect();
+        near(&e.back_stages[2].items, &da, 1e-12, "dA = s b x'");
+        let db: Vec<f64> = (0..8 * r).map(|t| s * g[t / r] * h[t % r]).collect();
+        near(&e.back_stages[3].items, &db, 1e-12, "dB = s g h'");
+        let dx: Vec<f64> = (0..8).map(|j| (0..8).map(|i| e.w.items[i * 8 + j] * g[i]).sum::<f64>() + s * (0..r).map(|k| e.a.items[k * 8 + j] * b[k]).sum::<f64>()).collect();
+        near(&e.back_stages[4].items, &dx, 1e-12, "dx = W' g + s A' b");
+    }
+}
+
+#[test]
+fn lora_reaches_the_best_possible_and_lora_fa_does_not() {
+    for r in 1..=8 {
+        let e = at(r);
+        assert_eq!(e.loss[0], e.loss_fa[0], "rank {r}: the same start");
+        assert!(e.loss.last() < e.loss.first() && e.loss_fa.last() < e.loss_fa.first(), "rank {r}: both learn");
+        // T is of rank 4: the best is 0 from rank 4 on.
+        assert!((e.best[3..]).iter().all(|&v| v == 0.0) && e.best[2] > 0.01);
+        let (l, fa) = (*e.loss.last().unwrap(), *e.loss_fa.last().unwrap());
+        assert!(l >= e.best[r - 1] - 1e-9, "rank {r}: no update of rank r does better than the SVD");
+        assert!(l - e.best[r - 1] < 2e-3, "rank {r}: LoRA reaches it ({l} against {})", e.best[r - 1]);
+        if r < 8 {
+            assert!(fa > l + 0.02, "rank {r}: LoRA-FA ({fa}) stops above LoRA ({l})");
+        }
+        // The learned update is s B A of the loss: half its squared distance from T.
+        let d: f64 = e.learned.items.iter().zip(&e.t.items).map(|(a, t)| (a - t) * (a - t)).sum::<f64>() / 2.0;
+        assert!((d - l).abs() < 1e-9, "rank {r}: {d} against {l}");
+    }
+}
+
+#[test]
+fn the_sweep_follows_the_best_and_its_program_is_shown() {
+    let w = lora_explorer_web::micro::sweep().unwrap();
+    let e = at(3);
+    for k in 0..8 {
+        assert!(w.lora[k] - e.best[k] < 2e-3 && w.lora[k] >= e.best[k] - 1e-9, "rank {}: {} against {}", k + 1, w.lora[k], e.best[k]);
+        assert!(w.fa[k] >= w.lora[k] - 1e-9, "rank {}: LoRA-FA no better than LoRA", k + 1);
+    }
+    assert!(w.fa[2] > 1.0 && w.lora[2] < 0.02, "rank 3: FA {} against LoRA {}", w.fa[2], w.lora[2]);
+    let src = lora_explorer_web::micro::sweep_program();
+    assert!(rebound(src).is_empty(), "{:?}", rebound(src));
+    assert!(program(Settings::default()).contains(lora_explorer_web::micro::backward()));
+    assert!(!program(Settings::default()).contains("### The rank sweep"));
 }

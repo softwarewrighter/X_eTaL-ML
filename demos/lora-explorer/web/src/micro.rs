@@ -1,9 +1,12 @@
 //! The model: the demo's program (lora-explorer.xtl) run at the rank
-//! and sizes the page sets, then its pipeline drawn as math, every
-//! stage's value, and the arrays W, A, B, the update and the merged
-//! matrix read back. Nothing here knows about the browser.
+//! and sizes the page sets, up to its rank sweep, then its two
+//! pipelines (the forward pass and a backward step) drawn as math,
+//! every stage's value, and the arrays read back: W, A, B, the update,
+//! the merged matrix, the known update and what LoRA and LoRA-FA
+//! learned. The rank sweep is the whole program, run once. Nothing here
+//! knows about the browser.
 
-use microscope::run::{numbers, output, section};
+use microscope::run::{numbers, output, printed, section};
 pub use microscope::stages::{values, Value};
 
 /// The command line's program, which the page runs with its settings.
@@ -33,26 +36,46 @@ pub fn with(s: Settings) -> String {
         .fold(PROGRAM.to_string(), |p, (from, to)| p.replacen(from, to, 1))
 }
 
-/// The pipeline's text, as the program writes it after `flow:p_ipe<`.
-pub fn pipeline() -> &'static str {
-    let p = section(PROGRAM, "y := @ flow:p_ipe<", "\n## ");
-    p.trim_start_matches("y := @ flow:p_ipe<").trim_end()
+/// A pipeline's text, as the program writes it after `NAME := @ flow:p_ipe<`.
+fn text(name: &str) -> &'static str {
+    let start = format!("{name} := @ flow:p_ipe<");
+    section(PROGRAM, &start, "\n## ").trim_start_matches(start.as_str()).trim_end()
 }
 
-/// The program the page runs: the program, then what it reads back: the
-/// pipeline drawn as math, every stage's value (flow:s_tages<), and W,
-/// A, B, the update and the merged matrix, each ravelled.
+/// The forward pass's pipeline, then the backward step's.
+pub fn pipeline() -> &'static str {
+    text("y")
+}
+pub fn backward() -> &'static str {
+    text("back")
+}
+
+/// Where the page's run stops: the rank sweep after it runs once, apart.
+pub const END: &str = "# -- end of the explorer at rank r";
+
+/// The program the page runs at each setting: the program up to the rank
+/// sweep, then what it reads back: the two pipelines drawn as math and
+/// every stage's value (flow:s_tages<), and W, A, B, the update, the
+/// merged matrix, the known update T and the two learned updates, each
+/// ravelled.
 pub fn program(s: Settings) -> String {
+    let p = with(s);
     format!(
-        "{}\n# -- read back by the page ------------------------------\ndrawn\n@ flow:s_tages<{}\nr_avel W\nr_avel A\nr_avel B\nr_avel delta\nr_avel merged\n",
-        with(s).trim_end(),
-        pipeline()
+        "{}\n# -- read back by the page ------------------------------\ndrawn\n@ flow:s_tages<{}\nbackDrawn\n@ flow:s_tages<{}\nr_avel W\nr_avel A\nr_avel B\nr_avel delta\nr_avel merged\nr_avel T\nr_avel learned\nr_avel learnedFA\n",
+        p[..p.find(END).expect("the end marker")].trim_end(),
+        pipeline(),
+        backward()
     )
 }
 
-/// How many lines the program itself prints, then the page's.
-const PRINTED: usize = 7;
-const READ: usize = 7;
+/// The rank sweep's run: the whole program, at the defaults.
+pub fn sweep_program() -> &'static str {
+    PROGRAM
+}
+
+/// How many lines the program prints up to the sweep, then the page's.
+const PRINTED: usize = 11;
+const READ: usize = 12;
 
 /// A matrix read back: its rows, its columns, its items by row.
 #[derive(Clone, Debug, PartialEq)]
@@ -80,11 +103,41 @@ pub struct Explored {
     /// The pipeline as LaTeX, and every stage's value.
     pub tex: String,
     pub stages: Vec<Value>,
+    /// The backward step: whether its dx is the library's, its pipeline
+    /// as LaTeX, its stages (g, b, dA, dB, dx).
+    pub back_same: bool,
+    pub back_tex: String,
+    pub back_stages: Vec<Value>,
+    /// Training: the loss after every 10 steps (the start first) of LoRA
+    /// and of LoRA-FA; the best loss any update of rank k can reach, for
+    /// k = 1 .. 8; the known update and the two learned.
+    pub loss: Vec<f64>,
+    pub loss_fa: Vec<f64>,
+    pub best: Vec<f64>,
+    pub t: Matrix,
+    pub learned: Matrix,
+    pub learned_fa: Matrix,
     pub w: Matrix,
     pub a: Matrix,
     pub b: Matrix,
     pub delta: Matrix,
     pub merged: Matrix,
+}
+
+/// The rank sweep: the loss LoRA and LoRA-FA reach at each rank 1 .. 8.
+#[derive(Clone, Debug, PartialEq)]
+pub struct Sweep {
+    pub lora: Vec<f64>,
+    pub fa: Vec<f64>,
+}
+
+/// Run the whole program for its last two lines, the sweep.
+pub fn sweep() -> Result<Sweep, String> {
+    let out = printed(sweep_program())?;
+    match out.len() {
+        13 => Ok(Sweep { lora: numbers(&out[11], 8)?, fa: numbers(&out[12], 8)? }),
+        n => Err(format!("expected 13 lines of output, got {n}")),
+    }
 }
 
 /// Run the program at settings `s`.
@@ -101,12 +154,21 @@ pub fn run(s: Settings) -> Result<Explored, String> {
         costs: two(&out[4])?,
         expert: out[5].trim().parse().map_err(|_| format!("not a count: {}", out[5]))?,
         mib: (mib[0], mib[1], mib[2]),
-        tex: out[7].clone(),
-        stages: values(&out[8])?,
-        w: m(&out[9], 8, 8)?,
-        a: m(&out[10], s.r, 8)?,
-        b: m(&out[11], 8, s.r)?,
-        delta: m(&out[12], 8, 8)?,
-        merged: m(&out[13], 8, 8)?,
+        back_same: out[7].trim() == "1",
+        loss: numbers(&out[8], 31)?,
+        loss_fa: numbers(&out[9], 31)?,
+        best: numbers(&out[10], 8)?,
+        tex: out[11].clone(),
+        stages: values(&out[12])?,
+        back_tex: out[13].clone(),
+        back_stages: values(&out[14])?,
+        w: m(&out[15], 8, 8)?,
+        a: m(&out[16], s.r, 8)?,
+        b: m(&out[17], 8, s.r)?,
+        delta: m(&out[18], 8, 8)?,
+        merged: m(&out[19], 8, 8)?,
+        t: m(&out[20], 8, 8)?,
+        learned: m(&out[21], 8, 8)?,
+        learned_fa: m(&out[22], 8, 8)?,
     })
 }

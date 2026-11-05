@@ -2,8 +2,11 @@
 ## LoRA explorer: one 8 x 8 projection adapted by a rank-r update. The
 ## frozen W, the trainable A (r x 8) and B (8 x r); the adapted layer
 ## y = W x + s B (A x) as a pipeline of equations, drawn as math, its
-## factors kept apart; the update s B A, its rank and the merge; then
-## what adapters cost on a large mixture-of-experts model.
+## factors kept apart; the update s B A, its rank and the merge; what
+## adapters cost on a large mixture-of-experts model; a backward step,
+## stage by stage; LoRA and LoRA-FA trained side by side to fit a known
+## update, against the best any rank-r update can do (the truncated
+## SVD); then the rank sweep.
 
 "e:" u_se< "Equations"
 "flow:" u_se< "Flow"
@@ -30,6 +33,16 @@ B := (8 c_at r) r_eshape 0.3 * s_in 0.9 * j * j
 X := c_os 0.4 * 8 t_ake i
 s := alpha lo:s_caling r
 q := r - 1
+## The known update to learn, T = P Q (8 x 8, of rank 4), by ripple;
+## the training inputs are the 8 unit vectors (I), so the loss is half
+## the squared distance between s B A and T, entry by entry. Adam at
+## the rate lr, 30 times 10 steps.
+p := f_loat r_ange 32
+T := (8 4 r_eshape 0.5 * s_in 1.3 * p * p) '+ '* i_nner 4 8 r_eshape 0.5 * c_os 0.6 * p * p
+I := 8 8 r_eshape 1.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0
+lr := 0.05
+chunks := 30
+every := 10
 
 ### The adapted layer
 
@@ -70,3 +83,83 @@ n := r lo:e_xpert d c_at f
 mib := (16 lo:b_ytes n) / 1048576.0
 n
 mib c_at (mib * f_loat experts) c_at mib * f_loat experts * layers
+
+### A backward step
+
+## The loss's gradient at the output for x is g = y - (W + T) x (the
+## known update's output wanted). Back through the layer: B' g once
+## (r numbers), then the gradients of A and B (outer products, s b x'
+## and s g h') and of x, through W and through the adapter.
+h := A '+ '* i_nner X
+G := y - (W + T) '+ '* i_nner X
+back := @ flow:p_ipe< c#"
+   G $g
+|> "b[k] | r" e:e_q< "sum i:=0..7 | B[i,k] * g[i]" $b
+|> "dA[k,j] | r 8" e:e_q< "s * b[k] * X[j]" $dA
+|> "dB[i,k] | 8 r" e:e_q< "s * g[i] * h[k]" $dB
+|> "dx[j] | 8" e:e_q< "(sum i:=0..7 | W[i,j] * g[i]) + s * (sum k:=0..q | A[k,j] * b[k])""#
+## The same, drawn as math.
+backDrawn := @ flow:m_ath< c#"
+   G $g
+|> "b[k] | r" e:e_q< "sum i:=0..7 | B[i,k] * g[i]" $b
+|> "dA[k,j] | r 8" e:e_q< "s * b[k] * X[j]" $dA
+|> "dB[i,k] | 8 r" e:e_q< "s * g[i] * h[k]" $dB
+|> "dx[j] | 8" e:e_q< "(sum i:=0..7 | W[i,j] * g[i]) + s * (sum k:=0..q | A[k,j] * b[k])""#
+## The pipeline's dx is the library's (lo:g_rads), within 1e-12: 1.
+(_, _, dx) := (W, A, B, s) lo:g_rads (8 1 r_eshape X, 8 1 r_eshape G)
+0.000000000001 > 'm_ax r_/ a_bs back - r_avel dx
+
+### Training: LoRA beside LoRA-FA
+
+## Both start as LoRA does, B at 0, from the same A (seeded); LoRA
+## trains A and B, LoRA-FA B alone. The loss after every 10 steps.
+a0 := (W, 1 lo:s_eeded r c_at 8, (8 c_at r) r_eshape 0.0, s)
+Y := (W + T) '+ '* i_nner I
+u:l_oss := { a -> a lo:l_oss (I, Y) }
+(q1, L1) := chunks '{ (z, L) ->
+  z2 := every '{ e -> lr lo:a_dam (e, (I, Y)) } p_ower z
+  (a, _, _) := z2
+  (z2, L c_at u:l_oss a)
+} p_ower (lo:a_damStart a0, u:l_oss a0)
+(q2, L2) := chunks '{ (z, L) ->
+  z2 := every '{ e -> lr lo:a_damFA (e, (I, Y)) } p_ower z
+  (a, _, _) := z2
+  (z2, L c_at u:l_oss a)
+} p_ower (lo:a_damStartFA a0, u:l_oss a0)
+L1
+L2
+## The best any update of rank k can do (Eckart-Young): half the sum of
+## T's squared singular values past the k-th. They are the eigenvalues
+## of T' T, found by power iteration, each taken out once found.
+u0 := 1.0 + 0.1 * f_loat r_ange 8
+(_, ev) := 8 '{ (M, e) ->
+  v := 300 '{ w -> m := M '+ '* i_nner w
+    m / 0.000000000000000001 + s_qrt '+ r_/ m * m } p_ower u0
+  lam := '+ r_/ v * M '+ '* i_nner v
+  (M - lam * v '* t_able v, e c_at lam)
+} p_ower ((o_\ T) '+ '* i_nner T, 0 r_eshape 0.0)
+best := 0.0 m_ax 0.5 * '{ k -> '+ r_/ k d_rop ev } e_ach r_ange 8
+best
+## What each learned: LoRA's update, LoRA-FA's.
+((_, A1, B1, s1), _, _) := q1
+((_, A2, B2, s2), _, _) := q2
+learned := lo:d_elta (A1, B1, s1)
+learnedFA := lo:d_elta (A2, B2, s2)
+# -- end of the explorer at rank r
+
+### The rank sweep
+
+## LoRA and LoRA-FA trained at each rank 1 .. 8 (300 steps each) from
+## the same start: LoRA reaches the best above at every rank; LoRA-FA,
+## its update held in A's row space, does not.
+u:s_tart := { k -> (W, 1 lo:s_eeded k c_at 8, (8 c_at k) r_eshape 0.0, alpha lo:s_caling k) }
+u:l_ora := { k ->
+  (a, _, _) := 300 '{ e -> lr lo:a_dam (e, (I, Y)) } p_ower lo:a_damStart u:s_tart k
+  u:l_oss a
+}
+u:f_a := { k ->
+  (a, _, _) := 300 '{ e -> lr lo:a_damFA (e, (I, Y)) } p_ower lo:a_damStartFA u:s_tart k
+  u:l_oss a
+}
+'u:l_ora e_ach r_ange 8
+'u:f_a e_ach r_ange 8

@@ -40,6 +40,24 @@
     table.facts td { padding: 3px 10px 3px 0; }
     table.facts td:last-child { font-variant-numeric: tabular-nums; font-weight: 600; }
     .tex { overflow-x: auto; }
+    figure.chart { margin: 8px 0; }
+    figure.chart svg { display: block; max-width: 100%; height: auto; }
+    figure.chart .grid { stroke: var(--line); }
+    figure.chart .tick { font-size: 11px; fill: var(--muted); }
+    figure.chart .tick.end { text-anchor: end; }
+    figure.chart .tick.mid { text-anchor: middle; }
+    figure.chart .line { fill: none; stroke-width: 2.5; }
+    figure.chart .line.lora { stroke: var(--t-builtin); }
+    figure.chart .line.fa { stroke: var(--sel); }
+    figure.chart .line.best { stroke: var(--muted); stroke-dasharray: 5 4; stroke-width: 2; }
+    figure.chart figcaption { display: flex; flex-wrap: wrap; gap: 14px; font-size: 0.85em; color: var(--muted); }
+    .key { display: inline-flex; align-items: center; gap: 6px; }
+    .swatch { display: inline-block; width: 18px; height: 3px; }
+    .swatch.lora { background: var(--t-builtin); }
+    .swatch.fa { background: var(--sel); }
+    .swatch.best { border-top: 2px dashed var(--muted); height: 0; }
+    table.sweep th { text-align: left; padding: 3px 10px 3px 0; font-weight: 600; }
+    table.sweep td { font-variant-numeric: tabular-nums; }
     pre.err { color: var(--c-error, #c92a2a); white-space: pre-wrap; }
   </style>
 </head>

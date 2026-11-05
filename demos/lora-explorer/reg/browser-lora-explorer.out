@@ -2,3 +2,5 @@ page: loaded
 errors: none
 found: the update's rank (lo:r_ank, by Gram-Schmidt)
 found: 165,888
+found: LoRA-FA's (trains 24 numbers)
+found: best possible (truncated SVD)

@@ -1,3 +1,5 @@
 # Text the page shows only after X_eTaL has run (scripts/browser-check.sh).
 the update's rank (lo:r_ank, by Gram-Schmidt)
 165,888
+LoRA-FA's (trains 24 numbers)
+best possible (truncated SVD)
