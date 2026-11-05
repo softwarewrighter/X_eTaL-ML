@@ -6,6 +6,7 @@
 //! - `source`: decorated source with a highlighted range; shapes
 //! - `canvas`, `color`: large arrays as pixels
 //! - `cells`: small boards as clickable cells
+//! - `heat`: small matrices as heat maps, colored as the 3D stage view
 //! - `chrome`: header, stage chips, panels, pictures, notices, footer
 //! - `libs`: this repo's libraries, importable with `u_se<`
 //! - `palette`: composing an equation or a pipeline from parts, run live
@@ -17,6 +18,7 @@ pub mod canvas;
 pub mod cells;
 pub mod chrome;
 pub mod color;
+pub mod heat;
 pub mod libs;
 pub mod palette;
 pub mod run;

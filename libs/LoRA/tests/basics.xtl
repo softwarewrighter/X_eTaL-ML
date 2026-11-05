@@ -12,6 +12,8 @@ W := 4 3 r_eshape 0.5 * s_in 0.7 * i * i
 A := 2 3 r_eshape 0.3 * c_os 0.7 * f_loat r_ange 6
 B := 4 2 r_eshape 0.2 * s_in 2.1 * f_loat r_ange 8
 s := 4.0 lo:s_caling 2
+## rsLoRA's scale at the same rank.
+4.0 lo:s_calingRs 2
 x := 3 2 r_eshape 1.0 -0.5 0.25 2.0 -1.0 0.5
 s
 (W, A, B, s) lo:f_orward x
@@ -48,3 +50,4 @@ g := ((W, A, B, s) lo:f_orward x) - y
 ## The reference page's gradient examples.
 (2 2 r_eshape 1.0 0.0 0.0 1.0, 1 2 r_eshape 1.0 1.0, 2 1 r_eshape 1.0 -1.0, 0.5) lo:g_rads (2 1 r_eshape 2.0 4.0, 2 1 r_eshape 1.0 -1.0)
 0.1 lo:s_gd ((2 2 r_eshape 1.0 0.0 0.0 1.0, 1 2 r_eshape 1.0 1.0, 2 1 r_eshape 1.0 -1.0, 0.5), (2 1 r_eshape 2.0 4.0, 2 1 r_eshape 4.0 2.0))
+16.0 lo:s_calingRs 4

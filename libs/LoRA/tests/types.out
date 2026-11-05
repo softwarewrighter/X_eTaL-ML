@@ -1,4 +1,5 @@
 l:s_caling : Num a => Float -> a -> Float
+l:s_calingRs : Num a => Float -> a -> Float
 l:f_orward : Num a => (a, a, a, a) -> a -> a
 l:d_elta : Num a => (a, a, a) -> a
 l:m_erge : Num a => (a, a, a, a) -> a

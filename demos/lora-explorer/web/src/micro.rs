@@ -77,13 +77,8 @@ pub fn sweep_program() -> &'static str {
 const PRINTED: usize = 11;
 const READ: usize = 12;
 
-/// A matrix read back: its rows, its columns, its items by row.
-#[derive(Clone, Debug, PartialEq)]
-pub struct Matrix {
-    pub rows: usize,
-    pub cols: usize,
-    pub items: Vec<f64>,
-}
+/// A matrix read back (the shared heat map's).
+pub use microscope::heat::Matrix;
 
 /// What a run gave.
 #[derive(Clone, Debug, PartialEq)]

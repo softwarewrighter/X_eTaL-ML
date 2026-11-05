@@ -10,4 +10,6 @@ ok: which take 1.69 MiB in BF16
 ok: 64 experts take 108 MiB, 24 layers of them 2.53 GiB
 ok: an 8 x 8 adapter at rank 3 trains 48 numbers
 ok: B (A x) costs r (m + n); making B A costs r m n
-12 checks, all passed
+ok: rsLoRA's scale is alpha / sqrt r
+ok: it is alpha / r at rank 1 and sqrt r times it after
+14 checks, all passed

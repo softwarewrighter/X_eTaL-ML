@@ -10,7 +10,9 @@ source. This crate (`microscope`) is what the pages share.
 | `source` | `code(src)` draws any snippet decorated and colored, as X_eTaL renders it; `line(src, range)` and `block(src, range)` draw a line or a program with `range` highlighted as one block; `between` and `find` compute ranges; `shape(dims, meaning)` labels a shape as `s_hape = ...` with a tooltip; `rendered(src)` draws a program as X_eTaL's Rendered pane does, each notation call (a `## draws:` macro, as `e:e_q<`) as a `texi` span of its LaTeX for the page's KaTeX to typeset inline, `pieces(src)` the same as data |
 | `canvas`, `color` | `Canvas` draws an RGBA array scaled to its box and reports clicks as (row, column); `color` turns arrays into pixels (`field`, `scaled`, `signed`, `mask`, `ramp`) |
 | `cells` | small boards as clickable HTML cells (0 / 1 boards, shaded counts with numbers) |
-| `chrome` | `header` (logo, title, lede), `chip` (a stage: name, code, shape), `panel`, `notice`, `footer` (copyright, license, repository, all demos, the pinned X_eTaL commit, build host, sha and time) |
+| `chrome` | `header` (logo, title, lede), `chip` (a stage: name, code, shape), `panel`, `notice`, `footer` (copyright, license, repository, all demos, the pinned X_eTaL commit, build host, sha and time); `Site` (a repository's name, URL, commit and links) with `header_of` and `footer_of` for another repository's pages, whose footer adds the X_eTaL-ML commit (`ML_COMMIT`), and `provenance` the footer's text |
+| `heat` | small matrices as heat maps: `Matrix`, `heat(m, scale, label)` colored as the 3D stage view (red positive, blue negative, near white about 0), `largest` for a shared scale, `column`, `fill` |
+| `libs` | the libraries embedded: this repository's, those used from X_eTaL-libraries, then any under the roots named in `MICROSCOPE_LIBS` at build time; `names()`; `add(path, text)` for a data file or a library added at run time |
 
 `microscope.css` is the shared stylesheet (light and dark themes, the
 highlight, panels, chips, canvases); a page links it with

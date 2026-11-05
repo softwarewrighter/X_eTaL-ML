@@ -319,3 +319,10 @@ body:has(main > .wide) :is(header, main, footer) { max-width: 1720px; }
 
 /* A notation call typeset in place in the Rendered pane (source::rendered). */
 pre.rendered .texi { font-size: 1.15em; padding: 0 2px; color: var(--fg); }
+
+/* A small matrix as a heat map (heat::heat). */
+figure.heat { margin: 0; }
+figure.heat svg { display: block; max-width: 100%; height: auto; }
+figure.heat .frame { fill: none; stroke: var(--line); }
+figure.heat .cell { stroke: var(--line); stroke-width: 0.5; }
+figure.heat figcaption { font-size: 0.8em; color: var(--muted); max-width: 200px; }

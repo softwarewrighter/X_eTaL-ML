@@ -39,4 +39,8 @@ c9 := "which take 1.69 MiB in BF16" k:t_est 1.69 k:n_ear u:c_ents mib
 c10 := "64 experts take 108 MiB, 24 layers of them 2.53 GiB" k:t_est 108.0 2.53 k:n_ear (64.0 * mib) c_at u:c_ents 24.0 * 64.0 * mib / 1024.0
 c11 := "an 8 x 8 adapter at rank 3 trains 48 numbers" k:t_est 48 k:i_s 3 lo:p_arams 8 8
 c12 := "B (A x) costs r (m + n); making B A costs r m n" k:t_est 1024 32768 k:i_s 8 lo:c_osts 64 64
-k:r_eport c1 k:a_nd c2 k:a_nd c3 k:a_nd c4 k:a_nd c5 k:a_nd c6 k:a_nd c7 k:a_nd c8 k:a_nd c9 k:a_nd c10 k:a_nd c11 k:a_nd c12
+## rsLoRA's scale: alpha / sqrt r, the same as alpha / r at rank 1,
+## twice it at rank 4.
+c13 := "rsLoRA's scale is alpha / sqrt r" k:t_est 16.0 8.0 4.0 k:n_ear '{ r -> 16.0 lo:s_calingRs r } e_ach 1 4 16
+c14 := "it is alpha / r at rank 1 and sqrt r times it after" k:t_est ((16.0 lo:s_caling 1) c_at 2.0 * 16.0 lo:s_caling 4) k:n_ear (16.0 lo:s_calingRs 1) c_at 16.0 lo:s_calingRs 4
+k:r_eport c1 k:a_nd c2 k:a_nd c3 k:a_nd c4 k:a_nd c5 k:a_nd c6 k:a_nd c7 k:a_nd c8 k:a_nd c9 k:a_nd c10 k:a_nd c11 k:a_nd c12 k:a_nd c13 k:a_nd c14

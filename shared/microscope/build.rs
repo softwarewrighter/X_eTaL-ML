@@ -3,7 +3,13 @@
 //! pinned X_eTaL commit (XETAL_COMMIT). Also embeds this
 //! repo's libraries (libs/<Name>/src/<Name>.xtl) and those used
 //! from X_eTaL-libraries (work/libs) for `libs`, so a page's
-//! program can import them with `u_se<`.
+//! program can import them with `u_se<`; then those under the roots a
+//! dependent names in MICROSCOPE_LIBS (X_eTaL-fine-tuning's ask FM1):
+//! directories separated by `:`, each a root of libraries
+//! (<Name>/src/<Name>.xtl) or one library's own directory, absolute (or
+//! made so by `[env] MICROSCOPE_LIBS = { value = "...", relative = true }`
+//! in the dependent's .cargo/config.toml). Later roots win a name both
+//! have.
 
 use std::process::Command;
 
@@ -29,11 +35,25 @@ fn pinned() -> String {
 fn libraries() {
     let here = std::path::Path::new(env!("CARGO_MANIFEST_DIR"));
     // This repo's libraries, then those used from X_eTaL-libraries.
-    let roots = [here.join("../../libs"), here.join("../../work/libs")];
-    let mut found: Vec<(String, std::path::PathBuf)> = roots
+    // Then the dependent's roots (FM1).
+    println!("cargo:rerun-if-env-changed=MICROSCOPE_LIBS");
+    let extra = std::env::var("MICROSCOPE_LIBS").unwrap_or_default();
+    let roots: Vec<std::path::PathBuf> = [here.join("../../libs"), here.join("../../work/libs")]
+        .into_iter()
+        .chain(extra.split(':').filter(|r| !r.trim().is_empty()).map(|r| here.join(r.trim())))
+        .collect();
+    // A library's own directory counts as a root holding just it.
+    let is_library = |d: &std::path::Path| {
+        let name = d.file_name().and_then(|n| n.to_str()).unwrap_or("");
+        ["xtl", "xtlm"].iter().any(|ext| d.join("src").join(format!("{name}.{ext}")).is_file())
+    };
+    let found: Vec<(String, std::path::PathBuf)> = roots
         .iter()
         .inspect(|r| println!("cargo:rerun-if-changed={}", r.display()))
-        .flat_map(|r| std::fs::read_dir(r).map(|d| d.filter_map(Result::ok).map(|e| e.path()).collect::<Vec<_>>()).unwrap_or_default())
+        .flat_map(|r| match is_library(r) {
+            true => vec![r.clone()],
+            false => std::fs::read_dir(r).map(|d| d.filter_map(Result::ok).map(|e| e.path()).collect::<Vec<_>>()).unwrap_or_default(),
+        })
         .flat_map(|dir| {
             // A library's functions (Name.xtl) and its macros (Name.xtlm).
             let name = dir.file_name().and_then(|n| n.to_str()).unwrap_or("").to_string();
@@ -43,9 +63,14 @@ fn libraries() {
             })
         })
         .collect();
-    found.sort();
+    // Each name once: the last root's (a dependent's library replaces
+    // one of the same name), sorted by name.
+    let mut by_name = std::collections::BTreeMap::new();
+    for (file, src) in found {
+        by_name.insert(file, src);
+    }
     let mut code = String::from("pub const LIBRARIES: &[(&str, &str)] = &[\n");
-    for (file, src) in &found {
+    for (file, src) in &by_name {
         println!("cargo:rerun-if-changed={}", src.display());
         code += &format!("    ({file:?}, include_str!({:?})),\n", src.canonicalize().unwrap());
     }

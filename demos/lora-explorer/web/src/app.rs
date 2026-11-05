@@ -13,48 +13,12 @@ use web_sys::HtmlInputElement;
 use yew::prelude::*;
 
 use microscope::chrome::{footer, header, panel};
-use microscope::color::{ramp, DIVERGE};
+use microscope::heat::{column, heat, largest};
 use microscope::source::{block, NONE};
 use microscope::stages::clickable;
 use microscope::stageview::{no_stage, row_picker, stage_view, Split, Turn};
 
 use crate::micro::{backward, pipeline, program, run, sweep, sweep_program, Explored, Matrix, Settings, Sweep};
-
-/// Cell size of a heat map, in pixels.
-const CELL: f64 = 22.0;
-
-/// A matrix as a heat map, colored as the 3D stage view colors its
-/// cubes (red positive, blue negative, near white about 0), the depth by
-/// the size against `scale` (the largest size shown beside
-/// it, so maps side by side compare); each cell's value on hover.
-fn heat(m: &Matrix, scale: f64, label: &str) -> Html {
-    let (w, h) = (m.cols as f64 * CELL, m.rows as f64 * CELL);
-    let cells = m.items.iter().enumerate().map(|(k, v)| {
-        let (y, x) = ((k / m.cols) as f64 * CELL, (k % m.cols) as f64 * CELL);
-        let c = ramp(&DIVERGE, 0.5 + 0.5 * if scale > 0.0 { (v / scale).clamp(-1.0, 1.0) } else { 0.0 });
-        let fill = format!("rgb({}, {}, {})", c[0], c[1], c[2]);
-        html! { <rect x={x.to_string()} y={y.to_string()} width={CELL.to_string()} height={CELL.to_string()} fill={fill} class="cell"><title>{format!("{v:.4}")}</title></rect> }
-    });
-    html! {
-        <figure class="heat">
-            <svg width={w.to_string()} height={h.to_string()} viewBox={format!("0 0 {w} {h}")} role="img" aria-label={label.to_string()}>
-                { for cells }
-                <rect x="0" y="0" width={w.to_string()} height={h.to_string()} class="frame" />
-            </svg>
-            <figcaption>{label}</figcaption>
-        </figure>
-    }
-}
-
-/// The largest size in some matrices.
-fn largest(ms: &[&Matrix]) -> f64 {
-    ms.iter().flat_map(|m| m.items.iter()).fold(0.0, |a: f64, v| a.max(v.abs()))
-}
-
-/// A vector as a one-column matrix.
-fn column(items: &[f64]) -> Matrix {
-    Matrix { rows: items.len(), cols: 1, items: items.to_vec() }
-}
 
 /// Stage k of the pipeline (from 0, the data first) in 2D: what it
 /// computes, from what, the matrices it multiplies by included.

@@ -13,6 +13,7 @@ refresh of the vendored X_eTaL.
 
 ## 2026-11-05
 
+- `feat` X_eTaL-fine-tuning's quick asks (step fine-tuning-asks): FM1 microscope's build.rs embeds the library roots named in `MICROSCOPE_LIBS` (a root or one library's directory, a dependent's library replacing one of the same name), `libs::names`, `libs::add` documented for libraries; FM2 `chrome::Site` with `header_of`, `footer_of` and `provenance` (another repository's footer shows its commit, then X_eTaL-ML's, `ML_COMMIT`, and X_eTaL's); FM3 `lo:s_calingRs`, rsLoRA's alpha / sqrt r, a doc example and 2 checks; FM5 the heat map is `microscope::heat`, the LoRA explorer on it, its CSS in microscope.css; microscope tests/chrome.rs (5 tests; MICROSCOPE_LIBS checked by hand with a scratch library, as a root and as one library's directory); docs/fine-tuning-asks.md, our word on FM1-FM10; LoRA basics, checks and types reblessed after review (additions only)
 - `demo` pipelines' Compose your own draws equations as math while you edit (step composer-integrals, X_eTaL's agent's request): a starter An integral, GELU as x Phi(x) after X_eTaL-libraries' Equations demo integrals.xtl (-0.0455 -0.1587 0.0 0.8413 1.9545 at -2 .. 2); the Rendered pane is `microscope::source::rendered`, xetal-play's `decorated` (X_eTaL D178: a `## draws:` macro's call typeset in place by KaTeX, inline), keyed by the text so an edit leaves no earlier drawing behind; a test (the values, one math box, its LaTeX an integral, a program that does not load drawn as typed); checked in Chrome
 
 ## 2026-11-04

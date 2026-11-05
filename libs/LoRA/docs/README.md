@@ -22,7 +22,9 @@ the libraries without setup.
 
 - W is m x n (m outputs, n inputs), A is r x n, B is m x r, the rank r
   much smaller than m and n; s is the scale, alpha / r
-  (`alpha lo:s_caling r`), so that changing r keeps the update's size.
+  (`alpha lo:s_caling r`), so that changing r keeps the update's size;
+  rsLoRA's alpha / sqrt r (`alpha lo:s_calingRs r`) keeps the update's
+  learning from slowing as r grows. The adapter takes either.
 - An adapter is the tuple `(W, A, B, s)`.
 - Inputs are columns: x is one input of n numbers, or an n x N matrix
   of N inputs; W x is `W '+ '* i_nner x`.
@@ -54,6 +56,7 @@ the libraries without setup.
 | Function | Type | What |
 | -------- | ---- | ---- |
 | `alpha lo:s_caling r` | `Num a => Float -> a -> Float` | the scale s, alpha / r |
+| `alpha lo:s_calingRs r` | `Num a => Float -> a -> Float` | rsLoRA's rank-stabilized scale, alpha / sqrt r |
 | `(W, A, B, s) lo:f_orward x` | `Num a => (a, a, a, a) -> a -> a` | the adapted layer, W x + s B (A x), the factors kept apart |
 | `lo:d_elta (A, B, s)` | `Num a => (a, a, a) -> a` | the update, s B A: an m x n matrix of rank r at most |
 | `lo:m_erge (W, A, B, s)` | `Num a => (a, a, a, a) -> a` | the adapter folded into the weights, W + s B A |
@@ -110,6 +113,8 @@ From `../tests/basics.xtl` and the doc comments:
 , 4: 0.5)
       16 lo:e_xpertFA 4096 14336
 524288 360448
+      16.0 lo:s_calingRs 4
+8.0
 ```
 
 In the gradient example, W is the identity, A = [1 1], B = [1 -1]',
@@ -124,7 +129,8 @@ x' = [2 4], dB = 0.5 * 6 * g = [3 -3]' and dx = g + 0.5 * A' * 2 = [2
 - the update's rank is r for r = 1 to 5 (A and B in general position),
   the base's is 6, an outer product's is 1;
 - with B at 0 the layer is the base;
-- the scale is alpha / r;
+- the scale is alpha / r, and rsLoRA's is alpha / sqrt r (the same at
+  rank 1, twice alpha / r at rank 4);
 - the worked numbers of the fine-tuning research
   (`docs/fine-tune-moe-research.txt`, a SwiGLU expert with d 4096 and
   f 14336 at rank 16): 884,736 numbers per expert, 1.69 MiB in BF16,

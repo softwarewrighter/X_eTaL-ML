@@ -27,6 +27,15 @@
 ## 2.0
 l:s_caling := { alpha r -> alpha / f_loat r }
 
+## `alpha s_calingRs r`: rsLoRA's rank-stabilized scale, alpha / sqrt r
+## (Kalajdzievski, "A Rank Stabilization Scaling Factor for Fine-Tuning
+## with LoRA", 2023): with alpha / r the update's learning slows as r
+## grows; over sqrt r it does not. An adapter takes either, (W, A, B, s).
+## >> "lo:" u_se< "LoRA"
+## >> 16.0 lo:s_calingRs 4
+## 8.0
+l:s_calingRs := { alpha r -> alpha / s_qrt f_loat r }
+
 ## `(W, A, B, s) f_orward x`: the adapted layer, W x + s B (A x), the
 ## update in its factored form: A x (r numbers per input), then B of
 ## that, never the m x n matrix B A.
