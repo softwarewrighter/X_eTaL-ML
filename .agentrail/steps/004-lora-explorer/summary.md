@@ -1,0 +1,1 @@
+lora-explorer trains: backward step as a second Flow pipeline with stage view; LoRA vs LoRA-FA fitting a known rank-4 update with loss curves vs the Eckart-Young optimum (power iteration); rank sweep 1..8 run once; 3 new page tests, baselines reblessed after review, checked in Chrome
