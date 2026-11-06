@@ -1,0 +1,82 @@
+#!/usr/bin/env xetal
+## lo:a_dapter<, checked with Check: the forward and backward functions
+## it writes are the library's (lo:f_orward, lo:g_rads, lo:g_radsFA)
+## for LoRA and LoRA-FA, the backward pass is the finite differences of
+## the squared error, the rank may be a name, and a caller's arrays
+## named x, g and b are not captured. Arrays by a fixed ripple, the
+## sine of a square (no chance).
+
+"lo:" u_se< "LoRA"
+"k:" u_se< "Check"
+
+u:r_ipple := { c n -> s_in c * f_loat (r_ange n) * r_ange n }
+## An 8 x 6 base at rank 3, 5 inputs (the columns of X) and the outputs
+## wanted for them.
+W := 8 6 r_eshape 0.7 u:r_ipple 48
+A := 3 6 r_eshape 0.4 * 1.1 u:r_ipple 18
+B := 8 3 r_eshape 0.3 * 0.9 u:r_ipple 24
+s := 6.0 lo:s_caling 3
+X := 6 5 r_eshape 0.3 u:r_ipple 30
+Y := 8 5 r_eshape 1.3 u:r_ipple 40
+G := ((W, A, B, s) lo:f_orward X) - Y
+_ := { v ->
+  v ? 0
+  []P_ANIC "lo:a_dapter<: A must be 3 x n and B m x 3 for \"W A B s | r 3 | train A B\""
+} (3 = f_irst s_hape A) & 3 = 2 s_elect s_hape B
+u:f_wd := { g3:x -> (W '+ '* i_nner g3:x) + s * B '+ '* i_nner A '+ '* i_nner g3:x }
+u:b_wd := { (g3:x, g2:g) ->
+  g1:b := (o_\ B) '+ '* i_nner g2:g
+  (s * g1:b '+ '* i_nner o_\ g3:x, s * g2:g '+ '* i_nner o_\ A '+ '* i_nner g3:x,
+    ((o_\ W) '+ '* i_nner g2:g) + s * (o_\ A) '+ '* i_nner g1:b)
+}
+_ := { v ->
+  v ? 0
+  []P_ANIC "lo:a_dapter<: A must be 3 x n and B m x 3 for \"W | r 3 | train B\""
+} (3 = f_irst s_hape A) & 3 = 2 s_elect s_hape B
+u:f_wdFA := { g6:x -> (W '+ '* i_nner g6:x) + s * B '+ '* i_nner A '+ '* i_nner g6:x }
+u:b_wdFA := { (g6:x, g5:g) ->
+  (s * g5:g '+ '* i_nner o_\ A '+ '* i_nner g6:x, ((o_\ W) '+ '* i_nner g5:g) +
+    s * (o_\ A) '+ '* i_nner (o_\ B) '+ '* i_nner g5:g)
+}
+(dA, dB, dx) := u:b_wd (X, G)
+(lA, lB, lx) := (W, A, B, s) lo:g_rads (X, G)
+(fB, fx) := u:b_wdFA (X, G)
+(gB, gx) := (W, A, B, s) lo:g_radsFA (X, G)
+c1 := "the forward function is lo:f_orward" k:t_est (u:f_wd X) k:n_ear (W, A, B, s) lo:f_orward X
+c2 := "LoRA's backward function is lo:g_rads" k:t_est ((r_avel dA) c_at (r_avel dB) c_at r_avel dx) k:n_ear (r_avel lA) c_at (r_avel lB) c_at r_avel lx
+c3 := "LoRA-FA's is lo:g_radsFA, two gradients" k:t_est ((r_avel fB) c_at r_avel fx) k:n_ear (r_avel gB) c_at r_avel gx
+c4 := "LoRA-FA's forward function is the same layer" k:t_est (u:f_wdFA X) k:n_ear u:f_wd X
+## The backward function against central differences of the squared
+## error, (L(w + e) - L(w - e)) / 2e for each item of A, B and X.
+e := 0.00001
+u:b_ump := { w i -> e * f_loat (s_hape w) r_eshape i = r_ange t_ally r_avel w }
+u:g_ap := { a b -> 'm_ax r_/ r_avel a_bs a - b }
+u:l_oss := { a -> a lo:l_oss (X, Y) }
+FA := (s_hape A) r_eshape '{ i -> ((u:l_oss (W, A + A u:b_ump i, B, s)) - u:l_oss (W, A - A u:b_ump i, B, s)) / 2.0 * e } e_ach r_ange t_ally r_avel A
+FB := (s_hape B) r_eshape '{ i -> ((u:l_oss (W, A, B + B u:b_ump i, s)) - u:l_oss (W, A, B - B u:b_ump i, s)) / 2.0 * e } e_ach r_ange t_ally r_avel B
+Fx := (s_hape X) r_eshape '{ i -> (((W, A, B, s) lo:l_oss (X + X u:b_ump i, Y)) - (W, A, B, s) lo:l_oss (X - X u:b_ump i, Y)) / 2.0 * e } e_ach r_ange t_ally r_avel X
+c5 := "dA, dB and dx are the finite differences" k:t_est k:t_rue 0.000001 > (dA u:g_ap FA) m_ax (dB u:g_ap FB) m_ax dx u:g_ap Fx
+c6 := "LoRA-FA's dB and dx are too" k:t_est k:t_rue 0.000001 > (fB u:g_ap FB) m_ax fx u:g_ap Fx
+## The rank as a name; arrays named as the macro's own lambdas' inputs
+## (x, g, b): its names are fresh, so these are not captured.
+k := 3
+(x, g, b, t) := (W, A, B, s)
+_ := { v ->
+  v ? 0
+  []P_ANIC "lo:a_dapter<: A must be k x n and B m x k for \"x g b t | r k | train g b\""
+} (k = f_irst s_hape g) & k = 2 s_elect s_hape b
+u:f_c := { g9:x -> (x '+ '* i_nner g9:x) + t * b '+ '* i_nner g '+ '* i_nner g9:x }
+u:b_c := { (g9:x, g8:g) ->
+  g7:b := (o_\ b) '+ '* i_nner g8:g
+  (t * g7:b '+ '* i_nner o_\ g9:x, t * g8:g '+ '* i_nner o_\ g '+ '* i_nner g9:x,
+    ((o_\ x) '+ '* i_nner g8:g) + t * (o_\ g) '+ '* i_nner g7:b)
+}
+(cA, cB, cx) := u:b_c (X, G)
+c7 := "a rank by name, and arrays named x, g, b: the same layer" k:t_est (u:f_c X) k:n_ear u:f_wd X
+c8 := "and the same gradients" k:t_est ((r_avel cA) c_at (r_avel cB) c_at r_avel cx) k:n_ear (r_avel dA) c_at (r_avel dB) c_at r_avel dx
+## A step with the backward function is lo:s_gd's.
+(_, A1, B1, _) := 0.01 lo:s_gd ((W, A, B, s), (X, Y))
+(mA, mB, _) := u:b_wd (X, ((u:f_wd X) - Y))
+c9 := "a step with its gradients is lo:s_gd's" k:t_est ((r_avel A1) c_at r_avel B1) k:n_ear (r_avel A - 0.01 * mA) c_at r_avel B - 0.01 * mB
+k:r_eport c1 k:a_nd c2 k:a_nd c3 k:a_nd c4 k:a_nd c5 k:a_nd c6 k:a_nd c7 k:a_nd c8 k:a_nd c9
+

@@ -1,0 +1,10 @@
+#!/usr/bin/env xetal
+## lo:a_dapter< checks A and B against the rank when the program runs:
+## at rank 2 these are of rank 1, and the program stops.
+"lo:" u_se< "LoRA"
+W := 2 2 r_eshape 1.0 0.0 0.0 1.0
+A := 1 2 r_eshape 1.0 1.0
+B := 2 1 r_eshape 1.0 -1.0
+s := 0.5
+"u:f_wd u:b_wd" lo:a_dapter< "W A B s | r 2 | train A B"
+u:f_wd 2 1 r_eshape 2.0 4.0

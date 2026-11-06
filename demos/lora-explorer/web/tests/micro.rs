@@ -95,7 +95,7 @@ fn the_backward_stages_are_the_gradients() {
     for r in [1, 3, 8] {
         let e = at(r);
         let s = 6.0 / r as f64;
-        assert!(e.back_same, "rank {r}: the pipeline's dx is lo:g_rads's");
+        assert!(e.back_same, "rank {r}: the pipeline's dx is lo:a_dapter<'s");
         assert_eq!(e.back_stages.iter().map(|v| v.label.as_str()).collect::<Vec<_>>(), ["g", "b", "dA", "dB", ""], "rank {r}");
         let x = &e.stages[0].items;
         let h = &e.stages[1].items;

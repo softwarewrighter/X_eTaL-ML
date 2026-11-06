@@ -51,3 +51,10 @@ g := ((W, A, B, s) lo:f_orward x) - y
 (2 2 r_eshape 1.0 0.0 0.0 1.0, 1 2 r_eshape 1.0 1.0, 2 1 r_eshape 1.0 -1.0, 0.5) lo:g_rads (2 1 r_eshape 2.0 4.0, 2 1 r_eshape 1.0 -1.0)
 0.1 lo:s_gd ((2 2 r_eshape 1.0 0.0 0.0 1.0, 1 2 r_eshape 1.0 1.0, 2 1 r_eshape 1.0 -1.0, 0.5), (2 1 r_eshape 2.0 4.0, 2 1 r_eshape 4.0 2.0))
 16.0 lo:s_calingRs 4
+## The macro lo:a_dapter<: the layer and its gradients written out for
+## these names (xetal expand shows them), the same as above.
+"u:f_wd u:b_wd" lo:a_dapter< "W A B s | r 2 | train A B"
+"u:f_fa u:b_fa" lo:a_dapter< "W | r 2 | train B"
+u:f_wd x
+u:b_wd (x, g)
+u:b_fa (x, g)

@@ -1,0 +1,2 @@
+command = "../../../scripts/xt run bad-rank.xtl"
+exit_code = 1

@@ -1,0 +1,10 @@
+ok: the forward function is lo:f_orward
+ok: LoRA's backward function is lo:g_rads
+ok: LoRA-FA's is lo:g_radsFA, two gradients
+ok: LoRA-FA's forward function is the same layer
+ok: dA, dB and dx are the finite differences
+ok: LoRA-FA's dB and dx are too
+ok: a rank by name, and arrays named x, g, b: the same layer
+ok: and the same gradients
+ok: a step with its gradients is lo:s_gd's
+9 checks, all passed

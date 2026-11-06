@@ -1,6 +1,6 @@
 number = 7
 slug = "adapter-macro"
-status = "pending"
+status = "in-progress"
 description = "(docs/fine-tune-moe-demo-plan.md, step 4; L2629-2659) lo:a_dapter<: a spec st..."
 role = "production"
 context_files = []

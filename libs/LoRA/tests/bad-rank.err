@@ -1,0 +1,5 @@
+error[panic]: lo:a_dapter<: A must be 2 x n and B m x 2 for "W A B s | r 2 | train A B"
+ --> bad-rank.xtl:9:1
+  |
+9 | "u:f_wd u:b_wd" lo:a_dapter< "W A B s | r 2 | train A B"
+  | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

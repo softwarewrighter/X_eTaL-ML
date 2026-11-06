@@ -1,6 +1,6 @@
 # LoRA
 
-Low-rank adapters (LoRA): the adapted forward pass in factored form, the merge, the counts, the gradients and steps, LoRA-FA
+Low-rank adapters (LoRA): the adapted forward pass in factored form, the merge, the counts, the gradients and steps, LoRA-FA, the macro lo:a_dapter<
 
 ```
 "lo:" u_se< "LoRA"
@@ -8,7 +8,7 @@ Low-rank adapters (LoRA): the adapted forward pass in factored form, the merge, 
 
 | Directory | What |
 | --------- | ---- |
-| [`src/`](src/) | the library, `LoRA.xtl` |
+| [`src/`](src/) | the library, `LoRA.xtl` (functions) and `LoRA.xtlm` (the macro `lo:a_dapter<`) |
 | [`docs/`](docs/README.md) | the reference: every function, its type, examples, provenance |
 | [`demos/`](demos/) | programs that use it |
 | [`tests/`](tests/) | reg-rs baselines: the test programs, the pinned export types (`types.rgt`) and the demos (`demo-*.rgt`) |

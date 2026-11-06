@@ -1,0 +1,8 @@
+#!/usr/bin/env xetal
+## lo:a_dapter< trains A and B (LoRA) or B alone (LoRA-FA): A alone is refused.
+"lo:" u_se< "LoRA"
+W := 2 2 r_eshape 1.0 0.0 0.0 1.0
+A := 1 2 r_eshape 1.0 1.0
+B := 2 1 r_eshape 1.0 -1.0
+s := 0.5
+"u:f_wd u:b_wd" lo:a_dapter< "W A B s | r 1 | train A"

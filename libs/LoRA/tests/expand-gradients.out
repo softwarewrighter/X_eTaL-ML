@@ -1,0 +1,69 @@
+#!/usr/bin/env xetal
+## LoRA's gradients and steps, checked with Check: every gradient
+## against central finite differences of the squared error, LoRA-FA's
+## the same as LoRA's for B and x, the steps lowering the loss,
+## LoRA-FA's updates inside A's row space (LoRA's not), the seeded A
+## and LoRA-FA's counts. Arrays by a fixed ripple, the sine of a square
+## (no chance).
+
+"lo:" u_se< "LoRA"
+"k:" u_se< "Check"
+
+u:r_ipple := { c n -> s_in c * f_loat (r_ange n) * r_ange n }
+## An 8 x 6 base at rank 3, 5 inputs (the columns of x) and the outputs
+## wanted for them.
+W := 8 6 r_eshape 0.7 u:r_ipple 48
+A := 3 6 r_eshape 0.4 * 1.1 u:r_ipple 18
+B := 8 3 r_eshape 0.3 * 0.9 u:r_ipple 24
+s := 6.0 lo:s_caling 3
+x := 6 5 r_eshape 0.3 u:r_ipple 30
+y := 8 5 r_eshape 1.3 u:r_ipple 40
+g := ((W, A, B, s) lo:f_orward x) - y
+(dA, dB, dx) := (W, A, B, s) lo:g_rads (x, g)
+## e at item i of an array shaped as w, 0 elsewhere; the largest gap.
+e := 0.00001
+u:b_ump := { w i -> e * f_loat (s_hape w) r_eshape i = r_ange t_ally r_avel w }
+u:g_ap := { a b -> 'm_ax r_/ r_avel a_bs a - b }
+## The loss of an adapter on these inputs.
+u:l_oss := { a -> a lo:l_oss (x, y) }
+## (L(w + e) - L(w - e)) / 2e for each item of A, B and x.
+FA := (s_hape A) r_eshape '{ i -> ((u:l_oss (W, A + A u:b_ump i, B, s)) - u:l_oss (W, A - A u:b_ump i, B, s)) / 2.0 * e } e_ach r_ange t_ally r_avel A
+FB := (s_hape B) r_eshape '{ i -> ((u:l_oss (W, A, B + B u:b_ump i, s)) - u:l_oss (W, A, B - B u:b_ump i, s)) / 2.0 * e } e_ach r_ange t_ally r_avel B
+Fx := (s_hape x) r_eshape '{ i -> (((W, A, B, s) lo:l_oss (x + x u:b_ump i, y)) - (W, A, B, s) lo:l_oss (x - x u:b_ump i, y)) / 2.0 * e } e_ach r_ange t_ally r_avel x
+c1 := "dL/dA = s (B' g) x' is the finite differences" k:t_est k:t_rue 0.000001 > dA u:g_ap FA
+c2 := "dL/dB = s g z' is the finite differences" k:t_est k:t_rue 0.000001 > dB u:g_ap FB
+c3 := "dL/dx = W' g + s A' B' g is the finite differences" k:t_est k:t_rue 0.000001 > dx u:g_ap Fx
+c4 := "each gradient has its array's shape" k:t_est ((s_hape A) c_at (s_hape B) c_at s_hape x) k:i_s (s_hape dA) c_at (s_hape dB) c_at s_hape dx
+(fB, fx) := (W, A, B, s) lo:g_radsFA (x, g)
+c5 := "LoRA-FA's dB and dx are LoRA's" k:t_est ((r_avel dB) c_at r_avel dx) k:n_ear (r_avel fB) c_at r_avel fx
+## Training from LoRA's start, B at 0: 200 steps of each.
+a0 := (W, A, 8 3 r_eshape 0.0, s)
+L0 := u:l_oss a0
+L1 := u:l_oss 200 '{ a -> 0.01 lo:s_gd (a, (x, y)) } p_ower a0
+(_, A2, B2, _) := 200 '{ a -> 0.01 lo:s_gdFA (a, (x, y)) } p_ower a0
+L2 := u:l_oss (W, A2, B2, s)
+(a3, _, t3) := 200 '{ q -> 0.01 lo:a_dam (q, (x, y)) } p_ower lo:a_damStart a0
+(a4, _, t4) := 200 '{ q -> 0.01 lo:a_damFA (q, (x, y)) } p_ower lo:a_damStartFA a0
+c6 := "a step of gradient descent lowers the loss" k:t_est k:t_rue L0 > u:l_oss 0.01 lo:s_gd (a0, (x, y))
+c7 := "200 steps of LoRA, LoRA-FA, Adam and Adam-FA all lower it" k:t_est 1 1 1 1 k:i_s L0 > L1 c_at L2 c_at (u:l_oss a3) c_at u:l_oss a4
+c8 := "Adam counts its steps" k:t_est 201 201 k:i_s t3 c_at t4
+## LoRA-FA keeps A: its update s B A has rows in A's row space, so A
+## with the update's rows under it still has rank 3. LoRA moves A too:
+## its update leaves the start's row space.
+(_, A3, B3, s3) := a3
+c9 := "LoRA-FA leaves A as it was" k:t_est A k:n_ear A2
+c10 := "LoRA-FA's update lies in A's row space" k:t_est 3 k:i_s lo:r_ank A c_at lo:d_elta (A2, B2, s)
+c11 := "LoRA's does not" k:t_est k:t_rue 3 < lo:r_ank A c_at lo:d_elta (A3, B3, s3)
+## The seeded A: the same seed, the same matrix; another seed, another.
+c12 := "a seed regenerates A" k:t_est (5 lo:s_eeded 3 6) k:n_ear 5 lo:s_eeded 3 6
+c13 := "another seed gives another A" k:t_est k:t_rue 0.1 < (5 lo:s_eeded 3 6) u:g_ap 6 lo:s_eeded 3 6
+c14 := "a seeded A is r x n, of rank r" k:t_est 3 6 3 k:i_s (s_hape 5 lo:s_eeded 3 6) c_at lo:r_ank 5 lo:s_eeded 3 6
+## The research's SwiGLU expert, d 4096, f 14336, rank 16, under
+## LoRA-FA: r (2f + d) trained, r (2d + f) frozen, 884,736 together;
+## Adam's two FP32 averages 4 MiB against LoRA's 6.75.
+ef := 16 lo:e_xpertFA 4096 14336
+c15 := "LoRA-FA trains r (2f + d) and regenerates r (2d + f)" k:t_est 524288 360448 k:i_s ef
+c16 := "which together are LoRA's 884,736" k:t_est (16 lo:e_xpert 4096 14336) k:i_s '+ r_/ ef
+c17 := "Adam's FP32 averages: 6.75 MiB for LoRA, 4 MiB for LoRA-FA" k:t_est 6.75 4.0 k:n_ear (2.0 * 32 lo:b_ytes (16 lo:e_xpert 4096 14336) c_at f_irst ef) / 1048576.0
+k:r_eport c1 k:a_nd c2 k:a_nd c3 k:a_nd c4 k:a_nd c5 k:a_nd c6 k:a_nd c7 k:a_nd c8 k:a_nd c9 k:a_nd c10 k:a_nd c11 k:a_nd c12 k:a_nd c13 k:a_nd c14 k:a_nd c15 k:a_nd c16 k:a_nd c17
+

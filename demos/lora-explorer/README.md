@@ -66,9 +66,11 @@ the matrix has, and at 8 twice as many: LoRA saves only where r is much
 smaller than the matrix.
 
 A backward step, with g = y - (W + T) x the loss's gradient at the
-output, is a second pipeline; its dx is checked against the library's
-`lo:g_rads` (whose gradients the library checks by finite
-differences):
+output, is a second pipeline; its dx is checked against the backward
+function the library's macro writes from a spec, `"u:f_orward
+u:b_ackward" lo:a_dapter< "W A B s | r r | train A B"` (the macro's
+gradients are checked against `lo:g_rads` and finite differences in
+the library's tests):
 
 ```
 back := @ flow:p_ipe< c#"

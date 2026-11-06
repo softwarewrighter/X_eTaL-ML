@@ -1,0 +1,47 @@
+#!/usr/bin/env xetal
+## LoRA's properties, checked with Check: the merge identity, the
+## update's rank, a zero B leaves the base, and the counts against the
+## worked numbers of docs/fine-tune-moe-research.txt (a SwiGLU expert,
+## d 4096, f 14336, rank 16). Arrays by a fixed ripple, the sine of a
+## square (no chance; the sine of a line would make every matrix of
+## rank 2).
+
+"lo:" u_se< "LoRA"
+"k:" u_se< "Check"
+
+u:r_ipple := { c n -> s_in c * f_loat (r_ange n) * r_ange n }
+## An 8 x 6 base, inputs as the 5 columns of x, rank-r factors.
+W := 8 6 r_eshape 0.7 u:r_ipple 48
+x := 6 5 r_eshape 0.3 u:r_ipple 30
+u:a_dapter := { r -> (W, (r c_at 6) r_eshape 0.4 * 1.1 u:r_ipple r * 6, (8 c_at r) r_eshape 0.3 * 0.9 u:r_ipple r * 8, 16.0 lo:s_caling r) }
+(_, A3, B3, s3) := u:a_dapter 3
+c1 := "W x + s B (A x) is (W + s B A) x" k:t_est ((u:a_dapter 3) lo:f_orward x) k:n_ear (lo:m_erge u:a_dapter 3) '+ '* i_nner x
+c2 := "the factored form is W x plus the update times x" k:t_est ((u:a_dapter 3) lo:f_orward x) k:n_ear (W '+ '* i_nner x) + (lo:d_elta (A3, B3, s3)) '+ '* i_nner x
+## The update's rank is the adapter's (A and B in general position),
+## never more; the base's is full.
+u:r_anks := { r ->
+  (_, A, B, _) := u:a_dapter r
+  lo:r_ank lo:d_elta (A, B, 1.0)
+}
+c3 := "rank(s B A) is r for r = 1 .. 5" k:t_est 1 2 3 4 5 k:i_s 'u:r_anks e_ach 1 2 3 4 5
+c4 := "the base is of full rank, 6" k:t_est 6 k:i_s lo:r_ank W
+c5 := "an outer product has rank 1" k:t_est 1 k:i_s lo:r_ank (f_loat r_ange 8) '* t_able f_loat r_ange 6
+## LoRA starts with B at 0: the adapted layer is the base.
+c6 := "with B at 0, the layer is W x" k:t_est (W '+ '* i_nner x) k:n_ear (W, A3, 8 3 r_eshape 0.0, s3) lo:f_orward x
+c7 := "the scale is alpha / r" k:t_est 2.0 0.5 k:n_ear (16.0 lo:s_caling 8) c_at 8.0 lo:s_caling 16
+## The research's numbers: 884,736 per expert, 1.69 MiB in BF16, 108
+## MiB for 64 experts, 2.53 GiB for 24 such layers.
+e := 16 lo:e_xpert 4096 14336
+mib := (16 lo:b_ytes e) / 1048576.0
+u:c_ents := { v -> (f_loat f_loor 0.5 + 100.0 * v) / 100.0 }
+c8 := "rank 16 on one SwiGLU expert trains 884,736 numbers" k:t_est 884736 k:i_s e
+c9 := "which take 1.69 MiB in BF16" k:t_est 1.69 k:n_ear u:c_ents mib
+c10 := "64 experts take 108 MiB, 24 layers of them 2.53 GiB" k:t_est 108.0 2.53 k:n_ear (64.0 * mib) c_at u:c_ents 24.0 * 64.0 * mib / 1024.0
+c11 := "an 8 x 8 adapter at rank 3 trains 48 numbers" k:t_est 48 k:i_s 3 lo:p_arams 8 8
+c12 := "B (A x) costs r (m + n); making B A costs r m n" k:t_est 1024 32768 k:i_s 8 lo:c_osts 64 64
+## rsLoRA's scale: alpha / sqrt r, the same as alpha / r at rank 1,
+## twice it at rank 4.
+c13 := "rsLoRA's scale is alpha / sqrt r" k:t_est 16.0 8.0 4.0 k:n_ear '{ r -> 16.0 lo:s_calingRs r } e_ach 1 4 16
+c14 := "it is alpha / r at rank 1 and sqrt r times it after" k:t_est ((16.0 lo:s_caling 1) c_at 2.0 * 16.0 lo:s_caling 4) k:n_ear (16.0 lo:s_calingRs 1) c_at 16.0 lo:s_calingRs 4
+k:r_eport c1 k:a_nd c2 k:a_nd c3 k:a_nd c4 k:a_nd c5 k:a_nd c6 k:a_nd c7 k:a_nd c8 k:a_nd c9 k:a_nd c10 k:a_nd c11 k:a_nd c12 k:a_nd c13 k:a_nd c14
+

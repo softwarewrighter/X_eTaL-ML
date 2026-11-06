@@ -1,0 +1,5 @@
+error[bad-macro-argument]: name the forward and the backward functions: "u:f_wd u:b_wd"
+ --> bad-names.xtl:8:1
+  |
+8 | "u:f_wd" lo:a_dapter< "W A B s | r 1 | train A B"
+  | ^^^^^^^^

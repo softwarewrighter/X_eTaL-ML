@@ -241,7 +241,7 @@ pub fn app() -> Html {
                         <div class="tex" onclick={pick} data-tex={shown.clone()}>{ shown.clone() }</div>
                         <div class="stages">{ for buttons }</div>
                         { match (*stage, *pass) { (Some(k), Pass::Forward) => arrays(e, k - 1, s), (Some(k), Pass::Backward) => back_arrays(e, k - 1, s), (None, _) => html! {} } }
-                        <p class="muted">{ if e.back_same { "The backward pipeline's dx is the library's lo:g_rads (within 1e-12); every gradient of lo:g_rads is checked against finite differences in the library's tests." } else { "The backward pipeline's dx differs from lo:g_rads!" } }</p>
+                        <p class="muted">{ if e.back_same { "The backward pipeline's dx is the one the library's macro lo:a_dapter< writes from the spec \"W A B s | r r | train A B\" (within 1e-12); the macro's gradients are checked against lo:g_rads and finite differences in the library's tests." } else { "The backward pipeline's dx differs from lo:a_dapter<'s!" } }</p>
                     </> }) }
                     { panel("The update and the merge", "lo:m_erge (W, A, B, s)", "The update s B A is an 8 x 8 matrix of rank r at most; added to W it is the merged matrix, one matrix again, as fast as the base, for deploying one task.", false, html! { <>
                         <div class="row">{ heat(&e.w, sc, "W, frozen") }<span class="op">{"+"}</span>{ heat(&e.delta, sc, &format!("s B A, rank {}", e.rank)) }<span class="op">{"="}</span>{ heat(&e.merged, sc, "W + s B A, merged") }</div>

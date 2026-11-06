@@ -1,0 +1,78 @@
+#!/usr/bin/env xetal
+## LoRA: each function's answers on small arrays, pinned. Run with
+## "just run LoRA basics".
+
+"lo:" u_se< "LoRA"
+
+## A 4 x 3 base, a rank-2 adapter (A 2 x 3, B 4 x 2) at alpha 4, and two
+## inputs as the columns of x, by a fixed ripple, the sine of a square
+## (no chance).
+i := f_loat r_ange 12
+W := 4 3 r_eshape 0.5 * s_in 0.7 * i * i
+A := 2 3 r_eshape 0.3 * c_os 0.7 * f_loat r_ange 6
+B := 4 2 r_eshape 0.2 * s_in 2.1 * f_loat r_ange 8
+s := 4.0 lo:s_caling 2
+## rsLoRA's scale at the same rank.
+4.0 lo:s_calingRs 2
+x := 3 2 r_eshape 1.0 -0.5 0.25 2.0 -1.0 0.5
+s
+(W, A, B, s) lo:f_orward x
+lo:d_elta (A, B, s)
+lo:m_erge (W, A, B, s)
+## Ranks: the base's, the update's (at most 2).
+lo:r_ank W
+lo:r_ank lo:d_elta (A, B, s)
+## Counts: this adapter, an 8 x 8 one at rank 3, the costs of B (A x)
+## and of B A.
+2 lo:p_arams s_hape W
+3 lo:p_arams 8 8
+8 lo:c_osts 64 64
+16 lo:e_xpert 4096 14336
+16 lo:b_ytes 16 lo:e_xpert 4096 14336
+## The reference page's examples.
+(2 2 r_eshape 1.0 0.0 0.0 1.0, 1 2 r_eshape 1.0 1.0, 2 1 r_eshape 1.0 -1.0, 0.5) lo:f_orward 2.0 4.0
+lo:m_erge (2 2 r_eshape 1.0 0.0 0.0 1.0, 1 2 r_eshape 1.0 1.0, 2 1 r_eshape 1.0 -1.0, 0.5)
+lo:r_ank 3 3 r_eshape 1.0 2.0 3.0 2.0 4.0 6.0 0.0 1.0 1.0
+## Gradients and steps: the loss, the gradients for g = y - wanted,
+## one step of each kind (the adapter's B, or A and B, after it).
+y := 4 2 r_eshape 0.5 -1.0 1.0 0.0 -0.5 2.0 0.25 1.0
+g := ((W, A, B, s) lo:f_orward x) - y
+(W, A, B, s) lo:l_oss (x, y)
+(W, A, B, s) lo:g_rads (x, g)
+(W, A, B, s) lo:g_radsFA (x, g)
+0.1 lo:s_gd ((W, A, B, s), (x, y))
+0.1 lo:s_gdFA ((W, A, B, s), (x, y))
+0.1 lo:a_dam ((lo:a_damStart (W, A, B, s)), (x, y))
+0.1 lo:a_damFA ((lo:a_damStartFA (W, A, B, s)), (x, y))
+## A seeded A, and LoRA-FA's counts on a SwiGLU expert.
+7 lo:s_eeded 2 3
+16 lo:e_xpertFA 4096 14336
+## The reference page's gradient examples.
+(2 2 r_eshape 1.0 0.0 0.0 1.0, 1 2 r_eshape 1.0 1.0, 2 1 r_eshape 1.0 -1.0, 0.5) lo:g_rads (2 1 r_eshape 2.0 4.0, 2 1 r_eshape 1.0 -1.0)
+0.1 lo:s_gd ((2 2 r_eshape 1.0 0.0 0.0 1.0, 1 2 r_eshape 1.0 1.0, 2 1 r_eshape 1.0 -1.0, 0.5), (2 1 r_eshape 2.0 4.0, 2 1 r_eshape 4.0 2.0))
+16.0 lo:s_calingRs 4
+## The macro lo:a_dapter<: the layer and its gradients written out for
+## these names (xetal expand shows them), the same as above.
+_ := { v ->
+  v ? 0
+  []P_ANIC "lo:a_dapter<: A must be 2 x n and B m x 2 for \"W A B s | r 2 | train A B\""
+} (2 = f_irst s_hape A) & 2 = 2 s_elect s_hape B
+u:f_wd := { g3:x -> (W '+ '* i_nner g3:x) + s * B '+ '* i_nner A '+ '* i_nner g3:x }
+u:b_wd := { (g3:x, g2:g) ->
+  g1:b := (o_\ B) '+ '* i_nner g2:g
+  (s * g1:b '+ '* i_nner o_\ g3:x, s * g2:g '+ '* i_nner o_\ A '+ '* i_nner g3:x,
+    ((o_\ W) '+ '* i_nner g2:g) + s * (o_\ A) '+ '* i_nner g1:b)
+}
+_ := { v ->
+  v ? 0
+  []P_ANIC "lo:a_dapter<: A must be 2 x n and B m x 2 for \"W | r 2 | train B\""
+} (2 = f_irst s_hape A) & 2 = 2 s_elect s_hape B
+u:f_fa := { g6:x -> (W '+ '* i_nner g6:x) + s * B '+ '* i_nner A '+ '* i_nner g6:x }
+u:b_fa := { (g6:x, g5:g) ->
+  (s * g5:g '+ '* i_nner o_\ A '+ '* i_nner g6:x, ((o_\ W) '+ '* i_nner g5:g) +
+    s * (o_\ A) '+ '* i_nner (o_\ B) '+ '* i_nner g5:g)
+}
+u:f_wd x
+u:b_wd (x, g)
+u:b_fa (x, g)
+

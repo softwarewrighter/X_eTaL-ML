@@ -13,7 +13,8 @@ and trains B alone.
 "lo:" u_se< "LoRA"
 ```
 
-Put each library's `src/` directory on `XETAL_PATH` (`just path`
+One import reaches the functions (`LoRA.xtl`) and the macro
+(`LoRA.xtlm`, `lo:a_dapter<`). Put each library's `src/` directory on `XETAL_PATH` (`just path`
 prints them; see the [README](../../../README.md)); `lo:` is the
 recommended alias. The demos and live pages of this repository find
 the libraries without setup.
@@ -76,6 +77,52 @@ the libraries without setup.
 | `r lo:e_xpertFA d f` | `Num a => a -> a -> a` | the same expert under LoRA-FA: trained r (2f + d), then frozen r (2d + f) |
 | `b lo:b_ytes n` | `Num a => a -> a -> Float` | the bytes n numbers take at b bits each (16 for BF16, 32 for FP32) |
 | `r lo:c_osts m n` | `Num a => a -> a -> a` | multiply-adds: B (A x) for one input, r (m + n), then making B A, r m n |
+
+## The macro
+
+`"u:f_wd u:b_wd" lo:a_dapter< "W A B s | r 3 | train A B"` writes an
+adapted layer from a spec, before the program is compiled (`xetal
+expand` shows it): a check that A is r x n and B m x r (the program
+stops naming the spec when they are not), the forward function under
+the first name on the left and the backward function under the second.
+The spec's three fields, between bars:
+
+- the arrays: `W A B s` (the frozen base, the factors, the scale), or
+  `W` alone for `W A B s`;
+- the rank: `r` and a number or a name;
+- what trains: `train A B` is LoRA, the backward function giving `(dA,
+  dB, dx)`; `train B` is LoRA-FA (A frozen), giving `(dB, dx)`.
+  Nothing else trains here.
+
+The forward function takes the inputs (columns) and gives W x + s B (A
+x); the backward one takes `(x, g)`, the inputs and the loss's gradient
+at the output. The expansion is the library's formulas written out for
+the names given, with no call to the library; its lambdas' own names
+are fresh (`[]G_ENSYM`), so arrays named x, g or b are not captured.
+From `../tests/basics.xtl`, `"u:f_wd u:b_wd" lo:a_dapter< "W A B s | r
+2 | train A B"` becomes:
+
+```
+_ := { v ->
+  v ? 0
+  []P_ANIC "lo:a_dapter<: A must be 2 x n and B m x 2 for \"W A B s | r 2 | train A B\""
+} (2 = f_irst s_hape A) & 2 = 2 s_elect s_hape B
+u:f_wd := { g3:x -> (W '+ '* i_nner g3:x) + s * B '+ '* i_nner A '+ '* i_nner g3:x }
+u:b_wd := { (g3:x, g2:g) ->
+  g1:b := (o_\ B) '+ '* i_nner g2:g
+  (s * g1:b '+ '* i_nner o_\ g3:x, s * g2:g '+ '* i_nner o_\ A '+ '* i_nner g3:x,
+    ((o_\ W) '+ '* i_nner g2:g) + s * (o_\ A) '+ '* i_nner g1:b)
+}
+```
+
+`../tests/adapter.xtl` checks, on the 8 x 6 base at rank 3, that the
+forward function is `lo:f_orward`, the backward functions are
+`lo:g_rads` and `lo:g_radsFA` and the central finite differences, that
+the rank may be a name and arrays named x, g and b are not captured,
+and that a step with the gradients is `lo:s_gd`'s. `bad-spec`,
+`bad-train` and `bad-names` pin the refusals, `bad-rank` the run-time
+check. The LoRA explorer's backward step is checked against the
+backward function the macro writes.
 
 ## Examples
 

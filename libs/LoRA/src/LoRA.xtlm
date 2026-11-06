@@ -1,0 +1,126 @@
+## LoRA's macro: an adapted layer written from a short spec -- its forward and backward passes, for LoRA or LoRA-FA
+##
+## Import it with the library: "lo:" u_se< "LoRA" reaches LoRA.xtl's
+## functions and this file's macro (X_eTaL MC11).
+## Names with m: are macros; h: names are private to this file.
+##
+## A macro is a function from the source text written left and right of
+## its call to the source that replaces the call, before the program is
+## compiled (X_eTaL MC10); xetal expand FILE shows the result. The spec
+## names the adapter's arrays, its rank and what trains:
+## "W A B s | r 3 | train A B". The arrays are the frozen W (m x n), A
+## (r x n), B (m x r) and the scale s, as LoRA.xtl's adapter (W, A, B,
+## s); "W" alone means "W A B s". The rank is a number or a name, and
+## the expansion checks A's and B's shapes against it when the program
+## runs. "train A B" is LoRA, "train B" is LoRA-FA (A frozen); nothing
+## else trains. The expansion is ordinary code with no call to the
+## library: the same formulas as lo:f_orward, lo:g_rads and
+## lo:g_radsFA, written out for these names.
+
+### Reading a spec (private)
+
+## The words of t: runs of characters other than white space, boxed
+## (after X_eTaL's Combinators.xtlm).
+h:w_ords := { t -> (n_ot t m_ember? " \n\t") p_artition t }
+## The fields of t between bars, boxed.
+h:f_ields := { t -> (n_ot t m_ember? "|") p_artition t }
+## The boxed texts b joined with a space between ("" for none).
+h:j_oin := { b ->
+  0 = t_ally b ? ""
+  d_isclose '{ x y -> e_nclose (d_isclose x) c_at " " c_at d_isclose y } r_/ b
+}
+## Whether the text w is a name a program can write (letters, digits,
+## _ and an alias's colon, not starting with a digit).
+h:n_ame? := { w ->
+  0 = t_ally w ? 0
+  ('& r_/ w m_ember? "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_:") & n_ot (f_irst w) m_ember? "0123456789"
+}
+## Whether the text w is a whole number.
+h:n_umber? := { w -> (0 < t_ally w) & '& r_/ w m_ember? []D }
+## The i-th of the boxed words ws, as text.
+h:n_th := { ws i -> d_isclose i s_elect ws }
+## Whether the boxed words ws hold the text w.
+h:h_as? := { ws w -> '| r_/ '{ v -> w m_atch d_isclose v } e_ach ws }
+## The arrays' names: the four written, or W with A, B and s.
+h:a_rrays := { ws ->
+  1 = t_ally ws ? ws c_at h:w_ords "A B s"
+  ws
+}
+## What a spec looks like, for the messages.
+specShape := "a spec is the arrays, the rank and what trains: \"W A B s | r 3 | train A B\" (LoRA) or \"W A B s | r 3 | train B\" (LoRA-FA)"
+## What is wrong with the spec's fields fs, or "".
+h:w_rong := { fs ->
+  3 != t_ally fs ? specShape
+  ns := h:w_ords d_isclose 1 s_elect fs
+  rs := h:w_ords d_isclose 2 s_elect fs
+  ts := h:w_ords d_isclose 3 s_elect fs
+  n_ot (1 = t_ally ns) | 4 = t_ally ns ? "name the arrays W A B s, or W alone: " c_at specShape
+  n_ot '& r_/ '{ w -> h:n_ame? d_isclose w } e_ach ns ? "not a name: " c_at h:j_oin ns
+  n_ot (2 = t_ally rs) ? "write the rank as r and a number or a name: \"r 3\""
+  n_ot ("r" m_atch d_isclose f_irst rs) & (h:n_umber? rs h:n_th 2) | h:n_ame? rs h:n_th 2 ? "write the rank as r and a number or a name: \"r 3\""
+  n_ot (1 < t_ally ts) ? "say what trains: \"train A B\" (LoRA) or \"train B\" (LoRA-FA)"
+  n_ot "train" m_atch d_isclose f_irst ts ? "say what trains: \"train A B\" (LoRA) or \"train B\" (LoRA-FA)"
+  ""
+}
+## The method the trained names ts (after "train") pick for the arrays
+## as: "lora" for A and B, "fa" for B alone, "" for anything else.
+h:m_ethod := { as ts ->
+  (2 = t_ally ts) & (ts h:h_as? as h:n_th 2) & ts h:h_as? as h:n_th 3 ? "lora"
+  (1 = t_ally ts) & ts h:h_as? as h:n_th 3 ? "fa"
+  ""
+}
+
+### Writing the passes (private)
+
+## The rank check, a statement: A has r rows and B r columns, or the
+## program stops naming the spec.
+h:c_heck := { (W, A, B, r) spec ->
+  "_ := { v -> v ? 0; []P_ANIC \"lo:a_dapter<: A must be " c_at r c_at " x n and B m x " c_at r c_at " for \\\"" c_at spec c_at "\\\"\" } (" c_at r c_at " = f_irst s_hape " c_at A c_at ") & " c_at r c_at " = 2 s_elect s_hape " c_at B
+}
+## The forward pass: W x + s B (A x), right to left, A x first.
+h:f_orward := { (W, A, B, s) x ->
+  "{ " c_at x c_at " -> (" c_at W c_at " '+ '* i_nner " c_at x c_at ") + " c_at s c_at " * " c_at B c_at " '+ '* i_nner " c_at A c_at " '+ '* i_nner " c_at x c_at " }"
+}
+## LoRA's backward pass for inputs x and the output's gradient g:
+## (dA, dB, dx) = (s (B' g) x', s g (A x)', W' g + s A' (B' g)), B' g
+## bound once under b.
+h:b_ackLoRA := { (W, A, B, s) (x, g, b) ->
+  "{ (" c_at x c_at ", " c_at g c_at ") ->\n  " c_at b c_at " := (o_\\ " c_at B c_at ") '+ '* i_nner " c_at g c_at "\n  (" c_at s c_at " * " c_at b c_at " '+ '* i_nner o_\\ " c_at x c_at ", " c_at s c_at " * " c_at g c_at " '+ '* i_nner o_\\ " c_at A c_at " '+ '* i_nner " c_at x c_at ", ((o_\\ " c_at W c_at ") '+ '* i_nner " c_at g c_at ") + " c_at s c_at " * (o_\\ " c_at A c_at ") '+ '* i_nner " c_at b c_at ")\n}"
+}
+## LoRA-FA's: A frozen, its gradient skipped; (dB, dx), x's still back
+## through A.
+h:b_ackFA := { (W, A, B, s) (x, g) ->
+  "{ (" c_at x c_at ", " c_at g c_at ") -> (" c_at s c_at " * " c_at g c_at " '+ '* i_nner o_\\ " c_at A c_at " '+ '* i_nner " c_at x c_at ", ((o_\\ " c_at W c_at ") '+ '* i_nner " c_at g c_at ") + " c_at s c_at " * (o_\\ " c_at A c_at ") '+ '* i_nner (o_\\ " c_at B c_at ") '+ '* i_nner " c_at g c_at ") }"
+}
+
+## The backward pass the method how picks.
+h:b_ack := { how (arrays, x, g, b) ->
+  "lora" m_atch how ? arrays h:b_ackLoRA (x, g, b)
+  arrays h:b_ackFA (x, g)
+}
+
+### Adapters
+
+## An adapted layer from the spec on the right, as statements: the rank
+## check, then the forward function and the backward function under the
+## two names on the left ("u:f_wd u:b_wd"). The forward function takes
+## the inputs (columns) and gives W x + s B (A x); the backward one
+## takes the inputs and the loss's gradient at the output, (x, g), and
+## gives (dA, dB, dx) for "train A B" (LoRA) or (dB, dx) for "train B"
+## (LoRA-FA). The lambdas' own names are fresh ([]G_ENSYM, X_eTaL
+## MC30), so a caller's array named x, g or b is not captured.
+## uses: parsed
+m:a_dapter< := { what spec ->
+  fs := h:f_ields spec
+  0 < t_ally h:w_rong fs ? "bad-macro-argument right" []R_EJECT h:w_rong fs
+  as := h:a_rrays h:w_ords d_isclose 1 s_elect fs
+  r := (h:w_ords d_isclose 2 s_elect fs) h:n_th 2
+  how := as h:m_ethod 1 d_rop h:w_ords d_isclose 3 s_elect fs
+  0 = t_ally how ? "bad-macro-argument right" []R_EJECT "LoRA trains A and B (\"train " c_at (as h:n_th 2) c_at " " c_at (as h:n_th 3) c_at "\"), LoRA-FA B alone (\"train " c_at (as h:n_th 3) c_at "\"); nothing else trains here"
+  fn := h:w_ords what
+  n_ot (2 = t_ally fn) & '& r_/ '{ w -> h:n_ame? d_isclose w } e_ach fn ? "bad-macro-argument left" []R_EJECT "name the forward and the backward functions: \"u:f_wd u:b_wd\""
+  arrays := (as h:n_th 1, as h:n_th 2, as h:n_th 3, as h:n_th 4)
+  (x, g, b) := ([]G_ENSYM "x", []G_ENSYM "g", []G_ENSYM "b")
+  back := how h:b_ack (arrays, x, g, b)
+  ((as h:n_th 1, as h:n_th 2, as h:n_th 3, r) h:c_heck spec) c_at "\n" c_at (fn h:n_th 1) c_at " := " c_at (arrays h:f_orward x) c_at "\n" c_at (fn h:n_th 2) c_at " := " c_at back
+}

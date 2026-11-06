@@ -105,8 +105,11 @@ backDrawn := @ flow:m_ath< c#"
 |> "dA[k,j] | r 8" e:e_q< "s * b[k] * X[j]" $dA
 |> "dB[i,k] | 8 r" e:e_q< "s * g[i] * h[k]" $dB
 |> "dx[j] | 8" e:e_q< "(sum i:=0..7 | W[i,j] * g[i]) + s * (sum k:=0..q | A[k,j] * b[k])""#
-## The pipeline's dx is the library's (lo:g_rads), within 1e-12: 1.
-(_, _, dx) := (W, A, B, s) lo:g_rads (8 1 r_eshape X, 8 1 r_eshape G)
+## The same layer written by the library's macro from a spec (lo:a_dapter<:
+## its forward and backward functions, xetal expand shows them); the
+## pipeline's dx is the macro's, within 1e-12: 1.
+"u:f_orward u:b_ackward" lo:a_dapter< "W A B s | r r | train A B"
+(_, _, dx) := u:b_ackward (8 1 r_eshape X, 8 1 r_eshape G)
 0.000000000001 > 'm_ax r_/ a_bs back - r_avel dx
 
 ### Training: LoRA beside LoRA-FA
