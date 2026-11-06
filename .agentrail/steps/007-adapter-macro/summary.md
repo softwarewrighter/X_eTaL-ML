@@ -1,0 +1,1 @@
+lo:a_dapter< macro (LoRA.xtlm): spec -> rank check, forward and backward functions for LoRA / LoRA-FA, hygienic; adapter.xtl 9 checks vs library and finite differences; 4 refusal tests; expansions pinned; explorer uses it
