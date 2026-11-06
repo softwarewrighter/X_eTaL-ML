@@ -1,8 +1,9 @@
 number = 10
 slug = "moe-lib"
-status = "in-progress"
+status = "completed"
 description = "(docs/fine-tune-moe-demo-plan.md, step 7; L3180-3274, L675) libs/MoE (moe:): ..."
 role = "production"
 context_files = []
 created_at = "2026-11-01T15:15:40"
-commits = []
+completed_at = "2026-11-06T14:19:17"
+commits = ["a46d6b3bb2c123362ca85675a835b057c9f88a31"]

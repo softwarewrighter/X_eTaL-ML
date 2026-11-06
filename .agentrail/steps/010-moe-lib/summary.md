@@ -1,0 +1,1 @@
+libs/MoE: router scores, softmax, top-k gates, LoRA experts, sparse combine + dense reference, gradients with selection fixed, frequency/entropy/balance; 17 checks incl FD and Flow pipeline; routing demo; site group
