@@ -1,8 +1,9 @@
 number = 9
 slug = "qlora"
-status = "in-progress"
+status = "completed"
 description = "(docs/fine-tune-moe-demo-plan.md, step 6; L172-218, L460, L2465-2525, L3471) ..."
 role = "production"
 context_files = []
 created_at = "2026-11-01T15:15:40"
-commits = []
+completed_at = "2026-11-06T12:40:39"
+commits = ["75e1d67958325bffd28a7dd5e5fb7044f744b995"]

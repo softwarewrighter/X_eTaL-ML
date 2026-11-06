@@ -1,0 +1,1 @@
+QLoRA: lo:q_base/d_equant/f_orwardQ/m_ergeQ/q_bytes, qz:n_f4Values; qlora.xtl 12 checks incl. QLoRA reaching the SVD optimum of T minus 4-bit error and the non-exact merge; explorer QLoRA panel; page test; Chrome; gate ok
