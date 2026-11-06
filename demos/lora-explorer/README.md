@@ -102,6 +102,26 @@ rank 1 to 8: LoRA follows the optimum (0 from rank 4, T's rank),
 LoRA-FA needs rank 8 to get near it. The page runs the program up to
 that marker at each setting and the whole of it once, for the sweep.
 
+W in 4 bits, as QLoRA keeps its frozen base (the
+[Quant](../../libs/Quant/docs/README.md) library): W's 64 numbers in
+blocks of 8 to 64 (the page's choice; QLoRA's is 64), each block's
+largest size its scale. Uniform 4 bits round to -7 .. 7 steps of the
+scale / 7 (`(4, qk) qz:u_niform W`); NF4 takes the nearest of 16
+levels at the normal distribution's quantiles (`qk qz:n_f4 W`). At
+blocks of 16:
+
+| RMSE | uniform 4 bits | NF4 |
+| ---- | -------------- | --- |
+| on W, a sine | 0.0361 | 0.0504 |
+| on a normal 8 x 8 matrix | 0.1020 | 0.0953 |
+
+NF4 spends its levels where normal weights are, so it wins on normal
+numbers and loses on W's, which pile up near the ends. A weight takes
+4 bits and its share of a 32-bit scale, 4.5 bits at QLoRA's block of
+64, 4.129 with the scales double-quantized; a 4096 x 14336 projection
+takes 224 MiB in FP32, 112 in FP16, 31.5 in NF4 and 28.9
+double-quantized.
+
 ## What it shows about X_eTaL
 
 - A layer's equations are its code: the pipeline of equations runs,

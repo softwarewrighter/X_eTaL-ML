@@ -11,6 +11,10 @@ planning and reordering, `release` milestone release, `chore`
 agentrail bookkeeping (step complete, saga archive), `vendor` a
 refresh of the vendored X_eTaL.
 
+## 2026-11-06
+
+- `lib` Quant learns QLoRA's 4-bit formats (step quant-nf4): `b_locks`, `a_bsmax`, `u_niformCodes` and `u_niform` (blockwise symmetric b bits, a scale per block), `p_hi` (the normal's distribution, erf by its series), `q_uantile` (its inverse, by bisection), `c_odebook` (NF4's 16 levels from the normal's quantiles, QLoRA's offset; equal to the published table to 1e-6), `n_f4Codes` and `n_f4`, `d_ouble` (the scales in 8 bits, their mean off, a ragged last block padded with zeros) and `n_f4Double`, `b_its` (4.5 and 4.129 bits a weight at 64 and 256); 11 doc examples; tests/nf4.xtl, 14 checks (error bounds, 0 and each block's absmax exact, NF4 better than uniform 4 bits on normal weights, 0.122 against 0.148, and worse on uniform ones, double quantization, the MiB of a 4096 x 14336 projection). `demo` lora-explorer: the W-in-4-bits panel (a block of 8 to 64, W beside both 4-bit forms and their errors, the RMSE on W and on a normal matrix, the layer's output's change, bits and MiB); a new page test redoing the arithmetic at every block. Baselines reblessed after review
+
 ## 2026-11-05
 
 - `lib` LoRA's macro (step adapter-macro): `"u:f_wd u:b_wd" lo:a_dapter< "W A B s | r 3 | train A B"` writes an adapted layer from a spec, a run-time check of A's and B's shapes against the rank (a number or a name), the forward function and the backward one, (dA, dB, dx) for LoRA or (dB, dx) for `train B`, LoRA-FA; its lambdas' names fresh ([]G_ENSYM). LoRA.xtlm beside LoRA.xtl, one import for both. tests/adapter.xtl, 9 checks (the functions it writes equal lo:f_orward, lo:g_rads and lo:g_radsFA and the finite differences, a rank by name, arrays named x, g, b not captured, a step); bad-spec, bad-train, bad-names and bad-rank pinned; every LoRA program's expansion pinned (expand-*.rgt); the reference page's macro section. The LoRA explorer checks its backward pipeline against the macro's backward function. Baselines reblessed after review (additions only)

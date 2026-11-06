@@ -1,4 +1,4 @@
-## Quant: weights in fewer bits: float rounding, integer and ternary quantization, a ternary layer as additions
+## Quant: weights in fewer bits: float rounding, integer and ternary quantization, a ternary layer as additions, blockwise 4-bit and NF4 with double quantization
 ##
 ## Import it with an alias of your choice: "qz:" u_se< "Quant".
 ## Put libs/Quant/src on XETAL_PATH ("just path"); the reference is libs/Quant/docs.
@@ -70,4 +70,170 @@ l:s_cale := { x q -> ('+ r_/ r_avel (a_bs x) * a_bs q) / 1.0 m_ax '+ r_/ r_avel 
 l:a_dds := { h q ->
   H := h 'l_eft t_able o_ffsets 2 s_elect s_hape q
   ('+ r_/ H * f_loat q = 1.0) - '+ r_/ H * f_loat q = -1.0
+}
+
+### Blocks: 4 bits, a scale per block
+
+## `k b_locks x`: x's numbers (raveled) as rows of k, a block each; the
+## count must be a multiple of k.
+## >> "qz:" u_se< "Quant"
+## >> 2 qz:b_locks 1.0 -4.0 2.0 0.5
+## 1.0 -4.0
+## 2.0  0.5
+l:b_locks := { k x ->
+  n := t_ally r_avel x
+  0 != n m_od k ? []P_ANIC "qz:b_locks: " c_at (f_ormat n) c_at " numbers are not blocks of " c_at f_ormat k
+  ((n d_iv k) c_at k) r_eshape r_avel x
+}
+
+## `k a_bsmax x`: each block's largest size, its scale (absmax).
+## >> "qz:" u_se< "Quant"
+## >> 2 qz:a_bsmax 1.0 -4.0 2.0 0.5
+## 4.0 2.0
+l:a_bsmax := { k x -> 'm_ax r_/_2 a_bs k l:b_locks x }
+
+## `(b, k) u_niformCodes x`: blockwise symmetric b-bit integers: each
+## block divided by its scale, its absmax over 2^(b-1) - 1 (7 for 4
+## bits), rounded and clipped to -7 .. 7: (codes, scales), the codes as
+## Floats a row per block.
+## >> "qz:" u_se< "Quant"
+## >> (q, s) := (4, 2) qz:u_niformCodes 1.0 -4.0 2.0 0.5
+## >> q
+## 2.0 -7.0
+## 7.0  2.0
+l:u_niformCodes := { (b, k) x ->
+  top := (2.0 ^ f_loat b - 1) - 1.0
+  s := (k l:a_bsmax x) / top
+  B := k l:b_locks x
+  S := s 'l_eft t_able o_ffsets k
+  (top m_in (n_eg top) m_ax f_loat f_loor 0.5 + B / 0.000000000001 m_ax S, s)
+}
+
+## `(b, k) u_niform x`: x through blockwise b-bit integers and back
+## (codes times their block's scale), shaped as x: what a uniform 4-bit
+## base computes with.
+## >> "qz:" u_se< "Quant"
+## >> (4, 2) qz:u_niform 1.0 -4.0 2.0 0.5
+## 1.1428571428571428 -4.0 2.0 0.5714285714285714
+l:u_niform := { (b, k) x ->
+  (q, s) := (b, k) l:u_niformCodes x
+  (s_hape x) r_eshape q * s 'l_eft t_able o_ffsets k
+}
+
+### NF4: 16 levels at the normal's quantiles
+
+## The NF4 codebook as QLoRA publishes it (Dettmers et al. 2023,
+## appendix E; bitsandbytes' create_normal_map, float32), derived again
+## by c_odebook and checked against it in the tests.
+nf4 := -1.0 -0.6961928009986877 -0.5250730514526367 -0.39491748809814453 -0.28444138169288635 -0.18477343022823334 -0.09105003625154495 0.0 0.07958029955625534 0.16093020141124725 0.24611230194568634 0.33791524171829224 0.44070982933044434 0.5626170039176941 0.7229568362236023 1.0
+
+## erf by its series, 80 terms: 2/sqrt(pi) sum (-1)^n z^(2n+1) / (n! (2n+1));
+## to 1e-15 for |z| up to about 3.
+h:e_rf := { z ->
+  (_, _, t) := 80 '{ (n, a, t) -> (n + 1.0, n_eg a * z * z / n + 1.0, t + a / 1.0 + 2.0 * n) } p_ower (0.0, z, 0.0)
+  t * 2.0 / s_qrt 3.141592653589793
+}
+## One halving of (lo, hi) toward the x where Phi(x) is p.
+h:h_alf := { p (lo, hi) ->
+  m := 0.5 * lo + hi
+  (l:p_hi m) < p ? (m, hi)
+  (lo, m)
+}
+## n points from a to b, both included.
+h:s_pan := { (a, b) n -> a + (b - a) * (f_loat (r_ange n) - 1) / f_loat n - 1 }
+
+## `p_hi x`: the standard normal's cumulative distribution, 1/2 (1 +
+## erf(x / sqrt 2)), erf by its series.
+## >> "qz:" u_se< "Quant"
+## >> qz:p_hi 1.0
+## 0.8413447460685428
+l:p_hi := { x -> 0.5 * 1.0 + h:e_rf x / s_qrt 2.0 }
+
+## `q_uantile p`: the normal's inverse, the x with Phi(x) = p, by 60
+## halvings of -4 .. 4 (to 1e-15 of p in 0.00004 .. 0.99996).
+## >> "qz:" u_se< "Quant"
+## >> qz:q_uantile 0.975
+## 1.959963984540054
+l:q_uantile := { p ->
+  (lo, hi) := 60 '{ q -> p h:h_alf q } p_ower (-4.0, 4.0)
+  0.5 * lo + hi
+}
+
+## `c_odebook offset`: NF4's 16 levels, made as QLoRA makes them: the
+## normal's quantiles at 9 points from offset to 1/2 (8 positive) and at
+## 8 (7 negative, mirrored), with 0, scaled so the largest is 1. Each
+## level is as likely as the next for normal weights, and 0 is exact.
+## QLoRA's offset is 0.9677083, the mean of 1 - 1/(2 15) and 1 - 1/(2 16).
+## >> "qz:" u_se< "Quant"
+## >> 8 t_ake qz:c_odebook 0.9677083
+## -1.0 -0.6961928906037205 -0.5250730386952299 -0.39491749069931015 -0.2844413576181078 -0.18477343519288897 -0.0910499921442795 0.0
+l:c_odebook := { offset ->
+  pos := 'l:q_uantile e_ach -1 d_rop (offset, 0.5) h:s_pan 9
+  neg := 'l:q_uantile e_ach -1 d_rop (offset, 0.5) h:s_pan 8
+  v := s_ort pos c_at 0.0 c_at n_eg neg
+  v / 'm_ax r_/ v
+}
+
+## `k n_f4Codes x`: each block divided by its absmax, then each number's
+## nearest NF4 level, by its index 1 .. 16: (codes, scales), the codes
+## a row per block.
+## >> "qz:" u_se< "Quant"
+## >> (q, s) := 2 qz:n_f4Codes 1.0 -4.0 2.0 0.5
+## >> q
+## 11  1
+## 16 11
+l:n_f4Codes := { k x ->
+  s := k l:a_bsmax x
+  B := k l:b_locks x
+  N := B / 0.000000000001 m_ax s 'l_eft t_able o_ffsets k
+  ((s_hape N) r_eshape '{ v -> f_irst g_rade a_bs v - nf4 } e_ach r_avel N, s)
+}
+
+## `k n_f4 x`: x through NF4 and back (each code's level times its
+## block's scale), shaped as x.
+## >> "qz:" u_se< "Quant"
+## >> 2 qz:n_f4 1.0 -4.0 2.0 0.5
+## 0.9844492077827454 -4.0 2.0 0.4922246038913727
+l:n_f4 := { k x ->
+  (q, s) := k l:n_f4Codes x
+  (s_hape x) r_eshape ((s_hape q) r_eshape (r_avel q) s_elect nf4) * s 'l_eft t_able o_ffsets k
+}
+
+### Double quantization: the scales in 8 bits
+
+## `k2 d_ouble s`: the block scales themselves quantized, as QLoRA does
+## to save their bytes: their mean taken off, then blockwise symmetric
+## 8-bit integers over blocks of k2 scales (the last block made up with
+## zeros, which change no block's absmax), and back, the mean added.
+## (QLoRA's second level is an 8-bit float; 8-bit integers here, the
+## same bytes.)
+## >> "qz:" u_se< "Quant"
+## >> 2 qz:d_ouble 0.5 0.25 1.0 0.75
+## 0.5009842519685039 0.25 1.0 0.7490157480314961
+l:d_ouble := { k2 s ->
+  n := t_ally s
+  m := ('+ r_/ s) / f_loat n
+  pad := (k2 * c_eiling (f_loat n) / f_loat k2) - n
+  m + n t_ake (8, k2) l:u_niform (s - m) c_at pad r_eshape 0.0
+}
+
+## `k2 n_f4Double (k, x)`: NF4 with its scales double-quantized: x
+## through NF4 and back, the scales first through d_ouble.
+l:n_f4Double := { k2 (k, x) ->
+  (q, s) := k l:n_f4Codes x
+  (s_hape x) r_eshape ((s_hape q) r_eshape (r_avel q) s_elect nf4) * (k2 l:d_ouble s) 'l_eft t_able o_ffsets k
+}
+
+### Bits
+
+## `(k, k2) b_its 4`: bits a weight takes: 4 for its code plus its
+## block's scale shared by k weights, at 32 bits; then with double
+## quantization, the scale at 8 bits plus a 32-bit scale and mean shared
+## by k2 scales. QLoRA's k 64 and k2 256: 4.5, and 4.129 (QLoRA's
+## paper counts 4.127, the mean left out).
+## >> "qz:" u_se< "Quant"
+## >> (64, 256) qz:b_its 4
+## 4.5 4.12890625
+l:b_its := { (k, k2) b ->
+  (f_loat b) + (32.0 / f_loat k) c_at (8.0 / f_loat k) + 64.0 / f_loat k * k2
 }

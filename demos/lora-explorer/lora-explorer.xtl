@@ -6,11 +6,13 @@
 ## adapters cost on a large mixture-of-experts model; a backward step,
 ## stage by stage; LoRA and LoRA-FA trained side by side to fit a known
 ## update, against the best any rank-r update can do (the truncated
-## SVD); then the rank sweep.
+## SVD); W in 4 bits, uniform and NF4 (QLoRA's base); then the rank
+## sweep.
 
 "e:" u_se< "Equations"
 "flow:" u_se< "Flow"
 "lo:" u_se< "LoRA"
+"qz:" u_se< "Quant"
 
 ### Data
 
@@ -43,6 +45,8 @@ I := 8 8 r_eshape 1.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0
 lr := 0.05
 chunks := 30
 every := 10
+## The quantization's block: 16 numbers (QLoRA's is 64; W has 64).
+qk := 16
 
 ### The adapted layer
 
@@ -148,6 +152,31 @@ best
 ((_, A2, B2, s2), _, _) := q2
 learned := lo:d_elta (A1, B1, s1)
 learnedFA := lo:d_elta (A2, B2, s2)
+
+### W in 4 bits
+
+## QLoRA keeps the frozen W in 4 bits and computes with it dequantized.
+## W in blocks of qk, each with its scale (its largest size): uniform 4
+## bits (rounded to -7 .. 7 steps of the scale / 7) and NF4 (the
+## nearest of 16 levels at the normal's quantiles). Their RMSE against
+## W, then against a normal 8 x 8 matrix Z (Box-Muller on the ripple):
+## W's numbers are a sine, piled up near its ends, so uniform does
+## better; on normal numbers NF4 does.
+Wu := (4, qk) qz:u_niform W
+Wn := qk qz:n_f4 W
+k2 := f_loat r_ange 64
+Z := 8 8 r_eshape (s_qrt -2.0 * l_og 0.0001 m_ax 0.5 + 0.5 * s_in 78.233 * k2 * k2) * c_os 6.283185307179586 * 0.5 + 0.5 * s_in 37.719 * k2 * k2
+u:r_mse := { a b -> s_qrt ('+ r_/ r_avel (a - b) * a - b) / f_loat t_ally r_avel a }
+(Wu u:r_mse W) c_at (Wn u:r_mse W) c_at (((4, qk) qz:u_niform Z) u:r_mse Z) c_at (qk qz:n_f4 Z) u:r_mse Z
+## The adapted layer on each base (QLoRA's forward pass: the adapter
+## kept in full precision): its output's largest change from y.
+('m_ax r_/ a_bs y - (Wu, A, B, s) lo:f_orward X) c_at 'm_ax r_/ a_bs y - (Wn, A, B, s) lo:f_orward X
+## Bits a weight: 4-bit codes with a 32-bit scale per block, then the
+## scales double-quantized (8 bits, blocks of 256); a 4096 x 14336
+## projection's MiB in FP32, FP16, NF4 and NF4 double-quantized.
+bits := (qk, 256) qz:b_its 4
+bits
+(f_loat 4096 * 14336) * (32.0 16.0 c_at bits) / 8.0 * 1048576.0
 # -- end of the explorer at rank r
 
 ### The rank sweep

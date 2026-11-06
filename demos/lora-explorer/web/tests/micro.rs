@@ -74,7 +74,7 @@ fn the_costs_are_the_researchs_worked_numbers_at_rank_16() {
 
 #[test]
 fn the_sizes_are_the_pages() {
-    let e = run(Settings { r: 2, d: 100, f: 300, experts: 4, layers: 5 }).unwrap();
+    let e = run(Settings { r: 2, d: 100, f: 300, experts: 4, layers: 5, qk: 16 }).unwrap();
     assert_eq!(e.expert, 3 * 2 * 400);
     let mib = 2400.0 * 2.0 / 1048576.0;
     near(&[e.mib.0, e.mib.1, e.mib.2], &[mib, 4.0 * mib, 20.0 * mib], 1e-15, "MiB");
@@ -149,4 +149,43 @@ fn the_sweep_follows_the_best_and_its_program_is_shown() {
     assert!(rebound(src).is_empty(), "{:?}", rebound(src));
     assert!(program(Settings::default()).contains(lora_explorer_web::micro::backward()));
     assert!(!program(Settings::default()).contains("### The rank sweep"));
+}
+
+/// QLoRA's NF4 levels (Dettmers et al. 2023, appendix E).
+const NF4: [f64; 16] = [-1.0, -0.6961928009986877, -0.5250730514526367, -0.39491748809814453, -0.28444138169288635, -0.18477343022823334, -0.09105003625154495, 0.0, 0.07958029955625534, 0.16093020141124725, 0.24611230194568634, 0.33791524171829224, 0.44070982933044434, 0.5626170039176941, 0.7229568362236023, 1.0];
+
+#[test]
+fn w_in_4_bits_is_the_blockwise_arithmetic_at_every_block() {
+    for qk in [8, 16, 32, 64] {
+        let e = run(Settings { qk, ..Settings::default() }).unwrap_or_else(|err| panic!("block {qk}: {err}"));
+        let w = &e.w.items;
+        let mut u = vec![0.0; 64];
+        let mut n = vec![0.0; 64];
+        for b in w.chunks(qk).enumerate() {
+            let (i, block) = b;
+            let scale = block.iter().fold(0.0f64, |a, v| a.max(v.abs()));
+            for (j, v) in block.iter().enumerate() {
+                let step = scale / 7.0;
+                u[i * qk + j] = (v / step + 0.5).floor().clamp(-7.0, 7.0) * step;
+                let x = v / scale;
+                let near = NF4.iter().copied().fold(NF4[0], |best, l| if (l - x).abs() < (best - x).abs() { l } else { best });
+                n[i * qk + j] = near * scale;
+            }
+        }
+        near(&e.w_uniform.items, &u, 1e-12, "uniform 4 bits");
+        near(&e.w_nf4.items, &n, 1e-12, "NF4");
+        let rmse = |q: &[f64]| (q.iter().zip(w).map(|(a, b)| (a - b) * (a - b)).sum::<f64>() / 64.0).sqrt();
+        near(&e.rmse[..2], &[rmse(&u), rmse(&n)], 1e-12, "the RMSE on W");
+        assert!(e.rmse[0] < e.rmse[1], "block {qk}: on W (a sine) uniform wins: {:?}", e.rmse);
+        assert_eq!(e.bits.0, 4.0 + 32.0 / qk as f64);
+        assert!((e.bits.1 - (4.0 + 8.0 / qk as f64 + 64.0 / (qk as f64 * 256.0))).abs() < 1e-12);
+        near(&e.big_mib[..2], &[224.0, 112.0], 1e-9, "FP32 and FP16 MiB");
+        assert!(e.moved.0 > 0.0 && e.moved.1 > 0.0, "a 4-bit base moves the output");
+    }
+    let e = at(3);
+    assert!(e.rmse[3] < e.rmse[2], "on normal numbers NF4 wins: {:?}", e.rmse);
+    // At QLoRA's block of 64: 4.5 bits, 31.5 MiB for the projection.
+    let q = run(Settings { qk: 64, ..Settings::default() }).unwrap();
+    assert_eq!(q.bits.0, 4.5);
+    assert!((q.big_mib[2] - 31.5).abs() < 1e-9 && (q.big_mib[3] - 28.9).abs() < 0.05, "{:?}", q.big_mib);
 }

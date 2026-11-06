@@ -21,17 +21,19 @@ pub struct Settings {
     pub f: usize,
     pub experts: usize,
     pub layers: usize,
+    /// The quantization's block (8, 16, 32 or 64 of W's 64 numbers).
+    pub qk: usize,
 }
 
 impl Default for Settings {
     fn default() -> Self {
-        Settings { r: 3, d: 4096, f: 14336, experts: 64, layers: 24 }
+        Settings { r: 3, d: 4096, f: 14336, experts: 64, layers: 24, qk: 16 }
     }
 }
 
 /// The program with the settings put in its data.
 pub fn with(s: Settings) -> String {
-    [("r := 3\n", format!("r := {}\n", s.r)), ("d := 4096\n", format!("d := {}\n", s.d)), ("f := 14336\n", format!("f := {}\n", s.f)), ("experts := 64\n", format!("experts := {}\n", s.experts)), ("layers := 24\n", format!("layers := {}\n", s.layers))]
+    [("r := 3\n", format!("r := {}\n", s.r)), ("d := 4096\n", format!("d := {}\n", s.d)), ("f := 14336\n", format!("f := {}\n", s.f)), ("experts := 64\n", format!("experts := {}\n", s.experts)), ("layers := 24\n", format!("layers := {}\n", s.layers)), ("qk := 16\n", format!("qk := {}\n", s.qk))]
         .iter()
         .fold(PROGRAM.to_string(), |p, (from, to)| p.replacen(from, to, 1))
 }
@@ -61,7 +63,7 @@ pub const END: &str = "# -- end of the explorer at rank r";
 pub fn program(s: Settings) -> String {
     let p = with(s);
     format!(
-        "{}\n# -- read back by the page ------------------------------\ndrawn\n@ flow:s_tages<{}\nbackDrawn\n@ flow:s_tages<{}\nr_avel W\nr_avel A\nr_avel B\nr_avel delta\nr_avel merged\nr_avel T\nr_avel learned\nr_avel learnedFA\n",
+        "{}\n# -- read back by the page ------------------------------\ndrawn\n@ flow:s_tages<{}\nbackDrawn\n@ flow:s_tages<{}\nr_avel W\nr_avel A\nr_avel B\nr_avel delta\nr_avel merged\nr_avel T\nr_avel learned\nr_avel learnedFA\nr_avel Wu\nr_avel Wn\n",
         p[..p.find(END).expect("the end marker")].trim_end(),
         pipeline(),
         backward()
@@ -74,8 +76,8 @@ pub fn sweep_program() -> &'static str {
 }
 
 /// How many lines the program prints up to the sweep, then the page's.
-const PRINTED: usize = 11;
-const READ: usize = 12;
+const PRINTED: usize = 15;
+const READ: usize = 14;
 
 /// A matrix read back (the shared heat map's).
 pub use microscope::heat::Matrix;
@@ -112,6 +114,17 @@ pub struct Explored {
     pub t: Matrix,
     pub learned: Matrix,
     pub learned_fa: Matrix,
+    /// W in 4 bits: the RMSE of uniform 4 bits and of NF4 against W,
+    /// then against a normal matrix; the layer's output's largest change
+    /// on each base; bits a weight (single, double-quantized); a 4096 x
+    /// 14336 projection's MiB (FP32, FP16, NF4, NF4 double); W through
+    /// each.
+    pub rmse: [f64; 4],
+    pub moved: (f64, f64),
+    pub bits: (f64, f64),
+    pub big_mib: [f64; 4],
+    pub w_uniform: Matrix,
+    pub w_nf4: Matrix,
     pub w: Matrix,
     pub a: Matrix,
     pub b: Matrix,
@@ -130,8 +143,8 @@ pub struct Sweep {
 pub fn sweep() -> Result<Sweep, String> {
     let out = printed(sweep_program())?;
     match out.len() {
-        13 => Ok(Sweep { lora: numbers(&out[11], 8)?, fa: numbers(&out[12], 8)? }),
-        n => Err(format!("expected 13 lines of output, got {n}")),
+        17 => Ok(Sweep { lora: numbers(&out[15], 8)?, fa: numbers(&out[16], 8)? }),
+        n => Err(format!("expected 17 lines of output, got {n}")),
     }
 }
 
@@ -153,17 +166,23 @@ pub fn run(s: Settings) -> Result<Explored, String> {
         loss: numbers(&out[8], 31)?,
         loss_fa: numbers(&out[9], 31)?,
         best: numbers(&out[10], 8)?,
-        tex: out[11].clone(),
-        stages: values(&out[12])?,
-        back_tex: out[13].clone(),
-        back_stages: values(&out[14])?,
-        w: m(&out[15], 8, 8)?,
-        a: m(&out[16], s.r, 8)?,
-        b: m(&out[17], 8, s.r)?,
-        delta: m(&out[18], 8, 8)?,
-        merged: m(&out[19], 8, 8)?,
-        t: m(&out[20], 8, 8)?,
-        learned: m(&out[21], 8, 8)?,
-        learned_fa: m(&out[22], 8, 8)?,
+        tex: out[15].clone(),
+        stages: values(&out[16])?,
+        back_tex: out[17].clone(),
+        back_stages: values(&out[18])?,
+        w: m(&out[19], 8, 8)?,
+        a: m(&out[20], s.r, 8)?,
+        b: m(&out[21], 8, s.r)?,
+        delta: m(&out[22], 8, 8)?,
+        merged: m(&out[23], 8, 8)?,
+        t: m(&out[24], 8, 8)?,
+        learned: m(&out[25], 8, 8)?,
+        learned_fa: m(&out[26], 8, 8)?,
+        rmse: { let v = numbers::<f64>(&out[11], 4)?; [v[0], v[1], v[2], v[3]] },
+        moved: { let v = numbers::<f64>(&out[12], 2)?; (v[0], v[1]) },
+        bits: { let v = numbers::<f64>(&out[13], 2)?; (v[0], v[1]) },
+        big_mib: { let v = numbers::<f64>(&out[14], 4)?; [v[0], v[1], v[2], v[3]] },
+        w_uniform: m(&out[27], 8, 8)?,
+        w_nf4: m(&out[28], 8, 8)?,
     })
 }

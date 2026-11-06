@@ -1,0 +1,16 @@
+ok: the codebook from the normal's quantiles is QLoRA's (float32)
+ok: 16 levels, -1 to 1, 0 among them
+ok: Phi(quantile p) is p
+ok: Phi(1.0) and the 97.5% quantile, as the tables give them
+ok: uniform 4 bits: every error within half its block's step
+ok: NF4: within half the widest gap times the block's absmax
+ok: both keep each block's largest size exactly
+ok: and 0 exactly
+ok: on normal weights NF4's error is below uniform 4 bits'
+ok: on uniform weights it is above
+ok: double-quantized scales stay within half an 8-bit step
+ok: NF4 with double quantization is about as close
+ok: bits a weight: 4.5, and 4.129 double-quantized
+ok: a 4096 x 14336 projection: 224, 112, 31.5 and 28.9 MiB
+14 checks, all passed
+0.148077 0.122401 0.077058 0.095776

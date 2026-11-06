@@ -1,0 +1,60 @@
+#!/usr/bin/env xetal
+## Blockwise 4-bit and NF4, checked with Check: the codebook made again
+## from the normal's quantiles is QLoRA's, the quantile inverts Phi,
+## each method's error stays within half a step of its block, 0 and
+## each block's largest size are kept exactly, NF4 beats uniform 4 bits
+## on normal weights and loses on uniform ones, double quantization
+## keeps the scales close, and the bits. Weights by a fixed ripple (no
+## chance): uniform ones, and normal ones from them by Box-Muller.
+
+"qz:" u_se< "Quant"
+"k:" u_se< "Check"
+
+## QLoRA's codebook (Dettmers et al. 2023, appendix E).
+published := -1.0 -0.6961928009986877 -0.5250730514526367 -0.39491748809814453 -0.28444138169288635 -0.18477343022823334 -0.09105003625154495 0.0 0.07958029955625534 0.16093020141124725 0.24611230194568634 0.33791524171829224 0.44070982933044434 0.5626170039176941 0.7229568362236023 1.0
+levels := qz:c_odebook 0.9677083
+u:g_ap := { a b -> 'm_ax r_/ r_avel a_bs a - b }
+c1 := "the codebook from the normal's quantiles is QLoRA's (float32)" k:t_est k:t_rue 0.000001 > levels u:g_ap published
+c2 := "16 levels, -1 to 1, 0 among them" k:t_est 16.0 -1.0 1.0 1.0 k:n_ear (f_loat t_ally levels) c_at (f_irst levels) c_at (f_irst r_ev levels) c_at f_loat '+ r_/ levels = 0.0
+ps := 0.01 0.1 0.3 0.5 0.8 0.975 0.999
+c3 := "Phi(quantile p) is p" k:t_est ps k:n_ear 'qz:p_hi e_ach 'qz:q_uantile e_ach ps
+c4 := "Phi(1.0) and the 97.5% quantile, as the tables give them" k:t_est 0.841344746 1.959963985 k:n_ear (f_loat f_loor 0.5 + 1000000000.0 * (qz:p_hi 1.0) c_at qz:q_uantile 0.975) / 1000000000.0
+## 2048 weights: uniform in -1 .. 1, then normal (Box-Muller), blocks of 64.
+i := f_loat r_ange 2048
+uni := 2.0 * (s_in 12.9898 * i * i) - f_loat f_loor s_in 12.9898 * i * i
+u1 := 0.0001 m_ax 0.5 + 0.5 * s_in 78.233 * i * i
+u2 := 0.5 + 0.5 * s_in 37.719 * i * i
+nor := (s_qrt -2.0 * l_og u1) * c_os 6.283185307179586 * u2
+u:r_mse := { a b -> s_qrt ('+ r_/ r_avel (a - b) * a - b) / f_loat t_ally r_avel a }
+U4n := (4, 64) qz:u_niform nor
+N4n := 64 qz:n_f4 nor
+U4u := (4, 64) qz:u_niform uni
+N4u := 64 qz:n_f4 uni
+## Each block's step: uniform's scale (absmax / 7); NF4's widest gap
+## between levels times the absmax.
+sc := 64 qz:a_bsmax nor
+u:b_lockGap := { a b -> 'm_ax r_/_2 a_bs 64 qz:b_locks a - b }
+gap := 'm_ax r_/ (1 d_rop published) - -1 d_rop published
+c5 := "uniform 4 bits: every error within half its block's step" k:t_est k:t_rue '& r_/ (U4n u:b_lockGap nor) <= 0.0000001 + 0.5 * sc / 7.0
+c6 := "NF4: within half the widest gap times the block's absmax" k:t_est k:t_rue '& r_/ (N4n u:b_lockGap nor) <= 0.0000001 + 0.5 * gap * sc
+c7 := "both keep each block's largest size exactly" k:t_est (sc c_at sc) k:n_ear (64 qz:a_bsmax U4n) c_at 64 qz:a_bsmax N4n
+c8 := "and 0 exactly" k:t_est 0.0 0.0 k:n_ear (f_irst (4, 4) qz:u_niform 0.0 0.3 -0.2 1.0) c_at f_irst 4 qz:n_f4 0.0 0.3 -0.2 1.0
+## NF4's levels are where normal weights are: it beats uniform 4 bits
+## on them, and loses on uniform weights.
+c9 := "on normal weights NF4's error is below uniform 4 bits'" k:t_est k:t_rue (N4n u:r_mse nor) < U4n u:r_mse nor
+c10 := "on uniform weights it is above" k:t_est k:t_rue (N4u u:r_mse uni) > U4u u:r_mse uni
+## Double quantization: the scales in 8 bits, blocks of 256 scales
+## (here 32 scales, one block), within 1/254 of their spread.
+s := 64 qz:a_bsmax nor
+d := 256 qz:d_ouble s
+c11 := "double-quantized scales stay within half an 8-bit step" k:t_est k:t_rue (d u:g_ap s) <= 0.0000001 + 0.5 * ('m_ax r_/ a_bs s - ('+ r_/ s) / f_loat t_ally s) / 127.0
+c12 := "NF4 with double quantization is about as close" k:t_est k:t_rue (1.01 * (N4n u:r_mse nor)) > (256 qz:n_f4Double (64, nor)) u:r_mse nor
+## The bits: 4.5 a weight with FP32 scales per 64, 4.129 with
+## double quantization; a 4096 x 14336 projection in MiB: FP32, FP16,
+## NF4, NF4 with double quantization.
+c13 := "bits a weight: 4.5, and 4.129 double-quantized" k:t_est 4.5 4.12890625 k:n_ear (64, 256) qz:b_its 4
+n := f_loat 4096 * 14336
+mib := (n * 32.0 16.0 c_at (64, 256) qz:b_its 4) / 8.0 * 1048576.0
+c14 := "a 4096 x 14336 projection: 224, 112, 31.5 and 28.9 MiB" k:t_est 224.0 112.0 31.5 28.9 k:n_ear (f_loat f_loor 0.5 + 10.0 * mib) / 10.0
+k:r_eport c1 k:a_nd c2 k:a_nd c3 k:a_nd c4 k:a_nd c5 k:a_nd c6 k:a_nd c7 k:a_nd c8 k:a_nd c9 k:a_nd c10 k:a_nd c11 k:a_nd c12 k:a_nd c13 k:a_nd c14
+'{ v -> (f_loat f_loor 0.5 + 1000000.0 * v) / 1000000.0 } e_ach (U4n u:r_mse nor) c_at (N4n u:r_mse nor) c_at (U4u u:r_mse uni) c_at N4u u:r_mse uni

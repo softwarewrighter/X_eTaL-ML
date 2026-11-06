@@ -21,3 +21,23 @@ x qz:s_cale q
 0.25 qz:s_nap 0.1 0.2 0.9
 4 qz:i_nt 0.875 -0.5 0.1
 0.5 qz:c_ut 0.9 0.2 -0.7 -0.1
+## Blockwise 4 bits on 8 numbers in blocks of 4: the blocks, their
+## scales, the uniform codes and values, NF4's codes and values, NF4
+## with its scales double-quantized, the scales double-quantized.
+w := 0.9 -0.35 0.1 0.6 -2.0 0.4 1.1 -0.05
+4 qz:b_locks w
+4 qz:a_bsmax w
+(4, 4) qz:u_niformCodes w
+(4, 4) qz:u_niform w
+4 qz:n_f4Codes w
+4 qz:n_f4 w
+2 qz:n_f4Double (4, w)
+2 qz:d_ouble 4 qz:a_bsmax w
+## The normal's distribution and quantiles, the codebook, the bits.
+'qz:p_hi e_ach -1.0 0.0 2.0
+'qz:q_uantile e_ach 0.1 0.5 0.9
+qz:c_odebook 0.9677083
+(64, 256) qz:b_its 4
+## The reference page's 4-bit examples.
+(4, 2) qz:u_niform 1.0 -4.0 2.0 0.5
+2 qz:n_f4 1.0 -4.0 2.0 0.5

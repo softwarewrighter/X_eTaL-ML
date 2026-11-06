@@ -74,6 +74,18 @@ fn back_arrays(e: &Explored, k: usize, s: Settings) -> Html {
     }
 }
 
+/// W beside its two 4-bit forms, then their errors (one scale for each row).
+fn quantized(e: &Explored) -> Html {
+    let qsc = largest(&[&e.w, &e.w_uniform, &e.w_nf4]);
+    let less = |q: &Matrix| Matrix { rows: 8, cols: 8, items: q.items.iter().zip(&e.w.items).map(|(q, w)| q - w).collect() };
+    let (du, dn) = (less(&e.w_uniform), less(&e.w_nf4));
+    let dsc = largest(&[&du, &dn]);
+    html! { <>
+        <div class="row">{ heat(&e.w, qsc, "W, full precision") }{ heat(&e.w_uniform, qsc, "uniform 4 bits") }{ heat(&e.w_nf4, qsc, "NF4") }</div>
+        <div class="row">{ heat(&du, dsc, "uniform's error") }{ heat(&dn, dsc, "NF4's error (same scale)") }</div>
+    </> }
+}
+
 /// What each stage means, for its button: the forward pass, the backward step.
 const STAGES: [&str; 4] = ["x: the input", "h = A x", "u = B h", "y = W x + s u"];
 const BACK: [&str; 5] = ["g = y - wanted", "b = B' g", "dA = s b x'", "dB = s g h'", "dx = W' g + s A' b"];
@@ -276,6 +288,25 @@ pub fn app() -> Html {
                         </table>
                         <div class="row">{ heat(&e.t, tsc, "T: the update to learn, rank 4") }{ heat(&e.learned, tsc, &format!("LoRA's s B A, rank {r}")) }{ heat(&e.learned_fa, tsc, &format!("LoRA-FA's s B A, rank {r}")) }</div>
                     </> }) }
+                    { panel("W in 4 bits", "qk qz:n_f4 W", "QLoRA keeps the frozen W in 4 bits and computes with it dequantized, the adapter in full precision. W's 64 numbers go in blocks, each with its own scale, its largest size, kept exactly. Uniform 4 bits round each number to one of 15 steps (-7 .. 7 of the scale / 7); NF4 takes the nearest of 16 levels placed at the normal distribution's quantiles, so it spends its levels where normal weights are. W here is a sine, its numbers piled up near the ends, so uniform does better on it; on a normal matrix NF4 does (the second row of the table).", false, html! { <>
+                        <div class="controls">{"block: "}{ for [8usize, 16, 32, 64].into_iter().map(|q| {
+                            let settings = settings.clone();
+                            html! { <button class={classes!((s.qk == q).then_some("on"))} onclick={Callback::from(move |_| settings.set(Settings { qk: q, ..*settings }))}>{format!("{q} numbers")}</button> }
+                        }) }</div>
+                        { quantized(e) }
+                        <table class="facts sweep">
+                            <tr><th>{"RMSE"}</th><th>{"uniform 4 bits"}</th><th>{"NF4"}</th></tr>
+                            <tr><td>{"on W (a sine)"}</td><td>{format!("{:.4}", e.rmse[0])}</td><td>{format!("{:.4}", e.rmse[1])}</td></tr>
+                            <tr><td>{"on a normal 8 x 8 matrix"}</td><td>{format!("{:.4}", e.rmse[2])}</td><td>{format!("{:.4}", e.rmse[3])}</td></tr>
+                            <tr><td>{"the layer's output, its largest change"}</td><td>{format!("{:.4}", e.moved.0)}</td><td>{format!("{:.4}", e.moved.1)}</td></tr>
+                        </table>
+                        <table class="facts">
+                            <tr><td>{format!("bits a weight: 4 and a 32-bit scale per {} numbers", s.qk)}</td><td>{format!("{}", e.bits.0)}</td></tr>
+                            <tr><td>{"with the scales double-quantized (8 bits, blocks of 256)"}</td><td>{format!("{:.3}", e.bits.1)}</td></tr>
+                            <tr><td>{"a 4096 x 14336 projection: FP32, FP16"}</td><td>{format!("{:.0} and {:.0} MiB", e.big_mib[0], e.big_mib[1])}</td></tr>
+                            <tr><td>{"in NF4, then double-quantized"}</td><td>{format!("{:.1} and {:.1} MiB", e.big_mib[2], e.big_mib[3])}</td></tr>
+                        </table>
+                    </> }) }
                     { panel("The rank sweep", "'u:l_ora e_ach r_ange 8", "LoRA and LoRA-FA trained at every rank from 1 to 8 (300 Adam steps each), against the best possible at that rank, from T's singular values (found by power iteration). T is of rank 4, so from rank 4 on the best is 0. LoRA follows the best at every rank; LoRA-FA needs a larger rank for the same loss. This runs once, apart from the slider.", false, sweep_panel) }
                 </> }
             }
@@ -285,7 +316,7 @@ pub fn app() -> Html {
     html! {
         <>
         <header>
-            { header("LoRA explorer", "Low-rank adaptation, computed by X_eTaL in your browser: a frozen 8 x 8 weight matrix W adapted by two small trainable ones, A (r x 8) and B (8 x r), the layer y = W x + s B (A x). Choose the rank; see each stage forward and backward, the update and its rank, the merge, what adapters cost on a large mixture-of-experts model, and LoRA and LoRA-FA trained to fit a known update against the best possible at each rank.") }
+            { header("LoRA explorer", "Low-rank adaptation, computed by X_eTaL in your browser: a frozen 8 x 8 weight matrix W adapted by two small trainable ones, A (r x 8) and B (8 x r), the layer y = W x + s B (A x). Choose the rank; see each stage forward and backward, the update and its rank, the merge, what adapters cost on a large mixture-of-experts model, LoRA and LoRA-FA trained to fit a known update against the best possible at each rank, and W in 4 bits, uniform and NF4, as QLoRA stores it.") }
             { rank }
         </header>
         <main><div class="wide">

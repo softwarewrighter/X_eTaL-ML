@@ -5,3 +5,15 @@ l:c_ut : Num a => a -> a -> Float
 l:t_ernary : Float -> Float -> Float
 l:s_cale : Float -> Float -> Float
 l:a_dds : Float -> Float -> Float
+l:b_locks : Int -> a -> a
+l:a_bsmax : Num a => Int -> a -> a
+l:u_niformCodes : Num a => (a, Int) -> Float -> (Float, Float)
+l:u_niform : Num a => (a, Int) -> Float -> Float
+l:p_hi : Float -> Float
+l:q_uantile : Float -> Float
+l:c_odebook : Float -> Float
+l:n_f4Codes : Int -> Float -> (Int, Float)
+l:n_f4 : Int -> Float -> Float
+l:d_ouble : Int -> Float -> Float
+l:n_f4Double : Int -> (Int, Float) -> Float
+l:b_its : (Num a, Num b) => (a, a) -> b -> Float

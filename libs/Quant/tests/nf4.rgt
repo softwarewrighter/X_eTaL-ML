@@ -1,0 +1,2 @@
+command = "../../../scripts/xt run nf4.xtl"
+exit_code = 0
