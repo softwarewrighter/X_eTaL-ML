@@ -1,8 +1,9 @@
 number = 8
 slug = "quant-nf4"
-status = "in-progress"
+status = "completed"
 description = "(docs/fine-tune-moe-demo-plan.md, step 5; L2954-3162) Quant gains blockwise u..."
 role = "production"
 context_files = []
 created_at = "2026-11-01T15:15:40"
-commits = []
+completed_at = "2026-11-06T07:52:44"
+commits = ["3842c3f552b94e55efd9ab38e62945f2854a5f62"]

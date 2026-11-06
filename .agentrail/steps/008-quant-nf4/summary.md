@@ -1,0 +1,1 @@
+Quant: blockwise 4-bit, NF4 with codebook derived from normal quantiles (= QLoRA's), double quantization, bits; nf4.xtl 14 checks; explorer W-in-4-bits panel with block choice; page test; Chrome check; gate ok
