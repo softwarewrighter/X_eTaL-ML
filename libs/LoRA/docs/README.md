@@ -7,7 +7,9 @@ adapter trains, their bytes and their cost, and the rank of a matrix to
 check that an update is of rank r at most. Training: the gradients of
 A, B and the inputs, steps of gradient descent and Adam (through the
 Optim library), and LoRA-FA, which freezes A (regenerated from a seed)
-and trains B alone.
+and trains B alone. QLoRA: the base stored in 4 bits (NF4, through
+the Quant library), the layer computed on it dequantized, the merge
+into a 4-bit base that is not exact, and QLoRA's bytes.
 
 ```
 "lo:" u_se< "LoRA"
@@ -44,6 +46,15 @@ the libraries without setup.
   `(adapter, (x, y))`, and gives back the adapter moved (`p_ower`
   repeats it). Adam's state is `(adapter, moments, t)`: `lo:a_damStart`
   makes it, the moments at 0 and the step count t at 1.
+- QLoRA keeps W in NF4 (`k lo:q_base W`: codes, a scale per block of
+  k, W's shape; QLoRA's k is 64) and computes with it dequantized, W~
+  (`lo:d_equant`), the adapter in full precision: `(Q, A, B, s)
+  lo:f_orwardQ x` is W~ x + s B (A x). It trains as LoRA does, with W~
+  for W (`lr lo:s_gd ((lo:d_equant Q, A, B, s), (x, y))`), and since W~
+  is W plus the 4-bit error E, what the adapter has to learn is the
+  update less E. Merging into a 4-bit base (`k lo:m_ergeQ`) quantizes
+  W~ + s B A again: not exact, the merged numbers fall between NF4's
+  levels.
 - LoRA-FA (A frozen) skips A's gradient but still sends x's back
   through A. Its update s B A has every row in A's row space, whatever
   B learns: the same rank as LoRA, fewer updates within reach. A is
@@ -71,6 +82,11 @@ the libraries without setup.
 | `lr lo:s_gdFA (adapter, (x, y))` | `Num a => a -> ((a, a, a, a), (a, a)) -> (a, a, a, a)` | LoRA-FA's step of gradient descent: B alone moves |
 | `lo:a_damStartFA adapter` | `(Any a, Any b, Any c, Num d) => (a, b, Float, c) -> ((a, b, Float, c), (Float, Float), d)` | LoRA-FA's Adam start: B's two averages only |
 | `lr lo:a_damFA (state, (x, y))` | `Float -> (((Float, Float, Float, Float), (Float, Float), Float), (Float, Float)) -> ((Float, Float, Float, Float), (Float, Float), Float)` | LoRA-FA's Adam step: B alone moves |
+| `k lo:q_base W` | `Int -> Float -> (Int, Float, Int)` | the base as QLoRA stores it: NF4 codes, a scale per block, W's shape |
+| `lo:d_equant Q` | `(Int, Float, Int) -> Float` | the stored base back to numbers, W~, in W's shape |
+| `(Q, A, B, s) lo:f_orwardQ x` | `((Int, Float, Int), Float, Float, Float) -> Float -> Float` | QLoRA's layer, W~ x + s B (A x), the base dequantized when it runs |
+| `k lo:m_ergeQ (Q, A, B, s)` | `Int -> ((Int, Float, Int), Float, Float, Float) -> (Int, Float, Int)` | the adapter merged into a 4-bit base: W~ + s B A quantized again (not exact) |
+| `(r, k) lo:q_bytes m n` | `(Num a, Num b) => (a, b) -> a -> Float` | QLoRA's bytes: the base in NF4, the adapter in BF16, Adam's two FP32 averages |
 | `lo:r_ank M` | `Num a => Float -> a` | the number of independent rows of M, by Gram-Schmidt (a row whose remainder is under 1e-9 of the largest row does not count) |
 | `r lo:p_arams m n` | `Num a => a -> a -> a` | the numbers a rank-r adapter on an m x n matrix trains, r (m + n) |
 | `r lo:e_xpert d f` | `Num a => a -> a -> a` | the numbers rank-r adapters train on a SwiGLU expert's three matrices (gate, up, down), 3 r (d + f) |
@@ -162,6 +178,9 @@ From `../tests/basics.xtl` and the doc comments:
 524288 360448
       16.0 lo:s_calingRs 4
 8.0
+      lo:d_equant 2 lo:q_base 2 2 r_eshape 1.0 -4.0 2.0 0.5
+0.9844492077827454               -4.0
+               2.0 0.4922246038913727
 ```
 
 In the gradient example, W is the identity, A = [1 1], B = [1 -1]',
@@ -212,6 +231,25 @@ The test matrices are the sine of a square (`s_in c * i * i`), not of
 a line: rows of `s_in c * i` all lie in a plane, since sin(a + b) is a
 sum of sin a and cos a, so every such matrix would be of rank 2.
 
+`../tests/qlora.xtl` checks, on an 8 x 8 base in blocks of 16 at
+rank 3:
+
+- the stored base comes back as Quant's NF4 of W, in W's shape, with
+  a scale per block, and it is not W;
+- QLoRA's layer is LoRA's on W~, and its gradients on W~ are the
+  central finite differences of its loss;
+- trained on a known rank-4 update T (the unit vectors as inputs, the
+  outputs (W + T) x wanted), QLoRA reaches the best rank 3 allows for
+  T less the 4-bit error (0.032227 against 0.032226), LoRA on W the
+  best for T (0.014665): the 4-bit base leaves the adapter more to
+  learn;
+- merged into a 4-bit base, the update is not exact (off by up to
+  0.18 here) but within half NF4's widest gap times each block's
+  absmax, and the merged layer's output moves from the adapter's;
+- a 4096 x 14336 projection at rank 16 in blocks of 64: the base 31.5
+  MiB in NF4 (112 in FP16), the adapter 0.56 MiB in BF16, Adam's
+  averages 2.25 MiB.
+
 ## Demos
 
 - [`demos/sizes.xtl`](../demos/sizes.xtl): an 8 x 8 projection adapted
@@ -229,4 +267,5 @@ merge, the counts and their worked example), and LoRA-FA (Zhang et
 al., "LoRA-FA: Memory-efficient Low-rank Adaptation for Large Language
 Models Fine-tuning", 2023). The gradients are derived by hand (the
 research's lines 2755-2947) and checked by finite differences. QLoRA
-and VeRA come in later steps (`docs/fine-tune-moe-demo-plan.md`).
+after Dettmers et al., "QLoRA: Efficient Finetuning of Quantized
+LLMs", 2023 (its formats in the Quant library). VeRA comes in a later step (`docs/fine-tune-moe-demo-plan.md`).

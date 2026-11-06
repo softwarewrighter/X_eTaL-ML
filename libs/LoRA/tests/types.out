@@ -13,6 +13,11 @@ l:g_radsFA : Num a => (a, a, a, a) -> (a, a) -> (a, a)
 l:s_gdFA : Num a => a -> ((a, a, a, a), (a, a)) -> (a, a, a, a)
 l:a_damStartFA : (Any a, Any b, Any c, Num d) => (a, b, Float, c) -> ((a, b, Float, c), (Float, Float), d)
 l:a_damFA : Float -> (((Float, Float, Float, Float), (Float, Float), Float), (Float, Float)) -> ((Float, Float, Float, Float), (Float, Float), Float)
+l:q_base : Int -> Float -> (Int, Float, Int)
+l:d_equant : (Int, Float, Int) -> Float
+l:f_orwardQ : ((Int, Float, Int), Float, Float, Float) -> Float -> Float
+l:m_ergeQ : Int -> ((Int, Float, Int), Float, Float, Float) -> (Int, Float, Int)
+l:q_bytes : (Num a, Num b) => (a, b) -> a -> Float
 l:r_ank : Num a => Float -> a
 l:p_arams : Num a => a -> a -> a
 l:e_xpert : Num a => a -> a -> a

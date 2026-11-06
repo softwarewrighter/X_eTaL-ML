@@ -60,6 +60,7 @@ the libraries without setup.
 | `qz:q_uantile p` | `Float -> Float` | its inverse, by 60 halvings |
 | `qz:c_odebook offset` | `Float -> Float` | NF4's 16 levels from the normal's quantiles (QLoRA's offset 0.9677083) |
 | `k qz:n_f4Codes x` | `Int -> Float -> (Int, Float)` | each number's nearest NF4 level (1 .. 16) after its block's scale, and the scales |
+| `qz:n_f4Values (q, s)` | `(Int, Float) -> Float` | NF4 codes back to numbers, each level times its block's scale (raveled) |
 | `k qz:n_f4 x` | `Int -> Float -> Float` | x through NF4 and back, shaped as x |
 | `k2 qz:d_ouble s` | `Int -> Float -> Float` | block scales through 8 bits (blocks of k2, their mean off) and back |
 | `k2 qz:n_f4Double (k, x)` | `Int -> (Int, Float) -> Float` | NF4 with its scales double-quantized |

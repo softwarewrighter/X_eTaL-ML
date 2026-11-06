@@ -122,6 +122,21 @@ numbers and loses on W's, which pile up near the ends. A weight takes
 takes 224 MiB in FP32, 112 in FP16, 31.5 in NF4 and 28.9
 double-quantized.
 
+QLoRA: the same adapter trained the same way on the 4-bit base
+(`qk lo:q_base W`, computed on dequantized: `lo:d_equant`). W~ is W
+plus the 4-bit error, so the adapter has to learn the known update
+less that error; the best rank r can do for it comes from the singular
+values of `T - (W~ - W)`. At rank 3, blocks of 16:
+
+| | loss after 300 steps | best possible |
+| - | -------------------- | ------------- |
+| LoRA on W | 0.014665 | 0.014665 |
+| QLoRA on W~ | 0.032227 | 0.032226 |
+
+Merging the trained adapter into a 4-bit base (`lo:m_ergeQ`)
+quantizes W~ + s B A again: it misses by up to 0.18, and the merged
+layer's output the adapter's by up to 0.40.
+
 ## What it shows about X_eTaL
 
 - A layer's equations are its code: the pipeline of equations runs,

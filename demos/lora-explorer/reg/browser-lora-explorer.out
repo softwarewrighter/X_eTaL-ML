@@ -5,3 +5,4 @@ found: 165,888
 found: LoRA-FA's (trains 24 numbers)
 found: best possible (truncated SVD)
 found: in NF4, then double-quantized
+found: and of the adapter's output

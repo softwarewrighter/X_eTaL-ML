@@ -76,7 +76,7 @@ pub fn sweep_program() -> &'static str {
 }
 
 /// How many lines the program prints up to the sweep, then the page's.
-const PRINTED: usize = 15;
+const PRINTED: usize = 18;
 const READ: usize = 14;
 
 /// A matrix read back (the shared heat map's).
@@ -125,6 +125,12 @@ pub struct Explored {
     pub big_mib: [f64; 4],
     pub w_uniform: Matrix,
     pub w_nf4: Matrix,
+    /// QLoRA: the loss every 10 steps of the adapter on the NF4 base, the
+    /// best its rank allows for T less the 4-bit error, and the merge
+    /// into 4 bits: its largest miss of W~ + s B A, and of the output.
+    pub loss_q: Vec<f64>,
+    pub best_q: f64,
+    pub merge_miss: (f64, f64),
     pub w: Matrix,
     pub a: Matrix,
     pub b: Matrix,
@@ -143,8 +149,8 @@ pub struct Sweep {
 pub fn sweep() -> Result<Sweep, String> {
     let out = printed(sweep_program())?;
     match out.len() {
-        17 => Ok(Sweep { lora: numbers(&out[15], 8)?, fa: numbers(&out[16], 8)? }),
-        n => Err(format!("expected 17 lines of output, got {n}")),
+        20 => Ok(Sweep { lora: numbers(&out[18], 8)?, fa: numbers(&out[19], 8)? }),
+        n => Err(format!("expected 20 lines of output, got {n}")),
     }
 }
 
@@ -166,23 +172,26 @@ pub fn run(s: Settings) -> Result<Explored, String> {
         loss: numbers(&out[8], 31)?,
         loss_fa: numbers(&out[9], 31)?,
         best: numbers(&out[10], 8)?,
-        tex: out[15].clone(),
-        stages: values(&out[16])?,
-        back_tex: out[17].clone(),
-        back_stages: values(&out[18])?,
-        w: m(&out[19], 8, 8)?,
-        a: m(&out[20], s.r, 8)?,
-        b: m(&out[21], 8, s.r)?,
-        delta: m(&out[22], 8, 8)?,
-        merged: m(&out[23], 8, 8)?,
-        t: m(&out[24], 8, 8)?,
-        learned: m(&out[25], 8, 8)?,
-        learned_fa: m(&out[26], 8, 8)?,
+        tex: out[18].clone(),
+        stages: values(&out[19])?,
+        back_tex: out[20].clone(),
+        back_stages: values(&out[21])?,
+        w: m(&out[22], 8, 8)?,
+        a: m(&out[23], s.r, 8)?,
+        b: m(&out[24], 8, s.r)?,
+        delta: m(&out[25], 8, 8)?,
+        merged: m(&out[26], 8, 8)?,
+        t: m(&out[27], 8, 8)?,
+        learned: m(&out[28], 8, 8)?,
+        learned_fa: m(&out[29], 8, 8)?,
         rmse: { let v = numbers::<f64>(&out[11], 4)?; [v[0], v[1], v[2], v[3]] },
         moved: { let v = numbers::<f64>(&out[12], 2)?; (v[0], v[1]) },
-        bits: { let v = numbers::<f64>(&out[13], 2)?; (v[0], v[1]) },
-        big_mib: { let v = numbers::<f64>(&out[14], 4)?; [v[0], v[1], v[2], v[3]] },
-        w_uniform: m(&out[27], 8, 8)?,
-        w_nf4: m(&out[28], 8, 8)?,
+        bits: { let v = numbers::<f64>(&out[16], 2)?; (v[0], v[1]) },
+        big_mib: { let v = numbers::<f64>(&out[17], 4)?; [v[0], v[1], v[2], v[3]] },
+        w_uniform: m(&out[30], 8, 8)?,
+        w_nf4: m(&out[31], 8, 8)?,
+        loss_q: numbers(&out[13], 31)?,
+        best_q: out[14].trim().parse().map_err(|_| format!("not a loss: {}", out[14]))?,
+        merge_miss: { let v = numbers::<f64>(&out[15], 2)?; (v[0], v[1]) },
     })
 }

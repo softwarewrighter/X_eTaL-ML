@@ -41,3 +41,5 @@ qz:c_odebook 0.9677083
 ## The reference page's 4-bit examples.
 (4, 2) qz:u_niform 1.0 -4.0 2.0 0.5
 2 qz:n_f4 1.0 -4.0 2.0 0.5
+## NF4's codes back to numbers.
+qz:n_f4Values 4 qz:n_f4Codes w

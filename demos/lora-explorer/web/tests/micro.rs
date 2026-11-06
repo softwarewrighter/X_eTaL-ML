@@ -189,3 +189,14 @@ fn w_in_4_bits_is_the_blockwise_arithmetic_at_every_block() {
     assert_eq!(q.bits.0, 4.5);
     assert!((q.big_mib[2] - 31.5).abs() < 1e-9 && (q.big_mib[3] - 28.9).abs() < 0.05, "{:?}", q.big_mib);
 }
+
+#[test]
+fn qlora_reaches_the_best_for_what_is_left_and_its_merge_is_not_exact() {
+    for qk in [16, 64] {
+        let e = run(Settings { qk, ..Settings::default() }).unwrap();
+        let l = *e.loss_q.last().unwrap();
+        assert!(l >= e.best_q - 1e-9 && l < e.best_q + 2e-3, "block {qk}: QLoRA {l} against its best {}", e.best_q);
+        assert!(e.best_q > e.best[2], "block {qk}: the 4-bit base leaves more to learn");
+        assert!(e.merge_miss.0 > 1e-6 && e.merge_miss.1 > 1e-6, "block {qk}: the merge into 4 bits is not exact: {:?}", e.merge_miss);
+    }
+}

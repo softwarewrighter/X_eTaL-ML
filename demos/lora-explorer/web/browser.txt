@@ -4,3 +4,4 @@ the update's rank (lo:r_ank, by Gram-Schmidt)
 LoRA-FA's (trains 24 numbers)
 best possible (truncated SVD)
 in NF4, then double-quantized
+and of the adapter's output

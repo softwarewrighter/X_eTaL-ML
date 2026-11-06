@@ -1,6 +1,6 @@
 number = 9
 slug = "qlora"
-status = "pending"
+status = "in-progress"
 description = "(docs/fine-tune-moe-demo-plan.md, step 6; L172-218, L460, L2465-2525, L3471) ..."
 role = "production"
 context_files = []

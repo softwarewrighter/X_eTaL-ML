@@ -13,6 +13,7 @@ l:p_hi : Float -> Float
 l:q_uantile : Float -> Float
 l:c_odebook : Float -> Float
 l:n_f4Codes : Int -> Float -> (Int, Float)
+l:n_f4Values : (Int, Float) -> Float
 l:n_f4 : Int -> Float -> Float
 l:d_ouble : Int -> Float -> Float
 l:n_f4Double : Int -> (Int, Float) -> Float

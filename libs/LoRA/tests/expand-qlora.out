@@ -1,0 +1,88 @@
+#!/usr/bin/env xetal
+## QLoRA, checked with Check: the stored base dequantized is Quant's
+## NF4 of W; the adapted layer on it is LoRA's on W~; its gradients are
+## the finite differences; trained on a known update it reaches the
+## best its rank allows for what is left to learn, the update less the
+## 4-bit error; the merge into a 4-bit base is not exact, but within
+## half a step; the bytes. Arrays by a fixed ripple (no chance).
+
+"lo:" u_se< "LoRA"
+"qz:" u_se< "Quant"
+"k:" u_se< "Check"
+
+u:r_ipple := { c n -> s_in c * f_loat (r_ange n) * r_ange n }
+u:g_ap := { a b -> 'm_ax r_/ r_avel a_bs a - b }
+## An 8 x 8 base in blocks of 16, a rank-3 adapter, 5 inputs.
+W := 8 8 r_eshape 0.7 u:r_ipple 64
+A := 3 8 r_eshape 0.4 * 1.1 u:r_ipple 24
+B := 8 3 r_eshape 0.3 * 0.9 u:r_ipple 24
+s := 6.0 lo:s_caling 3
+X := 8 5 r_eshape 0.3 u:r_ipple 40
+Y := 8 5 r_eshape 1.3 u:r_ipple 40
+Q := 16 lo:q_base W
+Wq := lo:d_equant Q
+(_, qs, _) := Q
+c1 := "the stored base comes back as Quant's NF4 of W" k:t_est (16 qz:n_f4 W) k:n_ear Wq
+c2 := "in W's shape, 4 scales of 16 numbers" k:t_est 8 8 4 k:i_s (s_hape Wq) c_at t_ally qs
+c3 := "and it is not W: the 4-bit error" k:t_est k:t_rue 0.01 < Wq u:g_ap W
+c4 := "QLoRA's layer is LoRA's on W~" k:t_est ((Q, A, B, s) lo:f_orwardQ X) k:n_ear (Wq, A, B, s) lo:f_orward X
+## The gradients on W~, against central differences of the loss of
+## QLoRA's layer (the stored base held fixed).
+G := ((Q, A, B, s) lo:f_orwardQ X) - Y
+(dA, dB, _) := (Wq, A, B, s) lo:g_rads (X, G)
+e := 0.00001
+u:b_ump := { w i -> e * f_loat (s_hape w) r_eshape i = r_ange t_ally r_avel w }
+u:l_oss := { (a, b) -> e2 := ((Q, a, b, s) lo:f_orwardQ X) - Y
+  0.5 * '+ r_/ r_avel e2 * e2 }
+FA := (s_hape A) r_eshape '{ i -> ((u:l_oss (A + A u:b_ump i, B)) - u:l_oss (A - A u:b_ump i, B)) / 2.0 * e } e_ach r_ange t_ally r_avel A
+FB := (s_hape B) r_eshape '{ i -> ((u:l_oss (A, B + B u:b_ump i)) - u:l_oss (A, B - B u:b_ump i)) / 2.0 * e } e_ach r_ange t_ally r_avel B
+c5 := "dA and dB on W~ are the finite differences" k:t_est k:t_rue 0.000001 > (dA u:g_ap FA) m_ax dB u:g_ap FB
+## Training on a known rank-4 update T: the inputs the 8 unit vectors,
+## the outputs wanted (W + T) x. QLoRA's adapter sits on W~ = W + E, so
+## what it has to learn is T - E; the best rank 3 can do is half the
+## sum of the squared singular values of T - E past the third.
+p := f_loat r_ange 32
+T := (8 4 r_eshape 0.5 * s_in 1.3 * p * p) '+ '* i_nner 4 8 r_eshape 0.5 * c_os 0.6 * p * p
+I := 8 8 r_eshape 1.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0
+Yt := (W + T) '+ '* i_nner I
+a0 := (Wq, 1 lo:s_eeded 3 c_at 8, 8 3 r_eshape 0.0, s)
+(aq, _, _) := 300 '{ z -> 0.05 lo:a_dam (z, (I, Yt)) } p_ower lo:a_damStart a0
+(al, _, _) := 300 '{ z -> 0.05 lo:a_dam (z, (I, Yt)) } p_ower lo:a_damStart (W, 1 lo:s_eeded 3 c_at 8, 8 3 r_eshape 0.0, s)
+Lq := aq lo:l_oss (I, Yt)
+Ll := al lo:l_oss (I, Yt)
+## The squared singular values of M: the eigenvalues of M' M by power
+## iteration, each taken out once found.
+u:s_q := { M ->
+  (_, ev) := 8 '{ (N, v) ->
+    w := 300 '{ u -> m := N '+ '* i_nner u
+      m / 0.000000000000000001 + s_qrt '+ r_/ m * m } p_ower 1.0 + 0.1 * f_loat r_ange 8
+    lam := '+ r_/ w * N '+ '* i_nner w
+    (N - lam * w '* t_able w, v c_at lam)
+  } p_ower ((o_\ M) '+ '* i_nner M, 0 r_eshape 0.0)
+  ev
+}
+bestQ := 0.5 * '+ r_/ 3 d_rop u:s_q T - Wq - W
+bestL := 0.5 * '+ r_/ 3 d_rop u:s_q T
+c6 := "QLoRA reaches the best rank 3 allows for T less the 4-bit error" k:t_est k:t_rue (Lq >= bestQ - 0.000000001) & Lq < bestQ + 0.001
+c7 := "LoRA on W reaches the best for T" k:t_est k:t_rue (Ll >= bestL - 0.000000001) & Ll < bestL + 0.001
+c8 := "the 4-bit base leaves QLoRA more to learn" k:t_est k:t_rue bestQ > bestL
+## The merge into a 4-bit base: W~ + s B A quantized again. Not exact,
+## but each number within half NF4's widest gap times its block's
+## absmax.
+(_, Aq, Bq, sq) := aq
+M := lo:d_elta (Aq, Bq, sq)
+Mq := lo:d_equant 16 lo:m_ergeQ (Q, Aq, Bq, sq)
+levels := qz:c_odebook 0.9677083
+gap := 'm_ax r_/ (1 d_rop levels) - -1 d_rop levels
+c9 := "the merge into 4 bits is not exact" k:t_est k:t_rue 0.000001 < Mq u:g_ap Wq + M
+c10 := "but within half a step of each block" k:t_est k:t_rue '& r_/ ('m_ax r_/_2 a_bs 16 qz:b_locks Mq - Wq + M) <= 0.0000001 + 0.5 * gap * 16 qz:a_bsmax Wq + M
+c11 := "the merged layer's output moves from the adapter's" k:t_est k:t_rue 0.000001 < (Mq '+ '* i_nner X) u:g_ap (Q, Aq, Bq, sq) lo:f_orwardQ X
+## The bytes of a 4096 x 14336 projection at rank 16, blocks of 64: the
+## base in NF4 31.5 MiB (FP16: 112), the adapter in BF16 0.56 MiB,
+## Adam's FP32 averages 2.25 MiB.
+mib := ((16, 64) lo:q_bytes 4096 14336) / 1048576.0
+c12 := "QLoRA's bytes: 31.5, 0.5625 and 2.25 MiB" k:t_est 31.5 0.5625 2.25 k:n_ear mib
+k:r_eport c1 k:a_nd c2 k:a_nd c3 k:a_nd c4 k:a_nd c5 k:a_nd c6 k:a_nd c7 k:a_nd c8 k:a_nd c9 k:a_nd c10 k:a_nd c11 k:a_nd c12
+## The losses: QLoRA's, its best; LoRA's, its best; the merge's largest error.
+(Lq c_at bestQ c_at Ll c_at bestL) c_at Mq u:g_ap Wq + M
+

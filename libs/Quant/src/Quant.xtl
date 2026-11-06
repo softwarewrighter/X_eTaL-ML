@@ -189,15 +189,19 @@ l:n_f4Codes := { k x ->
   ((s_hape N) r_eshape '{ v -> f_irst g_rade a_bs v - nf4 } e_ach r_avel N, s)
 }
 
+## `n_f4Values (q, s)`: NF4 codes back to numbers, each code's level
+## times its block's scale (raveled; the codes a row per block).
+## >> "qz:" u_se< "Quant"
+## >> qz:n_f4Values 2 qz:n_f4Codes 1.0 -4.0 2.0 0.5
+## 0.9844492077827454 -4.0 2.0 0.4922246038913727
+l:n_f4Values := { (q, s) -> r_avel ((s_hape q) r_eshape (r_avel q) s_elect nf4) * s 'l_eft t_able o_ffsets 2 s_elect s_hape q }
+
 ## `k n_f4 x`: x through NF4 and back (each code's level times its
 ## block's scale), shaped as x.
 ## >> "qz:" u_se< "Quant"
 ## >> 2 qz:n_f4 1.0 -4.0 2.0 0.5
 ## 0.9844492077827454 -4.0 2.0 0.4922246038913727
-l:n_f4 := { k x ->
-  (q, s) := k l:n_f4Codes x
-  (s_hape x) r_eshape ((s_hape q) r_eshape (r_avel q) s_elect nf4) * s 'l_eft t_able o_ffsets k
-}
+l:n_f4 := { k x -> (s_hape x) r_eshape l:n_f4Values k l:n_f4Codes x }
 
 ### Double quantization: the scales in 8 bits
 

@@ -58,3 +58,12 @@ g := ((W, A, B, s) lo:f_orward x) - y
 u:f_wd x
 u:b_wd (x, g)
 u:b_fa (x, g)
+## QLoRA: the base in NF4 (blocks of 4), back to numbers, the layer on
+## it, the merge into 4 bits and back, the bytes.
+Q := 4 lo:q_base W
+lo:d_equant Q
+(Q, A, B, s) lo:f_orwardQ x
+lo:d_equant 4 lo:m_ergeQ (Q, A, B, s)
+(16, 64) lo:q_bytes 4096 14336
+## The reference page's QLoRA example.
+lo:d_equant 2 lo:q_base 2 2 r_eshape 1.0 -4.0 2.0 0.5

@@ -307,6 +307,16 @@ pub fn app() -> Html {
                             <tr><td>{"in NF4, then double-quantized"}</td><td>{format!("{:.1} and {:.1} MiB", e.big_mib[2], e.big_mib[3])}</td></tr>
                         </table>
                     </> }) }
+                    { panel("QLoRA: the adapter on the 4-bit base", "Q := qk lo:q_base W", "QLoRA stores W in NF4 and trains the adapter, in full precision, on W~, the base dequantized as the layer runs; nothing else changes from LoRA. W~ is W plus the 4-bit error, so the adapter has to learn the known update less that error: at the same rank it is left with more to fit (the best possible is set by the singular values of T less the error). Merging the adapter into a 4-bit base means quantizing W~ + s B A again, which is not exact: the merged numbers fall between NF4's levels.", false, html! { <>
+                        { chart("LoRA and QLoRA as they train", &[("LoRA on W", &e.loss, "lora"), ("QLoRA on W~", &e.loss_q, "fa"), (&format!("best for LoRA at rank {r}"), &best, "best"), ("best for QLoRA", &vec![e.best_q; e.loss_q.len()], "best")], &steps) }
+                        <p class="muted">{format!("Loss after each 10 Adam steps (log scale), the same start and steps; the base in NF4 blocks of {}.", s.qk)}</p>
+                        <table class="facts">
+                            <tr><td>{"LoRA's loss after 300 steps, and the best for T"}</td><td>{format!("{:.6} and {:.6}", at(&e.loss), e.best[r - 1])}</td></tr>
+                            <tr><td>{"QLoRA's, and the best for T less the 4-bit error"}</td><td>{format!("{:.6} and {:.6}", at(&e.loss_q), e.best_q)}</td></tr>
+                            <tr><td>{"the merge into 4 bits: its largest miss of W~ + s B A"}</td><td>{format!("{:.4}", e.merge_miss.0)}</td></tr>
+                            <tr><td>{"and of the adapter's output"}</td><td>{format!("{:.4}", e.merge_miss.1)}</td></tr>
+                        </table>
+                    </> }) }
                     { panel("The rank sweep", "'u:l_ora e_ach r_ange 8", "LoRA and LoRA-FA trained at every rank from 1 to 8 (300 Adam steps each), against the best possible at that rank, from T's singular values (found by power iteration). T is of rank 4, so from rank 4 on the best is 0. LoRA follows the best at every rank; LoRA-FA needs a larger rank for the same loss. This runs once, apart from the slider.", false, sweep_panel) }
                 </> }
             }
@@ -316,7 +326,7 @@ pub fn app() -> Html {
     html! {
         <>
         <header>
-            { header("LoRA explorer", "Low-rank adaptation, computed by X_eTaL in your browser: a frozen 8 x 8 weight matrix W adapted by two small trainable ones, A (r x 8) and B (8 x r), the layer y = W x + s B (A x). Choose the rank; see each stage forward and backward, the update and its rank, the merge, what adapters cost on a large mixture-of-experts model, LoRA and LoRA-FA trained to fit a known update against the best possible at each rank, and W in 4 bits, uniform and NF4, as QLoRA stores it.") }
+            { header("LoRA explorer", "Low-rank adaptation, computed by X_eTaL in your browser: a frozen 8 x 8 weight matrix W adapted by two small trainable ones, A (r x 8) and B (8 x r), the layer y = W x + s B (A x). Choose the rank; see each stage forward and backward, the update and its rank, the merge, what adapters cost on a large mixture-of-experts model, LoRA and LoRA-FA trained to fit a known update against the best possible at each rank, W in 4 bits, uniform and NF4, as QLoRA stores it, and QLoRA's adapter trained on that base.") }
             { rank }
         </header>
         <main><div class="wide">

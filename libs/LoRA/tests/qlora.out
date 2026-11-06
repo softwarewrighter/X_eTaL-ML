@@ -1,0 +1,14 @@
+ok: the stored base comes back as Quant's NF4 of W
+ok: in W's shape, 4 scales of 16 numbers
+ok: and it is not W: the 4-bit error
+ok: QLoRA's layer is LoRA's on W~
+ok: dA and dB on W~ are the finite differences
+ok: QLoRA reaches the best rank 3 allows for T less the 4-bit error
+ok: LoRA on W reaches the best for T
+ok: the 4-bit base leaves QLoRA more to learn
+ok: the merge into 4 bits is not exact
+ok: but within half a step of each block
+ok: the merged layer's output moves from the adapter's
+ok: QLoRA's bytes: 31.5, 0.5625 and 2.25 MiB
+12 checks, all passed
+0.032226914369962216 0.032226487982716184 0.014664745985852318 0.014664745985819976 0.18440658120431208

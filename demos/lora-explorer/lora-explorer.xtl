@@ -139,13 +139,16 @@ L2
 ## T's squared singular values past the k-th. They are the eigenvalues
 ## of T' T, found by power iteration, each taken out once found.
 u0 := 1.0 + 0.1 * f_loat r_ange 8
-(_, ev) := 8 '{ (M, e) ->
-  v := 300 '{ w -> m := M '+ '* i_nner w
-    m / 0.000000000000000001 + s_qrt '+ r_/ m * m } p_ower u0
-  lam := '+ r_/ v * M '+ '* i_nner v
-  (M - lam * v '* t_able v, e c_at lam)
-} p_ower ((o_\ T) '+ '* i_nner T, 0 r_eshape 0.0)
-best := 0.0 m_ax 0.5 * '{ k -> '+ r_/ k d_rop ev } e_ach r_ange 8
+u:b_est := { D ->
+  (_, ev) := 8 '{ (M, e) ->
+    v := 300 '{ w -> m := M '+ '* i_nner w
+      m / 0.000000000000000001 + s_qrt '+ r_/ m * m } p_ower u0
+    lam := '+ r_/ v * M '+ '* i_nner v
+    (M - lam * v '* t_able v, e c_at lam)
+  } p_ower ((o_\ D) '+ '* i_nner D, 0 r_eshape 0.0)
+  0.0 m_ax 0.5 * '{ k -> '+ r_/ k d_rop ev } e_ach r_ange 8
+}
+best := u:b_est T
 best
 ## What each learned: LoRA's update, LoRA-FA's.
 ((_, A1, B1, s1), _, _) := q1
@@ -171,6 +174,27 @@ u:r_mse := { a b -> s_qrt ('+ r_/ r_avel (a - b) * a - b) / f_loat t_ally r_avel
 ## The adapted layer on each base (QLoRA's forward pass: the adapter
 ## kept in full precision): its output's largest change from y.
 ('m_ax r_/ a_bs y - (Wu, A, B, s) lo:f_orward X) c_at 'm_ax r_/ a_bs y - (Wn, A, B, s) lo:f_orward X
+
+### QLoRA: the adapter on the 4-bit base
+
+## The base stored in NF4 (blocks of qk) and trained on as LoRA is, the
+## same start and steps, the base dequantized (W~, Wn above): its loss
+## every 10 steps. W~ is W plus the 4-bit error, so what the adapter
+## has to learn is T less it; the best rank r can do for that.
+Q := qk lo:q_base W
+(q3, L3) := chunks '{ (z, L) ->
+  z2 := every '{ e -> lr lo:a_dam (e, (I, Y)) } p_ower z
+  (a, _, _) := z2
+  (z2, L c_at u:l_oss a)
+} p_ower (lo:a_damStart (lo:d_equant Q, 1 lo:s_eeded r c_at 8, (8 c_at r) r_eshape 0.0, s), u:l_oss (lo:d_equant Q, 1 lo:s_eeded r c_at 8, (8 c_at r) r_eshape 0.0, s))
+L3
+r s_elect u:b_est T - Wn - W
+## The merge into a 4-bit base: W~ + s B A quantized again. Its largest
+## miss of W~ + s B A, and of the adapter's output.
+((_, A3, B3, s3), _, _) := q3
+learnedQ := lo:d_elta (A3, B3, s3)
+Mq := lo:d_equant qk lo:m_ergeQ (Q, A3, B3, s3)
+('m_ax r_/ r_avel a_bs Mq - Wn + learnedQ) c_at 'm_ax r_/ r_avel a_bs (Mq '+ '* i_nner X) - (Q, A3, B3, s3) lo:f_orwardQ X
 ## Bits a weight: 4-bit codes with a 32-bit scale per block, then the
 ## scales double-quantized (8 bits, blocks of 256); a 4096 x 14336
 ## projection's MiB in FP32, FP16, NF4 and NF4 double-quantized.

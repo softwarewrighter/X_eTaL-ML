@@ -14,9 +14,12 @@
 ##
 ## Training moves A and B by the gradients of the squared error
 ## (g_rads, s_gd, a_dam through the Optim library); LoRA-FA freezes A
-## (regenerated from a seed, s_eeded) and trains B alone.
+## (regenerated from a seed, s_eeded) and trains B alone; QLoRA keeps W
+## in 4 bits (NF4, through the Quant library) and computes with it
+## dequantized.
 
 "op:" u_se< "Optim"
+"qz:" u_se< "Quant"
 
 ### The forward pass
 
@@ -168,6 +171,54 @@ l:a_damFA := { lr (((W, A, B, s), (mB, vB), t), (x, y)) ->
   (dB, _) := (W, A, B, s) l:g_radsFA (x, ((W, A, B, s) l:f_orward x) - y)
   (B2, mB2, vB2) := (lr, t) op:a_dam (B, mB, vB, dB)
   ((W, A, B2, s), (mB2, vB2), t + 1)
+}
+
+### QLoRA: the base in 4 bits
+
+## `k q_base W`: the base as QLoRA stores it: W in NF4, blocks of k
+## (QLoRA's 64), as (codes, scales, shape): 4-bit codes, a scale per
+## block, W's shape to come back to.
+## >> "lo:" u_se< "LoRA"
+## >> (q, s, sh) := 2 lo:q_base 2 2 r_eshape 1.0 -4.0 2.0 0.5
+## >> s c_at f_loat sh
+## 4.0 2.0 2.0 2.0
+l:q_base := { k W ->
+  (q, s) := k qz:n_f4Codes W
+  (q, s, s_hape W)
+}
+
+## `d_equant (q, s, shape)`: the stored base back to numbers, W~, the
+## matrix QLoRA computes with: each code's level times its block's
+## scale, in W's shape. It is not W: the difference is the 4-bit
+## error.
+## >> "lo:" u_se< "LoRA"
+## >> lo:d_equant 2 lo:q_base 2 2 r_eshape 1.0 -4.0 2.0 0.5
+## 0.9844492077827454               -4.0
+##                2.0 0.4922246038913727
+l:d_equant := { (q, s, sh) -> sh r_eshape qz:n_f4Values (q, s) }
+
+## `(Q, A, B, s) f_orwardQ x`: QLoRA's adapted layer, W~ x + s B (A x):
+## the 4-bit base dequantized when the layer runs, the adapter in full
+## precision. Its gradients and steps are LoRA's with W~ for W:
+## `lr s_gd ((d_equant Q, A, B, s), (x, y))`.
+l:f_orwardQ := { (Q, A, B, s) x -> (l:d_equant Q, A, B, s) l:f_orward x }
+
+## `k m_ergeQ (Q, A, B, s)`: the adapter merged into a 4-bit base: W~ +
+## s B A quantized again (blocks of k), as a stored base. Not exact:
+## d_equant of it is not W~ + s B A, since the merged numbers fall
+## between NF4's levels.
+l:m_ergeQ := { k (Q, A, B, s) -> k l:q_base (l:d_equant Q) + l:d_elta (A, B, s) }
+
+## `(r, k) q_bytes m n`: QLoRA's bytes for an m x n base at rank r,
+## blocks of k: the base in NF4 (4 bits and a 32-bit scale per block),
+## the adapter in BF16 (16 bits), Adam's two averages for it in FP32;
+## against FP16's 2 m n for the base alone.
+## >> "lo:" u_se< "LoRA"
+## >> (16, 64) lo:q_bytes 4096 14336
+## 33030144.0 589824.0 2359296.0
+l:q_bytes := { (r, k) mn ->
+  n := r l:p_arams mn
+  ((f_loat '* r_/ mn) * (4.0 + 32.0 / f_loat k) / 8.0) c_at (16 l:b_ytes n) c_at 2.0 * 32 l:b_ytes n
 }
 
 ### Rank
