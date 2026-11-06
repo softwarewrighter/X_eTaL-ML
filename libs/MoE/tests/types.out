@@ -1,0 +1,12 @@
+l:s_cores : Num a => a -> a -> a
+l:s_oftmax : Num a => a -> Float
+l:m_ask : Int -> Float -> Float
+l:t_opk : Int -> Float -> Float
+l:a_pply : Num a => (a, a, a, a) -> (Int, a) -> a
+l:c_ombine : ((Float, Float, Float, Float), Float) -> Float -> Float
+l:d_ense : ((Float, Float, Float, Float), Float) -> Float -> Float
+l:l_ayer : (Float, (Float, Float, Float, Float), Int) -> Float -> Float
+l:g_rads : (Float, (Float, Float, Float, Float), Int) -> (Float, Float) -> (Float, Float, Float, Float)
+l:f_requency : Float -> Float
+l:e_ntropy : Float -> Float
+l:b_alance : (Float, Float) -> Int -> Float

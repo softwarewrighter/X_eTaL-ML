@@ -1,0 +1,32 @@
+#!/usr/bin/env xetal
+## MoE: each function's answers on small arrays, pinned. Run with
+## "just run-lib MoE basics".
+
+"moe:" u_se< "MoE"
+
+## 3 experts on 2 inputs to 2 outputs, rank 1, 4 tokens (the columns
+## of x), by a fixed ripple, the sine of a square (no chance).
+u:r_ipple := { c n -> s_in c * f_loat (r_ange n) * r_ange n }
+R := 3 2 r_eshape 1.1 u:r_ipple 6
+ex := (3 2 2 r_eshape 0.7 u:r_ipple 12, 3 1 2 r_eshape 0.5 u:r_ipple 6, 3 2 1 r_eshape 0.3 u:r_ipple 6, 2.0)
+x := 2 4 r_eshape 0.9 u:r_ipple 8
+S := R moe:s_cores x
+S
+P := moe:s_oftmax S
+P
+2 moe:m_ask P
+G := 2 moe:t_opk P
+G
+ex moe:a_pply (2, x)
+(ex, G) moe:c_ombine x
+(ex, G) moe:d_ense x
+(R, ex, 2) moe:l_ayer x
+## The gradients for g = the output, the selection fixed.
+(R, ex, 2) moe:g_rads (x, (R, ex, 2) moe:l_ayer x)
+## The statistics.
+moe:f_requency G
+moe:e_ntropy P
+(P, G) moe:b_alance 2
+## The reference page's examples.
+2 moe:t_opk 3 1 r_eshape 0.5 0.3 0.2
+moe:f_requency 2 4 r_eshape 1.0 0.5 0.0 1.0 0.0 0.5 1.0 0.0

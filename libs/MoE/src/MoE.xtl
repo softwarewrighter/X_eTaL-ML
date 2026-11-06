@@ -1,0 +1,178 @@
+## MoE: mixture-of-experts layers: router scores, top-k gates, experts as adapted projections, the sparse combine, gradients and routing statistics
+##
+## Import it with an alias of your choice: "moe:" u_se< "MoE".
+## Put libs/MoE/src on XETAL_PATH ("just path"); the reference is libs/MoE/docs.
+## Names with l: are exported; h: names are private to this file.
+##
+## Tokens are columns, as in the LoRA library: x is n x N, N tokens of
+## n numbers. The router R (E x n) scores each token against E experts;
+## each token's scores become probabilities over the experts (a
+## column's softmax), and its k most likely experts are kept, their
+## probabilities renormalized over those k: the gates G (E x N, 0 where
+## an expert is not chosen). An expert here is an adapted projection,
+## W_e x + s B_e (A_e x) (the LoRA library's layer); the experts are
+## stacked, (Ws, As, Bs, s): Ws E x m x n, As E x r x n, Bs E x m x r,
+## one scale s. The layer is y = sum over the chosen e of G_e (W_e x +
+## s B_e (A_e x)), each token through its k experts only. Every
+## function takes its data on the right, so each can be a Flow stage.
+
+"lo:" u_se< "LoRA"
+
+### Helpers (private)
+
+## The vector v (one number per token) repeated down each row of a
+## matrix shaped as M: v's j-th number in column j.
+h:c_ols := { v M -> (s_hape M) r_eshape v }
+## The one-hot columns of the tokens idx among N: an N x t_ally idx
+## matrix whose column j is 1 at token idx[j].
+h:p_ick := { N idx -> f_loat (r_ange N) '= t_able idx }
+
+### Routing
+
+## `R s_cores x`: each token's score for each expert, R x (E x N).
+## >> "moe:" u_se< "MoE"
+## >> (2 2 r_eshape 1.0 0.0 0.0 1.0) moe:s_cores 2 1 r_eshape 3.0 -1.0
+##  3.0
+## -1.0
+l:s_cores := { R x -> R '+ '* i_nner x }
+
+## `s_oftmax S`: each column (a token) into probabilities over the
+## experts; the column's largest is taken off first (the same result,
+## no overflow).
+## >> "moe:" u_se< "MoE"
+## >> moe:s_oftmax 2 1 r_eshape 0.0 0.6931471805599453
+## 0.3333333333333333
+## 0.6666666666666666
+l:s_oftmax := { S ->
+  e := e_xp S - ('m_ax r_/_1 S) h:c_ols S
+  e / ('+ r_/_1 e) h:c_ols e
+}
+
+## `k m_ask P`: 1 at each token's k most likely experts, 0 elsewhere
+## (the largest, taken out, then the largest of what is left; a tie
+## keeps every expert at the tie).
+## >> "moe:" u_se< "MoE"
+## >> 1 moe:m_ask 3 2 r_eshape 0.2 0.5 0.7 0.1 0.1 0.4
+## 0.0 1.0
+## 1.0 0.0
+## 0.0 0.0
+l:m_ask := { k P ->
+  (_, M) := k '{ (Q, M) ->
+    m := f_loat Q = ('m_ax r_/_1 Q) h:c_ols Q
+    (Q - 2.0 * m, M + m)
+  } p_ower (P, 0.0 * P)
+  M
+}
+
+## `k t_opk P`: the gates: each token's k most likely experts, their
+## probabilities over those k's sum (Mixtral's), 0 for the rest.
+## >> "moe:" u_se< "MoE"
+## >> 2 moe:t_opk 3 1 r_eshape 0.5 0.3 0.2
+##               0.625
+## 0.37499999999999994
+##                 0.0
+l:t_opk := { k P ->
+  G := P * k l:m_ask P
+  G / ('+ r_/_1 G) h:c_ols G
+}
+
+### Experts
+
+## `(Ws, As, Bs, s) a_pply (e, x)`: expert e (from 1) on the tokens x,
+## W_e x + s B_e (A_e x), as the LoRA library computes it.
+l:a_pply := { (Ws, As, Bs, s) (e, x) -> (e s_elect Ws, e s_elect As, e s_elect Bs, s) lo:f_orward x }
+
+## `(experts, G) c_ombine x`: the layer's output for the gates G: each
+## expert run only on the tokens that chose it (picked out as columns,
+## then put back), times their gates, summed: sum over the chosen e of
+## G_e (W_e x + s B_e (A_e x)).
+l:c_ombine := { ((Ws, As, Bs, s), G) x ->
+  N := 2 s_elect s_hape x
+  m := 2 s_elect s_hape Ws
+  E := f_irst s_hape Ws
+  (y, _) := E '{ (y, e) ->
+    idx := w_here (e s_elect G) > 0.0
+    0 = t_ally idx ? (y, e + 1)
+    P := N h:p_ick idx
+    ye := ((Ws, As, Bs, s) l:a_pply (e, x '+ '* i_nner P)) '+ '* i_nner o_\ P
+    (y + ye * (e s_elect G) h:c_ols ye, e + 1)
+  } p_ower ((m c_at N) r_eshape 0.0, 1)
+  y
+}
+
+## `(experts, G) d_ense x`: the same sum with every expert run on every
+## token (an unchosen one's gate is 0): the reference c_ombine is
+## checked against.
+l:d_ense := { ((Ws, As, Bs, s), G) x ->
+  E := f_irst s_hape Ws
+  (y, _) := E '{ (y, e) ->
+    ye := (Ws, As, Bs, s) l:a_pply (e, x)
+    (y + ye * (e s_elect G) h:c_ols ye, e + 1)
+  } p_ower (0.0 * (Ws, As, Bs, s) l:a_pply (1, x), 1)
+  y
+}
+
+## `(R, experts, k) l_ayer x`: the whole layer: scores, probabilities,
+## the top-k gates, the sparse combine.
+## >> "moe:" u_se< "MoE"
+## >> ex := (2 2 2 r_eshape 1.0 0.0 0.0 1.0 2.0 0.0 0.0 2.0, 2 1 2 r_eshape 0.0, 2 2 1 r_eshape 0.0, 1.0)
+## >> (2 2 r_eshape 1.0 0.0 0.0 1.0, ex, 1) moe:l_ayer 2 2 r_eshape 3.0 -1.0 -1.0 3.0
+##  3.0 -2.0
+## -1.0  6.0
+l:l_ayer := { (R, experts, k) x -> (experts, k l:t_opk l:s_oftmax R l:s_cores x) l:c_ombine x }
+
+### Gradients, the selection fixed
+
+## `(R, (Ws, As, Bs, s), k) g_rads (x, g)`: the gradients for the
+## tokens x and g, the loss's gradient at the layer's output (m x N),
+## each token's chosen experts held fixed (the top-k is not
+## differentiable; a small change keeps it): (dR, dAs, dBs, dx). An
+## expert's gradients are the LoRA library's with g times its gates;
+## the router's go through the gates, a softmax over each token's
+## chosen experts: dL/dS_e = G_e (h_e - sum_i G_i h_i) for a chosen e,
+## h_e = g . y_e the loss's gradient by the gate; dR = dS x'. dx gathers
+## every chosen expert's and the router's, R' dS.
+l:g_rads := { (R, (Ws, As, Bs, s), k) (x, g) ->
+  E := f_irst s_hape Ws
+  G := k l:t_opk l:s_oftmax R l:s_cores x
+  (dA, dB, dx, H, _) := E '{ (dA, dB, dx, H, e) ->
+    ye := (Ws, As, Bs, s) l:a_pply (e, x)
+    ge := g * (e s_elect G) h:c_ols g
+    (a, b, d) := (e s_elect Ws, e s_elect As, e s_elect Bs, s) lo:g_rads (x, ge)
+    (dA c_at r_avel a, dB c_at r_avel b, dx + d, H c_at '+ r_/_1 g * ye, e + 1)
+  } p_ower (0 r_eshape 0.0, 0 r_eshape 0.0, 0.0 * x, 0 r_eshape 0.0, 1)
+  Hm := (s_hape G) r_eshape H
+  dS := G * Hm - ('+ r_/_1 G * Hm) h:c_ols G
+  (dS '+ '* i_nner o_\ x, (s_hape As) r_eshape dA, (s_hape Bs) r_eshape dB, dx + (o_\ R) '+ '* i_nner dS)
+}
+
+### Routing statistics
+
+## `f_requency G`: how often each expert is chosen: the fraction of
+## tokens whose gates include it.
+## >> "moe:" u_se< "MoE"
+## >> moe:f_requency 2 4 r_eshape 1.0 0.5 0.0 1.0 0.0 0.5 1.0 0.0
+## 0.75 0.5
+l:f_requency := { G -> ('+ r_/_2 f_loat G > 0.0) / f_loat 2 s_elect s_hape G }
+
+## `e_ntropy P`: the mean over tokens of the entropy of their
+## probabilities over the experts, in nats (log E for a router that
+## cannot choose, 0 for a certain one).
+## >> "moe:" u_se< "MoE"
+## >> moe:e_ntropy 2 1 r_eshape 0.5 0.5
+## 0.6931471805599453
+l:e_ntropy := { P -> ('+ r_/ r_avel n_eg P * l_og 0.000000000001 m_ax P) / f_loat 2 s_elect s_hape P }
+
+## `(P, G) b_alance k`: the Switch Transformer's load-balancing loss for
+## top-k, E sum_e f_e P_e: f_e the share of the k N choices expert e
+## got, P_e its mean probability. 1 when both are even, up to E when
+## one expert takes everything.
+## >> "moe:" u_se< "MoE"
+## >> (2 2 r_eshape 0.5 0.5 0.5 0.5, 2 2 r_eshape 1.0 0.0 0.0 1.0) moe:b_alance 1
+## 1.0
+l:b_alance := { (P, G) k ->
+  E := f_irst s_hape P
+  N := 2 s_elect s_hape P
+  f := ('+ r_/_2 f_loat G > 0.0) / f_loat k * N
+  (f_loat E) * '+ r_/ f * ('+ r_/_2 P) / f_loat N
+}

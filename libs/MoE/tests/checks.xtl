@@ -1,0 +1,79 @@
+#!/usr/bin/env xetal
+## MoE, checked with Check: the sparse combine against the dense
+## reference that runs every expert; the gates; an expert is LoRA's
+## layer; the gradients with the selection fixed against central finite
+## differences; the routing statistics at their bounds; the layer as a
+## Flow pipeline of the library's stages. Arrays by a fixed ripple, the
+## sine of a square (no chance).
+
+"moe:" u_se< "MoE"
+"lo:" u_se< "LoRA"
+"flow:" u_se< "Flow"
+"k:" u_se< "Check"
+
+u:r_ipple := { c n -> s_in c * f_loat (r_ange n) * r_ange n }
+u:g_ap := { a b -> 'm_ax r_/ r_avel a_bs a - b }
+## 4 experts on 6 inputs to 5 outputs, rank 2, 7 tokens; top-2.
+R := 4 6 r_eshape 1.3 u:r_ipple 24
+Ws := 4 5 6 r_eshape 0.7 u:r_ipple 120
+As := 4 2 6 r_eshape 0.4 * 1.1 u:r_ipple 48
+Bs := 4 5 2 r_eshape 0.3 * 0.9 u:r_ipple 40
+s := 4.0 lo:s_caling 2
+ex := (Ws, As, Bs, s)
+x := 6 7 r_eshape 0.8 u:r_ipple 42
+P := moe:s_oftmax R moe:s_cores x
+G := 2 moe:t_opk P
+c1 := "each token's probabilities sum to 1" k:t_est (7 r_eshape 1.0) k:n_ear '+ r_/_1 P
+c2 := "each token keeps 2 experts, its gates summing to 1" k:t_est ((7 r_eshape 2.0) c_at 7 r_eshape 1.0) k:n_ear (f_loat '+ r_/_1 f_loat G > 0.0) c_at '+ r_/_1 G
+c3 := "a gate is its probability over the chosen two's sum" k:t_est (r_avel G) k:n_ear r_avel (P * 2 moe:m_ask P) / (s_hape P) r_eshape '+ r_/_1 P * 2 moe:m_ask P
+c4 := "the sparse combine is the dense reference" k:t_est ((ex, G) moe:d_ense x) k:n_ear (ex, G) moe:c_ombine x
+c5 := "and the layer is the combine of its gates" k:t_est ((R, ex, 2) moe:l_ayer x) k:n_ear (ex, G) moe:c_ombine x
+c6 := "an expert is LoRA's adapted layer" k:t_est (ex moe:a_pply (3, x)) k:n_ear (3 s_elect Ws, 3 s_elect As, 3 s_elect Bs, s) lo:f_orward x
+c7 := "with every expert chosen (top-4) the layer is the probability-weighted sum" k:t_est ((R, ex, 4) moe:l_ayer x) k:n_ear (ex, P) moe:d_ense x
+## The gradients, the selection fixed, against central differences of
+## half the squared error; a small bump keeps every token's choice.
+Y := 5 7 r_eshape 1.7 u:r_ipple 35
+u:l_oss := { (R1, Ws1, As1, Bs1, x1) ->
+  e := ((R1, (Ws1, As1, Bs1, s), 2) moe:l_ayer x1) - Y
+  0.5 * '+ r_/ r_avel e * e
+}
+g := ((R, ex, 2) moe:l_ayer x) - Y
+(dR, dA, dB, dx) := (R, ex, 2) moe:g_rads (x, g)
+h := 0.00001
+u:b_ump := { w i -> h * f_loat (s_hape w) r_eshape i = r_ange t_ally r_avel w }
+FR := (s_hape R) r_eshape '{ i -> ((u:l_oss (R + R u:b_ump i, Ws, As, Bs, x)) - u:l_oss (R - R u:b_ump i, Ws, As, Bs, x)) / 2.0 * h } e_ach r_ange t_ally r_avel R
+FA := (s_hape As) r_eshape '{ i -> ((u:l_oss (R, Ws, As + As u:b_ump i, Bs, x)) - u:l_oss (R, Ws, As - As u:b_ump i, Bs, x)) / 2.0 * h } e_ach r_ange t_ally r_avel As
+FB := (s_hape Bs) r_eshape '{ i -> ((u:l_oss (R, Ws, As, Bs + Bs u:b_ump i, x)) - u:l_oss (R, Ws, As, Bs - Bs u:b_ump i, x)) / 2.0 * h } e_ach r_ange t_ally r_avel Bs
+Fx := (s_hape x) r_eshape '{ i -> ((u:l_oss (R, Ws, As, Bs, x + x u:b_ump i)) - u:l_oss (R, Ws, As, Bs, x - x u:b_ump i)) / 2.0 * h } e_ach r_ange t_ally r_avel x
+c8 := "the router's gradient is the finite differences" k:t_est k:t_rue 0.000001 > dR u:g_ap FR
+c9 := "every expert's dA and dB are" k:t_est k:t_rue 0.000001 > (dA u:g_ap FA) m_ax dB u:g_ap FB
+c10 := "and dx, through the experts and the router" k:t_est k:t_rue 0.000001 > dx u:g_ap Fx
+c11 := "the gradients have their arrays' shapes" k:t_est ((s_hape R) c_at (s_hape As) c_at (s_hape Bs) c_at s_hape x) k:i_s (s_hape dR) c_at (s_hape dA) c_at (s_hape dB) c_at s_hape dx
+## A router that never picks experts 3 and 4: the tokens given a
+## constant input 1 and the router a bias for it, +50 for experts 1
+## and 2, -50 for 3 and 4. Those two and the router's rows for them get
+## no gradient.
+x1 := x c_at 1 7 r_eshape 1.0
+R3 := o_\ (o_\ R) c_at 1 4 r_eshape 50.0 50.0 -50.0 -50.0
+ex3 := (4 5 7 r_eshape 0.7 u:r_ipple 140, 4 2 7 r_eshape 0.4 * 1.1 u:r_ipple 56, Bs, s)
+(dR3, dA3, dB3, _) := (R3, ex3, 2) moe:g_rads (x1, ((R3, ex3, 2) moe:l_ayer x1) - Y)
+c12 := "experts no token chose get no gradient, nor their router rows" k:t_est 0.0 0.0 0.0 0.0 k:n_ear ('+ r_/ r_avel a_bs 2 d_rop dA3) c_at ('+ r_/ r_avel a_bs 2 d_rop dB3) c_at ('+ r_/ r_avel a_bs 2 d_rop dR3) c_at '+ r_/ 2 d_rop moe:f_requency 2 moe:t_opk moe:s_oftmax R3 moe:s_cores x1
+## The statistics: frequencies sum to k, entropy within 0 .. log E,
+## the balance 1 when even and E when one expert takes all.
+c13 := "the frequencies sum to k" k:t_est 2.0 k:n_ear '+ r_/ moe:f_requency G
+c14 := "the entropy is between 0 and log 4" k:t_est k:t_rue (0.0 <= moe:e_ntropy P) & (moe:e_ntropy P) <= l_og 4.0
+## 4 tokens, each choosing its own expert with even probabilities, then
+## all choosing expert 1 with certainty.
+I4 := 4 4 r_eshape 1.0 0.0 0.0 0.0 0.0
+O4 := 4 4 r_eshape 1.0 1.0 1.0 1.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0
+c15 := "even routing: entropy log 4, balance 1" k:t_est ((l_og 4.0) c_at 1.0) k:n_ear (moe:e_ntropy 4 4 r_eshape 0.25) c_at (4 4 r_eshape 0.25, I4) moe:b_alance 1
+c16 := "one expert taking everything: entropy 0, balance E" k:t_est 0.0 4.0 k:n_ear (moe:e_ntropy O4) c_at (O4, O4) moe:b_alance 1
+## The layer as a Flow pipeline, each stage one of the library's.
+piped := @ flow:p_ipe< c"
+   x
+|> R moe:s_cores it
+|> moe:s_oftmax it
+|> 2 moe:t_opk it
+|> (ex, it) moe:c_ombine x"
+c17 := "the layer as a Flow pipeline of the stages" k:t_est piped k:n_ear (R, ex, 2) moe:l_ayer x
+k:r_eport c1 k:a_nd c2 k:a_nd c3 k:a_nd c4 k:a_nd c5 k:a_nd c6 k:a_nd c7 k:a_nd c8 k:a_nd c9 k:a_nd c10 k:a_nd c11 k:a_nd c12 k:a_nd c13 k:a_nd c14 k:a_nd c15 k:a_nd c16 k:a_nd c17

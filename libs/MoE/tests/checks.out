@@ -1,0 +1,18 @@
+ok: each token's probabilities sum to 1
+ok: each token keeps 2 experts, its gates summing to 1
+ok: a gate is its probability over the chosen two's sum
+ok: the sparse combine is the dense reference
+ok: and the layer is the combine of its gates
+ok: an expert is LoRA's adapted layer
+ok: with every expert chosen (top-4) the layer is the probability-weighted sum
+ok: the router's gradient is the finite differences
+ok: every expert's dA and dB are
+ok: and dx, through the experts and the router
+ok: the gradients have their arrays' shapes
+ok: experts no token chose get no gradient, nor their router rows
+ok: the frequencies sum to k
+ok: the entropy is between 0 and log 4
+ok: even routing: entropy log 4, balance 1
+ok: one expert taking everything: entropy 0, balance E
+ok: the layer as a Flow pipeline of the stages
+17 checks, all passed
