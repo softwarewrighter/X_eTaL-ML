@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>libs/LoRA/src/LoRA.xtlm - X_eTaL doc</title>
+<link rel="stylesheet" href="style.css">
+<script src="theme.js"></script>
+<script defer src="search-index.js"></script>
+<script defer src="search.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.18.10/dist/katex.min.css" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.18.10/dist/katex.min.js" crossorigin="anonymous"></script>
+<script>document.addEventListener('DOMContentLoaded', function () {
+if (typeof katex === 'undefined') return;
+document.querySelectorAll('.c-notation').forEach(function (el) {
+var tex = el.textContent; if (!tex) return;
+try { katex.render(tex, el, { throwOnError: false }); } catch (e) { el.textContent = tex; }
+});
+});</script>
+</head>
+<body>
+<nav class="side">
+<a class="home" href="index.html">X_eTaL doc</a>
+<input id="search" type="search" autocomplete="off" placeholder="Search: a name, or a type" title="A name (mean finds m_ean), or a type: Num a =&gt; a -&gt; a -&gt; a finds +, m_ax ...">
+<h2>Files</h2>
+<h3>demos/activations/</h3>
+<ul>
+<li><a href="demos-activations-activations.xtl.html">activations.xtl</a></li>
+</ul>
+<h3>demos/attention/</h3>
+<ul>
+<li><a href="demos-attention-attention.xtl.html">attention.xtl</a></li>
+</ul>
+<h3>demos/backprop/</h3>
+<ul>
+<li><a href="demos-backprop-backprop.xtl.html">backprop.xtl</a></li>
+</ul>
+<h3>demos/cnn-backprop/</h3>
+<ul>
+<li><a href="demos-cnn-backprop-cnn-backprop.xtl.html">cnn-backprop.xtl</a></li>
+</ul>
+<h3>demos/cnn-digits/</h3>
+<ul>
+<li><a href="demos-cnn-digits-batch.xtl.html">batch.xtl</a></li>
+<li><a href="demos-cnn-digits-cnn-digits.xtl.html">cnn-digits.xtl</a></li>
+</ul>
+<h3>demos/diffusion/</h3>
+<ul>
+<li><a href="demos-diffusion-diffusion.xtl.html">diffusion.xtl</a></li>
+</ul>
+<h3>demos/embedding-explorer/</h3>
+<ul>
+<li><a href="demos-embedding-explorer-embedding-explorer.xtl.html">embedding-explorer.xtl</a></li>
+</ul>
+<h3>demos/k-means/</h3>
+<ul>
+<li><a href="demos-k-means-k-means.xtl.html">k-means.xtl</a></li>
+</ul>
+<h3>demos/lora-explorer/</h3>
+<ul>
+<li><a href="demos-lora-explorer-lora-explorer.xtl.html">lora-explorer.xtl</a></li>
+</ul>
+<h3>demos/micro-bert/</h3>
+<ul>
+<li><a href="demos-micro-bert-micro-bert.xtl.html">micro-bert.xtl</a></li>
+</ul>
+<h3>demos/micro-gpt/</h3>
+<ul>
+<li><a href="demos-micro-gpt-batch.xtl.html">batch.xtl</a></li>
+<li><a href="demos-micro-gpt-micro-gpt.xtl.html">micro-gpt.xtl</a></li>
+</ul>
+<h3>demos/moe-router/</h3>
+<ul>
+<li><a href="demos-moe-router-moe-router.xtl.html">moe-router.xtl</a></li>
+</ul>
+<h3>demos/net-macro/</h3>
+<ul>
+<li><a href="demos-net-macro-net-macro.xtl.html">net-macro.xtl</a></li>
+<li><a href="demos-net-macro-train-it.xtl.html">train-it.xtl</a></li>
+</ul>
+<h3>demos/pipelines/</h3>
+<ul>
+<li><a href="demos-pipelines-diffusion.xtl.html">diffusion.xtl</a></li>
+<li><a href="demos-pipelines-equations.xtl.html">equations.xtl</a></li>
+<li><a href="demos-pipelines-pipelines.xtl.html">pipelines.xtl</a></li>
+<li><a href="demos-pipelines-rosetta.xtl.html">rosetta.xtl</a></li>
+</ul>
+<h3>demos/ternary-net/</h3>
+<ul>
+<li><a href="demos-ternary-net-ternary-net.xtl.html">ternary-net.xtl</a></li>
+</ul>
+<h3>demos/train-live/</h3>
+<ul>
+<li><a href="demos-train-live-train-live.xtl.html">train-live.xtl</a></li>
+</ul>
+<h3>demos/world-model/</h3>
+<ul>
+<li><a href="demos-world-model-world-model.xtl.html">world-model.xtl</a></li>
+</ul>
+<h3>libs/Activations/demos/</h3>
+<ul>
+<li><a href="libs-Activations-demos-curves.xtl.html">curves.xtl</a></li>
+</ul>
+<h3>libs/Activations/src/</h3>
+<ul>
+<li><a href="libs-Activations-src-Activations.xtl.html">Activations.xtl</a></li>
+</ul>
+<h3>libs/Attention/demos/</h3>
+<ul>
+<li><a href="libs-Attention-demos-previous.xtl.html">previous.xtl</a></li>
+</ul>
+<h3>libs/Attention/src/</h3>
+<ul>
+<li><a href="libs-Attention-src-Attention.xtl.html">Attention.xtl</a></li>
+</ul>
+<h3>libs/Conv/demos/</h3>
+<ul>
+<li><a href="libs-Conv-demos-edges.xtl.html">edges.xtl</a></li>
+</ul>
+<h3>libs/Conv/src/</h3>
+<ul>
+<li><a href="libs-Conv-src-Conv.xtl.html">Conv.xtl</a></li>
+</ul>
+<h3>libs/Embed/demos/</h3>
+<ul>
+<li><a href="libs-Embed-demos-pets.xtl.html">pets.xtl</a></li>
+</ul>
+<h3>libs/Embed/src/</h3>
+<ul>
+<li><a href="libs-Embed-src-Embed.xtl.html">Embed.xtl</a></li>
+</ul>
+<h3>libs/Flow/demos/</h3>
+<ul>
+<li><a href="libs-Flow-demos-mlp.xtl.html">mlp.xtl</a></li>
+</ul>
+<h3>libs/Flow/src/</h3>
+<ul>
+<li><a href="libs-Flow-src-Flow.xtlm.html">Flow.xtlm</a></li>
+</ul>
+<h3>libs/Integrals/demos/</h3>
+<ul>
+<li><a href="libs-Integrals-demos-convolution.xtl.html">convolution.xtl</a></li>
+<li><a href="libs-Integrals-demos-gelu.xtl.html">gelu.xtl</a></li>
+</ul>
+<h3>libs/Integrals/src/</h3>
+<ul>
+<li><a href="libs-Integrals-src-Integrals.xtlm.html">Integrals.xtlm</a></li>
+</ul>
+<h3>libs/Learn/demos/</h3>
+<ul>
+<li><a href="libs-Learn-demos-blobs.xtl.html">blobs.xtl</a></li>
+</ul>
+<h3>libs/Learn/src/</h3>
+<ul>
+<li><a href="libs-Learn-src-Learn.xtl.html">Learn.xtl</a></li>
+</ul>
+<h3>libs/LoRA/demos/</h3>
+<ul>
+<li><a href="libs-LoRA-demos-sizes.xtl.html">sizes.xtl</a></li>
+</ul>
+<h3>libs/LoRA/src/</h3>
+<ul>
+<li><a href="libs-LoRA-src-LoRA.xtl.html">LoRA.xtl</a></li>
+<li><a href="libs-LoRA-src-LoRA.xtlm.html">LoRA.xtlm</a></li>
+</ul>
+<h3>libs/MoE/demos/</h3>
+<ul>
+<li><a href="libs-MoE-demos-routing.xtl.html">routing.xtl</a></li>
+</ul>
+<h3>libs/MoE/src/</h3>
+<ul>
+<li><a href="libs-MoE-src-MoE.xtl.html">MoE.xtl</a></li>
+</ul>
+<h3>libs/Net/demos/</h3>
+<ul>
+<li><a href="libs-Net-demos-train-xor.xtl.html">train-xor.xtl</a></li>
+<li><a href="libs-Net-demos-xor.xtl.html">xor.xtl</a></li>
+</ul>
+<h3>libs/Net/src/</h3>
+<ul>
+<li><a href="libs-Net-src-Net.xtlm.html">Net.xtlm</a></li>
+</ul>
+<h3>libs/NN/demos/</h3>
+<ul>
+<li><a href="libs-NN-demos-xor.xtl.html">xor.xtl</a></li>
+</ul>
+<h3>libs/NN/src/</h3>
+<ul>
+<li><a href="libs-NN-src-NN.xtl.html">NN.xtl</a></li>
+</ul>
+<h3>libs/Norm/demos/</h3>
+<ul>
+<li><a href="libs-Norm-demos-rows.xtl.html">rows.xtl</a></li>
+</ul>
+<h3>libs/Norm/src/</h3>
+<ul>
+<li><a href="libs-Norm-src-Norm.xtl.html">Norm.xtl</a></li>
+</ul>
+<h3>libs/Optim/demos/</h3>
+<ul>
+<li><a href="libs-Optim-demos-bowl.xtl.html">bowl.xtl</a></li>
+</ul>
+<h3>libs/Optim/src/</h3>
+<ul>
+<li><a href="libs-Optim-src-Optim.xtl.html">Optim.xtl</a></li>
+</ul>
+<h3>libs/Quant/demos/</h3>
+<ul>
+<li><a href="libs-Quant-demos-formats.xtl.html">formats.xtl</a></li>
+</ul>
+<h3>libs/Quant/src/</h3>
+<ul>
+<li><a href="libs-Quant-src-Quant.xtl.html">Quant.xtl</a></li>
+</ul>
+<h3>libs/Sample/demos/</h3>
+<ul>
+<li><a href="libs-Sample-demos-next.xtl.html">next.xtl</a></li>
+</ul>
+<h3>libs/Sample/src/</h3>
+<ul>
+<li><a href="libs-Sample-src-Sample.xtl.html">Sample.xtl</a></li>
+</ul>
+<h3>std/</h3>
+<ul>
+<li><a href="std-Svg.xtl.html">Svg.xtl</a></li>
+<li><a href="std-System.xtlm.html">System.xtlm</a></li>
+</ul>
+<h3>work/libs/Check/src/</h3>
+<ul>
+<li><a href="work-libs-Check-src-Check.xtl.html">Check.xtl</a></li>
+<li><a href="work-libs-Check-src-Check.xtlm.html">Check.xtlm</a></li>
+</ul>
+<h3>work/libs/Equations/src/</h3>
+<ul>
+<li><a href="work-libs-Equations-src-Equations.xtl.html">Equations.xtl</a></li>
+<li><a href="work-libs-Equations-src-Equations.xtlm.html">Equations.xtlm</a></li>
+</ul>
+<h3>work/libs/Format/src/</h3>
+<ul>
+<li><a href="work-libs-Format-src-Format.xtl.html">Format.xtl</a></li>
+</ul>
+<h3>work/libs/Lists/src/</h3>
+<ul>
+<li><a href="work-libs-Lists-src-Lists.xtl.html">Lists.xtl</a></li>
+</ul>
+<h3>work/libs/Plot/src/</h3>
+<ul>
+<li><a href="work-libs-Plot-src-Plot.xtl.html">Plot.xtl</a></li>
+</ul>
+<h3>work/libs/Strings/src/</h3>
+<ul>
+<li><a href="work-libs-Strings-src-Strings.xtl.html">Strings.xtl</a></li>
+</ul>
+<ul>
+<li><a href="builtins.html">built-ins</a></li>
+</ul>
+<h2>On this page</h2>
+<ul>
+<li><a href="#section-1">Reading a spec (private)</a></li>
+<li class="item"><a href="#h.w_ords"><span class="c-libfunc">ʰw̲ords</span></a></li>
+<li class="item"><a href="#h.f_ields"><span class="c-libfunc">ʰf̲ields</span></a></li>
+<li class="item"><a href="#h.j_oin"><span class="c-libfunc">ʰj̲oin</span></a></li>
+<li class="item"><a href="#h.n_ame-3f"><span class="c-libfunc">ʰn̲ame?</span></a></li>
+<li class="item"><a href="#h.n_umber-3f"><span class="c-libfunc">ʰn̲umber?</span></a></li>
+<li class="item"><a href="#h.n_th"><span class="c-libfunc">ʰn̲th</span></a></li>
+<li class="item"><a href="#h.h_as-3f"><span class="c-libfunc">ʰh̲as?</span></a></li>
+<li class="item"><a href="#h.a_rrays"><span class="c-libfunc">ʰa̲rrays</span></a></li>
+<li class="item"><a href="#specShape">specShape</a></li>
+<li class="item"><a href="#h.w_rong"><span class="c-libfunc">ʰw̲rong</span></a></li>
+<li class="item"><a href="#h.m_ethod"><span class="c-libfunc">ʰm̲ethod</span></a></li>
+<li><a href="#section-2">Writing the passes (private)</a></li>
+<li class="item"><a href="#h.c_heck"><span class="c-libfunc">ʰc̲heck</span></a></li>
+<li class="item"><a href="#h.f_orward"><span class="c-libfunc">ʰf̲orward</span></a></li>
+<li class="item"><a href="#h.b_ackLoRA"><span class="c-libfunc">ʰb̲ackLoRA</span></a></li>
+<li class="item"><a href="#h.b_ackFA"><span class="c-libfunc">ʰb̲ackFA</span></a></li>
+<li class="item"><a href="#h.b_ack"><span class="c-libfunc">ʰb̲ack</span></a></li>
+<li><a href="#section-3">Adapters</a></li>
+<li class="item"><a href="#m.a_dapter-3c"><span class="c-macro">ᵐa̲dapter&lt;</span></a></li>
+</ul>
+</nav>
+<main>
+<button class="theme" title="Light or dark">theme</button>
+<section id="results"></section>
+<h1><span class="kind">macro library</span>libs/LoRA/src/LoRA.xtlm</h1>
+<div class="doc">
+<p>LoRA's macro: an adapted layer written from a short spec -- its forward and backward passes, for LoRA or LoRA-FA</p>
+<p>Import it with the library: &quot;lo:&quot; u_se&lt; &quot;LoRA&quot; reaches LoRA.xtl's
+functions and this file's macro (X_eTaL MC11).
+Names with m: are macros; h: names are private to this file.</p>
+<p>A macro is a function from the source text written left and right of
+its call to the source that replaces the call, before the program is
+compiled (X_eTaL MC10); xetal expand FILE shows the result. The spec
+names the adapter's arrays, its rank and what trains:
+&quot;W A B s | r 3 | train A B&quot;. The arrays are the frozen W (m x n), A
+(r x n), B (m x r) and the scale s, as LoRA.xtl's adapter (W, A, B,
+s); &quot;W&quot; alone means &quot;W A B s&quot;. The rank is a number or a name, and
+the expansion checks A's and B's shapes against it when the program
+runs. &quot;train A B&quot; is LoRA, &quot;train B&quot; is LoRA-FA (A frozen); nothing
+else trains. The expansion is ordinary code with no call to the
+library: the same formulas as lo:f_orward, lo:g_rads and
+lo:g_radsFA, written out for these names.</p>
+</div>
+<p class="meta"><a href="libs-LoRA-src-LoRA.xtlm.src.html">source</a></p>
+<h2 class="section" id="section-1">Reading a spec (private)</h2>
+<div class="item" id="h.w_ords">
+<h3><a href="#h.w_ords"><span class="c-libfunc">ʰw̲ords</span></a> <span class="type">: Char -&gt; Box Char</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="libs-LoRA-src-LoRA.xtlm.src.html#L24">line 24</a></div>
+<div class="doc">
+<p>The words of t: runs of characters other than white space, boxed
+(after X_eTaL's Combinators.xtlm).</p>
+</div>
+<pre class="code"><span class="c-libfunc">ʰw̲ords</span> ← { t → (<a href="builtins.html#n_ot" class="c-builtin">n̲ot</a> t <a href="builtins.html#m_ember-3f" class="c-builtin">m̲ember?</a> <span class="c-string">&quot; \n\t&quot;</span>) <a href="builtins.html#p_artition" class="c-builtin">p̲artition</a> t }</pre>
+<div class="uses">Used in: <a href="libs-LoRA-src-LoRA.xtlm.html#h.a_rrays"><span class="c-libfunc">ʰa̲rrays</span></a>, <a href="libs-LoRA-src-LoRA.xtlm.html#h.w_rong"><span class="c-libfunc">ʰw̲rong</span></a>, <a href="libs-LoRA-src-LoRA.xtlm.html#m.a_dapter-3c"><span class="c-macro">ᵐa̲dapter&lt;</span></a></div>
+</div>
+<div class="item" id="h.f_ields">
+<h3><a href="#h.f_ields"><span class="c-libfunc">ʰf̲ields</span></a> <span class="type">: Char -&gt; Box Char</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="libs-LoRA-src-LoRA.xtlm.src.html#L26">line 26</a></div>
+<div class="doc">
+<p>The fields of t between bars, boxed.</p>
+</div>
+<pre class="code"><span class="c-libfunc">ʰf̲ields</span> ← { t → (<a href="builtins.html#n_ot" class="c-builtin">n̲ot</a> t <a href="builtins.html#m_ember-3f" class="c-builtin">m̲ember?</a> <span class="c-string">&quot;|&quot;</span>) <a href="builtins.html#p_artition" class="c-builtin">p̲artition</a> t }</pre>
+<div class="uses">Used in: <a href="libs-LoRA-src-LoRA.xtlm.html#m.a_dapter-3c"><span class="c-macro">ᵐa̲dapter&lt;</span></a></div>
+</div>
+<div class="item" id="h.j_oin">
+<h3><a href="#h.j_oin"><span class="c-libfunc">ʰj̲oin</span></a> <span class="type">: Box Char -&gt; Char</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="libs-LoRA-src-LoRA.xtlm.src.html#L28">line 28</a></div>
+<div class="doc">
+<p>The boxed texts b joined with a space between (&quot;&quot; for none).</p>
+</div>
+<pre class="code"><span class="c-libfunc">ʰj̲oin</span> ← { b →
+  <span class="c-number">0</span> <a href="builtins.html#-3d" class="c-symbol">=</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> b ? <span class="c-string">&quot;&quot;</span>
+  <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> <span class="c-quote">'</span>{ x y → <a href="builtins.html#e_nclose" class="c-builtin">e̲nclose</a> (<a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> x) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> y } <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> b
+}</pre>
+<div class="uses">Used in: <a href="libs-LoRA-src-LoRA.xtlm.html#h.w_rong"><span class="c-libfunc">ʰw̲rong</span></a></div>
+</div>
+<div class="item" id="h.n_ame-3f">
+<h3><a href="#h.n_ame-3f"><span class="c-libfunc">ʰn̲ame?</span></a> <span class="type">: (Num a, Truthy a) =&gt; Char -&gt; a</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="libs-LoRA-src-LoRA.xtlm.src.html#L34">line 34</a></div>
+<div class="doc">
+<p>Whether the text w is a name a program can write (letters, digits,
+_ and an alias's colon, not starting with a digit).</p>
+</div>
+<pre class="code"><span class="c-libfunc">ʰn̲ame?</span> ← { w →
+  <span class="c-number">0</span> <a href="builtins.html#-3d" class="c-symbol">=</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> w ? <span class="c-number">0</span>
+  (<span class="c-symbol">'</span><a href="builtins.html#-26" class="c-symbol">∧</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> w <a href="builtins.html#m_ember-3f" class="c-builtin">m̲ember?</a> <span class="c-string">&quot;abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_:&quot;</span>) <a href="builtins.html#-26" class="c-symbol">∧</a> <a href="builtins.html#n_ot" class="c-builtin">n̲ot</a> (<a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> w) <a href="builtins.html#m_ember-3f" class="c-builtin">m̲ember?</a> <span class="c-string">&quot;0123456789&quot;</span>
+}</pre>
+<div class="uses">Used in: <a href="libs-LoRA-src-LoRA.xtlm.html#h.w_rong"><span class="c-libfunc">ʰw̲rong</span></a>, <a href="libs-LoRA-src-LoRA.xtlm.html#m.a_dapter-3c"><span class="c-macro">ᵐa̲dapter&lt;</span></a></div>
+</div>
+<div class="item" id="h.n_umber-3f">
+<h3><a href="#h.n_umber-3f"><span class="c-libfunc">ʰn̲umber?</span></a> <span class="type">: Truthy a =&gt; Char -&gt; a</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="libs-LoRA-src-LoRA.xtlm.src.html#L39">line 39</a></div>
+<div class="doc">
+<p>Whether the text w is a whole number.</p>
+</div>
+<pre class="code"><span class="c-libfunc">ʰn̲umber?</span> ← { w → (<span class="c-number">0</span> <a href="builtins.html#-3c" class="c-symbol">&lt;</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> w) <a href="builtins.html#-26" class="c-symbol">∧</a> <span class="c-symbol">'</span><a href="builtins.html#-26" class="c-symbol">∧</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> w <a href="builtins.html#m_ember-3f" class="c-builtin">m̲ember?</a> <a href="builtins.html#-5b-5dD" class="c-builtin">⎕D</a> }</pre>
+<div class="uses">Used in: <a href="libs-LoRA-src-LoRA.xtlm.html#h.w_rong"><span class="c-libfunc">ʰw̲rong</span></a></div>
+</div>
+<div class="item" id="h.n_th">
+<h3><a href="#h.n_th"><span class="c-libfunc">ʰn̲th</span></a> <span class="type">: Any a =&gt; Box a -&gt; Int -&gt; a</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="libs-LoRA-src-LoRA.xtlm.src.html#L41">line 41</a></div>
+<div class="doc">
+<p>The i-th of the boxed words ws, as text.</p>
+</div>
+<pre class="code"><span class="c-libfunc">ʰn̲th</span> ← { ws i → <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> i <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> ws }</pre>
+<div class="uses">Used in: <a href="libs-LoRA-src-LoRA.xtlm.html#h.w_rong"><span class="c-libfunc">ʰw̲rong</span></a>, <a href="libs-LoRA-src-LoRA.xtlm.html#h.m_ethod"><span class="c-libfunc">ʰm̲ethod</span></a>, <a href="libs-LoRA-src-LoRA.xtlm.html#m.a_dapter-3c"><span class="c-macro">ᵐa̲dapter&lt;</span></a></div>
+</div>
+<div class="item" id="h.h_as-3f">
+<h3><a href="#h.h_as-3f"><span class="c-libfunc">ʰh̲as?</span></a> <span class="type">: (Match a, Truthy b) =&gt; Box a -&gt; a -&gt; b</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="libs-LoRA-src-LoRA.xtlm.src.html#L43">line 43</a></div>
+<div class="doc">
+<p>Whether the boxed words ws hold the text w.</p>
+</div>
+<pre class="code"><span class="c-libfunc">ʰh̲as?</span> ← { ws w → <span class="c-symbol">'</span><a href="builtins.html#-7c" class="c-symbol">∨</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> <span class="c-quote">'</span>{ v → w <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> v } <a href="builtins.html#e_ach" class="c-builtin">e̲ach</a> ws }</pre>
+<div class="uses">Used in: <a href="libs-LoRA-src-LoRA.xtlm.html#h.m_ethod"><span class="c-libfunc">ʰm̲ethod</span></a></div>
+</div>
+<div class="item" id="h.a_rrays">
+<h3><a href="#h.a_rrays"><span class="c-libfunc">ʰa̲rrays</span></a> <span class="type">: Box Char -&gt; Box Char</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="libs-LoRA-src-LoRA.xtlm.src.html#L45">line 45</a></div>
+<div class="doc">
+<p>The arrays' names: the four written, or W with A, B and s.</p>
+</div>
+<pre class="code"><span class="c-libfunc">ʰa̲rrays</span> ← { ws →
+  <span class="c-number">1</span> <a href="builtins.html#-3d" class="c-symbol">=</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> ws ? ws <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="libs-LoRA-src-LoRA.xtlm.html#h.w_ords" class="c-libfunc">ʰw̲ords</a> <span class="c-string">&quot;A B s&quot;</span>
+  ws
+}</pre>
+<div class="uses">Used in: <a href="libs-LoRA-src-LoRA.xtlm.html#m.a_dapter-3c"><span class="c-macro">ᵐa̲dapter&lt;</span></a></div>
+</div>
+<div class="item" id="specShape">
+<h3><a href="#specShape">specShape</a> <span class="type">: Char</span></h3>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="libs-LoRA-src-LoRA.xtlm.src.html#L50">line 50</a></div>
+<div class="doc">
+<p>What a spec looks like, for the messages.</p>
+</div>
+<pre class="code">specShape ← <span class="c-string">&quot;a spec is the arrays, the rank and what trains: \&quot;W A B s | r 3 | train A B\&quot; (LoRA) or \&quot;W A B s | r 3 | train B\&quot; (LoRA-FA)&quot;</span></pre>
+<div class="uses">Used in: <a href="libs-LoRA-src-LoRA.xtlm.html#h.w_rong"><span class="c-libfunc">ʰw̲rong</span></a></div>
+</div>
+<div class="item" id="h.w_rong">
+<h3><a href="#h.w_rong"><span class="c-libfunc">ʰw̲rong</span></a> <span class="type">: Box Char -&gt; Char</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="libs-LoRA-src-LoRA.xtlm.src.html#L52">line 52</a></div>
+<div class="doc">
+<p>What is wrong with the spec's fields fs, or &quot;&quot;.</p>
+</div>
+<pre class="code"><span class="c-libfunc">ʰw̲rong</span> ← { fs →
+  <span class="c-number">3</span> <a href="builtins.html#-21-3d" class="c-symbol">≠</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> fs ? <a href="libs-LoRA-src-LoRA.xtlm.html#specShape">specShape</a>
+  ns ← <a href="libs-LoRA-src-LoRA.xtlm.html#h.w_ords" class="c-libfunc">ʰw̲ords</a> <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> <span class="c-number">1</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> fs
+  rs ← <a href="libs-LoRA-src-LoRA.xtlm.html#h.w_ords" class="c-libfunc">ʰw̲ords</a> <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> <span class="c-number">2</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> fs
+  ts ← <a href="libs-LoRA-src-LoRA.xtlm.html#h.w_ords" class="c-libfunc">ʰw̲ords</a> <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> <span class="c-number">3</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> fs
+  <a href="builtins.html#n_ot" class="c-builtin">n̲ot</a> (<span class="c-number">1</span> <a href="builtins.html#-3d" class="c-symbol">=</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> ns) <a href="builtins.html#-7c" class="c-symbol">∨</a> <span class="c-number">4</span> <a href="builtins.html#-3d" class="c-symbol">=</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> ns ? <span class="c-string">&quot;name the arrays W A B s, or W alone: &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="libs-LoRA-src-LoRA.xtlm.html#specShape">specShape</a>
+  <a href="builtins.html#n_ot" class="c-builtin">n̲ot</a> <span class="c-symbol">'</span><a href="builtins.html#-26" class="c-symbol">∧</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> <span class="c-quote">'</span>{ w → <a href="libs-LoRA-src-LoRA.xtlm.html#h.n_ame-3f" class="c-libfunc">ʰn̲ame?</a> <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> w } <a href="builtins.html#e_ach" class="c-builtin">e̲ach</a> ns ? <span class="c-string">&quot;not a name: &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="libs-LoRA-src-LoRA.xtlm.html#h.j_oin" class="c-libfunc">ʰj̲oin</a> ns
+  <a href="builtins.html#n_ot" class="c-builtin">n̲ot</a> (<span class="c-number">2</span> <a href="builtins.html#-3d" class="c-symbol">=</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> rs) ? <span class="c-string">&quot;write the rank as r and a number or a name: \&quot;r 3\&quot;&quot;</span>
+  <a href="builtins.html#n_ot" class="c-builtin">n̲ot</a> (<span class="c-string">&quot;r&quot;</span> <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> rs) <a href="builtins.html#-26" class="c-symbol">∧</a> (<a href="libs-LoRA-src-LoRA.xtlm.html#h.n_umber-3f" class="c-libfunc">ʰn̲umber?</a> rs <a href="libs-LoRA-src-LoRA.xtlm.html#h.n_th" class="c-libfunc">ʰn̲th</a> <span class="c-number">2</span>) <a href="builtins.html#-7c" class="c-symbol">∨</a> <a href="libs-LoRA-src-LoRA.xtlm.html#h.n_ame-3f" class="c-libfunc">ʰn̲ame?</a> rs <a href="libs-LoRA-src-LoRA.xtlm.html#h.n_th" class="c-libfunc">ʰn̲th</a> <span class="c-number">2</span> ? <span class="c-string">&quot;write the rank as r and a number or a name: \&quot;r 3\&quot;&quot;</span>
+  <a href="builtins.html#n_ot" class="c-builtin">n̲ot</a> (<span class="c-number">1</span> <a href="builtins.html#-3c" class="c-symbol">&lt;</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> ts) ? <span class="c-string">&quot;say what trains: \&quot;train A B\&quot; (LoRA) or \&quot;train B\&quot; (LoRA-FA)&quot;</span>
+  <a href="builtins.html#n_ot" class="c-builtin">n̲ot</a> <span class="c-string">&quot;train&quot;</span> <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> ts ? <span class="c-string">&quot;say what trains: \&quot;train A B\&quot; (LoRA) or \&quot;train B\&quot; (LoRA-FA)&quot;</span>
+  <span class="c-string">&quot;&quot;</span>
+}</pre>
+<div class="uses">Used in: <a href="libs-LoRA-src-LoRA.xtlm.html#m.a_dapter-3c"><span class="c-macro">ᵐa̲dapter&lt;</span></a></div>
+</div>
+<div class="item" id="h.m_ethod">
+<h3><a href="#h.m_ethod"><span class="c-libfunc">ʰm̲ethod</span></a> <span class="type">: Match a =&gt; Box a -&gt; Box a -&gt; Char</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="libs-LoRA-src-LoRA.xtlm.src.html#L67">line 67</a></div>
+<div class="doc">
+<p>The method the trained names ts (after &quot;train&quot;) pick for the arrays
+as: &quot;lora&quot; for A and B, &quot;fa&quot; for B alone, &quot;&quot; for anything else.</p>
+</div>
+<pre class="code"><span class="c-libfunc">ʰm̲ethod</span> ← { as ts →
+  (<span class="c-number">2</span> <a href="builtins.html#-3d" class="c-symbol">=</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> ts) <a href="builtins.html#-26" class="c-symbol">∧</a> (ts <a href="libs-LoRA-src-LoRA.xtlm.html#h.h_as-3f" class="c-libfunc">ʰh̲as?</a> as <a href="libs-LoRA-src-LoRA.xtlm.html#h.n_th" class="c-libfunc">ʰn̲th</a> <span class="c-number">2</span>) <a href="builtins.html#-26" class="c-symbol">∧</a> ts <a href="libs-LoRA-src-LoRA.xtlm.html#h.h_as-3f" class="c-libfunc">ʰh̲as?</a> as <a href="libs-LoRA-src-LoRA.xtlm.html#h.n_th" class="c-libfunc">ʰn̲th</a> <span class="c-number">3</span> ? <span class="c-string">&quot;lora&quot;</span>
+  (<span class="c-number">1</span> <a href="builtins.html#-3d" class="c-symbol">=</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> ts) <a href="builtins.html#-26" class="c-symbol">∧</a> ts <a href="libs-LoRA-src-LoRA.xtlm.html#h.h_as-3f" class="c-libfunc">ʰh̲as?</a> as <a href="libs-LoRA-src-LoRA.xtlm.html#h.n_th" class="c-libfunc">ʰn̲th</a> <span class="c-number">3</span> ? <span class="c-string">&quot;fa&quot;</span>
+  <span class="c-string">&quot;&quot;</span>
+}</pre>
+<div class="uses">Used in: <a href="libs-LoRA-src-LoRA.xtlm.html#m.a_dapter-3c"><span class="c-macro">ᵐa̲dapter&lt;</span></a></div>
+</div>
+<h2 class="section" id="section-2">Writing the passes (private)</h2>
+<div class="item" id="h.c_heck">
+<h3><a href="#h.c_heck"><span class="c-libfunc">ʰc̲heck</span></a> <span class="type">: Any a =&gt; (a, Char, Char, Char) -&gt; Char -&gt; Char</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="libs-LoRA-src-LoRA.xtlm.src.html#L77">line 77</a></div>
+<div class="doc">
+<p>The rank check, a statement: A has r rows and B r columns, or the
+program stops naming the spec.</p>
+</div>
+<pre class="code"><span class="c-libfunc">ʰc̲heck</span> ← { (W, A, B, r) spec →
+  <span class="c-string">&quot;_ := { v -&gt; v ? 0; []P_ANIC \&quot;lo:a_dapter&lt;: A must be &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> r <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; x n and B m x &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> r <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; for \\\&quot;&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> spec <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;\\\&quot;\&quot; } (&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> r <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; = f_irst s_hape &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> A <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;) &amp; &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> r <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; = 2 s_elect s_hape &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> B
+}</pre>
+<div class="uses">Used in: <a href="libs-LoRA-src-LoRA.xtlm.html#m.a_dapter-3c"><span class="c-macro">ᵐa̲dapter&lt;</span></a></div>
+</div>
+<div class="item" id="h.f_orward">
+<h3><a href="#h.f_orward"><span class="c-libfunc">ʰf̲orward</span></a> <span class="type">: (Char, Char, Char, Char) -&gt; Char -&gt; Char</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="libs-LoRA-src-LoRA.xtlm.src.html#L81">line 81</a></div>
+<div class="doc">
+<p>The forward pass: W x + s B (A x), right to left, A x first.</p>
+</div>
+<pre class="code"><span class="c-libfunc">ʰf̲orward</span> ← { (W, A, B, s) x →
+  <span class="c-string">&quot;{ &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> x <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; -&gt; (&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> W <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; '+ '* i_nner &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> x <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;) + &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> s <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; * &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> B <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; '+ '* i_nner &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> A <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; '+ '* i_nner &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> x <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; }&quot;</span>
+}</pre>
+<div class="uses">Used in: <a href="libs-LoRA-src-LoRA.xtlm.html#m.a_dapter-3c"><span class="c-macro">ᵐa̲dapter&lt;</span></a></div>
+</div>
+<div class="item" id="h.b_ackLoRA">
+<h3><a href="#h.b_ackLoRA"><span class="c-libfunc">ʰb̲ackLoRA</span></a> <span class="type">: (Char, Char, Char, Char) -&gt; (Char, Char, Char) -&gt; Char</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="libs-LoRA-src-LoRA.xtlm.src.html#L87">line 87</a></div>
+<div class="doc">
+<p>LoRA's backward pass for inputs x and the output's gradient g:
+(dA, dB, dx) = (s (B' g) x', s g (A x)', W' g + s A' (B' g)), B' g
+bound once under b.</p>
+</div>
+<pre class="code"><span class="c-libfunc">ʰb̲ackLoRA</span> ← { (W, A, B, s) (x, g, b) →
+  <span class="c-string">&quot;{ (&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> x <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;, &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> g <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;) -&gt;\n  &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> b <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; := (o_\\ &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> B <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;) '+ '* i_nner &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> g <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;\n  (&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> s <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; * &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> b <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; '+ '* i_nner o_\\ &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> x <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;, &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> s <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; * &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> g <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; '+ '* i_nner o_\\ &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> A <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; '+ '* i_nner &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> x <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;, ((o_\\ &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> W <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;) '+ '* i_nner &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> g <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;) + &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> s <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; * (o_\\ &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> A <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;) '+ '* i_nner &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> b <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;)\n}&quot;</span>
+}</pre>
+<div class="uses">Used in: <a href="libs-LoRA-src-LoRA.xtlm.html#h.b_ack"><span class="c-libfunc">ʰb̲ack</span></a></div>
+</div>
+<div class="item" id="h.b_ackFA">
+<h3><a href="#h.b_ackFA"><span class="c-libfunc">ʰb̲ackFA</span></a> <span class="type">: (Char, Char, Char, Char) -&gt; (Char, Char) -&gt; Char</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="libs-LoRA-src-LoRA.xtlm.src.html#L92">line 92</a></div>
+<div class="doc">
+<p>LoRA-FA's: A frozen, its gradient skipped; (dB, dx), x's still back
+through A.</p>
+</div>
+<pre class="code"><span class="c-libfunc">ʰb̲ackFA</span> ← { (W, A, B, s) (x, g) →
+  <span class="c-string">&quot;{ (&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> x <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;, &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> g <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;) -&gt; (&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> s <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; * &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> g <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; '+ '* i_nner o_\\ &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> A <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; '+ '* i_nner &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> x <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;, ((o_\\ &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> W <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;) '+ '* i_nner &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> g <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;) + &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> s <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; * (o_\\ &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> A <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;) '+ '* i_nner (o_\\ &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> B <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;) '+ '* i_nner &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> g <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;) }&quot;</span>
+}</pre>
+<div class="uses">Used in: <a href="libs-LoRA-src-LoRA.xtlm.html#h.b_ack"><span class="c-libfunc">ʰb̲ack</span></a></div>
+</div>
+<div class="item" id="h.b_ack">
+<h3><a href="#h.b_ack"><span class="c-libfunc">ʰb̲ack</span></a> <span class="type">: Char -&gt; ((Char, Char, Char, Char), Char, Char, Char) -&gt; Char</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="libs-LoRA-src-LoRA.xtlm.src.html#L97">line 97</a></div>
+<div class="doc">
+<p>The backward pass the method how picks.</p>
+</div>
+<pre class="code"><span class="c-libfunc">ʰb̲ack</span> ← { how (arrays, x, g, b) →
+  <span class="c-string">&quot;lora&quot;</span> <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> how ? arrays <a href="libs-LoRA-src-LoRA.xtlm.html#h.b_ackLoRA" class="c-libfunc">ʰb̲ackLoRA</a> (x, g, b)
+  arrays <a href="libs-LoRA-src-LoRA.xtlm.html#h.b_ackFA" class="c-libfunc">ʰb̲ackFA</a> (x, g)
+}</pre>
+<div class="uses">Used in: <a href="libs-LoRA-src-LoRA.xtlm.html#m.a_dapter-3c"><span class="c-macro">ᵐa̲dapter&lt;</span></a></div>
+</div>
+<h2 class="section" id="section-3">Adapters</h2>
+<div class="item" id="m.a_dapter-3c">
+<h3><a href="#m.a_dapter-3c"><span class="c-macro">ᵐa̲dapter&lt;</span></a> <span class="type">: Char -&gt; Char -&gt; Char</span></h3>
+<div class="meta">macro &middot; <a href="libs-LoRA-src-LoRA.xtlm.src.html#L113">line 113</a></div>
+<div class="doc">
+<p>An adapted layer from the spec on the right, as statements: the rank
+check, then the forward function and the backward function under the
+two names on the left (&quot;u:f_wd u:b_wd&quot;). The forward function takes
+the inputs (columns) and gives W x + s B (A x); the backward one
+takes the inputs and the loss's gradient at the output, (x, g), and
+gives (dA, dB, dx) for &quot;train A B&quot; (LoRA) or (dB, dx) for &quot;train B&quot;
+(LoRA-FA). The lambdas' own names are fresh ([]G_ENSYM, X_eTaL
+MC30), so a caller's array named x, g or b is not captured.</p>
+</div>
+<pre class="code"><span class="c-macro">ᵐa̲dapter&lt;</span> ← { what spec →
+  fs ← <a href="libs-LoRA-src-LoRA.xtlm.html#h.f_ields" class="c-libfunc">ʰf̲ields</a> spec
+  <span class="c-number">0</span> <a href="builtins.html#-3c" class="c-symbol">&lt;</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> <a href="libs-LoRA-src-LoRA.xtlm.html#h.w_rong" class="c-libfunc">ʰw̲rong</a> fs ? <span class="c-string">&quot;bad-macro-argument right&quot;</span> <a href="builtins.html#-5b-5dR_EJECT" class="c-builtin">⎕R̲EJECT</a> <a href="libs-LoRA-src-LoRA.xtlm.html#h.w_rong" class="c-libfunc">ʰw̲rong</a> fs
+  as ← <a href="libs-LoRA-src-LoRA.xtlm.html#h.a_rrays" class="c-libfunc">ʰa̲rrays</a> <a href="libs-LoRA-src-LoRA.xtlm.html#h.w_ords" class="c-libfunc">ʰw̲ords</a> <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> <span class="c-number">1</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> fs
+  r ← (<a href="libs-LoRA-src-LoRA.xtlm.html#h.w_ords" class="c-libfunc">ʰw̲ords</a> <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> <span class="c-number">2</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> fs) <a href="libs-LoRA-src-LoRA.xtlm.html#h.n_th" class="c-libfunc">ʰn̲th</a> <span class="c-number">2</span>
+  how ← as <a href="libs-LoRA-src-LoRA.xtlm.html#h.m_ethod" class="c-libfunc">ʰm̲ethod</a> <span class="c-number">1</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> <a href="libs-LoRA-src-LoRA.xtlm.html#h.w_ords" class="c-libfunc">ʰw̲ords</a> <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> <span class="c-number">3</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> fs
+  <span class="c-number">0</span> <a href="builtins.html#-3d" class="c-symbol">=</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> how ? <span class="c-string">&quot;bad-macro-argument right&quot;</span> <a href="builtins.html#-5b-5dR_EJECT" class="c-builtin">⎕R̲EJECT</a> <span class="c-string">&quot;LoRA trains A and B (\&quot;train &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (as <a href="libs-LoRA-src-LoRA.xtlm.html#h.n_th" class="c-libfunc">ʰn̲th</a> <span class="c-number">2</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (as <a href="libs-LoRA-src-LoRA.xtlm.html#h.n_th" class="c-libfunc">ʰn̲th</a> <span class="c-number">3</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;\&quot;), LoRA-FA B alone (\&quot;train &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (as <a href="libs-LoRA-src-LoRA.xtlm.html#h.n_th" class="c-libfunc">ʰn̲th</a> <span class="c-number">3</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;\&quot;); nothing else trains here&quot;</span>
+  fn ← <a href="libs-LoRA-src-LoRA.xtlm.html#h.w_ords" class="c-libfunc">ʰw̲ords</a> what
+  <a href="builtins.html#n_ot" class="c-builtin">n̲ot</a> (<span class="c-number">2</span> <a href="builtins.html#-3d" class="c-symbol">=</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> fn) <a href="builtins.html#-26" class="c-symbol">∧</a> <span class="c-symbol">'</span><a href="builtins.html#-26" class="c-symbol">∧</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> <span class="c-quote">'</span>{ w → <a href="libs-LoRA-src-LoRA.xtlm.html#h.n_ame-3f" class="c-libfunc">ʰn̲ame?</a> <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> w } <a href="builtins.html#e_ach" class="c-builtin">e̲ach</a> fn ? <span class="c-string">&quot;bad-macro-argument left&quot;</span> <a href="builtins.html#-5b-5dR_EJECT" class="c-builtin">⎕R̲EJECT</a> <span class="c-string">&quot;name the forward and the backward functions: \&quot;u:f_wd u:b_wd\&quot;&quot;</span>
+  arrays ← (as <a href="libs-LoRA-src-LoRA.xtlm.html#h.n_th" class="c-libfunc">ʰn̲th</a> <span class="c-number">1</span>, as <a href="libs-LoRA-src-LoRA.xtlm.html#h.n_th" class="c-libfunc">ʰn̲th</a> <span class="c-number">2</span>, as <a href="libs-LoRA-src-LoRA.xtlm.html#h.n_th" class="c-libfunc">ʰn̲th</a> <span class="c-number">3</span>, as <a href="libs-LoRA-src-LoRA.xtlm.html#h.n_th" class="c-libfunc">ʰn̲th</a> <span class="c-number">4</span>)
+  (x, g, b) ← (<a href="builtins.html#-5b-5dG_ENSYM" class="c-builtin">⎕G̲ENSYM</a> <span class="c-string">&quot;x&quot;</span>, <a href="builtins.html#-5b-5dG_ENSYM" class="c-builtin">⎕G̲ENSYM</a> <span class="c-string">&quot;g&quot;</span>, <a href="builtins.html#-5b-5dG_ENSYM" class="c-builtin">⎕G̲ENSYM</a> <span class="c-string">&quot;b&quot;</span>)
+  back ← how <a href="libs-LoRA-src-LoRA.xtlm.html#h.b_ack" class="c-libfunc">ʰb̲ack</a> (arrays, x, g, b)
+  ((as <a href="libs-LoRA-src-LoRA.xtlm.html#h.n_th" class="c-libfunc">ʰn̲th</a> <span class="c-number">1</span>, as <a href="libs-LoRA-src-LoRA.xtlm.html#h.n_th" class="c-libfunc">ʰn̲th</a> <span class="c-number">2</span>, as <a href="libs-LoRA-src-LoRA.xtlm.html#h.n_th" class="c-libfunc">ʰn̲th</a> <span class="c-number">3</span>, r) <a href="libs-LoRA-src-LoRA.xtlm.html#h.c_heck" class="c-libfunc">ʰc̲heck</a> spec) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;\n&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (fn <a href="libs-LoRA-src-LoRA.xtlm.html#h.n_th" class="c-libfunc">ʰn̲th</a> <span class="c-number">1</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; := &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (arrays <a href="libs-LoRA-src-LoRA.xtlm.html#h.f_orward" class="c-libfunc">ʰf̲orward</a> x) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;\n&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (fn <a href="libs-LoRA-src-LoRA.xtlm.html#h.n_th" class="c-libfunc">ʰn̲th</a> <span class="c-number">2</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; := &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> back
+}</pre>
+<div class="uses">Used in: <a href="demos-lora-explorer-lora-explorer.xtl.html#_">_</a></div>
+</div>
+</main>
+</body>
+</html>

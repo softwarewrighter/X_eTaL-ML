@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>libs/LoRA/src/LoRA.xtl - X_eTaL doc</title>
+<link rel="stylesheet" href="style.css">
+<script src="theme.js"></script>
+<script defer src="search-index.js"></script>
+<script defer src="search.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.18.10/dist/katex.min.css" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.18.10/dist/katex.min.js" crossorigin="anonymous"></script>
+<script>document.addEventListener('DOMContentLoaded', function () {
+if (typeof katex === 'undefined') return;
+document.querySelectorAll('.c-notation').forEach(function (el) {
+var tex = el.textContent; if (!tex) return;
+try { katex.render(tex, el, { throwOnError: false }); } catch (e) { el.textContent = tex; }
+});
+});</script>
+</head>
+<body>
+<nav class="side">
+<a class="home" href="index.html">X_eTaL doc</a>
+<input id="search" type="search" autocomplete="off" placeholder="Search: a name, or a type" title="A name (mean finds m_ean), or a type: Num a =&gt; a -&gt; a -&gt; a finds +, m_ax ...">
+<h2>Files</h2>
+<h3>demos/activations/</h3>
+<ul>
+<li><a href="demos-activations-activations.xtl.html">activations.xtl</a></li>
+</ul>
+<h3>demos/attention/</h3>
+<ul>
+<li><a href="demos-attention-attention.xtl.html">attention.xtl</a></li>
+</ul>
+<h3>demos/backprop/</h3>
+<ul>
+<li><a href="demos-backprop-backprop.xtl.html">backprop.xtl</a></li>
+</ul>
+<h3>demos/cnn-backprop/</h3>
+<ul>
+<li><a href="demos-cnn-backprop-cnn-backprop.xtl.html">cnn-backprop.xtl</a></li>
+</ul>
+<h3>demos/cnn-digits/</h3>
+<ul>
+<li><a href="demos-cnn-digits-batch.xtl.html">batch.xtl</a></li>
+<li><a href="demos-cnn-digits-cnn-digits.xtl.html">cnn-digits.xtl</a></li>
+</ul>
+<h3>demos/diffusion/</h3>
+<ul>
+<li><a href="demos-diffusion-diffusion.xtl.html">diffusion.xtl</a></li>
+</ul>
+<h3>demos/embedding-explorer/</h3>
+<ul>
+<li><a href="demos-embedding-explorer-embedding-explorer.xtl.html">embedding-explorer.xtl</a></li>
+</ul>
+<h3>demos/k-means/</h3>
+<ul>
+<li><a href="demos-k-means-k-means.xtl.html">k-means.xtl</a></li>
+</ul>
+<h3>demos/lora-explorer/</h3>
+<ul>
+<li><a href="demos-lora-explorer-lora-explorer.xtl.html">lora-explorer.xtl</a></li>
+</ul>
+<h3>demos/micro-bert/</h3>
+<ul>
+<li><a href="demos-micro-bert-micro-bert.xtl.html">micro-bert.xtl</a></li>
+</ul>
+<h3>demos/micro-gpt/</h3>
+<ul>
+<li><a href="demos-micro-gpt-batch.xtl.html">batch.xtl</a></li>
+<li><a href="demos-micro-gpt-micro-gpt.xtl.html">micro-gpt.xtl</a></li>
+</ul>
+<h3>demos/moe-router/</h3>
+<ul>
+<li><a href="demos-moe-router-moe-router.xtl.html">moe-router.xtl</a></li>
+</ul>
+<h3>demos/net-macro/</h3>
+<ul>
+<li><a href="demos-net-macro-net-macro.xtl.html">net-macro.xtl</a></li>
+<li><a href="demos-net-macro-train-it.xtl.html">train-it.xtl</a></li>
+</ul>
+<h3>demos/pipelines/</h3>
+<ul>
+<li><a href="demos-pipelines-diffusion.xtl.html">diffusion.xtl</a></li>
+<li><a href="demos-pipelines-equations.xtl.html">equations.xtl</a></li>
+<li><a href="demos-pipelines-pipelines.xtl.html">pipelines.xtl</a></li>
+<li><a href="demos-pipelines-rosetta.xtl.html">rosetta.xtl</a></li>
+</ul>
+<h3>demos/ternary-net/</h3>
+<ul>
+<li><a href="demos-ternary-net-ternary-net.xtl.html">ternary-net.xtl</a></li>
+</ul>
+<h3>demos/train-live/</h3>
+<ul>
+<li><a href="demos-train-live-train-live.xtl.html">train-live.xtl</a></li>
+</ul>
+<h3>demos/world-model/</h3>
+<ul>
+<li><a href="demos-world-model-world-model.xtl.html">world-model.xtl</a></li>
+</ul>
+<h3>libs/Activations/demos/</h3>
+<ul>
+<li><a href="libs-Activations-demos-curves.xtl.html">curves.xtl</a></li>
+</ul>
+<h3>libs/Activations/src/</h3>
+<ul>
+<li><a href="libs-Activations-src-Activations.xtl.html">Activations.xtl</a></li>
+</ul>
+<h3>libs/Attention/demos/</h3>
+<ul>
+<li><a href="libs-Attention-demos-previous.xtl.html">previous.xtl</a></li>
+</ul>
+<h3>libs/Attention/src/</h3>
+<ul>
+<li><a href="libs-Attention-src-Attention.xtl.html">Attention.xtl</a></li>
+</ul>
+<h3>libs/Conv/demos/</h3>
+<ul>
+<li><a href="libs-Conv-demos-edges.xtl.html">edges.xtl</a></li>
+</ul>
+<h3>libs/Conv/src/</h3>
+<ul>
+<li><a href="libs-Conv-src-Conv.xtl.html">Conv.xtl</a></li>
+</ul>
+<h3>libs/Embed/demos/</h3>
+<ul>
+<li><a href="libs-Embed-demos-pets.xtl.html">pets.xtl</a></li>
+</ul>
+<h3>libs/Embed/src/</h3>
+<ul>
+<li><a href="libs-Embed-src-Embed.xtl.html">Embed.xtl</a></li>
+</ul>
+<h3>libs/Flow/demos/</h3>
+<ul>
+<li><a href="libs-Flow-demos-mlp.xtl.html">mlp.xtl</a></li>
+</ul>
+<h3>libs/Flow/src/</h3>
+<ul>
+<li><a href="libs-Flow-src-Flow.xtlm.html">Flow.xtlm</a></li>
+</ul>
+<h3>libs/Integrals/demos/</h3>
+<ul>
+<li><a href="libs-Integrals-demos-convolution.xtl.html">convolution.xtl</a></li>
+<li><a href="libs-Integrals-demos-gelu.xtl.html">gelu.xtl</a></li>
+</ul>
+<h3>libs/Integrals/src/</h3>
+<ul>
+<li><a href="libs-Integrals-src-Integrals.xtlm.html">Integrals.xtlm</a></li>
+</ul>
+<h3>libs/Learn/demos/</h3>
+<ul>
+<li><a href="libs-Learn-demos-blobs.xtl.html">blobs.xtl</a></li>
+</ul>
+<h3>libs/Learn/src/</h3>
+<ul>
+<li><a href="libs-Learn-src-Learn.xtl.html">Learn.xtl</a></li>
+</ul>
+<h3>libs/LoRA/demos/</h3>
+<ul>
+<li><a href="libs-LoRA-demos-sizes.xtl.html">sizes.xtl</a></li>
+</ul>
+<h3>libs/LoRA/src/</h3>
+<ul>
+<li><a href="libs-LoRA-src-LoRA.xtl.html">LoRA.xtl</a></li>
+<li><a href="libs-LoRA-src-LoRA.xtlm.html">LoRA.xtlm</a></li>
+</ul>
+<h3>libs/MoE/demos/</h3>
+<ul>
+<li><a href="libs-MoE-demos-routing.xtl.html">routing.xtl</a></li>
+</ul>
+<h3>libs/MoE/src/</h3>
+<ul>
+<li><a href="libs-MoE-src-MoE.xtl.html">MoE.xtl</a></li>
+</ul>
+<h3>libs/Net/demos/</h3>
+<ul>
+<li><a href="libs-Net-demos-train-xor.xtl.html">train-xor.xtl</a></li>
+<li><a href="libs-Net-demos-xor.xtl.html">xor.xtl</a></li>
+</ul>
+<h3>libs/Net/src/</h3>
+<ul>
+<li><a href="libs-Net-src-Net.xtlm.html">Net.xtlm</a></li>
+</ul>
+<h3>libs/NN/demos/</h3>
+<ul>
+<li><a href="libs-NN-demos-xor.xtl.html">xor.xtl</a></li>
+</ul>
+<h3>libs/NN/src/</h3>
+<ul>
+<li><a href="libs-NN-src-NN.xtl.html">NN.xtl</a></li>
+</ul>
+<h3>libs/Norm/demos/</h3>
+<ul>
+<li><a href="libs-Norm-demos-rows.xtl.html">rows.xtl</a></li>
+</ul>
+<h3>libs/Norm/src/</h3>
+<ul>
+<li><a href="libs-Norm-src-Norm.xtl.html">Norm.xtl</a></li>
+</ul>
+<h3>libs/Optim/demos/</h3>
+<ul>
+<li><a href="libs-Optim-demos-bowl.xtl.html">bowl.xtl</a></li>
+</ul>
+<h3>libs/Optim/src/</h3>
+<ul>
+<li><a href="libs-Optim-src-Optim.xtl.html">Optim.xtl</a></li>
+</ul>
+<h3>libs/Quant/demos/</h3>
+<ul>
+<li><a href="libs-Quant-demos-formats.xtl.html">formats.xtl</a></li>
+</ul>
+<h3>libs/Quant/src/</h3>
+<ul>
+<li><a href="libs-Quant-src-Quant.xtl.html">Quant.xtl</a></li>
+</ul>
+<h3>libs/Sample/demos/</h3>
+<ul>
+<li><a href="libs-Sample-demos-next.xtl.html">next.xtl</a></li>
+</ul>
+<h3>libs/Sample/src/</h3>
+<ul>
+<li><a href="libs-Sample-src-Sample.xtl.html">Sample.xtl</a></li>
+</ul>
+<h3>std/</h3>
+<ul>
+<li><a href="std-Svg.xtl.html">Svg.xtl</a></li>
+<li><a href="std-System.xtlm.html">System.xtlm</a></li>
+</ul>
+<h3>work/libs/Check/src/</h3>
+<ul>
+<li><a href="work-libs-Check-src-Check.xtl.html">Check.xtl</a></li>
+<li><a href="work-libs-Check-src-Check.xtlm.html">Check.xtlm</a></li>
+</ul>
+<h3>work/libs/Equations/src/</h3>
+<ul>
+<li><a href="work-libs-Equations-src-Equations.xtl.html">Equations.xtl</a></li>
+<li><a href="work-libs-Equations-src-Equations.xtlm.html">Equations.xtlm</a></li>
+</ul>
+<h3>work/libs/Format/src/</h3>
+<ul>
+<li><a href="work-libs-Format-src-Format.xtl.html">Format.xtl</a></li>
+</ul>
+<h3>work/libs/Lists/src/</h3>
+<ul>
+<li><a href="work-libs-Lists-src-Lists.xtl.html">Lists.xtl</a></li>
+</ul>
+<h3>work/libs/Plot/src/</h3>
+<ul>
+<li><a href="work-libs-Plot-src-Plot.xtl.html">Plot.xtl</a></li>
+</ul>
+<h3>work/libs/Strings/src/</h3>
+<ul>
+<li><a href="work-libs-Strings-src-Strings.xtl.html">Strings.xtl</a></li>
+</ul>
+<ul>
+<li><a href="builtins.html">built-ins</a></li>
+</ul>
+<h2>On this page</h2>
+<ul>
+<li class="item"><a href="#L31"><span class="c-libfunc">ˡs̲caling</span></a></li>
+<li class="item"><a href="#L40"><span class="c-libfunc">ˡs̲calingRs</span></a></li>
+<li class="item"><a href="#L48"><span class="c-libfunc">ˡf̲orward</span></a></li>
+<li class="item"><a href="#L58"><span class="c-libfunc">ˡd̲elta</span></a></li>
+<li class="item"><a href="#L66"><span class="c-libfunc">ˡm̲erge</span></a></li>
+<li class="item"><a href="#L77"><span class="c-libfunc">ˡl̲oss</span></a></li>
+<li class="item"><a href="#L92"><span class="c-libfunc">ˡg̲rads</span></a></li>
+<li class="item"><a href="#L108"><span class="c-libfunc">ˡs̲gd</span></a></li>
+<li class="item"><a href="#L115"><span class="c-libfunc">ˡa̲damStart</span></a></li>
+<li class="item"><a href="#L125"><span class="c-libfunc">ˡa̲dam</span></a></li>
+<li class="item"><a href="#L143"><span class="c-libfunc">ˡs̲eeded</span></a></li>
+<li class="item"><a href="#L151"><span class="c-libfunc">ˡg̲radsFA</span></a></li>
+<li class="item"><a href="#L158"><span class="c-libfunc">ˡs̲gdFA</span></a></li>
+<li class="item"><a href="#L166"><span class="c-libfunc">ˡa̲damStartFA</span></a></li>
+<li class="item"><a href="#L170"><span class="c-libfunc">ˡa̲damFA</span></a></li>
+<li class="item"><a href="#L185"><span class="c-libfunc">ˡq̲base</span></a></li>
+<li class="item"><a href="#L198"><span class="c-libfunc">ˡd̲equant</span></a></li>
+<li class="item"><a href="#L204"><span class="c-libfunc">ˡf̲orwardQ</span></a></li>
+<li class="item"><a href="#L210"><span class="c-libfunc">ˡm̲ergeQ</span></a></li>
+<li class="item"><a href="#L219"><span class="c-libfunc">ˡq̲bytes</span></a></li>
+<li class="item"><a href="#L229"><span class="c-libfunc">ʰs̲tep</span></a></li>
+<li class="item"><a href="#L243"><span class="c-libfunc">ˡr̲ank</span></a></li>
+<li class="item"><a href="#L257"><span class="c-libfunc">ˡp̲arams</span></a></li>
+<li class="item"><a href="#L265"><span class="c-libfunc">ˡe̲xpert</span></a></li>
+<li class="item"><a href="#L273"><span class="c-libfunc">ˡe̲xpertFA</span></a></li>
+<li class="item"><a href="#L283"><span class="c-libfunc">ˡb̲ytes</span></a></li>
+<li class="item"><a href="#L291"><span class="c-libfunc">ˡc̲osts</span></a></li>
+</ul>
+</nav>
+<main>
+<button class="theme" title="Light or dark">theme</button>
+<section id="results"></section>
+<h1><span class="kind">source</span><a href="libs-LoRA-src-LoRA.xtl.html">libs/LoRA/src/LoRA.xtl</a></h1>
+<div class="source"><span class="line" id="L1"><a class="ln" href="#L1">1</a><span class="c-doc">⍝│</span><span class="c-doc"> LoRA: low-rank adapters: the adapted forward pass in factored form, the merge, the counts, the gradients and steps, LoRA-FA</span></span>
+<span class="line" id="L2"><a class="ln" href="#L2">2</a><span class="c-doc">⍝│</span></span>
+<span class="line" id="L3"><a class="ln" href="#L3">3</a><span class="c-doc">⍝│</span><span class="c-doc"> Import it with an alias of your choice: &quot;lo:&quot; u_se&lt; &quot;LoRA&quot;.</span></span>
+<span class="line" id="L4"><a class="ln" href="#L4">4</a><span class="c-doc">⍝│</span><span class="c-doc"> Put libs/LoRA/src on XETAL_PATH (&quot;just path&quot;); the reference is libs/LoRA/docs.</span></span>
+<span class="line" id="L5"><a class="ln" href="#L5">5</a><span class="c-doc">⍝│</span><span class="c-doc"> Names with l: are exported; h: names are private to this file.</span></span>
+<span class="line" id="L6"><a class="ln" href="#L6">6</a><span class="c-doc">⍝│</span></span>
+<span class="line" id="L7"><a class="ln" href="#L7">7</a><span class="c-doc">⍝│</span><span class="c-doc"> A frozen weight matrix W (m x n: m outputs, n inputs) is adapted by</span></span>
+<span class="line" id="L8"><a class="ln" href="#L8">8</a><span class="c-doc">⍝│</span><span class="c-doc"> a low-rank update s B A: A is r x n, B is m x r, the rank r much</span></span>
+<span class="line" id="L9"><a class="ln" href="#L9">9</a><span class="c-doc">⍝│</span><span class="c-doc"> smaller than m and n, s the scale alpha / r. An adapter is the tuple</span></span>
+<span class="line" id="L10"><a class="ln" href="#L10">10</a><span class="c-doc">⍝│</span><span class="c-doc"> (W, A, B, s). The inputs are columns: x is one input of n numbers or</span></span>
+<span class="line" id="L11"><a class="ln" href="#L11">11</a><span class="c-doc">⍝│</span><span class="c-doc"> an n x N matrix of N inputs, and W x is </span><span class="c-doc"></span>W <span class="c-symbol">'</span><span class="c-symbol">+</span> <span class="c-symbol">'</span><span class="c-symbol">×</span> <span class="c-builtin">i̲nner</span> x<span class="c-doc"></span><span class="c-doc">. The</span></span>
+<span class="line" id="L12"><a class="ln" href="#L12">12</a><span class="c-doc">⍝│</span><span class="c-doc"> forward pass keeps the factors apart, B (A x), as training does:</span></span>
+<span class="line" id="L13"><a class="ln" href="#L13">13</a><span class="c-doc">⍝│</span><span class="c-doc"> the merged matrix W + s B A is made only to deploy it.</span></span>
+<span class="line" id="L14"><a class="ln" href="#L14">14</a><span class="c-doc">⍝│</span></span>
+<span class="line" id="L15"><a class="ln" href="#L15">15</a><span class="c-doc">⍝│</span><span class="c-doc"> Training moves A and B by the gradients of the squared error</span></span>
+<span class="line" id="L16"><a class="ln" href="#L16">16</a><span class="c-doc">⍝│</span><span class="c-doc"> (g_rads, s_gd, a_dam through the Optim library); LoRA-FA freezes A</span></span>
+<span class="line" id="L17"><a class="ln" href="#L17">17</a><span class="c-doc">⍝│</span><span class="c-doc"> (regenerated from a seed, s_eeded) and trains B alone; QLoRA keeps W</span></span>
+<span class="line" id="L18"><a class="ln" href="#L18">18</a><span class="c-doc">⍝│</span><span class="c-doc"> in 4 bits (NF4, through the Quant library) and computes with it</span></span>
+<span class="line" id="L19"><a class="ln" href="#L19">19</a><span class="c-doc">⍝│</span><span class="c-doc"> dequantized.</span></span>
+<span class="line" id="L20"><a class="ln" href="#L20">20</a></span>
+<span class="line" id="L21"><a class="ln" href="#L21">21</a><span class="c-string">&quot;op:&quot;</span> <a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="libs-Optim-src-Optim.xtl.html" class="c-string">&quot;Optim&quot;</a></span>
+<span class="line" id="L22"><a class="ln" href="#L22">22</a><span class="c-string">&quot;qz:&quot;</span> <a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="libs-Quant-src-Quant.xtl.html" class="c-string">&quot;Quant&quot;</a></span>
+<span class="line" id="L23"><a class="ln" href="#L23">23</a></span>
+<span class="line" id="L24"><a class="ln" href="#L24">24</a><span class="c-heading">⍝━━</span><span class="c-heading"> The forward pass</span></span>
+<span class="line" id="L25"><a class="ln" href="#L25">25</a></span>
+<span class="line" id="L26"><a class="ln" href="#L26">26</a><span class="c-doc">⍝│</span><span class="c-doc"> </span><span class="c-doc"></span>alpha <span class="c-builtin">s̲caling</span> r<span class="c-doc"></span><span class="c-doc">: the adapter's scale s, alpha / r (so that a</span></span>
+<span class="line" id="L27"><a class="ln" href="#L27">27</a><span class="c-doc">⍝│</span><span class="c-doc"> change of rank keeps the update's size).</span></span>
+<span class="line" id="L28"><a class="ln" href="#L28">28</a><span class="c-doc">⍝│</span><span class="c-doc"> &gt;&gt; &quot;lo:&quot; u_se&lt; &quot;LoRA&quot;</span></span>
+<span class="line" id="L29"><a class="ln" href="#L29">29</a><span class="c-doc">⍝│</span><span class="c-doc"> &gt;&gt; 16.0 lo:s_caling 8</span></span>
+<span class="line" id="L30"><a class="ln" href="#L30">30</a><span class="c-doc">⍝│</span><span class="c-doc"> 2.0</span></span>
+<span class="line" id="L31"><a class="ln" href="#L31">31</a><span class="c-libfunc">ˡs̲caling</span> ← { alpha r → alpha <a href="builtins.html#-2f" class="c-symbol">÷</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> r }</span>
+<span class="line" id="L32"><a class="ln" href="#L32">32</a></span>
+<span class="line" id="L33"><a class="ln" href="#L33">33</a><span class="c-doc">⍝│</span><span class="c-doc"> </span><span class="c-doc"></span>alpha <span class="c-builtin">s̲calingRs</span> r<span class="c-doc"></span><span class="c-doc">: rsLoRA's rank-stabilized scale, alpha / sqrt r</span></span>
+<span class="line" id="L34"><a class="ln" href="#L34">34</a><span class="c-doc">⍝│</span><span class="c-doc"> (Kalajdzievski, &quot;A Rank Stabilization Scaling Factor for Fine-Tuning</span></span>
+<span class="line" id="L35"><a class="ln" href="#L35">35</a><span class="c-doc">⍝│</span><span class="c-doc"> with LoRA&quot;, 2023): with alpha / r the update's learning slows as r</span></span>
+<span class="line" id="L36"><a class="ln" href="#L36">36</a><span class="c-doc">⍝│</span><span class="c-doc"> grows; over sqrt r it does not. An adapter takes either, (W, A, B, s).</span></span>
+<span class="line" id="L37"><a class="ln" href="#L37">37</a><span class="c-doc">⍝│</span><span class="c-doc"> &gt;&gt; &quot;lo:&quot; u_se&lt; &quot;LoRA&quot;</span></span>
+<span class="line" id="L38"><a class="ln" href="#L38">38</a><span class="c-doc">⍝│</span><span class="c-doc"> &gt;&gt; 16.0 lo:s_calingRs 4</span></span>
+<span class="line" id="L39"><a class="ln" href="#L39">39</a><span class="c-doc">⍝│</span><span class="c-doc"> 8.0</span></span>
+<span class="line" id="L40"><a class="ln" href="#L40">40</a><span class="c-libfunc">ˡs̲calingRs</span> ← { alpha r → alpha <a href="builtins.html#-2f" class="c-symbol">÷</a> <a href="builtins.html#s_qrt" class="c-builtin">s̲qrt</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> r }</span>
+<span class="line" id="L41"><a class="ln" href="#L41">41</a></span>
+<span class="line" id="L42"><a class="ln" href="#L42">42</a><span class="c-doc">⍝│</span><span class="c-doc"> </span><span class="c-doc"></span>(W, A, B, s) <span class="c-builtin">f̲orward</span> x<span class="c-doc"></span><span class="c-doc">: the adapted layer, W x + s B (A x), the</span></span>
+<span class="line" id="L43"><a class="ln" href="#L43">43</a><span class="c-doc">⍝│</span><span class="c-doc"> update in its factored form: A x (r numbers per input), then B of</span></span>
+<span class="line" id="L44"><a class="ln" href="#L44">44</a><span class="c-doc">⍝│</span><span class="c-doc"> that, never the m x n matrix B A.</span></span>
+<span class="line" id="L45"><a class="ln" href="#L45">45</a><span class="c-doc">⍝│</span><span class="c-doc"> &gt;&gt; &quot;lo:&quot; u_se&lt; &quot;LoRA&quot;</span></span>
+<span class="line" id="L46"><a class="ln" href="#L46">46</a><span class="c-doc">⍝│</span><span class="c-doc"> &gt;&gt; (2 2 r_eshape 1.0 0.0 0.0 1.0, 1 2 r_eshape 1.0 1.0, 2 1 r_eshape 1.0 -1.0, 0.5) lo:f_orward 2.0 4.0</span></span>
+<span class="line" id="L47"><a class="ln" href="#L47">47</a><span class="c-doc">⍝│</span><span class="c-doc"> 5.0 1.0</span></span>
+<span class="line" id="L48"><a class="ln" href="#L48">48</a><span class="c-libfunc">ˡf̲orward</span> ← { (W, A, B, s) x → (W <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#i_nner" class="c-builtin">i̲nner</a> x) <a href="builtins.html#-2b" class="c-symbol">+</a> s <a href="builtins.html#-2a" class="c-symbol">×</a> B <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#i_nner" class="c-builtin">i̲nner</a> A <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#i_nner" class="c-builtin">i̲nner</a> x }</span>
+<span class="line" id="L49"><a class="ln" href="#L49">49</a></span>
+<span class="line" id="L50"><a class="ln" href="#L50">50</a><span class="c-heading">⍝━━</span><span class="c-heading"> The merge</span></span>
+<span class="line" id="L51"><a class="ln" href="#L51">51</a></span>
+<span class="line" id="L52"><a class="ln" href="#L52">52</a><span class="c-doc">⍝│</span><span class="c-doc"> </span><span class="c-doc"></span><span class="c-builtin">d̲elta</span> (A, B, s)<span class="c-doc"></span><span class="c-doc">: the update itself, s B A, an m x n matrix of</span></span>
+<span class="line" id="L53"><a class="ln" href="#L53">53</a><span class="c-doc">⍝│</span><span class="c-doc"> rank r at most.</span></span>
+<span class="line" id="L54"><a class="ln" href="#L54">54</a><span class="c-doc">⍝│</span><span class="c-doc"> &gt;&gt; &quot;lo:&quot; u_se&lt; &quot;LoRA&quot;</span></span>
+<span class="line" id="L55"><a class="ln" href="#L55">55</a><span class="c-doc">⍝│</span><span class="c-doc"> &gt;&gt; lo:d_elta (1 2 r_eshape 1.0 1.0, 2 1 r_eshape 1.0 -1.0, 0.5)</span></span>
+<span class="line" id="L56"><a class="ln" href="#L56">56</a><span class="c-doc">⍝│</span><span class="c-doc">  0.5  0.5</span></span>
+<span class="line" id="L57"><a class="ln" href="#L57">57</a><span class="c-doc">⍝│</span><span class="c-doc"> -0.5 -0.5</span></span>
+<span class="line" id="L58"><a class="ln" href="#L58">58</a><span class="c-libfunc">ˡd̲elta</span> ← { (A, B, s) → s <a href="builtins.html#-2a" class="c-symbol">×</a> B <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#i_nner" class="c-builtin">i̲nner</a> A }</span>
+<span class="line" id="L59"><a class="ln" href="#L59">59</a></span>
+<span class="line" id="L60"><a class="ln" href="#L60">60</a><span class="c-doc">⍝│</span><span class="c-doc"> </span><span class="c-doc"></span><span class="c-builtin">m̲erge</span> (W, A, B, s)<span class="c-doc"></span><span class="c-doc">: the adapter folded into the weights, W + s B</span></span>
+<span class="line" id="L61"><a class="ln" href="#L61">61</a><span class="c-doc">⍝│</span><span class="c-doc"> A: one matrix again, as fast as the base layer, for one task.</span></span>
+<span class="line" id="L62"><a class="ln" href="#L62">62</a><span class="c-doc">⍝│</span><span class="c-doc"> &gt;&gt; &quot;lo:&quot; u_se&lt; &quot;LoRA&quot;</span></span>
+<span class="line" id="L63"><a class="ln" href="#L63">63</a><span class="c-doc">⍝│</span><span class="c-doc"> &gt;&gt; lo:m_erge (2 2 r_eshape 1.0 0.0 0.0 1.0, 1 2 r_eshape 1.0 1.0, 2 1 r_eshape 1.0 -1.0, 0.5)</span></span>
+<span class="line" id="L64"><a class="ln" href="#L64">64</a><span class="c-doc">⍝│</span><span class="c-doc">  1.5 0.5</span></span>
+<span class="line" id="L65"><a class="ln" href="#L65">65</a><span class="c-doc">⍝│</span><span class="c-doc"> -0.5 0.5</span></span>
+<span class="line" id="L66"><a class="ln" href="#L66">66</a><span class="c-libfunc">ˡm̲erge</span> ← { (W, A, B, s) → W <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="libs-LoRA-src-LoRA.xtl.html#l.d_elta" class="c-libfunc">ˡd̲elta</a> (A, B, s) }</span>
+<span class="line" id="L67"><a class="ln" href="#L67">67</a></span>
+<span class="line" id="L68"><a class="ln" href="#L68">68</a><span class="c-heading">⍝━━</span><span class="c-heading"> Gradients</span></span>
+<span class="line" id="L69"><a class="ln" href="#L69">69</a></span>
+<span class="line" id="L70"><a class="ln" href="#L70">70</a><span class="c-doc">⍝│</span><span class="c-doc"> </span><span class="c-doc"></span>(W, A, B, s) <span class="c-builtin">l̲oss</span> (x, y)<span class="c-doc"></span><span class="c-doc">: the squared error of the adapted layer</span></span>
+<span class="line" id="L71"><a class="ln" href="#L71">71</a><span class="c-doc">⍝│</span><span class="c-doc"> on the inputs x (columns) against the wanted outputs y, half the sum</span></span>
+<span class="line" id="L72"><a class="ln" href="#L72">72</a><span class="c-doc">⍝│</span><span class="c-doc"> of the squared differences, so that its gradient at the output, g,</span></span>
+<span class="line" id="L73"><a class="ln" href="#L73">73</a><span class="c-doc">⍝│</span><span class="c-doc"> is the difference itself.</span></span>
+<span class="line" id="L74"><a class="ln" href="#L74">74</a><span class="c-doc">⍝│</span><span class="c-doc"> &gt;&gt; &quot;lo:&quot; u_se&lt; &quot;LoRA&quot;</span></span>
+<span class="line" id="L75"><a class="ln" href="#L75">75</a><span class="c-doc">⍝│</span><span class="c-doc"> &gt;&gt; (2 2 r_eshape 1.0 0.0 0.0 1.0, 1 2 r_eshape 1.0 1.0, 2 1 r_eshape 1.0 -1.0, 0.5) lo:l_oss (2 1 r_eshape 2.0 4.0, 2 1 r_eshape 4.0 2.0)</span></span>
+<span class="line" id="L76"><a class="ln" href="#L76">76</a><span class="c-doc">⍝│</span><span class="c-doc"> 1.0</span></span>
+<span class="line" id="L77"><a class="ln" href="#L77">77</a><span class="c-libfunc">ˡl̲oss</span> ← { a (x, y) →</span>
+<span class="line" id="L78"><a class="ln" href="#L78">78</a>  e ← (a <a href="libs-LoRA-src-LoRA.xtl.html#l.f_orward" class="c-libfunc">ˡf̲orward</a> x) <a href="builtins.html#-2d" class="c-symbol">−</a> y</span>
+<span class="line" id="L79"><a class="ln" href="#L79">79</a>  <span class="c-number">0.5</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> e <a href="builtins.html#-2a" class="c-symbol">×</a> e</span>
+<span class="line" id="L80"><a class="ln" href="#L80">80</a>}</span>
+<span class="line" id="L81"><a class="ln" href="#L81">81</a></span>
+<span class="line" id="L82"><a class="ln" href="#L82">82</a><span class="c-doc">⍝│</span><span class="c-doc"> </span><span class="c-doc"></span>(W, A, B, s) <span class="c-builtin">g̲rads</span> (x, g)<span class="c-doc"></span><span class="c-doc">: the gradients for the inputs x (an n x</span></span>
+<span class="line" id="L83"><a class="ln" href="#L83">83</a><span class="c-doc">⍝│</span><span class="c-doc"> N matrix, one input per column) and g, the loss's gradient at the</span></span>
+<span class="line" id="L84"><a class="ln" href="#L84">84</a><span class="c-doc">⍝│</span><span class="c-doc"> output (m x N): with z = A x, dL/dA = s (B' g) x', dL/dB = s g z' and</span></span>
+<span class="line" id="L85"><a class="ln" href="#L85">85</a><span class="c-doc">⍝│</span><span class="c-doc"> dL/dx = W' g + s A' (B' g), as the tuple (dA, dB, dx). B' g is made</span></span>
+<span class="line" id="L86"><a class="ln" href="#L86">86</a><span class="c-doc">⍝│</span><span class="c-doc"> once and used twice; no m x n matrix but W's own is made.</span></span>
+<span class="line" id="L87"><a class="ln" href="#L87">87</a><span class="c-doc">⍝│</span><span class="c-doc"> &gt;&gt; &quot;lo:&quot; u_se&lt; &quot;LoRA&quot;</span></span>
+<span class="line" id="L88"><a class="ln" href="#L88">88</a><span class="c-doc">⍝│</span><span class="c-doc"> &gt;&gt; (dA, dB, dx) := (2 2 r_eshape 1.0 0.0 0.0 1.0, 1 2 r_eshape 1.0 1.0, 2 1 r_eshape 1.0 -1.0, 0.5) lo:g_rads (2 1 r_eshape 2.0 4.0, 2 1 r_eshape 1.0 -1.0)</span></span>
+<span class="line" id="L89"><a class="ln" href="#L89">89</a><span class="c-doc">⍝│</span><span class="c-doc"> &gt;&gt; dB</span></span>
+<span class="line" id="L90"><a class="ln" href="#L90">90</a><span class="c-doc">⍝│</span><span class="c-doc">  3.0</span></span>
+<span class="line" id="L91"><a class="ln" href="#L91">91</a><span class="c-doc">⍝│</span><span class="c-doc"> -3.0</span></span>
+<span class="line" id="L92"><a class="ln" href="#L92">92</a><span class="c-libfunc">ˡg̲rads</span> ← { (W, A, B, s) (x, g) →</span>
+<span class="line" id="L93"><a class="ln" href="#L93">93</a>  b ← (<a href="builtins.html#o_-5c" class="c-builtin">o̲\</a> B) <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#i_nner" class="c-builtin">i̲nner</a> g</span>
+<span class="line" id="L94"><a class="ln" href="#L94">94</a>  (s <a href="builtins.html#-2a" class="c-symbol">×</a> b <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#i_nner" class="c-builtin">i̲nner</a> <a href="builtins.html#o_-5c" class="c-builtin">o̲\</a> x, s <a href="builtins.html#-2a" class="c-symbol">×</a> g <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#i_nner" class="c-builtin">i̲nner</a> <a href="builtins.html#o_-5c" class="c-builtin">o̲\</a> A <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#i_nner" class="c-builtin">i̲nner</a> x, ((<a href="builtins.html#o_-5c" class="c-builtin">o̲\</a> W) <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#i_nner" class="c-builtin">i̲nner</a> g) <a href="builtins.html#-2b" class="c-symbol">+</a> s <a href="builtins.html#-2a" class="c-symbol">×</a> (<a href="builtins.html#o_-5c" class="c-builtin">o̲\</a> A) <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#i_nner" class="c-builtin">i̲nner</a> b)</span>
+<span class="line" id="L95"><a class="ln" href="#L95">95</a>}</span>
+<span class="line" id="L96"><a class="ln" href="#L96">96</a></span>
+<span class="line" id="L97"><a class="ln" href="#L97">97</a><span class="c-heading">⍝━━</span><span class="c-heading"> Training steps</span></span>
+<span class="line" id="L98"><a class="ln" href="#L98">98</a></span>
+<span class="line" id="L99"><a class="ln" href="#L99">99</a><span class="c-doc">⍝│</span><span class="c-doc"> </span><span class="c-doc"></span>lr <span class="c-builtin">s̲gd</span> ((W, A, B, s), (x, y))<span class="c-doc"></span><span class="c-doc">: one step of gradient descent on</span></span>
+<span class="line" id="L100"><a class="ln" href="#L100">100</a><span class="c-doc">⍝│</span><span class="c-doc"> the squared error (l_oss) at the rate lr, A and B moved by Optim's</span></span>
+<span class="line" id="L101"><a class="ln" href="#L101">101</a><span class="c-doc">⍝│</span><span class="c-doc"> s_gd, W and s left as they are: the adapter after the step. p_ower</span></span>
+<span class="line" id="L102"><a class="ln" href="#L102">102</a><span class="c-doc">⍝│</span><span class="c-doc"> repeats it.</span></span>
+<span class="line" id="L103"><a class="ln" href="#L103">103</a><span class="c-doc">⍝│</span><span class="c-doc"> &gt;&gt; &quot;lo:&quot; u_se&lt; &quot;LoRA&quot;</span></span>
+<span class="line" id="L104"><a class="ln" href="#L104">104</a><span class="c-doc">⍝│</span><span class="c-doc"> &gt;&gt; (_, A, B, _) := 0.1 lo:s_gd ((2 2 r_eshape 1.0 0.0 0.0 1.0, 1 2 r_eshape 1.0 1.0, 2 1 r_eshape 1.0 -1.0, 0.5), (2 1 r_eshape 2.0 4.0, 2 1 r_eshape 4.0 2.0))</span></span>
+<span class="line" id="L105"><a class="ln" href="#L105">105</a><span class="c-doc">⍝│</span><span class="c-doc"> &gt;&gt; B</span></span>
+<span class="line" id="L106"><a class="ln" href="#L106">106</a><span class="c-doc">⍝│</span><span class="c-doc">  0.7</span></span>
+<span class="line" id="L107"><a class="ln" href="#L107">107</a><span class="c-doc">⍝│</span><span class="c-doc"> -0.7</span></span>
+<span class="line" id="L108"><a class="ln" href="#L108">108</a><span class="c-libfunc">ˡs̲gd</span> ← { lr ((W, A, B, s), (x, y)) →</span>
+<span class="line" id="L109"><a class="ln" href="#L109">109</a>  (dA, dB, _) ← (W, A, B, s) <a href="libs-LoRA-src-LoRA.xtl.html#l.g_rads" class="c-libfunc">ˡg̲rads</a> (x, ((W, A, B, s) <a href="libs-LoRA-src-LoRA.xtl.html#l.f_orward" class="c-libfunc">ˡf̲orward</a> x) <a href="builtins.html#-2d" class="c-symbol">−</a> y)</span>
+<span class="line" id="L110"><a class="ln" href="#L110">110</a>  (W, lr <a href="libs-Optim-src-Optim.xtl.html#l.s_gd" class="c-libfunc">ᵒᵖs̲gd</a> (A, dA), lr <a href="libs-Optim-src-Optim.xtl.html#l.s_gd" class="c-libfunc">ᵒᵖs̲gd</a> (B, dB), s)</span>
+<span class="line" id="L111"><a class="ln" href="#L111">111</a>}</span>
+<span class="line" id="L112"><a class="ln" href="#L112">112</a></span>
+<span class="line" id="L113"><a class="ln" href="#L113">113</a><span class="c-doc">⍝│</span><span class="c-doc"> </span><span class="c-doc"></span><span class="c-builtin">a̲damStart</span> (W, A, B, s)<span class="c-doc"></span><span class="c-doc">: what Adam starts from: the adapter, its</span></span>
+<span class="line" id="L114"><a class="ln" href="#L114">114</a><span class="c-doc">⍝│</span><span class="c-doc"> four running averages at 0 (A's two, then B's) and the step count 1.</span></span>
+<span class="line" id="L115"><a class="ln" href="#L115">115</a><span class="c-libfunc">ˡa̲damStart</span> ← { (W, A, B, s) → ((W, A, B, s), (<span class="c-number">0.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> A, <span class="c-number">0.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> A, <span class="c-number">0.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> B, <span class="c-number">0.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> B), <span class="c-number">1</span>) }</span>
+<span class="line" id="L116"><a class="ln" href="#L116">116</a></span>
+<span class="line" id="L117"><a class="ln" href="#L117">117</a><span class="c-doc">⍝│</span><span class="c-doc"> </span><span class="c-doc"></span>lr <span class="c-builtin">a̲dam</span> (((W, A, B, s), (mA, vA, mB, vB), t), (x, y))<span class="c-doc"></span><span class="c-doc">: Adam's step</span></span>
+<span class="line" id="L118"><a class="ln" href="#L118">118</a><span class="c-doc">⍝│</span><span class="c-doc"> t on the squared error, A and B moved by Optim's a_dam at the rate</span></span>
+<span class="line" id="L119"><a class="ln" href="#L119">119</a><span class="c-doc">⍝│</span><span class="c-doc"> lr; the next state, the step count one more.</span></span>
+<span class="line" id="L120"><a class="ln" href="#L120">120</a><span class="c-doc">⍝│</span><span class="c-doc"> &gt;&gt; &quot;lo:&quot; u_se&lt; &quot;LoRA&quot;</span></span>
+<span class="line" id="L121"><a class="ln" href="#L121">121</a><span class="c-doc">⍝│</span><span class="c-doc"> &gt;&gt; ((_, _, B, _), _, _) := 0.1 lo:a_dam ((lo:a_damStart (2 2 r_eshape 1.0 0.0 0.0 1.0, 1 2 r_eshape 1.0 1.0, 2 1 r_eshape 1.0 -1.0, 0.5)), (2 1 r_eshape 2.0 4.0, 2 1 r_eshape 4.0 2.0))</span></span>
+<span class="line" id="L122"><a class="ln" href="#L122">122</a><span class="c-doc">⍝│</span><span class="c-doc"> &gt;&gt; B</span></span>
+<span class="line" id="L123"><a class="ln" href="#L123">123</a><span class="c-doc">⍝│</span><span class="c-doc">  0.9000000003333333</span></span>
+<span class="line" id="L124"><a class="ln" href="#L124">124</a><span class="c-doc">⍝│</span><span class="c-doc"> -0.9000000003333333</span></span>
+<span class="line" id="L125"><a class="ln" href="#L125">125</a><span class="c-libfunc">ˡa̲dam</span> ← { lr (((W, A, B, s), (mA, vA, mB, vB), t), (x, y)) →</span>
+<span class="line" id="L126"><a class="ln" href="#L126">126</a>  (dA, dB, _) ← (W, A, B, s) <a href="libs-LoRA-src-LoRA.xtl.html#l.g_rads" class="c-libfunc">ˡg̲rads</a> (x, ((W, A, B, s) <a href="libs-LoRA-src-LoRA.xtl.html#l.f_orward" class="c-libfunc">ˡf̲orward</a> x) <a href="builtins.html#-2d" class="c-symbol">−</a> y)</span>
+<span class="line" id="L127"><a class="ln" href="#L127">127</a>  (A2, mA2, vA2) ← (lr, t) <a href="libs-Optim-src-Optim.xtl.html#l.a_dam" class="c-libfunc">ᵒᵖa̲dam</a> (A, mA, vA, dA)</span>
+<span class="line" id="L128"><a class="ln" href="#L128">128</a>  (B2, mB2, vB2) ← (lr, t) <a href="libs-Optim-src-Optim.xtl.html#l.a_dam" class="c-libfunc">ᵒᵖa̲dam</a> (B, mB, vB, dB)</span>
+<span class="line" id="L129"><a class="ln" href="#L129">129</a>  ((W, A2, B2, s), (mA2, vA2, mB2, vB2), t <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">1</span>)</span>
+<span class="line" id="L130"><a class="ln" href="#L130">130</a>}</span>
+<span class="line" id="L131"><a class="ln" href="#L131">131</a></span>
+<span class="line" id="L132"><a class="ln" href="#L132">132</a><span class="c-heading">⍝━━</span><span class="c-heading"> LoRA-FA: A frozen</span></span>
+<span class="line" id="L133"><a class="ln" href="#L133">133</a></span>
+<span class="line" id="L134"><a class="ln" href="#L134">134</a><span class="c-doc">⍝│</span><span class="c-doc"> </span><span class="c-doc"></span>seed <span class="c-builtin">s̲eeded</span> r n<span class="c-doc"></span><span class="c-doc">: an r x n matrix regenerated from a whole-number</span></span>
+<span class="line" id="L135"><a class="ln" href="#L135">135</a><span class="c-doc">⍝│</span><span class="c-doc"> seed (LoRA-FA's frozen A, which a checkpoint then need not hold):</span></span>
+<span class="line" id="L136"><a class="ln" href="#L136">136</a><span class="c-doc">⍝│</span><span class="c-doc"> sin(seed k k) for k = 1 .. r n, over the square root of n (the</span></span>
+<span class="line" id="L137"><a class="ln" href="#L137">137</a><span class="c-doc">⍝│</span><span class="c-doc"> inputs' count, so A x keeps x's size). No chance: the same seed</span></span>
+<span class="line" id="L138"><a class="ln" href="#L138">138</a><span class="c-doc">⍝│</span><span class="c-doc"> gives the same matrix everywhere.</span></span>
+<span class="line" id="L139"><a class="ln" href="#L139">139</a><span class="c-doc">⍝│</span><span class="c-doc"> &gt;&gt; &quot;lo:&quot; u_se&lt; &quot;LoRA&quot;</span></span>
+<span class="line" id="L140"><a class="ln" href="#L140">140</a><span class="c-doc">⍝│</span><span class="c-doc"> &gt;&gt; 7 lo:s_eeded 2 4</span></span>
+<span class="line" id="L141"><a class="ln" href="#L141">141</a><span class="c-doc">⍝│</span><span class="c-doc"> 0.32849329935939453 0.13545289415393452  0.08367785015140346 -0.44499780218341667</span></span>
+<span class="line" id="L142"><a class="ln" href="#L142">142</a><span class="c-doc">⍝│</span><span class="c-doc"> -0.4005672975890204  0.3115061055018265 -0.26829917759428185  0.47413628607807934</span></span>
+<span class="line" id="L143"><a class="ln" href="#L143">143</a><span class="c-libfunc">ˡs̲eeded</span> ← { seed rn →</span>
+<span class="line" id="L144"><a class="ln" href="#L144">144</a>  k ← <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> rn</span>
+<span class="line" id="L145"><a class="ln" href="#L145">145</a>  rn <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> (<a href="builtins.html#s_in" class="c-builtin">s̲in</a> (<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> seed) <a href="builtins.html#-2a" class="c-symbol">×</a> k <a href="builtins.html#-2a" class="c-symbol">×</a> k) <a href="builtins.html#-2f" class="c-symbol">÷</a> <a href="builtins.html#s_qrt" class="c-builtin">s̲qrt</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <span class="c-number">2</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> rn</span>
+<span class="line" id="L146"><a class="ln" href="#L146">146</a>}</span>
+<span class="line" id="L147"><a class="ln" href="#L147">147</a></span>
+<span class="line" id="L148"><a class="ln" href="#L148">148</a><span class="c-doc">⍝│</span><span class="c-doc"> </span><span class="c-doc"></span>(W, A, B, s) <span class="c-builtin">g̲radsFA</span> (x, g)<span class="c-doc"></span><span class="c-doc">: LoRA-FA's gradients, (dB, dx): A is</span></span>
+<span class="line" id="L149"><a class="ln" href="#L149">149</a><span class="c-doc">⍝│</span><span class="c-doc"> frozen, so its gradient is skipped, but x's still flows back through</span></span>
+<span class="line" id="L150"><a class="ln" href="#L150">150</a><span class="c-doc">⍝│</span><span class="c-doc"> A, dx = W' g + s A' (B' g).</span></span>
+<span class="line" id="L151"><a class="ln" href="#L151">151</a><span class="c-libfunc">ˡg̲radsFA</span> ← { (W, A, B, s) (x, g) →</span>
+<span class="line" id="L152"><a class="ln" href="#L152">152</a>  (s <a href="builtins.html#-2a" class="c-symbol">×</a> g <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#i_nner" class="c-builtin">i̲nner</a> <a href="builtins.html#o_-5c" class="c-builtin">o̲\</a> A <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#i_nner" class="c-builtin">i̲nner</a> x, ((<a href="builtins.html#o_-5c" class="c-builtin">o̲\</a> W) <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#i_nner" class="c-builtin">i̲nner</a> g) <a href="builtins.html#-2b" class="c-symbol">+</a> s <a href="builtins.html#-2a" class="c-symbol">×</a> (<a href="builtins.html#o_-5c" class="c-builtin">o̲\</a> A) <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#i_nner" class="c-builtin">i̲nner</a> (<a href="builtins.html#o_-5c" class="c-builtin">o̲\</a> B) <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#i_nner" class="c-builtin">i̲nner</a> g)</span>
+<span class="line" id="L153"><a class="ln" href="#L153">153</a>}</span>
+<span class="line" id="L154"><a class="ln" href="#L154">154</a></span>
+<span class="line" id="L155"><a class="ln" href="#L155">155</a><span class="c-doc">⍝│</span><span class="c-doc"> </span><span class="c-doc"></span>lr <span class="c-builtin">s̲gdFA</span> ((W, A, B, s), (x, y))<span class="c-doc"></span><span class="c-doc">: LoRA-FA's step of gradient</span></span>
+<span class="line" id="L156"><a class="ln" href="#L156">156</a><span class="c-doc">⍝│</span><span class="c-doc"> descent: B alone moves. Every update s B A it reaches has its rows</span></span>
+<span class="line" id="L157"><a class="ln" href="#L157">157</a><span class="c-doc">⍝│</span><span class="c-doc"> in A's row space.</span></span>
+<span class="line" id="L158"><a class="ln" href="#L158">158</a><span class="c-libfunc">ˡs̲gdFA</span> ← { lr ((W, A, B, s), (x, y)) →</span>
+<span class="line" id="L159"><a class="ln" href="#L159">159</a>  (dB, _) ← (W, A, B, s) <a href="libs-LoRA-src-LoRA.xtl.html#l.g_radsFA" class="c-libfunc">ˡg̲radsFA</a> (x, ((W, A, B, s) <a href="libs-LoRA-src-LoRA.xtl.html#l.f_orward" class="c-libfunc">ˡf̲orward</a> x) <a href="builtins.html#-2d" class="c-symbol">−</a> y)</span>
+<span class="line" id="L160"><a class="ln" href="#L160">160</a>  (W, A, lr <a href="libs-Optim-src-Optim.xtl.html#l.s_gd" class="c-libfunc">ᵒᵖs̲gd</a> (B, dB), s)</span>
+<span class="line" id="L161"><a class="ln" href="#L161">161</a>}</span>
+<span class="line" id="L162"><a class="ln" href="#L162">162</a></span>
+<span class="line" id="L163"><a class="ln" href="#L163">163</a><span class="c-doc">⍝│</span><span class="c-doc"> </span><span class="c-doc"></span><span class="c-builtin">a̲damStartFA</span> (W, A, B, s)<span class="c-doc"></span><span class="c-doc">: LoRA-FA's Adam state: the adapter, B's</span></span>
+<span class="line" id="L164"><a class="ln" href="#L164">164</a><span class="c-doc">⍝│</span><span class="c-doc"> two running averages at 0 (A has none: half of LoRA's optimizer</span></span>
+<span class="line" id="L165"><a class="ln" href="#L165">165</a><span class="c-doc">⍝│</span><span class="c-doc"> memory on a square layer), the step 1.</span></span>
+<span class="line" id="L166"><a class="ln" href="#L166">166</a><span class="c-libfunc">ˡa̲damStartFA</span> ← { (W, A, B, s) → ((W, A, B, s), (<span class="c-number">0.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> B, <span class="c-number">0.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> B), <span class="c-number">1</span>) }</span>
+<span class="line" id="L167"><a class="ln" href="#L167">167</a></span>
+<span class="line" id="L168"><a class="ln" href="#L168">168</a><span class="c-doc">⍝│</span><span class="c-doc"> </span><span class="c-doc"></span>lr <span class="c-builtin">a̲damFA</span> (((W, A, B, s), (mB, vB), t), (x, y))<span class="c-doc"></span><span class="c-doc">: LoRA-FA's Adam</span></span>
+<span class="line" id="L169"><a class="ln" href="#L169">169</a><span class="c-doc">⍝│</span><span class="c-doc"> step: B alone moves; the next state.</span></span>
+<span class="line" id="L170"><a class="ln" href="#L170">170</a><span class="c-libfunc">ˡa̲damFA</span> ← { lr (((W, A, B, s), (mB, vB), t), (x, y)) →</span>
+<span class="line" id="L171"><a class="ln" href="#L171">171</a>  (dB, _) ← (W, A, B, s) <a href="libs-LoRA-src-LoRA.xtl.html#l.g_radsFA" class="c-libfunc">ˡg̲radsFA</a> (x, ((W, A, B, s) <a href="libs-LoRA-src-LoRA.xtl.html#l.f_orward" class="c-libfunc">ˡf̲orward</a> x) <a href="builtins.html#-2d" class="c-symbol">−</a> y)</span>
+<span class="line" id="L172"><a class="ln" href="#L172">172</a>  (B2, mB2, vB2) ← (lr, t) <a href="libs-Optim-src-Optim.xtl.html#l.a_dam" class="c-libfunc">ᵒᵖa̲dam</a> (B, mB, vB, dB)</span>
+<span class="line" id="L173"><a class="ln" href="#L173">173</a>  ((W, A, B2, s), (mB2, vB2), t <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">1</span>)</span>
+<span class="line" id="L174"><a class="ln" href="#L174">174</a>}</span>
+<span class="line" id="L175"><a class="ln" href="#L175">175</a></span>
+<span class="line" id="L176"><a class="ln" href="#L176">176</a><span class="c-heading">⍝━━</span><span class="c-heading"> QLoRA: the base in 4 bits</span></span>
+<span class="line" id="L177"><a class="ln" href="#L177">177</a></span>
+<span class="line" id="L178"><a class="ln" href="#L178">178</a><span class="c-doc">⍝│</span><span class="c-doc"> </span><span class="c-doc"></span>k <span class="c-builtin">q̲base</span> W<span class="c-doc"></span><span class="c-doc">: the base as QLoRA stores it: W in NF4, blocks of k</span></span>
+<span class="line" id="L179"><a class="ln" href="#L179">179</a><span class="c-doc">⍝│</span><span class="c-doc"> (QLoRA's 64), as (codes, scales, shape): 4-bit codes, a scale per</span></span>
+<span class="line" id="L180"><a class="ln" href="#L180">180</a><span class="c-doc">⍝│</span><span class="c-doc"> block, W's shape to come back to.</span></span>
+<span class="line" id="L181"><a class="ln" href="#L181">181</a><span class="c-doc">⍝│</span><span class="c-doc"> &gt;&gt; &quot;lo:&quot; u_se&lt; &quot;LoRA&quot;</span></span>
+<span class="line" id="L182"><a class="ln" href="#L182">182</a><span class="c-doc">⍝│</span><span class="c-doc"> &gt;&gt; (q, s, sh) := 2 lo:q_base 2 2 r_eshape 1.0 -4.0 2.0 0.5</span></span>
+<span class="line" id="L183"><a class="ln" href="#L183">183</a><span class="c-doc">⍝│</span><span class="c-doc"> &gt;&gt; s c_at f_loat sh</span></span>
+<span class="line" id="L184"><a class="ln" href="#L184">184</a><span class="c-doc">⍝│</span><span class="c-doc"> 4.0 2.0 2.0 2.0</span></span>
+<span class="line" id="L185"><a class="ln" href="#L185">185</a><span class="c-libfunc">ˡq̲base</span> ← { k W →</span>
+<span class="line" id="L186"><a class="ln" href="#L186">186</a>  (q, s) ← k <a href="libs-Quant-src-Quant.xtl.html#l.n_f4Codes" class="c-libfunc">qz:n̲f4Codes</a> W</span>
+<span class="line" id="L187"><a class="ln" href="#L187">187</a>  (q, s, <a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> W)</span>
+<span class="line" id="L188"><a class="ln" href="#L188">188</a>}</span>
+<span class="line" id="L189"><a class="ln" href="#L189">189</a></span>
+<span class="line" id="L190"><a class="ln" href="#L190">190</a><span class="c-doc">⍝│</span><span class="c-doc"> </span><span class="c-doc"></span><span class="c-builtin">d̲equant</span> (q, s, shape)<span class="c-doc"></span><span class="c-doc">: the stored base back to numbers, W~, the</span></span>
+<span class="line" id="L191"><a class="ln" href="#L191">191</a><span class="c-doc">⍝│</span><span class="c-doc"> matrix QLoRA computes with: each code's level times its block's</span></span>
+<span class="line" id="L192"><a class="ln" href="#L192">192</a><span class="c-doc">⍝│</span><span class="c-doc"> scale, in W's shape. It is not W: the difference is the 4-bit</span></span>
+<span class="line" id="L193"><a class="ln" href="#L193">193</a><span class="c-doc">⍝│</span><span class="c-doc"> error.</span></span>
+<span class="line" id="L194"><a class="ln" href="#L194">194</a><span class="c-doc">⍝│</span><span class="c-doc"> &gt;&gt; &quot;lo:&quot; u_se&lt; &quot;LoRA&quot;</span></span>
+<span class="line" id="L195"><a class="ln" href="#L195">195</a><span class="c-doc">⍝│</span><span class="c-doc"> &gt;&gt; lo:d_equant 2 lo:q_base 2 2 r_eshape 1.0 -4.0 2.0 0.5</span></span>
+<span class="line" id="L196"><a class="ln" href="#L196">196</a><span class="c-doc">⍝│</span><span class="c-doc"> 0.9844492077827454               -4.0</span></span>
+<span class="line" id="L197"><a class="ln" href="#L197">197</a><span class="c-doc">⍝│</span><span class="c-doc">                2.0 0.4922246038913727</span></span>
+<span class="line" id="L198"><a class="ln" href="#L198">198</a><span class="c-libfunc">ˡd̲equant</span> ← { (q, s, sh) → sh <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <a href="libs-Quant-src-Quant.xtl.html#l.n_f4Values" class="c-libfunc">qz:n̲f4Values</a> (q, s) }</span>
+<span class="line" id="L199"><a class="ln" href="#L199">199</a></span>
+<span class="line" id="L200"><a class="ln" href="#L200">200</a><span class="c-doc">⍝│</span><span class="c-doc"> </span><span class="c-doc"></span>(Q, A, B, s) <span class="c-builtin">f̲orwardQ</span> x<span class="c-doc"></span><span class="c-doc">: QLoRA's adapted layer, W~ x + s B (A x):</span></span>
+<span class="line" id="L201"><a class="ln" href="#L201">201</a><span class="c-doc">⍝│</span><span class="c-doc"> the 4-bit base dequantized when the layer runs, the adapter in full</span></span>
+<span class="line" id="L202"><a class="ln" href="#L202">202</a><span class="c-doc">⍝│</span><span class="c-doc"> precision. Its gradients and steps are LoRA's with W~ for W:</span></span>
+<span class="line" id="L203"><a class="ln" href="#L203">203</a><span class="c-doc">⍝│</span><span class="c-doc"> </span><span class="c-doc"></span>lr <span class="c-builtin">s̲gd</span> ((<span class="c-builtin">d̲equant</span> Q, A, B, s), (x, y))<span class="c-doc"></span><span class="c-doc">.</span></span>
+<span class="line" id="L204"><a class="ln" href="#L204">204</a><span class="c-libfunc">ˡf̲orwardQ</span> ← { (Q, A, B, s) x → (<a href="libs-LoRA-src-LoRA.xtl.html#l.d_equant" class="c-libfunc">ˡd̲equant</a> Q, A, B, s) <a href="libs-LoRA-src-LoRA.xtl.html#l.f_orward" class="c-libfunc">ˡf̲orward</a> x }</span>
+<span class="line" id="L205"><a class="ln" href="#L205">205</a></span>
+<span class="line" id="L206"><a class="ln" href="#L206">206</a><span class="c-doc">⍝│</span><span class="c-doc"> </span><span class="c-doc"></span>k <span class="c-builtin">m̲ergeQ</span> (Q, A, B, s)<span class="c-doc"></span><span class="c-doc">: the adapter merged into a 4-bit base: W~ +</span></span>
+<span class="line" id="L207"><a class="ln" href="#L207">207</a><span class="c-doc">⍝│</span><span class="c-doc"> s B A quantized again (blocks of k), as a stored base. Not exact:</span></span>
+<span class="line" id="L208"><a class="ln" href="#L208">208</a><span class="c-doc">⍝│</span><span class="c-doc"> d_equant of it is not W~ + s B A, since the merged numbers fall</span></span>
+<span class="line" id="L209"><a class="ln" href="#L209">209</a><span class="c-doc">⍝│</span><span class="c-doc"> between NF4's levels.</span></span>
+<span class="line" id="L210"><a class="ln" href="#L210">210</a><span class="c-libfunc">ˡm̲ergeQ</span> ← { k (Q, A, B, s) → k <a href="libs-LoRA-src-LoRA.xtl.html#l.q_base" class="c-libfunc">ˡq̲base</a> (<a href="libs-LoRA-src-LoRA.xtl.html#l.d_equant" class="c-libfunc">ˡd̲equant</a> Q) <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="libs-LoRA-src-LoRA.xtl.html#l.d_elta" class="c-libfunc">ˡd̲elta</a> (A, B, s) }</span>
+<span class="line" id="L211"><a class="ln" href="#L211">211</a></span>
+<span class="line" id="L212"><a class="ln" href="#L212">212</a><span class="c-doc">⍝│</span><span class="c-doc"> </span><span class="c-doc"></span>(r, k) <span class="c-builtin">q̲bytes</span> m n<span class="c-doc"></span><span class="c-doc">: QLoRA's bytes for an m x n base at rank r,</span></span>
+<span class="line" id="L213"><a class="ln" href="#L213">213</a><span class="c-doc">⍝│</span><span class="c-doc"> blocks of k: the base in NF4 (4 bits and a 32-bit scale per block),</span></span>
+<span class="line" id="L214"><a class="ln" href="#L214">214</a><span class="c-doc">⍝│</span><span class="c-doc"> the adapter in BF16 (16 bits), Adam's two averages for it in FP32;</span></span>
+<span class="line" id="L215"><a class="ln" href="#L215">215</a><span class="c-doc">⍝│</span><span class="c-doc"> against FP16's 2 m n for the base alone.</span></span>
+<span class="line" id="L216"><a class="ln" href="#L216">216</a><span class="c-doc">⍝│</span><span class="c-doc"> &gt;&gt; &quot;lo:&quot; u_se&lt; &quot;LoRA&quot;</span></span>
+<span class="line" id="L217"><a class="ln" href="#L217">217</a><span class="c-doc">⍝│</span><span class="c-doc"> &gt;&gt; (16, 64) lo:q_bytes 4096 14336</span></span>
+<span class="line" id="L218"><a class="ln" href="#L218">218</a><span class="c-doc">⍝│</span><span class="c-doc"> 33030144.0 589824.0 2359296.0</span></span>
+<span class="line" id="L219"><a class="ln" href="#L219">219</a><span class="c-libfunc">ˡq̲bytes</span> ← { (r, k) mn →</span>
+<span class="line" id="L220"><a class="ln" href="#L220">220</a>  n ← r <a href="libs-LoRA-src-LoRA.xtl.html#l.p_arams" class="c-libfunc">ˡp̲arams</a> mn</span>
+<span class="line" id="L221"><a class="ln" href="#L221">221</a>  ((<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> mn) <a href="builtins.html#-2a" class="c-symbol">×</a> (<span class="c-number">4.0</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">32.0</span> <a href="builtins.html#-2f" class="c-symbol">÷</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> k) <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-number">8.0</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-number">16</span> <a href="libs-LoRA-src-LoRA.xtl.html#l.b_ytes" class="c-libfunc">ˡb̲ytes</a> n) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">2.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">32</span> <a href="libs-LoRA-src-LoRA.xtl.html#l.b_ytes" class="c-libfunc">ˡb̲ytes</a> n</span>
+<span class="line" id="L222"><a class="ln" href="#L222">222</a>}</span>
+<span class="line" id="L223"><a class="ln" href="#L223">223</a></span>
+<span class="line" id="L224"><a class="ln" href="#L224">224</a><span class="c-heading">⍝━━</span><span class="c-heading"> Rank</span></span>
+<span class="line" id="L225"><a class="ln" href="#L225">225</a></span>
+<span class="line" id="L226"><a class="ln" href="#L226">226</a><span class="c-doc">⍝│</span><span class="c-doc"> One step of Gram-Schmidt on the rows: the k-th row's remainder R[k],</span></span>
+<span class="line" id="L227"><a class="ln" href="#L227">227</a><span class="c-doc">⍝│</span><span class="c-doc"> if larger than tol, becomes a direction and is taken out of every</span></span>
+<span class="line" id="L228"><a class="ln" href="#L228">228</a><span class="c-doc">⍝│</span><span class="c-doc"> row, and the count c goes up.</span></span>
+<span class="line" id="L229"><a class="ln" href="#L229">229</a><span class="c-libfunc">ʰs̲tep</span> ← { tol (R, k, c) →</span>
+<span class="line" id="L230"><a class="ln" href="#L230">230</a>  v ← k <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> R</span>
+<span class="line" id="L231"><a class="ln" href="#L231">231</a>  n ← <a href="builtins.html#s_qrt" class="c-builtin">s̲qrt</a> <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> v <a href="builtins.html#-2a" class="c-symbol">×</a> v</span>
+<span class="line" id="L232"><a class="ln" href="#L232">232</a>  n <a href="builtins.html#-3c-3d" class="c-symbol">≤</a> tol ? (R, k <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">1</span>, c)</span>
+<span class="line" id="L233"><a class="ln" href="#L233">233</a>  (R <a href="builtins.html#-2d" class="c-symbol">−</a> (R <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#i_nner" class="c-builtin">i̲nner</a> v <a href="builtins.html#-2f" class="c-symbol">÷</a> n) <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> v <a href="builtins.html#-2f" class="c-symbol">÷</a> n, k <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">1</span>, c <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">1</span>)</span>
+<span class="line" id="L234"><a class="ln" href="#L234">234</a>}</span>
+<span class="line" id="L235"><a class="ln" href="#L235">235</a></span>
+<span class="line" id="L236"><a class="ln" href="#L236">236</a><span class="c-doc">⍝│</span><span class="c-doc"> </span><span class="c-doc"></span><span class="c-builtin">r̲ank</span> M<span class="c-doc"></span><span class="c-doc">: the number of independent rows of the matrix M (its</span></span>
+<span class="line" id="L237"><a class="ln" href="#L237">237</a><span class="c-doc">⍝│</span><span class="c-doc"> rank), by Gram-Schmidt: a row counts when what is left of it, after</span></span>
+<span class="line" id="L238"><a class="ln" href="#L238">238</a><span class="c-doc">⍝│</span><span class="c-doc"> the directions of the rows before it are taken out, is larger than</span></span>
+<span class="line" id="L239"><a class="ln" href="#L239">239</a><span class="c-doc">⍝│</span><span class="c-doc"> 1e-9 times the largest row.</span></span>
+<span class="line" id="L240"><a class="ln" href="#L240">240</a><span class="c-doc">⍝│</span><span class="c-doc"> &gt;&gt; &quot;lo:&quot; u_se&lt; &quot;LoRA&quot;</span></span>
+<span class="line" id="L241"><a class="ln" href="#L241">241</a><span class="c-doc">⍝│</span><span class="c-doc"> &gt;&gt; lo:r_ank 3 3 r_eshape 1.0 2.0 3.0 2.0 4.0 6.0 0.0 1.0 1.0</span></span>
+<span class="line" id="L242"><a class="ln" href="#L242">242</a><span class="c-doc">⍝│</span><span class="c-doc"> 2</span></span>
+<span class="line" id="L243"><a class="ln" href="#L243">243</a><span class="c-libfunc">ˡr̲ank</span> ← { M →</span>
+<span class="line" id="L244"><a class="ln" href="#L244">244</a>  tol ← <span class="c-number">0.000000001</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#s_qrt" class="c-builtin">s̲qrt</a> <span class="c-builtin">'</span><a href="builtins.html#m_ax" class="c-builtin">m̲ax</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/₂</a> M <a href="builtins.html#-2a" class="c-symbol">×</a> M</span>
+<span class="line" id="L245"><a class="ln" href="#L245">245</a>  (_, _, c) ← (<a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> <a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> M) <span class="c-quote">'</span>{ R → tol <a href="libs-LoRA-src-LoRA.xtl.html#h.s_tep" class="c-libfunc">ʰs̲tep</a> R } <a href="builtins.html#p_ower" class="c-builtin">p̲ower</a> (M, <span class="c-number">1</span>, <span class="c-number">0</span>)</span>
+<span class="line" id="L246"><a class="ln" href="#L246">246</a>  c</span>
+<span class="line" id="L247"><a class="ln" href="#L247">247</a>}</span>
+<span class="line" id="L248"><a class="ln" href="#L248">248</a></span>
+<span class="line" id="L249"><a class="ln" href="#L249">249</a><span class="c-heading">⍝━━</span><span class="c-heading"> Counts</span></span>
+<span class="line" id="L250"><a class="ln" href="#L250">250</a></span>
+<span class="line" id="L251"><a class="ln" href="#L251">251</a><span class="c-doc">⍝│</span><span class="c-doc"> </span><span class="c-doc"></span>r <span class="c-builtin">p̲arams</span> m n<span class="c-doc"></span><span class="c-doc">: the numbers an adapter of rank r on an m x n matrix</span></span>
+<span class="line" id="L252"><a class="ln" href="#L252">252</a><span class="c-doc">⍝│</span><span class="c-doc"> trains, r (m + n) (B's m r and A's r n), against the m n of the</span></span>
+<span class="line" id="L253"><a class="ln" href="#L253">253</a><span class="c-doc">⍝│</span><span class="c-doc"> matrix itself.</span></span>
+<span class="line" id="L254"><a class="ln" href="#L254">254</a><span class="c-doc">⍝│</span><span class="c-doc"> &gt;&gt; &quot;lo:&quot; u_se&lt; &quot;LoRA&quot;</span></span>
+<span class="line" id="L255"><a class="ln" href="#L255">255</a><span class="c-doc">⍝│</span><span class="c-doc"> &gt;&gt; 16 lo:p_arams 4096 14336</span></span>
+<span class="line" id="L256"><a class="ln" href="#L256">256</a><span class="c-doc">⍝│</span><span class="c-doc"> 294912</span></span>
+<span class="line" id="L257"><a class="ln" href="#L257">257</a><span class="c-libfunc">ˡp̲arams</span> ← { r mn → r <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> mn }</span>
+<span class="line" id="L258"><a class="ln" href="#L258">258</a></span>
+<span class="line" id="L259"><a class="ln" href="#L259">259</a><span class="c-doc">⍝│</span><span class="c-doc"> </span><span class="c-doc"></span>r <span class="c-builtin">e̲xpert</span> d f<span class="c-doc"></span><span class="c-doc">: the numbers rank-r adapters train on one SwiGLU</span></span>
+<span class="line" id="L260"><a class="ln" href="#L260">260</a><span class="c-doc">⍝│</span><span class="c-doc"> expert of hidden size d and inner size f: its three matrices (gate</span></span>
+<span class="line" id="L261"><a class="ln" href="#L261">261</a><span class="c-doc">⍝│</span><span class="c-doc"> and up, f x d; down, d x f), 3 r (d + f).</span></span>
+<span class="line" id="L262"><a class="ln" href="#L262">262</a><span class="c-doc">⍝│</span><span class="c-doc"> &gt;&gt; &quot;lo:&quot; u_se&lt; &quot;LoRA&quot;</span></span>
+<span class="line" id="L263"><a class="ln" href="#L263">263</a><span class="c-doc">⍝│</span><span class="c-doc"> &gt;&gt; 16 lo:e_xpert 4096 14336</span></span>
+<span class="line" id="L264"><a class="ln" href="#L264">264</a><span class="c-doc">⍝│</span><span class="c-doc"> 884736</span></span>
+<span class="line" id="L265"><a class="ln" href="#L265">265</a><span class="c-libfunc">ˡe̲xpert</span> ← { r df → <span class="c-number">3</span> <a href="builtins.html#-2a" class="c-symbol">×</a> r <a href="libs-LoRA-src-LoRA.xtl.html#l.p_arams" class="c-libfunc">ˡp̲arams</a> df }</span>
+<span class="line" id="L266"><a class="ln" href="#L266">266</a></span>
+<span class="line" id="L267"><a class="ln" href="#L267">267</a><span class="c-doc">⍝│</span><span class="c-doc"> </span><span class="c-doc"></span>r <span class="c-builtin">e̲xpertFA</span> d f<span class="c-doc"></span><span class="c-doc">: the same expert under LoRA-FA: the numbers it</span></span>
+<span class="line" id="L268"><a class="ln" href="#L268">268</a><span class="c-doc">⍝│</span><span class="c-doc"> trains (the B's, r (2f + d)), then the frozen A's it regenerates</span></span>
+<span class="line" id="L269"><a class="ln" href="#L269">269</a><span class="c-doc">⍝│</span><span class="c-doc"> (r (2d + f)); together r e_xpert d f.</span></span>
+<span class="line" id="L270"><a class="ln" href="#L270">270</a><span class="c-doc">⍝│</span><span class="c-doc"> &gt;&gt; &quot;lo:&quot; u_se&lt; &quot;LoRA&quot;</span></span>
+<span class="line" id="L271"><a class="ln" href="#L271">271</a><span class="c-doc">⍝│</span><span class="c-doc"> &gt;&gt; 16 lo:e_xpertFA 4096 14336</span></span>
+<span class="line" id="L272"><a class="ln" href="#L272">272</a><span class="c-doc">⍝│</span><span class="c-doc"> 524288 360448</span></span>
+<span class="line" id="L273"><a class="ln" href="#L273">273</a><span class="c-libfunc">ˡe̲xpertFA</span> ← { r df →</span>
+<span class="line" id="L274"><a class="ln" href="#L274">274</a>  (d, f) ← (<a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> df, <span class="c-number">2</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> df)</span>
+<span class="line" id="L275"><a class="ln" href="#L275">275</a>  (r <a href="builtins.html#-2a" class="c-symbol">×</a> f <a href="builtins.html#-2b" class="c-symbol">+</a> f <a href="builtins.html#-2b" class="c-symbol">+</a> d) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> r <a href="builtins.html#-2a" class="c-symbol">×</a> d <a href="builtins.html#-2b" class="c-symbol">+</a> d <a href="builtins.html#-2b" class="c-symbol">+</a> f</span>
+<span class="line" id="L276"><a class="ln" href="#L276">276</a>}</span>
+<span class="line" id="L277"><a class="ln" href="#L277">277</a></span>
+<span class="line" id="L278"><a class="ln" href="#L278">278</a><span class="c-doc">⍝│</span><span class="c-doc"> </span><span class="c-doc"></span>b <span class="c-builtin">b̲ytes</span> n<span class="c-doc"></span><span class="c-doc">: the bytes n numbers take at b bits each (16 for BF16</span></span>
+<span class="line" id="L279"><a class="ln" href="#L279">279</a><span class="c-doc">⍝│</span><span class="c-doc"> and FP16, 32 for FP32, 4 for NF4).</span></span>
+<span class="line" id="L280"><a class="ln" href="#L280">280</a><span class="c-doc">⍝│</span><span class="c-doc"> &gt;&gt; &quot;lo:&quot; u_se&lt; &quot;LoRA&quot;</span></span>
+<span class="line" id="L281"><a class="ln" href="#L281">281</a><span class="c-doc">⍝│</span><span class="c-doc"> &gt;&gt; 16 lo:b_ytes 884736</span></span>
+<span class="line" id="L282"><a class="ln" href="#L282">282</a><span class="c-doc">⍝│</span><span class="c-doc"> 1769472.0</span></span>
+<span class="line" id="L283"><a class="ln" href="#L283">283</a><span class="c-libfunc">ˡb̲ytes</span> ← { b n → (<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> b <a href="builtins.html#-2a" class="c-symbol">×</a> n) <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-number">8.0</span> }</span>
+<span class="line" id="L284"><a class="ln" href="#L284">284</a></span>
+<span class="line" id="L285"><a class="ln" href="#L285">285</a><span class="c-doc">⍝│</span><span class="c-doc"> </span><span class="c-doc"></span>r <span class="c-builtin">c̲osts</span> m n<span class="c-doc"></span><span class="c-doc">: the multiply-adds for one input through rank-r</span></span>
+<span class="line" id="L286"><a class="ln" href="#L286">286</a><span class="c-doc">⍝│</span><span class="c-doc"> factors on an m x n matrix, B (A x) as r (m + n), then what making</span></span>
+<span class="line" id="L287"><a class="ln" href="#L287">287</a><span class="c-doc">⍝│</span><span class="c-doc"> the matrix B A first costs, r m n.</span></span>
+<span class="line" id="L288"><a class="ln" href="#L288">288</a><span class="c-doc">⍝│</span><span class="c-doc"> &gt;&gt; &quot;lo:&quot; u_se&lt; &quot;LoRA&quot;</span></span>
+<span class="line" id="L289"><a class="ln" href="#L289">289</a><span class="c-doc">⍝│</span><span class="c-doc"> &gt;&gt; 8 lo:c_osts 64 64</span></span>
+<span class="line" id="L290"><a class="ln" href="#L290">290</a><span class="c-doc">⍝│</span><span class="c-doc"> 1024 32768</span></span>
+<span class="line" id="L291"><a class="ln" href="#L291">291</a><span class="c-libfunc">ˡc̲osts</span> ← { r mn → (r <a href="libs-LoRA-src-LoRA.xtl.html#l.p_arams" class="c-libfunc">ˡp̲arams</a> mn) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> r <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> mn }</span>
+</div>
+</main>
+</body>
+</html>

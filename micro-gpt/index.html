@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Tiny GPT</title>
+  
+<script type="module">
+import init, * as bindings from '/X_eTaL-ML/micro-gpt/micro-gpt-web-2298a027137e9436.js';
+const wasm = await init({ module_or_path: '/X_eTaL-ML/micro-gpt/micro-gpt-web-2298a027137e9436_bg.wasm' });
+
+
+window.wasmBindings = bindings;
+
+
+dispatchEvent(new CustomEvent("TrunkApplicationStarted", {detail: {wasm}}));
+
+</script>
+  
+  <link rel="icon" href="/X_eTaL-ML/micro-gpt/favicon-a11bc0a2bcd81290.ico" integrity="sha384-xOjSLs9ZRBKy2hF6zlqNv+0U86E4BqZOJy7H7a4GXSVwDQMNie0D851/sRBSYI9a"/>
+  <link rel="stylesheet" href="/X_eTaL-ML/micro-gpt/microscope-22257fd62318e7bf.css" integrity="sha384-HhCElH/+Dn/dCD6BMktfya0hcEUbJTzOz+U+aDZwhSMfcwqIb3L1cSWYSUVqWKI9"/>
+<link rel="modulepreload" href="/X_eTaL-ML/micro-gpt/micro-gpt-web-2298a027137e9436.js" crossorigin="anonymous" integrity="sha384-GpzlCM55/9l4tYZYJQ92IEL6jBNVmUERACwfkIqE9X20aSL6qPpjlPqQYaT/3or6"><link rel="preload" href="/X_eTaL-ML/micro-gpt/micro-gpt-web-2298a027137e9436_bg.wasm" crossorigin="anonymous" integrity="sha384-OmrpQunRZVxNFTZBbM6lK3F5BYLPi06Ui9ERbw1Q8tdJENc4pm9DPlxDUjPbJcg0" as="fetch" type="application/wasm"></head>
+<body></body>
+</html>

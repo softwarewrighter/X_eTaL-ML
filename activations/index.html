@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Activation Functions</title>
+  
+<script type="module">
+import init, * as bindings from '/X_eTaL-ML/activations/activations-web-4c7b024d38af8acb.js';
+const wasm = await init({ module_or_path: '/X_eTaL-ML/activations/activations-web-4c7b024d38af8acb_bg.wasm' });
+
+
+window.wasmBindings = bindings;
+
+
+dispatchEvent(new CustomEvent("TrunkApplicationStarted", {detail: {wasm}}));
+
+</script>
+  
+  <link rel="icon" href="/X_eTaL-ML/activations/favicon-a11bc0a2bcd81290.ico" integrity="sha384-xOjSLs9ZRBKy2hF6zlqNv+0U86E4BqZOJy7H7a4GXSVwDQMNie0D851/sRBSYI9a"/>
+  <link rel="stylesheet" href="/X_eTaL-ML/activations/microscope-22257fd62318e7bf.css" integrity="sha384-HhCElH/+Dn/dCD6BMktfya0hcEUbJTzOz+U+aDZwhSMfcwqIb3L1cSWYSUVqWKI9"/>
+  <style>
+    .sliders { gap: 18px; }
+    .slider { display: flex; align-items: center; gap: 8px; font-size: 0.9em; }
+    .pair .picture { flex: 1 1 420px; }
+    .pair .picture svg { max-width: none; }
+    .running { display: flex; align-items: center; gap: 12px; padding: 28px 4px; }
+    .spinner { width: 26px; height: 26px; border-radius: 50%; border: 3px solid var(--line); border-top-color: var(--accent); animation: spin 0.8s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    textarea.editor { width: 100%; font-family: "JuliaMono", "DejaVu Sans Mono", Menlo, ui-monospace, monospace; font-size: 0.95em; background: var(--card); color: var(--fg); border: 1px solid var(--line); border-radius: 8px; padding: 8px; }
+    pre.err { color: var(--c-error, #c92a2a); white-space: pre-wrap; }
+  </style>
+<link rel="modulepreload" href="/X_eTaL-ML/activations/activations-web-4c7b024d38af8acb.js" crossorigin="anonymous" integrity="sha384-pRBGF+FRl4xgkKZ2ePm9wemWFfh/M6jwVNXnelNxe+tG9Tt6P9bt2O5u2z/1KQYu"><link rel="preload" href="/X_eTaL-ML/activations/activations-web-4c7b024d38af8acb_bg.wasm" crossorigin="anonymous" integrity="sha384-yV4lElxuDI1h+HnYmv6h6drRRGkmi2/EfnYpACRM/0ZsiZhJ8cOVSU82CGoaavF8" as="fetch" type="application/wasm"></head>
+<body></body>
+</html>

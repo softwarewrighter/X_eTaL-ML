@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>k-means</title>
+  
+<script type="module">
+import init, * as bindings from '/X_eTaL-ML/k-means/k-means-web-7fc95f708286615f.js';
+const wasm = await init({ module_or_path: '/X_eTaL-ML/k-means/k-means-web-7fc95f708286615f_bg.wasm' });
+
+
+window.wasmBindings = bindings;
+
+
+dispatchEvent(new CustomEvent("TrunkApplicationStarted", {detail: {wasm}}));
+
+</script>
+  
+  <link rel="icon" href="/X_eTaL-ML/k-means/favicon-a11bc0a2bcd81290.ico" integrity="sha384-xOjSLs9ZRBKy2hF6zlqNv+0U86E4BqZOJy7H7a4GXSVwDQMNie0D851/sRBSYI9a"/>
+  <link rel="stylesheet" href="/X_eTaL-ML/k-means/microscope-22257fd62318e7bf.css" integrity="sha384-HhCElH/+Dn/dCD6BMktfya0hcEUbJTzOz+U+aDZwhSMfcwqIb3L1cSWYSUVqWKI9"/>
+<link rel="modulepreload" href="/X_eTaL-ML/k-means/k-means-web-7fc95f708286615f.js" crossorigin="anonymous" integrity="sha384-OHdsahB20GSOg5I5cEUnkfYxqKmq3N5KEmh9b7QVqkG20rA3Kks0oycYcHb/qvXV"><link rel="preload" href="/X_eTaL-ML/k-means/k-means-web-7fc95f708286615f_bg.wasm" crossorigin="anonymous" integrity="sha384-SZtKfNCWPXHzCuMT2QVTFL4dYFItHv2M80K1YiObJdItN3H1xaJSFDuAmclg9OgP" as="fetch" type="application/wasm"></head>
+<body></body>
+</html>

@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>libs/MoE/src/MoE.xtl - X_eTaL doc</title>
+<link rel="stylesheet" href="style.css">
+<script src="theme.js"></script>
+<script defer src="search-index.js"></script>
+<script defer src="search.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.18.10/dist/katex.min.css" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.18.10/dist/katex.min.js" crossorigin="anonymous"></script>
+<script>document.addEventListener('DOMContentLoaded', function () {
+if (typeof katex === 'undefined') return;
+document.querySelectorAll('.c-notation').forEach(function (el) {
+var tex = el.textContent; if (!tex) return;
+try { katex.render(tex, el, { throwOnError: false }); } catch (e) { el.textContent = tex; }
+});
+});</script>
+</head>
+<body>
+<nav class="side">
+<a class="home" href="index.html">X_eTaL doc</a>
+<input id="search" type="search" autocomplete="off" placeholder="Search: a name, or a type" title="A name (mean finds m_ean), or a type: Num a =&gt; a -&gt; a -&gt; a finds +, m_ax ...">
+<h2>Files</h2>
+<h3>demos/activations/</h3>
+<ul>
+<li><a href="demos-activations-activations.xtl.html">activations.xtl</a></li>
+</ul>
+<h3>demos/attention/</h3>
+<ul>
+<li><a href="demos-attention-attention.xtl.html">attention.xtl</a></li>
+</ul>
+<h3>demos/backprop/</h3>
+<ul>
+<li><a href="demos-backprop-backprop.xtl.html">backprop.xtl</a></li>
+</ul>
+<h3>demos/cnn-backprop/</h3>
+<ul>
+<li><a href="demos-cnn-backprop-cnn-backprop.xtl.html">cnn-backprop.xtl</a></li>
+</ul>
+<h3>demos/cnn-digits/</h3>
+<ul>
+<li><a href="demos-cnn-digits-batch.xtl.html">batch.xtl</a></li>
+<li><a href="demos-cnn-digits-cnn-digits.xtl.html">cnn-digits.xtl</a></li>
+</ul>
+<h3>demos/diffusion/</h3>
+<ul>
+<li><a href="demos-diffusion-diffusion.xtl.html">diffusion.xtl</a></li>
+</ul>
+<h3>demos/embedding-explorer/</h3>
+<ul>
+<li><a href="demos-embedding-explorer-embedding-explorer.xtl.html">embedding-explorer.xtl</a></li>
+</ul>
+<h3>demos/k-means/</h3>
+<ul>
+<li><a href="demos-k-means-k-means.xtl.html">k-means.xtl</a></li>
+</ul>
+<h3>demos/lora-explorer/</h3>
+<ul>
+<li><a href="demos-lora-explorer-lora-explorer.xtl.html">lora-explorer.xtl</a></li>
+</ul>
+<h3>demos/micro-bert/</h3>
+<ul>
+<li><a href="demos-micro-bert-micro-bert.xtl.html">micro-bert.xtl</a></li>
+</ul>
+<h3>demos/micro-gpt/</h3>
+<ul>
+<li><a href="demos-micro-gpt-batch.xtl.html">batch.xtl</a></li>
+<li><a href="demos-micro-gpt-micro-gpt.xtl.html">micro-gpt.xtl</a></li>
+</ul>
+<h3>demos/moe-router/</h3>
+<ul>
+<li><a href="demos-moe-router-moe-router.xtl.html">moe-router.xtl</a></li>
+</ul>
+<h3>demos/net-macro/</h3>
+<ul>
+<li><a href="demos-net-macro-net-macro.xtl.html">net-macro.xtl</a></li>
+<li><a href="demos-net-macro-train-it.xtl.html">train-it.xtl</a></li>
+</ul>
+<h3>demos/pipelines/</h3>
+<ul>
+<li><a href="demos-pipelines-diffusion.xtl.html">diffusion.xtl</a></li>
+<li><a href="demos-pipelines-equations.xtl.html">equations.xtl</a></li>
+<li><a href="demos-pipelines-pipelines.xtl.html">pipelines.xtl</a></li>
+<li><a href="demos-pipelines-rosetta.xtl.html">rosetta.xtl</a></li>
+</ul>
+<h3>demos/ternary-net/</h3>
+<ul>
+<li><a href="demos-ternary-net-ternary-net.xtl.html">ternary-net.xtl</a></li>
+</ul>
+<h3>demos/train-live/</h3>
+<ul>
+<li><a href="demos-train-live-train-live.xtl.html">train-live.xtl</a></li>
+</ul>
+<h3>demos/world-model/</h3>
+<ul>
+<li><a href="demos-world-model-world-model.xtl.html">world-model.xtl</a></li>
+</ul>
+<h3>libs/Activations/demos/</h3>
+<ul>
+<li><a href="libs-Activations-demos-curves.xtl.html">curves.xtl</a></li>
+</ul>
+<h3>libs/Activations/src/</h3>
+<ul>
+<li><a href="libs-Activations-src-Activations.xtl.html">Activations.xtl</a></li>
+</ul>
+<h3>libs/Attention/demos/</h3>
+<ul>
+<li><a href="libs-Attention-demos-previous.xtl.html">previous.xtl</a></li>
+</ul>
+<h3>libs/Attention/src/</h3>
+<ul>
+<li><a href="libs-Attention-src-Attention.xtl.html">Attention.xtl</a></li>
+</ul>
+<h3>libs/Conv/demos/</h3>
+<ul>
+<li><a href="libs-Conv-demos-edges.xtl.html">edges.xtl</a></li>
+</ul>
+<h3>libs/Conv/src/</h3>
+<ul>
+<li><a href="libs-Conv-src-Conv.xtl.html">Conv.xtl</a></li>
+</ul>
+<h3>libs/Embed/demos/</h3>
+<ul>
+<li><a href="libs-Embed-demos-pets.xtl.html">pets.xtl</a></li>
+</ul>
+<h3>libs/Embed/src/</h3>
+<ul>
+<li><a href="libs-Embed-src-Embed.xtl.html">Embed.xtl</a></li>
+</ul>
+<h3>libs/Flow/demos/</h3>
+<ul>
+<li><a href="libs-Flow-demos-mlp.xtl.html">mlp.xtl</a></li>
+</ul>
+<h3>libs/Flow/src/</h3>
+<ul>
+<li><a href="libs-Flow-src-Flow.xtlm.html">Flow.xtlm</a></li>
+</ul>
+<h3>libs/Integrals/demos/</h3>
+<ul>
+<li><a href="libs-Integrals-demos-convolution.xtl.html">convolution.xtl</a></li>
+<li><a href="libs-Integrals-demos-gelu.xtl.html">gelu.xtl</a></li>
+</ul>
+<h3>libs/Integrals/src/</h3>
+<ul>
+<li><a href="libs-Integrals-src-Integrals.xtlm.html">Integrals.xtlm</a></li>
+</ul>
+<h3>libs/Learn/demos/</h3>
+<ul>
+<li><a href="libs-Learn-demos-blobs.xtl.html">blobs.xtl</a></li>
+</ul>
+<h3>libs/Learn/src/</h3>
+<ul>
+<li><a href="libs-Learn-src-Learn.xtl.html">Learn.xtl</a></li>
+</ul>
+<h3>libs/LoRA/demos/</h3>
+<ul>
+<li><a href="libs-LoRA-demos-sizes.xtl.html">sizes.xtl</a></li>
+</ul>
+<h3>libs/LoRA/src/</h3>
+<ul>
+<li><a href="libs-LoRA-src-LoRA.xtl.html">LoRA.xtl</a></li>
+<li><a href="libs-LoRA-src-LoRA.xtlm.html">LoRA.xtlm</a></li>
+</ul>
+<h3>libs/MoE/demos/</h3>
+<ul>
+<li><a href="libs-MoE-demos-routing.xtl.html">routing.xtl</a></li>
+</ul>
+<h3>libs/MoE/src/</h3>
+<ul>
+<li><a href="libs-MoE-src-MoE.xtl.html">MoE.xtl</a></li>
+</ul>
+<h3>libs/Net/demos/</h3>
+<ul>
+<li><a href="libs-Net-demos-train-xor.xtl.html">train-xor.xtl</a></li>
+<li><a href="libs-Net-demos-xor.xtl.html">xor.xtl</a></li>
+</ul>
+<h3>libs/Net/src/</h3>
+<ul>
+<li><a href="libs-Net-src-Net.xtlm.html">Net.xtlm</a></li>
+</ul>
+<h3>libs/NN/demos/</h3>
+<ul>
+<li><a href="libs-NN-demos-xor.xtl.html">xor.xtl</a></li>
+</ul>
+<h3>libs/NN/src/</h3>
+<ul>
+<li><a href="libs-NN-src-NN.xtl.html">NN.xtl</a></li>
+</ul>
+<h3>libs/Norm/demos/</h3>
+<ul>
+<li><a href="libs-Norm-demos-rows.xtl.html">rows.xtl</a></li>
+</ul>
+<h3>libs/Norm/src/</h3>
+<ul>
+<li><a href="libs-Norm-src-Norm.xtl.html">Norm.xtl</a></li>
+</ul>
+<h3>libs/Optim/demos/</h3>
+<ul>
+<li><a href="libs-Optim-demos-bowl.xtl.html">bowl.xtl</a></li>
+</ul>
+<h3>libs/Optim/src/</h3>
+<ul>
+<li><a href="libs-Optim-src-Optim.xtl.html">Optim.xtl</a></li>
+</ul>
+<h3>libs/Quant/demos/</h3>
+<ul>
+<li><a href="libs-Quant-demos-formats.xtl.html">formats.xtl</a></li>
+</ul>
+<h3>libs/Quant/src/</h3>
+<ul>
+<li><a href="libs-Quant-src-Quant.xtl.html">Quant.xtl</a></li>
+</ul>
+<h3>libs/Sample/demos/</h3>
+<ul>
+<li><a href="libs-Sample-demos-next.xtl.html">next.xtl</a></li>
+</ul>
+<h3>libs/Sample/src/</h3>
+<ul>
+<li><a href="libs-Sample-src-Sample.xtl.html">Sample.xtl</a></li>
+</ul>
+<h3>std/</h3>
+<ul>
+<li><a href="std-Svg.xtl.html">Svg.xtl</a></li>
+<li><a href="std-System.xtlm.html">System.xtlm</a></li>
+</ul>
+<h3>work/libs/Check/src/</h3>
+<ul>
+<li><a href="work-libs-Check-src-Check.xtl.html">Check.xtl</a></li>
+<li><a href="work-libs-Check-src-Check.xtlm.html">Check.xtlm</a></li>
+</ul>
+<h3>work/libs/Equations/src/</h3>
+<ul>
+<li><a href="work-libs-Equations-src-Equations.xtl.html">Equations.xtl</a></li>
+<li><a href="work-libs-Equations-src-Equations.xtlm.html">Equations.xtlm</a></li>
+</ul>
+<h3>work/libs/Format/src/</h3>
+<ul>
+<li><a href="work-libs-Format-src-Format.xtl.html">Format.xtl</a></li>
+</ul>
+<h3>work/libs/Lists/src/</h3>
+<ul>
+<li><a href="work-libs-Lists-src-Lists.xtl.html">Lists.xtl</a></li>
+</ul>
+<h3>work/libs/Plot/src/</h3>
+<ul>
+<li><a href="work-libs-Plot-src-Plot.xtl.html">Plot.xtl</a></li>
+</ul>
+<h3>work/libs/Strings/src/</h3>
+<ul>
+<li><a href="work-libs-Strings-src-Strings.xtl.html">Strings.xtl</a></li>
+</ul>
+<ul>
+<li><a href="builtins.html">built-ins</a></li>
+</ul>
+<h2>On this page</h2>
+<ul>
+<li class="item"><a href="#L25"><span class="c-libfunc">ʰc̲ols</span></a></li>
+<li class="item"><a href="#L28"><span class="c-libfunc">ʰp̲ick</span></a></li>
+<li class="item"><a href="#L37"><span class="c-libfunc">ˡs̲cores</span></a></li>
+<li class="item"><a href="#L46"><span class="c-libfunc">ˡs̲oftmax</span></a></li>
+<li class="item"><a href="#L59"><span class="c-libfunc">ˡm̲ask</span></a></li>
+<li class="item"><a href="#L74"><span class="c-libfunc">ˡt̲opk</span></a></li>
+<li class="item"><a href="#L83"><span class="c-libfunc">ˡa̲pply</span></a></li>
+<li class="item"><a href="#L89"><span class="c-libfunc">ˡc̲ombine</span></a></li>
+<li class="item"><a href="#L106"><span class="c-libfunc">ˡd̲ense</span></a></li>
+<li class="item"><a href="#L122"><span class="c-libfunc">ˡl̲ayer</span></a></li>
+<li class="item"><a href="#L135"><span class="c-libfunc">ˡg̲rads</span></a></li>
+<li class="item"><a href="#L156"><span class="c-libfunc">ˡf̲requency</span></a></li>
+<li class="item"><a href="#L164"><span class="c-libfunc">ˡe̲ntropy</span></a></li>
+<li class="item"><a href="#L173"><span class="c-libfunc">ˡb̲alance</span></a></li>
+</ul>
+</nav>
+<main>
+<button class="theme" title="Light or dark">theme</button>
+<section id="results"></section>
+<h1><span class="kind">source</span><a href="libs-MoE-src-MoE.xtl.html">libs/MoE/src/MoE.xtl</a></h1>
+<div class="source"><span class="line" id="L1"><a class="ln" href="#L1">1</a><span class="c-doc">⍝│</span><span class="c-doc"> MoE: mixture-of-experts layers: router scores, top-k gates, experts as adapted projections, the sparse combine, gradients and routing statistics</span></span>
+<span class="line" id="L2"><a class="ln" href="#L2">2</a><span class="c-doc">⍝│</span></span>
+<span class="line" id="L3"><a class="ln" href="#L3">3</a><span class="c-doc">⍝│</span><span class="c-doc"> Import it with an alias of your choice: &quot;moe:&quot; u_se&lt; &quot;MoE&quot;.</span></span>
+<span class="line" id="L4"><a class="ln" href="#L4">4</a><span class="c-doc">⍝│</span><span class="c-doc"> Put libs/MoE/src on XETAL_PATH (&quot;just path&quot;); the reference is libs/MoE/docs.</span></span>
+<span class="line" id="L5"><a class="ln" href="#L5">5</a><span class="c-doc">⍝│</span><span class="c-doc"> Names with l: are exported; h: names are private to this file.</span></span>
+<span class="line" id="L6"><a class="ln" href="#L6">6</a><span class="c-doc">⍝│</span></span>
+<span class="line" id="L7"><a class="ln" href="#L7">7</a><span class="c-doc">⍝│</span><span class="c-doc"> Tokens are columns, as in the LoRA library: x is n x N, N tokens of</span></span>
+<span class="line" id="L8"><a class="ln" href="#L8">8</a><span class="c-doc">⍝│</span><span class="c-doc"> n numbers. The router R (E x n) scores each token against E experts;</span></span>
+<span class="line" id="L9"><a class="ln" href="#L9">9</a><span class="c-doc">⍝│</span><span class="c-doc"> each token's scores become probabilities over the experts (a</span></span>
+<span class="line" id="L10"><a class="ln" href="#L10">10</a><span class="c-doc">⍝│</span><span class="c-doc"> column's softmax), and its k most likely experts are kept, their</span></span>
+<span class="line" id="L11"><a class="ln" href="#L11">11</a><span class="c-doc">⍝│</span><span class="c-doc"> probabilities renormalized over those k: the gates G (E x N, 0 where</span></span>
+<span class="line" id="L12"><a class="ln" href="#L12">12</a><span class="c-doc">⍝│</span><span class="c-doc"> an expert is not chosen). An expert here is an adapted projection,</span></span>
+<span class="line" id="L13"><a class="ln" href="#L13">13</a><span class="c-doc">⍝│</span><span class="c-doc"> W_e x + s B_e (A_e x) (the LoRA library's layer); the experts are</span></span>
+<span class="line" id="L14"><a class="ln" href="#L14">14</a><span class="c-doc">⍝│</span><span class="c-doc"> stacked, (Ws, As, Bs, s): Ws E x m x n, As E x r x n, Bs E x m x r,</span></span>
+<span class="line" id="L15"><a class="ln" href="#L15">15</a><span class="c-doc">⍝│</span><span class="c-doc"> one scale s. The layer is y = sum over the chosen e of G_e (W_e x +</span></span>
+<span class="line" id="L16"><a class="ln" href="#L16">16</a><span class="c-doc">⍝│</span><span class="c-doc"> s B_e (A_e x)), each token through its k experts only. Every</span></span>
+<span class="line" id="L17"><a class="ln" href="#L17">17</a><span class="c-doc">⍝│</span><span class="c-doc"> function takes its data on the right, so each can be a Flow stage.</span></span>
+<span class="line" id="L18"><a class="ln" href="#L18">18</a></span>
+<span class="line" id="L19"><a class="ln" href="#L19">19</a><span class="c-string">&quot;lo:&quot;</span> <a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="libs-LoRA-src-LoRA.xtl.html" class="c-string">&quot;LoRA&quot;</a></span>
+<span class="line" id="L20"><a class="ln" href="#L20">20</a></span>
+<span class="line" id="L21"><a class="ln" href="#L21">21</a><span class="c-heading">⍝━━</span><span class="c-heading"> Helpers (private)</span></span>
+<span class="line" id="L22"><a class="ln" href="#L22">22</a></span>
+<span class="line" id="L23"><a class="ln" href="#L23">23</a><span class="c-doc">⍝│</span><span class="c-doc"> The vector v (one number per token) repeated down each row of a</span></span>
+<span class="line" id="L24"><a class="ln" href="#L24">24</a><span class="c-doc">⍝│</span><span class="c-doc"> matrix shaped as M: v's j-th number in column j.</span></span>
+<span class="line" id="L25"><a class="ln" href="#L25">25</a><span class="c-libfunc">ʰc̲ols</span> ← { v M → (<a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> M) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> v }</span>
+<span class="line" id="L26"><a class="ln" href="#L26">26</a><span class="c-doc">⍝│</span><span class="c-doc"> The one-hot columns of the tokens idx among N: an N x t_ally idx</span></span>
+<span class="line" id="L27"><a class="ln" href="#L27">27</a><span class="c-doc">⍝│</span><span class="c-doc"> matrix whose column j is 1 at token idx[j].</span></span>
+<span class="line" id="L28"><a class="ln" href="#L28">28</a><span class="c-libfunc">ʰp̲ick</span> ← { N idx → <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> (<a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> N) <span class="c-symbol">'</span><a href="builtins.html#-3d" class="c-symbol">=</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> idx }</span>
+<span class="line" id="L29"><a class="ln" href="#L29">29</a></span>
+<span class="line" id="L30"><a class="ln" href="#L30">30</a><span class="c-heading">⍝━━</span><span class="c-heading"> Routing</span></span>
+<span class="line" id="L31"><a class="ln" href="#L31">31</a></span>
+<span class="line" id="L32"><a class="ln" href="#L32">32</a><span class="c-doc">⍝│</span><span class="c-doc"> </span><span class="c-doc"></span>R <span class="c-builtin">s̲cores</span> x<span class="c-doc"></span><span class="c-doc">: each token's score for each expert, R x (E x N).</span></span>
+<span class="line" id="L33"><a class="ln" href="#L33">33</a><span class="c-doc">⍝│</span><span class="c-doc"> &gt;&gt; &quot;moe:&quot; u_se&lt; &quot;MoE&quot;</span></span>
+<span class="line" id="L34"><a class="ln" href="#L34">34</a><span class="c-doc">⍝│</span><span class="c-doc"> &gt;&gt; (2 2 r_eshape 1.0 0.0 0.0 1.0) moe:s_cores 2 1 r_eshape 3.0 -1.0</span></span>
+<span class="line" id="L35"><a class="ln" href="#L35">35</a><span class="c-doc">⍝│</span><span class="c-doc">  3.0</span></span>
+<span class="line" id="L36"><a class="ln" href="#L36">36</a><span class="c-doc">⍝│</span><span class="c-doc"> -1.0</span></span>
+<span class="line" id="L37"><a class="ln" href="#L37">37</a><span class="c-libfunc">ˡs̲cores</span> ← { R x → R <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#i_nner" class="c-builtin">i̲nner</a> x }</span>
+<span class="line" id="L38"><a class="ln" href="#L38">38</a></span>
+<span class="line" id="L39"><a class="ln" href="#L39">39</a><span class="c-doc">⍝│</span><span class="c-doc"> </span><span class="c-doc"></span><span class="c-builtin">s̲oftmax</span> S<span class="c-doc"></span><span class="c-doc">: each column (a token) into probabilities over the</span></span>
+<span class="line" id="L40"><a class="ln" href="#L40">40</a><span class="c-doc">⍝│</span><span class="c-doc"> experts; the column's largest is taken off first (the same result,</span></span>
+<span class="line" id="L41"><a class="ln" href="#L41">41</a><span class="c-doc">⍝│</span><span class="c-doc"> no overflow).</span></span>
+<span class="line" id="L42"><a class="ln" href="#L42">42</a><span class="c-doc">⍝│</span><span class="c-doc"> &gt;&gt; &quot;moe:&quot; u_se&lt; &quot;MoE&quot;</span></span>
+<span class="line" id="L43"><a class="ln" href="#L43">43</a><span class="c-doc">⍝│</span><span class="c-doc"> &gt;&gt; moe:s_oftmax 2 1 r_eshape 0.0 0.6931471805599453</span></span>
+<span class="line" id="L44"><a class="ln" href="#L44">44</a><span class="c-doc">⍝│</span><span class="c-doc"> 0.3333333333333333</span></span>
+<span class="line" id="L45"><a class="ln" href="#L45">45</a><span class="c-doc">⍝│</span><span class="c-doc"> 0.6666666666666666</span></span>
+<span class="line" id="L46"><a class="ln" href="#L46">46</a><span class="c-libfunc">ˡs̲oftmax</span> ← { S →</span>
+<span class="line" id="L47"><a class="ln" href="#L47">47</a>  e ← <a href="builtins.html#e_xp" class="c-builtin">e̲xp</a> S <a href="builtins.html#-2d" class="c-symbol">−</a> (<span class="c-builtin">'</span><a href="builtins.html#m_ax" class="c-builtin">m̲ax</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/₁</a> S) <a href="libs-MoE-src-MoE.xtl.html#h.c_ols" class="c-libfunc">ʰc̲ols</a> S</span>
+<span class="line" id="L48"><a class="ln" href="#L48">48</a>  e <a href="builtins.html#-2f" class="c-symbol">÷</a> (<span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/₁</a> e) <a href="libs-MoE-src-MoE.xtl.html#h.c_ols" class="c-libfunc">ʰc̲ols</a> e</span>
+<span class="line" id="L49"><a class="ln" href="#L49">49</a>}</span>
+<span class="line" id="L50"><a class="ln" href="#L50">50</a></span>
+<span class="line" id="L51"><a class="ln" href="#L51">51</a><span class="c-doc">⍝│</span><span class="c-doc"> </span><span class="c-doc"></span>k <span class="c-builtin">m̲ask</span> P<span class="c-doc"></span><span class="c-doc">: 1 at each token's k most likely experts, 0 elsewhere</span></span>
+<span class="line" id="L52"><a class="ln" href="#L52">52</a><span class="c-doc">⍝│</span><span class="c-doc"> (the largest, taken out, then the largest of what is left; a tie</span></span>
+<span class="line" id="L53"><a class="ln" href="#L53">53</a><span class="c-doc">⍝│</span><span class="c-doc"> keeps every expert at the tie).</span></span>
+<span class="line" id="L54"><a class="ln" href="#L54">54</a><span class="c-doc">⍝│</span><span class="c-doc"> &gt;&gt; &quot;moe:&quot; u_se&lt; &quot;MoE&quot;</span></span>
+<span class="line" id="L55"><a class="ln" href="#L55">55</a><span class="c-doc">⍝│</span><span class="c-doc"> &gt;&gt; 1 moe:m_ask 3 2 r_eshape 0.2 0.5 0.7 0.1 0.1 0.4</span></span>
+<span class="line" id="L56"><a class="ln" href="#L56">56</a><span class="c-doc">⍝│</span><span class="c-doc"> 0.0 1.0</span></span>
+<span class="line" id="L57"><a class="ln" href="#L57">57</a><span class="c-doc">⍝│</span><span class="c-doc"> 1.0 0.0</span></span>
+<span class="line" id="L58"><a class="ln" href="#L58">58</a><span class="c-doc">⍝│</span><span class="c-doc"> 0.0 0.0</span></span>
+<span class="line" id="L59"><a class="ln" href="#L59">59</a><span class="c-libfunc">ˡm̲ask</span> ← { k P →</span>
+<span class="line" id="L60"><a class="ln" href="#L60">60</a>  (_, M) ← k <span class="c-quote">'</span>{ (Q, M) →</span>
+<span class="line" id="L61"><a class="ln" href="#L61">61</a>    m ← <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> Q <a href="builtins.html#-3d" class="c-symbol">=</a> (<span class="c-builtin">'</span><a href="builtins.html#m_ax" class="c-builtin">m̲ax</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/₁</a> Q) <a href="libs-MoE-src-MoE.xtl.html#h.c_ols" class="c-libfunc">ʰc̲ols</a> Q</span>
+<span class="line" id="L62"><a class="ln" href="#L62">62</a>    (Q <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">2.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> m, M <a href="builtins.html#-2b" class="c-symbol">+</a> m)</span>
+<span class="line" id="L63"><a class="ln" href="#L63">63</a>  } <a href="builtins.html#p_ower" class="c-builtin">p̲ower</a> (P, <span class="c-number">0.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> P)</span>
+<span class="line" id="L64"><a class="ln" href="#L64">64</a>  M</span>
+<span class="line" id="L65"><a class="ln" href="#L65">65</a>}</span>
+<span class="line" id="L66"><a class="ln" href="#L66">66</a></span>
+<span class="line" id="L67"><a class="ln" href="#L67">67</a><span class="c-doc">⍝│</span><span class="c-doc"> </span><span class="c-doc"></span>k <span class="c-builtin">t̲opk</span> P<span class="c-doc"></span><span class="c-doc">: the gates: each token's k most likely experts, their</span></span>
+<span class="line" id="L68"><a class="ln" href="#L68">68</a><span class="c-doc">⍝│</span><span class="c-doc"> probabilities over those k's sum (Mixtral's), 0 for the rest.</span></span>
+<span class="line" id="L69"><a class="ln" href="#L69">69</a><span class="c-doc">⍝│</span><span class="c-doc"> &gt;&gt; &quot;moe:&quot; u_se&lt; &quot;MoE&quot;</span></span>
+<span class="line" id="L70"><a class="ln" href="#L70">70</a><span class="c-doc">⍝│</span><span class="c-doc"> &gt;&gt; 2 moe:t_opk 3 1 r_eshape 0.5 0.3 0.2</span></span>
+<span class="line" id="L71"><a class="ln" href="#L71">71</a><span class="c-doc">⍝│</span><span class="c-doc">               0.625</span></span>
+<span class="line" id="L72"><a class="ln" href="#L72">72</a><span class="c-doc">⍝│</span><span class="c-doc"> 0.37499999999999994</span></span>
+<span class="line" id="L73"><a class="ln" href="#L73">73</a><span class="c-doc">⍝│</span><span class="c-doc">                 0.0</span></span>
+<span class="line" id="L74"><a class="ln" href="#L74">74</a><span class="c-libfunc">ˡt̲opk</span> ← { k P →</span>
+<span class="line" id="L75"><a class="ln" href="#L75">75</a>  G ← P <a href="builtins.html#-2a" class="c-symbol">×</a> k <a href="libs-MoE-src-MoE.xtl.html#l.m_ask" class="c-libfunc">ˡm̲ask</a> P</span>
+<span class="line" id="L76"><a class="ln" href="#L76">76</a>  G <a href="builtins.html#-2f" class="c-symbol">÷</a> (<span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/₁</a> G) <a href="libs-MoE-src-MoE.xtl.html#h.c_ols" class="c-libfunc">ʰc̲ols</a> G</span>
+<span class="line" id="L77"><a class="ln" href="#L77">77</a>}</span>
+<span class="line" id="L78"><a class="ln" href="#L78">78</a></span>
+<span class="line" id="L79"><a class="ln" href="#L79">79</a><span class="c-heading">⍝━━</span><span class="c-heading"> Experts</span></span>
+<span class="line" id="L80"><a class="ln" href="#L80">80</a></span>
+<span class="line" id="L81"><a class="ln" href="#L81">81</a><span class="c-doc">⍝│</span><span class="c-doc"> </span><span class="c-doc"></span>(Ws, As, Bs, s) <span class="c-builtin">a̲pply</span> (e, x)<span class="c-doc"></span><span class="c-doc">: expert e (from 1) on the tokens x,</span></span>
+<span class="line" id="L82"><a class="ln" href="#L82">82</a><span class="c-doc">⍝│</span><span class="c-doc"> W_e x + s B_e (A_e x), as the LoRA library computes it.</span></span>
+<span class="line" id="L83"><a class="ln" href="#L83">83</a><span class="c-libfunc">ˡa̲pply</span> ← { (Ws, As, Bs, s) (e, x) → (e <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> Ws, e <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> As, e <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> Bs, s) <a href="libs-LoRA-src-LoRA.xtl.html#l.f_orward" class="c-libfunc">ˡᵒf̲orward</a> x }</span>
+<span class="line" id="L84"><a class="ln" href="#L84">84</a></span>
+<span class="line" id="L85"><a class="ln" href="#L85">85</a><span class="c-doc">⍝│</span><span class="c-doc"> </span><span class="c-doc"></span>(experts, G) <span class="c-builtin">c̲ombine</span> x<span class="c-doc"></span><span class="c-doc">: the layer's output for the gates G: each</span></span>
+<span class="line" id="L86"><a class="ln" href="#L86">86</a><span class="c-doc">⍝│</span><span class="c-doc"> expert run only on the tokens that chose it (picked out as columns,</span></span>
+<span class="line" id="L87"><a class="ln" href="#L87">87</a><span class="c-doc">⍝│</span><span class="c-doc"> then put back), times their gates, summed: sum over the chosen e of</span></span>
+<span class="line" id="L88"><a class="ln" href="#L88">88</a><span class="c-doc">⍝│</span><span class="c-doc"> G_e (W_e x + s B_e (A_e x)).</span></span>
+<span class="line" id="L89"><a class="ln" href="#L89">89</a><span class="c-libfunc">ˡc̲ombine</span> ← { ((Ws, As, Bs, s), G) x →</span>
+<span class="line" id="L90"><a class="ln" href="#L90">90</a>  N ← <span class="c-number">2</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> x</span>
+<span class="line" id="L91"><a class="ln" href="#L91">91</a>  m ← <span class="c-number">2</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> Ws</span>
+<span class="line" id="L92"><a class="ln" href="#L92">92</a>  E ← <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> <a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> Ws</span>
+<span class="line" id="L93"><a class="ln" href="#L93">93</a>  (y, _) ← E <span class="c-quote">'</span>{ (y, e) →</span>
+<span class="line" id="L94"><a class="ln" href="#L94">94</a>    idx ← <a href="builtins.html#w_here" class="c-builtin">w̲here</a> (e <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> G) <a href="builtins.html#-3e" class="c-symbol">&gt;</a> <span class="c-number">0.0</span></span>
+<span class="line" id="L95"><a class="ln" href="#L95">95</a>    <span class="c-number">0</span> <a href="builtins.html#-3d" class="c-symbol">=</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> idx ? (y, e <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">1</span>)</span>
+<span class="line" id="L96"><a class="ln" href="#L96">96</a>    P ← N <a href="libs-MoE-src-MoE.xtl.html#h.p_ick" class="c-libfunc">ʰp̲ick</a> idx</span>
+<span class="line" id="L97"><a class="ln" href="#L97">97</a>    ye ← ((Ws, As, Bs, s) <a href="libs-MoE-src-MoE.xtl.html#l.a_pply" class="c-libfunc">ˡa̲pply</a> (e, x <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#i_nner" class="c-builtin">i̲nner</a> P)) <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#i_nner" class="c-builtin">i̲nner</a> <a href="builtins.html#o_-5c" class="c-builtin">o̲\</a> P</span>
+<span class="line" id="L98"><a class="ln" href="#L98">98</a>    (y <a href="builtins.html#-2b" class="c-symbol">+</a> ye <a href="builtins.html#-2a" class="c-symbol">×</a> (e <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> G) <a href="libs-MoE-src-MoE.xtl.html#h.c_ols" class="c-libfunc">ʰc̲ols</a> ye, e <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">1</span>)</span>
+<span class="line" id="L99"><a class="ln" href="#L99">99</a>  } <a href="builtins.html#p_ower" class="c-builtin">p̲ower</a> ((m <a href="builtins.html#c_at" class="c-builtin">c̲at</a> N) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.0</span>, <span class="c-number">1</span>)</span>
+<span class="line" id="L100"><a class="ln" href="#L100">100</a>  y</span>
+<span class="line" id="L101"><a class="ln" href="#L101">101</a>}</span>
+<span class="line" id="L102"><a class="ln" href="#L102">102</a></span>
+<span class="line" id="L103"><a class="ln" href="#L103">103</a><span class="c-doc">⍝│</span><span class="c-doc"> </span><span class="c-doc"></span>(experts, G) <span class="c-builtin">d̲ense</span> x<span class="c-doc"></span><span class="c-doc">: the same sum with every expert run on every</span></span>
+<span class="line" id="L104"><a class="ln" href="#L104">104</a><span class="c-doc">⍝│</span><span class="c-doc"> token (an unchosen one's gate is 0): the reference c_ombine is</span></span>
+<span class="line" id="L105"><a class="ln" href="#L105">105</a><span class="c-doc">⍝│</span><span class="c-doc"> checked against.</span></span>
+<span class="line" id="L106"><a class="ln" href="#L106">106</a><span class="c-libfunc">ˡd̲ense</span> ← { ((Ws, As, Bs, s), G) x →</span>
+<span class="line" id="L107"><a class="ln" href="#L107">107</a>  E ← <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> <a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> Ws</span>
+<span class="line" id="L108"><a class="ln" href="#L108">108</a>  (y, _) ← E <span class="c-quote">'</span>{ (y, e) →</span>
+<span class="line" id="L109"><a class="ln" href="#L109">109</a>    ye ← (Ws, As, Bs, s) <a href="libs-MoE-src-MoE.xtl.html#l.a_pply" class="c-libfunc">ˡa̲pply</a> (e, x)</span>
+<span class="line" id="L110"><a class="ln" href="#L110">110</a>    (y <a href="builtins.html#-2b" class="c-symbol">+</a> ye <a href="builtins.html#-2a" class="c-symbol">×</a> (e <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> G) <a href="libs-MoE-src-MoE.xtl.html#h.c_ols" class="c-libfunc">ʰc̲ols</a> ye, e <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">1</span>)</span>
+<span class="line" id="L111"><a class="ln" href="#L111">111</a>  } <a href="builtins.html#p_ower" class="c-builtin">p̲ower</a> (<span class="c-number">0.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> (Ws, As, Bs, s) <a href="libs-MoE-src-MoE.xtl.html#l.a_pply" class="c-libfunc">ˡa̲pply</a> (<span class="c-number">1</span>, x), <span class="c-number">1</span>)</span>
+<span class="line" id="L112"><a class="ln" href="#L112">112</a>  y</span>
+<span class="line" id="L113"><a class="ln" href="#L113">113</a>}</span>
+<span class="line" id="L114"><a class="ln" href="#L114">114</a></span>
+<span class="line" id="L115"><a class="ln" href="#L115">115</a><span class="c-doc">⍝│</span><span class="c-doc"> </span><span class="c-doc"></span>(R, experts, k) <span class="c-builtin">l̲ayer</span> x<span class="c-doc"></span><span class="c-doc">: the whole layer: scores, probabilities,</span></span>
+<span class="line" id="L116"><a class="ln" href="#L116">116</a><span class="c-doc">⍝│</span><span class="c-doc"> the top-k gates, the sparse combine.</span></span>
+<span class="line" id="L117"><a class="ln" href="#L117">117</a><span class="c-doc">⍝│</span><span class="c-doc"> &gt;&gt; &quot;moe:&quot; u_se&lt; &quot;MoE&quot;</span></span>
+<span class="line" id="L118"><a class="ln" href="#L118">118</a><span class="c-doc">⍝│</span><span class="c-doc"> &gt;&gt; ex := (2 2 2 r_eshape 1.0 0.0 0.0 1.0 2.0 0.0 0.0 2.0, 2 1 2 r_eshape 0.0, 2 2 1 r_eshape 0.0, 1.0)</span></span>
+<span class="line" id="L119"><a class="ln" href="#L119">119</a><span class="c-doc">⍝│</span><span class="c-doc"> &gt;&gt; (2 2 r_eshape 1.0 0.0 0.0 1.0, ex, 1) moe:l_ayer 2 2 r_eshape 3.0 -1.0 -1.0 3.0</span></span>
+<span class="line" id="L120"><a class="ln" href="#L120">120</a><span class="c-doc">⍝│</span><span class="c-doc">  3.0 -2.0</span></span>
+<span class="line" id="L121"><a class="ln" href="#L121">121</a><span class="c-doc">⍝│</span><span class="c-doc"> -1.0  6.0</span></span>
+<span class="line" id="L122"><a class="ln" href="#L122">122</a><span class="c-libfunc">ˡl̲ayer</span> ← { (R, experts, k) x → (experts, k <a href="libs-MoE-src-MoE.xtl.html#l.t_opk" class="c-libfunc">ˡt̲opk</a> <a href="libs-MoE-src-MoE.xtl.html#l.s_oftmax" class="c-libfunc">ˡs̲oftmax</a> R <a href="libs-MoE-src-MoE.xtl.html#l.s_cores" class="c-libfunc">ˡs̲cores</a> x) <a href="libs-MoE-src-MoE.xtl.html#l.c_ombine" class="c-libfunc">ˡc̲ombine</a> x }</span>
+<span class="line" id="L123"><a class="ln" href="#L123">123</a></span>
+<span class="line" id="L124"><a class="ln" href="#L124">124</a><span class="c-heading">⍝━━</span><span class="c-heading"> Gradients, the selection fixed</span></span>
+<span class="line" id="L125"><a class="ln" href="#L125">125</a></span>
+<span class="line" id="L126"><a class="ln" href="#L126">126</a><span class="c-doc">⍝│</span><span class="c-doc"> </span><span class="c-doc"></span>(R, (Ws, As, Bs, s), k) <span class="c-builtin">g̲rads</span> (x, g)<span class="c-doc"></span><span class="c-doc">: the gradients for the</span></span>
+<span class="line" id="L127"><a class="ln" href="#L127">127</a><span class="c-doc">⍝│</span><span class="c-doc"> tokens x and g, the loss's gradient at the layer's output (m x N),</span></span>
+<span class="line" id="L128"><a class="ln" href="#L128">128</a><span class="c-doc">⍝│</span><span class="c-doc"> each token's chosen experts held fixed (the top-k is not</span></span>
+<span class="line" id="L129"><a class="ln" href="#L129">129</a><span class="c-doc">⍝│</span><span class="c-doc"> differentiable; a small change keeps it): (dR, dAs, dBs, dx). An</span></span>
+<span class="line" id="L130"><a class="ln" href="#L130">130</a><span class="c-doc">⍝│</span><span class="c-doc"> expert's gradients are the LoRA library's with g times its gates;</span></span>
+<span class="line" id="L131"><a class="ln" href="#L131">131</a><span class="c-doc">⍝│</span><span class="c-doc"> the router's go through the gates, a softmax over each token's</span></span>
+<span class="line" id="L132"><a class="ln" href="#L132">132</a><span class="c-doc">⍝│</span><span class="c-doc"> chosen experts: dL/dS_e = G_e (h_e - sum_i G_i h_i) for a chosen e,</span></span>
+<span class="line" id="L133"><a class="ln" href="#L133">133</a><span class="c-doc">⍝│</span><span class="c-doc"> h_e = g . y_e the loss's gradient by the gate; dR = dS x'. dx gathers</span></span>
+<span class="line" id="L134"><a class="ln" href="#L134">134</a><span class="c-doc">⍝│</span><span class="c-doc"> every chosen expert's and the router's, R' dS.</span></span>
+<span class="line" id="L135"><a class="ln" href="#L135">135</a><span class="c-libfunc">ˡg̲rads</span> ← { (R, (Ws, As, Bs, s), k) (x, g) →</span>
+<span class="line" id="L136"><a class="ln" href="#L136">136</a>  E ← <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> <a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> Ws</span>
+<span class="line" id="L137"><a class="ln" href="#L137">137</a>  G ← k <a href="libs-MoE-src-MoE.xtl.html#l.t_opk" class="c-libfunc">ˡt̲opk</a> <a href="libs-MoE-src-MoE.xtl.html#l.s_oftmax" class="c-libfunc">ˡs̲oftmax</a> R <a href="libs-MoE-src-MoE.xtl.html#l.s_cores" class="c-libfunc">ˡs̲cores</a> x</span>
+<span class="line" id="L138"><a class="ln" href="#L138">138</a>  (dA, dB, dx, H, _) ← E <span class="c-quote">'</span>{ (dA, dB, dx, H, e) →</span>
+<span class="line" id="L139"><a class="ln" href="#L139">139</a>    ye ← (Ws, As, Bs, s) <a href="libs-MoE-src-MoE.xtl.html#l.a_pply" class="c-libfunc">ˡa̲pply</a> (e, x)</span>
+<span class="line" id="L140"><a class="ln" href="#L140">140</a>    ge ← g <a href="builtins.html#-2a" class="c-symbol">×</a> (e <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> G) <a href="libs-MoE-src-MoE.xtl.html#h.c_ols" class="c-libfunc">ʰc̲ols</a> g</span>
+<span class="line" id="L141"><a class="ln" href="#L141">141</a>    (a, b, d) ← (e <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> Ws, e <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> As, e <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> Bs, s) <a href="libs-LoRA-src-LoRA.xtl.html#l.g_rads" class="c-libfunc">ˡᵒg̲rads</a> (x, ge)</span>
+<span class="line" id="L142"><a class="ln" href="#L142">142</a>    (dA <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> a, dB <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> b, dx <a href="builtins.html#-2b" class="c-symbol">+</a> d, H <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/₁</a> g <a href="builtins.html#-2a" class="c-symbol">×</a> ye, e <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">1</span>)</span>
+<span class="line" id="L143"><a class="ln" href="#L143">143</a>  } <a href="builtins.html#p_ower" class="c-builtin">p̲ower</a> (<span class="c-number">0</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.0</span>, <span class="c-number">0</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.0</span>, <span class="c-number">0.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> x, <span class="c-number">0</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.0</span>, <span class="c-number">1</span>)</span>
+<span class="line" id="L144"><a class="ln" href="#L144">144</a>  Hm ← (<a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> G) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> H</span>
+<span class="line" id="L145"><a class="ln" href="#L145">145</a>  dS ← G <a href="builtins.html#-2a" class="c-symbol">×</a> Hm <a href="builtins.html#-2d" class="c-symbol">−</a> (<span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/₁</a> G <a href="builtins.html#-2a" class="c-symbol">×</a> Hm) <a href="libs-MoE-src-MoE.xtl.html#h.c_ols" class="c-libfunc">ʰc̲ols</a> G</span>
+<span class="line" id="L146"><a class="ln" href="#L146">146</a>  (dS <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#i_nner" class="c-builtin">i̲nner</a> <a href="builtins.html#o_-5c" class="c-builtin">o̲\</a> x, (<a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> As) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> dA, (<a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> Bs) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> dB, dx <a href="builtins.html#-2b" class="c-symbol">+</a> (<a href="builtins.html#o_-5c" class="c-builtin">o̲\</a> R) <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#i_nner" class="c-builtin">i̲nner</a> dS)</span>
+<span class="line" id="L147"><a class="ln" href="#L147">147</a>}</span>
+<span class="line" id="L148"><a class="ln" href="#L148">148</a></span>
+<span class="line" id="L149"><a class="ln" href="#L149">149</a><span class="c-heading">⍝━━</span><span class="c-heading"> Routing statistics</span></span>
+<span class="line" id="L150"><a class="ln" href="#L150">150</a></span>
+<span class="line" id="L151"><a class="ln" href="#L151">151</a><span class="c-doc">⍝│</span><span class="c-doc"> </span><span class="c-doc"></span><span class="c-builtin">f̲requency</span> G<span class="c-doc"></span><span class="c-doc">: how often each expert is chosen: the fraction of</span></span>
+<span class="line" id="L152"><a class="ln" href="#L152">152</a><span class="c-doc">⍝│</span><span class="c-doc"> tokens whose gates include it.</span></span>
+<span class="line" id="L153"><a class="ln" href="#L153">153</a><span class="c-doc">⍝│</span><span class="c-doc"> &gt;&gt; &quot;moe:&quot; u_se&lt; &quot;MoE&quot;</span></span>
+<span class="line" id="L154"><a class="ln" href="#L154">154</a><span class="c-doc">⍝│</span><span class="c-doc"> &gt;&gt; moe:f_requency 2 4 r_eshape 1.0 0.5 0.0 1.0 0.0 0.5 1.0 0.0</span></span>
+<span class="line" id="L155"><a class="ln" href="#L155">155</a><span class="c-doc">⍝│</span><span class="c-doc"> 0.75 0.5</span></span>
+<span class="line" id="L156"><a class="ln" href="#L156">156</a><span class="c-libfunc">ˡf̲requency</span> ← { G → (<span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/₂</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> G <a href="builtins.html#-3e" class="c-symbol">&gt;</a> <span class="c-number">0.0</span>) <a href="builtins.html#-2f" class="c-symbol">÷</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <span class="c-number">2</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> G }</span>
+<span class="line" id="L157"><a class="ln" href="#L157">157</a></span>
+<span class="line" id="L158"><a class="ln" href="#L158">158</a><span class="c-doc">⍝│</span><span class="c-doc"> </span><span class="c-doc"></span><span class="c-builtin">e̲ntropy</span> P<span class="c-doc"></span><span class="c-doc">: the mean over tokens of the entropy of their</span></span>
+<span class="line" id="L159"><a class="ln" href="#L159">159</a><span class="c-doc">⍝│</span><span class="c-doc"> probabilities over the experts, in nats (log E for a router that</span></span>
+<span class="line" id="L160"><a class="ln" href="#L160">160</a><span class="c-doc">⍝│</span><span class="c-doc"> cannot choose, 0 for a certain one).</span></span>
+<span class="line" id="L161"><a class="ln" href="#L161">161</a><span class="c-doc">⍝│</span><span class="c-doc"> &gt;&gt; &quot;moe:&quot; u_se&lt; &quot;MoE&quot;</span></span>
+<span class="line" id="L162"><a class="ln" href="#L162">162</a><span class="c-doc">⍝│</span><span class="c-doc"> &gt;&gt; moe:e_ntropy 2 1 r_eshape 0.5 0.5</span></span>
+<span class="line" id="L163"><a class="ln" href="#L163">163</a><span class="c-doc">⍝│</span><span class="c-doc"> 0.6931471805599453</span></span>
+<span class="line" id="L164"><a class="ln" href="#L164">164</a><span class="c-libfunc">ˡe̲ntropy</span> ← { P → (<span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> <a href="builtins.html#n_eg" class="c-builtin">n̲eg</a> P <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#l_og" class="c-builtin">l̲og</a> <span class="c-number">0.000000000001</span> <a href="builtins.html#m_ax" class="c-builtin">m̲ax</a> P) <a href="builtins.html#-2f" class="c-symbol">÷</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <span class="c-number">2</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> P }</span>
+<span class="line" id="L165"><a class="ln" href="#L165">165</a></span>
+<span class="line" id="L166"><a class="ln" href="#L166">166</a><span class="c-doc">⍝│</span><span class="c-doc"> </span><span class="c-doc"></span>(P, G) <span class="c-builtin">b̲alance</span> k<span class="c-doc"></span><span class="c-doc">: the Switch Transformer's load-balancing loss for</span></span>
+<span class="line" id="L167"><a class="ln" href="#L167">167</a><span class="c-doc">⍝│</span><span class="c-doc"> top-k, E sum_e f_e P_e: f_e the share of the k N choices expert e</span></span>
+<span class="line" id="L168"><a class="ln" href="#L168">168</a><span class="c-doc">⍝│</span><span class="c-doc"> got, P_e its mean probability. 1 when both are even, up to E when</span></span>
+<span class="line" id="L169"><a class="ln" href="#L169">169</a><span class="c-doc">⍝│</span><span class="c-doc"> one expert takes everything.</span></span>
+<span class="line" id="L170"><a class="ln" href="#L170">170</a><span class="c-doc">⍝│</span><span class="c-doc"> &gt;&gt; &quot;moe:&quot; u_se&lt; &quot;MoE&quot;</span></span>
+<span class="line" id="L171"><a class="ln" href="#L171">171</a><span class="c-doc">⍝│</span><span class="c-doc"> &gt;&gt; (2 2 r_eshape 0.5 0.5 0.5 0.5, 2 2 r_eshape 1.0 0.0 0.0 1.0) moe:b_alance 1</span></span>
+<span class="line" id="L172"><a class="ln" href="#L172">172</a><span class="c-doc">⍝│</span><span class="c-doc"> 1.0</span></span>
+<span class="line" id="L173"><a class="ln" href="#L173">173</a><span class="c-libfunc">ˡb̲alance</span> ← { (P, G) k →</span>
+<span class="line" id="L174"><a class="ln" href="#L174">174</a>  E ← <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> <a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> P</span>
+<span class="line" id="L175"><a class="ln" href="#L175">175</a>  N ← <span class="c-number">2</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> P</span>
+<span class="line" id="L176"><a class="ln" href="#L176">176</a>  f ← (<span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/₂</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> G <a href="builtins.html#-3e" class="c-symbol">&gt;</a> <span class="c-number">0.0</span>) <a href="builtins.html#-2f" class="c-symbol">÷</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> k <a href="builtins.html#-2a" class="c-symbol">×</a> N</span>
+<span class="line" id="L177"><a class="ln" href="#L177">177</a>  (<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> E) <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> f <a href="builtins.html#-2a" class="c-symbol">×</a> (<span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/₂</a> P) <a href="builtins.html#-2f" class="c-symbol">÷</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> N</span>
+<span class="line" id="L178"><a class="ln" href="#L178">178</a>}</span>
+</div>
+</main>
+</body>
+</html>

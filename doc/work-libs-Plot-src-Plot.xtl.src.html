@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>work/libs/Plot/src/Plot.xtl - X_eTaL doc</title>
+<link rel="stylesheet" href="style.css">
+<script src="theme.js"></script>
+<script defer src="search-index.js"></script>
+<script defer src="search.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.18.10/dist/katex.min.css" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.18.10/dist/katex.min.js" crossorigin="anonymous"></script>
+<script>document.addEventListener('DOMContentLoaded', function () {
+if (typeof katex === 'undefined') return;
+document.querySelectorAll('.c-notation').forEach(function (el) {
+var tex = el.textContent; if (!tex) return;
+try { katex.render(tex, el, { throwOnError: false }); } catch (e) { el.textContent = tex; }
+});
+});</script>
+</head>
+<body>
+<nav class="side">
+<a class="home" href="index.html">X_eTaL doc</a>
+<input id="search" type="search" autocomplete="off" placeholder="Search: a name, or a type" title="A name (mean finds m_ean), or a type: Num a =&gt; a -&gt; a -&gt; a finds +, m_ax ...">
+<h2>Files</h2>
+<h3>demos/activations/</h3>
+<ul>
+<li><a href="demos-activations-activations.xtl.html">activations.xtl</a></li>
+</ul>
+<h3>demos/attention/</h3>
+<ul>
+<li><a href="demos-attention-attention.xtl.html">attention.xtl</a></li>
+</ul>
+<h3>demos/backprop/</h3>
+<ul>
+<li><a href="demos-backprop-backprop.xtl.html">backprop.xtl</a></li>
+</ul>
+<h3>demos/cnn-backprop/</h3>
+<ul>
+<li><a href="demos-cnn-backprop-cnn-backprop.xtl.html">cnn-backprop.xtl</a></li>
+</ul>
+<h3>demos/cnn-digits/</h3>
+<ul>
+<li><a href="demos-cnn-digits-batch.xtl.html">batch.xtl</a></li>
+<li><a href="demos-cnn-digits-cnn-digits.xtl.html">cnn-digits.xtl</a></li>
+</ul>
+<h3>demos/diffusion/</h3>
+<ul>
+<li><a href="demos-diffusion-diffusion.xtl.html">diffusion.xtl</a></li>
+</ul>
+<h3>demos/embedding-explorer/</h3>
+<ul>
+<li><a href="demos-embedding-explorer-embedding-explorer.xtl.html">embedding-explorer.xtl</a></li>
+</ul>
+<h3>demos/k-means/</h3>
+<ul>
+<li><a href="demos-k-means-k-means.xtl.html">k-means.xtl</a></li>
+</ul>
+<h3>demos/lora-explorer/</h3>
+<ul>
+<li><a href="demos-lora-explorer-lora-explorer.xtl.html">lora-explorer.xtl</a></li>
+</ul>
+<h3>demos/micro-bert/</h3>
+<ul>
+<li><a href="demos-micro-bert-micro-bert.xtl.html">micro-bert.xtl</a></li>
+</ul>
+<h3>demos/micro-gpt/</h3>
+<ul>
+<li><a href="demos-micro-gpt-batch.xtl.html">batch.xtl</a></li>
+<li><a href="demos-micro-gpt-micro-gpt.xtl.html">micro-gpt.xtl</a></li>
+</ul>
+<h3>demos/moe-router/</h3>
+<ul>
+<li><a href="demos-moe-router-moe-router.xtl.html">moe-router.xtl</a></li>
+</ul>
+<h3>demos/net-macro/</h3>
+<ul>
+<li><a href="demos-net-macro-net-macro.xtl.html">net-macro.xtl</a></li>
+<li><a href="demos-net-macro-train-it.xtl.html">train-it.xtl</a></li>
+</ul>
+<h3>demos/pipelines/</h3>
+<ul>
+<li><a href="demos-pipelines-diffusion.xtl.html">diffusion.xtl</a></li>
+<li><a href="demos-pipelines-equations.xtl.html">equations.xtl</a></li>
+<li><a href="demos-pipelines-pipelines.xtl.html">pipelines.xtl</a></li>
+<li><a href="demos-pipelines-rosetta.xtl.html">rosetta.xtl</a></li>
+</ul>
+<h3>demos/ternary-net/</h3>
+<ul>
+<li><a href="demos-ternary-net-ternary-net.xtl.html">ternary-net.xtl</a></li>
+</ul>
+<h3>demos/train-live/</h3>
+<ul>
+<li><a href="demos-train-live-train-live.xtl.html">train-live.xtl</a></li>
+</ul>
+<h3>demos/world-model/</h3>
+<ul>
+<li><a href="demos-world-model-world-model.xtl.html">world-model.xtl</a></li>
+</ul>
+<h3>libs/Activations/demos/</h3>
+<ul>
+<li><a href="libs-Activations-demos-curves.xtl.html">curves.xtl</a></li>
+</ul>
+<h3>libs/Activations/src/</h3>
+<ul>
+<li><a href="libs-Activations-src-Activations.xtl.html">Activations.xtl</a></li>
+</ul>
+<h3>libs/Attention/demos/</h3>
+<ul>
+<li><a href="libs-Attention-demos-previous.xtl.html">previous.xtl</a></li>
+</ul>
+<h3>libs/Attention/src/</h3>
+<ul>
+<li><a href="libs-Attention-src-Attention.xtl.html">Attention.xtl</a></li>
+</ul>
+<h3>libs/Conv/demos/</h3>
+<ul>
+<li><a href="libs-Conv-demos-edges.xtl.html">edges.xtl</a></li>
+</ul>
+<h3>libs/Conv/src/</h3>
+<ul>
+<li><a href="libs-Conv-src-Conv.xtl.html">Conv.xtl</a></li>
+</ul>
+<h3>libs/Embed/demos/</h3>
+<ul>
+<li><a href="libs-Embed-demos-pets.xtl.html">pets.xtl</a></li>
+</ul>
+<h3>libs/Embed/src/</h3>
+<ul>
+<li><a href="libs-Embed-src-Embed.xtl.html">Embed.xtl</a></li>
+</ul>
+<h3>libs/Flow/demos/</h3>
+<ul>
+<li><a href="libs-Flow-demos-mlp.xtl.html">mlp.xtl</a></li>
+</ul>
+<h3>libs/Flow/src/</h3>
+<ul>
+<li><a href="libs-Flow-src-Flow.xtlm.html">Flow.xtlm</a></li>
+</ul>
+<h3>libs/Integrals/demos/</h3>
+<ul>
+<li><a href="libs-Integrals-demos-convolution.xtl.html">convolution.xtl</a></li>
+<li><a href="libs-Integrals-demos-gelu.xtl.html">gelu.xtl</a></li>
+</ul>
+<h3>libs/Integrals/src/</h3>
+<ul>
+<li><a href="libs-Integrals-src-Integrals.xtlm.html">Integrals.xtlm</a></li>
+</ul>
+<h3>libs/Learn/demos/</h3>
+<ul>
+<li><a href="libs-Learn-demos-blobs.xtl.html">blobs.xtl</a></li>
+</ul>
+<h3>libs/Learn/src/</h3>
+<ul>
+<li><a href="libs-Learn-src-Learn.xtl.html">Learn.xtl</a></li>
+</ul>
+<h3>libs/LoRA/demos/</h3>
+<ul>
+<li><a href="libs-LoRA-demos-sizes.xtl.html">sizes.xtl</a></li>
+</ul>
+<h3>libs/LoRA/src/</h3>
+<ul>
+<li><a href="libs-LoRA-src-LoRA.xtl.html">LoRA.xtl</a></li>
+<li><a href="libs-LoRA-src-LoRA.xtlm.html">LoRA.xtlm</a></li>
+</ul>
+<h3>libs/MoE/demos/</h3>
+<ul>
+<li><a href="libs-MoE-demos-routing.xtl.html">routing.xtl</a></li>
+</ul>
+<h3>libs/MoE/src/</h3>
+<ul>
+<li><a href="libs-MoE-src-MoE.xtl.html">MoE.xtl</a></li>
+</ul>
+<h3>libs/Net/demos/</h3>
+<ul>
+<li><a href="libs-Net-demos-train-xor.xtl.html">train-xor.xtl</a></li>
+<li><a href="libs-Net-demos-xor.xtl.html">xor.xtl</a></li>
+</ul>
+<h3>libs/Net/src/</h3>
+<ul>
+<li><a href="libs-Net-src-Net.xtlm.html">Net.xtlm</a></li>
+</ul>
+<h3>libs/NN/demos/</h3>
+<ul>
+<li><a href="libs-NN-demos-xor.xtl.html">xor.xtl</a></li>
+</ul>
+<h3>libs/NN/src/</h3>
+<ul>
+<li><a href="libs-NN-src-NN.xtl.html">NN.xtl</a></li>
+</ul>
+<h3>libs/Norm/demos/</h3>
+<ul>
+<li><a href="libs-Norm-demos-rows.xtl.html">rows.xtl</a></li>
+</ul>
+<h3>libs/Norm/src/</h3>
+<ul>
+<li><a href="libs-Norm-src-Norm.xtl.html">Norm.xtl</a></li>
+</ul>
+<h3>libs/Optim/demos/</h3>
+<ul>
+<li><a href="libs-Optim-demos-bowl.xtl.html">bowl.xtl</a></li>
+</ul>
+<h3>libs/Optim/src/</h3>
+<ul>
+<li><a href="libs-Optim-src-Optim.xtl.html">Optim.xtl</a></li>
+</ul>
+<h3>libs/Quant/demos/</h3>
+<ul>
+<li><a href="libs-Quant-demos-formats.xtl.html">formats.xtl</a></li>
+</ul>
+<h3>libs/Quant/src/</h3>
+<ul>
+<li><a href="libs-Quant-src-Quant.xtl.html">Quant.xtl</a></li>
+</ul>
+<h3>libs/Sample/demos/</h3>
+<ul>
+<li><a href="libs-Sample-demos-next.xtl.html">next.xtl</a></li>
+</ul>
+<h3>libs/Sample/src/</h3>
+<ul>
+<li><a href="libs-Sample-src-Sample.xtl.html">Sample.xtl</a></li>
+</ul>
+<h3>std/</h3>
+<ul>
+<li><a href="std-Svg.xtl.html">Svg.xtl</a></li>
+<li><a href="std-System.xtlm.html">System.xtlm</a></li>
+</ul>
+<h3>work/libs/Check/src/</h3>
+<ul>
+<li><a href="work-libs-Check-src-Check.xtl.html">Check.xtl</a></li>
+<li><a href="work-libs-Check-src-Check.xtlm.html">Check.xtlm</a></li>
+</ul>
+<h3>work/libs/Equations/src/</h3>
+<ul>
+<li><a href="work-libs-Equations-src-Equations.xtl.html">Equations.xtl</a></li>
+<li><a href="work-libs-Equations-src-Equations.xtlm.html">Equations.xtlm</a></li>
+</ul>
+<h3>work/libs/Format/src/</h3>
+<ul>
+<li><a href="work-libs-Format-src-Format.xtl.html">Format.xtl</a></li>
+</ul>
+<h3>work/libs/Lists/src/</h3>
+<ul>
+<li><a href="work-libs-Lists-src-Lists.xtl.html">Lists.xtl</a></li>
+</ul>
+<h3>work/libs/Plot/src/</h3>
+<ul>
+<li><a href="work-libs-Plot-src-Plot.xtl.html">Plot.xtl</a></li>
+</ul>
+<h3>work/libs/Strings/src/</h3>
+<ul>
+<li><a href="work-libs-Strings-src-Strings.xtl.html">Strings.xtl</a></li>
+</ul>
+<ul>
+<li><a href="builtins.html">built-ins</a></li>
+</ul>
+<h2>On this page</h2>
+<ul>
+<li class="item"><a href="#L17">blocks</a></li>
+<li class="item"><a href="#L18">width</a></li>
+<li class="item"><a href="#L23"><span class="c-libfunc">ʰs̲cale</span></a></li>
+<li class="item"><a href="#L31"><span class="c-libfunc">ˡb̲ars</span></a></li>
+<li class="item"><a href="#L43"><span class="c-libfunc">ˡs̲park</span></a></li>
+<li class="item"><a href="#L52"><span class="c-libfunc">ˡh̲istogram</span></a></li>
+<li class="item"><a href="#L65"><span class="c-libfunc">ˡs̲catter</span></a></li>
+<li class="item"><a href="#L83"><span class="c-libfunc">ˡl̲ine!</span></a></li>
+<li class="item"><a href="#L88"><span class="c-libfunc">ˡl̲ines!</span></a></li>
+<li class="item"><a href="#L93"><span class="c-libfunc">ˡc̲hart!</span></a></li>
+<li class="item"><a href="#L103"><span class="c-libfunc">ˡl̲inspace</span></a></li>
+<li class="item"><a href="#L112"><span class="c-libfunc">ˡf̲unction!</span></a></li>
+<li class="item"><a href="#L117"><span class="c-libfunc">ˡf̲unctions!</span></a></li>
+<li class="item"><a href="#L121"><span class="c-libfunc">ˡf̲unctionChart!</span></a></li>
+<li class="item"><a href="#L127"><span class="c-libfunc">ʰx̲box</span></a></li>
+<li class="item"><a href="#L137"><span class="c-libfunc">ʰx̲boxAll</span></a></li>
+<li class="item"><a href="#L146">ʰW</a></li>
+<li class="item"><a href="#L147">ʰH</a></li>
+<li class="item"><a href="#L148">ʰL</a></li>
+<li class="item"><a href="#L149">ʰR</a></li>
+<li class="item"><a href="#L150">ʰT</a></li>
+<li class="item"><a href="#L151">ʰB</a></li>
+<li class="item"><a href="#L154">ʰcolors</a></li>
+<li class="item"><a href="#L157"><span class="c-libfunc">ʰj̲oined</span></a></li>
+<li class="item"><a href="#L160"><span class="c-libfunc">ʰc̲hart</span></a></li>
+<li class="item"><a href="#L174"><span class="c-libfunc">ʰp̲ad</span></a></li>
+<li class="item"><a href="#L181"><span class="c-libfunc">ʰj̲oinText</span></a></li>
+<li class="item"><a href="#L187"><span class="c-libfunc">ʰc̲olor</span></a></li>
+<li class="item"><a href="#L191"><span class="c-libfunc">ʰx̲at</span></a></li>
+<li class="item"><a href="#L197"><span class="c-libfunc">ʰr̲ound</span></a></li>
+<li class="item"><a href="#L200"><span class="c-libfunc">ʰy̲at</span></a></li>
+<li class="item"><a href="#L208"><span class="c-libfunc">ʰx̲atValue</span></a></li>
+<li class="item"><a href="#L216"><span class="c-libfunc">ʰs̲eriesXY</span></a></li>
+<li class="item"><a href="#L231"><span class="c-libfunc">ʰs̲eries</span></a></li>
+<li class="item"><a href="#L243">ʰsmall</a></li>
+<li class="item"><a href="#L248"><span class="c-libfunc">ʰf̲rame</span></a></li>
+<li class="item"><a href="#L269"><span class="c-libfunc">ʰf̲rameXY</span></a></li>
+<li class="item"><a href="#L293"><span class="c-libfunc">ʰc̲hartXY</span></a></li>
+<li class="item"><a href="#L307"><span class="c-libfunc">ʰt̲itles</span></a></li>
+<li class="item"><a href="#L319"><span class="c-libfunc">ʰk̲ept</span></a></li>
+</ul>
+</nav>
+<main>
+<button class="theme" title="Light or dark">theme</button>
+<section id="results"></section>
+<h1><span class="kind">source</span><a href="work-libs-Plot-src-Plot.xtl.html">work/libs/Plot/src/Plot.xtl</a></h1>
+<div class="source"><span class="line" id="L1"><a class="ln" href="#L1">1</a><span class="c-doc">⍝│</span><span class="c-doc"> Plot: text charts -- bars, sparklines, histograms, scatter plots on</span></span>
+<span class="line" id="L2"><a class="ln" href="#L2">2</a><span class="c-doc">⍝│</span><span class="c-doc"> a character grid -- and line charts as pictures, with axes, labels</span></span>
+<span class="line" id="L3"><a class="ln" href="#L3">3</a><span class="c-doc">⍝│</span><span class="c-doc"> and several lines in one chart.</span></span>
+<span class="line" id="L4"><a class="ln" href="#L4">4</a><span class="c-doc">⍝│</span><span class="c-doc"> Import it with an alias of your choice: &quot;p:&quot; u_se&lt; &quot;Plot&quot;.</span></span>
+<span class="line" id="L5"><a class="ln" href="#L5">5</a><span class="c-doc">⍝│</span><span class="c-doc"> Put libs/Plot/src on XETAL_PATH (&quot;just path&quot;); the reference is libs/Plot/docs.</span></span>
+<span class="line" id="L6"><a class="ln" href="#L6">6</a><span class="c-doc">⍝│</span><span class="c-doc"> Names with l: are exported; those under h: are private to this file.</span></span>
+<span class="line" id="L7"><a class="ln" href="#L7">7</a><span class="c-doc">⍝│</span></span>
+<span class="line" id="L8"><a class="ln" href="#L8">8</a><span class="c-doc">⍝│</span><span class="c-doc"> A text chart is a character matrix: it prints as lines in a terminal,</span></span>
+<span class="line" id="L9"><a class="ln" href="#L9">9</a><span class="c-doc">⍝│</span><span class="c-doc"> a notebook or the live demo. A picture (l_ine!) is an SVG document</span></span>
+<span class="line" id="L10"><a class="ln" href="#L10">10</a><span class="c-doc">⍝│</span><span class="c-doc"> shown with []S_HOW: numbered files from the command line, a pane in</span></span>
+<span class="line" id="L11"><a class="ln" href="#L11">11</a><span class="c-doc">⍝│</span><span class="c-doc"> the browser.</span></span>
+<span class="line" id="L12"><a class="ln" href="#L12">12</a></span>
+<span class="line" id="L13"><a class="ln" href="#L13">13</a><span class="c-string">&quot;t:&quot;</span> <a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="work-libs-Strings-src-Strings.xtl.html" class="c-string">&quot;Strings&quot;</a></span>
+<span class="line" id="L14"><a class="ln" href="#L14">14</a><span class="c-string">&quot;f:&quot;</span> <a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="work-libs-Format-src-Format.xtl.html" class="c-string">&quot;Format&quot;</a></span>
+<span class="line" id="L15"><a class="ln" href="#L15">15</a><span class="c-string">&quot;v:&quot;</span> <a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="std-Svg.xtl.html" class="c-string">&quot;Svg&quot;</a></span>
+<span class="line" id="L16"><a class="ln" href="#L16">16</a></span>
+<span class="line" id="L17"><a class="ln" href="#L17">17</a>blocks ← <span class="c-string">&quot;▁▂▃▄▅▆▇█&quot;</span>                          <span class="c-comment">⍝</span><span class="c-comment"> eight heights, lowest first</span></span>
+<span class="line" id="L18"><a class="ln" href="#L18">18</a>width ← <span class="c-number">40</span>                                    <span class="c-comment">⍝</span><span class="c-comment"> the longest bar</span></span>
+<span class="line" id="L19"><a class="ln" href="#L19">19</a></span>
+<span class="line" id="L20"><a class="ln" href="#L20">20</a><span class="c-heading">⍝━━</span><span class="c-heading"> Text charts</span></span>
+<span class="line" id="L21"><a class="ln" href="#L21">21</a></span>
+<span class="line" id="L22"><a class="ln" href="#L22">22</a><span class="c-doc">⍝│</span><span class="c-doc"> v scaled to 0..m, rounded (all 0 when v is all 0).</span></span>
+<span class="line" id="L23"><a class="ln" href="#L23">23</a><span class="c-libfunc">ʰs̲cale</span> ← { m v →</span>
+<span class="line" id="L24"><a class="ln" href="#L24">24</a>  top ← <span class="c-builtin">'</span><a href="builtins.html#m_ax" class="c-builtin">m̲ax</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> <a href="builtins.html#a_bs" class="c-builtin">a̲bs</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> v</span>
+<span class="line" id="L25"><a class="ln" href="#L25">25</a>  top <a href="builtins.html#-3d" class="c-symbol">=</a> <span class="c-number">0.0</span> ? (<a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> v) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0</span></span>
+<span class="line" id="L26"><a class="ln" href="#L26">26</a>  <a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> <span class="c-number">0.5</span> <a href="builtins.html#-2b" class="c-symbol">+</a> (<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> m) <a href="builtins.html#-2a" class="c-symbol">×</a> (<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> v) <a href="builtins.html#-2f" class="c-symbol">÷</a> top</span>
+<span class="line" id="L27"><a class="ln" href="#L27">27</a>}</span>
+<span class="line" id="L28"><a class="ln" href="#L28">28</a></span>
+<span class="line" id="L29"><a class="ln" href="#L29">29</a><span class="c-doc">⍝│</span><span class="c-doc"> labels b_ars values: a horizontal bar per value, labeled, the</span></span>
+<span class="line" id="L30"><a class="ln" href="#L30">30</a><span class="c-doc">⍝│</span><span class="c-doc"> longest 40 wide, each followed by its value (values &gt;= 0).</span></span>
+<span class="line" id="L31"><a class="ln" href="#L31">31</a><span class="c-libfunc">ˡb̲ars</span> ← { labels v →</span>
+<span class="line" id="L32"><a class="ln" href="#L32">32</a>  w ← <span class="c-builtin">'</span><a href="builtins.html#m_ax" class="c-builtin">m̲ax</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> <span class="c-quote">'</span>{ <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> <span class="c-lambdaarg">⍵</span> } <a href="builtins.html#e_ach" class="c-builtin">e̲ach</a> labels</span>
+<span class="line" id="L33"><a class="ln" href="#L33">33</a>  n ← <a href="work-libs-Plot-src-Plot.xtl.html#width">width</a> <a href="work-libs-Plot-src-Plot.xtl.html#h.s_cale" class="c-libfunc">ʰs̲cale</a> v</span>
+<span class="line" id="L34"><a class="ln" href="#L34">34</a>  <a href="work-libs-Strings-src-Strings.xtl.html#l.m_ix" class="c-libfunc">ᵗm̲ix</a> <span class="c-quote">'</span>{ i →</span>
+<span class="line" id="L35"><a class="ln" href="#L35">35</a>    label ← w <a href="work-libs-Strings-src-Strings.xtl.html#l.p_adRight" class="c-libfunc">ᵗp̲adRight</a> <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> i <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> labels</span>
+<span class="line" id="L36"><a class="ln" href="#L36">36</a>    bar ← (<a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> i <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> n) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-string">&quot;#&quot;</span></span>
+<span class="line" id="L37"><a class="ln" href="#L37">37</a>    label <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; |&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> bar <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> i <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> v</span>
+<span class="line" id="L38"><a class="ln" href="#L38">38</a>  } <a href="builtins.html#m_ap" class="c-builtin">m̲ap</a> <a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> v</span>
+<span class="line" id="L39"><a class="ln" href="#L39">39</a>}</span>
+<span class="line" id="L40"><a class="ln" href="#L40">40</a></span>
+<span class="line" id="L41"><a class="ln" href="#L41">41</a><span class="c-doc">⍝│</span><span class="c-doc"> s_park v: v as a sparkline, one block character per value, its</span></span>
+<span class="line" id="L42"><a class="ln" href="#L42">42</a><span class="c-doc">⍝│</span><span class="c-doc"> height from the least (lowest) to the greatest (highest).</span></span>
+<span class="line" id="L43"><a class="ln" href="#L43">43</a><span class="c-libfunc">ˡs̲park</span> ← { v →</span>
+<span class="line" id="L44"><a class="ln" href="#L44">44</a>  lo ← <span class="c-builtin">'</span><a href="builtins.html#m_in" class="c-builtin">m̲in</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> v</span>
+<span class="line" id="L45"><a class="ln" href="#L45">45</a>  hi ← <span class="c-builtin">'</span><a href="builtins.html#m_ax" class="c-builtin">m̲ax</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> v</span>
+<span class="line" id="L46"><a class="ln" href="#L46">46</a>  hi <a href="builtins.html#-3d" class="c-symbol">=</a> lo ? (<a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> v) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">4</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="work-libs-Plot-src-Plot.xtl.html#blocks">blocks</a></span>
+<span class="line" id="L47"><a class="ln" href="#L47">47</a>  (<span class="c-number">1</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> <span class="c-number">0.5</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">7.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> ((<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> v) <a href="builtins.html#-2d" class="c-symbol">−</a> lo) <a href="builtins.html#-2f" class="c-symbol">÷</a> hi <a href="builtins.html#-2d" class="c-symbol">−</a> lo) <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="work-libs-Plot-src-Plot.xtl.html#blocks">blocks</a></span>
+<span class="line" id="L48"><a class="ln" href="#L48">48</a>}</span>
+<span class="line" id="L49"><a class="ln" href="#L49">49</a></span>
+<span class="line" id="L50"><a class="ln" href="#L50">50</a><span class="c-doc">⍝│</span><span class="c-doc"> n h_istogram v: v counted into n bins of equal width from its least</span></span>
+<span class="line" id="L51"><a class="ln" href="#L51">51</a><span class="c-doc">⍝│</span><span class="c-doc"> to its greatest, drawn as bars labeled by each bin's range.</span></span>
+<span class="line" id="L52"><a class="ln" href="#L52">52</a><span class="c-libfunc">ˡh̲istogram</span> ← { n v →</span>
+<span class="line" id="L53"><a class="ln" href="#L53">53</a>  lo ← <span class="c-builtin">'</span><a href="builtins.html#m_in" class="c-builtin">m̲in</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> v</span>
+<span class="line" id="L54"><a class="ln" href="#L54">54</a>  hi ← <span class="c-builtin">'</span><a href="builtins.html#m_ax" class="c-builtin">m̲ax</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> v</span>
+<span class="line" id="L55"><a class="ln" href="#L55">55</a>  step ← (hi <a href="builtins.html#-2d" class="c-symbol">−</a> lo) <a href="builtins.html#-2f" class="c-symbol">÷</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> n</span>
+<span class="line" id="L56"><a class="ln" href="#L56">56</a>  bin ← <span class="c-number">1</span> <a href="builtins.html#-2b" class="c-symbol">+</a> (n <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span>) <a href="builtins.html#m_in" class="c-builtin">m̲in</a> <a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> ((<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> v) <a href="builtins.html#-2d" class="c-symbol">−</a> lo) <a href="builtins.html#-2f" class="c-symbol">÷</a> step <a href="builtins.html#m_ax" class="c-builtin">m̲ax</a> <span class="c-number">0.000000000001</span></span>
+<span class="line" id="L57"><a class="ln" href="#L57">57</a>  counts ← <span class="c-quote">'</span>{ <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> <a href="builtins.html#w_here" class="c-builtin">w̲here</a> bin <a href="builtins.html#-3d" class="c-symbol">=</a> <span class="c-lambdaarg">⍵</span> } <a href="builtins.html#e_ach" class="c-builtin">e̲ach</a> <a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> n</span>
+<span class="line" id="L58"><a class="ln" href="#L58">58</a>  edges ← lo <a href="builtins.html#-2b" class="c-symbol">+</a> step <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="builtins.html#o_ffsets" class="c-builtin">o̲ffsets</a> n <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">1</span></span>
+<span class="line" id="L59"><a class="ln" href="#L59">59</a>  labels ← <span class="c-quote">'</span>{ i → (<a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> i <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <span class="c-number">2</span> <a href="work-libs-Format-src-Format.xtl.html#l.f_ixed" class="c-libfunc">ᶠf̲ixed</a> edges) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;-&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> (i <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">1</span>) <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <span class="c-number">2</span> <a href="work-libs-Format-src-Format.xtl.html#l.f_ixed" class="c-libfunc">ᶠf̲ixed</a> edges } <a href="builtins.html#m_ap" class="c-builtin">m̲ap</a> <a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> n</span>
+<span class="line" id="L60"><a class="ln" href="#L60">60</a>  labels <a href="work-libs-Plot-src-Plot.xtl.html#l.b_ars" class="c-libfunc">ˡb̲ars</a> counts</span>
+<span class="line" id="L61"><a class="ln" href="#L61">61</a>}</span>
+<span class="line" id="L62"><a class="ln" href="#L62">62</a></span>
+<span class="line" id="L63"><a class="ln" href="#L63">63</a><span class="c-doc">⍝│</span><span class="c-doc"> (w c_at h) s_catter xy: the points xy (2 rows, x over y, as []P_ATH</span></span>
+<span class="line" id="L64"><a class="ln" href="#L64">64</a><span class="c-doc">⍝│</span><span class="c-doc"> takes them) marked * on a character grid w wide and h high, y up.</span></span>
+<span class="line" id="L65"><a class="ln" href="#L65">65</a><span class="c-libfunc">ˡs̲catter</span> ← { size xy →</span>
+<span class="line" id="L66"><a class="ln" href="#L66">66</a>  w ← <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> size</span>
+<span class="line" id="L67"><a class="ln" href="#L67">67</a>  h ← <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> <span class="c-number">1</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> size</span>
+<span class="line" id="L68"><a class="ln" href="#L68">68</a>  x ← <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> xy</span>
+<span class="line" id="L69"><a class="ln" href="#L69">69</a>  y ← <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> <span class="c-number">1</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> xy</span>
+<span class="line" id="L70"><a class="ln" href="#L70">70</a>  col ← <span class="c-number">1</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> <span class="c-number">0.5</span> <a href="builtins.html#-2b" class="c-symbol">+</a> (<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> w <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span>) <a href="builtins.html#-2a" class="c-symbol">×</a> (x <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-builtin">'</span><a href="builtins.html#m_in" class="c-builtin">m̲in</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> x) <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-number">1.0</span> <a href="builtins.html#m_ax" class="c-builtin">m̲ax</a> (<span class="c-builtin">'</span><a href="builtins.html#m_ax" class="c-builtin">m̲ax</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> x) <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-builtin">'</span><a href="builtins.html#m_in" class="c-builtin">m̲in</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> x</span>
+<span class="line" id="L71"><a class="ln" href="#L71">71</a>  row ← h <a href="builtins.html#-2d" class="c-symbol">−</a> <a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> <span class="c-number">0.5</span> <a href="builtins.html#-2b" class="c-symbol">+</a> (<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> h <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span>) <a href="builtins.html#-2a" class="c-symbol">×</a> (y <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-builtin">'</span><a href="builtins.html#m_in" class="c-builtin">m̲in</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> y) <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-number">1.0</span> <a href="builtins.html#m_ax" class="c-builtin">m̲ax</a> (<span class="c-builtin">'</span><a href="builtins.html#m_ax" class="c-builtin">m̲ax</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> y) <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-builtin">'</span><a href="builtins.html#m_in" class="c-builtin">m̲in</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> y</span>
+<span class="line" id="L72"><a class="ln" href="#L72">72</a>  at ← (col <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span>) <a href="builtins.html#-2b" class="c-symbol">+</a> w <a href="builtins.html#-2a" class="c-symbol">×</a> row <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span>                   <span class="c-comment">⍝</span><span class="c-comment"> offsets into the grid</span></span>
+<span class="line" id="L73"><a class="ln" href="#L73">73</a>  marks ← (<a href="builtins.html#o_ffsets" class="c-builtin">o̲ffsets</a> h <a href="builtins.html#-2a" class="c-symbol">×</a> w) <a href="builtins.html#m_ember-3f" class="c-builtin">m̲ember?</a> at</span>
+<span class="line" id="L74"><a class="ln" href="#L74">74</a>  (h <a href="builtins.html#c_at" class="c-builtin">c̲at</a> w) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> (<span class="c-number">1</span> <a href="builtins.html#-2b" class="c-symbol">+</a> marks) <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <span class="c-string">&quot; *&quot;</span></span>
+<span class="line" id="L75"><a class="ln" href="#L75">75</a>}</span>
+<span class="line" id="L76"><a class="ln" href="#L76">76</a></span>
+<span class="line" id="L77"><a class="ln" href="#L77">77</a><span class="c-heading">⍝━━</span><span class="c-heading"> Line charts</span></span>
+<span class="line" id="L78"><a class="ln" href="#L78">78</a></span>
+<span class="line" id="L79"><a class="ln" href="#L79">79</a><span class="c-doc">⍝│</span><span class="c-doc"> l_ine! v: v as a line chart with axes, a picture shown with []S_HOW;</span></span>
+<span class="line" id="L80"><a class="ln" href="#L80">80</a><span class="c-doc">⍝│</span><span class="c-doc"> gives the picture's SVG text. The vertical axis spans the values</span></span>
+<span class="line" id="L81"><a class="ln" href="#L81">81</a><span class="c-doc">⍝│</span><span class="c-doc"> (however small their range), the horizontal one the positions 1 to</span></span>
+<span class="line" id="L82"><a class="ln" href="#L82">82</a><span class="c-doc">⍝│</span><span class="c-doc"> t_ally v; a single value is drawn as a point.</span></span>
+<span class="line" id="L83"><a class="ln" href="#L83">83</a><span class="c-libfunc">ˡl̲ine!</span> ← { v → <a href="builtins.html#-5b-5dS_HOW" class="c-builtin">⎕S̲HOW</a> (<span class="c-string">&quot;&quot;</span> <span class="c-string">&quot;&quot;</span> <span class="c-string">&quot;&quot;</span>) <a href="work-libs-Plot-src-Plot.xtl.html#h.c_hart" class="c-libfunc">ʰc̲hart</a> <span class="c-number">1</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <a href="builtins.html#e_nclose" class="c-builtin">e̲nclose</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> v }</span>
+<span class="line" id="L84"><a class="ln" href="#L84">84</a></span>
+<span class="line" id="L85"><a class="ln" href="#L85">85</a><span class="c-doc">⍝│</span><span class="c-doc"> names l_ines! series: several lines in one chart, one per boxed</span></span>
+<span class="line" id="L86"><a class="ln" href="#L86">86</a><span class="c-doc">⍝│</span><span class="c-doc"> vector of series (each its own length), colored in turn and named in</span></span>
+<span class="line" id="L87"><a class="ln" href="#L87">87</a><span class="c-doc">⍝│</span><span class="c-doc"> a legend by names (a boxed text per series).</span></span>
+<span class="line" id="L88"><a class="ln" href="#L88">88</a><span class="c-libfunc">ˡl̲ines!</span> ← { names series → <a href="builtins.html#-5b-5dS_HOW" class="c-builtin">⎕S̲HOW</a> (<span class="c-string">&quot;&quot;</span> <span class="c-string">&quot;&quot;</span> <span class="c-string">&quot;&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> names) <a href="work-libs-Plot-src-Plot.xtl.html#h.c_hart" class="c-libfunc">ʰc̲hart</a> <span class="c-quote">'</span>{ x → <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> x } <a href="builtins.html#m_ap" class="c-builtin">m̲ap</a> series }</span>
+<span class="line" id="L89"><a class="ln" href="#L89">89</a></span>
+<span class="line" id="L90"><a class="ln" href="#L90">90</a><span class="c-doc">⍝│</span><span class="c-doc"> labels c_hart! series: as l_ines!, with a title and the names of the</span></span>
+<span class="line" id="L91"><a class="ln" href="#L91">91</a><span class="c-doc">⍝│</span><span class="c-doc"> axes: labels is the title, the horizontal axis's name, the vertical</span></span>
+<span class="line" id="L92"><a class="ln" href="#L92">92</a><span class="c-doc">⍝│</span><span class="c-doc"> axis's name, then a name per series (&quot;&quot; for none).</span></span>
+<span class="line" id="L93"><a class="ln" href="#L93">93</a><span class="c-libfunc">ˡc̲hart!</span> ← { labels series → <a href="builtins.html#-5b-5dS_HOW" class="c-builtin">⎕S̲HOW</a> labels <a href="work-libs-Plot-src-Plot.xtl.html#h.c_hart" class="c-libfunc">ʰc̲hart</a> <span class="c-quote">'</span>{ x → <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> x } <a href="builtins.html#m_ap" class="c-builtin">m̲ap</a> series }</span>
+<span class="line" id="L94"><a class="ln" href="#L94">94</a></span>
+<span class="line" id="L95"><a class="ln" href="#L95">95</a><span class="c-heading">⍝━━</span><span class="c-heading"> Function plots (a real x-axis, not a position: l_ine! and its</span></span>
+<span class="line" id="L96"><a class="ln" href="#L96">96</a><span class="c-heading">⍝━━</span><span class="c-heading"> kin space a series across the plot area by count alone, fine for</span></span>
+<span class="line" id="L97"><a class="ln" href="#L97">97</a><span class="c-heading">⍝━━</span><span class="c-heading"> a sequence but not for y = f(x) over a range, where a reader</span></span>
+<span class="line" id="L98"><a class="ln" href="#L98">98</a><span class="c-heading">⍝━━</span><span class="c-heading"> expects the axis itself to read x's own values)</span></span>
+<span class="line" id="L99"><a class="ln" href="#L99">99</a></span>
+<span class="line" id="L100"><a class="ln" href="#L100">100</a><span class="c-doc">⍝│</span><span class="c-doc"> n l_inspace (lo, hi): n evenly spaced Floats from lo to hi</span></span>
+<span class="line" id="L101"><a class="ln" href="#L101">101</a><span class="c-doc">⍝│</span><span class="c-doc"> inclusive (n = 1 gives lo). Sample a function over it with e_ach or</span></span>
+<span class="line" id="L102"><a class="ln" href="#L102">102</a><span class="c-doc">⍝│</span><span class="c-doc"> m_ap: ys := 'f e_ach (n l_inspace (lo, hi)).</span></span>
+<span class="line" id="L103"><a class="ln" href="#L103">103</a><span class="c-libfunc">ˡl̲inspace</span> ← { n (lo, hi) →</span>
+<span class="line" id="L104"><a class="ln" href="#L104">104</a>  <span class="c-number">1</span> <a href="builtins.html#-3d" class="c-symbol">=</a> n ? (<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> lo) <a href="builtins.html#-2b" class="c-symbol">+</a> (<span class="c-number">0.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> (<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="builtins.html#o_ffsets" class="c-builtin">o̲ffsets</a> n))</span>
+<span class="line" id="L105"><a class="ln" href="#L105">105</a>  (<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> lo) <a href="builtins.html#-2b" class="c-symbol">+</a> (((<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> hi) <a href="builtins.html#-2d" class="c-symbol">−</a> (<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> lo)) <a href="builtins.html#-2a" class="c-symbol">×</a> ((<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="builtins.html#o_ffsets" class="c-builtin">o̲ffsets</a> n) <a href="builtins.html#-2f" class="c-symbol">÷</a> (<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> n <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span>)))</span>
+<span class="line" id="L106"><a class="ln" href="#L106">106</a>}</span>
+<span class="line" id="L107"><a class="ln" href="#L107">107</a></span>
+<span class="line" id="L108"><a class="ln" href="#L108">108</a><span class="c-doc">⍝│</span><span class="c-doc"> xy f_unction!: xy (2 rows, x over y, as []P_ATH and s_catter take</span></span>
+<span class="line" id="L109"><a class="ln" href="#L109">109</a><span class="c-doc">⍝│</span><span class="c-doc"> them) as a line chart with a real-valued horizontal axis, a picture</span></span>
+<span class="line" id="L110"><a class="ln" href="#L110">110</a><span class="c-doc">⍝│</span><span class="c-doc"> shown with []S_HOW; gives the picture's SVG text. The vertical axis</span></span>
+<span class="line" id="L111"><a class="ln" href="#L111">111</a><span class="c-doc">⍝│</span><span class="c-doc"> spans y's values; the horizontal one spans x's.</span></span>
+<span class="line" id="L112"><a class="ln" href="#L112">112</a><span class="c-libfunc">ˡf̲unction!</span> ← { xy → <a href="builtins.html#-5b-5dS_HOW" class="c-builtin">⎕S̲HOW</a> (<span class="c-string">&quot;&quot;</span> <span class="c-string">&quot;&quot;</span> <span class="c-string">&quot;&quot;</span>) <a href="work-libs-Plot-src-Plot.xtl.html#h.c_hartXY" class="c-libfunc">ʰc̲hartXY</a> (<a href="work-libs-Plot-src-Plot.xtl.html#h.x_box" class="c-libfunc">ʰx̲box</a> xy, <span class="c-number">1</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <a href="builtins.html#e_nclose" class="c-builtin">e̲nclose</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> xy) }</span>
+<span class="line" id="L113"><a class="ln" href="#L113">113</a></span>
+<span class="line" id="L114"><a class="ln" href="#L114">114</a><span class="c-doc">⍝│</span><span class="c-doc"> names f_unctions! series: several curves in one chart, one per</span></span>
+<span class="line" id="L115"><a class="ln" href="#L115">115</a><span class="c-doc">⍝│</span><span class="c-doc"> boxed (x over y) pair of series (each its own length and its own x</span></span>
+<span class="line" id="L116"><a class="ln" href="#L116">116</a><span class="c-doc">⍝│</span><span class="c-doc"> values), colored in turn and named in a legend by names.</span></span>
+<span class="line" id="L117"><a class="ln" href="#L117">117</a><span class="c-libfunc">ˡf̲unctions!</span> ← { names series → <a href="builtins.html#-5b-5dS_HOW" class="c-builtin">⎕S̲HOW</a> (<span class="c-string">&quot;&quot;</span> <span class="c-string">&quot;&quot;</span> <span class="c-string">&quot;&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> names) <a href="work-libs-Plot-src-Plot.xtl.html#h.c_hartXY" class="c-libfunc">ʰc̲hartXY</a> (<a href="work-libs-Plot-src-Plot.xtl.html#h.x_boxAll" class="c-libfunc">ʰx̲boxAll</a> series, <span class="c-quote">'</span>{ xy → <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> xy } <a href="builtins.html#m_ap" class="c-builtin">m̲ap</a> series) }</span>
+<span class="line" id="L118"><a class="ln" href="#L118">118</a></span>
+<span class="line" id="L119"><a class="ln" href="#L119">119</a><span class="c-doc">⍝│</span><span class="c-doc"> labels f_unctionChart! series: as f_unctions!, with a title and the</span></span>
+<span class="line" id="L120"><a class="ln" href="#L120">120</a><span class="c-doc">⍝│</span><span class="c-doc"> names of the axes (as c_hart!'s labels).</span></span>
+<span class="line" id="L121"><a class="ln" href="#L121">121</a><span class="c-libfunc">ˡf̲unctionChart!</span> ← { labels series → <a href="builtins.html#-5b-5dS_HOW" class="c-builtin">⎕S̲HOW</a> labels <a href="work-libs-Plot-src-Plot.xtl.html#h.c_hartXY" class="c-libfunc">ʰc̲hartXY</a> (<a href="work-libs-Plot-src-Plot.xtl.html#h.x_boxAll" class="c-libfunc">ʰx̲boxAll</a> series, <span class="c-quote">'</span>{ xy → <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> xy } <a href="builtins.html#m_ap" class="c-builtin">m̲ap</a> series) }</span>
+<span class="line" id="L122"><a class="ln" href="#L122">122</a></span>
+<span class="line" id="L123"><a class="ln" href="#L123">123</a><span class="c-heading">⍝━━</span><span class="c-heading"> Chart drawing (private)</span></span>
+<span class="line" id="L124"><a class="ln" href="#L124">124</a></span>
+<span class="line" id="L125"><a class="ln" href="#L125">125</a><span class="c-doc">⍝│</span><span class="c-doc"> The horizontal range of one (x over y) pair, padded as the</span></span>
+<span class="line" id="L126"><a class="ln" href="#L126">126</a><span class="c-doc">⍝│</span><span class="c-doc"> vertical axis is.</span></span>
+<span class="line" id="L127"><a class="ln" href="#L127">127</a><span class="c-libfunc">ʰx̲box</span> ← { xy →</span>
+<span class="line" id="L128"><a class="ln" href="#L128">128</a>  x ← <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> xy</span>
+<span class="line" id="L129"><a class="ln" href="#L129">129</a>  lo ← <span class="c-builtin">'</span><a href="builtins.html#m_in" class="c-builtin">m̲in</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> x</span>
+<span class="line" id="L130"><a class="ln" href="#L130">130</a>  hi ← <span class="c-builtin">'</span><a href="builtins.html#m_ax" class="c-builtin">m̲ax</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> x</span>
+<span class="line" id="L131"><a class="ln" href="#L131">131</a>  pad ← lo <a href="work-libs-Plot-src-Plot.xtl.html#h.p_ad" class="c-libfunc">ʰp̲ad</a> hi</span>
+<span class="line" id="L132"><a class="ln" href="#L132">132</a>  (lo <a href="builtins.html#-2d" class="c-symbol">−</a> pad) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> hi <a href="builtins.html#-2b" class="c-symbol">+</a> pad</span>
+<span class="line" id="L133"><a class="ln" href="#L133">133</a>}</span>
+<span class="line" id="L134"><a class="ln" href="#L134">134</a></span>
+<span class="line" id="L135"><a class="ln" href="#L135">135</a><span class="c-doc">⍝│</span><span class="c-doc"> The horizontal range across every boxed (x over y) pair of series,</span></span>
+<span class="line" id="L136"><a class="ln" href="#L136">136</a><span class="c-doc">⍝│</span><span class="c-doc"> so curves of different x values still share one axis.</span></span>
+<span class="line" id="L137"><a class="ln" href="#L137">137</a><span class="c-libfunc">ʰx̲boxAll</span> ← { series →</span>
+<span class="line" id="L138"><a class="ln" href="#L138">138</a>  xs ← <a href="work-libs-Plot-src-Plot.xtl.html#h.j_oined" class="c-libfunc">ʰj̲oined</a> <span class="c-quote">'</span>{ xy → <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> xy } <a href="builtins.html#m_ap" class="c-builtin">m̲ap</a> series</span>
+<span class="line" id="L139"><a class="ln" href="#L139">139</a>  lo ← <span class="c-builtin">'</span><a href="builtins.html#m_in" class="c-builtin">m̲in</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> xs</span>
+<span class="line" id="L140"><a class="ln" href="#L140">140</a>  hi ← <span class="c-builtin">'</span><a href="builtins.html#m_ax" class="c-builtin">m̲ax</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> xs</span>
+<span class="line" id="L141"><a class="ln" href="#L141">141</a>  pad ← lo <a href="work-libs-Plot-src-Plot.xtl.html#h.p_ad" class="c-libfunc">ʰp̲ad</a> hi</span>
+<span class="line" id="L142"><a class="ln" href="#L142">142</a>  (lo <a href="builtins.html#-2d" class="c-symbol">−</a> pad) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> hi <a href="builtins.html#-2b" class="c-symbol">+</a> pad</span>
+<span class="line" id="L143"><a class="ln" href="#L143">143</a>}</span>
+<span class="line" id="L144"><a class="ln" href="#L144">144</a></span>
+<span class="line" id="L145"><a class="ln" href="#L145">145</a><span class="c-doc">⍝│</span><span class="c-doc"> The chart's frame: the picture's size and the plot area's edges.</span></span>
+<span class="line" id="L146"><a class="ln" href="#L146">146</a>ʰW ← <span class="c-number">480.0</span></span>
+<span class="line" id="L147"><a class="ln" href="#L147">147</a>ʰH ← <span class="c-number">280.0</span></span>
+<span class="line" id="L148"><a class="ln" href="#L148">148</a>ʰL ← <span class="c-number">64.0</span></span>
+<span class="line" id="L149"><a class="ln" href="#L149">149</a>ʰR ← <span class="c-number">456.0</span></span>
+<span class="line" id="L150"><a class="ln" href="#L150">150</a>ʰT ← <span class="c-number">44.0</span></span>
+<span class="line" id="L151"><a class="ln" href="#L151">151</a>ʰB ← <span class="c-number">232.0</span></span>
+<span class="line" id="L152"><a class="ln" href="#L152">152</a></span>
+<span class="line" id="L153"><a class="ln" href="#L153">153</a><span class="c-doc">⍝│</span><span class="c-doc"> The line colors, in turn (blue, red, green, amber, violet, teal).</span></span>
+<span class="line" id="L154"><a class="ln" href="#L154">154</a>ʰcolors ← <span class="c-string">&quot;#2563eb&quot;</span> <span class="c-string">&quot;#dc2626&quot;</span> <span class="c-string">&quot;#16a34a&quot;</span> <span class="c-string">&quot;#d97706&quot;</span> <span class="c-string">&quot;#7c3aed&quot;</span> <span class="c-string">&quot;#0d9488&quot;</span></span>
+<span class="line" id="L155"><a class="ln" href="#L155">155</a></span>
+<span class="line" id="L156"><a class="ln" href="#L156">156</a><span class="c-doc">⍝│</span><span class="c-doc"> Boxed numbers joined into one vector.</span></span>
+<span class="line" id="L157"><a class="ln" href="#L157">157</a><span class="c-libfunc">ʰj̲oined</span> ← { b → <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> <span class="c-quote">'</span>{ x y → <a href="builtins.html#e_nclose" class="c-builtin">e̲nclose</a> (<a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> x) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> y } <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> b }</span>
+<span class="line" id="L158"><a class="ln" href="#L158">158</a></span>
+<span class="line" id="L159"><a class="ln" href="#L159">159</a><span class="c-doc">⍝│</span><span class="c-doc"> labels c_hart series: the picture's SVG text.</span></span>
+<span class="line" id="L160"><a class="ln" href="#L160">160</a><span class="c-libfunc">ʰc̲hart</span> ← { labels series →</span>
+<span class="line" id="L161"><a class="ln" href="#L161">161</a>  all ← <a href="work-libs-Plot-src-Plot.xtl.html#h.j_oined" class="c-libfunc">ʰj̲oined</a> series</span>
+<span class="line" id="L162"><a class="ln" href="#L162">162</a>  lo ← <span class="c-builtin">'</span><a href="builtins.html#m_in" class="c-builtin">m̲in</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> all</span>
+<span class="line" id="L163"><a class="ln" href="#L163">163</a>  hi ← <span class="c-builtin">'</span><a href="builtins.html#m_ax" class="c-builtin">m̲ax</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> all</span>
+<span class="line" id="L164"><a class="ln" href="#L164">164</a>  pad ← lo <a href="work-libs-Plot-src-Plot.xtl.html#h.p_ad" class="c-libfunc">ʰp̲ad</a> hi</span>
+<span class="line" id="L165"><a class="ln" href="#L165">165</a>  box ← (lo <a href="builtins.html#-2d" class="c-symbol">−</a> pad) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> hi <a href="builtins.html#-2b" class="c-symbol">+</a> pad</span>
+<span class="line" id="L166"><a class="ln" href="#L166">166</a>  n ← <span class="c-builtin">'</span><a href="builtins.html#m_ax" class="c-builtin">m̲ax</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> <span class="c-quote">'</span>{ x → <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> x } <a href="builtins.html#e_ach" class="c-builtin">e̲ach</a> series</span>
+<span class="line" id="L167"><a class="ln" href="#L167">167</a>  lines ← <a href="work-libs-Plot-src-Plot.xtl.html#h.j_oinText" class="c-libfunc">ʰj̲oinText</a> <span class="c-quote">'</span>{ i → (i <a href="work-libs-Plot-src-Plot.xtl.html#h.c_olor" class="c-libfunc">ʰc̲olor</a> <a href="work-libs-Plot-src-Plot.xtl.html#h.colors">ʰcolors</a>) <a href="work-libs-Plot-src-Plot.xtl.html#h.s_eries" class="c-libfunc">ʰs̲eries</a> (<a href="builtins.html#e_nclose" class="c-builtin">e̲nclose</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> n) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#e_nclose" class="c-builtin">e̲nclose</a> box) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> i <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> series } <a href="builtins.html#m_ap" class="c-builtin">m̲ap</a> <a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> series</span>
+<span class="line" id="L168"><a class="ln" href="#L168">168</a>  body ← (n <a href="work-libs-Plot-src-Plot.xtl.html#h.f_rame" class="c-libfunc">ʰf̲rame</a> box) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> lines <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="work-libs-Plot-src-Plot.xtl.html#h.t_itles" class="c-libfunc">ʰt̲itles</a> labels</span>
+<span class="line" id="L169"><a class="ln" href="#L169">169</a>  (<a href="work-libs-Plot-src-Plot.xtl.html#h.W">ʰW</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="work-libs-Plot-src-Plot.xtl.html#h.H">ʰH</a>) <a href="std-Svg.xtl.html#l.p_icture" class="c-libfunc">ᵛp̲icture</a> body</span>
+<span class="line" id="L170"><a class="ln" href="#L170">170</a>}</span>
+<span class="line" id="L171"><a class="ln" href="#L171">171</a></span>
+<span class="line" id="L172"><a class="ln" href="#L172">172</a><span class="c-doc">⍝│</span><span class="c-doc"> How far past its least and greatest values the vertical axis goes: 0,</span></span>
+<span class="line" id="L173"><a class="ln" href="#L173">173</a><span class="c-doc">⍝│</span><span class="c-doc"> or for a flat series a tenth of its size (1 when it is 0).</span></span>
+<span class="line" id="L174"><a class="ln" href="#L174">174</a><span class="c-libfunc">ʰp̲ad</span> ← { lo hi →</span>
+<span class="line" id="L175"><a class="ln" href="#L175">175</a>  hi <a href="builtins.html#-3e" class="c-symbol">&gt;</a> lo ? <span class="c-number">0.0</span></span>
+<span class="line" id="L176"><a class="ln" href="#L176">176</a>  lo <a href="builtins.html#-3d" class="c-symbol">=</a> <span class="c-number">0.0</span> ? <span class="c-number">1.0</span></span>
+<span class="line" id="L177"><a class="ln" href="#L177">177</a>  <span class="c-number">0.1</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#a_bs" class="c-builtin">a̲bs</a> lo</span>
+<span class="line" id="L178"><a class="ln" href="#L178">178</a>}</span>
+<span class="line" id="L179"><a class="ln" href="#L179">179</a></span>
+<span class="line" id="L180"><a class="ln" href="#L180">180</a><span class="c-doc">⍝│</span><span class="c-doc"> Boxed texts joined into one text (none is the empty text).</span></span>
+<span class="line" id="L181"><a class="ln" href="#L181">181</a><span class="c-libfunc">ʰj̲oinText</span> ← { b →</span>
+<span class="line" id="L182"><a class="ln" href="#L182">182</a>  <span class="c-number">0</span> <a href="builtins.html#-3d" class="c-symbol">=</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> b ? <span class="c-string">&quot;&quot;</span></span>
+<span class="line" id="L183"><a class="ln" href="#L183">183</a>  <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> <span class="c-quote">'</span>{ x y → <a href="builtins.html#e_nclose" class="c-builtin">e̲nclose</a> (<a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> x) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> y } <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> b</span>
+<span class="line" id="L184"><a class="ln" href="#L184">184</a>}</span>
+<span class="line" id="L185"><a class="ln" href="#L185">185</a></span>
+<span class="line" id="L186"><a class="ln" href="#L186">186</a><span class="c-doc">⍝│</span><span class="c-doc"> The color of series i (1, 2, ...), the colors in turn.</span></span>
+<span class="line" id="L187"><a class="ln" href="#L187">187</a><span class="c-libfunc">ʰc̲olor</span> ← { i c → <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> (<span class="c-number">1</span> <a href="builtins.html#-2b" class="c-symbol">+</a> (i <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span>) <a href="builtins.html#m_od" class="c-builtin">m̲od</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> c) <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> c }</span>
+<span class="line" id="L188"><a class="ln" href="#L188">188</a></span>
+<span class="line" id="L189"><a class="ln" href="#L189">189</a><span class="c-doc">⍝│</span><span class="c-doc"> The x of positions p (0, 1, ...) of n: spread across the plot area,</span></span>
+<span class="line" id="L190"><a class="ln" href="#L190">190</a><span class="c-doc">⍝│</span><span class="c-doc"> one position in its middle.</span></span>
+<span class="line" id="L191"><a class="ln" href="#L191">191</a><span class="c-libfunc">ʰx̲at</span> ← { n p →</span>
+<span class="line" id="L192"><a class="ln" href="#L192">192</a>  n <a href="builtins.html#-3d" class="c-symbol">=</a> <span class="c-number">1</span> ? (<a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> p) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> (<a href="work-libs-Plot-src-Plot.xtl.html#h.L">ʰL</a> <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="work-libs-Plot-src-Plot.xtl.html#h.R">ʰR</a>) <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-number">2.0</span></span>
+<span class="line" id="L193"><a class="ln" href="#L193">193</a>  <a href="work-libs-Plot-src-Plot.xtl.html#h.r_ound" class="c-libfunc">ʰr̲ound</a> <a href="work-libs-Plot-src-Plot.xtl.html#h.L">ʰL</a> <a href="builtins.html#-2b" class="c-symbol">+</a> (<a href="work-libs-Plot-src-Plot.xtl.html#h.R">ʰR</a> <a href="builtins.html#-2d" class="c-symbol">−</a> <a href="work-libs-Plot-src-Plot.xtl.html#h.L">ʰL</a>) <a href="builtins.html#-2a" class="c-symbol">×</a> (<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> p) <a href="builtins.html#-2f" class="c-symbol">÷</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> n <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span></span>
+<span class="line" id="L194"><a class="ln" href="#L194">194</a>}</span>
+<span class="line" id="L195"><a class="ln" href="#L195">195</a></span>
+<span class="line" id="L196"><a class="ln" href="#L196">196</a><span class="c-doc">⍝│</span><span class="c-doc"> x rounded to a whole number, still a Float.</span></span>
+<span class="line" id="L197"><a class="ln" href="#L197">197</a><span class="c-libfunc">ʰr̲ound</span> ← { x → <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> <span class="c-number">0.5</span> <a href="builtins.html#-2b" class="c-symbol">+</a> x }</span>
+<span class="line" id="L198"><a class="ln" href="#L198">198</a></span>
+<span class="line" id="L199"><a class="ln" href="#L199">199</a><span class="c-doc">⍝│</span><span class="c-doc"> The y of values v in the vertical range box (least, greatest).</span></span>
+<span class="line" id="L200"><a class="ln" href="#L200">200</a><span class="c-libfunc">ʰy̲at</span> ← { box v →</span>
+<span class="line" id="L201"><a class="ln" href="#L201">201</a>  lo ← <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> box</span>
+<span class="line" id="L202"><a class="ln" href="#L202">202</a>  hi ← <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> <span class="c-number">1</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> box</span>
+<span class="line" id="L203"><a class="ln" href="#L203">203</a>  <a href="work-libs-Plot-src-Plot.xtl.html#h.r_ound" class="c-libfunc">ʰr̲ound</a> <a href="work-libs-Plot-src-Plot.xtl.html#h.B">ʰB</a> <a href="builtins.html#-2d" class="c-symbol">−</a> (<a href="work-libs-Plot-src-Plot.xtl.html#h.B">ʰB</a> <a href="builtins.html#-2d" class="c-symbol">−</a> <a href="work-libs-Plot-src-Plot.xtl.html#h.T">ʰT</a>) <a href="builtins.html#-2a" class="c-symbol">×</a> ((<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> v) <a href="builtins.html#-2d" class="c-symbol">−</a> lo) <a href="builtins.html#-2f" class="c-symbol">÷</a> hi <a href="builtins.html#-2d" class="c-symbol">−</a> lo</span>
+<span class="line" id="L204"><a class="ln" href="#L204">204</a>}</span>
+<span class="line" id="L205"><a class="ln" href="#L205">205</a></span>
+<span class="line" id="L206"><a class="ln" href="#L206">206</a><span class="c-doc">⍝│</span><span class="c-doc"> The x of values v in the horizontal range box (least, greatest):</span></span>
+<span class="line" id="L207"><a class="ln" href="#L207">207</a><span class="c-doc">⍝│</span><span class="c-doc"> h:y_at's mapping, left to right instead of inverted.</span></span>
+<span class="line" id="L208"><a class="ln" href="#L208">208</a><span class="c-libfunc">ʰx̲atValue</span> ← { box v →</span>
+<span class="line" id="L209"><a class="ln" href="#L209">209</a>  lo ← <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> box</span>
+<span class="line" id="L210"><a class="ln" href="#L210">210</a>  hi ← <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> <span class="c-number">1</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> box</span>
+<span class="line" id="L211"><a class="ln" href="#L211">211</a>  <a href="work-libs-Plot-src-Plot.xtl.html#h.r_ound" class="c-libfunc">ʰr̲ound</a> <a href="work-libs-Plot-src-Plot.xtl.html#h.L">ʰL</a> <a href="builtins.html#-2b" class="c-symbol">+</a> (<a href="work-libs-Plot-src-Plot.xtl.html#h.R">ʰR</a> <a href="builtins.html#-2d" class="c-symbol">−</a> <a href="work-libs-Plot-src-Plot.xtl.html#h.L">ʰL</a>) <a href="builtins.html#-2a" class="c-symbol">×</a> ((<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> v) <a href="builtins.html#-2d" class="c-symbol">−</a> lo) <a href="builtins.html#-2f" class="c-symbol">÷</a> hi <a href="builtins.html#-2d" class="c-symbol">−</a> lo</span>
+<span class="line" id="L212"><a class="ln" href="#L212">212</a>}</span>
+<span class="line" id="L213"><a class="ln" href="#L213">213</a></span>
+<span class="line" id="L214"><a class="ln" href="#L214">214</a><span class="c-doc">⍝│</span><span class="c-doc"> One (x over y) series as a polyline (and a point when it has one</span></span>
+<span class="line" id="L215"><a class="ln" href="#L215">215</a><span class="c-doc">⍝│</span><span class="c-doc"> value), in its color: color s_eriesXY (xbox; ybox; xy), boxed.</span></span>
+<span class="line" id="L216"><a class="ln" href="#L216">216</a><span class="c-libfunc">ʰs̲eriesXY</span> ← { color rest →</span>
+<span class="line" id="L217"><a class="ln" href="#L217">217</a>  xbox ← <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> rest</span>
+<span class="line" id="L218"><a class="ln" href="#L218">218</a>  ybox ← <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> <span class="c-number">1</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> rest</span>
+<span class="line" id="L219"><a class="ln" href="#L219">219</a>  xy ← <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> <span class="c-number">2</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> rest</span>
+<span class="line" id="L220"><a class="ln" href="#L220">220</a>  x ← <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> xy</span>
+<span class="line" id="L221"><a class="ln" href="#L221">221</a>  y ← <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> <span class="c-number">1</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> xy</span>
+<span class="line" id="L222"><a class="ln" href="#L222">222</a>  xs ← xbox <a href="work-libs-Plot-src-Plot.xtl.html#h.x_atValue" class="c-libfunc">ʰx̲atValue</a> x</span>
+<span class="line" id="L223"><a class="ln" href="#L223">223</a>  ys ← ybox <a href="work-libs-Plot-src-Plot.xtl.html#h.y_at" class="c-libfunc">ʰy̲at</a> y</span>
+<span class="line" id="L224"><a class="ln" href="#L224">224</a>  line ← ((<a href="std-Svg.xtl.html#l.f_ill" class="c-libfunc">ᵛf̲ill</a> <span class="c-string">&quot;none&quot;</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> color <a href="std-Svg.xtl.html#l.s_troke" class="c-libfunc">ᵛs̲troke</a> <span class="c-number">2</span>) <a href="std-Svg.xtl.html#l.p_olyline" class="c-libfunc">ᵛp̲olyline</a> (<span class="c-number">2</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> x) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> xs <a href="builtins.html#c_at" class="c-builtin">c̲at</a> ys</span>
+<span class="line" id="L225"><a class="ln" href="#L225">225</a>  <span class="c-number">1</span> <a href="builtins.html#-3c" class="c-symbol">&lt;</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> x ? line</span>
+<span class="line" id="L226"><a class="ln" href="#L226">226</a>  line <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;&lt;circle&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot;cx&quot;</span> <a href="std-Svg.xtl.html#l.a_ttr" class="c-libfunc">ᵛa̲ttr</a> <a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> xs) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot;cy&quot;</span> <a href="std-Svg.xtl.html#l.a_ttr" class="c-libfunc">ᵛa̲ttr</a> <a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> ys) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; r=\&quot;3\&quot;&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="std-Svg.xtl.html#l.f_ill" class="c-libfunc">ᵛf̲ill</a> color) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;/&gt;&quot;</span></span>
+<span class="line" id="L227"><a class="ln" href="#L227">227</a>}</span>
+<span class="line" id="L228"><a class="ln" href="#L228">228</a></span>
+<span class="line" id="L229"><a class="ln" href="#L229">229</a><span class="c-doc">⍝│</span><span class="c-doc"> One series as a polyline (and a point when it has one value), in its</span></span>
+<span class="line" id="L230"><a class="ln" href="#L230">230</a><span class="c-doc">⍝│</span><span class="c-doc"> color: color s_eries (n; box; values), boxed (n a Float).</span></span>
+<span class="line" id="L231"><a class="ln" href="#L231">231</a><span class="c-libfunc">ʰs̲eries</span> ← { color rest →</span>
+<span class="line" id="L232"><a class="ln" href="#L232">232</a>  n ← <a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> rest</span>
+<span class="line" id="L233"><a class="ln" href="#L233">233</a>  box ← <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> <span class="c-number">1</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> rest</span>
+<span class="line" id="L234"><a class="ln" href="#L234">234</a>  v ← <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> <span class="c-number">2</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> rest</span>
+<span class="line" id="L235"><a class="ln" href="#L235">235</a>  xs ← n <a href="work-libs-Plot-src-Plot.xtl.html#h.x_at" class="c-libfunc">ʰx̲at</a> <a href="builtins.html#o_ffsets" class="c-builtin">o̲ffsets</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> v</span>
+<span class="line" id="L236"><a class="ln" href="#L236">236</a>  ys ← box <a href="work-libs-Plot-src-Plot.xtl.html#h.y_at" class="c-libfunc">ʰy̲at</a> v</span>
+<span class="line" id="L237"><a class="ln" href="#L237">237</a>  line ← ((<a href="std-Svg.xtl.html#l.f_ill" class="c-libfunc">ᵛf̲ill</a> <span class="c-string">&quot;none&quot;</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> color <a href="std-Svg.xtl.html#l.s_troke" class="c-libfunc">ᵛs̲troke</a> <span class="c-number">2</span>) <a href="std-Svg.xtl.html#l.p_olyline" class="c-libfunc">ᵛp̲olyline</a> (<span class="c-number">2</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> v) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> xs <a href="builtins.html#c_at" class="c-builtin">c̲at</a> ys</span>
+<span class="line" id="L238"><a class="ln" href="#L238">238</a>  <span class="c-number">1</span> <a href="builtins.html#-3c" class="c-symbol">&lt;</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> v ? line</span>
+<span class="line" id="L239"><a class="ln" href="#L239">239</a>  line <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;&lt;circle&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot;cx&quot;</span> <a href="std-Svg.xtl.html#l.a_ttr" class="c-libfunc">ᵛa̲ttr</a> <a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> xs) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot;cy&quot;</span> <a href="std-Svg.xtl.html#l.a_ttr" class="c-libfunc">ᵛa̲ttr</a> <a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> ys) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; r=\&quot;3\&quot;&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="std-Svg.xtl.html#l.f_ill" class="c-libfunc">ᵛf̲ill</a> color) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;/&gt;&quot;</span></span>
+<span class="line" id="L240"><a class="ln" href="#L240">240</a>}</span>
+<span class="line" id="L241"><a class="ln" href="#L241">241</a></span>
+<span class="line" id="L242"><a class="ln" href="#L242">242</a><span class="c-doc">⍝│</span><span class="c-doc"> The text attributes of tick labels and names.</span></span>
+<span class="line" id="L243"><a class="ln" href="#L243">243</a>ʰsmall ← <span class="c-string">&quot; font-family=\&quot;sans-serif\&quot; font-size=\&quot;11\&quot; fill=\&quot;#475569\&quot;&quot;</span></span>
+<span class="line" id="L244"><a class="ln" href="#L244">244</a></span>
+<span class="line" id="L245"><a class="ln" href="#L245">245</a><span class="c-doc">⍝│</span><span class="c-doc"> The axes, the grid lines and the tick labels: three values on the</span></span>
+<span class="line" id="L246"><a class="ln" href="#L246">246</a><span class="c-doc">⍝│</span><span class="c-doc"> vertical axis (least, middle, greatest), the first and last</span></span>
+<span class="line" id="L247"><a class="ln" href="#L247">247</a><span class="c-doc">⍝│</span><span class="c-doc"> positions on the horizontal one.</span></span>
+<span class="line" id="L248"><a class="ln" href="#L248">248</a><span class="c-libfunc">ʰf̲rame</span> ← { n box →</span>
+<span class="line" id="L249"><a class="ln" href="#L249">249</a>  lo ← <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> box</span>
+<span class="line" id="L250"><a class="ln" href="#L250">250</a>  hi ← <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> <span class="c-number">1</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> box</span>
+<span class="line" id="L251"><a class="ln" href="#L251">251</a>  ticks ← lo <a href="builtins.html#c_at" class="c-builtin">c̲at</a> ((lo <a href="builtins.html#-2b" class="c-symbol">+</a> hi) <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-number">2.0</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> hi</span>
+<span class="line" id="L252"><a class="ln" href="#L252">252</a>  ys ← box <a href="work-libs-Plot-src-Plot.xtl.html#h.y_at" class="c-libfunc">ʰy̲at</a> ticks</span>
+<span class="line" id="L253"><a class="ln" href="#L253">253</a>  d ← <span class="c-number">0</span> <a href="builtins.html#m_ax" class="c-builtin">m̲ax</a> <span class="c-number">8</span> <a href="builtins.html#m_in" class="c-builtin">m̲in</a> <span class="c-number">1</span> <a href="builtins.html#-2d" class="c-symbol">−</a> <a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> (<a href="builtins.html#l_og" class="c-builtin">l̲og</a> (hi <a href="builtins.html#-2d" class="c-symbol">−</a> lo) <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-number">2.0</span>) <a href="builtins.html#-2f" class="c-symbol">÷</a> <a href="builtins.html#l_og" class="c-builtin">l̲og</a> <span class="c-number">10</span>           <span class="c-comment">⍝</span><span class="c-comment"> decimals enough to tell the ticks apart</span></span>
+<span class="line" id="L254"><a class="ln" href="#L254">254</a>  texts ← d <a href="work-libs-Format-src-Format.xtl.html#l.f_ixed" class="c-libfunc">ᶠf̲ixed</a> ticks</span>
+<span class="line" id="L255"><a class="ln" href="#L255">255</a>  grid ← <a href="work-libs-Plot-src-Plot.xtl.html#h.j_oinText" class="c-libfunc">ʰj̲oinText</a> <span class="c-quote">'</span>{ y → ((<a href="std-Svg.xtl.html#l.f_ill" class="c-libfunc">ᵛf̲ill</a> <span class="c-string">&quot;none&quot;</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;#e2e8f0&quot;</span> <a href="std-Svg.xtl.html#l.s_troke" class="c-libfunc">ᵛs̲troke</a> <span class="c-number">1</span>) <a href="std-Svg.xtl.html#l.p_olyline" class="c-libfunc">ᵛp̲olyline</a> <span class="c-number">2</span> <span class="c-number">2</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <a href="work-libs-Plot-src-Plot.xtl.html#h.L">ʰL</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="work-libs-Plot-src-Plot.xtl.html#h.R">ʰR</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> y <a href="builtins.html#c_at" class="c-builtin">c̲at</a> y } <a href="builtins.html#m_ap" class="c-builtin">m̲ap</a> ys</span>
+<span class="line" id="L256"><a class="ln" href="#L256">256</a>  left ← <a href="work-libs-Plot-src-Plot.xtl.html#h.j_oinText" class="c-libfunc">ʰj̲oinText</a> <span class="c-quote">'</span>{ k → ((<a href="std-Svg.xtl.html#l.a_t" class="c-libfunc">ᵛa̲t</a> (<a href="work-libs-Plot-src-Plot.xtl.html#h.L">ʰL</a> <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">8.0</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">4.0</span> <a href="builtins.html#-2b" class="c-symbol">+</a> k <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> ys) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="work-libs-Plot-src-Plot.xtl.html#h.small">ʰsmall</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;text-anchor&quot;</span> <a href="std-Svg.xtl.html#l.a_ttr" class="c-libfunc">ᵛa̲ttr</a> <span class="c-string">&quot;end&quot;</span>) <a href="std-Svg.xtl.html#l.t_ext" class="c-libfunc">ᵛt̲ext</a> <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> k <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> texts } <a href="builtins.html#m_ap" class="c-builtin">m̲ap</a> <a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <span class="c-number">3</span></span>
+<span class="line" id="L257"><a class="ln" href="#L257">257</a>  last ← <span class="c-number">1</span> <a href="builtins.html#m_ax" class="c-builtin">m̲ax</a> n</span>
+<span class="line" id="L258"><a class="ln" href="#L258">258</a>  at ← n <a href="work-libs-Plot-src-Plot.xtl.html#h.x_at" class="c-libfunc">ʰx̲at</a> (<span class="c-number">1</span> <a href="builtins.html#-2b" class="c-symbol">+</a> n <a href="builtins.html#-3e" class="c-symbol">&gt;</a> <span class="c-number">1</span>) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> n <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span></span>
+<span class="line" id="L259"><a class="ln" href="#L259">259</a>  marks ← (<span class="c-number">1</span> <a href="builtins.html#-2b" class="c-symbol">+</a> n <a href="builtins.html#-3e" class="c-symbol">&gt;</a> <span class="c-number">1</span>) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">1</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> last</span>
+<span class="line" id="L260"><a class="ln" href="#L260">260</a>  bottom ← <a href="work-libs-Plot-src-Plot.xtl.html#h.j_oinText" class="c-libfunc">ʰj̲oinText</a> <span class="c-quote">'</span>{ k → ((<a href="std-Svg.xtl.html#l.a_t" class="c-libfunc">ᵛa̲t</a> (k <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> at) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="work-libs-Plot-src-Plot.xtl.html#h.B">ʰB</a> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">18.0</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="work-libs-Plot-src-Plot.xtl.html#h.small">ʰsmall</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;text-anchor&quot;</span> <a href="std-Svg.xtl.html#l.a_ttr" class="c-libfunc">ᵛa̲ttr</a> <span class="c-string">&quot;middle&quot;</span>) <a href="std-Svg.xtl.html#l.t_ext" class="c-libfunc">ᵛt̲ext</a> <a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> k <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> marks } <a href="builtins.html#m_ap" class="c-builtin">m̲ap</a> <a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> at</span>
+<span class="line" id="L261"><a class="ln" href="#L261">261</a>  axes ← ((<a href="std-Svg.xtl.html#l.f_ill" class="c-libfunc">ᵛf̲ill</a> <span class="c-string">&quot;none&quot;</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;#64748b&quot;</span> <a href="std-Svg.xtl.html#l.s_troke" class="c-libfunc">ᵛs̲troke</a> <span class="c-number">1</span>) <a href="std-Svg.xtl.html#l.p_olyline" class="c-libfunc">ᵛp̲olyline</a> <span class="c-number">2</span> <span class="c-number">3</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <a href="work-libs-Plot-src-Plot.xtl.html#h.L">ʰL</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="work-libs-Plot-src-Plot.xtl.html#h.L">ʰL</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="work-libs-Plot-src-Plot.xtl.html#h.R">ʰR</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="work-libs-Plot-src-Plot.xtl.html#h.T">ʰT</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="work-libs-Plot-src-Plot.xtl.html#h.B">ʰB</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="work-libs-Plot-src-Plot.xtl.html#h.B">ʰB</a></span>
+<span class="line" id="L262"><a class="ln" href="#L262">262</a>  back ← <span class="c-string">&quot;&lt;rect&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot;width&quot;</span> <a href="std-Svg.xtl.html#l.a_ttr" class="c-libfunc">ᵛa̲ttr</a> <a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <a href="work-libs-Plot-src-Plot.xtl.html#h.W">ʰW</a>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot;height&quot;</span> <a href="std-Svg.xtl.html#l.a_ttr" class="c-libfunc">ᵛa̲ttr</a> <a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <a href="work-libs-Plot-src-Plot.xtl.html#h.H">ʰH</a>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="std-Svg.xtl.html#l.f_ill" class="c-libfunc">ᵛf̲ill</a> <span class="c-string">&quot;#ffffff&quot;</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;/&gt;&quot;</span></span>
+<span class="line" id="L263"><a class="ln" href="#L263">263</a>  back <a href="builtins.html#c_at" class="c-builtin">c̲at</a> grid <a href="builtins.html#c_at" class="c-builtin">c̲at</a> axes <a href="builtins.html#c_at" class="c-builtin">c̲at</a> left <a href="builtins.html#c_at" class="c-builtin">c̲at</a> bottom</span>
+<span class="line" id="L264"><a class="ln" href="#L264">264</a>}</span>
+<span class="line" id="L265"><a class="ln" href="#L265">265</a></span>
+<span class="line" id="L266"><a class="ln" href="#L266">266</a><span class="c-doc">⍝│</span><span class="c-doc"> The axes, the grid lines and the tick labels, both real-valued:</span></span>
+<span class="line" id="L267"><a class="ln" href="#L267">267</a><span class="c-doc">⍝│</span><span class="c-doc"> three ticks on each axis (least, middle, greatest), as h:f_rame's</span></span>
+<span class="line" id="L268"><a class="ln" href="#L268">268</a><span class="c-doc">⍝│</span><span class="c-doc"> vertical axis already reads, but the horizontal one too.</span></span>
+<span class="line" id="L269"><a class="ln" href="#L269">269</a><span class="c-libfunc">ʰf̲rameXY</span> ← { xbox ybox →</span>
+<span class="line" id="L270"><a class="ln" href="#L270">270</a>  ylo ← <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> ybox</span>
+<span class="line" id="L271"><a class="ln" href="#L271">271</a>  yhi ← <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> <span class="c-number">1</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> ybox</span>
+<span class="line" id="L272"><a class="ln" href="#L272">272</a>  yticks ← ylo <a href="builtins.html#c_at" class="c-builtin">c̲at</a> ((ylo <a href="builtins.html#-2b" class="c-symbol">+</a> yhi) <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-number">2.0</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> yhi</span>
+<span class="line" id="L273"><a class="ln" href="#L273">273</a>  ys ← ybox <a href="work-libs-Plot-src-Plot.xtl.html#h.y_at" class="c-libfunc">ʰy̲at</a> yticks</span>
+<span class="line" id="L274"><a class="ln" href="#L274">274</a>  yd ← <span class="c-number">0</span> <a href="builtins.html#m_ax" class="c-builtin">m̲ax</a> <span class="c-number">8</span> <a href="builtins.html#m_in" class="c-builtin">m̲in</a> <span class="c-number">1</span> <a href="builtins.html#-2d" class="c-symbol">−</a> <a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> (<a href="builtins.html#l_og" class="c-builtin">l̲og</a> (yhi <a href="builtins.html#-2d" class="c-symbol">−</a> ylo) <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-number">2.0</span>) <a href="builtins.html#-2f" class="c-symbol">÷</a> <a href="builtins.html#l_og" class="c-builtin">l̲og</a> <span class="c-number">10</span></span>
+<span class="line" id="L275"><a class="ln" href="#L275">275</a>  ytexts ← yd <a href="work-libs-Format-src-Format.xtl.html#l.f_ixed" class="c-libfunc">ᶠf̲ixed</a> yticks</span>
+<span class="line" id="L276"><a class="ln" href="#L276">276</a>  xlo ← <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> xbox</span>
+<span class="line" id="L277"><a class="ln" href="#L277">277</a>  xhi ← <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> <span class="c-number">1</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> xbox</span>
+<span class="line" id="L278"><a class="ln" href="#L278">278</a>  xticks ← xlo <a href="builtins.html#c_at" class="c-builtin">c̲at</a> ((xlo <a href="builtins.html#-2b" class="c-symbol">+</a> xhi) <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-number">2.0</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> xhi</span>
+<span class="line" id="L279"><a class="ln" href="#L279">279</a>  xs ← xbox <a href="work-libs-Plot-src-Plot.xtl.html#h.x_atValue" class="c-libfunc">ʰx̲atValue</a> xticks</span>
+<span class="line" id="L280"><a class="ln" href="#L280">280</a>  xd ← <span class="c-number">0</span> <a href="builtins.html#m_ax" class="c-builtin">m̲ax</a> <span class="c-number">8</span> <a href="builtins.html#m_in" class="c-builtin">m̲in</a> <span class="c-number">1</span> <a href="builtins.html#-2d" class="c-symbol">−</a> <a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> (<a href="builtins.html#l_og" class="c-builtin">l̲og</a> (xhi <a href="builtins.html#-2d" class="c-symbol">−</a> xlo) <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-number">2.0</span>) <a href="builtins.html#-2f" class="c-symbol">÷</a> <a href="builtins.html#l_og" class="c-builtin">l̲og</a> <span class="c-number">10</span></span>
+<span class="line" id="L281"><a class="ln" href="#L281">281</a>  xtexts ← xd <a href="work-libs-Format-src-Format.xtl.html#l.f_ixed" class="c-libfunc">ᶠf̲ixed</a> xticks</span>
+<span class="line" id="L282"><a class="ln" href="#L282">282</a>  grid ← <a href="work-libs-Plot-src-Plot.xtl.html#h.j_oinText" class="c-libfunc">ʰj̲oinText</a> <span class="c-quote">'</span>{ y → ((<a href="std-Svg.xtl.html#l.f_ill" class="c-libfunc">ᵛf̲ill</a> <span class="c-string">&quot;none&quot;</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;#e2e8f0&quot;</span> <a href="std-Svg.xtl.html#l.s_troke" class="c-libfunc">ᵛs̲troke</a> <span class="c-number">1</span>) <a href="std-Svg.xtl.html#l.p_olyline" class="c-libfunc">ᵛp̲olyline</a> <span class="c-number">2</span> <span class="c-number">2</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <a href="work-libs-Plot-src-Plot.xtl.html#h.L">ʰL</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="work-libs-Plot-src-Plot.xtl.html#h.R">ʰR</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> y <a href="builtins.html#c_at" class="c-builtin">c̲at</a> y } <a href="builtins.html#m_ap" class="c-builtin">m̲ap</a> ys</span>
+<span class="line" id="L283"><a class="ln" href="#L283">283</a>  left ← <a href="work-libs-Plot-src-Plot.xtl.html#h.j_oinText" class="c-libfunc">ʰj̲oinText</a> <span class="c-quote">'</span>{ k → ((<a href="std-Svg.xtl.html#l.a_t" class="c-libfunc">ᵛa̲t</a> (<a href="work-libs-Plot-src-Plot.xtl.html#h.L">ʰL</a> <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">8.0</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">4.0</span> <a href="builtins.html#-2b" class="c-symbol">+</a> k <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> ys) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="work-libs-Plot-src-Plot.xtl.html#h.small">ʰsmall</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;text-anchor&quot;</span> <a href="std-Svg.xtl.html#l.a_ttr" class="c-libfunc">ᵛa̲ttr</a> <span class="c-string">&quot;end&quot;</span>) <a href="std-Svg.xtl.html#l.t_ext" class="c-libfunc">ᵛt̲ext</a> <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> k <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> ytexts } <a href="builtins.html#m_ap" class="c-builtin">m̲ap</a> <a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <span class="c-number">3</span></span>
+<span class="line" id="L284"><a class="ln" href="#L284">284</a>  bottom ← <a href="work-libs-Plot-src-Plot.xtl.html#h.j_oinText" class="c-libfunc">ʰj̲oinText</a> <span class="c-quote">'</span>{ k → ((<a href="std-Svg.xtl.html#l.a_t" class="c-libfunc">ᵛa̲t</a> (k <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> xs) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="work-libs-Plot-src-Plot.xtl.html#h.B">ʰB</a> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">18.0</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="work-libs-Plot-src-Plot.xtl.html#h.small">ʰsmall</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;text-anchor&quot;</span> <a href="std-Svg.xtl.html#l.a_ttr" class="c-libfunc">ᵛa̲ttr</a> <span class="c-string">&quot;middle&quot;</span>) <a href="std-Svg.xtl.html#l.t_ext" class="c-libfunc">ᵛt̲ext</a> <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> k <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> xtexts } <a href="builtins.html#m_ap" class="c-builtin">m̲ap</a> <a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <span class="c-number">3</span></span>
+<span class="line" id="L285"><a class="ln" href="#L285">285</a>  axes ← ((<a href="std-Svg.xtl.html#l.f_ill" class="c-libfunc">ᵛf̲ill</a> <span class="c-string">&quot;none&quot;</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;#64748b&quot;</span> <a href="std-Svg.xtl.html#l.s_troke" class="c-libfunc">ᵛs̲troke</a> <span class="c-number">1</span>) <a href="std-Svg.xtl.html#l.p_olyline" class="c-libfunc">ᵛp̲olyline</a> <span class="c-number">2</span> <span class="c-number">3</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <a href="work-libs-Plot-src-Plot.xtl.html#h.L">ʰL</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="work-libs-Plot-src-Plot.xtl.html#h.L">ʰL</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="work-libs-Plot-src-Plot.xtl.html#h.R">ʰR</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="work-libs-Plot-src-Plot.xtl.html#h.T">ʰT</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="work-libs-Plot-src-Plot.xtl.html#h.B">ʰB</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="work-libs-Plot-src-Plot.xtl.html#h.B">ʰB</a></span>
+<span class="line" id="L286"><a class="ln" href="#L286">286</a>  back ← <span class="c-string">&quot;&lt;rect&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot;width&quot;</span> <a href="std-Svg.xtl.html#l.a_ttr" class="c-libfunc">ᵛa̲ttr</a> <a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <a href="work-libs-Plot-src-Plot.xtl.html#h.W">ʰW</a>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot;height&quot;</span> <a href="std-Svg.xtl.html#l.a_ttr" class="c-libfunc">ᵛa̲ttr</a> <a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <a href="work-libs-Plot-src-Plot.xtl.html#h.H">ʰH</a>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="std-Svg.xtl.html#l.f_ill" class="c-libfunc">ᵛf̲ill</a> <span class="c-string">&quot;#ffffff&quot;</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;/&gt;&quot;</span></span>
+<span class="line" id="L287"><a class="ln" href="#L287">287</a>  back <a href="builtins.html#c_at" class="c-builtin">c̲at</a> grid <a href="builtins.html#c_at" class="c-builtin">c̲at</a> axes <a href="builtins.html#c_at" class="c-builtin">c̲at</a> left <a href="builtins.html#c_at" class="c-builtin">c̲at</a> bottom</span>
+<span class="line" id="L288"><a class="ln" href="#L288">288</a>}</span>
+<span class="line" id="L289"><a class="ln" href="#L289">289</a></span>
+<span class="line" id="L290"><a class="ln" href="#L290">290</a><span class="c-doc">⍝│</span><span class="c-doc"> labels c_hartXY (xbox, series): as h:c_hart, but series is a boxed</span></span>
+<span class="line" id="L291"><a class="ln" href="#L291">291</a><span class="c-doc">⍝│</span><span class="c-doc"> (x over y) pair per curve and the horizontal axis spans xbox (its</span></span>
+<span class="line" id="L292"><a class="ln" href="#L292">292</a><span class="c-doc">⍝│</span><span class="c-doc"> own real values, not a count) instead of a position.</span></span>
+<span class="line" id="L293"><a class="ln" href="#L293">293</a><span class="c-libfunc">ʰc̲hartXY</span> ← { labels (xbox, series) →</span>
+<span class="line" id="L294"><a class="ln" href="#L294">294</a>  allY ← <a href="work-libs-Plot-src-Plot.xtl.html#h.j_oined" class="c-libfunc">ʰj̲oined</a> <span class="c-quote">'</span>{ xy → <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> <span class="c-number">1</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> xy } <a href="builtins.html#m_ap" class="c-builtin">m̲ap</a> series</span>
+<span class="line" id="L295"><a class="ln" href="#L295">295</a>  ylo ← <span class="c-builtin">'</span><a href="builtins.html#m_in" class="c-builtin">m̲in</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> allY</span>
+<span class="line" id="L296"><a class="ln" href="#L296">296</a>  yhi ← <span class="c-builtin">'</span><a href="builtins.html#m_ax" class="c-builtin">m̲ax</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> allY</span>
+<span class="line" id="L297"><a class="ln" href="#L297">297</a>  ypad ← ylo <a href="work-libs-Plot-src-Plot.xtl.html#h.p_ad" class="c-libfunc">ʰp̲ad</a> yhi</span>
+<span class="line" id="L298"><a class="ln" href="#L298">298</a>  ybox ← (ylo <a href="builtins.html#-2d" class="c-symbol">−</a> ypad) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> yhi <a href="builtins.html#-2b" class="c-symbol">+</a> ypad</span>
+<span class="line" id="L299"><a class="ln" href="#L299">299</a>  lines ← <a href="work-libs-Plot-src-Plot.xtl.html#h.j_oinText" class="c-libfunc">ʰj̲oinText</a> <span class="c-quote">'</span>{ i → (i <a href="work-libs-Plot-src-Plot.xtl.html#h.c_olor" class="c-libfunc">ʰc̲olor</a> <a href="work-libs-Plot-src-Plot.xtl.html#h.colors">ʰcolors</a>) <a href="work-libs-Plot-src-Plot.xtl.html#h.s_eriesXY" class="c-libfunc">ʰs̲eriesXY</a> (<a href="builtins.html#e_nclose" class="c-builtin">e̲nclose</a> xbox) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#e_nclose" class="c-builtin">e̲nclose</a> ybox) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> i <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> series } <a href="builtins.html#m_ap" class="c-builtin">m̲ap</a> <a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> series</span>
+<span class="line" id="L300"><a class="ln" href="#L300">300</a>  body ← (xbox <a href="work-libs-Plot-src-Plot.xtl.html#h.f_rameXY" class="c-libfunc">ʰf̲rameXY</a> ybox) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> lines <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="work-libs-Plot-src-Plot.xtl.html#h.t_itles" class="c-libfunc">ʰt̲itles</a> labels</span>
+<span class="line" id="L301"><a class="ln" href="#L301">301</a>  (<a href="work-libs-Plot-src-Plot.xtl.html#h.W">ʰW</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="work-libs-Plot-src-Plot.xtl.html#h.H">ʰH</a>) <a href="std-Svg.xtl.html#l.p_icture" class="c-libfunc">ᵛp̲icture</a> body</span>
+<span class="line" id="L302"><a class="ln" href="#L302">302</a>}</span>
+<span class="line" id="L303"><a class="ln" href="#L303">303</a></span>
+<span class="line" id="L304"><a class="ln" href="#L304">304</a><span class="c-doc">⍝│</span><span class="c-doc"> The title, the axes' names and the legend from labels (title,</span></span>
+<span class="line" id="L305"><a class="ln" href="#L305">305</a><span class="c-doc">⍝│</span><span class="c-doc"> horizontal axis, vertical axis, then a name per series); empty ones</span></span>
+<span class="line" id="L306"><a class="ln" href="#L306">306</a><span class="c-doc">⍝│</span><span class="c-doc"> are left out.</span></span>
+<span class="line" id="L307"><a class="ln" href="#L307">307</a><span class="c-libfunc">ʰt̲itles</span> ← { labels →</span>
+<span class="line" id="L308"><a class="ln" href="#L308">308</a>  <span class="c-builtin">n̲ame</span> ← { k → <span class="c-number">0</span> <a href="builtins.html#-3d" class="c-symbol">=</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> k <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> labels ? <span class="c-string">&quot;&quot;</span>◆ <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> k <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> labels }</span>
+<span class="line" id="L309"><a class="ln" href="#L309">309</a>  title ← ((<a href="std-Svg.xtl.html#l.a_t" class="c-libfunc">ᵛa̲t</a> <a href="work-libs-Plot-src-Plot.xtl.html#h.L">ʰL</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">24.0</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; font-family=\&quot;sans-serif\&quot; font-size=\&quot;14\&quot; font-weight=\&quot;bold\&quot; fill=\&quot;#0f172a\&quot;&quot;</span>) <a href="std-Svg.xtl.html#l.t_ext" class="c-libfunc">ᵛt̲ext</a> <span class="c-builtin">n̲ame</span> <span class="c-number">1</span></span>
+<span class="line" id="L310"><a class="ln" href="#L310">310</a>  across ← ((<a href="std-Svg.xtl.html#l.a_t" class="c-libfunc">ᵛa̲t</a> ((<a href="work-libs-Plot-src-Plot.xtl.html#h.L">ʰL</a> <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="work-libs-Plot-src-Plot.xtl.html#h.R">ʰR</a>) <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-number">2.0</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="work-libs-Plot-src-Plot.xtl.html#h.B">ʰB</a> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">38.0</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="work-libs-Plot-src-Plot.xtl.html#h.small">ʰsmall</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;text-anchor&quot;</span> <a href="std-Svg.xtl.html#l.a_ttr" class="c-libfunc">ᵛa̲ttr</a> <span class="c-string">&quot;middle&quot;</span>) <a href="std-Svg.xtl.html#l.t_ext" class="c-libfunc">ᵛt̲ext</a> <span class="c-builtin">n̲ame</span> <span class="c-number">2</span></span>
+<span class="line" id="L311"><a class="ln" href="#L311">311</a>  up ← (<a href="work-libs-Plot-src-Plot.xtl.html#h.small">ʰsmall</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot;text-anchor&quot;</span> <a href="std-Svg.xtl.html#l.a_ttr" class="c-libfunc">ᵛa̲ttr</a> <span class="c-string">&quot;middle&quot;</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;transform&quot;</span> <a href="std-Svg.xtl.html#l.a_ttr" class="c-libfunc">ᵛa̲ttr</a> <span class="c-string">&quot;translate(18 &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> (<a href="work-libs-Plot-src-Plot.xtl.html#h.T">ʰT</a> <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="work-libs-Plot-src-Plot.xtl.html#h.B">ʰB</a>) <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-number">2.0</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;) rotate(-90)&quot;</span>) <a href="std-Svg.xtl.html#l.t_ext" class="c-libfunc">ᵛt̲ext</a> <span class="c-builtin">n̲ame</span> <span class="c-number">3</span></span>
+<span class="line" id="L312"><a class="ln" href="#L312">312</a>  names ← <span class="c-number">3</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> labels</span>
+<span class="line" id="L313"><a class="ln" href="#L313">313</a>  keys ← <a href="work-libs-Plot-src-Plot.xtl.html#h.j_oinText" class="c-libfunc">ʰj̲oinText</a> <span class="c-quote">'</span>{ i → ((i <a href="work-libs-Plot-src-Plot.xtl.html#h.c_olor" class="c-libfunc">ʰc̲olor</a> <a href="work-libs-Plot-src-Plot.xtl.html#h.colors">ʰcolors</a>) <a href="std-Svg.xtl.html#l.s_pan" class="c-libfunc">ᵛs̲pan</a> <span class="c-string">&quot;■ &quot;</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot;#334155&quot;</span> <a href="std-Svg.xtl.html#l.s_pan" class="c-libfunc">ᵛs̲pan</a> <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> i <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> names) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;   &quot;</span> } <a href="builtins.html#m_ap" class="c-builtin">m̲ap</a> <a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> names</span>
+<span class="line" id="L314"><a class="ln" href="#L314">314</a>  legend ← ((<a href="std-Svg.xtl.html#l.a_t" class="c-libfunc">ᵛa̲t</a> <a href="work-libs-Plot-src-Plot.xtl.html#h.R">ʰR</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">24.0</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="work-libs-Plot-src-Plot.xtl.html#h.small">ʰsmall</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;text-anchor&quot;</span> <a href="std-Svg.xtl.html#l.a_ttr" class="c-libfunc">ᵛa̲ttr</a> <span class="c-string">&quot;end&quot;</span>) <a href="std-Svg.xtl.html#l.m_arkup" class="c-libfunc">ᵛm̲arkup</a> keys</span>
+<span class="line" id="L315"><a class="ln" href="#L315">315</a>  ((<span class="c-builtin">n̲ame</span> <span class="c-number">1</span>) <a href="work-libs-Plot-src-Plot.xtl.html#h.k_ept" class="c-libfunc">ʰk̲ept</a> title) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> ((<span class="c-builtin">n̲ame</span> <span class="c-number">2</span>) <a href="work-libs-Plot-src-Plot.xtl.html#h.k_ept" class="c-libfunc">ʰk̲ept</a> across) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> ((<span class="c-builtin">n̲ame</span> <span class="c-number">3</span>) <a href="work-libs-Plot-src-Plot.xtl.html#h.k_ept" class="c-libfunc">ʰk̲ept</a> up) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> keys <a href="work-libs-Plot-src-Plot.xtl.html#h.k_ept" class="c-libfunc">ʰk̲ept</a> legend</span>
+<span class="line" id="L316"><a class="ln" href="#L316">316</a>}</span>
+<span class="line" id="L317"><a class="ln" href="#L317">317</a></span>
+<span class="line" id="L318"><a class="ln" href="#L318">318</a><span class="c-doc">⍝│</span><span class="c-doc"> An element, or nothing when the text it shows is empty.</span></span>
+<span class="line" id="L319"><a class="ln" href="#L319">319</a><span class="c-libfunc">ʰk̲ept</span> ← { t element →</span>
+<span class="line" id="L320"><a class="ln" href="#L320">320</a>  <span class="c-number">0</span> <a href="builtins.html#-3d" class="c-symbol">=</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> t ? <span class="c-string">&quot;&quot;</span></span>
+<span class="line" id="L321"><a class="ln" href="#L321">321</a>  element</span>
+<span class="line" id="L322"><a class="ln" href="#L322">322</a>}</span>
+</div>
+</main>
+</body>
+</html>
