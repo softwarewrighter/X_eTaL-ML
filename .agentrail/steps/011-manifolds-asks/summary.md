@@ -1,0 +1,1 @@
+GM1: shared/lesson moved in from X_eTaL-fine-tuning, configured by LESSON_ROOT/SITE/GLOSSARY/PINS/LIBRARIES_PIN, 20 tests default + dependent build; GM3: microscope::turning + embedding explorer keys; docs/manifolds-asks.md; gate --full ok

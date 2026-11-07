@@ -1,8 +1,9 @@
 number = 11
 slug = "manifolds-asks"
-status = "in-progress"
+status = "completed"
 description = "(the user, 2026-11-06) Take X_eTaL-manifolds' asks (its docs/xetal-ML-asks.md..."
 role = "production"
 context_files = []
 created_at = "2026-11-06T14:47:39"
-commits = []
+completed_at = "2026-11-06T22:01:38"
+commits = ["501ab1592f268a580dd5933a413ec68a4139e706"]
