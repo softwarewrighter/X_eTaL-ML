@@ -146,6 +146,22 @@ l:g_rads := { (R, (Ws, As, Bs, s), k) (x, g) ->
   (dS '+ '* i_nner o_\ x, (s_hape As) r_eshape dA, (s_hape Bs) r_eshape dB, dx + (o_\ R) '+ '* i_nner dS)
 }
 
+## `(R, experts, k) g_radsW (x, g)`: the gradients of the experts'
+## base weights Ws (E x m x n), for training the experts themselves
+## rather than adapters (a base model): expert e's is (g G_e) x', g
+## times its gates, the same with any adapter, 0 for an expert no
+## token chose.
+## >> "moe:" u_se< "MoE"
+## >> ex := (2 1 1 r_eshape 2.0 3.0, 2 1 1 r_eshape 0.0, 2 1 1 r_eshape 0.0, 1.0)
+## >> r_avel (2 1 r_eshape 0.0 1.0, ex, 1) moe:g_radsW (1 1 r_eshape 1.0, 1 1 r_eshape 1.0)
+## 0.0 1.0
+l:g_radsW := { (R, (Ws, As, Bs, s), k) (x, g) ->
+  E := f_irst s_hape Ws
+  G := k l:t_opk l:s_oftmax R l:s_cores x
+  (dW, _) := E '{ (dW, e) -> (dW c_at r_avel (g * (e s_elect G) h:c_ols g) '+ '* i_nner o_\ x, e + 1) } p_ower (0 r_eshape 0.0, 1)
+  (s_hape Ws) r_eshape dW
+}
+
 ### Routing statistics
 
 ## `f_requency G`: how often each expert is chosen: the fraction of

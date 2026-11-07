@@ -4,7 +4,8 @@ Mixture-of-experts layers: a router scores each token against the
 experts, each token keeps its k most likely ones, and the layer's
 output is their outputs weighted by the gates, each token through its
 chosen experts only. An expert is an adapted projection, the LoRA
-library's W x + s B (A x). The gradients with the selection fixed, and
+library's W x + s B (A x). The gradients with the selection fixed (the
+adapters', or the experts' own weights when training a base model), and
 the routing statistics: how often each expert is chosen, the routing's
 entropy, the load-balancing loss.
 
@@ -58,6 +59,7 @@ the libraries without setup.
 | `(experts, G) moe:d_ense x` | `((Float, Float, Float, Float), Float) -> Float -> Float` | the same with every expert on every token: the reference |
 | `(R, experts, k) moe:l_ayer x` | `(Float, (Float, Float, Float, Float), Int) -> Float -> Float` | the whole layer: scores, probabilities, top-k gates, the sparse combine |
 | `(R, experts, k) moe:g_rads (x, g)` | `(Float, (Float, Float, Float, Float), Int) -> (Float, Float) -> (Float, Float, Float, Float)` | (dR, dAs, dBs, dx), the selection fixed |
+| `(R, experts, k) moe:g_radsW (x, g)` | `(Float, (a, b, c, d), Int) -> (Float, Float) -> Float` | the gradients of the experts' base weights Ws, for training a base model: (g G_e) x' for expert e |
 | `moe:f_requency G` | `Float -> Float` | the fraction of tokens choosing each expert (they sum to k) |
 | `moe:e_ntropy P` | `Float -> Float` | the mean entropy of the tokens' probabilities, in nats (log E when the router has no preference) |
 | `(P, G) moe:b_alance k` | `(Float, Float) -> Int -> Float` | the Switch Transformer's load-balancing loss, E sum_e f_e P_e: 1 when even, E when one expert takes all |
@@ -85,9 +87,9 @@ From `../tests/basics.xtl` and the doc comments:
   chosen (top 4) the layer is the probability-weighted sum of all;
 - the router's gradient, every expert's dA and dB and dx are the
   central finite differences of half the squared error (a small bump
-  keeps every choice), in their arrays' shapes; experts no token chose
-  (a router biased against them) get no gradient, nor their router
-  rows;
+  keeps every choice), in their arrays' shapes, and so are the experts'
+  base weights' (`moe:g_radsW`); experts no token chose (a router
+  biased against them) get no gradient, nor their router rows;
 - the frequencies sum to k; the entropy is between 0 and log E, log E
   for even routing and 0 for certain; the balance is 1 when even and
   E when one expert takes everything;

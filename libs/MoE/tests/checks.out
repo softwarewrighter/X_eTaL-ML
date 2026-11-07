@@ -15,4 +15,6 @@ ok: the entropy is between 0 and log 4
 ok: even routing: entropy log 4, balance 1
 ok: one expert taking everything: entropy 0, balance E
 ok: the layer as a Flow pipeline of the stages
-17 checks, all passed
+ok: every expert's base weights' gradient (g_radsW) is the finite differences
+ok: and an expert no token chose gets none for its base weights
+19 checks, all passed

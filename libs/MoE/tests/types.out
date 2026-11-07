@@ -7,6 +7,7 @@ l:c_ombine : ((Float, Float, Float, Float), Float) -> Float -> Float
 l:d_ense : ((Float, Float, Float, Float), Float) -> Float -> Float
 l:l_ayer : (Float, (Float, Float, Float, Float), Int) -> Float -> Float
 l:g_rads : (Float, (Float, Float, Float, Float), Int) -> (Float, Float) -> (Float, Float, Float, Float)
+l:g_radsW : (Any b, Any c, Any d) => (Float, (a, b, c, d), Int) -> (Float, Float) -> Float
 l:f_requency : Float -> Float
 l:e_ntropy : Float -> Float
 l:b_alance : (Float, Float) -> Int -> Float

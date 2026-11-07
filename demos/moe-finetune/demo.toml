@@ -1,0 +1,11 @@
+# One demo's description: read by scripts/demos.py for the tests, the
+# README's demo list and the live catalog (pages/index.html).
+slug = "moe-finetune"
+title = "MoE fine-tuning"
+summary = "A tiny mixture-of-experts (a shared layer, 4 experts, top-2) trained in X_eTaL on tokens of four kinds, each with its own rule: the base model every fine-tuning method starts from, its accuracy kind by kind and where each kind's tokens are routed."
+concepts = ["inner product", "softmax by column", "top-k by masks", "p_ower for training", "reading and writing data files"]
+status = "draft"
+order = 16
+needs = []
+line = "G := 2 moe:t_opk moe:s_oftmax R moe:s_cores z"
+why = "Every token's scores, probabilities and top-2 gates over the experts at once: one matrix product, a softmax down each column and masks."

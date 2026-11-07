@@ -1,0 +1,69 @@
+#!/usr/bin/env xetal
+## The base model every fine-tuning method starts from: a tiny
+## mixture-of-experts trained in X_eTaL (train/base.xtl, fixed seeds)
+## on tokens of 8 features in 4 kinds, each token's class (1 to 3) a
+## rule of its kind's own. A shared layer z = tanh(S x), a router R on
+## z, 4 experts at top 2, softmax over the classes. Its baseline: the
+## accuracy on the training and the held-out tokens, kind by kind, and
+## its routing with the router frozen: which experts each kind's tokens
+## go to, how often each expert is chosen, the routing's entropy and
+## balance. A method that changes the experts but not the router keeps
+## this routing; one that trains the router can move it.
+
+"moe:" u_se< "MoE"
+
+### The checkpoint and the tokens
+
+## `r_ead file`: (x, the classes one-hot, the kinds) of a data file:
+## the inputs (9 x N, the 9th a constant 1), the kinds, the classes.
+u:r_ead := { file ->
+  v := n_umbers []N_GET file
+  N := (t_ally v) d_iv 11
+  (((9 c_at N) r_eshape (9 * N) t_ake v, f_loat (r_ange 3) '= t_able f_loor (n_eg N) t_ake v), f_loor N t_ake (9 * N) d_rop v)
+}
+((x, Y), kinds) := u:r_ead "data/train.txt"
+((xt, Yt), kindst) := u:r_ead "data/test.txt"
+## The checkpoint: S (8 x 9), R (4 x 8), the experts' Ws (4 x 3 x 8);
+## the experts are LoRA adapters with no update yet (A, B 0, rank 2).
+w := n_umbers []N_GET "data/base.txt"
+S := 8 9 r_eshape 72 t_ake w
+R := 4 8 r_eshape 32 t_ake 72 d_rop w
+Ws := 4 3 8 r_eshape 104 d_rop w
+ex := (Ws, 4 2 8 r_eshape 0.0, 4 3 2 r_eshape 0.0, 1.0)
+
+### The model
+
+## `r_oute x`: each token's gates over the 4 experts (top 2).
+u:r_oute := { x -> 2 moe:t_opk moe:s_oftmax R moe:s_cores t_anh S '+ '* i_nner x }
+## `p_redict x`: each token's probabilities over the 3 classes.
+u:p_redict := { x -> moe:s_oftmax (ex, u:r_oute x) moe:c_ombine t_anh S '+ '* i_nner x }
+## `(P, Y) a_ccuracy kinds`: the share of tokens whose likeliest class
+## is theirs, kind by kind, then over all.
+u:a_ccuracy := { (P, Y) kinds ->
+  right := '+ r_/_1 Y * 1 moe:m_ask P
+  K := f_loat (r_ange 4) '= t_able kinds
+  ((K '+ '* i_nner right) / '+ r_/_2 K) c_at ('+ r_/ right) / f_loat t_ally right
+}
+u:r_ound := { v -> (f_loat f_loor 0.5 + v * 1000.0) / 1000.0 }
+# -- end of the base model ------------------------------
+
+## The trainable numbers: S, R and the experts (72 + 32 + 96).
+t_ally w
+## The accuracy on the 800 training tokens and the 400 held out: kinds
+## 1 to 4, then all.
+u:r_ound (u:p_redict x, Y) u:a_ccuracy kinds
+u:r_ound (u:p_redict xt, Yt) u:a_ccuracy kindst
+
+### The routing, the router frozen
+
+## On the held-out tokens: the share of each kind's tokens (a column)
+## each expert (a row) gets; each column sums to 2, the top 2.
+G := u:r_oute xt
+Kt := f_loat (r_ange 4) '= t_able kindst
+u:r_ound ((f_loat G > 0.0) '+ '* i_nner o_\ Kt) / 4 4 r_eshape '+ r_/_2 Kt
+## How often each expert is chosen (summing to 2), the routing's
+## entropy in nats (log 4 = 1.386 for no preference), and its balance
+## (1 when even, 4 when one expert takes all).
+u:r_ound moe:f_requency G
+P := moe:s_oftmax R moe:s_cores t_anh S '+ '* i_nner xt
+u:r_ound (moe:e_ntropy P) c_at (P, G) moe:b_alance 2

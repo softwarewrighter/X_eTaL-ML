@@ -95,6 +95,10 @@ world-model-data:
 diffusion-data:
     cargo run --release -q --manifest-path demos/diffusion/train/Cargo.toml
 
+# Make the moe-finetune demo's tokens and train its base model in X_eTaL (fixed seeds, half a minute), writing its data/ (then just bless moe-finetune)
+moe-base:
+    scripts/run-demo.sh moe-finetune train/base.xtl
+
 # Write the embedding explorer's corpus (4,000 sentences from templates, a fixed seed) into its data/
 embedding-data:
     cargo run --release -q --manifest-path demos/embedding-explorer/train/Cargo.toml

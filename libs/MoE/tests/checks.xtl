@@ -2,9 +2,10 @@
 ## MoE, checked with Check: the sparse combine against the dense
 ## reference that runs every expert; the gates; an expert is LoRA's
 ## layer; the gradients with the selection fixed against central finite
-## differences; the routing statistics at their bounds; the layer as a
-## Flow pipeline of the library's stages. Arrays by a fixed ripple, the
-## sine of a square (no chance).
+## differences (the experts' base weights too, for a base model); the
+## routing statistics at their bounds; the layer as a Flow pipeline of
+## the library's stages. Arrays by a fixed ripple, the sine of a square
+## (no chance).
 
 "moe:" u_se< "MoE"
 "lo:" u_se< "LoRA"
@@ -49,6 +50,8 @@ c8 := "the router's gradient is the finite differences" k:t_est k:t_rue 0.000001
 c9 := "every expert's dA and dB are" k:t_est k:t_rue 0.000001 > (dA u:g_ap FA) m_ax dB u:g_ap FB
 c10 := "and dx, through the experts and the router" k:t_est k:t_rue 0.000001 > dx u:g_ap Fx
 c11 := "the gradients have their arrays' shapes" k:t_est ((s_hape R) c_at (s_hape As) c_at (s_hape Bs) c_at s_hape x) k:i_s (s_hape dR) c_at (s_hape dA) c_at (s_hape dB) c_at s_hape dx
+FW := (s_hape Ws) r_eshape '{ i -> ((u:l_oss (R, Ws + Ws u:b_ump i, As, Bs, x)) - u:l_oss (R, Ws - Ws u:b_ump i, As, Bs, x)) / 2.0 * h } e_ach r_ange t_ally r_avel Ws
+c18 := "every expert's base weights' gradient (g_radsW) is the finite differences" k:t_est k:t_rue 0.000001 > ((R, ex, 2) moe:g_radsW (x, g)) u:g_ap FW
 ## A router that never picks experts 3 and 4: the tokens given a
 ## constant input 1 and the router a bias for it, +50 for experts 1
 ## and 2, -50 for 3 and 4. Those two and the router's rows for them get
@@ -58,6 +61,7 @@ R3 := o_\ (o_\ R) c_at 1 4 r_eshape 50.0 50.0 -50.0 -50.0
 ex3 := (4 5 7 r_eshape 0.7 u:r_ipple 140, 4 2 7 r_eshape 0.4 * 1.1 u:r_ipple 56, Bs, s)
 (dR3, dA3, dB3, _) := (R3, ex3, 2) moe:g_rads (x1, ((R3, ex3, 2) moe:l_ayer x1) - Y)
 c12 := "experts no token chose get no gradient, nor their router rows" k:t_est 0.0 0.0 0.0 0.0 k:n_ear ('+ r_/ r_avel a_bs 2 d_rop dA3) c_at ('+ r_/ r_avel a_bs 2 d_rop dB3) c_at ('+ r_/ r_avel a_bs 2 d_rop dR3) c_at '+ r_/ 2 d_rop moe:f_requency 2 moe:t_opk moe:s_oftmax R3 moe:s_cores x1
+c19 := "and an expert no token chose gets none for its base weights" k:t_est 0.0 k:n_ear '+ r_/ r_avel a_bs 2 d_rop (R3, ex3, 2) moe:g_radsW (x1, ((R3, ex3, 2) moe:l_ayer x1) - Y)
 ## The statistics: frequencies sum to k, entropy within 0 .. log E,
 ## the balance 1 when even and E when one expert takes all.
 c13 := "the frequencies sum to k" k:t_est 2.0 k:n_ear '+ r_/ moe:f_requency G
@@ -76,4 +80,4 @@ piped := @ flow:p_ipe< c"
 |> 2 moe:t_opk it
 |> (ex, it) moe:c_ombine x"
 c17 := "the layer as a Flow pipeline of the stages" k:t_est piped k:n_ear (R, ex, 2) moe:l_ayer x
-k:r_eport c1 k:a_nd c2 k:a_nd c3 k:a_nd c4 k:a_nd c5 k:a_nd c6 k:a_nd c7 k:a_nd c8 k:a_nd c9 k:a_nd c10 k:a_nd c11 k:a_nd c12 k:a_nd c13 k:a_nd c14 k:a_nd c15 k:a_nd c16 k:a_nd c17
+k:r_eport c1 k:a_nd c2 k:a_nd c3 k:a_nd c4 k:a_nd c5 k:a_nd c6 k:a_nd c7 k:a_nd c8 k:a_nd c9 k:a_nd c10 k:a_nd c11 k:a_nd c12 k:a_nd c13 k:a_nd c14 k:a_nd c15 k:a_nd c16 k:a_nd c17 k:a_nd c18 k:a_nd c19

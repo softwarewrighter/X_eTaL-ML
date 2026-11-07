@@ -1,0 +1,91 @@
+#!/usr/bin/env xetal
+## The base model's trainer: makes the task, trains a tiny
+## mixture-of-experts on it and writes the checkpoint, all in X_eTaL
+## with fixed seeds (`just moe-base`, about five minutes; then `just
+## bless moe-finetune`). The task, the moe-router demo's world: tokens
+## of 8 features, each of one of 4 kinds (the kind's feature near 0.8,
+## the others near 0, a little noise) with 4 attributes in -1 .. 1; its
+## class (1 to 3) is the largest of 3 scores, a rule of its kind's own
+## on the attributes. The model: a shared layer z = tanh(S x) (8 x 9,
+## the 9th input a constant 1), a router R (4 x 8) on z, and 4 experts
+## (3 x 8 each), each token through its top 2, then softmax over the 3
+## classes. Adam on the cross-entropy, the selection fixed (MoE's
+## gradients), every token at once, 250 steps.
+##
+## Writes data/train.txt (800 tokens) and data/test.txt (400 tokens),
+## each the inputs (9 x N), the kinds and the classes, numbers rounded
+## to 4 places; and data/base.txt, the checkpoint: S, R, then the
+## experts' Ws (200 numbers).
+
+"moe:" u_se< "MoE"
+"op:" u_se< "Optim"
+
+### The task
+
+## `seed u_nit n`: n numbers in 0 .. 1 from a seed: the fraction of a
+## large multiple of a sine (a fixed hash, no chance).
+u:u_nit := { seed n ->
+  v := 43758.5453 * s_in (12.9898 * f_loat r_ange n) + 78.233 * f_loat seed
+  v - f_loat f_loor v
+}
+u:r_ound := { v -> (f_loat f_loor 0.5 + v * 10000.0) / 10000.0 }
+## Each kind's rule: 3 scores of the 4 attributes, rows 3k-2 .. 3k.
+M := 12 4 r_eshape (2.0 * 7 u:u_nit 48) - 1.0
+## `t_okens (seed, N)`: N tokens, the kinds 1 2 3 4 in turn: the
+## inputs, the kinds and the classes, as one list of 11 N numbers.
+u:t_okens := { (seed, N) ->
+  kinds := 1 + (o_ffsets N) m_od 4
+  K := f_loat (r_ange 4) '= t_able kinds
+  a := u:r_ound (4 c_at N) r_eshape (2.0 * seed u:u_nit 4 * N) - 1.0
+  e := (4 c_at N) r_eshape 0.3 * ((seed + 1) u:u_nit 4 * N) - 0.5
+  x := u:r_ound ((0.8 * K) + e) c_at a c_at (1 c_at N) r_eshape 1.0
+  mask := f_loat (1 + (o_ffsets 12) d_iv 3) '= t_able kinds
+  S := '+ r_/_1 (4 3 c_at N) r_eshape mask * M '+ '* i_nner a
+  classes := '+ r_/_1 (f_loat (r_ange 3) 'l_eft t_able o_ffsets N) * 1 moe:m_ask S
+  (r_avel x) c_at (f_loat kinds) c_at classes
+}
+_ := (f_ormat u:t_okens (11, 800)) []N_PUT "data/train.txt"
+_ := (f_ormat u:t_okens (23, 400)) []N_PUT "data/test.txt"
+
+### The tokens, read back
+
+## `r_ead file`: (x, the classes one-hot, the kinds) of a data file.
+u:r_ead := { file ->
+  v := n_umbers []N_GET file
+  N := (t_ally v) d_iv 11
+  (((9 c_at N) r_eshape (9 * N) t_ake v, f_loat (r_ange 3) '= t_able f_loor (n_eg N) t_ake v), f_loor N t_ake (9 * N) d_rop v)
+}
+((x, Y), _) := u:r_ead "data/train.txt"
+
+### The model and its training
+
+## The shared layer, the router and the experts at the start, small
+## and seeded; the experts are adapters of the LoRA library with no
+## update yet (A and B 0, rank 2), so each is its W alone.
+S0 := 8 9 r_eshape 0.5 * (2.0 * 31 u:u_nit 72) - 1.0
+R0 := 4 8 r_eshape 0.1 * (2.0 * 37 u:u_nit 32) - 1.0
+W0 := 4 3 8 r_eshape 0.5 * (2.0 * 41 u:u_nit 96) - 1.0
+u:e_xperts := { Ws -> (Ws, 4 2 8 r_eshape 0.0, 4 3 2 r_eshape 0.0, 1.0) }
+## One step of Adam (rate 0.02) on the mean cross-entropy. Every expert
+## runs on every token (d_ense: the same sum as the sparse c_ombine,
+## faster at this size); the gradients come from MoE with each token's
+## two experts held fixed: the router's and z's from g_rads, the
+## experts' own weights from g_radsW, then through tanh to S.
+u:s_tep := { ((S, R, Ws), (mS, vS, mR, vR, mW, vW), t) ->
+  z := t_anh S '+ '* i_nner x
+  ex := u:e_xperts Ws
+  G := 2 moe:t_opk moe:s_oftmax R moe:s_cores z
+  g := ((moe:s_oftmax (ex, G) moe:d_ense z) - Y) / f_loat 2 s_elect s_hape x
+  (dR, _, _, dz) := (R, ex, 2) moe:g_rads (z, g)
+  dW := (R, ex, 2) moe:g_radsW (z, g)
+  dS := (dz * 1.0 - z * z) '+ '* i_nner o_\ x
+  (S2, mS2, vS2) := (0.02, t) op:a_dam (S, mS, vS, dS)
+  (R2, mR2, vR2) := (0.02, t) op:a_dam (R, mR, vR, dR)
+  (W2, mW2, vW2) := (0.02, t) op:a_dam (Ws, mW, vW, dW)
+  ((S2, R2, W2), (mS2, vS2, mR2, vR2, mW2, vW2), t + 1)
+}
+((S1, R1, W1), _, _) := 250 'u:s_tep p_ower ((S0, R0, W0), (0.0 * S0, 0.0 * S0, 0.0 * R0, 0.0 * R0, 0.0 * W0, 0.0 * W0), 1)
+_ := (f_ormat (r_avel S1) c_at (r_avel R1) c_at r_avel W1) []N_PUT "data/base.txt"
+## The training tokens' accuracy at the end.
+P := moe:s_oftmax (R1, u:e_xperts W1, 2) moe:l_ayer t_anh S1 '+ '* i_nner x
+('+ r_/ r_avel Y * 1 moe:m_ask P) / f_loat 2 s_elect s_hape x
