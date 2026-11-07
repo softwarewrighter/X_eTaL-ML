@@ -1,0 +1,13 @@
+# The words of X_eTaL itself that the lessons programs use (lesson::explain::words): the word as typed, then what it does in plain words. Tab-separated. A test of each page checks every built-in word its program uses is here.
+r_eshape	arranges the numbers on its right into a table with the rows and columns given on its left: 4 4 reshape makes 4 rows of 4. If there are too few numbers, they are used again from the start
+r_ange	the whole numbers from 1 up to the one given: range 16 is 1, 2, 3 ... 16
+f_loat	turns whole numbers into numbers with decimals, so they can be multiplied by one
+s_in	the sine of each number: used in these programs only to make up varied numbers without typing them
+c_os	the cosine of each number: used, like sine, only to make up varied numbers
+r_avel	lays a table out as one list, row after row, so it can be printed on one line
+i_nner	with a quoted + and a quoted × before it: multiply a table by a list (or by a table): pair the numbers up, multiply, add
+c_at	joins two lists, or two single numbers, into one list
+t_ake	the first few items of a list: 4 take gives the first 4
+r_/	works a whole list down to one number with the function quoted before it: with max, the largest
+m_ax	the larger of two numbers; quoted before r_/, the largest of a list
+a_bs	the size of each number, ignoring its sign

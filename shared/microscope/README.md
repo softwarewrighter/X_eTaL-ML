@@ -11,6 +11,7 @@ source. This crate (`microscope`) is what the pages share.
 | `canvas`, `color` | `Canvas` draws an RGBA array scaled to its box and reports clicks as (row, column); `color` turns arrays into pixels (`field`, `scaled`, `signed`, `mask`, `ramp`) |
 | `cells` | small boards as clickable HTML cells (0 / 1 boards, shaded counts with numbers) |
 | `chrome` | `header` (logo, title, lede), `chip` (a stage: name, code, shape), `panel`, `notice`, `footer` (copyright, license, repository, all demos, the pinned X_eTaL commit, build host, sha and time); `Site` (a repository's name, URL, commit and links) with `header_of` and `footer_of` for another repository's pages, whose footer adds the X_eTaL-ML commit (`ML_COMMIT`), and `provenance` the footer's text |
+| `turning` | one turning view in 3D: `Scene` (points with a color and a label, segments, vectors, wire lines such as a sphere's meridians), `Angle` (yaw, pitch: the page's state), `turn` (a drag), `key` (the arrow keys), `typical` (a scale), `project` (the stated projection), `marks` (what to draw, far to near), and `Turning`, the SVG turned by pointer, touch and keys; the embedding explorer draws with its projection and keys |
 | `heat` | small matrices as heat maps: `Matrix`, `heat(m, scale, label)` colored as the 3D stage view (red positive, blue negative, near white about 0), `largest` for a shared scale, `column`, `fill` |
 | `libs` | the libraries embedded: this repository's, those used from X_eTaL-libraries, then any under the roots named in `MICROSCOPE_LIBS` at build time; `names()`; `add(path, text)` for a data file or a library added at run time |
 
@@ -50,3 +51,7 @@ Conventions: every code snippet on a page is drawn decorated, never as
 typed ASCII; shapes are shown as `s_hape`; an X_eTaL error keeps the
 last good state and shows a notice; anything X_eTaL lacks goes in
 `docs/xetal-asks.md` and the demo's README.
+
+The teaching shell built on this crate is [`../lesson`](../lesson/README.md):
+frames, a glossary, library functions explained from their source, a
+stepper and the rest, configured by the repository whose pages use it.

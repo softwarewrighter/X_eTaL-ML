@@ -9,7 +9,7 @@ animals gather, and the foods, the colors, the numbers, the places.
 into the 3 that spread the words most, for a cloud to turn.
 
 Live: [Embedding explorer](https://softwarewrighter.github.io/X_eTaL-ML/embedding-explorer/)
-(drag the cloud to turn it, click a word for its five nearest; the
+(drag the cloud, with a mouse or a finger, or press the arrow keys, to turn it, click a word for its five nearest; the
 colors are the clusters k-means finds in the 64 numbers, not told the
 kinds).
 

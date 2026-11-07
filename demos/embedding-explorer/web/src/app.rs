@@ -23,13 +23,14 @@ fn cloud(m: &UseReducerHandle<Model>) -> Html {
     let mv = Callback::from(move |e: PointerEvent| d2.dispatch(Action::Move(e.client_x() as f64, e.client_y() as f64)));
     let up = Callback::from(move |_: PointerEvent| d3.dispatch(Action::Up));
     let leave = Callback::from(move |_: PointerEvent| d4.dispatch(Action::Up));
+    let keys = { let dk = m.dispatcher(); Callback::from(move |e: KeyboardEvent| if e.key().starts_with("Arrow") { e.prevent_default(); dk.dispatch(Action::Key(e.key())) }) };
     let lines = match at(m.picked) {
         Some(p) => near.iter().filter_map(|&j| at(j)).map(|q| html! { <line x1={format!("{:.1}", p.x)} y1={format!("{:.1}", p.y)} x2={format!("{:.1}", q.x)} y2={format!("{:.1}", q.y)} stroke="#f59f00" stroke-width="1.5" stroke-dasharray="4 3" /> }).collect::<Html>(),
         None => html! {},
     };
     html! {
-        <svg class="cloud" viewBox={format!("0 0 {SIZE} {SIZE}")} width="100%" role="img" aria-label="the words in 3-D"
-            onpointerdown={down} onpointermove={mv} onpointerup={up} onpointerleave={leave}>
+        <svg class="cloud turning" viewBox={format!("0 0 {SIZE} {SIZE}")} width="100%" role="img" aria-label="the words in 3-D" tabindex="0"
+            onpointerdown={down} onpointermove={mv} onpointerup={up} onpointerleave={leave} onkeydown={keys}>
             { lines }
             { for ds.iter().map(|d| {
                 let color = COLORS[(c.cluster[d.word].max(1) - 1) % COLORS.len()];
@@ -72,10 +73,10 @@ pub fn app() -> Html {
     html! {
         <>
         <header>
-            { header("Embedding explorer", "Word embeddings made from counts, in X_eTaL: 4,000 short sentences over 70 words; each word's embedding 64 numbers from which words occur near it. Words used alike point alike. Learn's PCA turns the 64 dimensions into the 3 that spread the words most; drag the cloud to turn it, click a word for its nearest.") }
+            { header("Embedding explorer", "Word embeddings made from counts, in X_eTaL: 4,000 short sentences over 70 words; each word's embedding 64 numbers from which words occur near it. Words used alike point alike. Learn's PCA turns the 64 dimensions into the 3 that spread the words most; drag the cloud (or a finger, or the arrow keys) to turn it, click a word for its nearest.") }
             <div class="controls">
                 <button class={classes!(spinning.then_some("on"))} onclick={spin}>{ if spinning { "Stop spinning" } else { "Spin" } }</button>
-                <span class="gen">{format!("drag to turn \u{00b7} X_eTaL made the cloud in {:.0} ms", model.ms)}</span>
+                <span class="gen">{format!("drag or arrow keys to turn \u{00b7} X_eTaL made the cloud in {:.0} ms", model.ms)}</span>
             </div>
             { notice(&model.notice) }
         </header>

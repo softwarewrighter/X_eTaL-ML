@@ -1,0 +1,140 @@
+/* The teaching shell's styles, beside microscope.css (whose variables
+   these use): framing sections, words that open a plain explanation,
+   asides, linked code, the list of ideas. */
+.frame p, .frame ul, .frame ol, .frame dl, .panel > p.read, .aside-body p, .ideas p { max-width: 46rem; line-height: 1.55; }
+.frame ul { padding-left: 1.2em; }
+.frame li { margin: 6px 0; }
+.frame a, .aside a, .links a, .ideas a { color: var(--accent); }
+main .panel { margin-bottom: 14px; }
+
+/* A word that opens its explanation: a button that reads as text. */
+button.term { font: inherit; color: inherit; background: none; border: 0; padding: 0; margin: 0; cursor: pointer;
+  border-bottom: 1px dotted var(--accent); border-radius: 0; }
+button.term:hover, button.term:focus-visible, button.term.open { color: var(--accent); border-bottom-style: solid; outline: none; }
+button.term:focus-visible { box-shadow: 0 2px 0 var(--accent); }
+.eli5 { display: block; margin: 6px 0 8px; padding: 8px 12px; border-left: 3px solid var(--accent);
+  background: var(--off); border-radius: 0 8px 8px 0; font-size: 0.95em; line-height: 1.5; max-width: 44rem; }
+.hint { color: var(--muted); font-size: 0.9em; }
+
+/* An aside: closed until its summary is opened. */
+details.aside { margin: 10px 0; border: 1px dashed var(--line); border-radius: 10px; padding: 0 12px; }
+details.aside > summary { cursor: pointer; padding: 8px 0; color: var(--accent); font-weight: 600; }
+details.aside[open] { border-style: solid; padding-bottom: 10px; }
+.aside-body h3 { font-size: 0.95rem; margin: 12px 0 4px; }
+.aside-body p.quote { color: var(--muted); border-left: 3px solid var(--line); padding-left: 10px; }
+.aside-body table.read { border-collapse: collapse; margin: 6px 0; }
+.aside-body table.read td { padding: 4px 12px 4px 0; vertical-align: top; }
+.aside-body table.read td:first-child { white-space: nowrap; }
+
+/* Code whose functions link to the cross-reference. */
+a.xl { text-decoration: none; }
+a.xl:hover, a.xl:focus-visible { text-decoration: underline; }
+pre.source a.xl { color: inherit; }
+pre.source a.t-builtin { color: var(--t-builtin); } pre.source a.t-user { color: var(--t-user); } pre.source a.t-sym { color: var(--t-sym, inherit); }
+
+/* Every idea of the page, each closed until opened; the functions used. */
+.ideas details.idea { border-bottom: 1px solid var(--line); padding: 6px 0; }
+.ideas details.idea > summary { cursor: pointer; font-weight: 600; }
+.ideas details.idea p { margin: 6px 0 4px; }
+table.functions { border-collapse: collapse; }
+table.functions th { text-align: left; padding: 4px 12px 4px 0; font-weight: 600; }
+table.functions td { padding: 6px 12px 6px 0; vertical-align: top; border-top: 1px solid var(--line); }
+table.functions td.links { white-space: nowrap; }
+
+/* The deeper levels of an idea: a worked example, the lesson that teaches it. */
+.eli5 details.example, .ideas details.example { margin: 6px 0 2px; }
+.eli5 details.example > summary, .ideas details.example > summary { cursor: pointer; color: var(--accent); }
+.eli5 details.example > span, .ideas details.example > span { display: block; margin: 4px 0 0; }
+.taught { display: block; margin: 6px 0 0; font-size: 0.9em; color: var(--muted); }
+.taught a { color: var(--accent); }
+
+/* How much to show. */
+fieldset.modes { border: 1px solid var(--line); border-radius: 10px; padding: 8px 12px; margin: 0 0 14px; }
+fieldset.modes legend { font-size: 0.85em; color: var(--muted); padding: 0 6px; }
+label.mode { display: inline-flex; align-items: center; gap: 6px; margin-right: 16px; cursor: pointer; }
+label.mode.on { font-weight: 700; color: var(--accent); }
+.mode-about { margin: 6px 0 0; font-size: 0.9em; color: var(--muted); }
+
+/* A sum written out; tables side by side. */
+.worked { font: 1.05rem ui-monospace, "JuliaMono", Menlo, monospace; padding: 2px 0 2px 1.2em; overflow-x: auto; }
+.worked.symbols { color: var(--muted); }
+.tables { display: flex; flex-wrap: wrap; gap: 24px; align-items: flex-start; }
+.tables figure { margin: 0; }
+.tables figcaption { font-size: 0.9em; color: var(--muted); margin-bottom: 4px; }
+
+/* Stepping through a computation. */
+.stepper { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 10px 0; }
+.stepper button { font: inherit; padding: 6px 14px; border-radius: 8px; border: 1px solid var(--line); background: var(--card); color: var(--fg); cursor: pointer; }
+.stepper button:hover:not(:disabled), .stepper button:focus-visible { border-color: var(--accent); outline: none; }
+.stepper button:disabled { opacity: 0.45; cursor: default; }
+.stepper button.play { font-weight: 700; min-width: 5.5em; }
+.stepper .where { color: var(--muted); font-size: 0.9em; margin-left: 4px; }
+
+/* A heat map with its legend and inspector. */
+figure.lesson-heat { margin: 0; max-width: 22rem; }
+.tables.stages figure.lesson-heat { width: 10.5rem; }
+.heat-key { margin: 8px 0 0; }
+figure.lesson-heat figcaption { font-size: 0.9em; color: var(--muted); margin-bottom: 4px; max-width: none; }
+figure.lesson-heat svg { display: block; max-width: 100%; height: auto; border-radius: 4px; }
+figure.lesson-heat svg:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+figure.lesson-heat .cell { stroke: var(--line); stroke-width: 0.5; cursor: pointer; }
+figure.lesson-heat .cell.read { stroke: var(--t-builtin); stroke-width: 2.5; stroke-dasharray: 4 3; }
+figure.lesson-heat .cell.written { stroke: var(--fg); stroke-width: 2.5; }
+figure.lesson-heat .cell.picked { stroke: var(--accent); stroke-width: 3.5; }
+figure.lesson-heat .frame { fill: none; stroke: var(--line); pointer-events: none; }
+figure.lesson-heat .inspector { margin: 6px 0 2px; font-size: 0.9em; min-height: 2.6em; }
+.legend .lead { flex-basis: 100%; }
+.legend { display: flex; gap: 10px; flex-wrap: wrap; font-size: 0.8em; color: var(--muted); font-variant-numeric: tabular-nums; }
+.legend .stop { display: inline-flex; align-items: center; gap: 4px; }
+.legend .swatch { display: inline-block; width: 14px; height: 14px; border: 1px solid var(--line); border-radius: 2px; }
+.legend-note { margin: 4px 0 0; font-size: 0.8em; color: var(--muted); }
+.marks-key { font-size: 0.85em; color: var(--muted); }
+.marks-key .k { display: inline-block; width: 16px; height: 12px; vertical-align: middle; margin: 0 4px 0 10px; }
+.marks-key .k.read { border: 2px dashed var(--t-builtin); }
+.marks-key .k.written { border: 2px solid var(--fg); }
+
+/* A question answered first. */
+section.predict { border-left: 3px solid var(--accent); padding: 4px 0 4px 12px; margin: 10px 0; }
+.predict .question { margin: 0 0 8px; max-width: 46rem; }
+.predict ul.choices { list-style: none; padding: 0; margin: 0 0 8px; display: flex; flex-wrap: wrap; gap: 8px; }
+.predict button.choice, .predict button.skip { font: inherit; padding: 6px 14px; border-radius: 8px; border: 1px solid var(--line); background: var(--card); color: var(--fg); cursor: pointer; }
+.predict button.choice:hover:not(:disabled), .predict button.choice:focus-visible, .predict button.skip:hover, .predict button.skip:focus-visible { border-color: var(--accent); outline: none; }
+.predict button.choice.on { border-color: var(--accent); color: var(--accent); font-weight: 700; }
+.predict button.choice:disabled { cursor: default; }
+.predict button.skip { font-size: 0.9em; color: var(--muted); }
+.predict .verdict { margin: 8px 0; max-width: 46rem; }
+
+/* Motion: the numbers a stage works out come in one after another;
+   what it reads from pulses; the sentence for the stage slides in; a
+   bar shows how far along the calculation is. All of it is off for a
+   reader who asks their system for less motion. */
+@keyframes cell-in { from { opacity: 0; } to { opacity: 1; } }
+@keyframes read-march { to { stroke-dashoffset: -14; } }
+@keyframes says-in { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+@keyframes tick { from { width: 0; } to { width: 100%; } }
+figure.lesson-heat .cellg.written { animation: cell-in 0.45s ease-out both; }
+figure.lesson-heat .cell.read { animation: read-march 0.9s linear infinite; }
+figure.lesson-heat text.num { font: 600 12px ui-monospace, Menlo, monospace; text-anchor: middle; dominant-baseline: central; fill: #1d1d1f; pointer-events: none; }
+figure.lesson-heat text.num.strong { fill: #ffffff; }
+.stage-says { animation: says-in 0.35s ease-out both; }
+.stepper .track { display: inline-flex; gap: 4px; align-items: center; position: relative; margin-left: 8px; }
+.stepper .track .seg { width: 34px; height: 6px; border-radius: 3px; background: var(--line); transition: background 0.3s; }
+.stepper .track .seg.done { background: var(--accent); }
+.stepper .track .seg.now { box-shadow: 0 0 0 2px var(--card), 0 0 0 3px var(--accent); }
+.stepper .track .tick { position: absolute; left: 0; bottom: -6px; height: 2px; background: var(--muted); animation: tick linear both; }
+svg.flow { display: block; max-width: 100%; height: auto; margin: 6px 0; }
+svg.flow .node circle { fill: var(--card); stroke: var(--line); stroke-width: 1.5; transition: stroke 0.3s, fill 0.3s; }
+svg.flow .node text { font: 600 14px ui-monospace, Menlo, monospace; text-anchor: middle; dominant-baseline: central; fill: var(--muted); }
+svg.flow .node.done circle { stroke: var(--muted); }
+svg.flow .node.read circle { stroke: var(--t-builtin); stroke-width: 2.5; stroke-dasharray: 4 3; }
+svg.flow .node.on circle { stroke: var(--accent); stroke-width: 3; fill: var(--off); }
+svg.flow .node.on text, svg.flow .node.read text { fill: var(--fg); }
+svg.flow .arc { fill: none; stroke: var(--t-builtin); stroke-width: 1.5; stroke-dasharray: 4 3; }
+svg.flow .dot { fill: var(--accent); }
+@media (prefers-reduced-motion: reduce) {
+  figure.lesson-heat .cellg.written, figure.lesson-heat .cell.read, .stage-says, .stepper .track .tick { animation: none; }
+  svg.flow .dot { display: none; }
+}
+figure.lesson-heat .cell.pending { fill: none; stroke: var(--line); stroke-dasharray: 3 4; cursor: default; }
+figure.lesson-heat text.num.pending { fill: var(--muted); font-weight: 400; }
+figure.lesson-heat.chosen svg { outline: 3px solid var(--accent); outline-offset: 3px; border-radius: 4px; }

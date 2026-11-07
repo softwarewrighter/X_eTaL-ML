@@ -11,6 +11,8 @@
 //! - `libs`: this repo's libraries, importable with `u_se<`
 //! - `palette`: composing an equation or a pipeline from parts, run live
 //! - `stages`, `stageview`: a pipeline's stages, drawn as math and in 3D
+//! - `turning`: points, segments and wire surfaces in 3D, turned by
+//!   pointer, keys and touch
 //!
 //! Pages also link `microscope.css` (trunk: `rel="css"`).
 
@@ -25,3 +27,4 @@ pub mod run;
 pub mod source;
 pub mod stages;
 pub mod stageview;
+pub mod turning;

@@ -1,0 +1,18 @@
+[package]
+name = "lesson"
+description = "The teaching shell of X_eTaL pages, on microscope: frames and asides, the glossary and its marked prose, library functions explained from their source, linked code, depths, heat maps with a legend, a stepper, written-out sums, a narrator, predictions; the dependent repository names its site, root, glossary and pins at build time"
+version = "0.1.0"
+edition = "2021"
+license = "MIT"
+publish = false
+
+[dependencies]
+# The page shell beside it, and X_eTaL's own drawing of source, the same
+# paths microscope has (so a dependent builds both against one X_eTaL).
+microscope = { path = "../microscope" }
+xetal-play = { path = "../../work/xetal/components/web/crates/xetal-play" }
+yew = { version = "0.21", features = ["csr"] }
+web-sys = { version = "0.3", features = ["KeyboardEvent", "Element", "EventTarget", "Window", "Location"] }
+gloo-timers = "0.3"
+
+[workspace]

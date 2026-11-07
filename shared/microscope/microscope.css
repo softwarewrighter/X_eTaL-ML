@@ -326,3 +326,11 @@ figure.heat svg { display: block; max-width: 100%; height: auto; }
 figure.heat .frame { fill: none; stroke: var(--line); }
 figure.heat .cell { stroke: var(--line); stroke-width: 0.5; }
 figure.heat figcaption { font-size: 0.8em; color: var(--muted); max-width: 200px; }
+
+/* The turning view (turning::Turning): drag, arrow keys or a finger turn it. */
+svg.turning { touch-action: none; cursor: grab; max-width: 100%; }
+svg.turning:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+svg.turning .wire { fill: none; stroke: var(--line); stroke-width: 1; }
+svg.turning .seg { stroke-width: 2; }
+svg.turning .seg.vector { marker-end: url(#turning-head); }
+svg.turning .pt { cursor: pointer; }

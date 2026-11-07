@@ -4,6 +4,7 @@
 use std::rc::Rc;
 
 use microscope::run::now;
+use microscope::turning::{key, turn, Angle};
 use yew::Reducible;
 
 use crate::micro::{run, words, Cloud};
@@ -30,6 +31,8 @@ pub enum Action {
     Spin(bool),
     Tick,
     Pick(usize),
+    /// An arrow key, once the cloud has the focus.
+    Key(String),
 }
 
 impl Model {
@@ -58,7 +61,14 @@ impl Reducible for Model {
         Rc::new(match action {
             Action::Down(x, y) => Model { drag: Some((x, y)), spinning: false, ..m },
             Action::Move(x, y) => match m.drag {
-                Some((x0, y0)) => Model { yaw: m.yaw + (x - x0) * 0.01, pitch: (m.pitch + (y - y0) * 0.01).clamp(-1.5, 1.5), drag: Some((x, y)), ..m },
+                Some((x0, y0)) => {
+                    let a = turn(Angle { yaw: m.yaw, pitch: m.pitch }, x - x0, y - y0);
+                    Model { yaw: a.yaw, pitch: a.pitch, drag: Some((x, y)), ..m }
+                }
+                None => m,
+            },
+            Action::Key(k) => match key(Angle { yaw: m.yaw, pitch: m.pitch }, &k) {
+                Some(a) => Model { yaw: a.yaw, pitch: a.pitch, spinning: false, ..m },
                 None => m,
             },
             Action::Up => Model { drag: None, ..m },
