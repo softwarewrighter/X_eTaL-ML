@@ -1,11 +1,17 @@
 # MoE fine-tuning
 
-A tiny mixture-of-experts model and the ways of fine-tuning it. This
-first part is the base model every method starts from: a shared layer,
-a router and 4 experts (each token through its top 2), trained in
-X_eTaL on a synthetic task, its weights kept in `data/base.txt`.
-The live page, with the fine-tuning methods compared on it, is still
-to come.
+A tiny mixture-of-experts model learned a task; now one kind of token
+gets a new rule. Each way of fine-tuning it trains a few numbers beside
+the frozen base, on the same tokens, and the page asks two questions of
+each: is the new task learned, and is the old one kept? The shared
+layer, every expert, both, selected experts, the router too, or a new
+expert of its own: every run is X_eTaL training in your browser, one
+method after another, on the new tokens alone or mixed with old ones,
+over one seed or three.
+
+Live: [MoE fine-tuning](https://softwarewrighter.github.io/X_eTaL-ML/moe-finetune/)
+
+[![MoE fine-tuning: the live page](screenshot.png)](https://softwarewrighter.github.io/X_eTaL-ML/moe-finetune/)
 
 ## The task
 
@@ -18,7 +24,13 @@ kinds, which is what experts are for. 800 tokens to train on, 400 held
 out (`data/train.txt`, `data/test.txt`: the inputs, the kinds, the
 classes).
 
-## The model
+The new task changes kind 3's rule (its 3 scores from another seed)
+and keeps the others: 200 tokens of kind 3 by the new rule to
+fine-tune on, 200 held out (`data/shift-train.txt`,
+`data/shift-test.txt`). The old task is the 300 held-out tokens of
+kinds 1, 2 and 4, whose rule did not change.
+
+## The base model
 
 | Part | Code | Shape | What it is |
 | ---- | ---- | ----- | ---------- |
@@ -27,33 +39,26 @@ classes).
 | experts | `(ex, G) moe:c_ombine z` | 3 x N | each token through its two experts (3 x 8 each), weighted by the gates |
 | classes | `moe:s_oftmax` | 3 x N | each token's probabilities over the 3 classes |
 
-200 trainable numbers. The experts are the LoRA library's adapters
-with no update yet (A and B zero), so the fine-tuning methods can give
-them one.
+200 numbers, trained in X_eTaL by `train/base.xtl` (`just moe-base`,
+half a minute): it makes the tokens (a fixed hash of a sine, no
+chance) and trains with Adam (rate 0.02) on the cross-entropy, all 800
+tokens at once, for 250 steps. The top 2 cannot be differentiated, so
+each token's two experts are held fixed for the step, as training
+frameworks do: the router's gradient goes through the two gates (the
+MoE library's `moe:g_rads`), the experts' own weights' through their
+gates (`moe:g_radsW`), then back through tanh to S. While training,
+every expert runs on every token (`moe:d_ense`), the same sum as the
+sparse combine and faster at this size. The checkpoint is
+`data/base.txt`.
 
-## The training
-
-`train/base.xtl` makes the tokens (a fixed hash of a sine, no chance),
-then trains with Adam (rate 0.02) on the cross-entropy, all 800 tokens
-at once, for 250 steps, about half a minute. The top 2 cannot be
-differentiated, so each token's two experts are held fixed for the
-step, as training frameworks do: the router's gradient goes through
-the two gates (the MoE library's `moe:g_rads`), the experts' own
-weights' through their gates (`moe:g_radsW`), then back through tanh
-to S. While training, every expert runs on every token (`moe:d_ense`),
-the same sum as the sparse combine and faster at this size; the
-program checked here uses the sparse one.
-
-## The baseline
-
-From `base.xtl`, which reads the checkpoint and the tokens:
+`base.xtl` reads it and gives the baseline:
 
 | | kind 1 | kind 2 | kind 3 | kind 4 | all |
 | - | ------ | ------ | ------ | ------ | --- |
 | training accuracy | 0.99 | 0.965 | 0.97 | 0.95 | 0.969 |
 | held-out accuracy | 0.92 | 0.97 | 0.8 | 0.84 | 0.883 |
 
-Where the held-out tokens go, the router frozen: the share of each
+and where the held-out tokens go, the router frozen: the share of each
 kind's tokens each expert gets (each column sums to 2):
 
 | | kind 1 | kind 2 | kind 3 | kind 4 |
@@ -63,20 +68,105 @@ kind's tokens each expert gets (each column sums to 2):
 | expert 3 | 0.83 | 0.85 | 0.53 | 0.56 |
 | expert 4 | 0.2 | 0.99 | 0.4 | 0.26 |
 
-Each kind has its pair (kind 2 experts 4 and 3, kind 4 experts 1 and
-3), and expert 3 serves every kind. The experts are chosen 0.34,
-0.505, 0.693 and 0.463 of the time (summing to 2); the routing's
+Each kind has its pair, and expert 3 serves every kind. The routing's
 entropy is 0.437 nats (log 4 = 1.386 would be no preference); its
-load-balancing loss is 1.056 (1 is even). A method that changes the
-experts but not the router keeps this routing; one that trains the
-router can move it.
+load-balancing loss is 1.056 (1 is even).
+
+## The methods
+
+In the research's order (`docs/fine-tune-moe-research.txt`, L223-294),
+then a new expert. Every adapter is LoRA at rank 2 (alpha 4); the
+base's own weights stay frozen.
+
+| Method | What trains | Numbers |
+| ------ | ----------- | ------- |
+| none | nothing: the base | 0 |
+| shared layer only | an adapter on the shared layer (the research's attention-only) | 34 |
+| every expert, router frozen | an adapter on each of the 4 experts | 96 |
+| shared layer and experts | both | 130 |
+| selected experts | adapters on the two experts the base sends most new tokens to (2 and 3) | 48 |
+| experts and the router | every expert's adapter and the router's 4 rows | 132 |
+| a new expert | a fifth expert from 0, and its own router row, starting pointed at the new tokens and away from the old | 36 |
+
+The expert layer's input is z with a constant 1 under it, so a router
+row and an expert can have a bias (the base's are 0, so nothing of the
+base changes); the fifth expert waits with a router row of bias -30,
+never in a token's top 2. A method is a flag per part, `(shared,
+experts, router, new)`; one step trains any of them, a frozen part's
+gradient multiplied by 0 so Adam leaves it where it is:
+
+```
+(R2, m32, v32) := (0.02, t) op:a_dam (R, m3, v3, ((4 r_eshape fR) c_at fN) u:p_er dR)
+(As2, m52, v52) := (0.02, t) op:a_dam (As, m5, v5, (fE c_at 0.0) u:p_er dAs)
+```
+
+Each runs 120 steps of Adam (rate 0.02) on the new tokens alone, or
+mixed with 200 of the old task's training tokens (replay, the usual
+guard against forgetting).
+
+## What they do
+
+From the page, three seeds (each adapter's A starts from the seed, B
+at 0; the new expert starts from 0 whatever the seed, so its runs
+agree). The new task's accuracy, the old task's, and its change
+against the base's 0.910, in points; 3 points is the bar the research
+sets for regression (L1348):
+
+| Method | New alone: new | old | change | Mixed: new | old | change |
+| ------ | --- | --- | ------ | --- | --- | ------ |
+| none | 0.485 | 0.910 | 0 | 0.485 | 0.910 | 0 |
+| shared layer only | 0.910 | 0.609 | -30.1 | 0.725 | 0.804 | -10.6 |
+| every expert, router frozen | 0.788 | 0.648 | -26.2 | 0.750 | 0.849 | -6.1 |
+| shared layer and experts | 0.935 | 0.543 | -36.7 | 0.808 | 0.824 | -8.6 |
+| selected experts | 0.745 | 0.769 | -14.1 | 0.723 | 0.848 | -6.2 |
+| experts and the router | 0.838 | 0.629 | -28.1 | 0.820 | 0.858 | -5.2 |
+| a new expert | 0.770 | 0.890 | -2.0 | 0.760 | 0.900 | -1.0 |
+
+- Fine-tuning on the new tokens alone, every method that changes what
+  the old kinds pass through forgets them: the shared layer is every
+  token's, and the experts kind 3 uses serve the other kinds too
+  (expert 3 serves them all). The more a method trains, the better it
+  learns the new rule and the more it forgets.
+- Replay cuts the damage by half or more, and costs some of the
+  new task; still no adapted method keeps the old task within 3 points.
+- The router, frozen, still decides which experts learn: with every
+  expert's adapter trainable, those the new tokens seldom reach learn
+  little, and the routing does not move. The shared layer's adapter
+  moves the router's input, so it moves the routing too, as the
+  research says (L1734, L2314).
+- A new expert, its own router row sending the new tokens to it and
+  keeping the old ones away, keeps the old task (it is the only
+  method within the bar, even without replay) with the fewest numbers
+  but one method; it learns the new task less well than the methods
+  that adapt the shared layer. What the research says it takes to get
+  an identifiable expert: "controlled routing, expert isolation, or
+  training a new expert" (L273).
+
+The page shows, for each method, where the new and the old tokens go
+before and after (a bar per expert), each update's size (|s B A|, and
+the new expert's weights), and the loss at each step.
+
+## The program
+
+`moe-finetune.xtl`: the tokens, the base with room for a new expert,
+the model with its adapters, a method's step and its measures, up to
+`# -- end of the core`; then every method on both choices of tokens at
+seed 1 (the CLI baseline). The page runs the core, then one run's own
+lines, for each method, tokens and seed:
+
+```
+(m, losses) := (added, mixed, 120) u:t_une 1
+(a, o, n, b, sn, so, sz) := m u:r_eport added
+```
 
 ## Run it
 
 ```bash
-just run moe-finetune base.xtl   # the baseline
-just moe-base                    # make the tokens and train the base again (half a minute)
-just test-demo moe-finetune      # its CLI baseline (reg-rs)
+just run moe-finetune             # every method, seed 1 (two minutes)
+just run moe-finetune base.xtl    # the base's baseline
+just moe-base                     # make the tokens and train the base again (half a minute)
+just serve moe-finetune           # the page, locally
+just test-demo moe-finetune       # its baselines, the page's tests, the retraining
 ```
 
 ## Workarounds

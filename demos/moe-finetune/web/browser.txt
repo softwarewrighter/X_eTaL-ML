@@ -1,0 +1,6 @@
+# Text the page shows only after X_eTaL has run (scripts/browser-check.sh):
+# the base's row, the first run.
+0.910
++0.0 ✓
+1 of 1
+The new task's tokens:

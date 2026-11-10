@@ -1,0 +1,21 @@
+[package]
+name = "moe-finetune-web"
+description = "MoE fine-tuning: a tiny mixture-of-experts fine-tuned to a changed task by each method in turn, its new and old accuracy, what it trains, its routing and its updates"
+version = "0.1.0"
+edition = "2021"
+license = "MIT"
+publish = false
+
+[dependencies]
+microscope = { path = "../../../shared/microscope" }
+yew = { version = "0.21", features = ["csr"] }
+gloo-timers = "0.3"
+web-sys = { version = "0.3", features = ["HtmlInputElement", "HtmlSelectElement"] }
+console_error_panic_hook = "0.1"
+
+[workspace]
+
+# The tests train the model by X_eTaL natively: the interpreter (a
+# dependency) optimized, or a run takes many times as long.
+[profile.dev.package."*"]
+opt-level = 3

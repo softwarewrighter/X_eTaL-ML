@@ -1,0 +1,3 @@
+command = "scripts/browser-check.sh moe-finetune"
+exit_code = 0
+desc = "moe-finetune: the built page run in headless Chrome shows X_eTaL's results"

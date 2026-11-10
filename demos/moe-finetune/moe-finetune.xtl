@@ -1,0 +1,182 @@
+#!/usr/bin/env xetal
+## Fine-tuning a tiny mixture-of-experts, each method in turn. The base
+## (base.xtl, trained by train/base.xtl) classifies tokens of 4 kinds,
+## each by its kind's own rule; the new task changes kind 3's rule. A
+## method fine-tunes the base on 200 tokens of the new task (alone, or
+## mixed with 200 of the old task's: replay), the base's own weights
+## frozen, with LoRA adapters (rank 2) on some of its parts: the shared
+## layer only; every expert, the router frozen; both; the two experts
+## the new tokens use most; every expert with the router trained too;
+## or a new expert, added with its own router row, trained alone. Each
+## is measured by the new task's accuracy, the old task's (the kinds
+## whose rule did not change: what fine-tuning must not break, 3 points
+## the bar), the numbers it trains and their bytes, where the tokens are
+## routed before and after, and how large each expert's update is.
+
+"moe:" u_se< "MoE"
+"lo:" u_se< "LoRA"
+"op:" u_se< "Optim"
+
+### The tokens
+
+## `r_ead file`: (x, the classes one-hot, the kinds) of a data file:
+## the inputs (9 x N, the 9th a constant 1), the kinds, the classes.
+u:r_ead := { file ->
+  v := n_umbers []N_GET file
+  N := (t_ally v) d_iv 11
+  (((9 c_at N) r_eshape (9 * N) t_ake v, f_loat (r_ange 3) '= t_able f_loor (n_eg N) t_ake v), f_loor N t_ake (9 * N) d_rop v)
+}
+## `idx c_olumns M`: the columns (tokens) idx of M.
+u:c_olumns := { idx M -> M '+ '* i_nner f_loat (r_ange 2 s_elect s_hape M) '= t_able idx }
+## The new task: 200 tokens of kind 3 by its new rule to fine-tune on,
+## 200 held out.
+((x, Y), _) := u:r_ead "data/shift-train.txt"
+((xn, Yn), _) := u:r_ead "data/shift-test.txt"
+## The old task: the held-out tokens of kinds 1, 2 and 4, whose rule
+## the new task keeps (300).
+((xa, Ya), ka) := u:r_ead "data/test.txt"
+(xo, Yo) := ((w_here ka != 3) u:c_olumns xa, (w_here ka != 3) u:c_olumns Ya)
+## Replay: the new tokens mixed with 200 of the old task's training
+## tokens (kinds 1, 2 and 4), the usual guard against forgetting.
+((xb, Yb), kb) := u:r_ead "data/train.txt"
+old := 200 t_ake w_here kb != 3
+(xr, Yr) := (old u:c_olumns xb, old u:c_olumns Yb)
+mixed := (o_\ (o_\ x) c_at o_\ xr, o_\ (o_\ Y) c_at o_\ Yr)
+
+### The base, with room for a new expert
+
+## The base: the shared layer S (8 x 9), the router (4 x 8), the
+## experts (4 x 3 x 8). The expert layer's input here is z with a
+## constant 1 under it (9 x N), so a router row and an expert can have
+## a bias; the base's are 0. A fifth expert waits, 0, its router row a
+## bias of -30 (never in a token's top 2: the gates of the chosen two
+## are as the base's).
+w := n_umbers []N_GET "data/base.txt"
+S := 8 9 r_eshape 72 t_ake w
+R0 := (o_\ (o_\ 4 8 r_eshape 32 t_ake 72 d_rop w) c_at 1 4 r_eshape 0.0) c_at 1 9 r_eshape (8 r_eshape 0.0) c_at -30.0
+W0 := 5 3 9 r_eshape r_avel (o_\ (o_\ 12 8 r_eshape 104 d_rop w) c_at 1 12 r_eshape 0.0) c_at 3 9 r_eshape 0.0
+## The adapters: (aS, bS) on the shared layer (2 x 9, 8 x 2), (As, Bs)
+## on the experts (5 x 2 x 9, 5 x 3 x 2); s = alpha / r, alpha 4 at
+## rank 2.
+s := 4.0 lo:s_caling 2
+u:o_ne := { M -> M c_at (1 c_at 2 s_elect s_hape M) r_eshape 1.0 }
+## `(aS, bS, R, Ws, As, Bs) l_ayers x`: (z, G, P): the shared layer's
+## output, the gates over the 5 experts, each token's probabilities
+## over the classes.
+u:l_ayers := { (aS, bS, R, Ws, As, Bs) x ->
+  z := u:o_ne t_anh (S, aS, bS, s) lo:f_orward x
+  G := 2 moe:t_opk moe:s_oftmax R moe:s_cores z
+  (z, G, moe:s_oftmax ((Ws, As, Bs, s), G) moe:c_ombine z)
+}
+## `m a_ccuracy (x, Y)`: the share of tokens whose likeliest class is
+## theirs.
+u:a_ccuracy := { m (x, Y) ->
+  (_, _, P) := m u:l_ayers x
+  ('+ r_/ r_avel Y * 1 moe:m_ask P) / f_loat 2 s_elect s_hape Y
+}
+## `m s_hare x`: the share of the tokens x each expert gets (summing to 2).
+u:s_hare := { m x ->
+  (_, G, _) := m u:l_ayers x
+  moe:f_requency G
+}
+## `f p_er A`: each expert's block of A (stacked) times its flag in f.
+u:p_er := { f A -> A * (s_hape A) r_eshape r_avel f 'l_eft t_able o_ffsets (t_ally r_avel A) d_iv t_ally f }
+base := (2 9 r_eshape 0.0, 8 2 r_eshape 0.0, R0, W0, 5 2 9 r_eshape 0.0, 5 3 2 r_eshape 0.0)
+
+### The new expert's router row
+
+## It starts pointing at the new tokens and away from the old: the
+## direction from the old training tokens' mean z to the new ones', 6
+## long, its bias putting 0 halfway between the two means.
+u:m_ean := { M -> ('+ r_/_2 M) / f_loat 2 s_elect s_hape M }
+(zn, _, _) := base u:l_ayers x
+(zo, _, _) := base u:l_ayers xr
+d := (8 t_ake u:m_ean zn) - 8 t_ake u:m_ean zo
+r5 := 6.0 * d / s_qrt '+ r_/ d * d
+R5 := 5 9 r_eshape (36 t_ake r_avel R0) c_at r5 c_at n_eg '+ r_/ r5 * 0.5 * 8 t_ake (u:m_ean zn) + u:m_ean zo
+
+### A method
+
+## A method is which parts train, (shared, experts, router, new): 1 or
+## 0 for the shared layer's adapter, the base router's rows and the new
+## expert (its weights and router row), a flag per base expert's
+## adapter. The gradients of the cross-entropy go back through the
+## experts and the router (MoE's g_rads and g_radsW, each token's two
+## experts held fixed) and the shared layer (LoRA's g_rads, after tanh);
+## every expert runs on every token here (d_ense, the same sum as the
+## sparse c_ombine, faster at this size). A frozen part's gradient is 0,
+## so Adam leaves it where it is. The state: the model, Adam's
+## averages, the step, the loss after each step; (xs, Ys) the tokens
+## to fine-tune on.
+u:s_tep := { ((fS, fE, fR, fN), (xs, Ys)) ((aS, bS, R, Ws, As, Bs), (m1, v1, m2, v2, m3, v3, m4, v4, m5, v5, m6, v6), t, losses) ->
+  z0 := t_anh (S, aS, bS, s) lo:f_orward xs
+  z := u:o_ne z0
+  G := 2 moe:t_opk moe:s_oftmax R moe:s_cores z
+  P := moe:s_oftmax ((Ws, As, Bs, s), G) moe:d_ense z
+  g := (P - Ys) / f_loat 2 s_elect s_hape xs
+  (dR, dAs, dBs, dz) := (R, (Ws, As, Bs, s), 2) moe:g_rads (z, g)
+  dW := (R, (Ws, As, Bs, s), 2) moe:g_radsW (z, g)
+  (daS, dbS, _) := (S, aS, bS, s) lo:g_rads (xs, (8 t_ake dz) * 1.0 - z0 * z0)
+  (aS2, m12, v12) := (0.02, t) op:a_dam (aS, m1, v1, fS * daS)
+  (bS2, m22, v22) := (0.02, t) op:a_dam (bS, m2, v2, fS * dbS)
+  (R2, m32, v32) := (0.02, t) op:a_dam (R, m3, v3, ((4 r_eshape fR) c_at fN) u:p_er dR)
+  (W2, m42, v42) := (0.02, t) op:a_dam (Ws, m4, v4, (0.0 0.0 0.0 0.0 c_at fN) u:p_er dW)
+  (As2, m52, v52) := (0.02, t) op:a_dam (As, m5, v5, (fE c_at 0.0) u:p_er dAs)
+  (Bs2, m62, v62) := (0.02, t) op:a_dam (Bs, m6, v6, (fE c_at 0.0) u:p_er dBs)
+  loss := n_eg ('+ r_/ r_avel Ys * l_og P) / f_loat 2 s_elect s_hape xs
+  ((aS2, bS2, R2, W2, As2, Bs2), (m12, v12, m22, v22, m32, v32, m42, v42, m52, v52, m62, v62), t + 1, losses c_at loss)
+}
+## `(method, tokens, steps) t_une seed`: the base fine-tuned by a
+## method on the tokens: each A from the seed (small), each B 0, so it
+## starts as the base; with a new expert, its router row as above.
+u:t_une := { ((fS, fE, fR, fN), tokens, steps) seed ->
+  aS := 0.3 * seed lo:s_eeded 2 9
+  As := 5 2 9 r_eshape 0.3 * (seed + 1) lo:s_eeded 10 9
+  R := R0 + fN * R5 - R0
+  zero := (0.0 * aS, 8 2 r_eshape 0.0, 0.0 * R0, 0.0 * W0, 0.0 * As, 5 3 2 r_eshape 0.0)
+  (zS, zB, zR, zW, zA, zE) := zero
+  (m, _, _, losses) := steps '{ st -> ((fS, fE, fR, fN), tokens) u:s_tep st } p_ower ((aS, zB, R, W0, As, zE), (zS, zS, zB, zB, zR, zR, zW, zW, zA, zA, zE, zE), 1, 0 r_eshape 0.0)
+  (m, losses)
+}
+## `s_ize (A, B)`: an update's size, |s B A| (Frobenius).
+u:s_ize := { (A, B) -> s * s_qrt '+ r_/ r_avel (B '+ '* i_nner A) ^ 2 }
+## `m r_eport method`: a method's measures: the new task's accuracy and
+## the old task's; the numbers trained and their bytes in FP32; the
+## new and the old tokens' share of each of the 5 experts; the update's
+## size on each base expert, the shared layer and the new expert (its
+## weights, from 0).
+u:r_eport := { m (fS, fE, fR, fN) ->
+  (aS, bS, R, Ws, As, Bs) := m
+  n := (fS * 34.0) + (24.0 * '+ r_/ fE) + (fR * 36.0) + fN * 36.0
+  sizes := '{ e -> u:s_ize (e s_elect As, e s_elect Bs) } e_ach r_ange 4
+  new := s_qrt '+ r_/ r_avel (5 s_elect Ws) ^ 2
+  (m u:a_ccuracy (xn, Yn), m u:a_ccuracy (xo, Yo), n, 4.0 * n, m u:s_hare xn, m u:s_hare xo, sizes c_at (u:s_ize (aS, bS)) c_at new)
+}
+## The methods, in the research's order, then a new expert; "selected"
+## takes the two experts the base sends most of the new tokens to.
+picked := 4 t_ake r_avel 2 moe:m_ask 5 1 r_eshape base u:s_hare x
+none := (0.0, 4 r_eshape 0.0, 0.0, 0.0)
+shared := (1.0, 4 r_eshape 0.0, 0.0, 0.0)
+experts := (0.0, 4 r_eshape 1.0, 0.0, 0.0)
+both := (1.0, 4 r_eshape 1.0, 0.0, 0.0)
+selected := (0.0, picked, 0.0, 0.0)
+router := (0.0, 4 r_eshape 1.0, 1.0, 0.0)
+added := (0.0, 4 r_eshape 0.0, 0.0, 1.0)
+u:r_ound := { v -> (f_loat f_loor 0.5 + v * 1000.0) / 1000.0 }
+# -- end of the core ------------------------------
+
+### Each method, seed 1, 120 steps
+
+## A line per method: the new task's accuracy, the old task's, the
+## numbers trained, their bytes, the new tokens' share of each of the 5
+## experts, the old tokens', then the update sizes (the 4 experts, the
+## shared layer, the new expert).
+u:r_ow := { (method, tokens) ->
+  (m, _) := (method, tokens, 120) u:t_une 1
+  (a, o, n, b, sn, so, sz) := m u:r_eport method
+  u:r_ound a c_at o c_at n c_at b c_at sn c_at so c_at sz
+}
+u:a_ll := { tokens -> 7 20 r_eshape (u:r_ow (none, tokens)) c_at (u:r_ow (shared, tokens)) c_at (u:r_ow (experts, tokens)) c_at (u:r_ow (both, tokens)) c_at (u:r_ow (selected, tokens)) c_at (u:r_ow (router, tokens)) c_at u:r_ow (added, tokens) }
+## Fine-tuned on the new tokens alone, then mixed with old ones.
+u:a_ll (x, Y)
+u:a_ll mixed

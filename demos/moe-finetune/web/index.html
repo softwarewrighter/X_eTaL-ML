@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>MoE fine-tuning</title>
+  <link data-trunk rel="rust" data-bin="moe-finetune-web" />
+  <link data-trunk rel="copy-file" href="../../../images/xetal-logo-orange.png" />
+  <link data-trunk rel="icon" href="../../../images/favicon.ico" />
+  <link data-trunk rel="css" href="../../../shared/microscope/microscope.css" />
+  <style>
+    table.methods tr.method { cursor: pointer; }
+    table.methods tr.picked td { background: var(--off); }
+    table.methods .what { color: var(--muted); font-size: .8rem; }
+    td.num { font-variant-numeric: tabular-nums; white-space: nowrap; }
+    td.pass { color: #1f7a3a; font-weight: 700; }
+    td.fail { color: #c92a2a; }
+    table.routing { width: 100%; }
+    table.routing td { white-space: nowrap; }
+    table.routing td:not(:first-child) { width: 45%; }
+    .hbar { display: inline-block; height: 10px; border-radius: 2px; vertical-align: middle; margin-right: 6px; max-width: 70%; }
+    .hbar.before { background: #adb5bd; }
+    .hbar.after { background: #9775fa; }
+    .v { font-size: .8rem; font-variant-numeric: tabular-nums; }
+    figure.chart { margin: 8px 0; }
+    figure.chart svg { display: block; max-width: 100%; height: auto; }
+    figure.chart .grid { stroke: var(--line); }
+    figure.chart .tick { font-size: 11px; fill: var(--muted); }
+    figure.chart .tick.end { text-anchor: end; }
+    figure.chart .tick.mid { text-anchor: middle; }
+    figure.chart .line { fill: none; stroke: #9775fa; stroke-width: 2.5; }
+    figure.chart figcaption { font-size: .8rem; color: var(--muted); }
+  </style>
+</head>
+<body></body>
+</html>

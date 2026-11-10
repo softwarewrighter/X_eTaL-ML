@@ -31,21 +31,29 @@ u:u_nit := { seed n ->
 u:r_ound := { v -> (f_loat f_loor 0.5 + v * 10000.0) / 10000.0 }
 ## Each kind's rule: 3 scores of the 4 attributes, rows 3k-2 .. 3k.
 M := 12 4 r_eshape (2.0 * 7 u:u_nit 48) - 1.0
-## `t_okens (seed, N)`: N tokens, the kinds 1 2 3 4 in turn: the
-## inputs, the kinds and the classes, as one list of 11 N numbers.
-u:t_okens := { (seed, N) ->
-  kinds := 1 + (o_ffsets N) m_od 4
+## The shifted task: kind 3 follows a new rule (its rows from another
+## seed); the other kinds' rules are kept.
+M2 := (6 4 r_eshape 24 t_ake r_avel M) c_at (3 4 r_eshape (2.0 * 13 u:u_nit 12) - 1.0) c_at 3 4 r_eshape 36 d_rop r_avel M
+## `(seed, rules) t_okens kinds`: a token of each kind given, by the
+## rules: the inputs, the kinds and the classes, as one list of 11 N
+## numbers.
+u:t_okens := { (seed, rules) kinds ->
+  N := t_ally kinds
   K := f_loat (r_ange 4) '= t_able kinds
   a := u:r_ound (4 c_at N) r_eshape (2.0 * seed u:u_nit 4 * N) - 1.0
   e := (4 c_at N) r_eshape 0.3 * ((seed + 1) u:u_nit 4 * N) - 0.5
   x := u:r_ound ((0.8 * K) + e) c_at a c_at (1 c_at N) r_eshape 1.0
   mask := f_loat (1 + (o_ffsets 12) d_iv 3) '= t_able kinds
-  S := '+ r_/_1 (4 3 c_at N) r_eshape mask * M '+ '* i_nner a
+  S := '+ r_/_1 (4 3 c_at N) r_eshape mask * rules '+ '* i_nner a
   classes := '+ r_/_1 (f_loat (r_ange 3) 'l_eft t_able o_ffsets N) * 1 moe:m_ask S
   (r_avel x) c_at (f_loat kinds) c_at classes
 }
-_ := (f_ormat u:t_okens (11, 800)) []N_PUT "data/train.txt"
-_ := (f_ormat u:t_okens (23, 400)) []N_PUT "data/test.txt"
+_ := (f_ormat (11, M) u:t_okens 1 + (o_ffsets 800) m_od 4) []N_PUT "data/train.txt"
+_ := (f_ormat (23, M) u:t_okens 1 + (o_ffsets 400) m_od 4) []N_PUT "data/test.txt"
+## The shifted task's tokens, all of kind 3: 200 to fine-tune on, 200
+## held out.
+_ := (f_ormat (47, M2) u:t_okens 200 r_eshape 3) []N_PUT "data/shift-train.txt"
+_ := (f_ormat (53, M2) u:t_okens 200 r_eshape 3) []N_PUT "data/shift-test.txt"
 
 ### The tokens, read back
 

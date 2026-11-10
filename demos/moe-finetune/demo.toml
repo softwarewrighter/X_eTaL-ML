@@ -2,10 +2,10 @@
 # README's demo list and the live catalog (pages/index.html).
 slug = "moe-finetune"
 title = "MoE fine-tuning"
-summary = "A tiny mixture-of-experts (a shared layer, 4 experts, top-2) trained in X_eTaL on tokens of four kinds, each with its own rule: the base model every fine-tuning method starts from, its accuracy kind by kind and where each kind's tokens are routed."
-concepts = ["inner product", "softmax by column", "top-k by masks", "p_ower for training", "reading and writing data files"]
-status = "draft"
+summary = "A tiny mixture-of-experts, trained in X_eTaL, fine-tuned to a changed task by each method in turn, in your browser: the shared layer, every expert, both, selected experts, the router, a new expert. Is the new task learned and the old one kept? Only a new expert with its own router row keeps the old task within 3 points."
+concepts = ["inner product", "softmax by column", "top-k by masks", "p_ower for training", "gradients masked by a flag per part", "reading data files"]
+status = "live"
 order = 16
 needs = []
-line = "G := 2 moe:t_opk moe:s_oftmax R moe:s_cores z"
-why = "Every token's scores, probabilities and top-2 gates over the experts at once: one matrix product, a softmax down each column and masks."
+line = "(method, tokens, 120) u:t_une seed"
+why = "One function fine-tunes the base by any method: a method is a flag per part, and a frozen part's gradient is multiplied by 0, so the same step trains any of them."

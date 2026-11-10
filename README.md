@@ -72,7 +72,7 @@ an error before the forward pass, not a wrong number after it.
 
 ## Demos
 
-All thirteen run live in your browser and at the command line.
+All eighteen run live in your browser and at the command line.
 [Start with the Tiny CNN](https://softwarewrighter.github.io/X_eTaL-ML/cnn-digits/):
 draw a digit and watch a network read it.
 
@@ -81,6 +81,7 @@ draw a digit and watch a network read it.
 | [Tiny CNN](demos/cnn-digits/README.md) ([live](https://softwarewrighter.github.io/X_eTaL-ML/cnn-digits/)) | draw a digit; filters, feature maps, pooling and probabilities, every stage computed by X_eTaL; click a map for its arithmetic | `-1 0 1 o_-_2 -1 0 1 o_-_2 x`: every 3 x 3 window of the picture at once |
 | [Activation functions](demos/activations/README.md) ([live](https://softwarewrighter.github.io/X_eTaL-ML/activations/)) | every activation of the Activations library and its slope over -6..6, a family at a time, drawn by Plot with a real x axis; sliders for the parameters; an activation of your own, edited, run and drawn beside a built-in | `u:s_lope := { f_ x -> 5000.0 * (f_ x + 0.0001) - f_ x - 0.0001 }`: one central-difference line for any function, passed as its argument |
 | [LoRA explorer](demos/lora-explorer/README.md) ([live](https://softwarewrighter.github.io/X_eTaL-ML/lora-explorer/)) | one 8 x 8 projection adapted at a rank you choose: the adapted layer y = W x + s B (A x) as a pipeline of equations drawn as math, each stage's arrays as heat maps, a backward step as a second pipeline, the update s B A and its rank, the merge, what adapters cost on a large mixture-of-experts model, and LoRA beside LoRA-FA trained to fit a known update against the truncated SVD's optimum at every rank, W in 4 bits as QLoRA stores it, uniform and NF4, and QLoRA trained beside LoRA, against the best each can do | `B '+ '* i_nner A '+ '* i_nner x`: right to left, A x first, so the matrix B A is never made |
+| [MoE fine-tuning](demos/moe-finetune/README.md) ([live](https://softwarewrighter.github.io/X_eTaL-ML/moe-finetune/)) | a tiny mixture-of-experts, trained in X_eTaL, fine-tuned to a changed task by six methods in turn in your browser (the shared layer, every expert, both, selected experts, the router, a new expert), on the new tokens alone or mixed with old ones, over 1 or 3 seeds: the new task's accuracy, the old task's (3 points the bar), the numbers trained, where the tokens go before and after, each update's size; only the new expert keeps the old task | `(method, tokens, 120) u:t_une seed`: one step trains any method, a frozen part's gradient times 0 |
 | [Backprop microscope](demos/backprop/README.md) ([live](https://softwarewrighter.github.io/X_eTaL-ML/backprop/)) | one training step with every array shown: forward, loss, each layer's gradient, the step; every gradient checked by nudging its weight; take steps and watch the loss fall | `(o_\ u:o_nes X) '+ '* i_nner D1`: a layer's gradient, one matrix product |
 | [CNN training](demos/cnn-backprop/README.md) ([live](https://softwarewrighter.github.io/X_eTaL-ML/cnn-backprop/)) | X_eTaL trains a tiny CNN from random weights on 600 handwritten digits in your browser: the backward pass through softmax, dense, max-pooling, ReLU and the convolution, checked by finite differences; the filters form and the test digits come to be read right | `DC := (A cv:u_npool DQ) * f_loat C > 0.0`: back through pooling and ReLU, a whole batch at once |
 | [Training live](demos/train-live/README.md) ([live](https://softwarewrighter.github.io/X_eTaL-ML/train-live/)) | X_eTaL trains a small network on a spiral in your browser; the decision regions bend to follow it as the loss falls | `s := 25 'u:a_dam p_ower s`: Adam's step, iterated |
@@ -95,12 +96,6 @@ draw a digit and watch a network read it.
 | [World model](demos/world-model/README.md) ([live](https://softwarewrighter.github.io/X_eTaL-ML/world-model/)) | a network that watched a ball bounce predicts the next frame from the last three; 1,897 of 1,936 exact, 348 of the 387 it never saw; let it dream and it plays the ball forward, bounces included | `act:s_igmoid (act:r_elu X nn:d_ense wb1) nn:d_ense wb2`: every state's next frame at once |
 | [Learned denoiser](demos/diffusion/README.md) ([live](https://softwarewrighter.github.io/X_eTaL-ML/diffusion/)) | pictures from noise in ten steps: a convolutional network trained to see the clean picture in a noisy one, run backward; eight at a time, every level shown; the same noise gives the same pictures | `(((t s_elect ra) * C) + (t s_elect rb) * (X - ((1 + t) s_elect ra) * C) / (1 + t) s_elect rb, t - 1)`: one step down for all the pictures |
 | [1.58-bit network](demos/ternary-net/README.md) ([live](https://softwarewrighter.github.io/X_eTaL-ML/ternary-net/)) | one classifier with FP32, FP16, INT8 and ternary weights compared; a ternary layer as additions | `(f_loat x > s) - f_loat x < n_eg s`: a layer's weights to -1, 0, +1 |
-
-In progress, at the command line so far: [MoE fine-tuning](demos/moe-finetune/README.md),
-a tiny mixture-of-experts (a shared layer, 4 experts, top 2) trained in
-X_eTaL on tokens of four kinds, the base model the fine-tuning methods
-will be compared on: its accuracy kind by kind (0.883 held out) and
-where each kind's tokens are routed.
 
 Every page shows all the code it runs, beside the arrays that code
 computed. Programs are short: weights and other data live in each
