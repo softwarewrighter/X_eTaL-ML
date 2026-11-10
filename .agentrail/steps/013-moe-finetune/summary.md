@@ -1,0 +1,1 @@
+demos/moe-finetune live: six methods + base on kind 3's changed rule, new tokens alone or with replay, 1 or 3 seeds, in the browser; a new expert with its own router row is the only method within the 3-point bar (-1.0 replay, -2.0 alone; adapted methods -5 to -37); routing before/after, update sizes, loss; page tests; gate passed
