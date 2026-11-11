@@ -1,4 +1,4 @@
-number = 15
+number = 18
 slug = "adapters-deploy"
 status = "pending"
 description = "(docs/fine-tune-moe-demo-plan.md, step 11; L381-460, L1103-1150, L4447) adapt..."
