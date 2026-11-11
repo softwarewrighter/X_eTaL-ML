@@ -13,6 +13,16 @@ l:g_radsFA : Num a => (a, a, a, a) -> (a, a) -> (a, a)
 l:s_gdFA : Num a => a -> ((a, a, a, a), (a, a)) -> (a, a, a, a)
 l:a_damStartFA : (Any a, Any b, Any c, Num d) => (a, b, Float, c) -> ((a, b, Float, c), (Float, Float), d)
 l:a_damFA : Float -> (((Float, Float, Float, Float), (Float, Float), Float), (Float, Float)) -> ((Float, Float, Float, Float), (Float, Float), Float)
+l:p_rojections : Num a => a -> Int -> (Float, Float)
+l:v_era : Num a => a -> (b, Int) -> (b, Float, Float, Float, Float)
+l:d_eltaV : Num a => (a, a, a, a) -> a
+l:f_orwardV : Num a => (a, a, a, a, a) -> a -> a
+l:m_ergeV : Num a => (a, a, a, a, a) -> a
+l:l_ossV : (Float, Float, Float, Float, Float) -> (Float, Float) -> Float
+l:g_radsV : Num a => (a, a, a, a, a) -> (a, a) -> (a, a, a)
+l:s_gdV : Num a => a -> ((a, a, a, a, a), (a, a)) -> (a, a, a, a, a)
+l:a_damStartV : (Any a, Any b, Any c, Num d) => (a, b, c, Float, Float) -> ((a, b, c, Float, Float), (Float, Float, Float, Float), d)
+l:a_damV : Float -> (((Float, Float, Float, Float, Float), (Float, Float, Float, Float), Float), (Float, Float)) -> ((Float, Float, Float, Float, Float), (Float, Float, Float, Float), Float)
 l:q_base : Int -> Float -> (Int, Float, Int)
 l:d_equant : (Int, Float, Int) -> Float
 l:f_orwardQ : ((Int, Float, Int), Float, Float, Float) -> Float -> Float
@@ -24,3 +34,5 @@ l:e_xpert : Num a => a -> a -> a
 l:e_xpertFA : Num a => a -> a -> a
 l:b_ytes : Num a => a -> a -> Float
 l:c_osts : Num a => a -> a -> a
+l:p_aramsV : Num a => a -> a -> a
+l:e_xpertV : Num a => a -> a -> a

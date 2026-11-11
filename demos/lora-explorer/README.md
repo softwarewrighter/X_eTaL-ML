@@ -12,7 +12,9 @@ research (`docs/fine-tune-moe-research.txt`) works out. A backward step
 is a second pipeline of equations, the gradients of A, B and x. Then
 LoRA and LoRA-FA (A frozen) are trained side by side to fit a known
 update, against the best any update of the rank can do (the truncated
-SVD), and swept over every rank.
+SVD), and swept over every rank. VeRA freezes A and B too, random and
+shared, and trains two vectors: its layer and gradients are pipelines
+of equations as well, and it is trained and swept beside them.
 
 Live: [LoRA explorer](https://softwarewrighter.github.io/X_eTaL-ML/lora-explorer/)
 (move the rank slider from 1 to 8; click a row of the math or a
@@ -21,7 +23,8 @@ and what it gives, dragged to turn, as the Pipelines demo shows them;
 under the buttons what it computes from what in 2D, the matrices too;
 change the large model's sizes; switch the math to the backward step
 and click its stages; watch the two loss curves against the best
-possible at the slider's rank; the rank sweep runs once).
+possible at the slider's rank; switch the math to VeRA's layer or its
+backward step; the rank sweep runs once).
 
 W, A, B and x are made up (a fixed ripple), to show the shapes and the
 arithmetic; the known update T to learn is too (8 x 8, of rank 4).
@@ -136,6 +139,33 @@ values of `T - (W~ - W)`. At rank 3, blocks of 16:
 Merging the trained adapter into a 4-bit base (`lo:m_ergeQ`)
 quantizes W~ + s B A again: it misses by up to 0.18, and the merged
 layer's output the adapter's by up to 0.40.
+
+VeRA (Kopiczko, Blankevoort and Asano, 2024; the research's lines
+3612-4464): A0 (r x 8) and B0 (8 x r) frozen, from a seed
+(`1 lo:v_era (W, r)`, LoRA-FA's seed, so A0 is its A) and shared by
+every 8 x 8 layer; two vectors trained, d (r numbers) and b (8),
+`y = W x + b (B0 (d (A0 x)))`. Its forward pass and its backward step
+(c = B0' (b g) once, then dd = c (A0 x), db = g (B0 (d (A0 x))) and
+dx) are pipelines drawn as math, checked against the functions
+`lo:a_dapter< "W A0 B0 dv bv | r r | train dv bv"` writes. Trained on
+the same T, steps and rate from its start (b at 0), at the rank on the
+slider and in the sweep:
+
+| rank | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 |
+| ---- | - | - | - | - | - | - | - | - |
+| numbers VeRA trains | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16 |
+| VeRA's loss | 1.738 | 1.733 | 1.724 | 1.584 | 1.668 | 1.584 | 1.677 | 1.335 |
+| LoRA-FA's | 1.738 | 1.650 | 1.444 | 1.164 | 0.869 | 0.554 | 0.410 | 0.026 |
+| LoRA's | 1.142 | 0.410 | 0.015 | 0 | 0 | 0 | 0 | 0 |
+
+At rank 1 VeRA is LoRA-FA: its update is any 8-vector times the seeded
+row of A. After that 8 + r numbers on fixed random directions learn
+little of an update of 64 numbers, and a larger rank does not always
+help (each rank draws other projections). What VeRA saves shows on a
+large model: on the research's expert (d 4096, f 14336) at rank 3 it
+trains 32,777 numbers to LoRA's 165,888, and the projections, 110,592
+numbers, are stored once for every expert of every layer (or not at
+all: the seed).
 
 ## What it shows about X_eTaL
 

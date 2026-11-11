@@ -1,0 +1,2 @@
+command = "../../../scripts/xt expand vera.xtl"
+exit_code = 0

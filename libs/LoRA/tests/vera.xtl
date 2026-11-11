@@ -1,0 +1,73 @@
+#!/usr/bin/env xetal
+## VeRA, checked with Check: the factored layer is the merged matrix,
+## the adapter starts as the base, its update has rank r at most and
+## is B0 and A0 scaled, every gradient is the finite differences of
+## the squared error, the steps lower the loss and leave the
+## projections, the projections come back from their seed and are
+## shared, and the research's counts. Arrays by a fixed ripple, the
+## sine of a square (no chance).
+
+"lo:" u_se< "LoRA"
+"k:" u_se< "Check"
+
+u:r_ipple := { c n -> s_in c * f_loat (r_ange n) * r_ange n }
+## An 8 x 6 base at rank 3, 5 inputs (the columns of x) and the outputs
+## wanted for them; the projections from seed 5, d and b by the ripple.
+W := 8 6 r_eshape 0.7 u:r_ipple 48
+(A0, B0) := 5 lo:p_rojections 8 6 3
+d := 1.1 u:r_ipple 3
+b := 0.9 u:r_ipple 8
+x := 6 5 r_eshape 0.3 u:r_ipple 30
+y := 8 5 r_eshape 1.3 u:r_ipple 40
+v := (W, A0, B0, d, b)
+c1 := "W x + b (B0 (d (A0 x))) is the merged matrix times x" k:t_est (v lo:f_orwardV x) k:n_ear (lo:m_ergeV v) '+ '* i_nner x
+## The update written with its diagonals, row by row and column by
+## column: b_i B0_ij d_j.
+D := (8 3 r_eshape '{ k -> ((1 + (k - 1) d_iv 3) s_elect b) * (1 + (k - 1) m_od 3) s_elect d } e_ach r_ange 24) * B0
+c2 := "diag(b) B0 diag(d) is B0 times the table of b by d" k:t_est (D '+ '* i_nner A0) k:n_ear lo:d_eltaV (A0, B0, d, b)
+c3 := "the update's rank is r, 3" k:t_est 3 k:i_s lo:r_ank lo:d_eltaV (A0, B0, d, b)
+## The paper's start: b at 0, the layer is the base.
+v0 := 5 lo:v_era (W, 3)
+(_, A1, B1, d1, b1) := v0
+c4 := "VeRA starts as the base" k:t_est (W '+ '* i_nner x) k:n_ear v0 lo:f_orwardV x
+c5 := "with the seed's projections, d at 0.1 and b at 0" k:t_est ((r_avel A1) c_at (r_avel B1) c_at d1 c_at b1) k:n_ear (r_avel A0) c_at (r_avel B0) c_at 0.1 0.1 0.1 c_at 8 r_eshape 0.0
+## The gradients against central differences.
+g := (v lo:f_orwardV x) - y
+(dd, db, dx) := v lo:g_radsV (x, g)
+e := 0.00001
+u:b_ump := { w i -> e * f_loat (s_hape w) r_eshape i = r_ange t_ally r_avel w }
+u:g_ap := { p q -> 'm_ax r_/ r_avel a_bs p - q }
+Fd := '{ i -> (((W, A0, B0, d + d u:b_ump i, b) lo:l_ossV (x, y)) - (W, A0, B0, d - d u:b_ump i, b) lo:l_ossV (x, y)) / 2.0 * e } e_ach r_ange 3
+Fb := '{ i -> (((W, A0, B0, d, b + b u:b_ump i) lo:l_ossV (x, y)) - (W, A0, B0, d, b - b u:b_ump i) lo:l_ossV (x, y)) / 2.0 * e } e_ach r_ange 8
+Fx := (s_hape x) r_eshape '{ i -> ((v lo:l_ossV (x + x u:b_ump i, y)) - v lo:l_ossV (x - x u:b_ump i, y)) / 2.0 * e } e_ach r_ange 30
+c6 := "dL/dd = b' (B0 times g z') is the finite differences" k:t_est k:t_rue 0.000001 > dd u:g_ap Fd
+c7 := "dL/db = (B0 times g z') d is the finite differences" k:t_est k:t_rue 0.000001 > db u:g_ap Fb
+c8 := "dL/dx = W' g + A0' (diag(b) B0 diag(d))' g is the finite differences" k:t_est k:t_rue 0.000001 > dx u:g_ap Fx
+c9 := "dd has r numbers, db m, dx x's shape" k:t_est 3 8 6 5 k:i_s (t_ally dd) c_at (t_ally db) c_at s_hape dx
+## dx is LoRA's with A0 for A, diag(b) B0 diag(d) for B and scale 1.
+(_, _, lx) := (W, A0, D, 1.0) lo:g_rads (x, g)
+c10 := "dx is LoRA's with A0 and B0 scaled" k:t_est dx k:n_ear lx
+## Training from the start: 200 steps of descent, 200 of Adam.
+L0 := v0 lo:l_ossV (x, y)
+v1 := 200 '{ a -> 0.01 lo:s_gdV (a, (x, y)) } p_ower v0
+(v2, _, t2) := 200 '{ q -> 0.01 lo:a_damV (q, (x, y)) } p_ower lo:a_damStartV v0
+(_, A2, B2, _, _) := v2
+c11 := "a step of descent lowers the loss" k:t_est k:t_rue L0 > (0.01 lo:s_gdV (v0, (x, y))) lo:l_ossV (x, y)
+c12 := "200 steps of descent and of Adam lower it" k:t_est 1 1 k:i_s L0 > (v1 lo:l_ossV (x, y)) c_at v2 lo:l_ossV (x, y)
+c13 := "Adam counts its steps" k:t_est 201 k:i_s t2
+c14 := "the projections stay as they were" k:t_est ((r_avel A2) c_at r_avel B2) k:n_ear (r_avel A0) c_at r_avel B0
+## Shared: another matrix of the same shape, from the same seed, gets
+## the same projections; another seed, others.
+(A3, B3) := 5 lo:p_rojections 8 6 3
+(A4, _) := 6 lo:p_rojections 8 6 3
+c15 := "a seed regenerates the projections" k:t_est ((r_avel A3) c_at r_avel B3) k:n_ear (r_avel A0) c_at r_avel B0
+c16 := "another seed gives others" k:t_est k:t_rue 0.1 < A3 u:g_ap A4
+## The research's MoE projection, n 4096, m 14336, rank 16, 64
+## experts: 14,352 numbers an expert against LoRA's 294,912, 918,528
+## for all 64 (about 20.5 times fewer), 1.75 MiB in BF16; the shared
+## projections, r (m + n), 0.56 MiB.
+pv := 16 lo:p_aramsV 14336 4096
+c17 := "VeRA trains m + r numbers, 14,352 an expert" k:t_est 14352 918528 k:i_s pv c_at 64 * pv
+c18 := "20.5 times fewer than expert LoRA" k:t_est 20.5 k:n_ear (f_loat f_loor 0.5 + 10.0 * (16 lo:p_arams 14336 4096) / f_loat pv) / 10.0
+c19 := "1.75 MiB in BF16, the projections 0.56 MiB" k:t_est 1.75 0.56 k:n_ear (f_loat f_loor 0.5 + 100.0 * (16 lo:b_ytes (64 * pv) c_at 16 lo:p_arams 14336 4096) / 1048576.0) / 100.0
+k:r_eport c1 k:a_nd c2 k:a_nd c3 k:a_nd c4 k:a_nd c5 k:a_nd c6 k:a_nd c7 k:a_nd c8 k:a_nd c9 k:a_nd c10 k:a_nd c11 k:a_nd c12 k:a_nd c13 k:a_nd c14 k:a_nd c15 k:a_nd c16 k:a_nd c17 k:a_nd c18 k:a_nd c19

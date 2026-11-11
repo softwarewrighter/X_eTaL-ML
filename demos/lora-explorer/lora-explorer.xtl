@@ -201,17 +201,90 @@ Mq := lo:d_equant qk lo:m_ergeQ (Q, A3, B3, s3)
 bits := (qk, 256) qz:b_its 4
 bits
 (f_loat 4096 * 14336) * (32.0 16.0 c_at bits) / 8.0 * 1048576.0
+### VeRA: shared random projections, two vectors
+
+## VeRA (Kopiczko, Blankevoort and Asano, 2024) freezes A and B too:
+## A0 (r x 8) and B0 (8 x r) are random, regenerated from a seed and
+## shared by every layer of the shape, and it trains two vectors, d (r
+## numbers) scaling A0 x and b (8) scaling B0's output: y = W x + b
+## (B0 (d (A0 x))). Forward and back as pipelines, at made-up vectors
+## dv and bv (a real adapter starts with b at 0).
+(_, A0, B0, _, _) := 1 lo:v_era (W, r)
+dv := 0.5 + 0.3 * c_os 0.8 * f_loat r_ange r
+bv := 0.6 * s_in 1.7 * f_loat r_ange 8
+yv := @ flow:p_ipe< c#"
+   X $x
+|> "h[k] | r" e:e_q< "sum j:=0..7 | A0[k,j] * x[j]" $h
+|> "u[k] | r" e:e_q< "dv[k] * h[k]" $u
+|> "v[i] | 8" e:e_q< "sum k:=0..q | B0[i,k] * u[k]" $v
+|> "y[i] | 8" e:e_q< "(sum j:=0..7 | W[i,j] * x[j]) + bv[i] * v[i]""#
+## The same, drawn as math.
+drawnV := @ flow:m_ath< c#"
+   X $x
+|> "h[k] | r" e:e_q< "sum j:=0..7 | A0[k,j] * x[j]" $h
+|> "u[k] | r" e:e_q< "dv[k] * h[k]" $u
+|> "v[i] | 8" e:e_q< "sum k:=0..q | B0[i,k] * u[k]" $v
+|> "y[i] | 8" e:e_q< "(sum j:=0..7 | W[i,j] * x[j]) + bv[i] * v[i]""#
+yv
+## Back, for the gradient g at the output: c = B0' (b g) once (r
+## numbers), then dd = c (A0 x) and db = g (B0 (d (A0 x))), item by
+## item, and dx through W and through the adapter. The projections are
+## in every gradient and get none.
+hv := A0 '+ '* i_nner X
+vv := B0 '+ '* i_nner dv * hv
+Gv := yv - (W + T) '+ '* i_nner X
+backV := @ flow:p_ipe< c#"
+   Gv $g
+|> "c[k] | r" e:e_q< "sum i:=0..7 | B0[i,k] * bv[i] * g[i]" $c
+|> "dd[k] | r" e:e_q< "c[k] * hv[k]" $dd
+|> "db[i] | 8" e:e_q< "g[i] * vv[i]" $db
+|> "dx[j] | 8" e:e_q< "(sum i:=0..7 | W[i,j] * g[i]) + (sum k:=0..q | A0[k,j] * dv[k] * c[k])""#
+## The same, drawn as math.
+backDrawnV := @ flow:m_ath< c#"
+   Gv $g
+|> "c[k] | r" e:e_q< "sum i:=0..7 | B0[i,k] * bv[i] * g[i]" $c
+|> "dd[k] | r" e:e_q< "c[k] * hv[k]" $dd
+|> "db[i] | 8" e:e_q< "g[i] * vv[i]" $db
+|> "dx[j] | 8" e:e_q< "(sum i:=0..7 | W[i,j] * g[i]) + (sum k:=0..q | A0[k,j] * dv[k] * c[k])""#
+## The macro's VeRA layer from its spec: the pipelines' y and dx are
+## its forward and backward functions', within 1e-12: 1 1.
+"u:f_orwardV u:b_ackwardV" lo:a_dapter< "W A0 B0 dv bv | r r | train dv bv"
+(_, _, dxv) := u:b_ackwardV (8 1 r_eshape X, 8 1 r_eshape Gv)
+0.000000000001 > ('m_ax r_/ a_bs yv - u:f_orwardV X) c_at 'm_ax r_/ a_bs backV - r_avel dxv
+## VeRA trained beside LoRA, from its start (b at 0, d at 0.1), on the
+## same known update and steps: its loss every 10 steps.
+V := 1 lo:v_era (W, r)
+(q4, L4) := chunks '{ (z, L) ->
+  z2 := every '{ e -> lr lo:a_damV (e, (I, Y)) } p_ower z
+  (a, _, _) := z2
+  (z2, L c_at a lo:l_ossV (I, Y))
+} p_ower (lo:a_damStartV V, V lo:l_ossV (I, Y))
+L4
+((_, _, _, d4, b4), _, _) := q4
+learnedV := lo:d_eltaV (A0, B0, d4, b4)
+## What it trains against LoRA, on this layer: 8 + r and 16 r numbers;
+## its projections, 16 r numbers, are shared by every 8 x 8 layer (or
+## regenerated from the seed). On the large model: one expert's VeRA
+## numbers, a layer of experts', and the projections they share, two
+## pairs, 2 r (d + f).
+(r lo:p_aramsV 8 8) c_at r lo:p_arams 8 8
+(r lo:e_xpertV d c_at f) c_at (experts * r lo:e_xpertV d c_at f) c_at 2 * r * d + f
 # -- end of the explorer at rank r
 
 ### The rank sweep
 
 ## LoRA and LoRA-FA trained at each rank 1 .. 8 (300 steps each) from
 ## the same start: LoRA reaches the best above at every rank; LoRA-FA,
-## its update held in A's row space, does not.
+## its update held in A's row space, does not; nor does VeRA, which
+## trains 8 + k numbers.
 u:s_tart := { k -> (W, 1 lo:s_eeded k c_at 8, (8 c_at k) r_eshape 0.0, alpha lo:s_caling k) }
 u:l_ora := { k ->
   (a, _, _) := 300 '{ e -> lr lo:a_dam (e, (I, Y)) } p_ower lo:a_damStart u:s_tart k
   u:l_oss a
+}
+u:v_era := { k ->
+  (a, _, _) := 300 '{ e -> lr lo:a_damV (e, (I, Y)) } p_ower lo:a_damStartV 1 lo:v_era (W, k)
+  a lo:l_ossV (I, Y)
 }
 u:f_a := { k ->
   (a, _, _) := 300 '{ e -> lr lo:a_damFA (e, (I, Y)) } p_ower lo:a_damStartFA u:s_tart k
@@ -219,3 +292,4 @@ u:f_a := { k ->
 }
 'u:l_ora e_ach r_ange 8
 'u:f_a e_ach r_ange 8
+'u:v_era e_ach r_ange 8

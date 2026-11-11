@@ -3,8 +3,9 @@
 //! pipelines (the forward pass and a backward step) drawn as math,
 //! every stage's value, and the arrays read back: W, A, B, the update,
 //! the merged matrix, the known update and what LoRA and LoRA-FA
-//! learned. The rank sweep is the whole program, run once. Nothing here
-//! knows about the browser.
+//! learned; then VeRA's two pipelines, stages and arrays. The rank
+//! sweep is the whole program, run once. Nothing here knows about the
+//! browser.
 
 use microscope::run::{numbers, output, printed, section};
 pub use microscope::stages::{values, Value};
@@ -44,12 +45,18 @@ fn text(name: &str) -> &'static str {
     section(PROGRAM, &start, "\n## ").trim_start_matches(start.as_str()).trim_end()
 }
 
-/// The forward pass's pipeline, then the backward step's.
+/// The forward pass's pipeline, then the backward step's; VeRA's two.
 pub fn pipeline() -> &'static str {
     text("y")
 }
 pub fn backward() -> &'static str {
     text("back")
+}
+pub fn pipeline_v() -> &'static str {
+    text("yv")
+}
+pub fn backward_v() -> &'static str {
+    text("backV")
 }
 
 /// Where the page's run stops: the rank sweep after it runs once, apart.
@@ -59,14 +66,17 @@ pub const END: &str = "# -- end of the explorer at rank r";
 /// sweep, then what it reads back: the two pipelines drawn as math and
 /// every stage's value (flow:s_tages<), and W, A, B, the update, the
 /// merged matrix, the known update T and the two learned updates, each
-/// ravelled.
+/// ravelled; then VeRA's two pipelines and their stages, its learned
+/// update, its projections and its learned vectors.
 pub fn program(s: Settings) -> String {
     let p = with(s);
     format!(
-        "{}\n# -- read back by the page ------------------------------\ndrawn\n@ flow:s_tages<{}\nbackDrawn\n@ flow:s_tages<{}\nr_avel W\nr_avel A\nr_avel B\nr_avel delta\nr_avel merged\nr_avel T\nr_avel learned\nr_avel learnedFA\nr_avel Wu\nr_avel Wn\n",
+        "{}\n# -- read back by the page ------------------------------\ndrawn\n@ flow:s_tages<{}\nbackDrawn\n@ flow:s_tages<{}\nr_avel W\nr_avel A\nr_avel B\nr_avel delta\nr_avel merged\nr_avel T\nr_avel learned\nr_avel learnedFA\nr_avel Wu\nr_avel Wn\ndrawnV\n@ flow:s_tages<{}\nbackDrawnV\n@ flow:s_tages<{}\nr_avel learnedV\nr_avel A0\nr_avel B0\nd4\nb4\n",
         p[..p.find(END).expect("the end marker")].trim_end(),
         pipeline(),
-        backward()
+        backward(),
+        pipeline_v(),
+        backward_v()
     )
 }
 
@@ -76,8 +86,8 @@ pub fn sweep_program() -> &'static str {
 }
 
 /// How many lines the program prints up to the sweep, then the page's.
-const PRINTED: usize = 18;
-const READ: usize = 14;
+const PRINTED: usize = 23;
+const READ: usize = 23;
 
 /// A matrix read back (the shared heat map's).
 pub use microscope::heat::Matrix;
@@ -136,21 +146,41 @@ pub struct Explored {
     pub b: Matrix,
     pub delta: Matrix,
     pub merged: Matrix,
+    /// VeRA: whether its pipelines are the macro's (forward, backward),
+    /// its pipelines as LaTeX and their stages (x, h, u, v, y; g, c, dd,
+    /// db, dx); the loss every 10 steps from its start; what it trains
+    /// and LoRA, on this layer; on the large model one expert's numbers,
+    /// a layer of experts', the projections they share; the learned
+    /// update, the projections A0 and B0, the learned d and b.
+    pub v_same: (bool, bool),
+    pub v_tex: String,
+    pub v_stages: Vec<Value>,
+    pub v_back_tex: String,
+    pub v_back_stages: Vec<Value>,
+    pub loss_v: Vec<f64>,
+    pub trained_v: (usize, usize),
+    pub expert_v: (u64, u64, u64),
+    pub learned_v: Matrix,
+    pub a0: Matrix,
+    pub b0: Matrix,
+    pub d_v: Vec<f64>,
+    pub b_v: Vec<f64>,
 }
 
-/// The rank sweep: the loss LoRA and LoRA-FA reach at each rank 1 .. 8.
+/// The rank sweep: the loss LoRA, LoRA-FA and VeRA reach at each rank 1 .. 8.
 #[derive(Clone, Debug, PartialEq)]
 pub struct Sweep {
     pub lora: Vec<f64>,
     pub fa: Vec<f64>,
+    pub vera: Vec<f64>,
 }
 
-/// Run the whole program for its last two lines, the sweep.
+/// Run the whole program for its last three lines, the sweep.
 pub fn sweep() -> Result<Sweep, String> {
     let out = printed(sweep_program())?;
     match out.len() {
-        20 => Ok(Sweep { lora: numbers(&out[18], 8)?, fa: numbers(&out[19], 8)? }),
-        n => Err(format!("expected 20 lines of output, got {n}")),
+        26 => Ok(Sweep { lora: numbers(&out[23], 8)?, fa: numbers(&out[24], 8)?, vera: numbers(&out[25], 8)? }),
+        n => Err(format!("expected 26 lines of output, got {n}")),
     }
 }
 
@@ -172,26 +202,39 @@ pub fn run(s: Settings) -> Result<Explored, String> {
         loss: numbers(&out[8], 31)?,
         loss_fa: numbers(&out[9], 31)?,
         best: numbers(&out[10], 8)?,
-        tex: out[18].clone(),
-        stages: values(&out[19])?,
-        back_tex: out[20].clone(),
-        back_stages: values(&out[21])?,
-        w: m(&out[22], 8, 8)?,
-        a: m(&out[23], s.r, 8)?,
-        b: m(&out[24], 8, s.r)?,
-        delta: m(&out[25], 8, 8)?,
-        merged: m(&out[26], 8, 8)?,
-        t: m(&out[27], 8, 8)?,
-        learned: m(&out[28], 8, 8)?,
-        learned_fa: m(&out[29], 8, 8)?,
+        tex: out[23].clone(),
+        stages: values(&out[24])?,
+        back_tex: out[25].clone(),
+        back_stages: values(&out[26])?,
+        w: m(&out[27], 8, 8)?,
+        a: m(&out[28], s.r, 8)?,
+        b: m(&out[29], 8, s.r)?,
+        delta: m(&out[30], 8, 8)?,
+        merged: m(&out[31], 8, 8)?,
+        t: m(&out[32], 8, 8)?,
+        learned: m(&out[33], 8, 8)?,
+        learned_fa: m(&out[34], 8, 8)?,
         rmse: { let v = numbers::<f64>(&out[11], 4)?; [v[0], v[1], v[2], v[3]] },
         moved: { let v = numbers::<f64>(&out[12], 2)?; (v[0], v[1]) },
         bits: { let v = numbers::<f64>(&out[16], 2)?; (v[0], v[1]) },
         big_mib: { let v = numbers::<f64>(&out[17], 4)?; [v[0], v[1], v[2], v[3]] },
-        w_uniform: m(&out[30], 8, 8)?,
-        w_nf4: m(&out[31], 8, 8)?,
+        w_uniform: m(&out[35], 8, 8)?,
+        w_nf4: m(&out[36], 8, 8)?,
         loss_q: numbers(&out[13], 31)?,
         best_q: out[14].trim().parse().map_err(|_| format!("not a loss: {}", out[14]))?,
         merge_miss: { let v = numbers::<f64>(&out[15], 2)?; (v[0], v[1]) },
+        v_same: { let v = numbers::<u8>(&out[19], 2)?; (v[0] == 1, v[1] == 1) },
+        loss_v: numbers(&out[20], 31)?,
+        trained_v: two(&out[21])?,
+        expert_v: { let v = numbers::<u64>(&out[22], 3)?; (v[0], v[1], v[2]) },
+        v_tex: out[37].clone(),
+        v_stages: values(&out[38])?,
+        v_back_tex: out[39].clone(),
+        v_back_stages: values(&out[40])?,
+        learned_v: m(&out[41], 8, 8)?,
+        a0: m(&out[42], s.r, 8)?,
+        b0: m(&out[43], 8, s.r)?,
+        d_v: numbers(&out[44], s.r)?,
+        b_v: numbers(&out[45], 8)?,
     })
 }

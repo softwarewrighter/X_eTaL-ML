@@ -2,8 +2,8 @@
 # README's demo list and the live catalog (pages/index.html).
 slug = "lora-explorer"            # the directory name, demos/<slug>/
 title = "LoRA explorer"
-summary = "Low-rank adaptation of one 8 x 8 projection: choose the rank, see the adapted layer y = W x + s B (A x) as a pipeline of equations drawn as math and each stage's arrays, a backward step through it stage by stage, the update s B A and its rank, the merge, what adapters cost on a large mixture-of-experts model, and LoRA beside LoRA-FA trained to fit a known update against the best possible at each rank (the truncated SVD), W in 4 bits as QLoRA stores it, uniform and NF4, and QLoRA's adapter trained on it, its merge not exact."
-concepts = ["LoRA", "low-rank updates", "a pipeline of equations", "rank by Gram-Schmidt", "tuples as arguments", "gradients written as equations", "LoRA-FA", "Eckart-Young", "NF4", "QLoRA"]        # the X_eTaL ideas it shows
+summary = "Low-rank adaptation of one 8 x 8 projection: choose the rank, see the adapted layer y = W x + s B (A x) as a pipeline of equations drawn as math and each stage's arrays, a backward step through it stage by stage, the update s B A and its rank, the merge, what adapters cost on a large mixture-of-experts model, and LoRA beside LoRA-FA trained to fit a known update against the best possible at each rank (the truncated SVD), W in 4 bits as QLoRA stores it, uniform and NF4, QLoRA's adapter trained on it, its merge not exact, and VeRA, two vectors on frozen random projections shared by every layer, forward, back and trained beside them."
+concepts = ["LoRA", "low-rank updates", "a pipeline of equations", "rank by Gram-Schmidt", "tuples as arguments", "gradients written as equations", "LoRA-FA", "Eckart-Young", "NF4", "QLoRA", "VeRA"]        # the X_eTaL ideas it shows
 status = "live"             # draft | live | deferred
 order = 15                  # position in the catalog (lower first)
 needs = []                   # asks in docs/xetal-asks.md it waits on or works around

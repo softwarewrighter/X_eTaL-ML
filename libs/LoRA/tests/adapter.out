@@ -7,4 +7,8 @@ ok: LoRA-FA's dB and dx are too
 ok: a rank by name, and arrays named x, g, b: the same layer
 ok: and the same gradients
 ok: a step with its gradients is lo:s_gd's
-9 checks, all passed
+ok: VeRA's forward function is lo:f_orwardV
+ok: and its backward one lo:g_radsV
+ok: VeRA's dd and db are the finite differences
+ok: "W | r 3 | train d b" is VeRA on W A B d b
+13 checks, all passed

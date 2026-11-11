@@ -1,0 +1,20 @@
+ok: W x + b (B0 (d (A0 x))) is the merged matrix times x
+ok: diag(b) B0 diag(d) is B0 times the table of b by d
+ok: the update's rank is r, 3
+ok: VeRA starts as the base
+ok: with the seed's projections, d at 0.1 and b at 0
+ok: dL/dd = b' (B0 times g z') is the finite differences
+ok: dL/db = (B0 times g z') d is the finite differences
+ok: dL/dx = W' g + A0' (diag(b) B0 diag(d))' g is the finite differences
+ok: dd has r numbers, db m, dx x's shape
+ok: dx is LoRA's with A0 and B0 scaled
+ok: a step of descent lowers the loss
+ok: 200 steps of descent and of Adam lower it
+ok: Adam counts its steps
+ok: the projections stay as they were
+ok: a seed regenerates the projections
+ok: another seed gives others
+ok: VeRA trains m + r numbers, 14,352 an expert
+ok: 20.5 times fewer than expert LoRA
+ok: 1.75 MiB in BF16, the projections 0.56 MiB
+19 checks, all passed

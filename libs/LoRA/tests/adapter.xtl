@@ -1,7 +1,8 @@
 #!/usr/bin/env xetal
 ## lo:a_dapter<, checked with Check: the forward and backward functions
 ## it writes are the library's (lo:f_orward, lo:g_rads, lo:g_radsFA)
-## for LoRA and LoRA-FA, the backward pass is the finite differences of
+## for LoRA and LoRA-FA, and lo:f_orwardV and lo:g_radsV for VeRA,
+## the backward pass is the finite differences of
 ## the squared error, the rank may be a name, and a caller's arrays
 ## named x, g and b are not captured. Arrays by a fixed ripple, the
 ## sine of a square (no chance).
@@ -52,4 +53,24 @@ c8 := "and the same gradients" k:t_est ((r_avel cA) c_at (r_avel cB) c_at r_avel
 (_, A1, B1, _) := 0.01 lo:s_gd ((W, A, B, s), (X, Y))
 (mA, mB, _) := u:b_wd (X, ((u:f_wd X) - Y))
 c9 := "a step with its gradients is lo:s_gd's" k:t_est ((r_avel A1) c_at r_avel B1) k:n_ear (r_avel A - 0.01 * mA) c_at r_avel B - 0.01 * mB
-k:r_eport c1 k:a_nd c2 k:a_nd c3 k:a_nd c4 k:a_nd c5 k:a_nd c6 k:a_nd c7 k:a_nd c8 k:a_nd c9
+## VeRA: the projections from a seed, d and b by the ripple.
+(A0, B0) := 5 lo:p_rojections 8 6 3
+d := 1.1 u:r_ipple 3
+v := 0.9 u:r_ipple 8
+"u:f_v u:b_v" lo:a_dapter< "W A0 B0 d v | r 3 | train d v"
+(vd, vb, vx) := u:b_v (X, ((W, A0, B0, d, v) lo:f_orwardV X) - Y)
+(ld, lb, lx2) := (W, A0, B0, d, v) lo:g_radsV (X, ((W, A0, B0, d, v) lo:f_orwardV X) - Y)
+c10 := "VeRA's forward function is lo:f_orwardV" k:t_est (u:f_v X) k:n_ear (W, A0, B0, d, v) lo:f_orwardV X
+c11 := "and its backward one lo:g_radsV" k:t_est (vd c_at vb c_at r_avel vx) k:n_ear ld c_at lb c_at r_avel lx2
+u:l_ossV := { a -> a lo:l_ossV (X, Y) }
+Fd := '{ i -> ((u:l_ossV (W, A0, B0, d + d u:b_ump i, v)) - u:l_ossV (W, A0, B0, d - d u:b_ump i, v)) / 2.0 * e } e_ach r_ange 3
+Fv := '{ i -> ((u:l_ossV (W, A0, B0, d, v + v u:b_ump i)) - u:l_ossV (W, A0, B0, d, v - v u:b_ump i)) / 2.0 * e } e_ach r_ange 8
+c12 := "VeRA's dd and db are the finite differences" k:t_est k:t_rue 0.000001 > (vd u:g_ap Fd) m_ax vb u:g_ap Fv
+## W alone, trained d and b: W A B d b, the names a lambda's
+## parameters here.
+u:w_alone := { (W, A, B, d, b) ->
+  "f_w b_w" lo:a_dapter< "W | r 3 | train d b"
+  f_w X
+}
+c13 := "\"W | r 3 | train d b\" is VeRA on W A B d b" k:t_est (u:w_alone (W, A0, B0, d, v)) k:n_ear u:f_v X
+k:r_eport c1 k:a_nd c2 k:a_nd c3 k:a_nd c4 k:a_nd c5 k:a_nd c6 k:a_nd c7 k:a_nd c8 k:a_nd c9 k:a_nd c10 k:a_nd c11 k:a_nd c12 k:a_nd c13

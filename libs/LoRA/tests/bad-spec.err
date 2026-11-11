@@ -1,4 +1,4 @@
-error[bad-macro-argument]: a spec is the arrays, the rank and what trains: "W A B s | r 3 | train A B" (LoRA) or "W A B s | r 3 | train B" (LoRA-FA)
+error[bad-macro-argument]: a spec is the arrays, the rank and what trains: "W A B s | r 3 | train A B" (LoRA), "W A B s | r 3 | train B" (LoRA-FA) or "W A B d b | r 3 | train d b" (VeRA)
  --> bad-spec.xtl:8:30
   |
 8 | "u:f_wd u:b_wd" lo:a_dapter< "W A B s | train A B"

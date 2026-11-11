@@ -3,7 +3,8 @@
 //! drawn as math, a stage picked to see its value and the arrays it
 //! reads; the update s B A, its rank and the merge; what adapters cost
 //! on a large mixture-of-experts model; LoRA and LoRA-FA trained to fit
-//! a known update; the rank sweep against the truncated SVD; and the
+//! a known update; VeRA, its projections frozen and shared, trained
+//! beside them; the rank sweep against the truncated SVD; and the
 //! programs the page ran.
 
 use std::rc::Rc;
@@ -18,7 +19,7 @@ use microscope::source::{block, NONE};
 use microscope::stages::clickable;
 use microscope::stageview::{no_stage, row_picker, stage_view, Split, Turn};
 
-use crate::micro::{backward, pipeline, program, run, sweep, sweep_program, Explored, Matrix, Settings, Sweep};
+use crate::micro::{backward, backward_v, pipeline, pipeline_v, program, run, sweep, sweep_program, Explored, Matrix, Settings, Sweep};
 
 /// Stage k of the pipeline (from 0, the data first) in 2D: what it
 /// computes, from what, the matrices it multiplies by included.
@@ -89,6 +90,8 @@ fn quantized(e: &Explored) -> Html {
 /// What each stage means, for its button: the forward pass, the backward step.
 const STAGES: [&str; 4] = ["x: the input", "h = A x", "u = B h", "y = W x + s u"];
 const BACK: [&str; 5] = ["g = y - wanted", "b = B' g", "dA = s b x'", "dB = s g h'", "dx = W' g + s A' b"];
+const VERA: [&str; 5] = ["x: the input", "h = A0 x", "u = d h", "v = B0 u", "y = W x + b v"];
+const VERA_BACK: [&str; 5] = ["g = y - wanted", "c = B0' (b g)", "dd = c h", "db = g v", "dx = W' g + A0' (d c)"];
 
 /// Width and height of a chart, and its margins for the axes' labels.
 const CW: f64 = 520.0;
@@ -132,6 +135,8 @@ fn chart(label: &str, series: &[(&str, &[f64], &str)], xs: &[String]) -> Html {
 enum Pass {
     Forward,
     Backward,
+    VeraForward,
+    VeraBackward,
 }
 
 /// A whole number typed in a box, kept within `lo..=hi`.
@@ -210,6 +215,8 @@ pub fn app() -> Html {
     let right = match (result.as_deref(), *stage, *pass) {
         (Some(Ok(e)), Some(k), Pass::Forward) => stage_view(&e.stages, pipeline(), k, "of the adapted layer", &turn),
         (Some(Ok(e)), Some(k), Pass::Backward) => stage_view(&e.back_stages, backward(), k, "of the backward step", &turn),
+        (Some(Ok(e)), Some(k), Pass::VeraForward) => stage_view(&e.v_stages, pipeline_v(), k, "of the VeRA layer", &turn),
+        (Some(Ok(e)), Some(k), Pass::VeraBackward) => stage_view(&e.v_back_stages, backward_v(), k, "of VeRA's backward step", &turn),
         _ => no_stage(),
     };
     let body = match result {
@@ -217,7 +224,7 @@ pub fn app() -> Html {
         Some(r) => match r.as_ref() {
             Err(e) => html! { <pre class="err">{ e.clone() }</pre> },
             Ok(e) => {
-                let names: &[&str] = match *pass { Pass::Forward => &STAGES, Pass::Backward => &BACK };
+                let names: &[&str] = match *pass { Pass::Forward => &STAGES, Pass::Backward => &BACK, Pass::VeraForward => &VERA, Pass::VeraBackward => &VERA_BACK };
                 let buttons = names.iter().enumerate().map(|(k, t)| {
                     let st = stage.clone();
                     html! { <button class={classes!((*stage == Some(k + 1)).then_some("on"))} onclick={Callback::from(move |_| st.set(Some(k + 1)))}>{*t}</button> }
@@ -225,7 +232,7 @@ pub fn app() -> Html {
                 let sc = largest(&[&e.w, &e.delta, &e.merged]);
                 let st = stage.clone();
                 let pick = row_picker(Callback::from(move |k| st.set(Some(k))));
-                let shown = clickable(if *pass == Pass::Forward { &e.tex } else { &e.back_tex }, *stage);
+                let shown = clickable(match *pass { Pass::Forward => &e.tex, Pass::Backward => &e.back_tex, Pass::VeraForward => &e.v_tex, Pass::VeraBackward => &e.v_back_tex }, *stage);
                 let switch = |p: Pass, t: &str| {
                     let (ps, st) = (pass.clone(), stage.clone());
                     html! { <button class={classes!((*pass == p).then_some("on"))} onclick={Callback::from(move |_| { ps.set(p); st.set(None); })}>{t.to_string()}</button> }
@@ -236,24 +243,24 @@ pub fn app() -> Html {
                 let steps: Vec<String> = (0..e.loss.len()).map(|i| if i % 5 == 0 { (10 * i).to_string() } else { String::new() }).collect();
                 let best = vec![e.best[r - 1]; e.loss.len()];
                 let sweep_panel = match swept.as_deref() {
-                    None => html! { <div class="running"><span class="spinner"></span>{"X_eTaL is training LoRA and LoRA-FA at every rank, 1 to 8, in your browser\u{2026}"}</div> },
+                    None => html! { <div class="running"><span class="spinner"></span>{"X_eTaL is training LoRA, LoRA-FA and VeRA at every rank, 1 to 8, in your browser\u{2026}"}</div> },
                     Some(Err(err)) => html! { <pre class="err">{ err.clone() }</pre> },
                     Some(Ok(w)) => {
                         let ranks: Vec<String> = (1..=8).map(|k| k.to_string()).collect();
-                        let rows = (0..8).map(|k| html! { <tr><td>{k + 1}</td><td>{format!("{:.6}", e.best[k])}</td><td>{format!("{:.6}", w.lora[k])}</td><td>{format!("{:.6}", w.fa[k])}</td></tr> });
+                        let rows = (0..8).map(|k| html! { <tr><td>{k + 1}</td><td>{format!("{:.6}", e.best[k])}</td><td>{format!("{:.6}", w.lora[k])}</td><td>{format!("{:.6}", w.fa[k])}</td><td>{format!("{:.6}", w.vera[k])}</td></tr> });
                         html! { <>
-                            { chart("the loss at each rank", &[("best possible (truncated SVD)", &e.best, "best"), ("LoRA", &w.lora, "lora"), ("LoRA-FA", &w.fa, "fa")], &ranks) }
-                            <table class="facts sweep"><tr><th>{"rank"}</th><th>{"best possible"}</th><th>{"LoRA"}</th><th>{"LoRA-FA"}</th></tr>{ for rows }</table>
+                            { chart("the loss at each rank", &[("best possible (truncated SVD)", &e.best, "best"), ("LoRA", &w.lora, "lora"), ("LoRA-FA", &w.fa, "fa"), ("VeRA", &w.vera, "vera")], &ranks) }
+                            <table class="facts sweep"><tr><th>{"rank"}</th><th>{"best possible"}</th><th>{"LoRA"}</th><th>{"LoRA-FA"}</th><th>{"VeRA"}</th></tr>{ for rows }</table>
                         </> }
                     }
                 };
                 html! { <>
-                    { panel(if *pass == Pass::Forward { "The adapted layer" } else { "A backward step" }, if *pass == Pass::Forward { "y := @ flow:p_ipe< ..." } else { "back := @ flow:p_ipe< ..." }, "x goes two ways: through the frozen W, and through the adapter, A first (r numbers), then B (back to 8); the two are added. The factors stay apart: the 8 x 8 matrix B A is never made. Backward, the loss's gradient g at the output goes back the same two ways: B' g once (r numbers), then the gradients of A and B (outer products) and of x. Click a row of the math, or a button, to see the stage: on the right its numbers and, in 3D, the stages it reads and what it gives (drag to turn); here what it computes from what, the matrices too (red positive, blue negative, near white about 0, as in 3D; hover a cell for its value).", false, html! { <>
-                        <div class="stages">{ switch(Pass::Forward, "Forward: y = W x + s B (A x)") }{ switch(Pass::Backward, "Backward: the gradients") }</div>
+                    { panel(match *pass { Pass::Forward => "The adapted layer", Pass::Backward => "A backward step", Pass::VeraForward => "The VeRA layer", Pass::VeraBackward => "VeRA's backward step" }, match *pass { Pass::Forward => "y := @ flow:p_ipe< ...", Pass::Backward => "back := @ flow:p_ipe< ...", Pass::VeraForward => "yv := @ flow:p_ipe< ...", Pass::VeraBackward => "backV := @ flow:p_ipe< ..." }, "x goes two ways: through the frozen W, and through the adapter, A first (r numbers), then B (back to 8); the two are added. The factors stay apart: the 8 x 8 matrix B A is never made. Backward, the loss's gradient g at the output goes back the same two ways: B' g once (r numbers), then the gradients of A and B (outer products) and of x. Click a row of the math, or a button, to see the stage: on the right its numbers and, in 3D, the stages it reads and what it gives (drag to turn); here what it computes from what, the matrices too (red positive, blue negative, near white about 0, as in 3D; hover a cell for its value). VeRA's layer, y = W x + b (B0 (d (A0 x))), and its gradients are here too, at made-up vectors d and b.", false, html! { <>
+                        <div class="stages">{ switch(Pass::Forward, "Forward: y = W x + s B (A x)") }{ switch(Pass::Backward, "Backward: the gradients") }{ switch(Pass::VeraForward, "VeRA: y = W x + b (B0 (d (A0 x)))") }{ switch(Pass::VeraBackward, "VeRA backward") }</div>
                         <div class="tex" onclick={pick} data-tex={shown.clone()}>{ shown.clone() }</div>
                         <div class="stages">{ for buttons }</div>
-                        { match (*stage, *pass) { (Some(k), Pass::Forward) => arrays(e, k - 1, s), (Some(k), Pass::Backward) => back_arrays(e, k - 1, s), (None, _) => html! {} } }
-                        <p class="muted">{ if e.back_same { "The backward pipeline's dx is the one the library's macro lo:a_dapter< writes from the spec \"W A B s | r r | train A B\" (within 1e-12); the macro's gradients are checked against lo:g_rads and finite differences in the library's tests." } else { "The backward pipeline's dx differs from lo:a_dapter<'s!" } }</p>
+                        { match (*stage, *pass) { (Some(k), Pass::Forward) => arrays(e, k - 1, s), (Some(k), Pass::Backward) => back_arrays(e, k - 1, s), _ => html! {} } }
+                        <p class="muted">{ if matches!(*pass, Pass::VeraForward | Pass::VeraBackward) { if e.v_same == (true, true) { "VeRA's pipelines give the output and dx of the layer lo:a_dapter< writes from \"W A0 B0 dv bv | r r | train dv bv\" (within 1e-12)." } else { "VeRA's pipelines differ from lo:a_dapter<'s!" } } else if e.back_same { "The backward pipeline's dx is the one the library's macro lo:a_dapter< writes from the spec \"W A B s | r r | train A B\" (within 1e-12); the macro's gradients are checked against lo:g_rads and finite differences in the library's tests." } else { "The backward pipeline's dx differs from lo:a_dapter<'s!" } }</p>
                     </> }) }
                     { panel("The update and the merge", "lo:m_erge (W, A, B, s)", "The update s B A is an 8 x 8 matrix of rank r at most; added to W it is the merged matrix, one matrix again, as fast as the base, for deploying one task.", false, html! { <>
                         <div class="row">{ heat(&e.w, sc, "W, frozen") }<span class="op">{"+"}</span>{ heat(&e.delta, sc, &format!("s B A, rank {}", e.rank)) }<span class="op">{"="}</span>{ heat(&e.merged, sc, "W + s B A, merged") }</div>
@@ -317,7 +324,24 @@ pub fn app() -> Html {
                             <tr><td>{"and of the adapter's output"}</td><td>{format!("{:.4}", e.merge_miss.1)}</td></tr>
                         </table>
                     </> }) }
-                    { panel("The rank sweep", "'u:l_ora e_ach r_ange 8", "LoRA and LoRA-FA trained at every rank from 1 to 8 (300 Adam steps each), against the best possible at that rank, from T's singular values (found by power iteration). T is of rank 4, so from rank 4 on the best is 0. LoRA follows the best at every rank; LoRA-FA needs a larger rank for the same loss. This runs once, apart from the slider.", false, sweep_panel) }
+                    { panel("VeRA: shared random projections", "1 lo:v_era (W, r)", "VeRA (Kopiczko, Blankevoort and Asano, 2024) freezes A and B too: A0 and B0 are random, regenerated from a seed (here LoRA-FA's, so A0 is its A) and shared by every layer of the shape. It trains two vectors: d, r numbers scaling A0 x, and b, 8 scaling B0's output; b starts at 0, so the layer starts as the base. Its update diag(b) B0 diag(d) A0 needs no diagonal matrix: it is B0 times the table of b by d, item by item. Trained here on the same known update, steps and rate as LoRA: it trains 8 + r numbers against LoRA's 16 r, and with so few, fixed directions it learns little of T. At rank 1 it is LoRA-FA (any 8-vector times A's one row). Its savings show on a large model, where the projections are shared by every expert and only the vectors are stored.", false, html! { <>
+                        { chart("LoRA, LoRA-FA and VeRA as they train", &[("LoRA", &e.loss, "lora"), ("LoRA-FA", &e.loss_fa, "fa"), ("VeRA", &e.loss_v, "vera"), (&format!("best possible at rank {r}"), &best, "best")], &steps) }
+                        <p class="muted">{"Loss after each 10 Adam steps (log scale), the same start, rate and steps."}</p>
+                        <table class="facts">
+                            <tr><td>{format!("VeRA's loss after 300 steps (trains {} numbers, d and b)", e.trained_v.0)}</td><td>{format!("{:.6}", at(&e.loss_v))}</td></tr>
+                            <tr><td>{format!("LoRA's (trains {}), LoRA-FA's (trains {})", e.trained_v.1, 8 * r)}</td><td>{format!("{:.6} and {:.6}", at(&e.loss), at(&e.loss_fa))}</td></tr>
+                            <tr><td>{format!("the frozen projections A0 and B0, shared by every 8 x 8 layer (or regenerated from the seed)")}</td><td>{format!("{} numbers", 16 * r)}</td></tr>
+                        </table>
+                        <div class="row">{ heat(&e.a0, largest(&[&e.a0, &e.b0]), &format!("A0: {r} x 8, frozen, shared")) }{ heat(&e.b0, largest(&[&e.a0, &e.b0]), &format!("B0: 8 x {r}, frozen, shared")) }</div>
+                        <div class="row">{ heat(&column(&e.d_v), largest(&[&column(&e.d_v), &column(&e.b_v)]), &format!("d: {r} numbers, learned")) }{ heat(&column(&e.b_v), largest(&[&column(&e.d_v), &column(&e.b_v)]), "b: 8 numbers, learned") }</div>
+                        <div class="row">{ heat(&e.t, tsc, "T: the update to learn") }{ heat(&e.learned_v, tsc, &format!("VeRA's diag(b) B0 diag(d) A0, rank {r} at most")) }{ heat(&e.learned, tsc, &format!("LoRA's s B A, rank {r}")) }</div>
+                        <table class="facts">
+                            <tr><td>{format!("on the large model (d {}, f {}): numbers VeRA trains per expert, 2 f + d + 3 r", s.d, s.f)}</td><td>{ format!("{} (LoRA's {})", commas(e.expert_v.0), commas(e.expert)) }</td></tr>
+                            <tr><td>{format!("a layer of {} experts", s.experts)}</td><td>{ format!("{} (LoRA's {})", commas(e.expert_v.1), commas(e.expert * s.experts as u64)) }</td></tr>
+                            <tr><td>{"the projections they share, two pairs (gate and up; down), 2 r (d + f), frozen"}</td><td>{ commas(e.expert_v.2) }</td></tr>
+                        </table>
+                    </> }) }
+                    { panel("The rank sweep", "'u:l_ora e_ach r_ange 8", "LoRA, LoRA-FA and VeRA trained at every rank from 1 to 8 (300 Adam steps each), against the best possible at that rank, from T's singular values (found by power iteration). T is of rank 4, so from rank 4 on the best is 0. LoRA follows the best at every rank; LoRA-FA needs a larger rank for the same loss; VeRA, with 8 + r numbers on fixed random directions, stays far above both, and a larger rank does not always help it. This runs once, apart from the slider.", false, sweep_panel) }
                 </> }
             }
         },
@@ -326,7 +350,7 @@ pub fn app() -> Html {
     html! {
         <>
         <header>
-            { header("LoRA explorer", "Low-rank adaptation, computed by X_eTaL in your browser: a frozen 8 x 8 weight matrix W adapted by two small trainable ones, A (r x 8) and B (8 x r), the layer y = W x + s B (A x). Choose the rank; see each stage forward and backward, the update and its rank, the merge, what adapters cost on a large mixture-of-experts model, LoRA and LoRA-FA trained to fit a known update against the best possible at each rank, W in 4 bits, uniform and NF4, as QLoRA stores it, and QLoRA's adapter trained on that base.") }
+            { header("LoRA explorer", "Low-rank adaptation, computed by X_eTaL in your browser: a frozen 8 x 8 weight matrix W adapted by two small trainable ones, A (r x 8) and B (8 x r), the layer y = W x + s B (A x). Choose the rank; see each stage forward and backward, the update and its rank, the merge, what adapters cost on a large mixture-of-experts model, LoRA and LoRA-FA trained to fit a known update against the best possible at each rank, W in 4 bits, uniform and NF4, as QLoRA stores it, QLoRA's adapter trained on that base, and VeRA, two small vectors on frozen random projections shared by every layer.") }
             { rank }
         </header>
         <main><div class="wide">

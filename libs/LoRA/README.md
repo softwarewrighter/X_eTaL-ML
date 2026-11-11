@@ -1,6 +1,6 @@
 # LoRA
 
-Low-rank adapters (LoRA): the adapted forward pass in factored form, the merge, the counts, the gradients and steps, LoRA-FA, the macro lo:a_dapter<
+Low-rank adapters (LoRA): the adapted forward pass in factored form, the merge, the counts, the gradients and steps, LoRA-FA, QLoRA, VeRA, the macro lo:a_dapter<
 
 ```
 "lo:" u_se< "LoRA"

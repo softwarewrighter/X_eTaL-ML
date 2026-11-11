@@ -1,4 +1,4 @@
-## LoRA: low-rank adapters: the adapted forward pass in factored form, the merge, the counts, the gradients and steps, LoRA-FA
+## LoRA: low-rank adapters: the adapted forward pass in factored form, the merge, the counts, the gradients and steps, LoRA-FA, QLoRA, VeRA
 ##
 ## Import it with an alias of your choice: "lo:" u_se< "LoRA".
 ## Put libs/LoRA/src on XETAL_PATH ("just path"); the reference is libs/LoRA/docs.
@@ -16,7 +16,8 @@
 ## (g_rads, s_gd, a_dam through the Optim library); LoRA-FA freezes A
 ## (regenerated from a seed, s_eeded) and trains B alone; QLoRA keeps W
 ## in 4 bits (NF4, through the Quant library) and computes with it
-## dequantized.
+## dequantized; VeRA freezes A and B too (random, from a seed, shared by
+## every matrix of the shape) and trains two vectors, d and b.
 
 "op:" u_se< "Optim"
 "qz:" u_se< "Quant"
@@ -173,6 +174,105 @@ l:a_damFA := { lr (((W, A, B, s), (mB, vB), t), (x, y)) ->
   ((W, A, B2, s), (mB2, vB2), t + 1)
 }
 
+### VeRA: shared random projections, two vectors trained
+
+## `seed p_rojections m n r`: VeRA's frozen projections for an m x n
+## matrix at rank r, (A0, B0): A0 (r x n) and B0 (m x r) regenerated
+## from the seed as s_eeded makes them (B0 from seed + 1), so a
+## checkpoint need not hold them and every layer or expert of the same
+## shape can share them.
+## >> "lo:" u_se< "LoRA"
+## >> (A0, B0) := 7 lo:p_rojections 3 4 2
+## >> s_hape B0
+## 3 2
+l:p_rojections := { seed mnr ->
+  (m, n, r) := (f_irst mnr, 2 s_elect mnr, 3 s_elect mnr)
+  (seed l:s_eeded r c_at n, (seed + 1) l:s_eeded m c_at r)
+}
+
+## `seed v_era (W, r)`: a VeRA adapter on the frozen W (m x n) at rank
+## r, as the paper starts it (Kopiczko, Blankevoort and Asano, "VeRA:
+## Vector-based Random Matrix Adaptation", 2024): (W, A0, B0, d, b),
+## the projections from the seed, d (r numbers) at 0.1 and b (m
+## numbers) at 0, so the adapted layer starts as the base. d and b are
+## all it trains: m + r numbers.
+## >> "lo:" u_se< "LoRA"
+## >> (_, _, _, d, b) := 7 lo:v_era (2 3 r_eshape 1.0, 4)
+## >> d c_at b
+## 0.1 0.1 0.1 0.1 0.0 0.0
+l:v_era := { seed (W, r) ->
+  (A0, B0) := seed l:p_rojections (s_hape W) c_at r
+  (W, A0, B0, r r_eshape 0.1, (f_irst s_hape W) r_eshape 0.0)
+}
+
+## `(A0, B0, d, b) d_eltaV`: VeRA's update, diag(b) B0 diag(d) A0, an
+## m x n matrix of rank r at most. The two diagonals need no matrix and
+## no broadcasting: diag(b) B0 diag(d) is B0 times the table of b by d,
+## item by item (an m x r matrix, B's size).
+## >> "lo:" u_se< "LoRA"
+## >> lo:d_eltaV (1 2 r_eshape 1.0 1.0, 2 1 r_eshape 1.0 -1.0, 1 r_eshape 0.5, 2.0 4.0)
+##  1.0  1.0
+## -2.0 -2.0
+l:d_eltaV := { (A0, B0, d, b) -> (B0 * b '* t_able d) '+ '* i_nner A0 }
+
+## `(W, A0, B0, d, b) f_orwardV x`: the VeRA layer, W x + b (B0 (d (A0
+## x))), the vectors scaling A0 x's rows and B0's output's: in factored
+## form, A0 x first, then the m x r matrix diag(b) B0 diag(d) of that.
+## >> "lo:" u_se< "LoRA"
+## >> (2 2 r_eshape 1.0 0.0 0.0 1.0, 1 2 r_eshape 1.0 1.0, 2 1 r_eshape 1.0 -1.0, 1 r_eshape 0.5, 2.0 4.0) lo:f_orwardV 2.0 4.0
+## 8.0 -8.0
+l:f_orwardV := { (W, A0, B0, d, b) x -> (W '+ '* i_nner x) + (B0 * b '* t_able d) '+ '* i_nner A0 '+ '* i_nner x }
+
+## `m_ergeV (W, A0, B0, d, b)`: the VeRA adapter folded into the
+## weights, W + diag(b) B0 diag(d) A0.
+## >> "lo:" u_se< "LoRA"
+## >> lo:m_ergeV (2 2 r_eshape 1.0 0.0 0.0 1.0, 1 2 r_eshape 1.0 1.0, 2 1 r_eshape 1.0 -1.0, 1 r_eshape 0.5, 2.0 4.0)
+##  2.0  1.0
+## -2.0 -1.0
+l:m_ergeV := { (W, A0, B0, d, b) -> W + l:d_eltaV (A0, B0, d, b) }
+
+## `(W, A0, B0, d, b) l_ossV (x, y)`: the squared error of the VeRA
+## layer, as l_oss.
+l:l_ossV := { a (x, y) ->
+  e := (a l:f_orwardV x) - y
+  0.5 * '+ r_/ r_avel e * e
+}
+
+## `(W, A0, B0, d, b) g_radsV (x, g)`: VeRA's gradients for the inputs
+## x (n x N) and the output's gradient g (m x N), as (dd, db, dx). With
+## z = A0 x and Q = B0 times g z' item by item (m x r): dd = b' Q (the
+## research's (B0' (g b)) z, summed over the inputs), db = Q d (its g
+## (B0 (d z))), dx = W' g + A0' (diag(b) B0 diag(d))' g. The projections
+## are in every gradient and get none.
+## >> "lo:" u_se< "LoRA"
+## >> (dd, db, dx) := (2 2 r_eshape 1.0 0.0 0.0 1.0, 1 2 r_eshape 1.0 1.0, 2 1 r_eshape 1.0 -1.0, 1 r_eshape 0.5, 2.0 4.0) lo:g_radsV (2 1 r_eshape 2.0 4.0, 2 1 r_eshape 1.0 -1.0)
+## >> dd c_at db
+## 36.0 3.0 3.0
+l:g_radsV := { (W, A0, B0, d, b) (x, g) ->
+  Q := B0 * g '+ '* i_nner o_\ A0 '+ '* i_nner x
+  (b '+ '* i_nner Q, Q '+ '* i_nner d, ((o_\ W) '+ '* i_nner g) + (o_\ A0) '+ '* i_nner (o_\ B0 * b '* t_able d) '+ '* i_nner g)
+}
+
+## `lr s_gdV ((W, A0, B0, d, b), (x, y))`: VeRA's step of gradient
+## descent on the squared error: d and b move, the rest stays.
+l:s_gdV := { lr ((W, A0, B0, d, b), (x, y)) ->
+  (dd, db, _) := (W, A0, B0, d, b) l:g_radsV (x, ((W, A0, B0, d, b) l:f_orwardV x) - y)
+  (W, A0, B0, lr op:s_gd (d, dd), lr op:s_gd (b, db))
+}
+
+## `a_damStartV (W, A0, B0, d, b)`: VeRA's Adam state: the adapter, the
+## running averages of d and b at 0, the step 1.
+l:a_damStartV := { (W, A0, B0, d, b) -> ((W, A0, B0, d, b), (0.0 * d, 0.0 * d, 0.0 * b, 0.0 * b), 1) }
+
+## `lr a_damV (((W, A0, B0, d, b), (md, vd, mb, vb), t), (x, y))`:
+## VeRA's Adam step: d and b move; the next state.
+l:a_damV := { lr (((W, A0, B0, d, b), (md, vd, mb, vb), t), (x, y)) ->
+  (dd, db, _) := (W, A0, B0, d, b) l:g_radsV (x, ((W, A0, B0, d, b) l:f_orwardV x) - y)
+  (d2, md2, vd2) := (lr, t) op:a_dam (d, md, vd, dd)
+  (b2, mb2, vb2) := (lr, t) op:a_dam (b, mb, vb, db)
+  ((W, A0, B0, d2, b2), (md2, vd2, mb2, vb2), t + 1)
+}
+
 ### QLoRA: the base in 4 bits
 
 ## `k q_base W`: the base as QLoRA stores it: W in NF4, blocks of k
@@ -289,3 +389,22 @@ l:b_ytes := { b n -> (f_loat b * n) / 8.0 }
 ## >> 8 lo:c_osts 64 64
 ## 1024 32768
 l:c_osts := { r mn -> (r l:p_arams mn) c_at r * '* r_/ mn }
+
+## `r p_aramsV m n`: the numbers VeRA trains on an m x n matrix at rank
+## r, m + r (b's m and d's r), against LoRA's r (m + n); its frozen
+## projections, r (m + n) numbers, are shared by every matrix of the
+## shape (or regenerated from their seed).
+## >> "lo:" u_se< "LoRA"
+## >> 16 lo:p_aramsV 14336 4096
+## 14352
+l:p_aramsV := { r mn -> r + f_irst mn }
+
+## `r e_xpertV d f`: the numbers VeRA trains on one SwiGLU expert of
+## hidden size d and inner size f, its three matrices at rank r: m + r
+## each, 2 f + d + 3 r. The projections are frozen and shared by every
+## expert: two pairs (one for gate and up, f x d; one for down, d x f),
+## 2 r (d + f) numbers, once.
+## >> "lo:" u_se< "LoRA"
+## >> 16 lo:e_xpertV 4096 14336
+## 32816
+l:e_xpertV := { r df -> (3 * r) + (2 * 2 s_elect df) + f_irst df }

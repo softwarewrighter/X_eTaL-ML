@@ -1,0 +1,5 @@
+error[bad-macro-argument]: LoRA trains A and B ("train A B"), LoRA-FA B alone ("train B"), VeRA d and b of five arrays ("W A B d b | r 3 | train d b"); nothing else trains here
+  --> bad-vera.xtl:10:30
+   |
+10 | "u:f_wd u:b_wd" lo:a_dapter< "W A B d b | r 1 | train A B"
+   |                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

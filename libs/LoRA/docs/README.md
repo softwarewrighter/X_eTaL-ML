@@ -9,7 +9,9 @@ A, B and the inputs, steps of gradient descent and Adam (through the
 Optim library), and LoRA-FA, which freezes A (regenerated from a seed)
 and trains B alone. QLoRA: the base stored in 4 bits (NF4, through
 the Quant library), the layer computed on it dequantized, the merge
-into a 4-bit base that is not exact, and QLoRA's bytes.
+into a 4-bit base that is not exact, and QLoRA's bytes. VeRA: A and B
+frozen too, random, regenerated from a seed and shared by every matrix
+of the shape, and two vectors trained, `y = W x + b (B0 (d (A0 x)))`.
 
 ```
 "lo:" u_se< "LoRA"
@@ -62,6 +64,15 @@ the libraries without setup.
   checkpoint holds B alone. On a SwiGLU expert it trains r (2f + d) of
   LoRA's r (3d + 3f) numbers (`lo:e_xpertFA`); Adam keeps its two
   averages for those alone.
+- VeRA's adapter is `(W, A0, B0, d, b)`: A0 (r x n) and B0 (m x r)
+  frozen, from `seed lo:p_rojections m n r`, d (r numbers) and b (m)
+  trained; `seed lo:v_era (W, r)` starts it as the paper does, d at
+  0.1 and b at 0, so the layer starts as the base. Its update diag(b)
+  B0 diag(d) A0 needs no diagonal matrix and no broadcasting: diag(b)
+  B0 diag(d) is `B0 * b '* t_able d`, item by item. It trains m + r
+  numbers per matrix (`lo:p_aramsV`), 2 f + d + 3 r per SwiGLU expert
+  (`lo:e_xpertV`); the projections are stored once for every matrix of
+  the shape, or not at all (the seed).
 
 ## Functions
 
@@ -82,6 +93,16 @@ the libraries without setup.
 | `lr lo:s_gdFA (adapter, (x, y))` | `Num a => a -> ((a, a, a, a), (a, a)) -> (a, a, a, a)` | LoRA-FA's step of gradient descent: B alone moves |
 | `lo:a_damStartFA adapter` | `(Any a, Any b, Any c, Num d) => (a, b, Float, c) -> ((a, b, Float, c), (Float, Float), d)` | LoRA-FA's Adam start: B's two averages only |
 | `lr lo:a_damFA (state, (x, y))` | `Float -> (((Float, Float, Float, Float), (Float, Float), Float), (Float, Float)) -> ((Float, Float, Float, Float), (Float, Float), Float)` | LoRA-FA's Adam step: B alone moves |
+| `seed lo:p_rojections m n r` | `Num a => a -> Int -> (Float, Float)` | VeRA's frozen projections (A0, B0) from a seed, shared by every matrix of the shape |
+| `seed lo:v_era (W, r)` | `Num a => a -> (b, Int) -> (b, Float, Float, Float, Float)` | a VeRA adapter (W, A0, B0, d, b) as the paper starts it: d at 0.1, b at 0 |
+| `lo:d_eltaV (A0, B0, d, b)` | `Num a => (a, a, a, a) -> a` | VeRA's update, diag(b) B0 diag(d) A0 |
+| `(W, A0, B0, d, b) lo:f_orwardV x` | `Num a => (a, a, a, a, a) -> a -> a` | the VeRA layer, W x + b (B0 (d (A0 x))), in factored form |
+| `lo:m_ergeV adapter` | `Num a => (a, a, a, a, a) -> a` | the VeRA adapter folded into the weights |
+| `adapter lo:l_ossV (x, y)` | `(Float, Float, Float, Float, Float) -> (Float, Float) -> Float` | the VeRA layer's squared error |
+| `adapter lo:g_radsV (x, g)` | `Num a => (a, a, a, a, a) -> (a, a) -> (a, a, a)` | VeRA's gradients (dd, db, dx); the projections get none |
+| `lr lo:s_gdV (adapter, (x, y))` | `Num a => a -> ((a, a, a, a, a), (a, a)) -> (a, a, a, a, a)` | VeRA's step of gradient descent: d and b move |
+| `lo:a_damStartV adapter` | `(Any a, Any b, Any c, Num d) => (a, b, c, Float, Float) -> ((a, b, c, Float, Float), (Float, Float, Float, Float), d)` | VeRA's Adam start |
+| `lr lo:a_damV (state, (x, y))` | `Float -> (((Float, Float, Float, Float, Float), (Float, Float, Float, Float), Float), (Float, Float)) -> ((Float, Float, Float, Float, Float), (Float, Float, Float, Float), Float)` | VeRA's Adam step: d and b move |
 | `k lo:q_base W` | `Int -> Float -> (Int, Float, Int)` | the base as QLoRA stores it: NF4 codes, a scale per block, W's shape |
 | `lo:d_equant Q` | `(Int, Float, Int) -> Float` | the stored base back to numbers, W~, in W's shape |
 | `(Q, A, B, s) lo:f_orwardQ x` | `((Int, Float, Int), Float, Float, Float) -> Float -> Float` | QLoRA's layer, W~ x + s B (A x), the base dequantized when it runs |
@@ -91,6 +112,8 @@ the libraries without setup.
 | `r lo:p_arams m n` | `Num a => a -> a -> a` | the numbers a rank-r adapter on an m x n matrix trains, r (m + n) |
 | `r lo:e_xpert d f` | `Num a => a -> a -> a` | the numbers rank-r adapters train on a SwiGLU expert's three matrices (gate, up, down), 3 r (d + f) |
 | `r lo:e_xpertFA d f` | `Num a => a -> a -> a` | the same expert under LoRA-FA: trained r (2f + d), then frozen r (2d + f) |
+| `r lo:p_aramsV m n` | `Num a => a -> a -> a` | the numbers VeRA trains on an m x n matrix, m + r |
+| `r lo:e_xpertV d f` | `Num a => a -> a -> a` | the numbers VeRA trains on a SwiGLU expert, 2 f + d + 3 r (its two pairs of projections, 2 r (d + f), shared) |
 | `b lo:b_ytes n` | `Num a => a -> a -> Float` | the bytes n numbers take at b bits each (16 for BF16, 32 for FP32) |
 | `r lo:c_osts m n` | `Num a => a -> a -> a` | multiply-adds: B (A x) for one input, r (m + n), then making B A, r m n |
 
@@ -104,11 +127,15 @@ the first name on the left and the backward function under the second.
 The spec's three fields, between bars:
 
 - the arrays: `W A B s` (the frozen base, the factors, the scale), or
-  `W` alone for `W A B s`;
+  for VeRA `W A B d b` (the base, the frozen projections, the two
+  vectors), or `W` alone for `W A B s`, or `W A B d b` when d and b
+  train;
 - the rank: `r` and a number or a name;
 - what trains: `train A B` is LoRA, the backward function giving `(dA,
-  dB, dx)`; `train B` is LoRA-FA (A frozen), giving `(dB, dx)`.
-  Nothing else trains here.
+  dB, dx)`; `train B` is LoRA-FA (A frozen), giving `(dB, dx)`;
+  `train d b` (of five arrays) is VeRA, the forward function W x + b
+  (B (d (A x))) and the backward one giving `(dd, db, dx)`. Nothing
+  else trains here.
 
 The forward function takes the inputs (columns) and gives W x + s B (A
 x); the backward one takes `(x, g)`, the inputs and the loss's gradient
@@ -135,10 +162,12 @@ u:b_wd := { (g3:x, g2:g) ->
 forward function is `lo:f_orward`, the backward functions are
 `lo:g_rads` and `lo:g_radsFA` and the central finite differences, that
 the rank may be a name and arrays named x, g and b are not captured,
-and that a step with the gradients is `lo:s_gd`'s. `bad-spec`,
-`bad-train` and `bad-names` pin the refusals, `bad-rank` the run-time
-check. The LoRA explorer's backward step is checked against the
-backward function the macro writes.
+and that a step with the gradients is `lo:s_gd`'s; for VeRA, that its
+functions are `lo:f_orwardV` and `lo:g_radsV` and the finite
+differences, and that `W | r 3 | train d b` is VeRA on `W A B d b`.
+`bad-spec`, `bad-train`, `bad-vera` and `bad-names` pin the refusals, `bad-rank` the run-time
+check. The LoRA explorer's backward step, and its VeRA layer forward and
+back, are checked against the functions the macro writes.
 
 ## Examples
 
@@ -250,6 +279,22 @@ rank 3:
   MiB in NF4 (112 in FP16), the adapter 0.56 MiB in BF16, Adam's
   averages 2.25 MiB.
 
+`../tests/vera.xtl` checks, on the 8 x 6 base at rank 3:
+
+- the factored VeRA layer is the merged matrix times x, and
+  `B0 * b '* t_able d` is diag(b) B0 diag(d) written entry by entry;
+  the update is of rank 3;
+- `lo:v_era` starts as the base, with the seed's projections, d at
+  0.1 and b at 0;
+- dL/dd, dL/db and dL/dx against central finite differences (within
+  1e-6), dx is LoRA's with A0 and the scaled B0, and the shapes;
+- descent and Adam lower the loss and leave the projections as they
+  were; a seed regenerates them, another seed gives others;
+- the research's MoE projection (n 4096, m 14336, rank 16, 64
+  experts): 14,352 numbers an expert, 918,528 for all, 20.5 times
+  fewer than expert LoRA, 1.75 MiB in BF16, the shared projections
+  0.56 MiB.
+
 ## Demos
 
 - [`demos/sizes.xtl`](../demos/sizes.xtl): an 8 x 8 projection adapted
@@ -268,4 +313,8 @@ al., "LoRA-FA: Memory-efficient Low-rank Adaptation for Large Language
 Models Fine-tuning", 2023). The gradients are derived by hand (the
 research's lines 2755-2947) and checked by finite differences. QLoRA
 after Dettmers et al., "QLoRA: Efficient Finetuning of Quantized
-LLMs", 2023 (its formats in the Quant library). VeRA comes in a later step (`docs/fine-tune-moe-demo-plan.md`).
+LLMs", 2023 (its formats in the Quant library). VeRA after Kopiczko,
+Blankevoort and Asano, "VeRA: Vector-based Random Matrix Adaptation",
+2024 (b at 0 and d at 0.1 to start, as there), its gradients after the
+research's lines 4130-4250, checked by finite differences; the counts
+after its lines 3780-3975.

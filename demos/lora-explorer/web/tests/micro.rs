@@ -200,3 +200,73 @@ fn qlora_reaches_the_best_for_what_is_left_and_its_merge_is_not_exact() {
         assert!(e.merge_miss.0 > 1e-6 && e.merge_miss.1 > 1e-6, "block {qk}: the merge into 4 bits is not exact: {:?}", e.merge_miss);
     }
 }
+
+#[test]
+fn vera_s_stages_are_the_arithmetic_and_the_macro_s() {
+    for r in [1, 3, 8] {
+        let e = at(r);
+        assert_eq!(e.v_same, (true, true), "rank {r}: VeRA's pipelines are lo:a_dapter<'s");
+        assert_eq!(e.v_stages.iter().map(|v| v.label.as_str()).collect::<Vec<_>>(), ["x", "h", "u", "v", ""], "rank {r}");
+        assert_eq!(e.v_back_stages.iter().map(|v| v.label.as_str()).collect::<Vec<_>>(), ["g", "c", "dd", "db", ""], "rank {r}");
+        // The made-up vectors, as the program makes them (r_ange from 1).
+        let dv: Vec<f64> = (1..=r).map(|k| 0.5 + 0.3 * (0.8 * k as f64).cos()).collect();
+        let bv: Vec<f64> = (1..=8).map(|i| 0.6 * (1.7 * i as f64).sin()).collect();
+        let x = &e.stages[0].items;
+        let h = times(&e.a0, x);
+        let u: Vec<f64> = dv.iter().zip(&h).map(|(d, h)| d * h).collect();
+        let v = times(&e.b0, &u);
+        let y: Vec<f64> = times(&e.w, x).iter().zip(&v).zip(&bv).map(|((w, v), b)| w + b * v).collect();
+        near(&e.v_stages[1].items, &h, 1e-12, "h = A0 x");
+        near(&e.v_stages[2].items, &u, 1e-12, "u = d h");
+        near(&e.v_stages[3].items, &v, 1e-12, "v = B0 u");
+        near(&e.v_stages[4].items, &y, 1e-12, "y = W x + b v");
+        // Back: c = B0' (b g), dd = c h, db = g v, dx = W' g + A0' (d c).
+        let wt = Matrix { rows: 8, cols: 8, items: e.w.items.iter().zip(&e.t.items).map(|(w, t)| w + t).collect() };
+        let g: Vec<f64> = y.iter().zip(times(&wt, x)).map(|(y, w)| y - w).collect();
+        let c: Vec<f64> = (0..r).map(|k| (0..8).map(|i| e.b0.items[i * r + k] * bv[i] * g[i]).sum()).collect();
+        near(&e.v_back_stages[0].items, &g, 1e-12, "g");
+        near(&e.v_back_stages[1].items, &c, 1e-12, "c = B0' (b g)");
+        near(&e.v_back_stages[2].items, &c.iter().zip(&h).map(|(c, h)| c * h).collect::<Vec<_>>(), 1e-12, "dd = c h");
+        near(&e.v_back_stages[3].items, &g.iter().zip(&v).map(|(g, v)| g * v).collect::<Vec<_>>(), 1e-12, "db = g v");
+        let dx: Vec<f64> = (0..8).map(|j| (0..8).map(|i| e.w.items[i * 8 + j] * g[i]).sum::<f64>() + (0..r).map(|k| e.a0.items[k * 8 + j] * dv[k] * c[k]).sum::<f64>()).collect();
+        near(&e.v_back_stages[4].items, &dx, 1e-12, "dx = W' g + A0' (d c)");
+    }
+}
+
+#[test]
+fn vera_trains_two_vectors_on_shared_projections() {
+    for r in [1, 3, 8] {
+        let e = at(r);
+        assert_eq!(e.trained_v, (8 + r, 16 * r), "rank {r}: VeRA trains 8 + r, LoRA 16 r");
+        assert_eq!(e.loss_v[0], e.loss[0], "rank {r}: VeRA starts as the base, b at 0");
+        assert!(e.loss_v.last() < e.loss_v.first(), "rank {r}: it learns");
+        // The learned update is diag(b) B0 diag(d) A0, and the loss is half
+        // its squared distance from T.
+        let upd: Vec<f64> = (0..64).map(|t| (0..r).map(|k| e.b_v[t / 8] * e.b0.items[(t / 8) * r + k] * e.d_v[k] * e.a0.items[k * 8 + t % 8]).sum()).collect();
+        near(&e.learned_v.items, &upd, 1e-12, "diag(b) B0 diag(d) A0");
+        let l: f64 = upd.iter().zip(&e.t.items).map(|(a, t)| (a - t) * (a - t)).sum::<f64>() / 2.0;
+        assert!((l - e.loss_v.last().unwrap()).abs() < 1e-9, "rank {r}");
+        // Its A0 is LoRA-FA's seeded A: the same seed, shared.
+        assert!(*e.loss_v.last().unwrap() >= *e.loss.last().unwrap(), "rank {r}: no better than LoRA");
+    }
+    // The research's expert, at rank 16: 2 f + d + 3 r, 64 of them, two
+    // pairs of projections shared, 2 r (d + f).
+    let src = with(Settings::default()).replacen("r := 3\n", "r := 16\n", 1);
+    let p = &src[..src.find("### The adapted layer").unwrap()];
+    let out = microscope::run::printed(&format!("{p}(r lo:e_xpertV d c_at f) c_at (experts * r lo:e_xpertV d c_at f) c_at 2 * r * d + f\n")).unwrap();
+    assert_eq!(out[0], "32816 2100224 589824");
+    let e = at(3);
+    assert_eq!(e.expert_v, (2 * 14336 + 4096 + 9, 64 * (2 * 14336 + 4096 + 9), 6 * (4096 + 14336)));
+}
+
+#[test]
+fn the_sweep_s_vera_is_lora_fa_at_rank_1_and_short_of_lora() {
+    let w = lora_explorer_web::micro::sweep().unwrap();
+    // At rank 1 VeRA's update is (b B0) (d A0's row): any 8-vector times
+    // the seeded row, LoRA-FA's at rank 1, which shares the seed.
+    assert!((w.vera[0] - w.fa[0]).abs() < 1e-9, "{} against {}", w.vera[0], w.fa[0]);
+    for k in 0..8 {
+        assert!(w.vera[k] >= w.lora[k] - 1e-9 && w.vera[k] < 1.75, "rank {}: VeRA {}", k + 1, w.vera[k]);
+    }
+    assert!(program(Settings::default()).contains(lora_explorer_web::micro::backward_v()));
+}
