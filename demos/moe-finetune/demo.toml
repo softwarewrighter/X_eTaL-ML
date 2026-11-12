@@ -2,8 +2,8 @@
 # README's demo list and the live catalog (pages/index.html).
 slug = "moe-finetune"
 title = "MoE fine-tuning"
-summary = "A tiny mixture-of-experts, trained in X_eTaL, fine-tuned to a changed task by each method in turn, in your browser: the shared layer, every expert, both, selected experts, the router, a new expert. Is the new task learned and the old one kept? Only a new expert with its own router row keeps the old task within 3 points."
-concepts = ["inner product", "softmax by column", "top-k by masks", "p_ower for training", "gradients masked by a flag per part", "reading data files"]
+summary = "A tiny mixture-of-experts, trained in X_eTaL, fine-tuned to a changed task by each method in turn, in your browser: the shared layer, every expert, both, selected experts, the router, a new expert. Is the new task learned and the old one kept? Only a new expert with its own router row keeps the old task within 3 points. Then four adapters compared at equal ranks and budgets: shared LoRA, expert LoRA, LoRA-FA and VeRA with its projections shared by the experts."
+concepts = ["inner product", "softmax by column", "top-k by masks", "p_ower for training", "gradients masked by a flag per part", "reading data files", "VeRA as LoRA's factors"]
 status = "live"
 order = 16
 needs = []

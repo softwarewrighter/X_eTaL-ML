@@ -7,7 +7,9 @@ each: is the new task learned, and is the old one kept? The shared
 layer, every expert, both, selected experts, the router too, or a new
 expert of its own: every run is X_eTaL training in your browser, one
 method after another, on the new tokens alone or mixed with old ones,
-over one seed or three.
+over one seed or three. Then the research's four adapters compared,
+shared LoRA, expert LoRA, LoRA-FA and shared VeRA, at equal ranks and
+at equal budgets.
 
 Live: [MoE fine-tuning](https://softwarewrighter.github.io/X_eTaL-ML/moe-finetune/)
 
@@ -146,12 +148,65 @@ The page shows, for each method, where the new and the old tokens go
 before and after (a bar per expert), each update's size (|s B A|, and
 the new expert's weights), and the loss at each step.
 
+## Four adapters compared
+
+The research's comparison (L4307-4430), on the same base and tokens,
+the router frozen, as adapters of either kind at any rank:
+
+| Adapter | What trains | Numbers |
+| ------- | ----------- | ------- |
+| shared LoRA | A and B on the shared layer (the research's attention LoRA) | r (8 + 9) |
+| expert LoRA | A and B on each of the 4 experts | 4 r (3 + 9) |
+| LoRA-FA | each expert's B, its A frozen from a seed | 4 x 3 r |
+| shared VeRA | each expert's d (r numbers) and b (3); one pair of frozen random projections, A0 (r x 9) and B0 (3 x r), for all four | 4 (3 + r) |
+
+VeRA's expert e is LoRA's factors diag(d_e) A0 and diag(b_e) B0, so
+the MoE library runs it as any adapter, and the gradients of d and b
+follow from the factors' (`u:c_hain`: dA times A0 summed along each
+row, dB times B0); a test checks every kind's gradients against
+central differences. At rank 2 shared LoRA and expert LoRA are the
+methods above, run for run.
+
+At equal ranks (2: 34, 96, 24 and 20 numbers) and at about equal
+budgets (shared LoRA at rank 3, 51 numbers; expert LoRA at 1, LoRA-FA
+at 4, VeRA at 9, 48 each), on the new tokens alone, seed 1, 120 steps;
+the new task's gain over the base's 0.485 and the old task's change
+from 0.910, in points, and the gain a number trained (the research's
+efficiency):
+
+| Rate | Adapter | Equal ranks: gain | old | gain a number | Equal budgets: gain | old | gain a number |
+| ---- | ------- | ---- | --- | ------------- | ---- | --- | ------------- |
+| 0.02 | shared LoRA | +45.0 | -31.3 | 1.32 | +44.5 | -34.0 | 0.87 |
+| 0.02 | expert LoRA | +30.5 | -27.0 | 0.32 | +29.5 | -26.7 | 0.61 |
+| 0.02 | LoRA-FA | -1.5 | -3.3 | -0.06 | +1.5 | -1.3 | 0.03 |
+| 0.02 | shared VeRA | -4.0 | -2.3 | -0.20 | +5.5 | -26.7 | 0.11 |
+| 0.1 | shared LoRA | +44.0 | -45.0 | 1.29 | +46.0 | -51.7 | 0.90 |
+| 0.1 | expert LoRA | +38.5 | -49.3 | 0.40 | +37.0 | -42.0 | 0.77 |
+| 0.1 | LoRA-FA | -4.5 | -13.3 | -0.19 | +2.0 | -14.7 | 0.04 |
+| 0.1 | shared VeRA | -1.5 | -20.0 | -0.08 | +21.5 | -39.7 | 0.45 |
+
+- An adapter whose projections are frozen moves slowly: at the
+  methods' rate, 0.02, LoRA-FA and VeRA barely leave the base in 120
+  steps (they keep the old task because they do not learn the new
+  one). VeRA's paper trains at several times LoRA's rate, so the page
+  offers 0.1 too: there VeRA at rank 9 gains 21.5 points with 48
+  numbers.
+- On these tiny experts (3 outputs, 9 inputs) a frozen random A
+  leaves few useful directions: LoRA-FA at rank 4 still gains little;
+  VeRA needs a large rank (9, all of the input's) to learn much.
+- Gain a number favors shared LoRA, which also forgets most: the
+  research's warning that efficiency never replaces the gain, or the
+  old task, holds here. No adapter on the experts keeps the old task
+  while learning the new: the experts kind 3 uses serve the other
+  kinds too. The new expert above remains the one that does.
+
 ## The program
 
 `moe-finetune.xtl`: the tokens, the base with room for a new expert,
-the model with its adapters, a method's step and its measures, up to
-`# -- end of the core`; then every method on both choices of tokens at
-seed 1 (the CLI baseline). The page runs the core, then one run's own
+the model with its adapters, a method's step and its measures, the
+four adapters, up to `# -- end of the core`; then every method on both
+choices of tokens at seed 1, and the four adapters at both rates (the
+CLI baseline). The page runs the core, then one run's own
 lines, for each method, tokens and seed:
 
 ```
@@ -159,10 +214,16 @@ lines, for each method, tokens and seed:
 (a, o, n, b, sn, so, sz) := m u:r_eport added
 ```
 
+and for a comparison's run, here shared VeRA at rank 9 at the rate 0.1:
+
+```
+(m, losses, n) := (4, 9, (x, Y), 120, 0.1) u:c_ompare 1
+```
+
 ## Run it
 
 ```bash
-just run moe-finetune             # every method, seed 1 (two minutes)
+just run moe-finetune             # every method and the four adapters, seed 1 (three minutes)
 just run moe-finetune base.xtl    # the base's baseline
 just moe-base                     # make the tokens and train the base again (half a minute)
 just serve moe-finetune           # the page, locally

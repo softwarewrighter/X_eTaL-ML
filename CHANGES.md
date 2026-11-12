@@ -11,6 +11,10 @@ planning and reordering, `release` milestone release, `chore`
 agentrail bookkeeping (step complete, saga archive), `vendor` a
 refresh of the vendored X_eTaL.
 
+## 2026-11-12
+
+- `demo` moe-finetune compares four adapters (step vera, part 2): shared LoRA, expert LoRA, LoRA-FA and shared VeRA (one pair of frozen projections for every expert, each its own d and b), router frozen, at any rank; VeRA's expert run as LoRA's factors diag(d) A0 and diag(b) B0 (`u:e_ffective`), its gradients chained from theirs (`u:c_hain`); the gradients factored out of the methods' step (`u:g_rads6`; the methods' CLI lines unchanged byte for byte). The CLI baseline gains 16 lines: equal ranks (2) and equal budgets (about 48 numbers), at 0.02 and 0.1, new tokens alone. At 0.02 LoRA-FA and VeRA barely move in 120 steps; at 0.1 VeRA at rank 9 gains 21.5 points with 48 numbers; shared LoRA gains most a number and forgets most; no adapter on the experts keeps the old task. The page: "Compare the four adapters", the rate chosen, two tables with the gain, the old task's change and the gain a number; 3 page tests (names bound once and the counts, every kind's gradients against central differences, rank 2 equal to the methods and a run equal to the CLI's). CLI and browser baselines reblessed after review (additions only); README
+
 ## 2026-11-11
 
 - `plan` the ML timeline (the user): docs/ml-timeline-plan.md, a page like the Forth, Lisp and APL timelines from the 1940s to today, papers, milestones and a callout for every demo with its screenshot; a minimap of years over months within years, sparse years folded, navigation to the start, the end and a year; steps timeline-shell, timeline-history and timeline-demos inserted after vera, before adapters-deploy

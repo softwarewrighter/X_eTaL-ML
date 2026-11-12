@@ -158,3 +158,115 @@ pub fn run(method: Method, data: Data, seed: usize, steps: usize) -> Result<Run,
         base_old: numbers(&out[6], 5)?,
     })
 }
+
+/// The four adapters of the research's comparison, the router frozen.
+#[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord)]
+pub enum Adapter {
+    Shared,
+    Expert,
+    Fa,
+    Vera,
+}
+
+impl Adapter {
+    pub const ALL: [Adapter; 4] = [Adapter::Shared, Adapter::Expert, Adapter::Fa, Adapter::Vera];
+
+    /// Its kind in the program.
+    pub fn kind(self) -> usize {
+        self as usize + 1
+    }
+
+    pub fn title(self) -> &'static str {
+        match self {
+            Adapter::Shared => "Shared LoRA",
+            Adapter::Expert => "Expert LoRA",
+            Adapter::Fa => "LoRA-FA",
+            Adapter::Vera => "Shared VeRA",
+        }
+    }
+
+    pub fn trains(self) -> &'static str {
+        match self {
+            Adapter::Shared => "A and B on the shared layer (the research's attention LoRA): r (8 + 9)",
+            Adapter::Expert => "A and B on each of the 4 experts: 4 r (3 + 9)",
+            Adapter::Fa => "B on each expert, A frozen from a seed: 4 x 3 r",
+            Adapter::Vera => "d and b on each expert, one pair of frozen projections for all: 4 (3 + r)",
+        }
+    }
+}
+
+/// Equal ranks, or about equal numbers trained.
+#[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord)]
+pub enum Config {
+    EqualRanks,
+    EqualBudgets,
+}
+
+impl Config {
+    pub const ALL: [Config; 2] = [Config::EqualRanks, Config::EqualBudgets];
+
+    /// The rank of each adapter, as the program's equalRanks and equalBudgets.
+    pub fn rank(self, a: Adapter) -> usize {
+        match self {
+            Config::EqualRanks => 2,
+            Config::EqualBudgets => [3, 1, 4, 9][a as usize],
+        }
+    }
+
+    pub fn title(self) -> &'static str {
+        match self {
+            Config::EqualRanks => "Equal ranks (2 each)",
+            Config::EqualBudgets => "Equal budgets (about 48 numbers each)",
+        }
+    }
+}
+
+/// Adam's rate for the comparison: the methods' 0.02, or 0.1.
+#[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord)]
+pub enum Rate {
+    Methods,
+    Fast,
+}
+
+impl Rate {
+    pub fn xetal(self) -> &'static str {
+        match self {
+            Rate::Methods => "0.02",
+            Rate::Fast => "0.1",
+        }
+    }
+}
+
+/// One comparison run's own lines: the adapter at its rank on the
+/// tokens from the seed at the rate, then what the page reads back.
+pub fn compare_tail(a: Adapter, c: Config, rate: Rate, data: Data, seed: usize, steps: usize) -> String {
+    format!(
+        "(m, losses, n) := ({}, {}, {}, {steps}, {}) u:c_ompare {seed}\n\
+         (m u:a_ccuracy (xn, Yn)) c_at (m u:a_ccuracy (xo, Yo)) c_at f_loat n\n0.0 c_at losses\n",
+        a.kind(),
+        c.rank(a),
+        data.xetal(),
+        rate.xetal()
+    )
+}
+
+pub fn compare_program(a: Adapter, c: Config, rate: Rate, data: Data, seed: usize, steps: usize) -> String {
+    format!("{}{}", head(), compare_tail(a, c, rate, data, seed, steps))
+}
+
+/// What a comparison run measured: the new task's accuracy and the
+/// old task's, the numbers trained, the loss after each step.
+#[derive(Clone, Debug, PartialEq)]
+pub struct Compared {
+    pub new: f64,
+    pub old: f64,
+    pub numbers: usize,
+    pub losses: Vec<f64>,
+}
+
+pub fn compare(a: Adapter, c: Config, rate: Rate, data: Data, seed: usize, steps: usize) -> Result<Compared, String> {
+    let out = output_with(&files(), &compare_program(a, c, rate, data, seed, steps), 2)?.0;
+    let first: Vec<f64> = numbers(&out[0], 3)?;
+    let losses: Vec<f64> = numbers(&out[1], steps + 1)?;
+    Ok(Compared { new: first[0], old: first[1], numbers: first[2] as usize, losses: losses[1..].to_vec() })
+}

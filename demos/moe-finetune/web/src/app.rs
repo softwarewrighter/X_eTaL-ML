@@ -2,7 +2,8 @@
 //! method's measures gathered as X_eTaL finishes each run (one at a
 //! time, the page drawn between); for the method picked, where the
 //! tokens go before and after, how large each update is, the loss; the
-//! program.
+//! four adapters compared at equal ranks and at equal budgets, at a
+//! rate chosen; the program.
 
 use std::collections::{BTreeMap, VecDeque};
 use std::rc::Rc;
@@ -14,10 +15,29 @@ use microscope::chrome::{footer, header, notice, panel};
 use microscope::run::now;
 use microscope::source::{block, NONE};
 
-use crate::micro::{head, run, tail, Data, Method, Run, STEPS};
+use crate::micro::{compare, compare_tail, head, run, tail, Adapter, Compared, Config, Data, Method, Rate, Run, STEPS};
 
-/// A run: a method on the tokens from a seed.
-pub type Job = (Method, Data, usize);
+/// A method's run: on the tokens from a seed.
+pub type MethodRun = (Method, Data, usize);
+/// A comparison's run: an adapter at a configuration's rank, at a rate,
+/// on the tokens from a seed.
+pub type CompareRun = (Adapter, Config, Rate, Data, usize);
+
+/// A run to do.
+#[derive(Clone, Copy, Debug, PartialEq)]
+pub enum Job {
+    Method(MethodRun),
+    Compare(CompareRun),
+}
+
+impl Job {
+    fn title(self) -> String {
+        match self {
+            Job::Method((m, _, seed)) => format!("{}, seed {seed}", m.title()),
+            Job::Compare((a, c, _, _, seed)) => format!("{} at rank {}, seed {seed}", a.title(), c.rank(a)),
+        }
+    }
+}
 
 #[derive(Clone, Debug, PartialEq)]
 pub struct Model {
@@ -26,7 +46,11 @@ pub struct Model {
     /// Fine-tuning asked for: until then only the base runs.
     pub started: bool,
     pub picked: Method,
-    pub results: BTreeMap<Job, Rc<Run>>,
+    pub results: BTreeMap<MethodRun, Rc<Run>>,
+    /// The comparison asked for, its rate, its runs.
+    pub comparing: bool,
+    pub rate: Rate,
+    pub compared: BTreeMap<CompareRun, Rc<Compared>>,
     pub queue: VecDeque<Job>,
     /// Milliseconds of the last run.
     pub ms: f64,
@@ -39,29 +63,50 @@ pub enum Action {
     Pick(Method),
     /// Fine-tune every method.
     Start,
+    /// Compare the four adapters.
+    Compare,
+    Rate(Rate),
     /// Run the next job in the queue.
     Next,
 }
 
 impl Model {
     fn new() -> Self {
-        let mut m = Model { data: Data::Mixed, seeds: 1, started: false, picked: Method::None, results: BTreeMap::new(), queue: VecDeque::new(), ms: 0.0, notice: None };
+        let mut m = Model { data: Data::Mixed, seeds: 1, started: false, picked: Method::None, results: BTreeMap::new(), comparing: false, rate: Rate::Methods, compared: BTreeMap::new(), queue: VecDeque::new(), ms: 0.0, notice: None };
         m.plan();
         m
     }
 
     /// Queue every run the settings show and no run has given yet: each
-    /// method in order, a seed at a time (the base alone until started).
+    /// method in order, a seed at a time (the base alone until started);
+    /// then, once asked, each adapter at each configuration.
     fn plan(&mut self) {
         let methods: &[Method] = if self.started { &Method::ALL } else { &[Method::None] };
         for seed in 1..=self.seeds {
             for &m in methods {
                 let job = (m, self.data, seed);
-                if !self.results.contains_key(&job) && !self.queue.contains(&job) {
-                    self.queue.push_back(job);
+                if !self.results.contains_key(&job) && !self.queue.contains(&Job::Method(job)) {
+                    self.queue.push_back(Job::Method(job));
                 }
             }
         }
+        if self.comparing {
+            for seed in 1..=self.seeds {
+                for c in Config::ALL {
+                    for a in Adapter::ALL {
+                        let job = (a, c, self.rate, self.data, seed);
+                        if !self.compared.contains_key(&job) && !self.queue.contains(&Job::Compare(job)) {
+                            self.queue.push_back(Job::Compare(job));
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    /// The comparison's runs of an adapter at a configuration, by seed.
+    pub fn compares(&self, a: Adapter, c: Config) -> Vec<Rc<Compared>> {
+        (1..=self.seeds).filter_map(|s| self.compared.get(&(a, c, self.rate, self.data, s)).cloned()).collect()
     }
 
     /// The runs of a method at the settings shown, by seed.
@@ -84,6 +129,14 @@ impl Reducible for Model {
                 m.plan();
             }
             Action::Pick(p) => m.picked = p,
+            Action::Compare => {
+                m.comparing = true;
+                m.plan();
+            }
+            Action::Rate(r) => {
+                m.rate = r;
+                m.plan();
+            }
             Action::Start => {
                 m.started = true;
                 m.picked = Method::Added;
@@ -92,13 +145,15 @@ impl Reducible for Model {
             Action::Next => {
                 if let Some(job) = m.queue.pop_front() {
                     let t = now();
-                    match run(job.0, job.1, job.2, STEPS) {
-                        Ok(r) => {
-                            m.results.insert(job, Rc::new(r));
-                            m.notice = None;
-                        }
-                        Err(e) => m.notice = Some(format!("{}: {e}", job.0.title())),
-                    }
+                    let done = match job {
+                        Job::Method(k) => run(k.0, k.1, k.2, STEPS).map(|r| {
+                            m.results.insert(k, Rc::new(r));
+                        }),
+                        Job::Compare(k) => compare(k.0, k.1, k.2, k.3, k.4, STEPS).map(|r| {
+                            m.compared.insert(k, Rc::new(r));
+                        }),
+                    };
+                    m.notice = done.err().map(|e| format!("{}: {e}", job.title()));
                     m.ms = now() - t;
                 }
             }
@@ -128,7 +183,7 @@ fn spread(v: &[f64]) -> String {
 
 fn controls(m: &UseReducerHandle<Model>) -> Html {
     let status = match (m.queue.front(), m.started) {
-        (Some((meth, _, seed)), _) => format!("X_eTaL is fine-tuning: {}, seed {seed} ({} runs to go; the page answers between runs)", meth.title(), m.queue.len()),
+        (Some(job), _) => format!("X_eTaL is fine-tuning: {} ({} runs to go; the page answers between runs)", job.title(), m.queue.len()),
         (None, true) => "every run done".to_string(),
         (None, false) => "the base, measured".to_string(),
     };
@@ -183,6 +238,51 @@ fn table(m: &UseReducerHandle<Model>) -> Html {
             { for rows }
         </table>
     }
+}
+
+/// The four adapters at each configuration: what each trains, the new
+/// task's gain over the base and the old task's change, in points, and
+/// the gain per number trained.
+fn comparison(m: &UseReducerHandle<Model>) -> Html {
+    let base = m.runs(Method::None).first().map(|r| (r.new, r.old));
+    let rate = |r: Rate, label: &str| html! { <button class={classes!((m.rate == r).then_some("on"))} onclick={act(m, move || Action::Rate(r))}>{label.to_string()}</button> };
+    let ask = (!m.comparing).then(|| html! { <button class="on" onclick={act(m, || Action::Compare)}>{"Compare the four adapters"}</button> });
+    let tables = Config::ALL.iter().map(|&c| {
+        let rows = Adapter::ALL.iter().map(|&a| {
+            let runs = m.compares(a, c);
+            let new: Vec<f64> = runs.iter().map(|r| r.new).collect();
+            let old: Vec<f64> = runs.iter().map(|r| r.old).collect();
+            let n = runs.first().map(|r| r.numbers);
+            let (gain, change, per) = match (base, runs.is_empty(), n) {
+                (Some((bn, bo)), false, Some(n)) => {
+                    let g = 100.0 * (mean(&new) - bn);
+                    (format!("{g:+.1}"), format!("{:+.1}", 100.0 * (mean(&old) - bo)), format!("{:+.2}", g / n as f64))
+                }
+                _ => ("..".into(), "..".into(), "..".into()),
+            };
+            html! { <tr>
+                <td><b>{a.title()}</b><br /><span class="what">{a.trains()}</span></td>
+                <td class="num">{c.rank(a)}</td>
+                <td class="num">{n.map_or("..".to_string(), |n| n.to_string())}</td>
+                <td class="num">{spread(&new)}</td>
+                <td class="num">{gain}</td>
+                <td class="num">{change}</td>
+                <td class="num">{per}</td>
+                <td class="num">{format!("{} of {}", runs.len(), m.seeds)}</td>
+            </tr> }
+        });
+        html! { <>
+            <p class="calc">{c.title()}</p>
+            <table class="facts methods">
+                <tr><th>{"Adapter"}</th><th>{"Rank"}</th><th>{"Trains"}</th><th>{"New task"}</th><th>{"Gain, points"}</th><th>{"Old, in points"}</th><th>{"Gain a number"}</th><th>{"Seeds"}</th></tr>
+                { for rows }
+            </table>
+        </> }
+    });
+    html! { <>
+        <div class="controls">{ ask }<span>{"Adam's rate: "}</span>{ rate(Rate::Methods, "0.02, the methods'") }{ rate(Rate::Fast, "0.1") }</div>
+        { for tables }
+    </> }
 }
 
 /// Before and after, a bar each, for each of the 5 experts.
@@ -256,6 +356,7 @@ pub fn app() -> Html {
         <div class="layout even">
             <div class="col">
                 { panel("Each method:", "(method, tokens, 120) u:t_une seed", "Every method fine-tunes the same base on the same tokens: kind 3's new rule. The new task is 200 held-out tokens of kind 3 by its new rule; the old task is the 300 held-out tokens of kinds 1, 2 and 4, whose rule did not change. The old task's change is in points against the base (3 points is the bar, ✓ within it). The numbers trained are adapters, a router or a new expert; the base's own weights stay frozen, and the bytes are those numbers in FP32. Click a method for its routing, its updates and its loss.", true, table(&model)) }
+                { panel("Four adapters compared:", "(kind, r, tokens, 120, lr) u:c_ompare seed", "The research's comparison, on the same base and tokens, the router frozen: shared LoRA (on the shared layer, its attention LoRA), expert LoRA, LoRA-FA (each expert's A frozen) and shared VeRA (one pair of frozen random projections for every expert, each expert its own two vectors), at equal ranks and at about equal numbers trained. The gain is the new task's accuracy over the base's, in points; the gain a number is that over the numbers trained, the research's efficiency, never a substitute for the gain itself; the old task's change is in points too. An adapter with frozen projections moves slowly at the methods' rate (VeRA's paper trains at several times LoRA's), so the rate is yours to choose. Each run is about 15 seconds.", false, comparison(&model)) }
                 { panel("Where the tokens go:", "m u:s_hare xn", &format!("{}, seed 1: the share of the new task's tokens, then of the old task's, each expert gets, before and after (each column sums to 2, the top 2). With the router frozen and the shared layer as it was, nothing can move; the shared layer's adapter moves the router's input, so it moves the routing too; a trained router or a new expert's own row moves it on purpose.", picked.title()), false, match &detail {
                     Some(r) => html! { <>
                         <p class="calc">{"The new task's tokens:"}</p>
@@ -277,8 +378,10 @@ pub fn app() -> Html {
             <div class="col">
                 <section class="panel code">
                     <h2>{"The program"}</h2>
-                    <p class="note">{"Everything the page runs, in your browser, once for each method, tokens and seed: moe-finetune.xtl up to its end of the core (the tokens, the base read from its data, the model with its adapters, a method's step and its measures), then the run's own lines, here the picked method's."}</p>
+                    <p class="note">{"Everything the page runs, in your browser, once for each method, tokens and seed: moe-finetune.xtl up to its end of the core (the tokens, the base read from its data, the model with its adapters, a method's step and its measures, the four adapters compared), then the run's own lines, here the picked method's."}</p>
                     { block(&format!("{}{}", head(), tail(picked, model.data, 1, STEPS)), NONE) }
+                    <p class="note">{"And a comparison's run, here shared VeRA at equal budgets (rank 9) at the rate chosen, its own lines after the same core:"}</p>
+                    { block(&compare_tail(Adapter::Vera, Config::EqualBudgets, model.rate, model.data, 1, STEPS), NONE) }
                 </section>
             </div>
         </div>
