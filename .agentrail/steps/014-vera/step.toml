@@ -1,8 +1,9 @@
 number = 14
 slug = "vera"
-status = "in-progress"
+status = "completed"
 description = "(docs/fine-tune-moe-demo-plan.md, step 10; L3612-4464, L4310-4361, L4430-4460..."
 role = "production"
 context_files = []
 created_at = "2026-11-01T15:15:40"
-commits = []
+completed_at = "2026-11-12T10:13:12"
+commits = ["239e358a5b3b9d0962b8e265e982baa72dab66cd"]
