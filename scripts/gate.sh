@@ -7,7 +7,8 @@
 #                            it from the files changed since HEAD): the
 #                            demos and libraries changed or importing a
 #                            changed library, their pages built and checked
-#                            in the browser. Before every commit.
+#                            in the browser; the ML timeline (timeline/)
+#                            when it changed. Before every commit.
 #   scripts/gate.sh --full   everything: the tooling self-tests, the shared
 #                            page shell, every demo, every library, every
 #                            page. After a pin, before publishing the whole
@@ -45,18 +46,18 @@ if [ "$mode" = affected ]; then
   if grep -qx all <<< "$plan"; then mode=full; fi
 fi
 # The demos and libraries the plan names (every one in the full gate).
-demos=(); libs=(); pages=0
+demos=(); libs=(); pages=0; timeline=0
 if [ "$mode" = full ]; then
-  pages=1
+  pages=1; timeline=1
   while IFS= read -r s; do [ -n "$s" ] && demos+=("$s"); done < <("$root/scripts/py" "$root/scripts/demos.py" list)
   while IFS= read -r s; do [ -n "$s" ] && libs+=("$s"); done < <("$root/scripts/py" "$root/scripts/libs.py" list)
 else
   while read -r kind name; do
-    case "$kind" in demo) demos+=("$name") ;; lib) libs+=("$name") ;; pages) pages=1 ;; esac
+    case "$kind" in demo) demos+=("$name") ;; lib) libs+=("$name") ;; pages) pages=1 ;; timeline) timeline=1 ;; esac
   done <<< "$plan"
 fi
 if [ "$mode" = full ]; then echo "gate: full"; else
-  printf 'gate: affected: %s demo(s), %s library(ies)%s\n' "${#demos[@]}" "${#libs[@]}" "$([ $pages = 1 ] && echo ', the pages' || true)"
+  printf 'gate: affected: %s demo(s), %s library(ies)%s%s\n' "${#demos[@]}" "${#libs[@]}" "$([ $pages = 1 ] && echo ', the pages' || true)" "$([ $timeline = 1 ] && echo ', the timeline' || true)"
 fi
 
 step "the pinned X_eTaL"
@@ -100,6 +101,14 @@ if [ $pages = 1 ]; then
   "$root/scripts/browser-check.sh" libs >/dev/null || { "$root/scripts/browser-check.sh" libs; echo "FAIL: pages/libs"; exit 1; }
   echo "ok: pages/libs in the browser"
 fi
+if [ $timeline = 1 ]; then
+  # The ML timeline (timeline/): its tests and page (built by the full
+  # build-pages above, or here), then the page in a real browser.
+  step "the ML timeline"
+  if [ "$mode" != full ]; then "$root/scripts/build-timeline.sh" >/dev/null; fi
+  "$root/scripts/browser-check.sh" ml-timeline >/dev/null || { "$root/scripts/browser-check.sh" ml-timeline; echo "FAIL: pages/ml-timeline"; exit 1; }
+  echo "ok: pages/ml-timeline in the browser"
+fi
 if [ ${#libs[@]} -gt 0 ]; then
   step "the libraries: ${libs[*]}"
   "$root/scripts/test-libs.sh" "${libs[@]}"
@@ -122,7 +131,7 @@ fi
 # American spellings only (the checker checks itself first).
 "$root/scripts/py" "$root/scripts/check-spelling.py" --self-test
 "$root/scripts/py" "$root/scripts/check-spelling.py"
-md=(README.md CHANGES.md docs/plan.md docs/xetal-asks.md docs/gpu-asks.md docs/speed.md shared/microscope/README.md shared/lesson/README.md)
+md=(README.md CHANGES.md docs/plan.md docs/xetal-asks.md docs/gpu-asks.md docs/speed.md shared/microscope/README.md shared/lesson/README.md timeline/README.md docs/ml-timeline-plan.md docs/ml-timeline-sources.md)
 for f in demos/*/README.md libs/*/README.md libs/*/docs/README.md; do [ -e "$f" ] && md+=("$f"); done
 for f in "${md[@]}"; do sw-markdown-checker -f "$f" >/dev/null || { sw-markdown-checker -f "$f"; exit 1; }; done
 step "done"

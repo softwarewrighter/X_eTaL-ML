@@ -1,0 +1,23 @@
+[package]
+name = "ml-timeline-web"
+description = "The ML timeline in a browser: a minimap of the years over a wide strip of months, in Yew"
+edition.workspace = true
+license.workspace = true
+version.workspace = true
+authors.workspace = true
+repository.workspace = true
+publish.workspace = true
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+ml-timeline = { path = "../ml-timeline" }
+yew = { version = "0.21", features = ["csr"] }
+wasm-bindgen = "0.2"
+gloo-events = "0.2"
+gloo-timers = "0.3"
+web-sys = { version = "0.3", features = ["Document", "Element", "HtmlElement", "HtmlInputElement", "Window", "Location", "History", "WheelEvent", "KeyboardEvent", "PointerEvent", "DomRect", "ScrollToOptions", "ScrollBehavior", "EventTarget"] }
+
+[lints]
+workspace = true

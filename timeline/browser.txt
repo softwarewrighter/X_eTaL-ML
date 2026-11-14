@@ -1,0 +1,13 @@
+# Text the ML timeline (pages/ml-timeline/) shows once its WebAssembly
+# has drawn the strip (scripts/browser-check.sh ml-timeline): the
+# controls, a folded run of empty years, the first and a late event,
+# and a year label.
+|<-
+->|
+Go to
+1944-1949
+1970-1985
+December 1943: A logical calculus of the ideas immanent in nervous activity
+VeRA: vector-based random matrix adaptation
+Attention is all you need
+2017

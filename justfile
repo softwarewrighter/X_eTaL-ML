@@ -121,6 +121,10 @@ browser-check slug:
 pages:
     scripts/build-pages.sh
 
+# Build the ML timeline alone (timeline/, its tests then trunk) into pages/ml-timeline/; just pages builds it too
+timeline:
+    scripts/build-timeline.sh
+
 # The cross-reference (xetal doc) of every library and demo program, into pages/doc; just pages builds it too
 doc:
     scripts/doc-site.sh

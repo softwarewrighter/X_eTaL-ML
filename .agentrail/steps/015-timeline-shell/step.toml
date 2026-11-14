@@ -1,6 +1,6 @@
 number = 15
 slug = "timeline-shell"
-status = "pending"
+status = "in-progress"
 description = "(docs/ml-timeline-plan.md, step 11a; the user, 2026-11-11) timeline/, forked ..."
 role = "production"
 context_files = []

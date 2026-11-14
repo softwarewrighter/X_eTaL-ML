@@ -1,3 +1,4 @@
+| Timeline | [the ML timeline](https://softwarewrighter.github.io/X_eTaL-ML/ml-timeline/) (`timeline/`), its shell: a minimap of every year over a strip of months, each year as wide as its callouts, quiet runs of years folded; to the start, the end, by a window, to a year or a month typed, by keys, by the URL's hash; 20 key papers and milestones so far, the history and a callout for every demo next |
 <h1>
   <img src="images/xetal-logo-orange.png" alt="X_eTaL logo" height="60" align="absmiddle">
   <img src="images/x-etal-ml-title.svg" alt="X_eTaL ML" height="40" align="absmiddle">
@@ -9,7 +10,9 @@
   <b><a href="https://softwarewrighter.github.io/X_eTaL-ML/recorded/">Run them yourself</a></b>
   -- every demo at the command line, from a clone<br>
   <b><a href="https://softwarewrighter.github.io/X_eTaL-ML/doc/">Read the code</a></b>
-  -- the cross-reference of every demo program and library (`xetal doc`)
+  -- the cross-reference of every demo program and library (`xetal doc`)<br>
+  <b><a href="https://softwarewrighter.github.io/X_eTaL-ML/ml-timeline/">The ML timeline</a></b>
+  -- machine learning from 1943 to today, its key papers and milestones
 </p>
 
 Machine learning in [X_eTaL](https://github.com/softwarewrighter/X_eTaL),
@@ -196,12 +199,16 @@ X_eTaL-libraries are pinned the same way (`XETAL_LIBRARIES_COMMIT`).
   when it has learned weights, and its web page in `web/`.
 - `site/` -- the libraries' live site (pages/libs/): every library's
   reference, types and demos, run in the browser.
+- `timeline/` -- the ML timeline (pages/ml-timeline/): its events
+  (`data/timeline.json`), a core crate (the scale, the layout, the
+  navigation; tested natively) and a Yew page.
 - `libs/<Name>/` -- one library per directory: `src/<Name>.xtl`, its
   reference page `docs/README.md`, `demos/`, and reg-rs `tests/`
   (including `types.rgt`, which pins every export's type).
 
 ```bash
 just pages                # build the live site into pages/ (not tracked): the libraries in pages/libs, the cross-reference in pages/doc
+just timeline             # the ML timeline alone (its tests, then trunk), into pages/ml-timeline
 just doc                  # the cross-reference alone (xetal doc), into pages/doc
 just doc-test             # run every ## >> example in the libraries' doc comments
 just publish              # put it live: pages/ becomes the gh-pages branch

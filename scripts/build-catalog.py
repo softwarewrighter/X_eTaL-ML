@@ -115,6 +115,7 @@ nav.toc a:hover {{ text-decoration: underline; }}
 <span>MIT License</span><span class="sep">&middot;</span>
 <a href="{repo}" target="_blank">Repository</a><span class="sep">&middot;</span>
 <a href="{up}libs/">Libraries</a><span class="sep">&middot;</span>
+<a href="{up}ml-timeline/">ML timeline</a><span class="sep">&middot;</span>
 <a href="{up}doc/">Cross-reference</a><span class="sep">&middot;</span>
 <span>X_eTaL <a href="{xetal}/commit/{xsha}" target="_blank">{xshort}</a></span><span class="sep">&middot;</span>
 <span>build (host {host}, sha {commit}, {stamp})</span>
@@ -235,6 +236,7 @@ def toc(demos):
     inside = sorted(demos, key=lambda m: m["title"].lower())
     items = "".join(f'<li><a href="#{html.escape(m["slug"])}">{html.escape(m["title"])}</a></li>' for m in inside)
     more = ('<li><a href="recorded/">Run them yourself</a></li>'
+            '<li><a href="ml-timeline/">The ML timeline</a></li>'
             '<li><a href="libs/">The libraries</a></li>'
             '<li><a href="doc/">The cross-reference</a></li>'
             f'<li><a href="{REPO}">The repository</a></li>')

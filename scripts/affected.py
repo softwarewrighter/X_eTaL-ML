@@ -13,6 +13,8 @@ one line per thing the gate should test:
                its doc examples
   pages        the libraries' site (site/) and the pages of the demos
                above are built; the libs site runs in the browser
+  timeline     the ML timeline (timeline/): its tests, its page built and
+               checked in the browser
   all          everything (the full gate): the shared shell, scripts,
                the justfile, a pin, the templates or this planner changed
 
@@ -82,7 +84,8 @@ def plan(files, demo_names, lib_names, demo_imports, lib_imports):
     touched_demos = {f.split("/")[1] for f in files if f.startswith("demos/") and f.count("/") >= 2}
     touched_libs = {f.split("/")[1] for f in files if f.startswith("libs/") and f.count("/") >= 2}
     site = any(f.startswith("site/") for f in files)
-    if any(not (f.startswith(("demos/", "libs/", "site/", "bench/"))) for f in files):
+    timeline = any(f.startswith("timeline/") for f in files)
+    if any(not (f.startswith(("demos/", "libs/", "site/", "bench/", "timeline/"))) for f in files):
         return ["all"]  # a file the planner does not know
     # A changed library affects what imports it, transitively.
     affected_libs = set(touched_libs)
@@ -95,6 +98,8 @@ def plan(files, demo_names, lib_names, demo_imports, lib_imports):
     lines = [f"demo {d}" for d in sorted(affected_demos)] + [f"lib {l}" for l in sorted(affected_libs)]
     if affected_demos or affected_libs or site:
         lines.append("pages")
+    if timeline:
+        lines.append("timeline")
     return lines
 
 
@@ -123,6 +128,8 @@ def self_test():
         (["XETAL_COMMIT"], ["all"]),
         (["scripts/gate.sh"], ["all"]),
         (["bench/dense.xtl"], []),  # the timings are not in the gate
+        (["timeline/data/timeline.json"], ["timeline"]),
+        (["timeline/crates/ml-timeline-web/index.html", "demos/diffusion/diffusion.xtl"], ["demo diffusion", "pages", "timeline"]),
     ]
     for files, want in cases:
         got = plan(files, demo_names, lib_names, demo_imports, lib_imports)

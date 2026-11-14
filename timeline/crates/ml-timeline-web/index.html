@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ML Timeline</title>
+<meta name="description" content="A timeline of machine learning, from 1943 to today: the key papers and milestones, and the X_eTaL ML demos that show their ideas live.">
+<link rel="icon" href="../favicon.ico">
+<link data-trunk rel="rust" data-wasm-opt="z" />
+<style>
+:root { --bg:#fbfaf7; --fg:#1d1d1f; --muted:#5f6368; --card:#ffffff; --line:#e3e0d8; --axis:#3a3a3d;
+  --accent:#2457c5; --chip:#eef2fb; --demo:#ff7a00; --fold:#ece8de; --frame:rgb(36 87 197 / .16);
+  --tone1:#2457c5; --tone2:#a14a3b; --tone3:#2b8a3e; --tone0:#8a8a8a; --shadow:rgb(0 0 0 / .08); }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg:#141518; --fg:#e8e6e3; --muted:#a0a4ab; --card:#1d1f23; --line:#30333a; --axis:#c9c7c3;
+  --accent:#8fb0ff; --chip:#262b36; --demo:#ff9a3d; --fold:#24262b; --frame:rgb(143 176 255 / .2);
+  --tone1:#8fb0ff; --tone2:#f08c78; --tone3:#8ce99a; --tone0:#8d9097; --shadow:rgb(0 0 0 / .4); } }
+:root[data-theme="dark"] { --bg:#141518; --fg:#e8e6e3; --muted:#a0a4ab; --card:#1d1f23; --line:#30333a; --axis:#c9c7c3;
+  --accent:#8fb0ff; --chip:#262b36; --demo:#ff9a3d; --fold:#24262b; --frame:rgb(143 176 255 / .2);
+  --tone1:#8fb0ff; --tone2:#f08c78; --tone3:#8ce99a; --tone0:#8d9097; --shadow:rgb(0 0 0 / .4); }
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body { margin: 0; background: var(--bg); color: var(--fg); display: flex; flex-direction: column;
+  font: 16px/1.4 system-ui, -apple-system, "Segoe UI", sans-serif; }
+a { color: var(--accent); }
+header { padding: 14px 16px 6px; display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 16px; }
+header h1 { margin: 0; font-size: 1.5rem; letter-spacing: -0.01em; }
+header h1 a { color: #ff7a00; text-decoration: none; font-weight: 800; }
+header p { margin: 0; color: var(--muted); max-width: 52rem; }
+main { flex: 1; min-height: 0; display: flex; }
+#timeline { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+.controls { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; padding: 4px 16px 8px; }
+.controls button { font: 600 15px/1 ui-monospace, Menlo, monospace; color: var(--fg); background: var(--card);
+  border: 1px solid var(--line); border-radius: 8px; padding: 7px 10px; cursor: pointer; }
+.controls button:hover, .controls button:focus-visible { border-color: var(--accent); color: var(--accent); }
+.controls .jump { display: flex; align-items: center; gap: 6px; margin-left: 8px; }
+.controls label { color: var(--muted); font-size: .9rem; }
+.controls input { font: inherit; font-size: .95rem; color: var(--fg); background: var(--card);
+  border: 1px solid var(--line); border-radius: 8px; padding: 5px 8px; width: 11rem; }
+.controls input.bad { border-color: #c92a2a; }
+.controls .jump button { font-family: system-ui, sans-serif; }
+.minimap { position: relative; margin: 0 16px; padding: 0 0 18px; cursor: pointer; touch-action: none; user-select: none; }
+.minimap .band { position: relative; height: 26px; background: var(--card); border: 1px solid var(--line); border-radius: 6px; overflow: hidden; }
+.minimap .folded { position: absolute; top: 0; bottom: 0;
+  background: repeating-linear-gradient(135deg, var(--fold) 0 4px, transparent 4px 8px); }
+.minimap .mark { position: absolute; top: 5px; bottom: 5px; width: 2px; margin-left: -1px; background: var(--muted); }
+.minimap .mark.demo { background: var(--demo); width: 3px; top: 2px; bottom: 2px; }
+.minimap .frame { position: absolute; top: 0; bottom: 0; background: var(--frame); border: 2px solid var(--accent); border-radius: 5px; }
+.minimap .decades { position: relative; height: 0; }
+.minimap .decade { position: absolute; top: 2px; transform: translateX(-50%); font-size: .75rem; color: var(--muted); }
+.strip { flex: 1; min-height: 0; overflow: auto; outline: none; border-top: 1px solid var(--line); margin-top: 6px; }
+.track { position: relative; }
+.line { position: absolute; height: 3px; background: var(--axis); transform: translateY(-1px); }
+.line::after { content: ""; position: absolute; right: -14px; top: -7px; border: 8px solid transparent; border-left: 14px solid var(--axis); }
+.tick { position: absolute; width: 2px; height: 18px; background: var(--axis); transform: translate(-1px, -9px); }
+.month { position: absolute; width: 1px; height: 8px; background: var(--muted); transform: translate(0, -4px); }
+.letter { position: absolute; transform: translateX(-50%); font-size: .68rem; color: var(--muted); }
+.year { position: absolute; transform: translateX(-50%); font-size: .78rem; color: var(--muted); }
+.year.busy { font-size: 1.05rem; font-weight: 700; color: var(--fg); }
+.fold { position: absolute; height: 0; }
+.fold .break { position: absolute; left: 50%; top: -12px; width: 18px; height: 24px;
+  background: var(--bg); border-left: 2px solid var(--axis); border-right: 2px solid var(--axis); transform: translateX(-50%) skewX(-18deg); }
+.fold .years { position: absolute; left: 50%; top: 12px; transform: translateX(-50%); white-space: nowrap;
+  font-size: .78rem; color: var(--muted); font-style: italic; }
+.leader { position: absolute; z-index: 0; overflow: visible; pointer-events: none; }
+.leader polyline { fill: none; stroke: var(--tone0); stroke-width: 2; }
+/* Each tone a color and a dash pattern, so a reader who cannot tell
+   the colors apart can still follow a leader. */
+.leader.tone-1 polyline { stroke: var(--tone1); stroke-dasharray: 8 5; }
+.leader.tone-2 polyline { stroke: var(--tone2); stroke-dasharray: 2 4; stroke-linecap: round; }
+.leader.tone-3 polyline { stroke: var(--tone3); stroke-dasharray: 9 4 2 4; }
+.dot { position: absolute; z-index: 1; width: 9px; height: 9px; border-radius: 50%; background: var(--axis); transform: translate(-4px, -4px); }
+.dot.demo { background: var(--demo); width: 11px; height: 11px; transform: translate(-5px, -5px); }
+.callout { position: absolute; z-index: 2; padding: 8px 10px; background: var(--card); border: 1px solid var(--line);
+  border-left: 4px solid var(--accent); border-radius: 8px; box-shadow: 0 2px 6px var(--shadow); }
+.callout.milestone { border-left-color: var(--tone3); }
+.callout.note { border-left-color: var(--tone0); background: transparent; box-shadow: none; }
+.callout.demo { border: 2px solid var(--demo); }
+.callout a { color: inherit; text-decoration: none; display: block; }
+.callout a:hover .title, .callout a:focus-visible .title { text-decoration: underline; }
+.callout p { margin: 2px 0 0; }
+.callout .kind { margin: 0; font-size: .7rem; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); }
+.callout.demo .kind { color: var(--demo); font-weight: 700; }
+.callout .when { font-size: .98rem; line-height: 1.25; }
+.callout .date { color: var(--muted); }
+.callout .title { font-weight: 650; }
+.callout .text { font-size: .86rem; color: var(--muted); line-height: 1.3; }
+.callout .topics { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 4px; }
+.callout .topic { background: var(--chip); border-radius: 999px; padding: 0 8px; font-size: .72rem; }
+.callout .shot { position: relative; margin-bottom: 4px; }
+.callout img { display: block; width: 100%; aspect-ratio: 16 / 9; object-fit: cover; object-position: top; border-radius: 4px; border: 1px solid var(--line); }
+.callout .shot[data-tip]::after { content: attr(data-tip); position: absolute; inset: 0; display: grid; place-content: center;
+  text-align: center; padding: .5rem; font-size: .9rem; color: #fff; background: rgb(0 0 0 / .55); border-radius: 4px; opacity: 0; pointer-events: none; }
+.callout:hover .shot::after, .callout a:focus-visible .shot::after { opacity: 1; }
+footer { padding: 6px 16px 10px; font-size: .8rem; color: var(--muted); border-top: 1px solid var(--line); }
+footer p { margin: 2px 0; }
+@media (max-width: 640px) {
+  header h1 { font-size: 1.2rem; }
+  header p { font-size: .88rem; }
+  .controls .jump { margin-left: 0; }
+  .controls input { width: 8.5rem; }
+  .minimap .decade:nth-child(even) { display: none; }
+  .callout .when { font-size: .9rem; }
+  .callout .text { font-size: .8rem; }
+}
+</style>
+</head>
+<body>
+<header>
+  <h1><a href="../">X_eTaL ML</a>: a timeline of machine learning</h1>
+  <p>The key papers and milestones from 1943 to today, beside the demos here that show their ideas live.
+  Years with more events are wider; quiet runs of years fold into one break.</p>
+</header>
+<main><div id="timeline"></div></main>
+<footer>
+  <p>Move with the buttons, the year box (1989, 2017-06 or 1990s), the minimap (click or drag), the wheel,
+  or Home, End, Page Up and Down and the arrow keys. The address follows the view, so a year can be linked.</p>
+  <p>Copyright (c) 2026 Michael A Wright &middot; MIT License &middot;
+  <a href="../">The demos</a> &middot; <a href="https://github.com/softwarewrighter/X_eTaL-ML">The repository</a> &middot;
+  layout from the <a href="https://github.com/sw-embed/web-sw-cor24-macrolisp">Lisp timeline</a> and
+  <a href="https://github.com/sw-vibe-coding/sw-apl">sw-apl</a>'s</p>
+</footer>
+</body>
+</html>

@@ -5,12 +5,14 @@
 #   - every demo with a web app (demos/<slug>/web/) is built with trunk
 #     into pages/<slug>/, served under /X_eTaL-ML/<slug>/;
 #   - pages/libs/, the libraries' site (site/, trunk);
+#   - pages/ml-timeline/, the ML timeline (timeline/, scripts/build-timeline.sh);
 #   - pages/doc/, the cross-reference (scripts/doc-site.sh);
 #   - pages/index.html, the catalog, from every demo.toml.
 # A demo removed from demos/ loses its pages/<slug>/. With arguments
-# (demo slugs, and libs for the libraries' site) only those are built
-# and nothing is removed: the affected gate's build; the catalog and the
-# cross-reference are rebuilt either way (seconds).
+# (demo slugs, libs for the libraries' site, ml-timeline for the
+# timeline) only those are built and nothing is removed: the affected
+# gate's build; the catalog and the cross-reference are rebuilt either
+# way (seconds).
 #   scripts/build-pages.sh [SLUG...]
 set -euo pipefail
 root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
@@ -22,7 +24,7 @@ touch "$root/pages/.nojekyll"
 only=("$@")
 # Whether SLUG is to be built: every one without arguments.
 wanted() { [ ${#only[@]} -eq 0 ] || printf '%s\n' "${only[@]}" | grep -qx "$1"; }
-keep=(libs)
+keep=(libs ml-timeline)
 while IFS= read -r slug; do
   [ -n "$slug" ] || continue
   web="$root/demos/$slug/web"
@@ -48,6 +50,7 @@ if wanted libs; then
   (cd "$root/site" && trunk build --release --public-url "$base/libs/" --dist "$root/target/pages-dist/libs")
   rsync -a --delete "$root/target/pages-dist/libs/" "$root/pages/libs/"
 fi
+wanted ml-timeline && "$root/scripts/build-timeline.sh"
 "$root/scripts/doc-site.sh"
 cp "$root/images/xetal-logo-orange.png" "$root/images/favicon.ico" "$root/pages/"
 "$root/scripts/py" "$root/scripts/build-catalog.py"

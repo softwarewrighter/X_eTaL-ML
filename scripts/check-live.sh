@@ -4,7 +4,8 @@
 # checkout's commit (GitHub Pages takes a minute), then load every
 # demo's live page in headless Chrome and check, as the local browser
 # test does, that X_eTaL ran there: no error, and every line of the
-# demo's web/browser.txt shown; then the libraries' site (libs).
+# demo's web/browser.txt shown; then the libraries' site (libs) and
+# the ML timeline (ml-timeline).
 #   scripts/check-live.sh
 set -euo pipefail
 root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
@@ -21,11 +22,11 @@ done
 echo "ok: catalog live at commit $head"
 fail=0
 while IFS= read -r slug; do
-  [ -f "demos/$slug/web/browser.txt" ] || [ "$slug" = libs ] || continue
+  [ -f "demos/$slug/web/browser.txt" ] || [ "$slug" = libs ] || [ "$slug" = ml-timeline ] || continue
   if out="$(XETAL_LIVE=1 scripts/browser-check.sh "$slug" 2>&1)"; then
     echo "ok: $base/$slug/ ($(printf '%s\n' "$out" | grep -c '^found:') checks)"
   else
     echo "FAIL: $base/$slug/"; printf '%s\n' "$out"; fail=1
   fi
-done < <(scripts/py scripts/demos.py list; echo libs)
+done < <(scripts/py scripts/demos.py list; echo libs; echo ml-timeline)
 [ $fail = 0 ] && echo "check-live: ok" || { echo "check-live: FAILURES"; exit 1; }

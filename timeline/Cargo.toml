@@ -1,0 +1,20 @@
+# The ML timeline (pages/ml-timeline/): forked from the Lisp timeline of
+# web-sw-cor24-macrolisp (lisp-timeline/, itself from sw-apl's by way of
+# the Forth one). Built by scripts/build-timeline.sh (just timeline).
+[workspace]
+members = [
+    "crates/ml-timeline",
+    "crates/ml-timeline-web",
+]
+resolver = "2"
+
+[workspace.package]
+edition = "2024"
+license = "MIT"
+version = "0.1.0"
+authors = ["Michael A Wright"]
+repository = "https://github.com/softwarewrighter/X_eTaL-ML"
+publish = false
+
+[workspace.lints.clippy]
+pedantic = "warn"
