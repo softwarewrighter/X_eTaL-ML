@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>libs/Quant/src/Quant.xtl - X_eTaL doc</title>
+<link rel="stylesheet" href="style.css">
+<script src="theme.js"></script>
+<script defer src="search-index.js"></script>
+<script defer src="search.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.18.10/dist/katex.min.css" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.18.10/dist/katex.min.js" crossorigin="anonymous"></script>
+<script>document.addEventListener('DOMContentLoaded', function () {
+if (typeof katex === 'undefined') return;
+document.querySelectorAll('.c-notation').forEach(function (el) {
+var tex = el.textContent; if (!tex) return;
+try { katex.render(tex, el, { throwOnError: false }); } catch (e) { el.textContent = tex; }
+});
+});</script>
+</head>
+<body>
+<nav class="side">
+<a class="home" href="index.html">X_eTaL doc</a>
+<input id="search" type="search" autocomplete="off" placeholder="Search: a name, or a type" title="A name (mean finds m_ean), or a type: Num a =&gt; a -&gt; a -&gt; a finds +, m_ax ...">
+<h2>Files</h2>
+<h3>demos/activations/</h3>
+<ul>
+<li><a href="demos-activations-activations.xtl.html">activations.xtl</a></li>
+</ul>
+<h3>demos/attention/</h3>
+<ul>
+<li><a href="demos-attention-attention.xtl.html">attention.xtl</a></li>
+</ul>
+<h3>demos/backprop/</h3>
+<ul>
+<li><a href="demos-backprop-backprop.xtl.html">backprop.xtl</a></li>
+</ul>
+<h3>demos/cnn-backprop/</h3>
+<ul>
+<li><a href="demos-cnn-backprop-cnn-backprop.xtl.html">cnn-backprop.xtl</a></li>
+</ul>
+<h3>demos/cnn-digits/</h3>
+<ul>
+<li><a href="demos-cnn-digits-batch.xtl.html">batch.xtl</a></li>
+<li><a href="demos-cnn-digits-cnn-digits.xtl.html">cnn-digits.xtl</a></li>
+</ul>
+<h3>demos/diffusion/</h3>
+<ul>
+<li><a href="demos-diffusion-diffusion.xtl.html">diffusion.xtl</a></li>
+</ul>
+<h3>demos/embedding-explorer/</h3>
+<ul>
+<li><a href="demos-embedding-explorer-embedding-explorer.xtl.html">embedding-explorer.xtl</a></li>
+</ul>
+<h3>demos/k-means/</h3>
+<ul>
+<li><a href="demos-k-means-k-means.xtl.html">k-means.xtl</a></li>
+</ul>
+<h3>demos/lora-explorer/</h3>
+<ul>
+<li><a href="demos-lora-explorer-lora-explorer.xtl.html">lora-explorer.xtl</a></li>
+</ul>
+<h3>demos/micro-bert/</h3>
+<ul>
+<li><a href="demos-micro-bert-micro-bert.xtl.html">micro-bert.xtl</a></li>
+</ul>
+<h3>demos/micro-gpt/</h3>
+<ul>
+<li><a href="demos-micro-gpt-batch.xtl.html">batch.xtl</a></li>
+<li><a href="demos-micro-gpt-micro-gpt.xtl.html">micro-gpt.xtl</a></li>
+</ul>
+<h3>demos/moe-finetune/</h3>
+<ul>
+<li><a href="demos-moe-finetune-base.xtl.html">base.xtl</a></li>
+<li><a href="demos-moe-finetune-moe-finetune.xtl.html">moe-finetune.xtl</a></li>
+</ul>
+<h3>demos/moe-router/</h3>
+<ul>
+<li><a href="demos-moe-router-moe-router.xtl.html">moe-router.xtl</a></li>
+</ul>
+<h3>demos/net-macro/</h3>
+<ul>
+<li><a href="demos-net-macro-net-macro.xtl.html">net-macro.xtl</a></li>
+<li><a href="demos-net-macro-train-it.xtl.html">train-it.xtl</a></li>
+</ul>
+<h3>demos/pipelines/</h3>
+<ul>
+<li><a href="demos-pipelines-diffusion.xtl.html">diffusion.xtl</a></li>
+<li><a href="demos-pipelines-equations.xtl.html">equations.xtl</a></li>
+<li><a href="demos-pipelines-pipelines.xtl.html">pipelines.xtl</a></li>
+<li><a href="demos-pipelines-rosetta.xtl.html">rosetta.xtl</a></li>
+</ul>
+<h3>demos/ternary-net/</h3>
+<ul>
+<li><a href="demos-ternary-net-ternary-net.xtl.html">ternary-net.xtl</a></li>
+</ul>
+<h3>demos/train-live/</h3>
+<ul>
+<li><a href="demos-train-live-train-live.xtl.html">train-live.xtl</a></li>
+</ul>
+<h3>demos/world-model/</h3>
+<ul>
+<li><a href="demos-world-model-world-model.xtl.html">world-model.xtl</a></li>
+</ul>
+<h3>libs/Activations/demos/</h3>
+<ul>
+<li><a href="libs-Activations-demos-curves.xtl.html">curves.xtl</a></li>
+</ul>
+<h3>libs/Activations/src/</h3>
+<ul>
+<li><a href="libs-Activations-src-Activations.xtl.html">Activations.xtl</a></li>
+</ul>
+<h3>libs/Attention/demos/</h3>
+<ul>
+<li><a href="libs-Attention-demos-previous.xtl.html">previous.xtl</a></li>
+</ul>
+<h3>libs/Attention/src/</h3>
+<ul>
+<li><a href="libs-Attention-src-Attention.xtl.html">Attention.xtl</a></li>
+</ul>
+<h3>libs/Conv/demos/</h3>
+<ul>
+<li><a href="libs-Conv-demos-edges.xtl.html">edges.xtl</a></li>
+</ul>
+<h3>libs/Conv/src/</h3>
+<ul>
+<li><a href="libs-Conv-src-Conv.xtl.html">Conv.xtl</a></li>
+</ul>
+<h3>libs/Embed/demos/</h3>
+<ul>
+<li><a href="libs-Embed-demos-pets.xtl.html">pets.xtl</a></li>
+</ul>
+<h3>libs/Embed/src/</h3>
+<ul>
+<li><a href="libs-Embed-src-Embed.xtl.html">Embed.xtl</a></li>
+</ul>
+<h3>libs/Flow/demos/</h3>
+<ul>
+<li><a href="libs-Flow-demos-mlp.xtl.html">mlp.xtl</a></li>
+</ul>
+<h3>libs/Flow/src/</h3>
+<ul>
+<li><a href="libs-Flow-src-Flow.xtlm.html">Flow.xtlm</a></li>
+</ul>
+<h3>libs/Integrals/demos/</h3>
+<ul>
+<li><a href="libs-Integrals-demos-convolution.xtl.html">convolution.xtl</a></li>
+<li><a href="libs-Integrals-demos-gelu.xtl.html">gelu.xtl</a></li>
+</ul>
+<h3>libs/Integrals/src/</h3>
+<ul>
+<li><a href="libs-Integrals-src-Integrals.xtlm.html">Integrals.xtlm</a></li>
+</ul>
+<h3>libs/Learn/demos/</h3>
+<ul>
+<li><a href="libs-Learn-demos-blobs.xtl.html">blobs.xtl</a></li>
+</ul>
+<h3>libs/Learn/src/</h3>
+<ul>
+<li><a href="libs-Learn-src-Learn.xtl.html">Learn.xtl</a></li>
+</ul>
+<h3>libs/LoRA/demos/</h3>
+<ul>
+<li><a href="libs-LoRA-demos-sizes.xtl.html">sizes.xtl</a></li>
+</ul>
+<h3>libs/LoRA/src/</h3>
+<ul>
+<li><a href="libs-LoRA-src-LoRA.xtl.html">LoRA.xtl</a></li>
+<li><a href="libs-LoRA-src-LoRA.xtlm.html">LoRA.xtlm</a></li>
+</ul>
+<h3>libs/MoE/demos/</h3>
+<ul>
+<li><a href="libs-MoE-demos-routing.xtl.html">routing.xtl</a></li>
+</ul>
+<h3>libs/MoE/src/</h3>
+<ul>
+<li><a href="libs-MoE-src-MoE.xtl.html">MoE.xtl</a></li>
+</ul>
+<h3>libs/Net/demos/</h3>
+<ul>
+<li><a href="libs-Net-demos-train-xor.xtl.html">train-xor.xtl</a></li>
+<li><a href="libs-Net-demos-xor.xtl.html">xor.xtl</a></li>
+</ul>
+<h3>libs/Net/src/</h3>
+<ul>
+<li><a href="libs-Net-src-Net.xtlm.html">Net.xtlm</a></li>
+</ul>
+<h3>libs/NN/demos/</h3>
+<ul>
+<li><a href="libs-NN-demos-xor.xtl.html">xor.xtl</a></li>
+</ul>
+<h3>libs/NN/src/</h3>
+<ul>
+<li><a href="libs-NN-src-NN.xtl.html">NN.xtl</a></li>
+</ul>
+<h3>libs/Norm/demos/</h3>
+<ul>
+<li><a href="libs-Norm-demos-rows.xtl.html">rows.xtl</a></li>
+</ul>
+<h3>libs/Norm/src/</h3>
+<ul>
+<li><a href="libs-Norm-src-Norm.xtl.html">Norm.xtl</a></li>
+</ul>
+<h3>libs/Optim/demos/</h3>
+<ul>
+<li><a href="libs-Optim-demos-bowl.xtl.html">bowl.xtl</a></li>
+</ul>
+<h3>libs/Optim/src/</h3>
+<ul>
+<li><a href="libs-Optim-src-Optim.xtl.html">Optim.xtl</a></li>
+</ul>
+<h3>libs/Quant/demos/</h3>
+<ul>
+<li><a href="libs-Quant-demos-formats.xtl.html">formats.xtl</a></li>
+</ul>
+<h3>libs/Quant/src/</h3>
+<ul>
+<li><a href="libs-Quant-src-Quant.xtl.html">Quant.xtl</a></li>
+</ul>
+<h3>libs/Sample/demos/</h3>
+<ul>
+<li><a href="libs-Sample-demos-next.xtl.html">next.xtl</a></li>
+</ul>
+<h3>libs/Sample/src/</h3>
+<ul>
+<li><a href="libs-Sample-src-Sample.xtl.html">Sample.xtl</a></li>
+</ul>
+<h3>std/</h3>
+<ul>
+<li><a href="std-Svg.xtl.html">Svg.xtl</a></li>
+<li><a href="std-System.xtlm.html">System.xtlm</a></li>
+</ul>
+<h3>work/libs/Check/src/</h3>
+<ul>
+<li><a href="work-libs-Check-src-Check.xtl.html">Check.xtl</a></li>
+<li><a href="work-libs-Check-src-Check.xtlm.html">Check.xtlm</a></li>
+</ul>
+<h3>work/libs/Equations/src/</h3>
+<ul>
+<li><a href="work-libs-Equations-src-Equations.xtl.html">Equations.xtl</a></li>
+<li><a href="work-libs-Equations-src-Equations.xtlm.html">Equations.xtlm</a></li>
+</ul>
+<h3>work/libs/Format/src/</h3>
+<ul>
+<li><a href="work-libs-Format-src-Format.xtl.html">Format.xtl</a></li>
+</ul>
+<h3>work/libs/Lists/src/</h3>
+<ul>
+<li><a href="work-libs-Lists-src-Lists.xtl.html">Lists.xtl</a></li>
+</ul>
+<h3>work/libs/Plot/src/</h3>
+<ul>
+<li><a href="work-libs-Plot-src-Plot.xtl.html">Plot.xtl</a></li>
+</ul>
+<h3>work/libs/Strings/src/</h3>
+<ul>
+<li><a href="work-libs-Strings-src-Strings.xtl.html">Strings.xtl</a></li>
+</ul>
+<ul>
+<li><a href="builtins.html">built-ins</a></li>
+</ul>
+<h2>On this page</h2>
+<ul>
+<li><a href="#section-1">Floats</a></li>
+<li class="item"><a href="#l.f_loats"><span class="c-libfunc">ˡf̲loats</span></a></li>
+<li><a href="#section-2">Integers</a></li>
+<li class="item"><a href="#l.s_nap"><span class="c-libfunc">ˡs̲nap</span></a></li>
+<li class="item"><a href="#l.i_nt"><span class="c-libfunc">ˡi̲nt</span></a></li>
+<li><a href="#section-3">Ternary: 1.58 bits</a></li>
+<li class="item"><a href="#l.c_ut"><span class="c-libfunc">ˡc̲ut</span></a></li>
+<li class="item"><a href="#l.t_ernary"><span class="c-libfunc">ˡt̲ernary</span></a></li>
+<li class="item"><a href="#l.s_cale"><span class="c-libfunc">ˡs̲cale</span></a></li>
+<li><a href="#section-4">Additions</a></li>
+<li class="item"><a href="#l.a_dds"><span class="c-libfunc">ˡa̲dds</span></a></li>
+<li><a href="#section-5">Blocks: 4 bits, a scale per block</a></li>
+<li class="item"><a href="#l.b_locks"><span class="c-libfunc">ˡb̲locks</span></a></li>
+<li class="item"><a href="#l.a_bsmax"><span class="c-libfunc">ˡa̲bsmax</span></a></li>
+<li class="item"><a href="#l.u_niformCodes"><span class="c-libfunc">ˡu̲niformCodes</span></a></li>
+<li class="item"><a href="#l.u_niform"><span class="c-libfunc">ˡu̲niform</span></a></li>
+<li><a href="#section-6">NF4: 16 levels at the normal's quantiles</a></li>
+<li class="item"><a href="#nf4">nf4</a></li>
+<li class="item"><a href="#h.e_rf"><span class="c-libfunc">ʰe̲rf</span></a></li>
+<li class="item"><a href="#h.h_alf"><span class="c-libfunc">ʰh̲alf</span></a></li>
+<li class="item"><a href="#h.s_pan"><span class="c-libfunc">ʰs̲pan</span></a></li>
+<li class="item"><a href="#l.p_hi"><span class="c-libfunc">ˡp̲hi</span></a></li>
+<li class="item"><a href="#l.q_uantile"><span class="c-libfunc">ˡq̲uantile</span></a></li>
+<li class="item"><a href="#l.c_odebook"><span class="c-libfunc">ˡc̲odebook</span></a></li>
+<li class="item"><a href="#l.n_f4Codes"><span class="c-libfunc">ˡn̲f4Codes</span></a></li>
+<li class="item"><a href="#l.n_f4Values"><span class="c-libfunc">ˡn̲f4Values</span></a></li>
+<li class="item"><a href="#l.n_f4"><span class="c-libfunc">ˡn̲f4</span></a></li>
+<li><a href="#section-7">Double quantization: the scales in 8 bits</a></li>
+<li class="item"><a href="#l.d_ouble"><span class="c-libfunc">ˡd̲ouble</span></a></li>
+<li class="item"><a href="#l.n_f4Double"><span class="c-libfunc">ˡn̲f4Double</span></a></li>
+<li><a href="#section-8">Bits</a></li>
+<li class="item"><a href="#l.b_its"><span class="c-libfunc">ˡb̲its</span></a></li>
+</ul>
+</nav>
+<main>
+<button class="theme" title="Light or dark">theme</button>
+<section id="results"></section>
+<h1><span class="kind">library</span>libs/Quant/src/Quant.xtl</h1>
+<div class="doc">
+<p>Quant: weights in fewer bits: float rounding, integer and ternary quantization, a ternary layer as additions, blockwise 4-bit and NF4 with double quantization</p>
+<p>Import it with an alias of your choice: &quot;qz:&quot; u_se&lt; &quot;Quant&quot;.
+Put libs/Quant/src on XETAL_PATH (&quot;just path&quot;); the reference is libs/Quant/docs.
+Names with l: are exported; h: names are private to this file.</p>
+<p>Every format is simulated: the numbers stay Float, rounded as the
+format would store them, so a network runs unchanged on the rounded
+weights. A scale or a threshold is a number for the whole array, or
+an array shaped as the weights (per layer, per row: the caller
+chooses).</p>
+</div>
+<p class="meta"><a href="libs-Quant-src-Quant.xtl.src.html">source</a></p>
+<h2 class="section" id="section-1">Floats</h2>
+<div class="item" id="l.f_loats">
+<h3><a href="#l.f_loats"><span class="c-libfunc">ˡf̲loats</span></a> <span class="type">: Float -&gt; Float -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="libs-Quant-src-Quant.xtl.src.html#L20">line 20</a></div>
+<div class="doc">
+<p><code>b <span class="c-builtin">f̲loats</span> x</code>: each number rounded to b bits after its leading one,
+as a float format keeps it (23 for FP32, 10 for FP16, 7 for bfloat16).</p>
+<pre class="example"><span class="prompt">      </span><span class="c-string">&quot;qz:&quot;</span> <a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="libs-Quant-src-Quant.xtl.html" class="c-string">&quot;Quant&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span><span class="c-number">2.0</span> <a href="libs-Quant-src-Quant.xtl.html#l.f_loats" class="c-libfunc">qz:f̲loats</a> <span class="c-number">1.0</span> <span class="c-number">1.3</span> <span class="c-number">6.2</span>
+1.0 1.25 6.0</pre>
+</div>
+<pre class="code"><span class="c-libfunc">ˡf̲loats</span> ← { b x →
+  s ← <span class="c-number">2.0</span> <a href="builtins.html#-5e" class="c-symbol">^</a> (<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> (<a href="builtins.html#l_og" class="c-builtin">l̲og</a> <span class="c-number">0.000000001</span> <a href="builtins.html#m_ax" class="c-builtin">m̲ax</a> <a href="builtins.html#a_bs" class="c-builtin">a̲bs</a> x) <a href="builtins.html#-2f" class="c-symbol">÷</a> <a href="builtins.html#l_og" class="c-builtin">l̲og</a> <span class="c-number">2.0</span>) <a href="builtins.html#-2d" class="c-symbol">−</a> b
+  s <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> <span class="c-number">0.5</span> <a href="builtins.html#-2b" class="c-symbol">+</a> x <a href="builtins.html#-2f" class="c-symbol">÷</a> s
+}</pre>
+<div class="uses">Used in: <a href="libs-Quant-demos-formats.xtl.src.html#L16">libs/Quant/demos/formats.xtl:16</a>, <a href="demos-ternary-net-ternary-net.xtl.html#m32">m32</a>, <a href="demos-ternary-net-ternary-net.xtl.html#m16">m16</a></div>
+</div>
+<h2 class="section" id="section-2">Integers</h2>
+<div class="item" id="l.s_nap">
+<h3><a href="#l.s_nap"><span class="c-libfunc">ˡs̲nap</span></a> <span class="type">: Float -&gt; Float -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="libs-Quant-src-Quant.xtl.src.html#L31">line 31</a></div>
+<div class="doc">
+<p><code>s <span class="c-builtin">s̲nap</span> x</code>: each number rounded to the nearest multiple of the step s.</p>
+<pre class="example"><span class="prompt">      </span><span class="c-string">&quot;qz:&quot;</span> <a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="libs-Quant-src-Quant.xtl.html" class="c-string">&quot;Quant&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span><span class="c-number">0.25</span> <a href="libs-Quant-src-Quant.xtl.html#l.s_nap" class="c-libfunc">qz:s̲nap</a> <span class="c-number">0.1</span> <span class="c-number">0.2</span> <span class="c-number">0.9</span>
+0.0 0.25 1.0</pre>
+</div>
+<pre class="code"><span class="c-libfunc">ˡs̲nap</span> ← { s x → s <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> <span class="c-number">0.5</span> <a href="builtins.html#-2b" class="c-symbol">+</a> x <a href="builtins.html#-2f" class="c-symbol">÷</a> s }</pre>
+<div class="uses">Used in: <a href="libs-Quant-src-Quant.xtl.html#l.i_nt"><span class="c-libfunc">ˡi̲nt</span></a>, <a href="demos-ternary-net-ternary-net.xtl.html#m8">m8</a></div>
+</div>
+<div class="item" id="l.i_nt">
+<h3><a href="#l.i_nt"><span class="c-libfunc">ˡi̲nt</span></a> <span class="type">: Num a =&gt; a -&gt; Float -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="libs-Quant-src-Quant.xtl.src.html#L39">line 39</a></div>
+<div class="doc">
+<p><code>b <span class="c-builtin">i̲nt</span> x</code>: symmetric b-bit integers for the whole array: the
+largest size becomes 2^(b-1) - 1 steps (127 for 8 bits); the values
+come back as Float.</p>
+<pre class="example"><span class="prompt">      </span><span class="c-string">&quot;qz:&quot;</span> <a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="libs-Quant-src-Quant.xtl.html" class="c-string">&quot;Quant&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span><span class="c-number">4</span> <a href="libs-Quant-src-Quant.xtl.html#l.i_nt" class="c-libfunc">qz:i̲nt</a> <span class="c-number">0.875</span> <span class="c-number">-0.5</span> <span class="c-number">0.1</span>
+0.875 -0.5 0.125</pre>
+</div>
+<pre class="code"><span class="c-libfunc">ˡi̲nt</span> ← { b x → ((<span class="c-builtin">'</span><a href="builtins.html#m_ax" class="c-builtin">m̲ax</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> <a href="builtins.html#a_bs" class="c-builtin">a̲bs</a> x) <a href="builtins.html#-2f" class="c-symbol">÷</a> (<span class="c-number">2.0</span> <a href="builtins.html#-5e" class="c-symbol">^</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> b <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span>) <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1.0</span>) <a href="libs-Quant-src-Quant.xtl.html#l.s_nap" class="c-libfunc">ˡs̲nap</a> x }</pre>
+<div class="uses">Used in: <a href="libs-Quant-demos-formats.xtl.src.html#L16">libs/Quant/demos/formats.xtl:16</a></div>
+</div>
+<h2 class="section" id="section-3">Ternary: 1.58 bits</h2>
+<div class="item" id="l.c_ut">
+<h3><a href="#l.c_ut"><span class="c-libfunc">ˡc̲ut</span></a> <span class="type">: Num a =&gt; a -&gt; a -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="libs-Quant-src-Quant.xtl.src.html#L48">line 48</a></div>
+<div class="doc">
+<p><code>s <span class="c-builtin">c̲ut</span> x</code>: -1, 0 or +1 for each number: +1 where it passes s, -1
+where it is below -s.</p>
+<pre class="example"><span class="prompt">      </span><span class="c-string">&quot;qz:&quot;</span> <a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="libs-Quant-src-Quant.xtl.html" class="c-string">&quot;Quant&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span><span class="c-number">0.5</span> <a href="libs-Quant-src-Quant.xtl.html#l.c_ut" class="c-libfunc">qz:c̲ut</a> <span class="c-number">0.9</span> <span class="c-number">0.2</span> <span class="c-number">-0.7</span> <span class="c-number">-0.1</span>
+1.0 0.0 -1.0 0.0</pre>
+</div>
+<pre class="code"><span class="c-libfunc">ˡc̲ut</span> ← { s x → (<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> x <a href="builtins.html#-3e" class="c-symbol">&gt;</a> s) <a href="builtins.html#-2d" class="c-symbol">−</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> x <a href="builtins.html#-3c" class="c-symbol">&lt;</a> <a href="builtins.html#n_eg" class="c-builtin">n̲eg</a> s }</pre>
+<div class="uses">Used in: <a href="libs-Quant-src-Quant.xtl.html#l.t_ernary"><span class="c-libfunc">ˡt̲ernary</span></a>, <a href="demos-ternary-net-ternary-net.xtl.html#q">q</a></div>
+</div>
+<div class="item" id="l.t_ernary">
+<h3><a href="#l.t_ernary"><span class="c-libfunc">ˡt̲ernary</span></a> <span class="type">: Float -&gt; Float -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="libs-Quant-src-Quant.xtl.src.html#L51">line 51</a></div>
+<div class="doc">
+<p><code>t <span class="c-builtin">t̲ernary</span> x</code>: c_ut at t times the array's mean size.</p>
+</div>
+<pre class="code"><span class="c-libfunc">ˡt̲ernary</span> ← { t x → (t <a href="builtins.html#-2a" class="c-symbol">×</a> (<span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> <a href="builtins.html#a_bs" class="c-builtin">a̲bs</a> x) <a href="builtins.html#-2f" class="c-symbol">÷</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> x) <a href="libs-Quant-src-Quant.xtl.html#l.c_ut" class="c-libfunc">ˡc̲ut</a> x }</pre>
+<div class="uses">Used in: <a href="libs-Quant-demos-formats.xtl.html#q">q</a></div>
+</div>
+<div class="item" id="l.s_cale">
+<h3><a href="#l.s_cale"><span class="c-libfunc">ˡs̲cale</span></a> <span class="type">: Float -&gt; Float -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="libs-Quant-src-Quant.xtl.src.html#L59">line 59</a></div>
+<div class="doc">
+<p><code>x <span class="c-builtin">s̲cale</span> q</code>: the mean size of the numbers ternary codes q keep (q
+not 0): the one multiply a ternary layer needs (q times it stands
+for x).</p>
+<pre class="example"><span class="prompt">      </span><span class="c-string">&quot;qz:&quot;</span> <a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="libs-Quant-src-Quant.xtl.html" class="c-string">&quot;Quant&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span><span class="c-number">0.9</span> <span class="c-number">0.2</span> <span class="c-number">-0.7</span> <span class="c-number">-0.1</span> <a href="libs-Quant-src-Quant.xtl.html#l.s_cale" class="c-libfunc">qz:s̲cale</a> <span class="c-number">1.0</span> <span class="c-number">0.0</span> <span class="c-number">-1.0</span> <span class="c-number">0.0</span>
+0.8</pre>
+</div>
+<pre class="code"><span class="c-libfunc">ˡs̲cale</span> ← { x q → (<span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> (<a href="builtins.html#a_bs" class="c-builtin">a̲bs</a> x) <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#a_bs" class="c-builtin">a̲bs</a> q) <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-number">1.0</span> <a href="builtins.html#m_ax" class="c-builtin">m̲ax</a> <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> <a href="builtins.html#a_bs" class="c-builtin">a̲bs</a> q }</pre>
+<div class="uses">Used in: <a href="libs-Quant-demos-formats.xtl.src.html#L16">libs/Quant/demos/formats.xtl:16</a>, <a href="libs-Quant-demos-formats.xtl.src.html#L18">libs/Quant/demos/formats.xtl:18</a></div>
+</div>
+<h2 class="section" id="section-4">Additions</h2>
+<div class="item" id="l.a_dds">
+<h3><a href="#l.a_dds"><span class="c-libfunc">ˡa̲dds</span></a> <span class="type">: Float -&gt; Float -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="libs-Quant-src-Quant.xtl.src.html#L70">line 70</a></div>
+<div class="doc">
+<p><code>h <span class="c-builtin">a̲dds</span> q</code>: a ternary layer without multiplying: for the input
+vector h (an item per row of q) and each column of q, the sum of the
+inputs under +1 minus the sum of those under -1. Times the scale, it
+is h times the ternary weights.</p>
+<pre class="example"><span class="prompt">      </span><span class="c-string">&quot;qz:&quot;</span> <a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="libs-Quant-src-Quant.xtl.html" class="c-string">&quot;Quant&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span><span class="c-number">1.0</span> <span class="c-number">2.0</span> <span class="c-number">3.0</span> <a href="libs-Quant-src-Quant.xtl.html#l.a_dds" class="c-libfunc">qz:a̲dds</a> <span class="c-number">3</span> <span class="c-number">2</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">1.0</span> <span class="c-number">0.0</span> <span class="c-number">-1.0</span> <span class="c-number">1.0</span> <span class="c-number">0.0</span> <span class="c-number">-1.0</span>
+-1.0 -1.0</pre>
+</div>
+<pre class="code"><span class="c-libfunc">ˡa̲dds</span> ← { h q →
+  H ← h <span class="c-builtin">'</span><a href="builtins.html#l_eft" class="c-builtin">l̲eft</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> <a href="builtins.html#o_ffsets" class="c-builtin">o̲ffsets</a> <span class="c-number">2</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> q
+  (<span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> H <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> q <a href="builtins.html#-3d" class="c-symbol">=</a> <span class="c-number">1.0</span>) <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> H <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> q <a href="builtins.html#-3d" class="c-symbol">=</a> <span class="c-number">-1.0</span>
+}</pre>
+<div class="uses">Used in: <a href="libs-Quant-demos-formats.xtl.src.html#L18">libs/Quant/demos/formats.xtl:18</a></div>
+</div>
+<h2 class="section" id="section-5">Blocks: 4 bits, a scale per block</h2>
+<div class="item" id="l.b_locks">
+<h3><a href="#l.b_locks"><span class="c-libfunc">ˡb̲locks</span></a> <span class="type">: Int -&gt; a -&gt; a</span></h3>
+<div class="meta">function &middot; <a href="libs-Quant-src-Quant.xtl.src.html#L83">line 83</a></div>
+<div class="doc">
+<p><code>k <span class="c-builtin">b̲locks</span> x</code>: x's numbers (raveled) as rows of k, a block each; the
+count must be a multiple of k.</p>
+<pre class="example"><span class="prompt">      </span><span class="c-string">&quot;qz:&quot;</span> <a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="libs-Quant-src-Quant.xtl.html" class="c-string">&quot;Quant&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span><span class="c-number">2</span> <a href="libs-Quant-src-Quant.xtl.html#l.b_locks" class="c-libfunc">qz:b̲locks</a> <span class="c-number">1.0</span> <span class="c-number">-4.0</span> <span class="c-number">2.0</span> <span class="c-number">0.5</span>
+1.0 -4.0
+2.0  0.5</pre>
+</div>
+<pre class="code"><span class="c-libfunc">ˡb̲locks</span> ← { k x →
+  n ← <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> x
+  <span class="c-number">0</span> <a href="builtins.html#-21-3d" class="c-symbol">≠</a> n <a href="builtins.html#m_od" class="c-builtin">m̲od</a> k ? <a href="builtins.html#-5b-5dP_ANIC" class="c-builtin">⎕P̲ANIC</a> <span class="c-string">&quot;qz:b_locks: &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> n) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; numbers are not blocks of &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> k
+  ((n <a href="builtins.html#d_iv" class="c-builtin">d̲iv</a> k) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> k) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> x
+}</pre>
+<div class="uses">Used in: <a href="libs-Quant-src-Quant.xtl.html#l.a_bsmax"><span class="c-libfunc">ˡa̲bsmax</span></a>, <a href="libs-Quant-src-Quant.xtl.html#l.u_niformCodes"><span class="c-libfunc">ˡu̲niformCodes</span></a>, <a href="libs-Quant-src-Quant.xtl.html#l.n_f4Codes"><span class="c-libfunc">ˡn̲f4Codes</span></a></div>
+</div>
+<div class="item" id="l.a_bsmax">
+<h3><a href="#l.a_bsmax"><span class="c-libfunc">ˡa̲bsmax</span></a> <span class="type">: Num a =&gt; Int -&gt; a -&gt; a</span></h3>
+<div class="meta">function &middot; <a href="libs-Quant-src-Quant.xtl.src.html#L93">line 93</a></div>
+<div class="doc">
+<p><code>k <span class="c-builtin">a̲bsmax</span> x</code>: each block's largest size, its scale (absmax).</p>
+<pre class="example"><span class="prompt">      </span><span class="c-string">&quot;qz:&quot;</span> <a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="libs-Quant-src-Quant.xtl.html" class="c-string">&quot;Quant&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span><span class="c-number">2</span> <a href="libs-Quant-src-Quant.xtl.html#l.a_bsmax" class="c-libfunc">qz:a̲bsmax</a> <span class="c-number">1.0</span> <span class="c-number">-4.0</span> <span class="c-number">2.0</span> <span class="c-number">0.5</span>
+4.0 2.0</pre>
+</div>
+<pre class="code"><span class="c-libfunc">ˡa̲bsmax</span> ← { k x → <span class="c-builtin">'</span><a href="builtins.html#m_ax" class="c-builtin">m̲ax</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/₂</a> <a href="builtins.html#a_bs" class="c-builtin">a̲bs</a> k <a href="libs-Quant-src-Quant.xtl.html#l.b_locks" class="c-libfunc">ˡb̲locks</a> x }</pre>
+<div class="uses">Used in: <a href="libs-Quant-src-Quant.xtl.html#l.u_niformCodes"><span class="c-libfunc">ˡu̲niformCodes</span></a>, <a href="libs-Quant-src-Quant.xtl.html#l.n_f4Codes"><span class="c-libfunc">ˡn̲f4Codes</span></a></div>
+</div>
+<div class="item" id="l.u_niformCodes">
+<h3><a href="#l.u_niformCodes"><span class="c-libfunc">ˡu̲niformCodes</span></a> <span class="type">: Num a =&gt; (a, Int) -&gt; Float -&gt; (Float, Float)</span></h3>
+<div class="meta">function &middot; <a href="libs-Quant-src-Quant.xtl.src.html#L104">line 104</a></div>
+<div class="doc">
+<p><code>(b, k) <span class="c-builtin">u̲niformCodes</span> x</code>: blockwise symmetric b-bit integers: each
+block divided by its scale, its absmax over 2^(b-1) - 1 (7 for 4
+bits), rounded and clipped to -7 .. 7: (codes, scales), the codes as
+Floats a row per block.</p>
+<pre class="example"><span class="prompt">      </span><span class="c-string">&quot;qz:&quot;</span> <a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="libs-Quant-src-Quant.xtl.html" class="c-string">&quot;Quant&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span>(q, s) ← (<span class="c-number">4</span>, <span class="c-number">2</span>) <a href="libs-Quant-src-Quant.xtl.html#l.u_niformCodes" class="c-libfunc">qz:u̲niformCodes</a> <span class="c-number">1.0</span> <span class="c-number">-4.0</span> <span class="c-number">2.0</span> <span class="c-number">0.5</span></pre>
+<pre class="example"><span class="prompt">      </span>q
+2.0 -7.0
+7.0  2.0</pre>
+</div>
+<pre class="code"><span class="c-libfunc">ˡu̲niformCodes</span> ← { (b, k) x →
+  top ← (<span class="c-number">2.0</span> <a href="builtins.html#-5e" class="c-symbol">^</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> b <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span>) <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1.0</span>
+  s ← (k <a href="libs-Quant-src-Quant.xtl.html#l.a_bsmax" class="c-libfunc">ˡa̲bsmax</a> x) <a href="builtins.html#-2f" class="c-symbol">÷</a> top
+  B ← k <a href="libs-Quant-src-Quant.xtl.html#l.b_locks" class="c-libfunc">ˡb̲locks</a> x
+  S ← s <span class="c-builtin">'</span><a href="builtins.html#l_eft" class="c-builtin">l̲eft</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> <a href="builtins.html#o_ffsets" class="c-builtin">o̲ffsets</a> k
+  (top <a href="builtins.html#m_in" class="c-builtin">m̲in</a> (<a href="builtins.html#n_eg" class="c-builtin">n̲eg</a> top) <a href="builtins.html#m_ax" class="c-builtin">m̲ax</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> <span class="c-number">0.5</span> <a href="builtins.html#-2b" class="c-symbol">+</a> B <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-number">0.000000000001</span> <a href="builtins.html#m_ax" class="c-builtin">m̲ax</a> S, s)
+}</pre>
+<div class="uses">Used in: <a href="libs-Quant-src-Quant.xtl.html#l.u_niform"><span class="c-libfunc">ˡu̲niform</span></a></div>
+</div>
+<div class="item" id="l.u_niform">
+<h3><a href="#l.u_niform"><span class="c-libfunc">ˡu̲niform</span></a> <span class="type">: Num a =&gt; (a, Int) -&gt; Float -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="libs-Quant-src-Quant.xtl.src.html#L118">line 118</a></div>
+<div class="doc">
+<p><code>(b, k) <span class="c-builtin">u̲niform</span> x</code>: x through blockwise b-bit integers and back
+(codes times their block's scale), shaped as x: what a uniform 4-bit
+base computes with.</p>
+<pre class="example"><span class="prompt">      </span><span class="c-string">&quot;qz:&quot;</span> <a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="libs-Quant-src-Quant.xtl.html" class="c-string">&quot;Quant&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span>(<span class="c-number">4</span>, <span class="c-number">2</span>) <a href="libs-Quant-src-Quant.xtl.html#l.u_niform" class="c-libfunc">qz:u̲niform</a> <span class="c-number">1.0</span> <span class="c-number">-4.0</span> <span class="c-number">2.0</span> <span class="c-number">0.5</span>
+1.1428571428571428 -4.0 2.0 0.5714285714285714</pre>
+</div>
+<pre class="code"><span class="c-libfunc">ˡu̲niform</span> ← { (b, k) x →
+  (q, s) ← (b, k) <a href="libs-Quant-src-Quant.xtl.html#l.u_niformCodes" class="c-libfunc">ˡu̲niformCodes</a> x
+  (<a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> x) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> q <a href="builtins.html#-2a" class="c-symbol">×</a> s <span class="c-builtin">'</span><a href="builtins.html#l_eft" class="c-builtin">l̲eft</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> <a href="builtins.html#o_ffsets" class="c-builtin">o̲ffsets</a> k
+}</pre>
+<div class="uses">Used in: <a href="libs-Quant-src-Quant.xtl.html#l.d_ouble"><span class="c-libfunc">ˡd̲ouble</span></a>, <a href="demos-lora-explorer-lora-explorer.xtl.html#Wu">Wu</a>, <a href="demos-lora-explorer-lora-explorer.xtl.src.html#L173">demos/lora-explorer/lora-explorer.xtl:173</a></div>
+</div>
+<h2 class="section" id="section-6">NF4: 16 levels at the normal's quantiles</h2>
+<div class="item" id="nf4">
+<h3><a href="#nf4">nf4</a> <span class="type">: Float</span></h3>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="libs-Quant-src-Quant.xtl.src.html#L128">line 128</a></div>
+<div class="doc">
+<p>The NF4 codebook as QLoRA publishes it (Dettmers et al. 2023,
+appendix E; bitsandbytes' create_normal_map, float32), derived again
+by c_odebook and checked against it in the tests.</p>
+</div>
+<pre class="code">nf4 ← <span class="c-number">-1.0</span> <span class="c-number">-0.6961928009986877</span> <span class="c-number">-0.5250730514526367</span> <span class="c-number">-0.39491748809814453</span> <span class="c-number">-0.28444138169288635</span> <span class="c-number">-0.18477343022823334</span> <span class="c-number">-0.09105003625154495</span> <span class="c-number">0.0</span> <span class="c-number">0.07958029955625534</span> <span class="c-number">0.16093020141124725</span> <span class="c-number">0.24611230194568634</span> <span class="c-number">0.33791524171829224</span> <span class="c-number">0.44070982933044434</span> <span class="c-number">0.5626170039176941</span> <span class="c-number">0.7229568362236023</span> <span class="c-number">1.0</span></pre>
+<div class="uses">Used in: <a href="libs-Quant-src-Quant.xtl.html#l.n_f4Codes"><span class="c-libfunc">ˡn̲f4Codes</span></a>, <a href="libs-Quant-src-Quant.xtl.html#l.n_f4Values"><span class="c-libfunc">ˡn̲f4Values</span></a>, <a href="libs-Quant-src-Quant.xtl.html#l.n_f4Double"><span class="c-libfunc">ˡn̲f4Double</span></a></div>
+</div>
+<div class="item" id="h.e_rf">
+<h3><a href="#h.e_rf"><span class="c-libfunc">ʰe̲rf</span></a> <span class="type">: Float -&gt; Float</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="libs-Quant-src-Quant.xtl.src.html#L132">line 132</a></div>
+<div class="doc">
+<p>erf by its series, 80 terms: 2/sqrt(pi) sum (-1)^n z^(2n+1) / (n! (2n+1));
+to 1e-15 for |z| up to about 3.</p>
+</div>
+<pre class="code"><span class="c-libfunc">ʰe̲rf</span> ← { z →
+  (_, _, t) ← <span class="c-number">80</span> <span class="c-quote">'</span>{ (n, a, t) → (n <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">1.0</span>, <a href="builtins.html#n_eg" class="c-builtin">n̲eg</a> a <a href="builtins.html#-2a" class="c-symbol">×</a> z <a href="builtins.html#-2a" class="c-symbol">×</a> z <a href="builtins.html#-2f" class="c-symbol">÷</a> n <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">1.0</span>, t <a href="builtins.html#-2b" class="c-symbol">+</a> a <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-number">1.0</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">2.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> n) } <a href="builtins.html#p_ower" class="c-builtin">p̲ower</a> (<span class="c-number">0.0</span>, z, <span class="c-number">0.0</span>)
+  t <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">2.0</span> <a href="builtins.html#-2f" class="c-symbol">÷</a> <a href="builtins.html#s_qrt" class="c-builtin">s̲qrt</a> <span class="c-number">3.141592653589793</span>
+}</pre>
+<div class="uses">Used in: <a href="libs-Quant-src-Quant.xtl.html#l.p_hi"><span class="c-libfunc">ˡp̲hi</span></a></div>
+</div>
+<div class="item" id="h.h_alf">
+<h3><a href="#h.h_alf"><span class="c-libfunc">ʰh̲alf</span></a> <span class="type">: Float -&gt; (Float, Float) -&gt; (Float, Float)</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="libs-Quant-src-Quant.xtl.src.html#L137">line 137</a></div>
+<div class="doc">
+<p>One halving of (lo, hi) toward the x where Phi(x) is p.</p>
+</div>
+<pre class="code"><span class="c-libfunc">ʰh̲alf</span> ← { p (lo, hi) →
+  m ← <span class="c-number">0.5</span> <a href="builtins.html#-2a" class="c-symbol">×</a> lo <a href="builtins.html#-2b" class="c-symbol">+</a> hi
+  (<a href="libs-Quant-src-Quant.xtl.html#l.p_hi" class="c-libfunc">ˡp̲hi</a> m) <a href="builtins.html#-3c" class="c-symbol">&lt;</a> p ? (m, hi)
+  (lo, m)
+}</pre>
+<div class="uses">Used in: <a href="libs-Quant-src-Quant.xtl.html#l.q_uantile"><span class="c-libfunc">ˡq̲uantile</span></a></div>
+</div>
+<div class="item" id="h.s_pan">
+<h3><a href="#h.s_pan"><span class="c-libfunc">ʰs̲pan</span></a> <span class="type">: (Float, Float) -&gt; Int -&gt; Float</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="libs-Quant-src-Quant.xtl.src.html#L143">line 143</a></div>
+<div class="doc">
+<p>n points from a to b, both included.</p>
+</div>
+<pre class="code"><span class="c-libfunc">ʰs̲pan</span> ← { (a, b) n → a <a href="builtins.html#-2b" class="c-symbol">+</a> (b <a href="builtins.html#-2d" class="c-symbol">−</a> a) <a href="builtins.html#-2a" class="c-symbol">×</a> (<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> (<a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> n) <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span>) <a href="builtins.html#-2f" class="c-symbol">÷</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> n <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span> }</pre>
+<div class="uses">Used in: <a href="libs-Quant-src-Quant.xtl.html#l.c_odebook"><span class="c-libfunc">ˡc̲odebook</span></a></div>
+</div>
+<div class="item" id="l.p_hi">
+<h3><a href="#l.p_hi"><span class="c-libfunc">ˡp̲hi</span></a> <span class="type">: Float -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="libs-Quant-src-Quant.xtl.src.html#L150">line 150</a></div>
+<div class="doc">
+<p><code><span class="c-builtin">p̲hi</span> x</code>: the standard normal's cumulative distribution, 1/2 (1 +
+erf(x / sqrt 2)), erf by its series.</p>
+<pre class="example"><span class="prompt">      </span><span class="c-string">&quot;qz:&quot;</span> <a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="libs-Quant-src-Quant.xtl.html" class="c-string">&quot;Quant&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span><a href="libs-Quant-src-Quant.xtl.html#l.p_hi" class="c-libfunc">qz:p̲hi</a> <span class="c-number">1.0</span>
+0.8413447460685428</pre>
+</div>
+<pre class="code"><span class="c-libfunc">ˡp̲hi</span> ← { x → <span class="c-number">0.5</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">1.0</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="libs-Quant-src-Quant.xtl.html#h.e_rf" class="c-libfunc">ʰe̲rf</a> x <a href="builtins.html#-2f" class="c-symbol">÷</a> <a href="builtins.html#s_qrt" class="c-builtin">s̲qrt</a> <span class="c-number">2.0</span> }</pre>
+<div class="uses">Used in: <a href="libs-Quant-src-Quant.xtl.html#h.h_alf"><span class="c-libfunc">ʰh̲alf</span></a></div>
+</div>
+<div class="item" id="l.q_uantile">
+<h3><a href="#l.q_uantile"><span class="c-libfunc">ˡq̲uantile</span></a> <span class="type">: Float -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="libs-Quant-src-Quant.xtl.src.html#L157">line 157</a></div>
+<div class="doc">
+<p><code><span class="c-builtin">q̲uantile</span> p</code>: the normal's inverse, the x with Phi(x) = p, by 60
+halvings of -4 .. 4 (to 1e-15 of p in 0.00004 .. 0.99996).</p>
+<pre class="example"><span class="prompt">      </span><span class="c-string">&quot;qz:&quot;</span> <a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="libs-Quant-src-Quant.xtl.html" class="c-string">&quot;Quant&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span><a href="libs-Quant-src-Quant.xtl.html#l.q_uantile" class="c-libfunc">qz:q̲uantile</a> <span class="c-number">0.975</span>
+1.959963984540054</pre>
+</div>
+<pre class="code"><span class="c-libfunc">ˡq̲uantile</span> ← { p →
+  (lo, hi) ← <span class="c-number">60</span> <span class="c-quote">'</span>{ q → p <a href="libs-Quant-src-Quant.xtl.html#h.h_alf" class="c-libfunc">ʰh̲alf</a> q } <a href="builtins.html#p_ower" class="c-builtin">p̲ower</a> (<span class="c-number">-4.0</span>, <span class="c-number">4.0</span>)
+  <span class="c-number">0.5</span> <a href="builtins.html#-2a" class="c-symbol">×</a> lo <a href="builtins.html#-2b" class="c-symbol">+</a> hi
+}</pre>
+<div class="uses">Used in: <a href="libs-Quant-src-Quant.xtl.html#l.c_odebook"><span class="c-libfunc">ˡc̲odebook</span></a></div>
+</div>
+<div class="item" id="l.c_odebook">
+<h3><a href="#l.c_odebook"><span class="c-libfunc">ˡc̲odebook</span></a> <span class="type">: Float -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="libs-Quant-src-Quant.xtl.src.html#L170">line 170</a></div>
+<div class="doc">
+<p><code><span class="c-builtin">c̲odebook</span> offset</code>: NF4's 16 levels, made as QLoRA makes them: the
+normal's quantiles at 9 points from offset to 1/2 (8 positive) and at
+8 (7 negative, mirrored), with 0, scaled so the largest is 1. Each
+level is as likely as the next for normal weights, and 0 is exact.
+QLoRA's offset is 0.9677083, the mean of 1 - 1/(2 15) and 1 - 1/(2 16).</p>
+<pre class="example"><span class="prompt">      </span><span class="c-string">&quot;qz:&quot;</span> <a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="libs-Quant-src-Quant.xtl.html" class="c-string">&quot;Quant&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span><span class="c-number">8</span> <a href="builtins.html#t_ake" class="c-builtin">t̲ake</a> <a href="libs-Quant-src-Quant.xtl.html#l.c_odebook" class="c-libfunc">qz:c̲odebook</a> <span class="c-number">0.9677083</span>
+-1.0 -0.6961928906037205 -0.5250730386952299 -0.39491749069931015 -0.2844413576181078 -0.18477343519288897 -0.0910499921442795 0.0</pre>
+</div>
+<pre class="code"><span class="c-libfunc">ˡc̲odebook</span> ← { offset →
+  pos ← <span class="c-libfunc">'</span><a href="libs-Quant-src-Quant.xtl.html#l.q_uantile" class="c-libfunc">ˡq̲uantile</a> <a href="builtins.html#e_ach" class="c-builtin">e̲ach</a> <span class="c-number">-1</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> (offset, <span class="c-number">0.5</span>) <a href="libs-Quant-src-Quant.xtl.html#h.s_pan" class="c-libfunc">ʰs̲pan</a> <span class="c-number">9</span>
+  neg ← <span class="c-libfunc">'</span><a href="libs-Quant-src-Quant.xtl.html#l.q_uantile" class="c-libfunc">ˡq̲uantile</a> <a href="builtins.html#e_ach" class="c-builtin">e̲ach</a> <span class="c-number">-1</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> (offset, <span class="c-number">0.5</span>) <a href="libs-Quant-src-Quant.xtl.html#h.s_pan" class="c-libfunc">ʰs̲pan</a> <span class="c-number">8</span>
+  v ← <a href="builtins.html#s_ort" class="c-builtin">s̲ort</a> pos <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">0.0</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="builtins.html#n_eg" class="c-builtin">n̲eg</a> neg
+  v <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-builtin">'</span><a href="builtins.html#m_ax" class="c-builtin">m̲ax</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> v
+}</pre>
+</div>
+<div class="item" id="l.n_f4Codes">
+<h3><a href="#l.n_f4Codes"><span class="c-libfunc">ˡn̲f4Codes</span></a> <span class="type">: Int -&gt; Float -&gt; (Int, Float)</span></h3>
+<div class="meta">function &middot; <a href="libs-Quant-src-Quant.xtl.src.html#L185">line 185</a></div>
+<div class="doc">
+<p><code>k <span class="c-builtin">n̲f4Codes</span> x</code>: each block divided by its absmax, then each number's
+nearest NF4 level, by its index 1 .. 16: (codes, scales), the codes
+a row per block.</p>
+<pre class="example"><span class="prompt">      </span><span class="c-string">&quot;qz:&quot;</span> <a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="libs-Quant-src-Quant.xtl.html" class="c-string">&quot;Quant&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span>(q, s) ← <span class="c-number">2</span> <a href="libs-Quant-src-Quant.xtl.html#l.n_f4Codes" class="c-libfunc">qz:n̲f4Codes</a> <span class="c-number">1.0</span> <span class="c-number">-4.0</span> <span class="c-number">2.0</span> <span class="c-number">0.5</span></pre>
+<pre class="example"><span class="prompt">      </span>q
+11  1
+16 11</pre>
+</div>
+<pre class="code"><span class="c-libfunc">ˡn̲f4Codes</span> ← { k x →
+  s ← k <a href="libs-Quant-src-Quant.xtl.html#l.a_bsmax" class="c-libfunc">ˡa̲bsmax</a> x
+  B ← k <a href="libs-Quant-src-Quant.xtl.html#l.b_locks" class="c-libfunc">ˡb̲locks</a> x
+  N ← B <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-number">0.000000000001</span> <a href="builtins.html#m_ax" class="c-builtin">m̲ax</a> s <span class="c-builtin">'</span><a href="builtins.html#l_eft" class="c-builtin">l̲eft</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> <a href="builtins.html#o_ffsets" class="c-builtin">o̲ffsets</a> k
+  ((<a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> N) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-quote">'</span>{ v → <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> <a href="builtins.html#g_rade" class="c-builtin">g̲rade</a> <a href="builtins.html#a_bs" class="c-builtin">a̲bs</a> v <a href="builtins.html#-2d" class="c-symbol">−</a> <a href="libs-Quant-src-Quant.xtl.html#nf4">nf4</a> } <a href="builtins.html#e_ach" class="c-builtin">e̲ach</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> N, s)
+}</pre>
+<div class="uses">Used in: <a href="libs-LoRA-src-LoRA.xtl.html#l.q_base"><span class="c-libfunc">ˡq̲base</span></a>, <a href="libs-Quant-src-Quant.xtl.html#l.n_f4"><span class="c-libfunc">ˡn̲f4</span></a>, <a href="libs-Quant-src-Quant.xtl.html#l.n_f4Double"><span class="c-libfunc">ˡn̲f4Double</span></a></div>
+</div>
+<div class="item" id="l.n_f4Values">
+<h3><a href="#l.n_f4Values"><span class="c-libfunc">ˡn̲f4Values</span></a> <span class="type">: (Int, Float) -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="libs-Quant-src-Quant.xtl.src.html#L197">line 197</a></div>
+<div class="doc">
+<p><code><span class="c-builtin">n̲f4Values</span> (q, s)</code>: NF4 codes back to numbers, each code's level
+times its block's scale (raveled; the codes a row per block).</p>
+<pre class="example"><span class="prompt">      </span><span class="c-string">&quot;qz:&quot;</span> <a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="libs-Quant-src-Quant.xtl.html" class="c-string">&quot;Quant&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span><a href="libs-Quant-src-Quant.xtl.html#l.n_f4Values" class="c-libfunc">qz:n̲f4Values</a> <span class="c-number">2</span> <a href="libs-Quant-src-Quant.xtl.html#l.n_f4Codes" class="c-libfunc">qz:n̲f4Codes</a> <span class="c-number">1.0</span> <span class="c-number">-4.0</span> <span class="c-number">2.0</span> <span class="c-number">0.5</span>
+0.9844492077827454 -4.0 2.0 0.4922246038913727</pre>
+</div>
+<pre class="code"><span class="c-libfunc">ˡn̲f4Values</span> ← { (q, s) → <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> ((<a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> q) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> (<a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> q) <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="libs-Quant-src-Quant.xtl.html#nf4">nf4</a>) <a href="builtins.html#-2a" class="c-symbol">×</a> s <span class="c-builtin">'</span><a href="builtins.html#l_eft" class="c-builtin">l̲eft</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> <a href="builtins.html#o_ffsets" class="c-builtin">o̲ffsets</a> <span class="c-number">2</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> q }</pre>
+<div class="uses">Used in: <a href="libs-LoRA-src-LoRA.xtl.html#l.d_equant"><span class="c-libfunc">ˡd̲equant</span></a>, <a href="libs-Quant-src-Quant.xtl.html#l.n_f4"><span class="c-libfunc">ˡn̲f4</span></a></div>
+</div>
+<div class="item" id="l.n_f4">
+<h3><a href="#l.n_f4"><span class="c-libfunc">ˡn̲f4</span></a> <span class="type">: Int -&gt; Float -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="libs-Quant-src-Quant.xtl.src.html#L204">line 204</a></div>
+<div class="doc">
+<p><code>k <span class="c-builtin">n̲f4</span> x</code>: x through NF4 and back (each code's level times its
+block's scale), shaped as x.</p>
+<pre class="example"><span class="prompt">      </span><span class="c-string">&quot;qz:&quot;</span> <a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="libs-Quant-src-Quant.xtl.html" class="c-string">&quot;Quant&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span><span class="c-number">2</span> <a href="libs-Quant-src-Quant.xtl.html#l.n_f4" class="c-libfunc">qz:n̲f4</a> <span class="c-number">1.0</span> <span class="c-number">-4.0</span> <span class="c-number">2.0</span> <span class="c-number">0.5</span>
+0.9844492077827454 -4.0 2.0 0.4922246038913727</pre>
+</div>
+<pre class="code"><span class="c-libfunc">ˡn̲f4</span> ← { k x → (<a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> x) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <a href="libs-Quant-src-Quant.xtl.html#l.n_f4Values" class="c-libfunc">ˡn̲f4Values</a> k <a href="libs-Quant-src-Quant.xtl.html#l.n_f4Codes" class="c-libfunc">ˡn̲f4Codes</a> x }</pre>
+<div class="uses">Used in: <a href="demos-lora-explorer-lora-explorer.xtl.html#Wn">Wn</a>, <a href="demos-lora-explorer-lora-explorer.xtl.src.html#L173">demos/lora-explorer/lora-explorer.xtl:173</a></div>
+</div>
+<h2 class="section" id="section-7">Double quantization: the scales in 8 bits</h2>
+<div class="item" id="l.d_ouble">
+<h3><a href="#l.d_ouble"><span class="c-libfunc">ˡd̲ouble</span></a> <span class="type">: Int -&gt; Float -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="libs-Quant-src-Quant.xtl.src.html#L217">line 217</a></div>
+<div class="doc">
+<p><code>k2 <span class="c-builtin">d̲ouble</span> s</code>: the block scales themselves quantized, as QLoRA does
+to save their bytes: their mean taken off, then blockwise symmetric
+8-bit integers over blocks of k2 scales (the last block made up with
+zeros, which change no block's absmax), and back, the mean added.
+(QLoRA's second level is an 8-bit float; 8-bit integers here, the
+same bytes.)</p>
+<pre class="example"><span class="prompt">      </span><span class="c-string">&quot;qz:&quot;</span> <a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="libs-Quant-src-Quant.xtl.html" class="c-string">&quot;Quant&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span><span class="c-number">2</span> <a href="libs-Quant-src-Quant.xtl.html#l.d_ouble" class="c-libfunc">qz:d̲ouble</a> <span class="c-number">0.5</span> <span class="c-number">0.25</span> <span class="c-number">1.0</span> <span class="c-number">0.75</span>
+0.5009842519685039 0.25 1.0 0.7490157480314961</pre>
+</div>
+<pre class="code"><span class="c-libfunc">ˡd̲ouble</span> ← { k2 s →
+  n ← <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> s
+  m ← (<span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> s) <a href="builtins.html#-2f" class="c-symbol">÷</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> n
+  pad ← (k2 <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#c_eiling" class="c-builtin">c̲eiling</a> (<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> n) <a href="builtins.html#-2f" class="c-symbol">÷</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> k2) <a href="builtins.html#-2d" class="c-symbol">−</a> n
+  m <a href="builtins.html#-2b" class="c-symbol">+</a> n <a href="builtins.html#t_ake" class="c-builtin">t̲ake</a> (<span class="c-number">8</span>, k2) <a href="libs-Quant-src-Quant.xtl.html#l.u_niform" class="c-libfunc">ˡu̲niform</a> (s <a href="builtins.html#-2d" class="c-symbol">−</a> m) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> pad <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.0</span>
+}</pre>
+<div class="uses">Used in: <a href="libs-Quant-src-Quant.xtl.html#l.n_f4Double"><span class="c-libfunc">ˡn̲f4Double</span></a></div>
+</div>
+<div class="item" id="l.n_f4Double">
+<h3><a href="#l.n_f4Double"><span class="c-libfunc">ˡn̲f4Double</span></a> <span class="type">: Int -&gt; (Int, Float) -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="libs-Quant-src-Quant.xtl.src.html#L226">line 226</a></div>
+<div class="doc">
+<p><code>k2 <span class="c-builtin">n̲f4Double</span> (k, x)</code>: NF4 with its scales double-quantized: x
+through NF4 and back, the scales first through d_ouble.</p>
+</div>
+<pre class="code"><span class="c-libfunc">ˡn̲f4Double</span> ← { k2 (k, x) →
+  (q, s) ← k <a href="libs-Quant-src-Quant.xtl.html#l.n_f4Codes" class="c-libfunc">ˡn̲f4Codes</a> x
+  (<a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> x) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> ((<a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> q) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> (<a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> q) <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="libs-Quant-src-Quant.xtl.html#nf4">nf4</a>) <a href="builtins.html#-2a" class="c-symbol">×</a> (k2 <a href="libs-Quant-src-Quant.xtl.html#l.d_ouble" class="c-libfunc">ˡd̲ouble</a> s) <span class="c-builtin">'</span><a href="builtins.html#l_eft" class="c-builtin">l̲eft</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> <a href="builtins.html#o_ffsets" class="c-builtin">o̲ffsets</a> k
+}</pre>
+</div>
+<h2 class="section" id="section-8">Bits</h2>
+<div class="item" id="l.b_its">
+<h3><a href="#l.b_its"><span class="c-libfunc">ˡb̲its</span></a> <span class="type">: (Num a, Num b) =&gt; (a, a) -&gt; b -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="libs-Quant-src-Quant.xtl.src.html#L241">line 241</a></div>
+<div class="doc">
+<p><code>(k, k2) <span class="c-builtin">b̲its</span> <span class="c-number">4</span></code>: bits a weight takes: 4 for its code plus its
+block's scale shared by k weights, at 32 bits; then with double
+quantization, the scale at 8 bits plus a 32-bit scale and mean shared
+by k2 scales. QLoRA's k 64 and k2 256: 4.5, and 4.129 (QLoRA's
+paper counts 4.127, the mean left out).</p>
+<pre class="example"><span class="prompt">      </span><span class="c-string">&quot;qz:&quot;</span> <a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="libs-Quant-src-Quant.xtl.html" class="c-string">&quot;Quant&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span>(<span class="c-number">64</span>, <span class="c-number">256</span>) <a href="libs-Quant-src-Quant.xtl.html#l.b_its" class="c-libfunc">qz:b̲its</a> <span class="c-number">4</span>
+4.5 4.12890625</pre>
+</div>
+<pre class="code"><span class="c-libfunc">ˡb̲its</span> ← { (k, k2) b →
+  (<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> b) <a href="builtins.html#-2b" class="c-symbol">+</a> (<span class="c-number">32.0</span> <a href="builtins.html#-2f" class="c-symbol">÷</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> k) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-number">8.0</span> <a href="builtins.html#-2f" class="c-symbol">÷</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> k) <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">64.0</span> <a href="builtins.html#-2f" class="c-symbol">÷</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> k <a href="builtins.html#-2a" class="c-symbol">×</a> k2
+}</pre>
+<div class="uses">Used in: <a href="demos-lora-explorer-lora-explorer.xtl.html#bits">bits</a></div>
+</div>
+</main>
+</body>
+</html>

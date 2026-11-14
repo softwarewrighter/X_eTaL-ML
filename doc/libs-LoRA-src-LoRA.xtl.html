@@ -1,0 +1,945 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>libs/LoRA/src/LoRA.xtl - X_eTaL doc</title>
+<link rel="stylesheet" href="style.css">
+<script src="theme.js"></script>
+<script defer src="search-index.js"></script>
+<script defer src="search.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.18.10/dist/katex.min.css" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.18.10/dist/katex.min.js" crossorigin="anonymous"></script>
+<script>document.addEventListener('DOMContentLoaded', function () {
+if (typeof katex === 'undefined') return;
+document.querySelectorAll('.c-notation').forEach(function (el) {
+var tex = el.textContent; if (!tex) return;
+try { katex.render(tex, el, { throwOnError: false }); } catch (e) { el.textContent = tex; }
+});
+});</script>
+</head>
+<body>
+<nav class="side">
+<a class="home" href="index.html">X_eTaL doc</a>
+<input id="search" type="search" autocomplete="off" placeholder="Search: a name, or a type" title="A name (mean finds m_ean), or a type: Num a =&gt; a -&gt; a -&gt; a finds +, m_ax ...">
+<h2>Files</h2>
+<h3>demos/activations/</h3>
+<ul>
+<li><a href="demos-activations-activations.xtl.html">activations.xtl</a></li>
+</ul>
+<h3>demos/attention/</h3>
+<ul>
+<li><a href="demos-attention-attention.xtl.html">attention.xtl</a></li>
+</ul>
+<h3>demos/backprop/</h3>
+<ul>
+<li><a href="demos-backprop-backprop.xtl.html">backprop.xtl</a></li>
+</ul>
+<h3>demos/cnn-backprop/</h3>
+<ul>
+<li><a href="demos-cnn-backprop-cnn-backprop.xtl.html">cnn-backprop.xtl</a></li>
+</ul>
+<h3>demos/cnn-digits/</h3>
+<ul>
+<li><a href="demos-cnn-digits-batch.xtl.html">batch.xtl</a></li>
+<li><a href="demos-cnn-digits-cnn-digits.xtl.html">cnn-digits.xtl</a></li>
+</ul>
+<h3>demos/diffusion/</h3>
+<ul>
+<li><a href="demos-diffusion-diffusion.xtl.html">diffusion.xtl</a></li>
+</ul>
+<h3>demos/embedding-explorer/</h3>
+<ul>
+<li><a href="demos-embedding-explorer-embedding-explorer.xtl.html">embedding-explorer.xtl</a></li>
+</ul>
+<h3>demos/k-means/</h3>
+<ul>
+<li><a href="demos-k-means-k-means.xtl.html">k-means.xtl</a></li>
+</ul>
+<h3>demos/lora-explorer/</h3>
+<ul>
+<li><a href="demos-lora-explorer-lora-explorer.xtl.html">lora-explorer.xtl</a></li>
+</ul>
+<h3>demos/micro-bert/</h3>
+<ul>
+<li><a href="demos-micro-bert-micro-bert.xtl.html">micro-bert.xtl</a></li>
+</ul>
+<h3>demos/micro-gpt/</h3>
+<ul>
+<li><a href="demos-micro-gpt-batch.xtl.html">batch.xtl</a></li>
+<li><a href="demos-micro-gpt-micro-gpt.xtl.html">micro-gpt.xtl</a></li>
+</ul>
+<h3>demos/moe-finetune/</h3>
+<ul>
+<li><a href="demos-moe-finetune-base.xtl.html">base.xtl</a></li>
+<li><a href="demos-moe-finetune-moe-finetune.xtl.html">moe-finetune.xtl</a></li>
+</ul>
+<h3>demos/moe-router/</h3>
+<ul>
+<li><a href="demos-moe-router-moe-router.xtl.html">moe-router.xtl</a></li>
+</ul>
+<h3>demos/net-macro/</h3>
+<ul>
+<li><a href="demos-net-macro-net-macro.xtl.html">net-macro.xtl</a></li>
+<li><a href="demos-net-macro-train-it.xtl.html">train-it.xtl</a></li>
+</ul>
+<h3>demos/pipelines/</h3>
+<ul>
+<li><a href="demos-pipelines-diffusion.xtl.html">diffusion.xtl</a></li>
+<li><a href="demos-pipelines-equations.xtl.html">equations.xtl</a></li>
+<li><a href="demos-pipelines-pipelines.xtl.html">pipelines.xtl</a></li>
+<li><a href="demos-pipelines-rosetta.xtl.html">rosetta.xtl</a></li>
+</ul>
+<h3>demos/ternary-net/</h3>
+<ul>
+<li><a href="demos-ternary-net-ternary-net.xtl.html">ternary-net.xtl</a></li>
+</ul>
+<h3>demos/train-live/</h3>
+<ul>
+<li><a href="demos-train-live-train-live.xtl.html">train-live.xtl</a></li>
+</ul>
+<h3>demos/world-model/</h3>
+<ul>
+<li><a href="demos-world-model-world-model.xtl.html">world-model.xtl</a></li>
+</ul>
+<h3>libs/Activations/demos/</h3>
+<ul>
+<li><a href="libs-Activations-demos-curves.xtl.html">curves.xtl</a></li>
+</ul>
+<h3>libs/Activations/src/</h3>
+<ul>
+<li><a href="libs-Activations-src-Activations.xtl.html">Activations.xtl</a></li>
+</ul>
+<h3>libs/Attention/demos/</h3>
+<ul>
+<li><a href="libs-Attention-demos-previous.xtl.html">previous.xtl</a></li>
+</ul>
+<h3>libs/Attention/src/</h3>
+<ul>
+<li><a href="libs-Attention-src-Attention.xtl.html">Attention.xtl</a></li>
+</ul>
+<h3>libs/Conv/demos/</h3>
+<ul>
+<li><a href="libs-Conv-demos-edges.xtl.html">edges.xtl</a></li>
+</ul>
+<h3>libs/Conv/src/</h3>
+<ul>
+<li><a href="libs-Conv-src-Conv.xtl.html">Conv.xtl</a></li>
+</ul>
+<h3>libs/Embed/demos/</h3>
+<ul>
+<li><a href="libs-Embed-demos-pets.xtl.html">pets.xtl</a></li>
+</ul>
+<h3>libs/Embed/src/</h3>
+<ul>
+<li><a href="libs-Embed-src-Embed.xtl.html">Embed.xtl</a></li>
+</ul>
+<h3>libs/Flow/demos/</h3>
+<ul>
+<li><a href="libs-Flow-demos-mlp.xtl.html">mlp.xtl</a></li>
+</ul>
+<h3>libs/Flow/src/</h3>
+<ul>
+<li><a href="libs-Flow-src-Flow.xtlm.html">Flow.xtlm</a></li>
+</ul>
+<h3>libs/Integrals/demos/</h3>
+<ul>
+<li><a href="libs-Integrals-demos-convolution.xtl.html">convolution.xtl</a></li>
+<li><a href="libs-Integrals-demos-gelu.xtl.html">gelu.xtl</a></li>
+</ul>
+<h3>libs/Integrals/src/</h3>
+<ul>
+<li><a href="libs-Integrals-src-Integrals.xtlm.html">Integrals.xtlm</a></li>
+</ul>
+<h3>libs/Learn/demos/</h3>
+<ul>
+<li><a href="libs-Learn-demos-blobs.xtl.html">blobs.xtl</a></li>
+</ul>
+<h3>libs/Learn/src/</h3>
+<ul>
+<li><a href="libs-Learn-src-Learn.xtl.html">Learn.xtl</a></li>
+</ul>
+<h3>libs/LoRA/demos/</h3>
+<ul>
+<li><a href="libs-LoRA-demos-sizes.xtl.html">sizes.xtl</a></li>
+</ul>
+<h3>libs/LoRA/src/</h3>
+<ul>
+<li><a href="libs-LoRA-src-LoRA.xtl.html">LoRA.xtl</a></li>
+<li><a href="libs-LoRA-src-LoRA.xtlm.html">LoRA.xtlm</a></li>
+</ul>
+<h3>libs/MoE/demos/</h3>
+<ul>
+<li><a href="libs-MoE-demos-routing.xtl.html">routing.xtl</a></li>
+</ul>
+<h3>libs/MoE/src/</h3>
+<ul>
+<li><a href="libs-MoE-src-MoE.xtl.html">MoE.xtl</a></li>
+</ul>
+<h3>libs/Net/demos/</h3>
+<ul>
+<li><a href="libs-Net-demos-train-xor.xtl.html">train-xor.xtl</a></li>
+<li><a href="libs-Net-demos-xor.xtl.html">xor.xtl</a></li>
+</ul>
+<h3>libs/Net/src/</h3>
+<ul>
+<li><a href="libs-Net-src-Net.xtlm.html">Net.xtlm</a></li>
+</ul>
+<h3>libs/NN/demos/</h3>
+<ul>
+<li><a href="libs-NN-demos-xor.xtl.html">xor.xtl</a></li>
+</ul>
+<h3>libs/NN/src/</h3>
+<ul>
+<li><a href="libs-NN-src-NN.xtl.html">NN.xtl</a></li>
+</ul>
+<h3>libs/Norm/demos/</h3>
+<ul>
+<li><a href="libs-Norm-demos-rows.xtl.html">rows.xtl</a></li>
+</ul>
+<h3>libs/Norm/src/</h3>
+<ul>
+<li><a href="libs-Norm-src-Norm.xtl.html">Norm.xtl</a></li>
+</ul>
+<h3>libs/Optim/demos/</h3>
+<ul>
+<li><a href="libs-Optim-demos-bowl.xtl.html">bowl.xtl</a></li>
+</ul>
+<h3>libs/Optim/src/</h3>
+<ul>
+<li><a href="libs-Optim-src-Optim.xtl.html">Optim.xtl</a></li>
+</ul>
+<h3>libs/Quant/demos/</h3>
+<ul>
+<li><a href="libs-Quant-demos-formats.xtl.html">formats.xtl</a></li>
+</ul>
+<h3>libs/Quant/src/</h3>
+<ul>
+<li><a href="libs-Quant-src-Quant.xtl.html">Quant.xtl</a></li>
+</ul>
+<h3>libs/Sample/demos/</h3>
+<ul>
+<li><a href="libs-Sample-demos-next.xtl.html">next.xtl</a></li>
+</ul>
+<h3>libs/Sample/src/</h3>
+<ul>
+<li><a href="libs-Sample-src-Sample.xtl.html">Sample.xtl</a></li>
+</ul>
+<h3>std/</h3>
+<ul>
+<li><a href="std-Svg.xtl.html">Svg.xtl</a></li>
+<li><a href="std-System.xtlm.html">System.xtlm</a></li>
+</ul>
+<h3>work/libs/Check/src/</h3>
+<ul>
+<li><a href="work-libs-Check-src-Check.xtl.html">Check.xtl</a></li>
+<li><a href="work-libs-Check-src-Check.xtlm.html">Check.xtlm</a></li>
+</ul>
+<h3>work/libs/Equations/src/</h3>
+<ul>
+<li><a href="work-libs-Equations-src-Equations.xtl.html">Equations.xtl</a></li>
+<li><a href="work-libs-Equations-src-Equations.xtlm.html">Equations.xtlm</a></li>
+</ul>
+<h3>work/libs/Format/src/</h3>
+<ul>
+<li><a href="work-libs-Format-src-Format.xtl.html">Format.xtl</a></li>
+</ul>
+<h3>work/libs/Lists/src/</h3>
+<ul>
+<li><a href="work-libs-Lists-src-Lists.xtl.html">Lists.xtl</a></li>
+</ul>
+<h3>work/libs/Plot/src/</h3>
+<ul>
+<li><a href="work-libs-Plot-src-Plot.xtl.html">Plot.xtl</a></li>
+</ul>
+<h3>work/libs/Strings/src/</h3>
+<ul>
+<li><a href="work-libs-Strings-src-Strings.xtl.html">Strings.xtl</a></li>
+</ul>
+<ul>
+<li><a href="builtins.html">built-ins</a></li>
+</ul>
+<h2>On this page</h2>
+<ul>
+<li><a href="#section-1">The forward pass</a></li>
+<li class="item"><a href="#l.s_caling"><span class="c-libfunc">ˡs̲caling</span></a></li>
+<li class="item"><a href="#l.s_calingRs"><span class="c-libfunc">ˡs̲calingRs</span></a></li>
+<li class="item"><a href="#l.f_orward"><span class="c-libfunc">ˡf̲orward</span></a></li>
+<li><a href="#section-2">The merge</a></li>
+<li class="item"><a href="#l.d_elta"><span class="c-libfunc">ˡd̲elta</span></a></li>
+<li class="item"><a href="#l.m_erge"><span class="c-libfunc">ˡm̲erge</span></a></li>
+<li><a href="#section-3">Gradients</a></li>
+<li class="item"><a href="#l.l_oss"><span class="c-libfunc">ˡl̲oss</span></a></li>
+<li class="item"><a href="#l.g_rads"><span class="c-libfunc">ˡg̲rads</span></a></li>
+<li><a href="#section-4">Training steps</a></li>
+<li class="item"><a href="#l.s_gd"><span class="c-libfunc">ˡs̲gd</span></a></li>
+<li class="item"><a href="#l.a_damStart"><span class="c-libfunc">ˡa̲damStart</span></a></li>
+<li class="item"><a href="#l.a_dam"><span class="c-libfunc">ˡa̲dam</span></a></li>
+<li><a href="#section-5">LoRA-FA: A frozen</a></li>
+<li class="item"><a href="#l.s_eeded"><span class="c-libfunc">ˡs̲eeded</span></a></li>
+<li class="item"><a href="#l.g_radsFA"><span class="c-libfunc">ˡg̲radsFA</span></a></li>
+<li class="item"><a href="#l.s_gdFA"><span class="c-libfunc">ˡs̲gdFA</span></a></li>
+<li class="item"><a href="#l.a_damStartFA"><span class="c-libfunc">ˡa̲damStartFA</span></a></li>
+<li class="item"><a href="#l.a_damFA"><span class="c-libfunc">ˡa̲damFA</span></a></li>
+<li><a href="#section-6">VeRA: shared random projections, two vectors trained</a></li>
+<li class="item"><a href="#l.p_rojections"><span class="c-libfunc">ˡp̲rojections</span></a></li>
+<li class="item"><a href="#l.v_era"><span class="c-libfunc">ˡv̲era</span></a></li>
+<li class="item"><a href="#l.d_eltaV"><span class="c-libfunc">ˡd̲eltaV</span></a></li>
+<li class="item"><a href="#l.f_orwardV"><span class="c-libfunc">ˡf̲orwardV</span></a></li>
+<li class="item"><a href="#l.m_ergeV"><span class="c-libfunc">ˡm̲ergeV</span></a></li>
+<li class="item"><a href="#l.l_ossV"><span class="c-libfunc">ˡl̲ossV</span></a></li>
+<li class="item"><a href="#l.g_radsV"><span class="c-libfunc">ˡg̲radsV</span></a></li>
+<li class="item"><a href="#l.s_gdV"><span class="c-libfunc">ˡs̲gdV</span></a></li>
+<li class="item"><a href="#l.a_damStartV"><span class="c-libfunc">ˡa̲damStartV</span></a></li>
+<li class="item"><a href="#l.a_damV"><span class="c-libfunc">ˡa̲damV</span></a></li>
+<li><a href="#section-7">QLoRA: the base in 4 bits</a></li>
+<li class="item"><a href="#l.q_base"><span class="c-libfunc">ˡq̲base</span></a></li>
+<li class="item"><a href="#l.d_equant"><span class="c-libfunc">ˡd̲equant</span></a></li>
+<li class="item"><a href="#l.f_orwardQ"><span class="c-libfunc">ˡf̲orwardQ</span></a></li>
+<li class="item"><a href="#l.m_ergeQ"><span class="c-libfunc">ˡm̲ergeQ</span></a></li>
+<li class="item"><a href="#l.q_bytes"><span class="c-libfunc">ˡq̲bytes</span></a></li>
+<li><a href="#section-8">Rank</a></li>
+<li class="item"><a href="#h.s_tep"><span class="c-libfunc">ʰs̲tep</span></a></li>
+<li class="item"><a href="#l.r_ank"><span class="c-libfunc">ˡr̲ank</span></a></li>
+<li><a href="#section-9">Counts</a></li>
+<li class="item"><a href="#l.p_arams"><span class="c-libfunc">ˡp̲arams</span></a></li>
+<li class="item"><a href="#l.e_xpert"><span class="c-libfunc">ˡe̲xpert</span></a></li>
+<li class="item"><a href="#l.e_xpertFA"><span class="c-libfunc">ˡe̲xpertFA</span></a></li>
+<li class="item"><a href="#l.b_ytes"><span class="c-libfunc">ˡb̲ytes</span></a></li>
+<li class="item"><a href="#l.c_osts"><span class="c-libfunc">ˡc̲osts</span></a></li>
+<li class="item"><a href="#l.p_aramsV"><span class="c-libfunc">ˡp̲aramsV</span></a></li>
+<li class="item"><a href="#l.e_xpertV"><span class="c-libfunc">ˡe̲xpertV</span></a></li>
+</ul>
+</nav>
+<main>
+<button class="theme" title="Light or dark">theme</button>
+<section id="results"></section>
+<h1><span class="kind">library</span>libs/LoRA/src/LoRA.xtl</h1>
+<div class="doc">
+<p>LoRA: low-rank adapters: the adapted forward pass in factored form, the merge, the counts, the gradients and steps, LoRA-FA, QLoRA, VeRA</p>
+<p>Import it with an alias of your choice: &quot;lo:&quot; u_se&lt; &quot;LoRA&quot;.
+Put libs/LoRA/src on XETAL_PATH (&quot;just path&quot;); the reference is libs/LoRA/docs.
+Names with l: are exported; h: names are private to this file.</p>
+<p>A frozen weight matrix W (m x n: m outputs, n inputs) is adapted by
+a low-rank update s B A: A is r x n, B is m x r, the rank r much
+smaller than m and n, s the scale alpha / r. An adapter is the tuple
+(W, A, B, s). The inputs are columns: x is one input of n numbers or
+an n x N matrix of N inputs, and W x is <code>W <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#i_nner" class="c-builtin">i̲nner</a> x</code>. The
+forward pass keeps the factors apart, B (A x), as training does:
+the merged matrix W + s B A is made only to deploy it.</p>
+<p>Training moves A and B by the gradients of the squared error
+(g_rads, s_gd, a_dam through the Optim library); LoRA-FA freezes A
+(regenerated from a seed, s_eeded) and trains B alone; QLoRA keeps W
+in 4 bits (NF4, through the Quant library) and computes with it
+dequantized; VeRA freezes A and B too (random, from a seed, shared by
+every matrix of the shape) and trains two vectors, d and b.</p>
+</div>
+<p class="meta"><a href="libs-LoRA-src-LoRA.xtl.src.html">source</a> &middot; imports <code><span class="c-error">op:</span></code> <a href="libs-Optim-src-Optim.xtl.html">libs/Optim/src/Optim.xtl</a>; <code><span class="c-error">qz:</span></code> <a href="libs-Quant-src-Quant.xtl.html">libs/Quant/src/Quant.xtl</a></p>
+<h2 class="section" id="section-1">The forward pass</h2>
+<div class="item" id="l.s_caling">
+<h3><a href="#l.s_caling"><span class="c-libfunc">ˡs̲caling</span></a> <span class="type">: Num a =&gt; Float -&gt; a -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="libs-LoRA-src-LoRA.xtl.src.html#L32">line 32</a></div>
+<div class="doc">
+<p><code>alpha <span class="c-builtin">s̲caling</span> r</code>: the adapter's scale s, alpha / r (so that a
+change of rank keeps the update's size).</p>
+<pre class="example"><span class="prompt">      </span><span class="c-string">&quot;lo:&quot;</span> <a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="libs-LoRA-src-LoRA.xtl.html" class="c-string">&quot;LoRA&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span><span class="c-number">16.0</span> <a href="libs-LoRA-src-LoRA.xtl.html#l.s_caling" class="c-libfunc">ˡᵒs̲caling</a> <span class="c-number">8</span>
+2.0</pre>
+</div>
+<pre class="code"><span class="c-libfunc">ˡs̲caling</span> ← { alpha r → alpha <a href="builtins.html#-2f" class="c-symbol">÷</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> r }</pre>
+<div class="uses">Used in: <a href="libs-LoRA-demos-sizes.xtl.html#a">a</a>, <a href="libs-MoE-demos-routing.xtl.html#ex">ex</a>, <a href="demos-lora-explorer-lora-explorer.xtl.html#s">s</a>, <a href="demos-lora-explorer-lora-explorer.xtl.html#u.s_tart"><span class="c-userfunc">ᵘs̲tart</span></a>, <a href="demos-moe-finetune-moe-finetune.xtl.html#s">s</a>, <a href="demos-moe-finetune-moe-finetune.xtl.html#u.e_ffective"><span class="c-userfunc">ᵘe̲ffective</span></a>, <a href="demos-moe-finetune-moe-finetune.xtl.html#u.c_hain"><span class="c-userfunc">ᵘc̲hain</span></a></div>
+</div>
+<div class="item" id="l.s_calingRs">
+<h3><a href="#l.s_calingRs"><span class="c-libfunc">ˡs̲calingRs</span></a> <span class="type">: Num a =&gt; Float -&gt; a -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="libs-LoRA-src-LoRA.xtl.src.html#L41">line 41</a></div>
+<div class="doc">
+<p><code>alpha <span class="c-builtin">s̲calingRs</span> r</code>: rsLoRA's rank-stabilized scale, alpha / sqrt r
+(Kalajdzievski, &quot;A Rank Stabilization Scaling Factor for Fine-Tuning
+with LoRA&quot;, 2023): with alpha / r the update's learning slows as r
+grows; over sqrt r it does not. An adapter takes either, (W, A, B, s).</p>
+<pre class="example"><span class="prompt">      </span><span class="c-string">&quot;lo:&quot;</span> <a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="libs-LoRA-src-LoRA.xtl.html" class="c-string">&quot;LoRA&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span><span class="c-number">16.0</span> <a href="libs-LoRA-src-LoRA.xtl.html#l.s_calingRs" class="c-libfunc">ˡᵒs̲calingRs</a> <span class="c-number">4</span>
+8.0</pre>
+</div>
+<pre class="code"><span class="c-libfunc">ˡs̲calingRs</span> ← { alpha r → alpha <a href="builtins.html#-2f" class="c-symbol">÷</a> <a href="builtins.html#s_qrt" class="c-builtin">s̲qrt</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> r }</pre>
+</div>
+<div class="item" id="l.f_orward">
+<h3><a href="#l.f_orward"><span class="c-libfunc">ˡf̲orward</span></a> <span class="type">: Num a =&gt; (a, a, a, a) -&gt; a -&gt; a</span></h3>
+<div class="meta">function &middot; <a href="libs-LoRA-src-LoRA.xtl.src.html#L49">line 49</a></div>
+<div class="doc">
+<p><code>(W, A, B, s) <span class="c-builtin">f̲orward</span> x</code>: the adapted layer, W x + s B (A x), the
+update in its factored form: A x (r numbers per input), then B of
+that, never the m x n matrix B A.</p>
+<pre class="example"><span class="prompt">      </span><span class="c-string">&quot;lo:&quot;</span> <a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="libs-LoRA-src-LoRA.xtl.html" class="c-string">&quot;LoRA&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span>(<span class="c-number">2</span> <span class="c-number">2</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">1.0</span> <span class="c-number">0.0</span> <span class="c-number">0.0</span> <span class="c-number">1.0</span>, <span class="c-number">1</span> <span class="c-number">2</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">1.0</span> <span class="c-number">1.0</span>, <span class="c-number">2</span> <span class="c-number">1</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">1.0</span> <span class="c-number">-1.0</span>, <span class="c-number">0.5</span>) <a href="libs-LoRA-src-LoRA.xtl.html#l.f_orward" class="c-libfunc">ˡᵒf̲orward</a> <span class="c-number">2.0</span> <span class="c-number">4.0</span>
+5.0 1.0</pre>
+</div>
+<pre class="code"><span class="c-libfunc">ˡf̲orward</span> ← { (W, A, B, s) x → (W <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#i_nner" class="c-builtin">i̲nner</a> x) <a href="builtins.html#-2b" class="c-symbol">+</a> s <a href="builtins.html#-2a" class="c-symbol">×</a> B <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#i_nner" class="c-builtin">i̲nner</a> A <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#i_nner" class="c-builtin">i̲nner</a> x }</pre>
+<div class="uses">Used in: <a href="libs-LoRA-src-LoRA.xtl.html#l.l_oss"><span class="c-libfunc">ˡl̲oss</span></a>, <a href="libs-LoRA-src-LoRA.xtl.html#l.s_gd"><span class="c-libfunc">ˡs̲gd</span></a>, <a href="libs-LoRA-src-LoRA.xtl.html#l.a_dam"><span class="c-libfunc">ˡa̲dam</span></a>, <a href="libs-LoRA-src-LoRA.xtl.html#l.s_gdFA"><span class="c-libfunc">ˡs̲gdFA</span></a>, <a href="libs-LoRA-src-LoRA.xtl.html#l.a_damFA"><span class="c-libfunc">ˡa̲damFA</span></a>, <a href="libs-LoRA-src-LoRA.xtl.html#l.f_orwardQ"><span class="c-libfunc">ˡf̲orwardQ</span></a>, <a href="libs-MoE-src-MoE.xtl.html#l.a_pply"><span class="c-libfunc">ˡa̲pply</span></a>, <a href="libs-LoRA-demos-sizes.xtl.html#y">y</a>, <a href="demos-lora-explorer-lora-explorer.xtl.src.html#L176">demos/lora-explorer/lora-explorer.xtl:176</a>, <a href="demos-moe-finetune-moe-finetune.xtl.html#u.l_ayers"><span class="c-userfunc">ᵘl̲ayers</span></a>, <a href="demos-moe-finetune-moe-finetune.xtl.html#u.g_rads6"><span class="c-userfunc">ᵘg̲rads6</span></a></div>
+</div>
+<h2 class="section" id="section-2">The merge</h2>
+<div class="item" id="l.d_elta">
+<h3><a href="#l.d_elta"><span class="c-libfunc">ˡd̲elta</span></a> <span class="type">: Num a =&gt; (a, a, a) -&gt; a</span></h3>
+<div class="meta">function &middot; <a href="libs-LoRA-src-LoRA.xtl.src.html#L59">line 59</a></div>
+<div class="doc">
+<p><code><span class="c-builtin">d̲elta</span> (A, B, s)</code>: the update itself, s B A, an m x n matrix of
+rank r at most.</p>
+<pre class="example"><span class="prompt">      </span><span class="c-string">&quot;lo:&quot;</span> <a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="libs-LoRA-src-LoRA.xtl.html" class="c-string">&quot;LoRA&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span><a href="libs-LoRA-src-LoRA.xtl.html#l.d_elta" class="c-libfunc">ˡᵒd̲elta</a> (<span class="c-number">1</span> <span class="c-number">2</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">1.0</span> <span class="c-number">1.0</span>, <span class="c-number">2</span> <span class="c-number">1</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">1.0</span> <span class="c-number">-1.0</span>, <span class="c-number">0.5</span>)
+ 0.5  0.5
+-0.5 -0.5</pre>
+</div>
+<pre class="code"><span class="c-libfunc">ˡd̲elta</span> ← { (A, B, s) → s <a href="builtins.html#-2a" class="c-symbol">×</a> B <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#i_nner" class="c-builtin">i̲nner</a> A }</pre>
+<div class="uses">Used in: <a href="libs-LoRA-src-LoRA.xtl.html#l.m_erge"><span class="c-libfunc">ˡm̲erge</span></a>, <a href="libs-LoRA-src-LoRA.xtl.html#l.m_ergeQ"><span class="c-libfunc">ˡm̲ergeQ</span></a>, <a href="libs-LoRA-demos-sizes.xtl.src.html#L23">libs/LoRA/demos/sizes.xtl:23</a>, <a href="demos-lora-explorer-lora-explorer.xtl.html#delta">delta</a>, <a href="demos-lora-explorer-lora-explorer.xtl.html#learned">learned</a>, <a href="demos-lora-explorer-lora-explorer.xtl.html#learnedFA">learnedFA</a>, <a href="demos-lora-explorer-lora-explorer.xtl.html#learnedQ">learnedQ</a></div>
+</div>
+<div class="item" id="l.m_erge">
+<h3><a href="#l.m_erge"><span class="c-libfunc">ˡm̲erge</span></a> <span class="type">: Num a =&gt; (a, a, a, a) -&gt; a</span></h3>
+<div class="meta">function &middot; <a href="libs-LoRA-src-LoRA.xtl.src.html#L67">line 67</a></div>
+<div class="doc">
+<p><code><span class="c-builtin">m̲erge</span> (W, A, B, s)</code>: the adapter folded into the weights, W + s B
+A: one matrix again, as fast as the base layer, for one task.</p>
+<pre class="example"><span class="prompt">      </span><span class="c-string">&quot;lo:&quot;</span> <a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="libs-LoRA-src-LoRA.xtl.html" class="c-string">&quot;LoRA&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span><a href="libs-LoRA-src-LoRA.xtl.html#l.m_erge" class="c-libfunc">ˡᵒm̲erge</a> (<span class="c-number">2</span> <span class="c-number">2</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">1.0</span> <span class="c-number">0.0</span> <span class="c-number">0.0</span> <span class="c-number">1.0</span>, <span class="c-number">1</span> <span class="c-number">2</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">1.0</span> <span class="c-number">1.0</span>, <span class="c-number">2</span> <span class="c-number">1</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">1.0</span> <span class="c-number">-1.0</span>, <span class="c-number">0.5</span>)
+ 1.5 0.5
+-0.5 0.5</pre>
+</div>
+<pre class="code"><span class="c-libfunc">ˡm̲erge</span> ← { (W, A, B, s) → W <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="libs-LoRA-src-LoRA.xtl.html#l.d_elta" class="c-libfunc">ˡd̲elta</a> (A, B, s) }</pre>
+<div class="uses">Used in: <a href="libs-LoRA-demos-sizes.xtl.src.html#L19">libs/LoRA/demos/sizes.xtl:19</a>, <a href="demos-lora-explorer-lora-explorer.xtl.html#merged">merged</a></div>
+</div>
+<h2 class="section" id="section-3">Gradients</h2>
+<div class="item" id="l.l_oss">
+<h3><a href="#l.l_oss"><span class="c-libfunc">ˡl̲oss</span></a> <span class="type">: (Float, Float, Float, Float) -&gt; (Float, Float) -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="libs-LoRA-src-LoRA.xtl.src.html#L78">line 78</a></div>
+<div class="doc">
+<p><code>(W, A, B, s) <span class="c-builtin">l̲oss</span> (x, y)</code>: the squared error of the adapted layer
+on the inputs x (columns) against the wanted outputs y, half the sum
+of the squared differences, so that its gradient at the output, g,
+is the difference itself.</p>
+<pre class="example"><span class="prompt">      </span><span class="c-string">&quot;lo:&quot;</span> <a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="libs-LoRA-src-LoRA.xtl.html" class="c-string">&quot;LoRA&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span>(<span class="c-number">2</span> <span class="c-number">2</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">1.0</span> <span class="c-number">0.0</span> <span class="c-number">0.0</span> <span class="c-number">1.0</span>, <span class="c-number">1</span> <span class="c-number">2</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">1.0</span> <span class="c-number">1.0</span>, <span class="c-number">2</span> <span class="c-number">1</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">1.0</span> <span class="c-number">-1.0</span>, <span class="c-number">0.5</span>) <a href="libs-LoRA-src-LoRA.xtl.html#l.l_oss" class="c-libfunc">ˡᵒl̲oss</a> (<span class="c-number">2</span> <span class="c-number">1</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">2.0</span> <span class="c-number">4.0</span>, <span class="c-number">2</span> <span class="c-number">1</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">4.0</span> <span class="c-number">2.0</span>)
+1.0</pre>
+</div>
+<pre class="code"><span class="c-libfunc">ˡl̲oss</span> ← { a (x, y) →
+  e ← (a <a href="libs-LoRA-src-LoRA.xtl.html#l.f_orward" class="c-libfunc">ˡf̲orward</a> x) <a href="builtins.html#-2d" class="c-symbol">−</a> y
+  <span class="c-number">0.5</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> e <a href="builtins.html#-2a" class="c-symbol">×</a> e
+}</pre>
+<div class="uses">Used in: <a href="demos-lora-explorer-lora-explorer.xtl.html#u.l_oss"><span class="c-userfunc">ᵘl̲oss</span></a></div>
+</div>
+<div class="item" id="l.g_rads">
+<h3><a href="#l.g_rads"><span class="c-libfunc">ˡg̲rads</span></a> <span class="type">: Num a =&gt; (a, a, a, a) -&gt; (a, a) -&gt; (a, a, a)</span></h3>
+<div class="meta">function &middot; <a href="libs-LoRA-src-LoRA.xtl.src.html#L93">line 93</a></div>
+<div class="doc">
+<p><code>(W, A, B, s) <span class="c-builtin">g̲rads</span> (x, g)</code>: the gradients for the inputs x (an n x
+N matrix, one input per column) and g, the loss's gradient at the
+output (m x N): with z = A x, dL/dA = s (B' g) x', dL/dB = s g z' and
+dL/dx = W' g + s A' (B' g), as the tuple (dA, dB, dx). B' g is made
+once and used twice; no m x n matrix but W's own is made.</p>
+<pre class="example"><span class="prompt">      </span><span class="c-string">&quot;lo:&quot;</span> <a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="libs-LoRA-src-LoRA.xtl.html" class="c-string">&quot;LoRA&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span>(dA, dB, dx) ← (<span class="c-number">2</span> <span class="c-number">2</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">1.0</span> <span class="c-number">0.0</span> <span class="c-number">0.0</span> <span class="c-number">1.0</span>, <span class="c-number">1</span> <span class="c-number">2</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">1.0</span> <span class="c-number">1.0</span>, <span class="c-number">2</span> <span class="c-number">1</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">1.0</span> <span class="c-number">-1.0</span>, <span class="c-number">0.5</span>) <a href="libs-LoRA-src-LoRA.xtl.html#l.g_rads" class="c-libfunc">ˡᵒg̲rads</a> (<span class="c-number">2</span> <span class="c-number">1</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">2.0</span> <span class="c-number">4.0</span>, <span class="c-number">2</span> <span class="c-number">1</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">1.0</span> <span class="c-number">-1.0</span>)</pre>
+<pre class="example"><span class="prompt">      </span>dB
+ 3.0
+-3.0</pre>
+</div>
+<pre class="code"><span class="c-libfunc">ˡg̲rads</span> ← { (W, A, B, s) (x, g) →
+  b ← (<a href="builtins.html#o_-5c" class="c-builtin">o̲\</a> B) <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#i_nner" class="c-builtin">i̲nner</a> g
+  (s <a href="builtins.html#-2a" class="c-symbol">×</a> b <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#i_nner" class="c-builtin">i̲nner</a> <a href="builtins.html#o_-5c" class="c-builtin">o̲\</a> x, s <a href="builtins.html#-2a" class="c-symbol">×</a> g <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#i_nner" class="c-builtin">i̲nner</a> <a href="builtins.html#o_-5c" class="c-builtin">o̲\</a> A <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#i_nner" class="c-builtin">i̲nner</a> x, ((<a href="builtins.html#o_-5c" class="c-builtin">o̲\</a> W) <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#i_nner" class="c-builtin">i̲nner</a> g) <a href="builtins.html#-2b" class="c-symbol">+</a> s <a href="builtins.html#-2a" class="c-symbol">×</a> (<a href="builtins.html#o_-5c" class="c-builtin">o̲\</a> A) <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#i_nner" class="c-builtin">i̲nner</a> b)
+}</pre>
+<div class="uses">Used in: <a href="libs-LoRA-src-LoRA.xtl.html#l.s_gd"><span class="c-libfunc">ˡs̲gd</span></a>, <a href="libs-LoRA-src-LoRA.xtl.html#l.a_dam"><span class="c-libfunc">ˡa̲dam</span></a>, <a href="libs-MoE-src-MoE.xtl.html#l.g_rads"><span class="c-libfunc">ˡg̲rads</span></a>, <a href="demos-moe-finetune-moe-finetune.xtl.html#u.g_rads6"><span class="c-userfunc">ᵘg̲rads6</span></a></div>
+</div>
+<h2 class="section" id="section-4">Training steps</h2>
+<div class="item" id="l.s_gd">
+<h3><a href="#l.s_gd"><span class="c-libfunc">ˡs̲gd</span></a> <span class="type">: Num a =&gt; a -&gt; ((a, a, a, a), (a, a)) -&gt; (a, a, a, a)</span></h3>
+<div class="meta">function &middot; <a href="libs-LoRA-src-LoRA.xtl.src.html#L109">line 109</a></div>
+<div class="doc">
+<p><code>lr <span class="c-builtin">s̲gd</span> ((W, A, B, s), (x, y))</code>: one step of gradient descent on
+the squared error (l_oss) at the rate lr, A and B moved by Optim's
+s_gd, W and s left as they are: the adapter after the step. p_ower
+repeats it.</p>
+<pre class="example"><span class="prompt">      </span><span class="c-string">&quot;lo:&quot;</span> <a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="libs-LoRA-src-LoRA.xtl.html" class="c-string">&quot;LoRA&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span>(_, A, B, _) ← <span class="c-number">0.1</span> <a href="libs-LoRA-src-LoRA.xtl.html#l.s_gd" class="c-libfunc">ˡᵒs̲gd</a> ((<span class="c-number">2</span> <span class="c-number">2</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">1.0</span> <span class="c-number">0.0</span> <span class="c-number">0.0</span> <span class="c-number">1.0</span>, <span class="c-number">1</span> <span class="c-number">2</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">1.0</span> <span class="c-number">1.0</span>, <span class="c-number">2</span> <span class="c-number">1</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">1.0</span> <span class="c-number">-1.0</span>, <span class="c-number">0.5</span>), (<span class="c-number">2</span> <span class="c-number">1</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">2.0</span> <span class="c-number">4.0</span>, <span class="c-number">2</span> <span class="c-number">1</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">4.0</span> <span class="c-number">2.0</span>))</pre>
+<pre class="example"><span class="prompt">      </span>B
+ 0.7
+-0.7</pre>
+</div>
+<pre class="code"><span class="c-libfunc">ˡs̲gd</span> ← { lr ((W, A, B, s), (x, y)) →
+  (dA, dB, _) ← (W, A, B, s) <a href="libs-LoRA-src-LoRA.xtl.html#l.g_rads" class="c-libfunc">ˡg̲rads</a> (x, ((W, A, B, s) <a href="libs-LoRA-src-LoRA.xtl.html#l.f_orward" class="c-libfunc">ˡf̲orward</a> x) <a href="builtins.html#-2d" class="c-symbol">−</a> y)
+  (W, lr <a href="libs-Optim-src-Optim.xtl.html#l.s_gd" class="c-libfunc">ᵒᵖs̲gd</a> (A, dA), lr <a href="libs-Optim-src-Optim.xtl.html#l.s_gd" class="c-libfunc">ᵒᵖs̲gd</a> (B, dB), s)
+}</pre>
+</div>
+<div class="item" id="l.a_damStart">
+<h3><a href="#l.a_damStart"><span class="c-libfunc">ˡa̲damStart</span></a> <span class="type">: (Any a, Any b, Num c) =&gt; (a, Float, Float, b) -&gt; ((a, Float, Float, b), (Float, Float, Float, Float), c)</span></h3>
+<div class="meta">function &middot; <a href="libs-LoRA-src-LoRA.xtl.src.html#L116">line 116</a></div>
+<div class="doc">
+<p><code><span class="c-builtin">a̲damStart</span> (W, A, B, s)</code>: what Adam starts from: the adapter, its
+four running averages at 0 (A's two, then B's) and the step count 1.</p>
+</div>
+<pre class="code"><span class="c-libfunc">ˡa̲damStart</span> ← { (W, A, B, s) → ((W, A, B, s), (<span class="c-number">0.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> A, <span class="c-number">0.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> A, <span class="c-number">0.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> B, <span class="c-number">0.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> B), <span class="c-number">1</span>) }</pre>
+<div class="uses">Used in: <a href="demos-lora-explorer-lora-explorer.xtl.html#q1">q1</a>, <a href="demos-lora-explorer-lora-explorer.xtl.html#q3">q3</a>, <a href="demos-lora-explorer-lora-explorer.xtl.html#u.l_ora"><span class="c-userfunc">ᵘl̲ora</span></a></div>
+</div>
+<div class="item" id="l.a_dam">
+<h3><a href="#l.a_dam"><span class="c-libfunc">ˡa̲dam</span></a> <span class="type">: Float -&gt; (((Float, Float, Float, Float), (Float, Float, Float, Float), Float), (Float, Float)) -&gt; ((Float, Float, Float, Float), (Float, Float, Float, Float), Float)</span></h3>
+<div class="meta">function &middot; <a href="libs-LoRA-src-LoRA.xtl.src.html#L126">line 126</a></div>
+<div class="doc">
+<p><code>lr <span class="c-builtin">a̲dam</span> (((W, A, B, s), (mA, vA, mB, vB), t), (x, y))</code>: Adam's step
+t on the squared error, A and B moved by Optim's a_dam at the rate
+lr; the next state, the step count one more.</p>
+<pre class="example"><span class="prompt">      </span><span class="c-string">&quot;lo:&quot;</span> <a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="libs-LoRA-src-LoRA.xtl.html" class="c-string">&quot;LoRA&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span>((_, _, B, _), _, _) ← <span class="c-number">0.1</span> <a href="libs-LoRA-src-LoRA.xtl.html#l.a_dam" class="c-libfunc">ˡᵒa̲dam</a> ((<a href="libs-LoRA-src-LoRA.xtl.html#l.a_damStart" class="c-libfunc">ˡᵒa̲damStart</a> (<span class="c-number">2</span> <span class="c-number">2</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">1.0</span> <span class="c-number">0.0</span> <span class="c-number">0.0</span> <span class="c-number">1.0</span>, <span class="c-number">1</span> <span class="c-number">2</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">1.0</span> <span class="c-number">1.0</span>, <span class="c-number">2</span> <span class="c-number">1</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">1.0</span> <span class="c-number">-1.0</span>, <span class="c-number">0.5</span>)), (<span class="c-number">2</span> <span class="c-number">1</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">2.0</span> <span class="c-number">4.0</span>, <span class="c-number">2</span> <span class="c-number">1</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">4.0</span> <span class="c-number">2.0</span>))</pre>
+<pre class="example"><span class="prompt">      </span>B
+ 0.9000000003333333
+-0.9000000003333333</pre>
+</div>
+<pre class="code"><span class="c-libfunc">ˡa̲dam</span> ← { lr (((W, A, B, s), (mA, vA, mB, vB), t), (x, y)) →
+  (dA, dB, _) ← (W, A, B, s) <a href="libs-LoRA-src-LoRA.xtl.html#l.g_rads" class="c-libfunc">ˡg̲rads</a> (x, ((W, A, B, s) <a href="libs-LoRA-src-LoRA.xtl.html#l.f_orward" class="c-libfunc">ˡf̲orward</a> x) <a href="builtins.html#-2d" class="c-symbol">−</a> y)
+  (A2, mA2, vA2) ← (lr, t) <a href="libs-Optim-src-Optim.xtl.html#l.a_dam" class="c-libfunc">ᵒᵖa̲dam</a> (A, mA, vA, dA)
+  (B2, mB2, vB2) ← (lr, t) <a href="libs-Optim-src-Optim.xtl.html#l.a_dam" class="c-libfunc">ᵒᵖa̲dam</a> (B, mB, vB, dB)
+  ((W, A2, B2, s), (mA2, vA2, mB2, vB2), t <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">1</span>)
+}</pre>
+<div class="uses">Used in: <a href="demos-lora-explorer-lora-explorer.xtl.html#q1">q1</a>, <a href="demos-lora-explorer-lora-explorer.xtl.html#q3">q3</a>, <a href="demos-lora-explorer-lora-explorer.xtl.html#u.l_ora"><span class="c-userfunc">ᵘl̲ora</span></a></div>
+</div>
+<h2 class="section" id="section-5">LoRA-FA: A frozen</h2>
+<div class="item" id="l.s_eeded">
+<h3><a href="#l.s_eeded"><span class="c-libfunc">ˡs̲eeded</span></a> <span class="type">: Num a =&gt; a -&gt; Int -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="libs-LoRA-src-LoRA.xtl.src.html#L144">line 144</a></div>
+<div class="doc">
+<p><code>seed <span class="c-builtin">s̲eeded</span> r n</code>: an r x n matrix regenerated from a whole-number
+seed (LoRA-FA's frozen A, which a checkpoint then need not hold):
+sin(seed k k) for k = 1 .. r n, over the square root of n (the
+inputs' count, so A x keeps x's size). No chance: the same seed
+gives the same matrix everywhere.</p>
+<pre class="example"><span class="prompt">      </span><span class="c-string">&quot;lo:&quot;</span> <a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="libs-LoRA-src-LoRA.xtl.html" class="c-string">&quot;LoRA&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span><span class="c-number">7</span> <a href="libs-LoRA-src-LoRA.xtl.html#l.s_eeded" class="c-libfunc">ˡᵒs̲eeded</a> <span class="c-number">2</span> <span class="c-number">4</span>
+0.32849329935939453 0.13545289415393452  0.08367785015140346 -0.44499780218341667
+-0.4005672975890204  0.3115061055018265 -0.26829917759428185  0.47413628607807934</pre>
+</div>
+<pre class="code"><span class="c-libfunc">ˡs̲eeded</span> ← { seed rn →
+  k ← <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> rn
+  rn <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> (<a href="builtins.html#s_in" class="c-builtin">s̲in</a> (<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> seed) <a href="builtins.html#-2a" class="c-symbol">×</a> k <a href="builtins.html#-2a" class="c-symbol">×</a> k) <a href="builtins.html#-2f" class="c-symbol">÷</a> <a href="builtins.html#s_qrt" class="c-builtin">s̲qrt</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <span class="c-number">2</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> rn
+}</pre>
+<div class="uses">Used in: <a href="libs-LoRA-src-LoRA.xtl.html#l.p_rojections"><span class="c-libfunc">ˡp̲rojections</span></a>, <a href="demos-lora-explorer-lora-explorer.xtl.html#a0">a0</a>, <a href="demos-lora-explorer-lora-explorer.xtl.html#q3">q3</a>, <a href="demos-lora-explorer-lora-explorer.xtl.html#u.s_tart"><span class="c-userfunc">ᵘs̲tart</span></a>, <a href="demos-moe-finetune-moe-finetune.xtl.html#u.t_une"><span class="c-userfunc">ᵘt̲une</span></a>, <a href="demos-moe-finetune-moe-finetune.xtl.html#u.s_tartC"><span class="c-userfunc">ᵘs̲tartC</span></a></div>
+</div>
+<div class="item" id="l.g_radsFA">
+<h3><a href="#l.g_radsFA"><span class="c-libfunc">ˡg̲radsFA</span></a> <span class="type">: Num a =&gt; (a, a, a, a) -&gt; (a, a) -&gt; (a, a)</span></h3>
+<div class="meta">function &middot; <a href="libs-LoRA-src-LoRA.xtl.src.html#L152">line 152</a></div>
+<div class="doc">
+<p><code>(W, A, B, s) <span class="c-builtin">g̲radsFA</span> (x, g)</code>: LoRA-FA's gradients, (dB, dx): A is
+frozen, so its gradient is skipped, but x's still flows back through
+A, dx = W' g + s A' (B' g).</p>
+</div>
+<pre class="code"><span class="c-libfunc">ˡg̲radsFA</span> ← { (W, A, B, s) (x, g) →
+  (s <a href="builtins.html#-2a" class="c-symbol">×</a> g <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#i_nner" class="c-builtin">i̲nner</a> <a href="builtins.html#o_-5c" class="c-builtin">o̲\</a> A <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#i_nner" class="c-builtin">i̲nner</a> x, ((<a href="builtins.html#o_-5c" class="c-builtin">o̲\</a> W) <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#i_nner" class="c-builtin">i̲nner</a> g) <a href="builtins.html#-2b" class="c-symbol">+</a> s <a href="builtins.html#-2a" class="c-symbol">×</a> (<a href="builtins.html#o_-5c" class="c-builtin">o̲\</a> A) <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#i_nner" class="c-builtin">i̲nner</a> (<a href="builtins.html#o_-5c" class="c-builtin">o̲\</a> B) <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#i_nner" class="c-builtin">i̲nner</a> g)
+}</pre>
+<div class="uses">Used in: <a href="libs-LoRA-src-LoRA.xtl.html#l.s_gdFA"><span class="c-libfunc">ˡs̲gdFA</span></a>, <a href="libs-LoRA-src-LoRA.xtl.html#l.a_damFA"><span class="c-libfunc">ˡa̲damFA</span></a></div>
+</div>
+<div class="item" id="l.s_gdFA">
+<h3><a href="#l.s_gdFA"><span class="c-libfunc">ˡs̲gdFA</span></a> <span class="type">: Num a =&gt; a -&gt; ((a, a, a, a), (a, a)) -&gt; (a, a, a, a)</span></h3>
+<div class="meta">function &middot; <a href="libs-LoRA-src-LoRA.xtl.src.html#L159">line 159</a></div>
+<div class="doc">
+<p><code>lr <span class="c-builtin">s̲gdFA</span> ((W, A, B, s), (x, y))</code>: LoRA-FA's step of gradient
+descent: B alone moves. Every update s B A it reaches has its rows
+in A's row space.</p>
+</div>
+<pre class="code"><span class="c-libfunc">ˡs̲gdFA</span> ← { lr ((W, A, B, s), (x, y)) →
+  (dB, _) ← (W, A, B, s) <a href="libs-LoRA-src-LoRA.xtl.html#l.g_radsFA" class="c-libfunc">ˡg̲radsFA</a> (x, ((W, A, B, s) <a href="libs-LoRA-src-LoRA.xtl.html#l.f_orward" class="c-libfunc">ˡf̲orward</a> x) <a href="builtins.html#-2d" class="c-symbol">−</a> y)
+  (W, A, lr <a href="libs-Optim-src-Optim.xtl.html#l.s_gd" class="c-libfunc">ᵒᵖs̲gd</a> (B, dB), s)
+}</pre>
+</div>
+<div class="item" id="l.a_damStartFA">
+<h3><a href="#l.a_damStartFA"><span class="c-libfunc">ˡa̲damStartFA</span></a> <span class="type">: (Any a, Any b, Any c, Num d) =&gt; (a, b, Float, c) -&gt; ((a, b, Float, c), (Float, Float), d)</span></h3>
+<div class="meta">function &middot; <a href="libs-LoRA-src-LoRA.xtl.src.html#L167">line 167</a></div>
+<div class="doc">
+<p><code><span class="c-builtin">a̲damStartFA</span> (W, A, B, s)</code>: LoRA-FA's Adam state: the adapter, B's
+two running averages at 0 (A has none: half of LoRA's optimizer
+memory on a square layer), the step 1.</p>
+</div>
+<pre class="code"><span class="c-libfunc">ˡa̲damStartFA</span> ← { (W, A, B, s) → ((W, A, B, s), (<span class="c-number">0.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> B, <span class="c-number">0.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> B), <span class="c-number">1</span>) }</pre>
+<div class="uses">Used in: <a href="demos-lora-explorer-lora-explorer.xtl.html#q2">q2</a>, <a href="demos-lora-explorer-lora-explorer.xtl.html#u.f_a"><span class="c-userfunc">ᵘf̲a</span></a></div>
+</div>
+<div class="item" id="l.a_damFA">
+<h3><a href="#l.a_damFA"><span class="c-libfunc">ˡa̲damFA</span></a> <span class="type">: Float -&gt; (((Float, Float, Float, Float), (Float, Float), Float), (Float, Float)) -&gt; ((Float, Float, Float, Float), (Float, Float), Float)</span></h3>
+<div class="meta">function &middot; <a href="libs-LoRA-src-LoRA.xtl.src.html#L171">line 171</a></div>
+<div class="doc">
+<p><code>lr <span class="c-builtin">a̲damFA</span> (((W, A, B, s), (mB, vB), t), (x, y))</code>: LoRA-FA's Adam
+step: B alone moves; the next state.</p>
+</div>
+<pre class="code"><span class="c-libfunc">ˡa̲damFA</span> ← { lr (((W, A, B, s), (mB, vB), t), (x, y)) →
+  (dB, _) ← (W, A, B, s) <a href="libs-LoRA-src-LoRA.xtl.html#l.g_radsFA" class="c-libfunc">ˡg̲radsFA</a> (x, ((W, A, B, s) <a href="libs-LoRA-src-LoRA.xtl.html#l.f_orward" class="c-libfunc">ˡf̲orward</a> x) <a href="builtins.html#-2d" class="c-symbol">−</a> y)
+  (B2, mB2, vB2) ← (lr, t) <a href="libs-Optim-src-Optim.xtl.html#l.a_dam" class="c-libfunc">ᵒᵖa̲dam</a> (B, mB, vB, dB)
+  ((W, A, B2, s), (mB2, vB2), t <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">1</span>)
+}</pre>
+<div class="uses">Used in: <a href="demos-lora-explorer-lora-explorer.xtl.html#q2">q2</a>, <a href="demos-lora-explorer-lora-explorer.xtl.html#u.f_a"><span class="c-userfunc">ᵘf̲a</span></a></div>
+</div>
+<h2 class="section" id="section-6">VeRA: shared random projections, two vectors trained</h2>
+<div class="item" id="l.p_rojections">
+<h3><a href="#l.p_rojections"><span class="c-libfunc">ˡp̲rojections</span></a> <span class="type">: Num a =&gt; a -&gt; Int -&gt; (Float, Float)</span></h3>
+<div class="meta">function &middot; <a href="libs-LoRA-src-LoRA.xtl.src.html#L188">line 188</a></div>
+<div class="doc">
+<p><code>seed <span class="c-builtin">p̲rojections</span> m n r</code>: VeRA's frozen projections for an m x n
+matrix at rank r, (A0, B0): A0 (r x n) and B0 (m x r) regenerated
+from the seed as s_eeded makes them (B0 from seed + 1), so a
+checkpoint need not hold them and every layer or expert of the same
+shape can share them.</p>
+<pre class="example"><span class="prompt">      </span><span class="c-string">&quot;lo:&quot;</span> <a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="libs-LoRA-src-LoRA.xtl.html" class="c-string">&quot;LoRA&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span>(A0, B0) ← <span class="c-number">7</span> <a href="libs-LoRA-src-LoRA.xtl.html#l.p_rojections" class="c-libfunc">ˡᵒp̲rojections</a> <span class="c-number">3</span> <span class="c-number">4</span> <span class="c-number">2</span></pre>
+<pre class="example"><span class="prompt">      </span><a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> B0
+3 2</pre>
+</div>
+<pre class="code"><span class="c-libfunc">ˡp̲rojections</span> ← { seed mnr →
+  (m, n, r) ← (<a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> mnr, <span class="c-number">2</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> mnr, <span class="c-number">3</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> mnr)
+  (seed <a href="libs-LoRA-src-LoRA.xtl.html#l.s_eeded" class="c-libfunc">ˡs̲eeded</a> r <a href="builtins.html#c_at" class="c-builtin">c̲at</a> n, (seed <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">1</span>) <a href="libs-LoRA-src-LoRA.xtl.html#l.s_eeded" class="c-libfunc">ˡs̲eeded</a> m <a href="builtins.html#c_at" class="c-builtin">c̲at</a> r)
+}</pre>
+<div class="uses">Used in: <a href="libs-LoRA-src-LoRA.xtl.html#l.v_era"><span class="c-libfunc">ˡv̲era</span></a>, <a href="demos-moe-finetune-moe-finetune.xtl.html#u.c_ompare"><span class="c-userfunc">ᵘc̲ompare</span></a></div>
+</div>
+<div class="item" id="l.v_era">
+<h3><a href="#l.v_era"><span class="c-libfunc">ˡv̲era</span></a> <span class="type">: Num a =&gt; a -&gt; (b, Int) -&gt; (b, Float, Float, Float, Float)</span></h3>
+<div class="meta">function &middot; <a href="libs-LoRA-src-LoRA.xtl.src.html#L203">line 203</a></div>
+<div class="doc">
+<p><code>seed <span class="c-builtin">v̲era</span> (W, r)</code>: a VeRA adapter on the frozen W (m x n) at rank
+r, as the paper starts it (Kopiczko, Blankevoort and Asano, &quot;VeRA:
+Vector-based Random Matrix Adaptation&quot;, 2024): (W, A0, B0, d, b),
+the projections from the seed, d (r numbers) at 0.1 and b (m
+numbers) at 0, so the adapted layer starts as the base. d and b are
+all it trains: m + r numbers.</p>
+<pre class="example"><span class="prompt">      </span><span class="c-string">&quot;lo:&quot;</span> <a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="libs-LoRA-src-LoRA.xtl.html" class="c-string">&quot;LoRA&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span>(_, _, _, d, b) ← <span class="c-number">7</span> <a href="libs-LoRA-src-LoRA.xtl.html#l.v_era" class="c-libfunc">ˡᵒv̲era</a> (<span class="c-number">2</span> <span class="c-number">3</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">1.0</span>, <span class="c-number">4</span>)</pre>
+<pre class="example"><span class="prompt">      </span>d <a href="builtins.html#c_at" class="c-builtin">c̲at</a> b
+0.1 0.1 0.1 0.1 0.0 0.0</pre>
+</div>
+<pre class="code"><span class="c-libfunc">ˡv̲era</span> ← { seed (W, r) →
+  (A0, B0) ← seed <a href="libs-LoRA-src-LoRA.xtl.html#l.p_rojections" class="c-libfunc">ˡp̲rojections</a> (<a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> W) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> r
+  (W, A0, B0, r <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.1</span>, (<a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> <a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> W) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.0</span>)
+}</pre>
+<div class="uses">Used in: <a href="demos-lora-explorer-lora-explorer.xtl.html#A0">A0</a>, <a href="demos-lora-explorer-lora-explorer.xtl.html#V">V</a>, <a href="demos-lora-explorer-lora-explorer.xtl.html#u.v_era"><span class="c-userfunc">ᵘv̲era</span></a></div>
+</div>
+<div class="item" id="l.d_eltaV">
+<h3><a href="#l.d_eltaV"><span class="c-libfunc">ˡd̲eltaV</span></a> <span class="type">: Num a =&gt; (a, a, a, a) -&gt; a</span></h3>
+<div class="meta">function &middot; <a href="libs-LoRA-src-LoRA.xtl.src.html#L216">line 216</a></div>
+<div class="doc">
+<p><code>(A0, B0, d, b) <span class="c-builtin">d̲eltaV</span></code>: VeRA's update, diag(b) B0 diag(d) A0, an
+m x n matrix of rank r at most. The two diagonals need no matrix and
+no broadcasting: diag(b) B0 diag(d) is B0 times the table of b by d,
+item by item (an m x r matrix, B's size).</p>
+<pre class="example"><span class="prompt">      </span><span class="c-string">&quot;lo:&quot;</span> <a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="libs-LoRA-src-LoRA.xtl.html" class="c-string">&quot;LoRA&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span><a href="libs-LoRA-src-LoRA.xtl.html#l.d_eltaV" class="c-libfunc">ˡᵒd̲eltaV</a> (<span class="c-number">1</span> <span class="c-number">2</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">1.0</span> <span class="c-number">1.0</span>, <span class="c-number">2</span> <span class="c-number">1</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">1.0</span> <span class="c-number">-1.0</span>, <span class="c-number">1</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.5</span>, <span class="c-number">2.0</span> <span class="c-number">4.0</span>)
+ 1.0  1.0
+-2.0 -2.0</pre>
+</div>
+<pre class="code"><span class="c-libfunc">ˡd̲eltaV</span> ← { (A0, B0, d, b) → (B0 <a href="builtins.html#-2a" class="c-symbol">×</a> b <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> d) <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#i_nner" class="c-builtin">i̲nner</a> A0 }</pre>
+<div class="uses">Used in: <a href="libs-LoRA-src-LoRA.xtl.html#l.m_ergeV"><span class="c-libfunc">ˡm̲ergeV</span></a>, <a href="demos-lora-explorer-lora-explorer.xtl.html#learnedV">learnedV</a></div>
+</div>
+<div class="item" id="l.f_orwardV">
+<h3><a href="#l.f_orwardV"><span class="c-libfunc">ˡf̲orwardV</span></a> <span class="type">: Num a =&gt; (a, a, a, a, a) -&gt; a -&gt; a</span></h3>
+<div class="meta">function &middot; <a href="libs-LoRA-src-LoRA.xtl.src.html#L224">line 224</a></div>
+<div class="doc">
+<p><code>(W, A0, B0, d, b) <span class="c-builtin">f̲orwardV</span> x</code>: the VeRA layer, W x + b (B0 (d (A0
+x))), the vectors scaling A0 x's rows and B0's output's: in factored
+form, A0 x first, then the m x r matrix diag(b) B0 diag(d) of that.</p>
+<pre class="example"><span class="prompt">      </span><span class="c-string">&quot;lo:&quot;</span> <a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="libs-LoRA-src-LoRA.xtl.html" class="c-string">&quot;LoRA&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span>(<span class="c-number">2</span> <span class="c-number">2</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">1.0</span> <span class="c-number">0.0</span> <span class="c-number">0.0</span> <span class="c-number">1.0</span>, <span class="c-number">1</span> <span class="c-number">2</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">1.0</span> <span class="c-number">1.0</span>, <span class="c-number">2</span> <span class="c-number">1</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">1.0</span> <span class="c-number">-1.0</span>, <span class="c-number">1</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.5</span>, <span class="c-number">2.0</span> <span class="c-number">4.0</span>) <a href="libs-LoRA-src-LoRA.xtl.html#l.f_orwardV" class="c-libfunc">ˡᵒf̲orwardV</a> <span class="c-number">2.0</span> <span class="c-number">4.0</span>
+8.0 -8.0</pre>
+</div>
+<pre class="code"><span class="c-libfunc">ˡf̲orwardV</span> ← { (W, A0, B0, d, b) x → (W <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#i_nner" class="c-builtin">i̲nner</a> x) <a href="builtins.html#-2b" class="c-symbol">+</a> (B0 <a href="builtins.html#-2a" class="c-symbol">×</a> b <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> d) <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#i_nner" class="c-builtin">i̲nner</a> A0 <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#i_nner" class="c-builtin">i̲nner</a> x }</pre>
+<div class="uses">Used in: <a href="libs-LoRA-src-LoRA.xtl.html#l.l_ossV"><span class="c-libfunc">ˡl̲ossV</span></a>, <a href="libs-LoRA-src-LoRA.xtl.html#l.s_gdV"><span class="c-libfunc">ˡs̲gdV</span></a>, <a href="libs-LoRA-src-LoRA.xtl.html#l.a_damV"><span class="c-libfunc">ˡa̲damV</span></a></div>
+</div>
+<div class="item" id="l.m_ergeV">
+<h3><a href="#l.m_ergeV"><span class="c-libfunc">ˡm̲ergeV</span></a> <span class="type">: Num a =&gt; (a, a, a, a, a) -&gt; a</span></h3>
+<div class="meta">function &middot; <a href="libs-LoRA-src-LoRA.xtl.src.html#L232">line 232</a></div>
+<div class="doc">
+<p><code><span class="c-builtin">m̲ergeV</span> (W, A0, B0, d, b)</code>: the VeRA adapter folded into the
+weights, W + diag(b) B0 diag(d) A0.</p>
+<pre class="example"><span class="prompt">      </span><span class="c-string">&quot;lo:&quot;</span> <a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="libs-LoRA-src-LoRA.xtl.html" class="c-string">&quot;LoRA&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span><a href="libs-LoRA-src-LoRA.xtl.html#l.m_ergeV" class="c-libfunc">ˡᵒm̲ergeV</a> (<span class="c-number">2</span> <span class="c-number">2</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">1.0</span> <span class="c-number">0.0</span> <span class="c-number">0.0</span> <span class="c-number">1.0</span>, <span class="c-number">1</span> <span class="c-number">2</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">1.0</span> <span class="c-number">1.0</span>, <span class="c-number">2</span> <span class="c-number">1</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">1.0</span> <span class="c-number">-1.0</span>, <span class="c-number">1</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.5</span>, <span class="c-number">2.0</span> <span class="c-number">4.0</span>)
+ 2.0  1.0
+-2.0 -1.0</pre>
+</div>
+<pre class="code"><span class="c-libfunc">ˡm̲ergeV</span> ← { (W, A0, B0, d, b) → W <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="libs-LoRA-src-LoRA.xtl.html#l.d_eltaV" class="c-libfunc">ˡd̲eltaV</a> (A0, B0, d, b) }</pre>
+</div>
+<div class="item" id="l.l_ossV">
+<h3><a href="#l.l_ossV"><span class="c-libfunc">ˡl̲ossV</span></a> <span class="type">: (Float, Float, Float, Float, Float) -&gt; (Float, Float) -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="libs-LoRA-src-LoRA.xtl.src.html#L236">line 236</a></div>
+<div class="doc">
+<p><code>(W, A0, B0, d, b) <span class="c-builtin">l̲ossV</span> (x, y)</code>: the squared error of the VeRA
+layer, as l_oss.</p>
+</div>
+<pre class="code"><span class="c-libfunc">ˡl̲ossV</span> ← { a (x, y) →
+  e ← (a <a href="libs-LoRA-src-LoRA.xtl.html#l.f_orwardV" class="c-libfunc">ˡf̲orwardV</a> x) <a href="builtins.html#-2d" class="c-symbol">−</a> y
+  <span class="c-number">0.5</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> e <a href="builtins.html#-2a" class="c-symbol">×</a> e
+}</pre>
+<div class="uses">Used in: <a href="demos-lora-explorer-lora-explorer.xtl.html#q4">q4</a>, <a href="demos-lora-explorer-lora-explorer.xtl.html#u.v_era"><span class="c-userfunc">ᵘv̲era</span></a></div>
+</div>
+<div class="item" id="l.g_radsV">
+<h3><a href="#l.g_radsV"><span class="c-libfunc">ˡg̲radsV</span></a> <span class="type">: Num a =&gt; (a, a, a, a, a) -&gt; (a, a) -&gt; (a, a, a)</span></h3>
+<div class="meta">function &middot; <a href="libs-LoRA-src-LoRA.xtl.src.html#L251">line 251</a></div>
+<div class="doc">
+<p><code>(W, A0, B0, d, b) <span class="c-builtin">g̲radsV</span> (x, g)</code>: VeRA's gradients for the inputs
+x (n x N) and the output's gradient g (m x N), as (dd, db, dx). With
+z = A0 x and Q = B0 times g z' item by item (m x r): dd = b' Q (the
+research's (B0' (g b)) z, summed over the inputs), db = Q d (its g
+(B0 (d z))), dx = W' g + A0' (diag(b) B0 diag(d))' g. The projections
+are in every gradient and get none.</p>
+<pre class="example"><span class="prompt">      </span><span class="c-string">&quot;lo:&quot;</span> <a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="libs-LoRA-src-LoRA.xtl.html" class="c-string">&quot;LoRA&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span>(dd, db, dx) ← (<span class="c-number">2</span> <span class="c-number">2</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">1.0</span> <span class="c-number">0.0</span> <span class="c-number">0.0</span> <span class="c-number">1.0</span>, <span class="c-number">1</span> <span class="c-number">2</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">1.0</span> <span class="c-number">1.0</span>, <span class="c-number">2</span> <span class="c-number">1</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">1.0</span> <span class="c-number">-1.0</span>, <span class="c-number">1</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.5</span>, <span class="c-number">2.0</span> <span class="c-number">4.0</span>) <a href="libs-LoRA-src-LoRA.xtl.html#l.g_radsV" class="c-libfunc">ˡᵒg̲radsV</a> (<span class="c-number">2</span> <span class="c-number">1</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">2.0</span> <span class="c-number">4.0</span>, <span class="c-number">2</span> <span class="c-number">1</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">1.0</span> <span class="c-number">-1.0</span>)</pre>
+<pre class="example"><span class="prompt">      </span>dd <a href="builtins.html#c_at" class="c-builtin">c̲at</a> db
+36.0 3.0 3.0</pre>
+</div>
+<pre class="code"><span class="c-libfunc">ˡg̲radsV</span> ← { (W, A0, B0, d, b) (x, g) →
+  Q ← B0 <a href="builtins.html#-2a" class="c-symbol">×</a> g <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#i_nner" class="c-builtin">i̲nner</a> <a href="builtins.html#o_-5c" class="c-builtin">o̲\</a> A0 <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#i_nner" class="c-builtin">i̲nner</a> x
+  (b <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#i_nner" class="c-builtin">i̲nner</a> Q, Q <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#i_nner" class="c-builtin">i̲nner</a> d, ((<a href="builtins.html#o_-5c" class="c-builtin">o̲\</a> W) <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#i_nner" class="c-builtin">i̲nner</a> g) <a href="builtins.html#-2b" class="c-symbol">+</a> (<a href="builtins.html#o_-5c" class="c-builtin">o̲\</a> A0) <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#i_nner" class="c-builtin">i̲nner</a> (<a href="builtins.html#o_-5c" class="c-builtin">o̲\</a> B0 <a href="builtins.html#-2a" class="c-symbol">×</a> b <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> d) <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#i_nner" class="c-builtin">i̲nner</a> g)
+}</pre>
+<div class="uses">Used in: <a href="libs-LoRA-src-LoRA.xtl.html#l.s_gdV"><span class="c-libfunc">ˡs̲gdV</span></a>, <a href="libs-LoRA-src-LoRA.xtl.html#l.a_damV"><span class="c-libfunc">ˡa̲damV</span></a></div>
+</div>
+<div class="item" id="l.s_gdV">
+<h3><a href="#l.s_gdV"><span class="c-libfunc">ˡs̲gdV</span></a> <span class="type">: Num a =&gt; a -&gt; ((a, a, a, a, a), (a, a)) -&gt; (a, a, a, a, a)</span></h3>
+<div class="meta">function &middot; <a href="libs-LoRA-src-LoRA.xtl.src.html#L258">line 258</a></div>
+<div class="doc">
+<p><code>lr <span class="c-builtin">s̲gdV</span> ((W, A0, B0, d, b), (x, y))</code>: VeRA's step of gradient
+descent on the squared error: d and b move, the rest stays.</p>
+</div>
+<pre class="code"><span class="c-libfunc">ˡs̲gdV</span> ← { lr ((W, A0, B0, d, b), (x, y)) →
+  (dd, db, _) ← (W, A0, B0, d, b) <a href="libs-LoRA-src-LoRA.xtl.html#l.g_radsV" class="c-libfunc">ˡg̲radsV</a> (x, ((W, A0, B0, d, b) <a href="libs-LoRA-src-LoRA.xtl.html#l.f_orwardV" class="c-libfunc">ˡf̲orwardV</a> x) <a href="builtins.html#-2d" class="c-symbol">−</a> y)
+  (W, A0, B0, lr <a href="libs-Optim-src-Optim.xtl.html#l.s_gd" class="c-libfunc">ᵒᵖs̲gd</a> (d, dd), lr <a href="libs-Optim-src-Optim.xtl.html#l.s_gd" class="c-libfunc">ᵒᵖs̲gd</a> (b, db))
+}</pre>
+</div>
+<div class="item" id="l.a_damStartV">
+<h3><a href="#l.a_damStartV"><span class="c-libfunc">ˡa̲damStartV</span></a> <span class="type">: (Any a, Any b, Any c, Num d) =&gt; (a, b, c, Float, Float) -&gt; ((a, b, c, Float, Float), (Float, Float, Float, Float), d)</span></h3>
+<div class="meta">function &middot; <a href="libs-LoRA-src-LoRA.xtl.src.html#L265">line 265</a></div>
+<div class="doc">
+<p><code><span class="c-builtin">a̲damStartV</span> (W, A0, B0, d, b)</code>: VeRA's Adam state: the adapter, the
+running averages of d and b at 0, the step 1.</p>
+</div>
+<pre class="code"><span class="c-libfunc">ˡa̲damStartV</span> ← { (W, A0, B0, d, b) → ((W, A0, B0, d, b), (<span class="c-number">0.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> d, <span class="c-number">0.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> d, <span class="c-number">0.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> b, <span class="c-number">0.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> b), <span class="c-number">1</span>) }</pre>
+<div class="uses">Used in: <a href="demos-lora-explorer-lora-explorer.xtl.html#q4">q4</a>, <a href="demos-lora-explorer-lora-explorer.xtl.html#u.v_era"><span class="c-userfunc">ᵘv̲era</span></a></div>
+</div>
+<div class="item" id="l.a_damV">
+<h3><a href="#l.a_damV"><span class="c-libfunc">ˡa̲damV</span></a> <span class="type">: Float -&gt; (((Float, Float, Float, Float, Float), (Float, Float, Float, Float), Float), (Float, Float)) -&gt; ((Float, Float, Float, Float, Float), (Float, Float, Float, Float), Float)</span></h3>
+<div class="meta">function &middot; <a href="libs-LoRA-src-LoRA.xtl.src.html#L269">line 269</a></div>
+<div class="doc">
+<p><code>lr <span class="c-builtin">a̲damV</span> (((W, A0, B0, d, b), (md, vd, mb, vb), t), (x, y))</code>:
+VeRA's Adam step: d and b move; the next state.</p>
+</div>
+<pre class="code"><span class="c-libfunc">ˡa̲damV</span> ← { lr (((W, A0, B0, d, b), (md, vd, mb, vb), t), (x, y)) →
+  (dd, db, _) ← (W, A0, B0, d, b) <a href="libs-LoRA-src-LoRA.xtl.html#l.g_radsV" class="c-libfunc">ˡg̲radsV</a> (x, ((W, A0, B0, d, b) <a href="libs-LoRA-src-LoRA.xtl.html#l.f_orwardV" class="c-libfunc">ˡf̲orwardV</a> x) <a href="builtins.html#-2d" class="c-symbol">−</a> y)
+  (d2, md2, vd2) ← (lr, t) <a href="libs-Optim-src-Optim.xtl.html#l.a_dam" class="c-libfunc">ᵒᵖa̲dam</a> (d, md, vd, dd)
+  (b2, mb2, vb2) ← (lr, t) <a href="libs-Optim-src-Optim.xtl.html#l.a_dam" class="c-libfunc">ᵒᵖa̲dam</a> (b, mb, vb, db)
+  ((W, A0, B0, d2, b2), (md2, vd2, mb2, vb2), t <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">1</span>)
+}</pre>
+<div class="uses">Used in: <a href="demos-lora-explorer-lora-explorer.xtl.html#q4">q4</a>, <a href="demos-lora-explorer-lora-explorer.xtl.html#u.v_era"><span class="c-userfunc">ᵘv̲era</span></a></div>
+</div>
+<h2 class="section" id="section-7">QLoRA: the base in 4 bits</h2>
+<div class="item" id="l.q_base">
+<h3><a href="#l.q_base"><span class="c-libfunc">ˡq̲base</span></a> <span class="type">: Int -&gt; Float -&gt; (Int, Float, Int)</span></h3>
+<div class="meta">function &middot; <a href="libs-LoRA-src-LoRA.xtl.src.html#L285">line 285</a></div>
+<div class="doc">
+<p><code>k <span class="c-builtin">q̲base</span> W</code>: the base as QLoRA stores it: W in NF4, blocks of k
+(QLoRA's 64), as (codes, scales, shape): 4-bit codes, a scale per
+block, W's shape to come back to.</p>
+<pre class="example"><span class="prompt">      </span><span class="c-string">&quot;lo:&quot;</span> <a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="libs-LoRA-src-LoRA.xtl.html" class="c-string">&quot;LoRA&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span>(q, s, sh) ← <span class="c-number">2</span> <a href="libs-LoRA-src-LoRA.xtl.html#l.q_base" class="c-libfunc">ˡᵒq̲base</a> <span class="c-number">2</span> <span class="c-number">2</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">1.0</span> <span class="c-number">-4.0</span> <span class="c-number">2.0</span> <span class="c-number">0.5</span></pre>
+<pre class="example"><span class="prompt">      </span>s <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> sh
+4.0 2.0 2.0 2.0</pre>
+</div>
+<pre class="code"><span class="c-libfunc">ˡq̲base</span> ← { k W →
+  (q, s) ← k <a href="libs-Quant-src-Quant.xtl.html#l.n_f4Codes" class="c-libfunc">qz:n̲f4Codes</a> W
+  (q, s, <a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> W)
+}</pre>
+<div class="uses">Used in: <a href="libs-LoRA-src-LoRA.xtl.html#l.m_ergeQ"><span class="c-libfunc">ˡm̲ergeQ</span></a>, <a href="demos-lora-explorer-lora-explorer.xtl.html#Q">Q</a></div>
+</div>
+<div class="item" id="l.d_equant">
+<h3><a href="#l.d_equant"><span class="c-libfunc">ˡd̲equant</span></a> <span class="type">: (Int, Float, Int) -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="libs-LoRA-src-LoRA.xtl.src.html#L298">line 298</a></div>
+<div class="doc">
+<p><code><span class="c-builtin">d̲equant</span> (q, s, shape)</code>: the stored base back to numbers, W~, the
+matrix QLoRA computes with: each code's level times its block's
+scale, in W's shape. It is not W: the difference is the 4-bit
+error.</p>
+<pre class="example"><span class="prompt">      </span><span class="c-string">&quot;lo:&quot;</span> <a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="libs-LoRA-src-LoRA.xtl.html" class="c-string">&quot;LoRA&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span><a href="libs-LoRA-src-LoRA.xtl.html#l.d_equant" class="c-libfunc">ˡᵒd̲equant</a> <span class="c-number">2</span> <a href="libs-LoRA-src-LoRA.xtl.html#l.q_base" class="c-libfunc">ˡᵒq̲base</a> <span class="c-number">2</span> <span class="c-number">2</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">1.0</span> <span class="c-number">-4.0</span> <span class="c-number">2.0</span> <span class="c-number">0.5</span>
+0.9844492077827454               -4.0
+               2.0 0.4922246038913727</pre>
+</div>
+<pre class="code"><span class="c-libfunc">ˡd̲equant</span> ← { (q, s, sh) → sh <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <a href="libs-Quant-src-Quant.xtl.html#l.n_f4Values" class="c-libfunc">qz:n̲f4Values</a> (q, s) }</pre>
+<div class="uses">Used in: <a href="libs-LoRA-src-LoRA.xtl.html#l.f_orwardQ"><span class="c-libfunc">ˡf̲orwardQ</span></a>, <a href="libs-LoRA-src-LoRA.xtl.html#l.m_ergeQ"><span class="c-libfunc">ˡm̲ergeQ</span></a>, <a href="demos-lora-explorer-lora-explorer.xtl.html#q3">q3</a>, <a href="demos-lora-explorer-lora-explorer.xtl.html#Mq">Mq</a></div>
+</div>
+<div class="item" id="l.f_orwardQ">
+<h3><a href="#l.f_orwardQ"><span class="c-libfunc">ˡf̲orwardQ</span></a> <span class="type">: ((Int, Float, Int), Float, Float, Float) -&gt; Float -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="libs-LoRA-src-LoRA.xtl.src.html#L304">line 304</a></div>
+<div class="doc">
+<p><code>(Q, A, B, s) <span class="c-builtin">f̲orwardQ</span> x</code>: QLoRA's adapted layer, W~ x + s B (A x):
+the 4-bit base dequantized when the layer runs, the adapter in full
+precision. Its gradients and steps are LoRA's with W~ for W:
+<code>lr <span class="c-builtin">s̲gd</span> ((<span class="c-builtin">d̲equant</span> Q, A, B, s), (x, y))</code>.</p>
+</div>
+<pre class="code"><span class="c-libfunc">ˡf̲orwardQ</span> ← { (Q, A, B, s) x → (<a href="libs-LoRA-src-LoRA.xtl.html#l.d_equant" class="c-libfunc">ˡd̲equant</a> Q, A, B, s) <a href="libs-LoRA-src-LoRA.xtl.html#l.f_orward" class="c-libfunc">ˡf̲orward</a> x }</pre>
+<div class="uses">Used in: <a href="demos-lora-explorer-lora-explorer.xtl.src.html#L197">demos/lora-explorer/lora-explorer.xtl:197</a></div>
+</div>
+<div class="item" id="l.m_ergeQ">
+<h3><a href="#l.m_ergeQ"><span class="c-libfunc">ˡm̲ergeQ</span></a> <span class="type">: Int -&gt; ((Int, Float, Int), Float, Float, Float) -&gt; (Int, Float, Int)</span></h3>
+<div class="meta">function &middot; <a href="libs-LoRA-src-LoRA.xtl.src.html#L310">line 310</a></div>
+<div class="doc">
+<p><code>k <span class="c-builtin">m̲ergeQ</span> (Q, A, B, s)</code>: the adapter merged into a 4-bit base: W~ +
+s B A quantized again (blocks of k), as a stored base. Not exact:
+d_equant of it is not W~ + s B A, since the merged numbers fall
+between NF4's levels.</p>
+</div>
+<pre class="code"><span class="c-libfunc">ˡm̲ergeQ</span> ← { k (Q, A, B, s) → k <a href="libs-LoRA-src-LoRA.xtl.html#l.q_base" class="c-libfunc">ˡq̲base</a> (<a href="libs-LoRA-src-LoRA.xtl.html#l.d_equant" class="c-libfunc">ˡd̲equant</a> Q) <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="libs-LoRA-src-LoRA.xtl.html#l.d_elta" class="c-libfunc">ˡd̲elta</a> (A, B, s) }</pre>
+<div class="uses">Used in: <a href="demos-lora-explorer-lora-explorer.xtl.html#Mq">Mq</a></div>
+</div>
+<div class="item" id="l.q_bytes">
+<h3><a href="#l.q_bytes"><span class="c-libfunc">ˡq̲bytes</span></a> <span class="type">: (Num a, Num b) =&gt; (a, b) -&gt; a -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="libs-LoRA-src-LoRA.xtl.src.html#L319">line 319</a></div>
+<div class="doc">
+<p><code>(r, k) <span class="c-builtin">q̲bytes</span> m n</code>: QLoRA's bytes for an m x n base at rank r,
+blocks of k: the base in NF4 (4 bits and a 32-bit scale per block),
+the adapter in BF16 (16 bits), Adam's two averages for it in FP32;
+against FP16's 2 m n for the base alone.</p>
+<pre class="example"><span class="prompt">      </span><span class="c-string">&quot;lo:&quot;</span> <a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="libs-LoRA-src-LoRA.xtl.html" class="c-string">&quot;LoRA&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span>(<span class="c-number">16</span>, <span class="c-number">64</span>) <a href="libs-LoRA-src-LoRA.xtl.html#l.q_bytes" class="c-libfunc">ˡᵒq̲bytes</a> <span class="c-number">4096</span> <span class="c-number">14336</span>
+33030144.0 589824.0 2359296.0</pre>
+</div>
+<pre class="code"><span class="c-libfunc">ˡq̲bytes</span> ← { (r, k) mn →
+  n ← r <a href="libs-LoRA-src-LoRA.xtl.html#l.p_arams" class="c-libfunc">ˡp̲arams</a> mn
+  ((<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> mn) <a href="builtins.html#-2a" class="c-symbol">×</a> (<span class="c-number">4.0</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">32.0</span> <a href="builtins.html#-2f" class="c-symbol">÷</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> k) <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-number">8.0</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-number">16</span> <a href="libs-LoRA-src-LoRA.xtl.html#l.b_ytes" class="c-libfunc">ˡb̲ytes</a> n) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">2.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">32</span> <a href="libs-LoRA-src-LoRA.xtl.html#l.b_ytes" class="c-libfunc">ˡb̲ytes</a> n
+}</pre>
+</div>
+<h2 class="section" id="section-8">Rank</h2>
+<div class="item" id="h.s_tep">
+<h3><a href="#h.s_tep"><span class="c-libfunc">ʰs̲tep</span></a> <span class="type">: Num a =&gt; Float -&gt; (Float, Int, a) -&gt; (Float, Int, a)</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="libs-LoRA-src-LoRA.xtl.src.html#L329">line 329</a></div>
+<div class="doc">
+<p>One step of Gram-Schmidt on the rows: the k-th row's remainder R[k],
+if larger than tol, becomes a direction and is taken out of every
+row, and the count c goes up.</p>
+</div>
+<pre class="code"><span class="c-libfunc">ʰs̲tep</span> ← { tol (R, k, c) →
+  v ← k <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> R
+  n ← <a href="builtins.html#s_qrt" class="c-builtin">s̲qrt</a> <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> v <a href="builtins.html#-2a" class="c-symbol">×</a> v
+  n <a href="builtins.html#-3c-3d" class="c-symbol">≤</a> tol ? (R, k <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">1</span>, c)
+  (R <a href="builtins.html#-2d" class="c-symbol">−</a> (R <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#i_nner" class="c-builtin">i̲nner</a> v <a href="builtins.html#-2f" class="c-symbol">÷</a> n) <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> v <a href="builtins.html#-2f" class="c-symbol">÷</a> n, k <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">1</span>, c <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">1</span>)
+}</pre>
+<div class="uses">Used in: <a href="libs-LoRA-src-LoRA.xtl.html#l.r_ank"><span class="c-libfunc">ˡr̲ank</span></a></div>
+</div>
+<div class="item" id="l.r_ank">
+<h3><a href="#l.r_ank"><span class="c-libfunc">ˡr̲ank</span></a> <span class="type">: Num a =&gt; Float -&gt; a</span></h3>
+<div class="meta">function &middot; <a href="libs-LoRA-src-LoRA.xtl.src.html#L343">line 343</a></div>
+<div class="doc">
+<p><code><span class="c-builtin">r̲ank</span> M</code>: the number of independent rows of the matrix M (its
+rank), by Gram-Schmidt: a row counts when what is left of it, after
+the directions of the rows before it are taken out, is larger than
+1e-9 times the largest row.</p>
+<pre class="example"><span class="prompt">      </span><span class="c-string">&quot;lo:&quot;</span> <a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="libs-LoRA-src-LoRA.xtl.html" class="c-string">&quot;LoRA&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span><a href="libs-LoRA-src-LoRA.xtl.html#l.r_ank" class="c-libfunc">ˡᵒr̲ank</a> <span class="c-number">3</span> <span class="c-number">3</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">1.0</span> <span class="c-number">2.0</span> <span class="c-number">3.0</span> <span class="c-number">2.0</span> <span class="c-number">4.0</span> <span class="c-number">6.0</span> <span class="c-number">0.0</span> <span class="c-number">1.0</span> <span class="c-number">1.0</span>
+2</pre>
+</div>
+<pre class="code"><span class="c-libfunc">ˡr̲ank</span> ← { M →
+  tol ← <span class="c-number">0.000000001</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#s_qrt" class="c-builtin">s̲qrt</a> <span class="c-builtin">'</span><a href="builtins.html#m_ax" class="c-builtin">m̲ax</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/₂</a> M <a href="builtins.html#-2a" class="c-symbol">×</a> M
+  (_, _, c) ← (<a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> <a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> M) <span class="c-quote">'</span>{ R → tol <a href="libs-LoRA-src-LoRA.xtl.html#h.s_tep" class="c-libfunc">ʰs̲tep</a> R } <a href="builtins.html#p_ower" class="c-builtin">p̲ower</a> (M, <span class="c-number">1</span>, <span class="c-number">0</span>)
+  c
+}</pre>
+<div class="uses">Used in: <a href="libs-LoRA-demos-sizes.xtl.src.html#L23">libs/LoRA/demos/sizes.xtl:23</a>, <a href="demos-lora-explorer-lora-explorer.xtl.src.html#L75">demos/lora-explorer/lora-explorer.xtl:75</a></div>
+</div>
+<h2 class="section" id="section-9">Counts</h2>
+<div class="item" id="l.p_arams">
+<h3><a href="#l.p_arams"><span class="c-libfunc">ˡp̲arams</span></a> <span class="type">: Num a =&gt; a -&gt; a -&gt; a</span></h3>
+<div class="meta">function &middot; <a href="libs-LoRA-src-LoRA.xtl.src.html#L357">line 357</a></div>
+<div class="doc">
+<p><code>r <span class="c-builtin">p̲arams</span> m n</code>: the numbers an adapter of rank r on an m x n matrix
+trains, r (m + n) (B's m r and A's r n), against the m n of the
+matrix itself.</p>
+<pre class="example"><span class="prompt">      </span><span class="c-string">&quot;lo:&quot;</span> <a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="libs-LoRA-src-LoRA.xtl.html" class="c-string">&quot;LoRA&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span><span class="c-number">16</span> <a href="libs-LoRA-src-LoRA.xtl.html#l.p_arams" class="c-libfunc">ˡᵒp̲arams</a> <span class="c-number">4096</span> <span class="c-number">14336</span>
+294912</pre>
+</div>
+<pre class="code"><span class="c-libfunc">ˡp̲arams</span> ← { r mn → r <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> mn }</pre>
+<div class="uses">Used in: <a href="libs-LoRA-src-LoRA.xtl.html#l.q_bytes"><span class="c-libfunc">ˡq̲bytes</span></a>, <a href="libs-LoRA-src-LoRA.xtl.html#l.e_xpert"><span class="c-libfunc">ˡe̲xpert</span></a>, <a href="libs-LoRA-src-LoRA.xtl.html#l.c_osts"><span class="c-libfunc">ˡc̲osts</span></a>, <a href="libs-LoRA-demos-sizes.xtl.src.html#L21">libs/LoRA/demos/sizes.xtl:21</a>, <a href="demos-lora-explorer-lora-explorer.xtl.src.html#L79">demos/lora-explorer/lora-explorer.xtl:79</a>, <a href="demos-lora-explorer-lora-explorer.xtl.src.html#L270">demos/lora-explorer/lora-explorer.xtl:270</a></div>
+</div>
+<div class="item" id="l.e_xpert">
+<h3><a href="#l.e_xpert"><span class="c-libfunc">ˡe̲xpert</span></a> <span class="type">: Num a =&gt; a -&gt; a -&gt; a</span></h3>
+<div class="meta">function &middot; <a href="libs-LoRA-src-LoRA.xtl.src.html#L365">line 365</a></div>
+<div class="doc">
+<p><code>r <span class="c-builtin">e̲xpert</span> d f</code>: the numbers rank-r adapters train on one SwiGLU
+expert of hidden size d and inner size f: its three matrices (gate
+and up, f x d; down, d x f), 3 r (d + f).</p>
+<pre class="example"><span class="prompt">      </span><span class="c-string">&quot;lo:&quot;</span> <a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="libs-LoRA-src-LoRA.xtl.html" class="c-string">&quot;LoRA&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span><span class="c-number">16</span> <a href="libs-LoRA-src-LoRA.xtl.html#l.e_xpert" class="c-libfunc">ˡᵒe̲xpert</a> <span class="c-number">4096</span> <span class="c-number">14336</span>
+884736</pre>
+</div>
+<pre class="code"><span class="c-libfunc">ˡe̲xpert</span> ← { r df → <span class="c-number">3</span> <a href="builtins.html#-2a" class="c-symbol">×</a> r <a href="libs-LoRA-src-LoRA.xtl.html#l.p_arams" class="c-libfunc">ˡp̲arams</a> df }</pre>
+<div class="uses">Used in: <a href="libs-LoRA-demos-sizes.xtl.html#u.e_xpert"><span class="c-userfunc">ᵘe̲xpert</span></a>, <a href="demos-lora-explorer-lora-explorer.xtl.html#n">n</a></div>
+</div>
+<div class="item" id="l.e_xpertFA">
+<h3><a href="#l.e_xpertFA"><span class="c-libfunc">ˡe̲xpertFA</span></a> <span class="type">: Num a =&gt; a -&gt; a -&gt; a</span></h3>
+<div class="meta">function &middot; <a href="libs-LoRA-src-LoRA.xtl.src.html#L373">line 373</a></div>
+<div class="doc">
+<p><code>r <span class="c-builtin">e̲xpertFA</span> d f</code>: the same expert under LoRA-FA: the numbers it
+trains (the B's, r (2f + d)), then the frozen A's it regenerates
+(r (2d + f)); together r e_xpert d f.</p>
+<pre class="example"><span class="prompt">      </span><span class="c-string">&quot;lo:&quot;</span> <a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="libs-LoRA-src-LoRA.xtl.html" class="c-string">&quot;LoRA&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span><span class="c-number">16</span> <a href="libs-LoRA-src-LoRA.xtl.html#l.e_xpertFA" class="c-libfunc">ˡᵒe̲xpertFA</a> <span class="c-number">4096</span> <span class="c-number">14336</span>
+524288 360448</pre>
+</div>
+<pre class="code"><span class="c-libfunc">ˡe̲xpertFA</span> ← { r df →
+  (d, f) ← (<a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> df, <span class="c-number">2</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> df)
+  (r <a href="builtins.html#-2a" class="c-symbol">×</a> f <a href="builtins.html#-2b" class="c-symbol">+</a> f <a href="builtins.html#-2b" class="c-symbol">+</a> d) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> r <a href="builtins.html#-2a" class="c-symbol">×</a> d <a href="builtins.html#-2b" class="c-symbol">+</a> d <a href="builtins.html#-2b" class="c-symbol">+</a> f
+}</pre>
+</div>
+<div class="item" id="l.b_ytes">
+<h3><a href="#l.b_ytes"><span class="c-libfunc">ˡb̲ytes</span></a> <span class="type">: Num a =&gt; a -&gt; a -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="libs-LoRA-src-LoRA.xtl.src.html#L383">line 383</a></div>
+<div class="doc">
+<p><code>b <span class="c-builtin">b̲ytes</span> n</code>: the bytes n numbers take at b bits each (16 for BF16
+and FP16, 32 for FP32, 4 for NF4).</p>
+<pre class="example"><span class="prompt">      </span><span class="c-string">&quot;lo:&quot;</span> <a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="libs-LoRA-src-LoRA.xtl.html" class="c-string">&quot;LoRA&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span><span class="c-number">16</span> <a href="libs-LoRA-src-LoRA.xtl.html#l.b_ytes" class="c-libfunc">ˡᵒb̲ytes</a> <span class="c-number">884736</span>
+1769472.0</pre>
+</div>
+<pre class="code"><span class="c-libfunc">ˡb̲ytes</span> ← { b n → (<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> b <a href="builtins.html#-2a" class="c-symbol">×</a> n) <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-number">8.0</span> }</pre>
+<div class="uses">Used in: <a href="libs-LoRA-src-LoRA.xtl.html#l.q_bytes"><span class="c-libfunc">ˡq̲bytes</span></a>, <a href="libs-LoRA-demos-sizes.xtl.html#mib">mib</a>, <a href="demos-lora-explorer-lora-explorer.xtl.html#mib">mib</a></div>
+</div>
+<div class="item" id="l.c_osts">
+<h3><a href="#l.c_osts"><span class="c-libfunc">ˡc̲osts</span></a> <span class="type">: Num a =&gt; a -&gt; a -&gt; a</span></h3>
+<div class="meta">function &middot; <a href="libs-LoRA-src-LoRA.xtl.src.html#L391">line 391</a></div>
+<div class="doc">
+<p><code>r <span class="c-builtin">c̲osts</span> m n</code>: the multiply-adds for one input through rank-r
+factors on an m x n matrix, B (A x) as r (m + n), then what making
+the matrix B A first costs, r m n.</p>
+<pre class="example"><span class="prompt">      </span><span class="c-string">&quot;lo:&quot;</span> <a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="libs-LoRA-src-LoRA.xtl.html" class="c-string">&quot;LoRA&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span><span class="c-number">8</span> <a href="libs-LoRA-src-LoRA.xtl.html#l.c_osts" class="c-libfunc">ˡᵒc̲osts</a> <span class="c-number">64</span> <span class="c-number">64</span>
+1024 32768</pre>
+</div>
+<pre class="code"><span class="c-libfunc">ˡc̲osts</span> ← { r mn → (r <a href="libs-LoRA-src-LoRA.xtl.html#l.p_arams" class="c-libfunc">ˡp̲arams</a> mn) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> r <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> mn }</pre>
+<div class="uses">Used in: <a href="demos-lora-explorer-lora-explorer.xtl.src.html#L80">demos/lora-explorer/lora-explorer.xtl:80</a></div>
+</div>
+<div class="item" id="l.p_aramsV">
+<h3><a href="#l.p_aramsV"><span class="c-libfunc">ˡp̲aramsV</span></a> <span class="type">: Num a =&gt; a -&gt; a -&gt; a</span></h3>
+<div class="meta">function &middot; <a href="libs-LoRA-src-LoRA.xtl.src.html#L400">line 400</a></div>
+<div class="doc">
+<p><code>r <span class="c-builtin">p̲aramsV</span> m n</code>: the numbers VeRA trains on an m x n matrix at rank
+r, m + r (b's m and d's r), against LoRA's r (m + n); its frozen
+projections, r (m + n) numbers, are shared by every matrix of the
+shape (or regenerated from their seed).</p>
+<pre class="example"><span class="prompt">      </span><span class="c-string">&quot;lo:&quot;</span> <a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="libs-LoRA-src-LoRA.xtl.html" class="c-string">&quot;LoRA&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span><span class="c-number">16</span> <a href="libs-LoRA-src-LoRA.xtl.html#l.p_aramsV" class="c-libfunc">ˡᵒp̲aramsV</a> <span class="c-number">14336</span> <span class="c-number">4096</span>
+14352</pre>
+</div>
+<pre class="code"><span class="c-libfunc">ˡp̲aramsV</span> ← { r mn → r <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> mn }</pre>
+<div class="uses">Used in: <a href="demos-lora-explorer-lora-explorer.xtl.src.html#L270">demos/lora-explorer/lora-explorer.xtl:270</a></div>
+</div>
+<div class="item" id="l.e_xpertV">
+<h3><a href="#l.e_xpertV"><span class="c-libfunc">ˡe̲xpertV</span></a> <span class="type">: Num a =&gt; a -&gt; a -&gt; a</span></h3>
+<div class="meta">function &middot; <a href="libs-LoRA-src-LoRA.xtl.src.html#L410">line 410</a></div>
+<div class="doc">
+<p><code>r <span class="c-builtin">e̲xpertV</span> d f</code>: the numbers VeRA trains on one SwiGLU expert of
+hidden size d and inner size f, its three matrices at rank r: m + r
+each, 2 f + d + 3 r. The projections are frozen and shared by every
+expert: two pairs (one for gate and up, f x d; one for down, d x f),
+2 r (d + f) numbers, once.</p>
+<pre class="example"><span class="prompt">      </span><span class="c-string">&quot;lo:&quot;</span> <a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="libs-LoRA-src-LoRA.xtl.html" class="c-string">&quot;LoRA&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span><span class="c-number">16</span> <a href="libs-LoRA-src-LoRA.xtl.html#l.e_xpertV" class="c-libfunc">ˡᵒe̲xpertV</a> <span class="c-number">4096</span> <span class="c-number">14336</span>
+32816</pre>
+</div>
+<pre class="code"><span class="c-libfunc">ˡe̲xpertV</span> ← { r df → (<span class="c-number">3</span> <a href="builtins.html#-2a" class="c-symbol">×</a> r) <a href="builtins.html#-2b" class="c-symbol">+</a> (<span class="c-number">2</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">2</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> df) <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> df }</pre>
+<div class="uses">Used in: <a href="demos-lora-explorer-lora-explorer.xtl.src.html#L271">demos/lora-explorer/lora-explorer.xtl:271</a></div>
+</div>
+</main>
+</body>
+</html>

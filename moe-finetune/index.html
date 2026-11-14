@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>MoE fine-tuning</title>
+  
+<script type="module">
+import init, * as bindings from '/X_eTaL-ML/moe-finetune/moe-finetune-web-f67ca0916f8bfa7d.js';
+const wasm = await init({ module_or_path: '/X_eTaL-ML/moe-finetune/moe-finetune-web-f67ca0916f8bfa7d_bg.wasm' });
+
+
+window.wasmBindings = bindings;
+
+
+dispatchEvent(new CustomEvent("TrunkApplicationStarted", {detail: {wasm}}));
+
+</script>
+  
+  <link rel="icon" href="/X_eTaL-ML/moe-finetune/favicon-a11bc0a2bcd81290.ico" integrity="sha384-xOjSLs9ZRBKy2hF6zlqNv+0U86E4BqZOJy7H7a4GXSVwDQMNie0D851/sRBSYI9a"/>
+  <link rel="stylesheet" href="/X_eTaL-ML/moe-finetune/microscope-22257fd62318e7bf.css" integrity="sha384-HhCElH/+Dn/dCD6BMktfya0hcEUbJTzOz+U+aDZwhSMfcwqIb3L1cSWYSUVqWKI9"/>
+  <style>
+    table.methods tr.method { cursor: pointer; }
+    table.methods tr.picked td { background: var(--off); }
+    table.methods .what { color: var(--muted); font-size: .8rem; }
+    td.num { font-variant-numeric: tabular-nums; white-space: nowrap; }
+    td.pass { color: #1f7a3a; font-weight: 700; }
+    td.fail { color: #c92a2a; }
+    table.routing { width: 100%; }
+    table.routing td { white-space: nowrap; }
+    table.routing td:not(:first-child) { width: 45%; }
+    .hbar { display: inline-block; height: 10px; border-radius: 2px; vertical-align: middle; margin-right: 6px; max-width: 70%; }
+    .hbar.before { background: #adb5bd; }
+    .hbar.after { background: #9775fa; }
+    .v { font-size: .8rem; font-variant-numeric: tabular-nums; }
+    figure.chart { margin: 8px 0; }
+    figure.chart svg { display: block; max-width: 100%; height: auto; }
+    figure.chart .grid { stroke: var(--line); }
+    figure.chart .tick { font-size: 11px; fill: var(--muted); }
+    figure.chart .tick.end { text-anchor: end; }
+    figure.chart .tick.mid { text-anchor: middle; }
+    figure.chart .line { fill: none; stroke: #9775fa; stroke-width: 2.5; }
+    figure.chart figcaption { font-size: .8rem; color: var(--muted); }
+  </style>
+<link rel="modulepreload" href="/X_eTaL-ML/moe-finetune/moe-finetune-web-f67ca0916f8bfa7d.js" crossorigin="anonymous" integrity="sha384-rExCmiISjwAhwvccb4IBPO0Cgf25YUCr0Fxj1k9n71aHs1tCs3Fe+vRmwOnPI7sp"><link rel="preload" href="/X_eTaL-ML/moe-finetune/moe-finetune-web-f67ca0916f8bfa7d_bg.wasm" crossorigin="anonymous" integrity="sha384-7bWfL2fUckh/lpQgtkkENlRMAHV4bpkzs0ZLZvddk1B4a9rHQbH0OyNRQUVolXAV" as="fetch" type="application/wasm"></head>
+<body></body>
+</html>

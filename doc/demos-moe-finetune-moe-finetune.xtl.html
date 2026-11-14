@@ -1,0 +1,976 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>demos/moe-finetune/moe-finetune.xtl - X_eTaL doc</title>
+<link rel="stylesheet" href="style.css">
+<script src="theme.js"></script>
+<script defer src="search-index.js"></script>
+<script defer src="search.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.18.10/dist/katex.min.css" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.18.10/dist/katex.min.js" crossorigin="anonymous"></script>
+<script>document.addEventListener('DOMContentLoaded', function () {
+if (typeof katex === 'undefined') return;
+document.querySelectorAll('.c-notation').forEach(function (el) {
+var tex = el.textContent; if (!tex) return;
+try { katex.render(tex, el, { throwOnError: false }); } catch (e) { el.textContent = tex; }
+});
+});</script>
+</head>
+<body>
+<nav class="side">
+<a class="home" href="index.html">X_eTaL doc</a>
+<input id="search" type="search" autocomplete="off" placeholder="Search: a name, or a type" title="A name (mean finds m_ean), or a type: Num a =&gt; a -&gt; a -&gt; a finds +, m_ax ...">
+<h2>Files</h2>
+<h3>demos/activations/</h3>
+<ul>
+<li><a href="demos-activations-activations.xtl.html">activations.xtl</a></li>
+</ul>
+<h3>demos/attention/</h3>
+<ul>
+<li><a href="demos-attention-attention.xtl.html">attention.xtl</a></li>
+</ul>
+<h3>demos/backprop/</h3>
+<ul>
+<li><a href="demos-backprop-backprop.xtl.html">backprop.xtl</a></li>
+</ul>
+<h3>demos/cnn-backprop/</h3>
+<ul>
+<li><a href="demos-cnn-backprop-cnn-backprop.xtl.html">cnn-backprop.xtl</a></li>
+</ul>
+<h3>demos/cnn-digits/</h3>
+<ul>
+<li><a href="demos-cnn-digits-batch.xtl.html">batch.xtl</a></li>
+<li><a href="demos-cnn-digits-cnn-digits.xtl.html">cnn-digits.xtl</a></li>
+</ul>
+<h3>demos/diffusion/</h3>
+<ul>
+<li><a href="demos-diffusion-diffusion.xtl.html">diffusion.xtl</a></li>
+</ul>
+<h3>demos/embedding-explorer/</h3>
+<ul>
+<li><a href="demos-embedding-explorer-embedding-explorer.xtl.html">embedding-explorer.xtl</a></li>
+</ul>
+<h3>demos/k-means/</h3>
+<ul>
+<li><a href="demos-k-means-k-means.xtl.html">k-means.xtl</a></li>
+</ul>
+<h3>demos/lora-explorer/</h3>
+<ul>
+<li><a href="demos-lora-explorer-lora-explorer.xtl.html">lora-explorer.xtl</a></li>
+</ul>
+<h3>demos/micro-bert/</h3>
+<ul>
+<li><a href="demos-micro-bert-micro-bert.xtl.html">micro-bert.xtl</a></li>
+</ul>
+<h3>demos/micro-gpt/</h3>
+<ul>
+<li><a href="demos-micro-gpt-batch.xtl.html">batch.xtl</a></li>
+<li><a href="demos-micro-gpt-micro-gpt.xtl.html">micro-gpt.xtl</a></li>
+</ul>
+<h3>demos/moe-finetune/</h3>
+<ul>
+<li><a href="demos-moe-finetune-base.xtl.html">base.xtl</a></li>
+<li><a href="demos-moe-finetune-moe-finetune.xtl.html">moe-finetune.xtl</a></li>
+</ul>
+<h3>demos/moe-router/</h3>
+<ul>
+<li><a href="demos-moe-router-moe-router.xtl.html">moe-router.xtl</a></li>
+</ul>
+<h3>demos/net-macro/</h3>
+<ul>
+<li><a href="demos-net-macro-net-macro.xtl.html">net-macro.xtl</a></li>
+<li><a href="demos-net-macro-train-it.xtl.html">train-it.xtl</a></li>
+</ul>
+<h3>demos/pipelines/</h3>
+<ul>
+<li><a href="demos-pipelines-diffusion.xtl.html">diffusion.xtl</a></li>
+<li><a href="demos-pipelines-equations.xtl.html">equations.xtl</a></li>
+<li><a href="demos-pipelines-pipelines.xtl.html">pipelines.xtl</a></li>
+<li><a href="demos-pipelines-rosetta.xtl.html">rosetta.xtl</a></li>
+</ul>
+<h3>demos/ternary-net/</h3>
+<ul>
+<li><a href="demos-ternary-net-ternary-net.xtl.html">ternary-net.xtl</a></li>
+</ul>
+<h3>demos/train-live/</h3>
+<ul>
+<li><a href="demos-train-live-train-live.xtl.html">train-live.xtl</a></li>
+</ul>
+<h3>demos/world-model/</h3>
+<ul>
+<li><a href="demos-world-model-world-model.xtl.html">world-model.xtl</a></li>
+</ul>
+<h3>libs/Activations/demos/</h3>
+<ul>
+<li><a href="libs-Activations-demos-curves.xtl.html">curves.xtl</a></li>
+</ul>
+<h3>libs/Activations/src/</h3>
+<ul>
+<li><a href="libs-Activations-src-Activations.xtl.html">Activations.xtl</a></li>
+</ul>
+<h3>libs/Attention/demos/</h3>
+<ul>
+<li><a href="libs-Attention-demos-previous.xtl.html">previous.xtl</a></li>
+</ul>
+<h3>libs/Attention/src/</h3>
+<ul>
+<li><a href="libs-Attention-src-Attention.xtl.html">Attention.xtl</a></li>
+</ul>
+<h3>libs/Conv/demos/</h3>
+<ul>
+<li><a href="libs-Conv-demos-edges.xtl.html">edges.xtl</a></li>
+</ul>
+<h3>libs/Conv/src/</h3>
+<ul>
+<li><a href="libs-Conv-src-Conv.xtl.html">Conv.xtl</a></li>
+</ul>
+<h3>libs/Embed/demos/</h3>
+<ul>
+<li><a href="libs-Embed-demos-pets.xtl.html">pets.xtl</a></li>
+</ul>
+<h3>libs/Embed/src/</h3>
+<ul>
+<li><a href="libs-Embed-src-Embed.xtl.html">Embed.xtl</a></li>
+</ul>
+<h3>libs/Flow/demos/</h3>
+<ul>
+<li><a href="libs-Flow-demos-mlp.xtl.html">mlp.xtl</a></li>
+</ul>
+<h3>libs/Flow/src/</h3>
+<ul>
+<li><a href="libs-Flow-src-Flow.xtlm.html">Flow.xtlm</a></li>
+</ul>
+<h3>libs/Integrals/demos/</h3>
+<ul>
+<li><a href="libs-Integrals-demos-convolution.xtl.html">convolution.xtl</a></li>
+<li><a href="libs-Integrals-demos-gelu.xtl.html">gelu.xtl</a></li>
+</ul>
+<h3>libs/Integrals/src/</h3>
+<ul>
+<li><a href="libs-Integrals-src-Integrals.xtlm.html">Integrals.xtlm</a></li>
+</ul>
+<h3>libs/Learn/demos/</h3>
+<ul>
+<li><a href="libs-Learn-demos-blobs.xtl.html">blobs.xtl</a></li>
+</ul>
+<h3>libs/Learn/src/</h3>
+<ul>
+<li><a href="libs-Learn-src-Learn.xtl.html">Learn.xtl</a></li>
+</ul>
+<h3>libs/LoRA/demos/</h3>
+<ul>
+<li><a href="libs-LoRA-demos-sizes.xtl.html">sizes.xtl</a></li>
+</ul>
+<h3>libs/LoRA/src/</h3>
+<ul>
+<li><a href="libs-LoRA-src-LoRA.xtl.html">LoRA.xtl</a></li>
+<li><a href="libs-LoRA-src-LoRA.xtlm.html">LoRA.xtlm</a></li>
+</ul>
+<h3>libs/MoE/demos/</h3>
+<ul>
+<li><a href="libs-MoE-demos-routing.xtl.html">routing.xtl</a></li>
+</ul>
+<h3>libs/MoE/src/</h3>
+<ul>
+<li><a href="libs-MoE-src-MoE.xtl.html">MoE.xtl</a></li>
+</ul>
+<h3>libs/Net/demos/</h3>
+<ul>
+<li><a href="libs-Net-demos-train-xor.xtl.html">train-xor.xtl</a></li>
+<li><a href="libs-Net-demos-xor.xtl.html">xor.xtl</a></li>
+</ul>
+<h3>libs/Net/src/</h3>
+<ul>
+<li><a href="libs-Net-src-Net.xtlm.html">Net.xtlm</a></li>
+</ul>
+<h3>libs/NN/demos/</h3>
+<ul>
+<li><a href="libs-NN-demos-xor.xtl.html">xor.xtl</a></li>
+</ul>
+<h3>libs/NN/src/</h3>
+<ul>
+<li><a href="libs-NN-src-NN.xtl.html">NN.xtl</a></li>
+</ul>
+<h3>libs/Norm/demos/</h3>
+<ul>
+<li><a href="libs-Norm-demos-rows.xtl.html">rows.xtl</a></li>
+</ul>
+<h3>libs/Norm/src/</h3>
+<ul>
+<li><a href="libs-Norm-src-Norm.xtl.html">Norm.xtl</a></li>
+</ul>
+<h3>libs/Optim/demos/</h3>
+<ul>
+<li><a href="libs-Optim-demos-bowl.xtl.html">bowl.xtl</a></li>
+</ul>
+<h3>libs/Optim/src/</h3>
+<ul>
+<li><a href="libs-Optim-src-Optim.xtl.html">Optim.xtl</a></li>
+</ul>
+<h3>libs/Quant/demos/</h3>
+<ul>
+<li><a href="libs-Quant-demos-formats.xtl.html">formats.xtl</a></li>
+</ul>
+<h3>libs/Quant/src/</h3>
+<ul>
+<li><a href="libs-Quant-src-Quant.xtl.html">Quant.xtl</a></li>
+</ul>
+<h3>libs/Sample/demos/</h3>
+<ul>
+<li><a href="libs-Sample-demos-next.xtl.html">next.xtl</a></li>
+</ul>
+<h3>libs/Sample/src/</h3>
+<ul>
+<li><a href="libs-Sample-src-Sample.xtl.html">Sample.xtl</a></li>
+</ul>
+<h3>std/</h3>
+<ul>
+<li><a href="std-Svg.xtl.html">Svg.xtl</a></li>
+<li><a href="std-System.xtlm.html">System.xtlm</a></li>
+</ul>
+<h3>work/libs/Check/src/</h3>
+<ul>
+<li><a href="work-libs-Check-src-Check.xtl.html">Check.xtl</a></li>
+<li><a href="work-libs-Check-src-Check.xtlm.html">Check.xtlm</a></li>
+</ul>
+<h3>work/libs/Equations/src/</h3>
+<ul>
+<li><a href="work-libs-Equations-src-Equations.xtl.html">Equations.xtl</a></li>
+<li><a href="work-libs-Equations-src-Equations.xtlm.html">Equations.xtlm</a></li>
+</ul>
+<h3>work/libs/Format/src/</h3>
+<ul>
+<li><a href="work-libs-Format-src-Format.xtl.html">Format.xtl</a></li>
+</ul>
+<h3>work/libs/Lists/src/</h3>
+<ul>
+<li><a href="work-libs-Lists-src-Lists.xtl.html">Lists.xtl</a></li>
+</ul>
+<h3>work/libs/Plot/src/</h3>
+<ul>
+<li><a href="work-libs-Plot-src-Plot.xtl.html">Plot.xtl</a></li>
+</ul>
+<h3>work/libs/Strings/src/</h3>
+<ul>
+<li><a href="work-libs-Strings-src-Strings.xtl.html">Strings.xtl</a></li>
+</ul>
+<ul>
+<li><a href="builtins.html">built-ins</a></li>
+</ul>
+<h2>On this page</h2>
+<ul>
+<li><a href="#section-1">The tokens</a></li>
+<li class="item"><a href="#u.r_ead"><span class="c-userfunc">ᵘr̲ead</span></a></li>
+<li class="item"><a href="#u.c_olumns"><span class="c-userfunc">ᵘc̲olumns</span></a></li>
+<li class="item"><a href="#x">x</a></li>
+<li class="item"><a href="#Y">Y</a></li>
+<li class="item"><a href="#xn">xn</a></li>
+<li class="item"><a href="#Yn">Yn</a></li>
+<li class="item"><a href="#xa">xa</a></li>
+<li class="item"><a href="#Ya">Ya</a></li>
+<li class="item"><a href="#ka">ka</a></li>
+<li class="item"><a href="#xo">xo</a></li>
+<li class="item"><a href="#Yo">Yo</a></li>
+<li class="item"><a href="#xb">xb</a></li>
+<li class="item"><a href="#Yb">Yb</a></li>
+<li class="item"><a href="#kb">kb</a></li>
+<li class="item"><a href="#old">old</a></li>
+<li class="item"><a href="#xr">xr</a></li>
+<li class="item"><a href="#Yr">Yr</a></li>
+<li class="item"><a href="#mixed">mixed</a></li>
+<li><a href="#section-2">The base, with room for a new expert</a></li>
+<li class="item"><a href="#w">w</a></li>
+<li class="item"><a href="#S">S</a></li>
+<li class="item"><a href="#R0">R0</a></li>
+<li class="item"><a href="#W0">W0</a></li>
+<li class="item"><a href="#s">s</a></li>
+<li class="item"><a href="#u.o_ne"><span class="c-userfunc">ᵘo̲ne</span></a></li>
+<li class="item"><a href="#u.l_ayers"><span class="c-userfunc">ᵘl̲ayers</span></a></li>
+<li class="item"><a href="#u.a_ccuracy"><span class="c-userfunc">ᵘa̲ccuracy</span></a></li>
+<li class="item"><a href="#u.s_hare"><span class="c-userfunc">ᵘs̲hare</span></a></li>
+<li class="item"><a href="#u.p_er"><span class="c-userfunc">ᵘp̲er</span></a></li>
+<li class="item"><a href="#base">base</a></li>
+<li><a href="#section-3">The new expert's router row</a></li>
+<li class="item"><a href="#u.m_ean"><span class="c-userfunc">ᵘm̲ean</span></a></li>
+<li class="item"><a href="#zn">zn</a></li>
+<li class="item"><a href="#zo">zo</a></li>
+<li class="item"><a href="#d">d</a></li>
+<li class="item"><a href="#r5">r5</a></li>
+<li class="item"><a href="#R5">R5</a></li>
+<li><a href="#section-4">A method</a></li>
+<li class="item"><a href="#u.g_rads6"><span class="c-userfunc">ᵘg̲rads6</span></a></li>
+<li class="item"><a href="#u.s_tep"><span class="c-userfunc">ᵘs̲tep</span></a></li>
+<li class="item"><a href="#u.t_une"><span class="c-userfunc">ᵘt̲une</span></a></li>
+<li class="item"><a href="#u.s_ize"><span class="c-userfunc">ᵘs̲ize</span></a></li>
+<li class="item"><a href="#u.r_eport"><span class="c-userfunc">ᵘr̲eport</span></a></li>
+<li class="item"><a href="#picked">picked</a></li>
+<li class="item"><a href="#none">none</a></li>
+<li class="item"><a href="#shared">shared</a></li>
+<li class="item"><a href="#experts">experts</a></li>
+<li class="item"><a href="#both">both</a></li>
+<li class="item"><a href="#selected">selected</a></li>
+<li class="item"><a href="#router">router</a></li>
+<li class="item"><a href="#added">added</a></li>
+<li class="item"><a href="#u.r_ound"><span class="c-userfunc">ᵘr̲ound</span></a></li>
+<li><a href="#section-5">Four adapters compared</a></li>
+<li class="item"><a href="#u.p_ad"><span class="c-userfunc">ᵘp̲ad</span></a></li>
+<li class="item"><a href="#u.e_ffective"><span class="c-userfunc">ᵘe̲ffective</span></a></li>
+<li class="item"><a href="#u.c_hain"><span class="c-userfunc">ᵘc̲hain</span></a></li>
+<li class="item"><a href="#u.s_tartC"><span class="c-userfunc">ᵘs̲tartC</span></a></li>
+<li class="item"><a href="#u.s_tepC"><span class="c-userfunc">ᵘs̲tepC</span></a></li>
+<li class="item"><a href="#u.c_ompare"><span class="c-userfunc">ᵘc̲ompare</span></a></li>
+<li class="item"><a href="#equalRanks">equalRanks</a></li>
+<li class="item"><a href="#equalBudgets">equalBudgets</a></li>
+<li><a href="#section-6">Each method, seed 1, 120 steps</a></li>
+<li class="item"><a href="#u.r_ow"><span class="c-userfunc">ᵘr̲ow</span></a></li>
+<li class="item"><a href="#u.a_ll"><span class="c-userfunc">ᵘa̲ll</span></a></li>
+<li><a href="#section-7">The four adapters, seed 1, 120 steps, on the new tokens alone</a></li>
+<li class="item"><a href="#u.l_ine"><span class="c-userfunc">ᵘl̲ine</span></a></li>
+<li class="item"><a href="#u.f_our"><span class="c-userfunc">ᵘf̲our</span></a></li>
+</ul>
+</nav>
+<main>
+<button class="theme" title="Light or dark">theme</button>
+<section id="results"></section>
+<h1><span class="kind">program</span>demos/moe-finetune/moe-finetune.xtl</h1>
+<div class="doc">
+<p>Fine-tuning a tiny mixture-of-experts, each method in turn. The base
+(base.xtl, trained by train/base.xtl) classifies tokens of 4 kinds,
+each by its kind's own rule; the new task changes kind 3's rule. A
+method fine-tunes the base on 200 tokens of the new task (alone, or
+mixed with 200 of the old task's: replay), the base's own weights
+frozen, with LoRA adapters (rank 2) on some of its parts: the shared
+layer only; every expert, the router frozen; both; the two experts
+the new tokens use most; every expert with the router trained too;
+or a new expert, added with its own router row, trained alone. Each
+is measured by the new task's accuracy, the old task's (the kinds
+whose rule did not change: what fine-tuning must not break, 3 points
+the bar), the numbers it trains and their bytes, where the tokens are
+routed before and after, and how large each expert's update is.</p>
+</div>
+<p class="meta"><a href="demos-moe-finetune-moe-finetune.xtl.src.html">source</a> &middot; imports <code><span class="c-error">moe:</span></code> <a href="libs-MoE-src-MoE.xtl.html">libs/MoE/src/MoE.xtl</a>; <code><span class="c-error">lo:</span></code> <a href="libs-LoRA-src-LoRA.xtl.html">libs/LoRA/src/LoRA.xtl</a> <a href="libs-LoRA-src-LoRA.xtlm.html">libs/LoRA/src/LoRA.xtlm</a>; <code><span class="c-error">op:</span></code> <a href="libs-Optim-src-Optim.xtl.html">libs/Optim/src/Optim.xtl</a></p>
+<h2 class="section" id="section-1">The tokens</h2>
+<div class="item" id="u.r_ead">
+<h3><a href="#u.r_ead"><span class="c-userfunc">ᵘr̲ead</span></a> <span class="type">: Char -&gt; ((Float, Float), Int)</span></h3>
+<div class="meta">function &middot; <a href="demos-moe-finetune-moe-finetune.xtl.src.html#L24">line 24</a></div>
+<div class="doc">
+<p><code><span class="c-builtin">r̲ead</span> file</code>: (x, the classes one-hot, the kinds) of a data file:
+the inputs (9 x N, the 9th a constant 1), the kinds, the classes.</p>
+</div>
+<pre class="code"><span class="c-userfunc">ᵘr̲ead</span> ← { file →
+  v ← <a href="builtins.html#n_umbers" class="c-builtin">n̲umbers</a> <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> file
+  N ← (<a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> v) <a href="builtins.html#d_iv" class="c-builtin">d̲iv</a> <span class="c-number">11</span>
+  (((<span class="c-number">9</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> N) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> (<span class="c-number">9</span> <a href="builtins.html#-2a" class="c-symbol">×</a> N) <a href="builtins.html#t_ake" class="c-builtin">t̲ake</a> v, <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> (<a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <span class="c-number">3</span>) <span class="c-symbol">'</span><a href="builtins.html#-3d" class="c-symbol">=</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> <a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> (<a href="builtins.html#n_eg" class="c-builtin">n̲eg</a> N) <a href="builtins.html#t_ake" class="c-builtin">t̲ake</a> v), <a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> N <a href="builtins.html#t_ake" class="c-builtin">t̲ake</a> (<span class="c-number">9</span> <a href="builtins.html#-2a" class="c-symbol">×</a> N) <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> v)
+}</pre>
+<div class="uses">Used in: <a href="demos-moe-finetune-moe-finetune.xtl.html#x">x</a>, <a href="demos-moe-finetune-moe-finetune.xtl.html#xn">xn</a>, <a href="demos-moe-finetune-moe-finetune.xtl.html#xa">xa</a>, <a href="demos-moe-finetune-moe-finetune.xtl.html#xb">xb</a></div>
+</div>
+<div class="item" id="u.c_olumns">
+<h3><a href="#u.c_olumns"><span class="c-userfunc">ᵘc̲olumns</span></a> <span class="type">: Int -&gt; Float -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="demos-moe-finetune-moe-finetune.xtl.src.html#L30">line 30</a></div>
+<div class="doc">
+<p><code>idx <span class="c-builtin">c̲olumns</span> M</code>: the columns (tokens) idx of M.</p>
+</div>
+<pre class="code"><span class="c-userfunc">ᵘc̲olumns</span> ← { idx M → M <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#i_nner" class="c-builtin">i̲nner</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> (<a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <span class="c-number">2</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> M) <span class="c-symbol">'</span><a href="builtins.html#-3d" class="c-symbol">=</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> idx }</pre>
+<div class="uses">Used in: <a href="demos-moe-finetune-moe-finetune.xtl.html#xo">xo</a>, <a href="demos-moe-finetune-moe-finetune.xtl.html#xr">xr</a></div>
+</div>
+<div class="item" id="x">
+<h3><a href="#x">x</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-moe-finetune-moe-finetune.xtl.src.html#L33">line 33</a></div>
+<div class="doc">
+<p>The new task: 200 tokens of kind 3 by its new rule to fine-tune on,
+200 held out.</p>
+</div>
+<pre class="code">((<a href="demos-moe-finetune-moe-finetune.xtl.html#x">x</a>, <a href="demos-moe-finetune-moe-finetune.xtl.html#Y">Y</a>), _) ← <a href="demos-moe-finetune-moe-finetune.xtl.html#u.r_ead" class="c-userfunc">ᵘr̲ead</a> <span class="c-string">&quot;data/shift-train.txt&quot;</span></pre>
+<div class="uses">Used in: <a href="demos-moe-finetune-moe-finetune.xtl.html#x">x</a>, <a href="demos-moe-finetune-moe-finetune.xtl.html#mixed">mixed</a>, <a href="demos-moe-finetune-moe-finetune.xtl.html#u.l_ayers"><span class="c-userfunc">ᵘl̲ayers</span></a>, <a href="demos-moe-finetune-moe-finetune.xtl.html#u.a_ccuracy"><span class="c-userfunc">ᵘa̲ccuracy</span></a>, <a href="demos-moe-finetune-moe-finetune.xtl.html#zn">zn</a>, <a href="demos-moe-finetune-moe-finetune.xtl.html#picked">picked</a>, <a href="demos-moe-finetune-moe-finetune.xtl.src.html#L257">demos/moe-finetune/moe-finetune.xtl:257</a>, <a href="demos-moe-finetune-moe-finetune.xtl.html#u.l_ine"><span class="c-userfunc">ᵘl̲ine</span></a></div>
+</div>
+<div class="item" id="Y">
+<h3><a href="#Y">Y</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-moe-finetune-moe-finetune.xtl.src.html#L33">line 33</a></div>
+<div class="doc">
+<p>The new task: 200 tokens of kind 3 by its new rule to fine-tune on,
+200 held out.</p>
+</div>
+<pre class="code">((<a href="demos-moe-finetune-moe-finetune.xtl.html#x">x</a>, <a href="demos-moe-finetune-moe-finetune.xtl.html#Y">Y</a>), _) ← <a href="demos-moe-finetune-moe-finetune.xtl.html#u.r_ead" class="c-userfunc">ᵘr̲ead</a> <span class="c-string">&quot;data/shift-train.txt&quot;</span></pre>
+<div class="uses">Used in: <a href="demos-moe-finetune-moe-finetune.xtl.html#x">x</a>, <a href="demos-moe-finetune-moe-finetune.xtl.html#mixed">mixed</a>, <a href="demos-moe-finetune-moe-finetune.xtl.html#u.a_ccuracy"><span class="c-userfunc">ᵘa̲ccuracy</span></a>, <a href="demos-moe-finetune-moe-finetune.xtl.src.html#L257">demos/moe-finetune/moe-finetune.xtl:257</a>, <a href="demos-moe-finetune-moe-finetune.xtl.html#u.l_ine"><span class="c-userfunc">ᵘl̲ine</span></a></div>
+</div>
+<div class="item" id="xn">
+<h3><a href="#xn">xn</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-moe-finetune-moe-finetune.xtl.src.html#L34">line 34</a></div>
+<pre class="code">((<a href="demos-moe-finetune-moe-finetune.xtl.html#xn">xn</a>, <a href="demos-moe-finetune-moe-finetune.xtl.html#Yn">Yn</a>), _) ← <a href="demos-moe-finetune-moe-finetune.xtl.html#u.r_ead" class="c-userfunc">ᵘr̲ead</a> <span class="c-string">&quot;data/shift-test.txt&quot;</span></pre>
+<div class="uses">Used in: <a href="demos-moe-finetune-moe-finetune.xtl.html#xn">xn</a>, <a href="demos-moe-finetune-moe-finetune.xtl.html#u.r_eport"><span class="c-userfunc">ᵘr̲eport</span></a>, <a href="demos-moe-finetune-moe-finetune.xtl.html#u.l_ine"><span class="c-userfunc">ᵘl̲ine</span></a></div>
+</div>
+<div class="item" id="Yn">
+<h3><a href="#Yn">Yn</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-moe-finetune-moe-finetune.xtl.src.html#L34">line 34</a></div>
+<pre class="code">((<a href="demos-moe-finetune-moe-finetune.xtl.html#xn">xn</a>, <a href="demos-moe-finetune-moe-finetune.xtl.html#Yn">Yn</a>), _) ← <a href="demos-moe-finetune-moe-finetune.xtl.html#u.r_ead" class="c-userfunc">ᵘr̲ead</a> <span class="c-string">&quot;data/shift-test.txt&quot;</span></pre>
+<div class="uses">Used in: <a href="demos-moe-finetune-moe-finetune.xtl.html#xn">xn</a>, <a href="demos-moe-finetune-moe-finetune.xtl.html#u.r_eport"><span class="c-userfunc">ᵘr̲eport</span></a>, <a href="demos-moe-finetune-moe-finetune.xtl.html#u.l_ine"><span class="c-userfunc">ᵘl̲ine</span></a></div>
+</div>
+<div class="item" id="xa">
+<h3><a href="#xa">xa</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-moe-finetune-moe-finetune.xtl.src.html#L37">line 37</a></div>
+<div class="doc">
+<p>The old task: the held-out tokens of kinds 1, 2 and 4, whose rule
+the new task keeps (300).</p>
+</div>
+<pre class="code">((<a href="demos-moe-finetune-moe-finetune.xtl.html#xa">xa</a>, <a href="demos-moe-finetune-moe-finetune.xtl.html#Ya">Ya</a>), <a href="demos-moe-finetune-moe-finetune.xtl.html#ka">ka</a>) ← <a href="demos-moe-finetune-moe-finetune.xtl.html#u.r_ead" class="c-userfunc">ᵘr̲ead</a> <span class="c-string">&quot;data/test.txt&quot;</span></pre>
+<div class="uses">Used in: <a href="demos-moe-finetune-moe-finetune.xtl.html#xa">xa</a>, <a href="demos-moe-finetune-moe-finetune.xtl.html#xo">xo</a></div>
+</div>
+<div class="item" id="Ya">
+<h3><a href="#Ya">Ya</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-moe-finetune-moe-finetune.xtl.src.html#L37">line 37</a></div>
+<div class="doc">
+<p>The old task: the held-out tokens of kinds 1, 2 and 4, whose rule
+the new task keeps (300).</p>
+</div>
+<pre class="code">((<a href="demos-moe-finetune-moe-finetune.xtl.html#xa">xa</a>, <a href="demos-moe-finetune-moe-finetune.xtl.html#Ya">Ya</a>), <a href="demos-moe-finetune-moe-finetune.xtl.html#ka">ka</a>) ← <a href="demos-moe-finetune-moe-finetune.xtl.html#u.r_ead" class="c-userfunc">ᵘr̲ead</a> <span class="c-string">&quot;data/test.txt&quot;</span></pre>
+<div class="uses">Used in: <a href="demos-moe-finetune-moe-finetune.xtl.html#xa">xa</a>, <a href="demos-moe-finetune-moe-finetune.xtl.html#xo">xo</a></div>
+</div>
+<div class="item" id="ka">
+<h3><a href="#ka">ka</a> <span class="type">: Int</span></h3>
+<div class="meta">value &middot; <a href="demos-moe-finetune-moe-finetune.xtl.src.html#L37">line 37</a></div>
+<div class="doc">
+<p>The old task: the held-out tokens of kinds 1, 2 and 4, whose rule
+the new task keeps (300).</p>
+</div>
+<pre class="code">((<a href="demos-moe-finetune-moe-finetune.xtl.html#xa">xa</a>, <a href="demos-moe-finetune-moe-finetune.xtl.html#Ya">Ya</a>), <a href="demos-moe-finetune-moe-finetune.xtl.html#ka">ka</a>) ← <a href="demos-moe-finetune-moe-finetune.xtl.html#u.r_ead" class="c-userfunc">ᵘr̲ead</a> <span class="c-string">&quot;data/test.txt&quot;</span></pre>
+<div class="uses">Used in: <a href="demos-moe-finetune-moe-finetune.xtl.html#xa">xa</a>, <a href="demos-moe-finetune-moe-finetune.xtl.html#xo">xo</a></div>
+</div>
+<div class="item" id="xo">
+<h3><a href="#xo">xo</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-moe-finetune-moe-finetune.xtl.src.html#L38">line 38</a></div>
+<pre class="code">(<a href="demos-moe-finetune-moe-finetune.xtl.html#xo">xo</a>, <a href="demos-moe-finetune-moe-finetune.xtl.html#Yo">Yo</a>) ← ((<a href="builtins.html#w_here" class="c-builtin">w̲here</a> <a href="demos-moe-finetune-moe-finetune.xtl.html#ka">ka</a> <a href="builtins.html#-21-3d" class="c-symbol">≠</a> <span class="c-number">3</span>) <a href="demos-moe-finetune-moe-finetune.xtl.html#u.c_olumns" class="c-userfunc">ᵘc̲olumns</a> <a href="demos-moe-finetune-moe-finetune.xtl.html#xa">xa</a>, (<a href="builtins.html#w_here" class="c-builtin">w̲here</a> <a href="demos-moe-finetune-moe-finetune.xtl.html#ka">ka</a> <a href="builtins.html#-21-3d" class="c-symbol">≠</a> <span class="c-number">3</span>) <a href="demos-moe-finetune-moe-finetune.xtl.html#u.c_olumns" class="c-userfunc">ᵘc̲olumns</a> <a href="demos-moe-finetune-moe-finetune.xtl.html#Ya">Ya</a>)</pre>
+<div class="uses">Used in: <a href="demos-moe-finetune-moe-finetune.xtl.html#xo">xo</a>, <a href="demos-moe-finetune-moe-finetune.xtl.html#u.r_eport"><span class="c-userfunc">ᵘr̲eport</span></a>, <a href="demos-moe-finetune-moe-finetune.xtl.html#u.l_ine"><span class="c-userfunc">ᵘl̲ine</span></a></div>
+</div>
+<div class="item" id="Yo">
+<h3><a href="#Yo">Yo</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-moe-finetune-moe-finetune.xtl.src.html#L38">line 38</a></div>
+<pre class="code">(<a href="demos-moe-finetune-moe-finetune.xtl.html#xo">xo</a>, <a href="demos-moe-finetune-moe-finetune.xtl.html#Yo">Yo</a>) ← ((<a href="builtins.html#w_here" class="c-builtin">w̲here</a> <a href="demos-moe-finetune-moe-finetune.xtl.html#ka">ka</a> <a href="builtins.html#-21-3d" class="c-symbol">≠</a> <span class="c-number">3</span>) <a href="demos-moe-finetune-moe-finetune.xtl.html#u.c_olumns" class="c-userfunc">ᵘc̲olumns</a> <a href="demos-moe-finetune-moe-finetune.xtl.html#xa">xa</a>, (<a href="builtins.html#w_here" class="c-builtin">w̲here</a> <a href="demos-moe-finetune-moe-finetune.xtl.html#ka">ka</a> <a href="builtins.html#-21-3d" class="c-symbol">≠</a> <span class="c-number">3</span>) <a href="demos-moe-finetune-moe-finetune.xtl.html#u.c_olumns" class="c-userfunc">ᵘc̲olumns</a> <a href="demos-moe-finetune-moe-finetune.xtl.html#Ya">Ya</a>)</pre>
+<div class="uses">Used in: <a href="demos-moe-finetune-moe-finetune.xtl.html#xo">xo</a>, <a href="demos-moe-finetune-moe-finetune.xtl.html#u.r_eport"><span class="c-userfunc">ᵘr̲eport</span></a>, <a href="demos-moe-finetune-moe-finetune.xtl.html#u.l_ine"><span class="c-userfunc">ᵘl̲ine</span></a></div>
+</div>
+<div class="item" id="xb">
+<h3><a href="#xb">xb</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-moe-finetune-moe-finetune.xtl.src.html#L41">line 41</a></div>
+<div class="doc">
+<p>Replay: the new tokens mixed with 200 of the old task's training
+tokens (kinds 1, 2 and 4), the usual guard against forgetting.</p>
+</div>
+<pre class="code">((<a href="demos-moe-finetune-moe-finetune.xtl.html#xb">xb</a>, <a href="demos-moe-finetune-moe-finetune.xtl.html#Yb">Yb</a>), <a href="demos-moe-finetune-moe-finetune.xtl.html#kb">kb</a>) ← <a href="demos-moe-finetune-moe-finetune.xtl.html#u.r_ead" class="c-userfunc">ᵘr̲ead</a> <span class="c-string">&quot;data/train.txt&quot;</span></pre>
+<div class="uses">Used in: <a href="demos-moe-finetune-moe-finetune.xtl.html#xb">xb</a>, <a href="demos-moe-finetune-moe-finetune.xtl.html#xr">xr</a></div>
+</div>
+<div class="item" id="Yb">
+<h3><a href="#Yb">Yb</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-moe-finetune-moe-finetune.xtl.src.html#L41">line 41</a></div>
+<div class="doc">
+<p>Replay: the new tokens mixed with 200 of the old task's training
+tokens (kinds 1, 2 and 4), the usual guard against forgetting.</p>
+</div>
+<pre class="code">((<a href="demos-moe-finetune-moe-finetune.xtl.html#xb">xb</a>, <a href="demos-moe-finetune-moe-finetune.xtl.html#Yb">Yb</a>), <a href="demos-moe-finetune-moe-finetune.xtl.html#kb">kb</a>) ← <a href="demos-moe-finetune-moe-finetune.xtl.html#u.r_ead" class="c-userfunc">ᵘr̲ead</a> <span class="c-string">&quot;data/train.txt&quot;</span></pre>
+<div class="uses">Used in: <a href="demos-moe-finetune-moe-finetune.xtl.html#xb">xb</a>, <a href="demos-moe-finetune-moe-finetune.xtl.html#xr">xr</a></div>
+</div>
+<div class="item" id="kb">
+<h3><a href="#kb">kb</a> <span class="type">: Int</span></h3>
+<div class="meta">value &middot; <a href="demos-moe-finetune-moe-finetune.xtl.src.html#L41">line 41</a></div>
+<div class="doc">
+<p>Replay: the new tokens mixed with 200 of the old task's training
+tokens (kinds 1, 2 and 4), the usual guard against forgetting.</p>
+</div>
+<pre class="code">((<a href="demos-moe-finetune-moe-finetune.xtl.html#xb">xb</a>, <a href="demos-moe-finetune-moe-finetune.xtl.html#Yb">Yb</a>), <a href="demos-moe-finetune-moe-finetune.xtl.html#kb">kb</a>) ← <a href="demos-moe-finetune-moe-finetune.xtl.html#u.r_ead" class="c-userfunc">ᵘr̲ead</a> <span class="c-string">&quot;data/train.txt&quot;</span></pre>
+<div class="uses">Used in: <a href="demos-moe-finetune-moe-finetune.xtl.html#xb">xb</a>, <a href="demos-moe-finetune-moe-finetune.xtl.html#old">old</a></div>
+</div>
+<div class="item" id="old">
+<h3><a href="#old">old</a> <span class="type">: Int</span></h3>
+<div class="meta">value &middot; <a href="demos-moe-finetune-moe-finetune.xtl.src.html#L42">line 42</a></div>
+<pre class="code">old ← <span class="c-number">200</span> <a href="builtins.html#t_ake" class="c-builtin">t̲ake</a> <a href="builtins.html#w_here" class="c-builtin">w̲here</a> <a href="demos-moe-finetune-moe-finetune.xtl.html#kb">kb</a> <a href="builtins.html#-21-3d" class="c-symbol">≠</a> <span class="c-number">3</span></pre>
+<div class="uses">Used in: <a href="demos-moe-finetune-moe-finetune.xtl.html#xr">xr</a></div>
+</div>
+<div class="item" id="xr">
+<h3><a href="#xr">xr</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-moe-finetune-moe-finetune.xtl.src.html#L43">line 43</a></div>
+<pre class="code">(<a href="demos-moe-finetune-moe-finetune.xtl.html#xr">xr</a>, <a href="demos-moe-finetune-moe-finetune.xtl.html#Yr">Yr</a>) ← (<a href="demos-moe-finetune-moe-finetune.xtl.html#old">old</a> <a href="demos-moe-finetune-moe-finetune.xtl.html#u.c_olumns" class="c-userfunc">ᵘc̲olumns</a> <a href="demos-moe-finetune-moe-finetune.xtl.html#xb">xb</a>, <a href="demos-moe-finetune-moe-finetune.xtl.html#old">old</a> <a href="demos-moe-finetune-moe-finetune.xtl.html#u.c_olumns" class="c-userfunc">ᵘc̲olumns</a> <a href="demos-moe-finetune-moe-finetune.xtl.html#Yb">Yb</a>)</pre>
+<div class="uses">Used in: <a href="demos-moe-finetune-moe-finetune.xtl.html#xr">xr</a>, <a href="demos-moe-finetune-moe-finetune.xtl.html#mixed">mixed</a>, <a href="demos-moe-finetune-moe-finetune.xtl.html#zo">zo</a></div>
+</div>
+<div class="item" id="Yr">
+<h3><a href="#Yr">Yr</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-moe-finetune-moe-finetune.xtl.src.html#L43">line 43</a></div>
+<pre class="code">(<a href="demos-moe-finetune-moe-finetune.xtl.html#xr">xr</a>, <a href="demos-moe-finetune-moe-finetune.xtl.html#Yr">Yr</a>) ← (<a href="demos-moe-finetune-moe-finetune.xtl.html#old">old</a> <a href="demos-moe-finetune-moe-finetune.xtl.html#u.c_olumns" class="c-userfunc">ᵘc̲olumns</a> <a href="demos-moe-finetune-moe-finetune.xtl.html#xb">xb</a>, <a href="demos-moe-finetune-moe-finetune.xtl.html#old">old</a> <a href="demos-moe-finetune-moe-finetune.xtl.html#u.c_olumns" class="c-userfunc">ᵘc̲olumns</a> <a href="demos-moe-finetune-moe-finetune.xtl.html#Yb">Yb</a>)</pre>
+<div class="uses">Used in: <a href="demos-moe-finetune-moe-finetune.xtl.html#xr">xr</a>, <a href="demos-moe-finetune-moe-finetune.xtl.html#mixed">mixed</a></div>
+</div>
+<div class="item" id="mixed">
+<h3><a href="#mixed">mixed</a> <span class="type">: (Float, Float)</span></h3>
+<div class="meta">value &middot; <a href="demos-moe-finetune-moe-finetune.xtl.src.html#L44">line 44</a></div>
+<pre class="code">mixed ← (<a href="builtins.html#o_-5c" class="c-builtin">o̲\</a> (<a href="builtins.html#o_-5c" class="c-builtin">o̲\</a> <a href="demos-moe-finetune-moe-finetune.xtl.html#x">x</a>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="builtins.html#o_-5c" class="c-builtin">o̲\</a> <a href="demos-moe-finetune-moe-finetune.xtl.html#xr">xr</a>, <a href="builtins.html#o_-5c" class="c-builtin">o̲\</a> (<a href="builtins.html#o_-5c" class="c-builtin">o̲\</a> <a href="demos-moe-finetune-moe-finetune.xtl.html#Y">Y</a>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="builtins.html#o_-5c" class="c-builtin">o̲\</a> <a href="demos-moe-finetune-moe-finetune.xtl.html#Yr">Yr</a>)</pre>
+<div class="uses">Used in: <a href="demos-moe-finetune-moe-finetune.xtl.src.html#L258">demos/moe-finetune/moe-finetune.xtl:258</a></div>
+</div>
+<h2 class="section" id="section-2">The base, with room for a new expert</h2>
+<div class="item" id="w">
+<h3><a href="#w">w</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-moe-finetune-moe-finetune.xtl.src.html#L54">line 54</a></div>
+<div class="doc">
+<p>The base: the shared layer S (8 x 9), the router (4 x 8), the
+experts (4 x 3 x 8). The expert layer's input here is z with a
+constant 1 under it (9 x N), so a router row and an expert can have
+a bias; the base's are 0. A fifth expert waits, 0, its router row a
+bias of -30 (never in a token's top 2: the gates of the chosen two
+are as the base's).</p>
+</div>
+<pre class="code">w ← <a href="builtins.html#n_umbers" class="c-builtin">n̲umbers</a> <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;data/base.txt&quot;</span></pre>
+<div class="uses">Used in: <a href="demos-moe-finetune-moe-finetune.xtl.html#S">S</a>, <a href="demos-moe-finetune-moe-finetune.xtl.html#R0">R0</a>, <a href="demos-moe-finetune-moe-finetune.xtl.html#W0">W0</a></div>
+</div>
+<div class="item" id="S">
+<h3><a href="#S">S</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-moe-finetune-moe-finetune.xtl.src.html#L55">line 55</a></div>
+<pre class="code">S ← <span class="c-number">8</span> <span class="c-number">9</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">72</span> <a href="builtins.html#t_ake" class="c-builtin">t̲ake</a> <a href="demos-moe-finetune-moe-finetune.xtl.html#w">w</a></pre>
+<div class="uses">Used in: <a href="demos-moe-finetune-moe-finetune.xtl.html#u.l_ayers"><span class="c-userfunc">ᵘl̲ayers</span></a>, <a href="demos-moe-finetune-moe-finetune.xtl.html#u.g_rads6"><span class="c-userfunc">ᵘg̲rads6</span></a></div>
+</div>
+<div class="item" id="R0">
+<h3><a href="#R0">R0</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-moe-finetune-moe-finetune.xtl.src.html#L56">line 56</a></div>
+<pre class="code">R0 ← (<a href="builtins.html#o_-5c" class="c-builtin">o̲\</a> (<a href="builtins.html#o_-5c" class="c-builtin">o̲\</a> <span class="c-number">4</span> <span class="c-number">8</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">32</span> <a href="builtins.html#t_ake" class="c-builtin">t̲ake</a> <span class="c-number">72</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> <a href="demos-moe-finetune-moe-finetune.xtl.html#w">w</a>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">1</span> <span class="c-number">4</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.0</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">1</span> <span class="c-number">9</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> (<span class="c-number">8</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.0</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">-30.0</span></pre>
+<div class="uses">Used in: <a href="demos-moe-finetune-moe-finetune.xtl.html#base">base</a>, <a href="demos-moe-finetune-moe-finetune.xtl.html#R5">R5</a>, <a href="demos-moe-finetune-moe-finetune.xtl.html#u.t_une"><span class="c-userfunc">ᵘt̲une</span></a>, <a href="demos-moe-finetune-moe-finetune.xtl.html#u.e_ffective"><span class="c-userfunc">ᵘe̲ffective</span></a></div>
+</div>
+<div class="item" id="W0">
+<h3><a href="#W0">W0</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-moe-finetune-moe-finetune.xtl.src.html#L57">line 57</a></div>
+<pre class="code">W0 ← <span class="c-number">5</span> <span class="c-number">3</span> <span class="c-number">9</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> (<a href="builtins.html#o_-5c" class="c-builtin">o̲\</a> (<a href="builtins.html#o_-5c" class="c-builtin">o̲\</a> <span class="c-number">12</span> <span class="c-number">8</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">104</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> <a href="demos-moe-finetune-moe-finetune.xtl.html#w">w</a>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">1</span> <span class="c-number">12</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.0</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">3</span> <span class="c-number">9</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.0</span></pre>
+<div class="uses">Used in: <a href="demos-moe-finetune-moe-finetune.xtl.html#base">base</a>, <a href="demos-moe-finetune-moe-finetune.xtl.html#u.t_une"><span class="c-userfunc">ᵘt̲une</span></a>, <a href="demos-moe-finetune-moe-finetune.xtl.html#u.e_ffective"><span class="c-userfunc">ᵘe̲ffective</span></a></div>
+</div>
+<div class="item" id="s">
+<h3><a href="#s">s</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-moe-finetune-moe-finetune.xtl.src.html#L61">line 61</a></div>
+<div class="doc">
+<p>The adapters: (aS, bS) on the shared layer (2 x 9, 8 x 2), (As, Bs)
+on the experts (5 x 2 x 9, 5 x 3 x 2); s = alpha / r, alpha 4 at
+rank 2.</p>
+</div>
+<pre class="code">s ← <span class="c-number">4.0</span> <a href="libs-LoRA-src-LoRA.xtl.html#l.s_caling" class="c-libfunc">ˡᵒs̲caling</a> <span class="c-number">2</span></pre>
+<div class="uses">Used in: <a href="demos-moe-finetune-moe-finetune.xtl.html#u.l_ayers"><span class="c-userfunc">ᵘl̲ayers</span></a>, <a href="demos-moe-finetune-moe-finetune.xtl.html#u.g_rads6"><span class="c-userfunc">ᵘg̲rads6</span></a>, <a href="demos-moe-finetune-moe-finetune.xtl.html#u.s_ize"><span class="c-userfunc">ᵘs̲ize</span></a>, <a href="demos-moe-finetune-moe-finetune.xtl.html#u.e_ffective"><span class="c-userfunc">ᵘe̲ffective</span></a>, <a href="demos-moe-finetune-moe-finetune.xtl.html#u.c_hain"><span class="c-userfunc">ᵘc̲hain</span></a></div>
+</div>
+<div class="item" id="u.o_ne">
+<h3><a href="#u.o_ne"><span class="c-userfunc">ᵘo̲ne</span></a> <span class="type">: Float -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="demos-moe-finetune-moe-finetune.xtl.src.html#L62">line 62</a></div>
+<pre class="code"><span class="c-userfunc">ᵘo̲ne</span> ← { M → M <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-number">1</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">2</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> M) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">1.0</span> }</pre>
+<div class="uses">Used in: <a href="demos-moe-finetune-moe-finetune.xtl.html#u.l_ayers"><span class="c-userfunc">ᵘl̲ayers</span></a>, <a href="demos-moe-finetune-moe-finetune.xtl.html#u.g_rads6"><span class="c-userfunc">ᵘg̲rads6</span></a></div>
+</div>
+<div class="item" id="u.l_ayers">
+<h3><a href="#u.l_ayers"><span class="c-userfunc">ᵘl̲ayers</span></a> <span class="type">: (Float, Float, Float, Float, Float, Float) -&gt; Float -&gt; (Float, Float, Float)</span></h3>
+<div class="meta">function &middot; <a href="demos-moe-finetune-moe-finetune.xtl.src.html#L66">line 66</a></div>
+<div class="doc">
+<p><code>(aS, bS, R, Ws, As, Bs) <span class="c-builtin">l̲ayers</span> <a href="demos-moe-finetune-moe-finetune.xtl.html#x">x</a></code>: (z, G, P): the shared layer's
+output, the gates over the 5 experts, each token's probabilities
+over the classes.</p>
+</div>
+<pre class="code"><span class="c-userfunc">ᵘl̲ayers</span> ← { (aS, bS, R, Ws, As, Bs) <a href="demos-moe-finetune-moe-finetune.xtl.html#x">x</a> →
+  z ← <a href="demos-moe-finetune-moe-finetune.xtl.html#u.o_ne" class="c-userfunc">ᵘo̲ne</a> <a href="builtins.html#t_anh" class="c-builtin">t̲anh</a> (<a href="demos-moe-finetune-moe-finetune.xtl.html#S">S</a>, aS, bS, <a href="demos-moe-finetune-moe-finetune.xtl.html#s">s</a>) <a href="libs-LoRA-src-LoRA.xtl.html#l.f_orward" class="c-libfunc">ˡᵒf̲orward</a> <a href="demos-moe-finetune-moe-finetune.xtl.html#x">x</a>
+  G ← <span class="c-number">2</span> <a href="libs-MoE-src-MoE.xtl.html#l.t_opk" class="c-libfunc">ᵐᵒᵉt̲opk</a> <a href="libs-MoE-src-MoE.xtl.html#l.s_oftmax" class="c-libfunc">ᵐᵒᵉs̲oftmax</a> R <a href="libs-MoE-src-MoE.xtl.html#l.s_cores" class="c-libfunc">ᵐᵒᵉs̲cores</a> z
+  (z, G, <a href="libs-MoE-src-MoE.xtl.html#l.s_oftmax" class="c-libfunc">ᵐᵒᵉs̲oftmax</a> ((Ws, As, Bs, <a href="demos-moe-finetune-moe-finetune.xtl.html#s">s</a>), G) <a href="libs-MoE-src-MoE.xtl.html#l.c_ombine" class="c-libfunc">ᵐᵒᵉc̲ombine</a> z)
+}</pre>
+<div class="uses">Used in: <a href="demos-moe-finetune-moe-finetune.xtl.html#u.a_ccuracy"><span class="c-userfunc">ᵘa̲ccuracy</span></a>, <a href="demos-moe-finetune-moe-finetune.xtl.html#u.s_hare"><span class="c-userfunc">ᵘs̲hare</span></a>, <a href="demos-moe-finetune-moe-finetune.xtl.html#zn">zn</a>, <a href="demos-moe-finetune-moe-finetune.xtl.html#zo">zo</a></div>
+</div>
+<div class="item" id="u.a_ccuracy">
+<h3><a href="#u.a_ccuracy"><span class="c-userfunc">ᵘa̲ccuracy</span></a> <span class="type">: (Float, Float, Float, Float, Float, Float) -&gt; (Float, Float) -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="demos-moe-finetune-moe-finetune.xtl.src.html#L73">line 73</a></div>
+<div class="doc">
+<p><code>m <span class="c-builtin">a̲ccuracy</span> (<a href="demos-moe-finetune-moe-finetune.xtl.html#x">x</a>, <a href="demos-moe-finetune-moe-finetune.xtl.html#Y">Y</a>)</code>: the share of tokens whose likeliest class is
+theirs.</p>
+</div>
+<pre class="code"><span class="c-userfunc">ᵘa̲ccuracy</span> ← { m (<a href="demos-moe-finetune-moe-finetune.xtl.html#x">x</a>, <a href="demos-moe-finetune-moe-finetune.xtl.html#Y">Y</a>) →
+  (_, _, P) ← m <a href="demos-moe-finetune-moe-finetune.xtl.html#u.l_ayers" class="c-userfunc">ᵘl̲ayers</a> <a href="demos-moe-finetune-moe-finetune.xtl.html#x">x</a>
+  (<span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> <a href="demos-moe-finetune-moe-finetune.xtl.html#Y">Y</a> <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">1</span> <a href="libs-MoE-src-MoE.xtl.html#l.m_ask" class="c-libfunc">ᵐᵒᵉm̲ask</a> P) <a href="builtins.html#-2f" class="c-symbol">÷</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <span class="c-number">2</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> <a href="demos-moe-finetune-moe-finetune.xtl.html#Y">Y</a>
+}</pre>
+<div class="uses">Used in: <a href="demos-moe-finetune-moe-finetune.xtl.html#u.r_eport"><span class="c-userfunc">ᵘr̲eport</span></a>, <a href="demos-moe-finetune-moe-finetune.xtl.html#u.l_ine"><span class="c-userfunc">ᵘl̲ine</span></a></div>
+</div>
+<div class="item" id="u.s_hare">
+<h3><a href="#u.s_hare"><span class="c-userfunc">ᵘs̲hare</span></a> <span class="type">: (Float, Float, Float, Float, Float, Float) -&gt; Float -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="demos-moe-finetune-moe-finetune.xtl.src.html#L78">line 78</a></div>
+<div class="doc">
+<p><code>m <span class="c-builtin">s̲hare</span> <a href="demos-moe-finetune-moe-finetune.xtl.html#x">x</a></code>: the share of the tokens x each expert gets (summing to 2).</p>
+</div>
+<pre class="code"><span class="c-userfunc">ᵘs̲hare</span> ← { m x →
+  (_, G, _) ← m <a href="demos-moe-finetune-moe-finetune.xtl.html#u.l_ayers" class="c-userfunc">ᵘl̲ayers</a> x
+  <a href="libs-MoE-src-MoE.xtl.html#l.f_requency" class="c-libfunc">ᵐᵒᵉf̲requency</a> G
+}</pre>
+<div class="uses">Used in: <a href="demos-moe-finetune-moe-finetune.xtl.html#u.r_eport"><span class="c-userfunc">ᵘr̲eport</span></a>, <a href="demos-moe-finetune-moe-finetune.xtl.html#picked">picked</a></div>
+</div>
+<div class="item" id="u.p_er">
+<h3><a href="#u.p_er"><span class="c-userfunc">ᵘp̲er</span></a> <span class="type">: Num a =&gt; a -&gt; a -&gt; a</span></h3>
+<div class="meta">function &middot; <a href="demos-moe-finetune-moe-finetune.xtl.src.html#L83">line 83</a></div>
+<div class="doc">
+<p><code>f <span class="c-builtin">p̲er</span> A</code>: each expert's block of A (stacked) times its flag in f.</p>
+</div>
+<pre class="code"><span class="c-userfunc">ᵘp̲er</span> ← { f A → A <a href="builtins.html#-2a" class="c-symbol">×</a> (<a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> A) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> f <span class="c-builtin">'</span><a href="builtins.html#l_eft" class="c-builtin">l̲eft</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> <a href="builtins.html#o_ffsets" class="c-builtin">o̲ffsets</a> (<a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> A) <a href="builtins.html#d_iv" class="c-builtin">d̲iv</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> f }</pre>
+<div class="uses">Used in: <a href="demos-moe-finetune-moe-finetune.xtl.html#u.s_tep"><span class="c-userfunc">ᵘs̲tep</span></a></div>
+</div>
+<div class="item" id="base">
+<h3><a href="#base">base</a> <span class="type">: (Float, Float, Float, Float, Float, Float)</span></h3>
+<div class="meta">value &middot; <a href="demos-moe-finetune-moe-finetune.xtl.src.html#L84">line 84</a></div>
+<pre class="code">base ← (<span class="c-number">2</span> <span class="c-number">9</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.0</span>, <span class="c-number">8</span> <span class="c-number">2</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.0</span>, <a href="demos-moe-finetune-moe-finetune.xtl.html#R0">R0</a>, <a href="demos-moe-finetune-moe-finetune.xtl.html#W0">W0</a>, <span class="c-number">5</span> <span class="c-number">2</span> <span class="c-number">9</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.0</span>, <span class="c-number">5</span> <span class="c-number">3</span> <span class="c-number">2</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.0</span>)</pre>
+<div class="uses">Used in: <a href="demos-moe-finetune-moe-finetune.xtl.html#zn">zn</a>, <a href="demos-moe-finetune-moe-finetune.xtl.html#zo">zo</a>, <a href="demos-moe-finetune-moe-finetune.xtl.html#picked">picked</a></div>
+</div>
+<h2 class="section" id="section-3">The new expert's router row</h2>
+<div class="item" id="u.m_ean">
+<h3><a href="#u.m_ean"><span class="c-userfunc">ᵘm̲ean</span></a> <span class="type">: Float -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="demos-moe-finetune-moe-finetune.xtl.src.html#L91">line 91</a></div>
+<div class="doc">
+<p>It starts pointing at the new tokens and away from the old: the
+direction from the old training tokens' mean z to the new ones', 6
+long, its bias putting 0 halfway between the two means.</p>
+</div>
+<pre class="code"><span class="c-userfunc">ᵘm̲ean</span> ← { M → (<span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/₂</a> M) <a href="builtins.html#-2f" class="c-symbol">÷</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <span class="c-number">2</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> M }</pre>
+<div class="uses">Used in: <a href="demos-moe-finetune-moe-finetune.xtl.html#d">d</a>, <a href="demos-moe-finetune-moe-finetune.xtl.html#R5">R5</a></div>
+</div>
+<div class="item" id="zn">
+<h3><a href="#zn">zn</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-moe-finetune-moe-finetune.xtl.src.html#L92">line 92</a></div>
+<pre class="code">(<a href="demos-moe-finetune-moe-finetune.xtl.html#zn">zn</a>, _, _) ← <a href="demos-moe-finetune-moe-finetune.xtl.html#base">base</a> <a href="demos-moe-finetune-moe-finetune.xtl.html#u.l_ayers" class="c-userfunc">ᵘl̲ayers</a> <a href="demos-moe-finetune-moe-finetune.xtl.html#x">x</a></pre>
+<div class="uses">Used in: <a href="demos-moe-finetune-moe-finetune.xtl.html#zn">zn</a>, <a href="demos-moe-finetune-moe-finetune.xtl.html#d">d</a>, <a href="demos-moe-finetune-moe-finetune.xtl.html#R5">R5</a></div>
+</div>
+<div class="item" id="zo">
+<h3><a href="#zo">zo</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-moe-finetune-moe-finetune.xtl.src.html#L93">line 93</a></div>
+<pre class="code">(<a href="demos-moe-finetune-moe-finetune.xtl.html#zo">zo</a>, _, _) ← <a href="demos-moe-finetune-moe-finetune.xtl.html#base">base</a> <a href="demos-moe-finetune-moe-finetune.xtl.html#u.l_ayers" class="c-userfunc">ᵘl̲ayers</a> <a href="demos-moe-finetune-moe-finetune.xtl.html#xr">xr</a></pre>
+<div class="uses">Used in: <a href="demos-moe-finetune-moe-finetune.xtl.html#zo">zo</a>, <a href="demos-moe-finetune-moe-finetune.xtl.html#d">d</a>, <a href="demos-moe-finetune-moe-finetune.xtl.html#R5">R5</a></div>
+</div>
+<div class="item" id="d">
+<h3><a href="#d">d</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-moe-finetune-moe-finetune.xtl.src.html#L94">line 94</a></div>
+<pre class="code">d ← (<span class="c-number">8</span> <a href="builtins.html#t_ake" class="c-builtin">t̲ake</a> <a href="demos-moe-finetune-moe-finetune.xtl.html#u.m_ean" class="c-userfunc">ᵘm̲ean</a> <a href="demos-moe-finetune-moe-finetune.xtl.html#zn">zn</a>) <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">8</span> <a href="builtins.html#t_ake" class="c-builtin">t̲ake</a> <a href="demos-moe-finetune-moe-finetune.xtl.html#u.m_ean" class="c-userfunc">ᵘm̲ean</a> <a href="demos-moe-finetune-moe-finetune.xtl.html#zo">zo</a></pre>
+<div class="uses">Used in: <a href="demos-moe-finetune-moe-finetune.xtl.html#r5">r5</a></div>
+</div>
+<div class="item" id="r5">
+<h3><a href="#r5">r5</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-moe-finetune-moe-finetune.xtl.src.html#L95">line 95</a></div>
+<pre class="code">r5 ← <span class="c-number">6.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="demos-moe-finetune-moe-finetune.xtl.html#d">d</a> <a href="builtins.html#-2f" class="c-symbol">÷</a> <a href="builtins.html#s_qrt" class="c-builtin">s̲qrt</a> <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> <a href="demos-moe-finetune-moe-finetune.xtl.html#d">d</a> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="demos-moe-finetune-moe-finetune.xtl.html#d">d</a></pre>
+<div class="uses">Used in: <a href="demos-moe-finetune-moe-finetune.xtl.html#R5">R5</a></div>
+</div>
+<div class="item" id="R5">
+<h3><a href="#R5">R5</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-moe-finetune-moe-finetune.xtl.src.html#L96">line 96</a></div>
+<pre class="code">R5 ← <span class="c-number">5</span> <span class="c-number">9</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> (<span class="c-number">36</span> <a href="builtins.html#t_ake" class="c-builtin">t̲ake</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> <a href="demos-moe-finetune-moe-finetune.xtl.html#R0">R0</a>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="demos-moe-finetune-moe-finetune.xtl.html#r5">r5</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="builtins.html#n_eg" class="c-builtin">n̲eg</a> <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> <a href="demos-moe-finetune-moe-finetune.xtl.html#r5">r5</a> <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">0.5</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">8</span> <a href="builtins.html#t_ake" class="c-builtin">t̲ake</a> (<a href="demos-moe-finetune-moe-finetune.xtl.html#u.m_ean" class="c-userfunc">ᵘm̲ean</a> <a href="demos-moe-finetune-moe-finetune.xtl.html#zn">zn</a>) <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="demos-moe-finetune-moe-finetune.xtl.html#u.m_ean" class="c-userfunc">ᵘm̲ean</a> <a href="demos-moe-finetune-moe-finetune.xtl.html#zo">zo</a></pre>
+<div class="uses">Used in: <a href="demos-moe-finetune-moe-finetune.xtl.html#u.t_une"><span class="c-userfunc">ᵘt̲une</span></a></div>
+</div>
+<h2 class="section" id="section-4">A method</h2>
+<div class="item" id="u.g_rads6">
+<h3><a href="#u.g_rads6"><span class="c-userfunc">ᵘg̲rads6</span></a> <span class="type">: (Float, Float, Float, Float, Float, Float) -&gt; (Float, Float) -&gt; (Float, Float, Float, Float, Float, Float, Float)</span></h3>
+<div class="meta">function &middot; <a href="demos-moe-finetune-moe-finetune.xtl.src.html#L111">line 111</a></div>
+<div class="doc">
+<p>A method is which parts train, (shared, experts, router, new): 1 or
+0 for the shared layer's adapter, the base router's rows and the new
+expert (its weights and router row), a flag per base expert's
+adapter. The gradients of the cross-entropy go back through the
+experts and the router (MoE's g_rads and g_radsW, each token's two
+experts held fixed) and the shared layer (LoRA's g_rads, after tanh);
+every expert runs on every token here (d_ense, the same sum as the
+sparse c_ombine, faster at this size). A frozen part's gradient is 0,
+so Adam leaves it where it is.
+<code>m <span class="c-builtin">g̲rads6</span> (xs, Ys)</code>: the model's loss on the tokens (xs, Ys) and its
+gradients for every part, (daS, dbS, dR, dW, dAs, dBs, loss).</p>
+</div>
+<pre class="code"><span class="c-userfunc">ᵘg̲rads6</span> ← { (aS, bS, R, Ws, As, Bs) (xs, Ys) →
+  z0 ← <a href="builtins.html#t_anh" class="c-builtin">t̲anh</a> (<a href="demos-moe-finetune-moe-finetune.xtl.html#S">S</a>, aS, bS, <a href="demos-moe-finetune-moe-finetune.xtl.html#s">s</a>) <a href="libs-LoRA-src-LoRA.xtl.html#l.f_orward" class="c-libfunc">ˡᵒf̲orward</a> xs
+  z ← <a href="demos-moe-finetune-moe-finetune.xtl.html#u.o_ne" class="c-userfunc">ᵘo̲ne</a> z0
+  G ← <span class="c-number">2</span> <a href="libs-MoE-src-MoE.xtl.html#l.t_opk" class="c-libfunc">ᵐᵒᵉt̲opk</a> <a href="libs-MoE-src-MoE.xtl.html#l.s_oftmax" class="c-libfunc">ᵐᵒᵉs̲oftmax</a> R <a href="libs-MoE-src-MoE.xtl.html#l.s_cores" class="c-libfunc">ᵐᵒᵉs̲cores</a> z
+  P ← <a href="libs-MoE-src-MoE.xtl.html#l.s_oftmax" class="c-libfunc">ᵐᵒᵉs̲oftmax</a> ((Ws, As, Bs, <a href="demos-moe-finetune-moe-finetune.xtl.html#s">s</a>), G) <a href="libs-MoE-src-MoE.xtl.html#l.d_ense" class="c-libfunc">ᵐᵒᵉd̲ense</a> z
+  g ← (P <a href="builtins.html#-2d" class="c-symbol">−</a> Ys) <a href="builtins.html#-2f" class="c-symbol">÷</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <span class="c-number">2</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> xs
+  (dR, dAs, dBs, dz) ← (R, (Ws, As, Bs, <a href="demos-moe-finetune-moe-finetune.xtl.html#s">s</a>), <span class="c-number">2</span>) <a href="libs-MoE-src-MoE.xtl.html#l.g_rads" class="c-libfunc">ᵐᵒᵉg̲rads</a> (z, g)
+  dW ← (R, (Ws, As, Bs, <a href="demos-moe-finetune-moe-finetune.xtl.html#s">s</a>), <span class="c-number">2</span>) <a href="libs-MoE-src-MoE.xtl.html#l.g_radsW" class="c-libfunc">ᵐᵒᵉg̲radsW</a> (z, g)
+  (daS, dbS, _) ← (<a href="demos-moe-finetune-moe-finetune.xtl.html#S">S</a>, aS, bS, <a href="demos-moe-finetune-moe-finetune.xtl.html#s">s</a>) <a href="libs-LoRA-src-LoRA.xtl.html#l.g_rads" class="c-libfunc">ˡᵒg̲rads</a> (xs, (<span class="c-number">8</span> <a href="builtins.html#t_ake" class="c-builtin">t̲ake</a> dz) <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">1.0</span> <a href="builtins.html#-2d" class="c-symbol">−</a> z0 <a href="builtins.html#-2a" class="c-symbol">×</a> z0)
+  (daS, dbS, dR, dW, dAs, dBs, <a href="builtins.html#n_eg" class="c-builtin">n̲eg</a> (<span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> Ys <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#l_og" class="c-builtin">l̲og</a> P) <a href="builtins.html#-2f" class="c-symbol">÷</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <span class="c-number">2</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> xs)
+}</pre>
+<div class="uses">Used in: <a href="demos-moe-finetune-moe-finetune.xtl.html#u.s_tep"><span class="c-userfunc">ᵘs̲tep</span></a>, <a href="demos-moe-finetune-moe-finetune.xtl.html#u.s_tepC"><span class="c-userfunc">ᵘs̲tepC</span></a></div>
+</div>
+<div class="item" id="u.s_tep">
+<h3><a href="#u.s_tep"><span class="c-userfunc">ᵘs̲tep</span></a> <span class="type">: ((Float, Float, Float, Float), (Float, Float)) -&gt; ((Float, Float, Float, Float, Float, Float), (Float, Float, Float, Float, Float, Float, Float, Float, Float, Float, Float, Float), Float, Float) -&gt; ((Float, Float, Float, Float, Float, Float), (Float, Float, Float, Float, Float, Float, Float, Float, Float, Float, Float, Float), Float, Float)</span></h3>
+<div class="meta">function &middot; <a href="demos-moe-finetune-moe-finetune.xtl.src.html#L124">line 124</a></div>
+<div class="doc">
+<p>The state: the model, Adam's averages, the step, the loss after each
+step; (xs, Ys) the tokens to fine-tune on.</p>
+</div>
+<pre class="code"><span class="c-userfunc">ᵘs̲tep</span> ← { ((fS, fE, fR, fN), (xs, Ys)) ((aS, bS, R, Ws, As, Bs), (m1, v1, m2, v2, m3, v3, m4, v4, m5, v5, m6, v6), t, losses) →
+  (daS, dbS, dR, dW, dAs, dBs, loss) ← (aS, bS, R, Ws, As, Bs) <a href="demos-moe-finetune-moe-finetune.xtl.html#u.g_rads6" class="c-userfunc">ᵘg̲rads6</a> (xs, Ys)
+  (aS2, m12, v12) ← (<span class="c-number">0.02</span>, t) <a href="libs-Optim-src-Optim.xtl.html#l.a_dam" class="c-libfunc">ᵒᵖa̲dam</a> (aS, m1, v1, fS <a href="builtins.html#-2a" class="c-symbol">×</a> daS)
+  (bS2, m22, v22) ← (<span class="c-number">0.02</span>, t) <a href="libs-Optim-src-Optim.xtl.html#l.a_dam" class="c-libfunc">ᵒᵖa̲dam</a> (bS, m2, v2, fS <a href="builtins.html#-2a" class="c-symbol">×</a> dbS)
+  (R2, m32, v32) ← (<span class="c-number">0.02</span>, t) <a href="libs-Optim-src-Optim.xtl.html#l.a_dam" class="c-libfunc">ᵒᵖa̲dam</a> (R, m3, v3, ((<span class="c-number">4</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> fR) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> fN) <a href="demos-moe-finetune-moe-finetune.xtl.html#u.p_er" class="c-userfunc">ᵘp̲er</a> dR)
+  (W2, m42, v42) ← (<span class="c-number">0.02</span>, t) <a href="libs-Optim-src-Optim.xtl.html#l.a_dam" class="c-libfunc">ᵒᵖa̲dam</a> (Ws, m4, v4, (<span class="c-number">0.0</span> <span class="c-number">0.0</span> <span class="c-number">0.0</span> <span class="c-number">0.0</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> fN) <a href="demos-moe-finetune-moe-finetune.xtl.html#u.p_er" class="c-userfunc">ᵘp̲er</a> dW)
+  (As2, m52, v52) ← (<span class="c-number">0.02</span>, t) <a href="libs-Optim-src-Optim.xtl.html#l.a_dam" class="c-libfunc">ᵒᵖa̲dam</a> (As, m5, v5, (fE <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">0.0</span>) <a href="demos-moe-finetune-moe-finetune.xtl.html#u.p_er" class="c-userfunc">ᵘp̲er</a> dAs)
+  (Bs2, m62, v62) ← (<span class="c-number">0.02</span>, t) <a href="libs-Optim-src-Optim.xtl.html#l.a_dam" class="c-libfunc">ᵒᵖa̲dam</a> (Bs, m6, v6, (fE <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">0.0</span>) <a href="demos-moe-finetune-moe-finetune.xtl.html#u.p_er" class="c-userfunc">ᵘp̲er</a> dBs)
+  ((aS2, bS2, R2, W2, As2, Bs2), (m12, v12, m22, v22, m32, v32, m42, v42, m52, v52, m62, v62), t <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">1</span>, losses <a href="builtins.html#c_at" class="c-builtin">c̲at</a> loss)
+}</pre>
+<div class="uses">Used in: <a href="demos-moe-finetune-moe-finetune.xtl.html#u.t_une"><span class="c-userfunc">ᵘt̲une</span></a></div>
+</div>
+<div class="item" id="u.t_une">
+<h3><a href="#u.t_une"><span class="c-userfunc">ᵘt̲une</span></a> <span class="type">: Num a =&gt; ((Float, Float, Float, Float), (Float, Float), Int) -&gt; a -&gt; ((Float, Float, Float, Float, Float, Float), Float)</span></h3>
+<div class="meta">function &middot; <a href="demos-moe-finetune-moe-finetune.xtl.src.html#L137">line 137</a></div>
+<div class="doc">
+<p><code>(method, tokens, steps) <span class="c-builtin">t̲une</span> seed</code>: the base fine-tuned by a
+method on the tokens: each A from the seed (small), each B 0, so it
+starts as the base; with a new expert, its router row as above.</p>
+</div>
+<pre class="code"><span class="c-userfunc">ᵘt̲une</span> ← { ((fS, fE, fR, fN), tokens, steps) seed →
+  aS ← <span class="c-number">0.3</span> <a href="builtins.html#-2a" class="c-symbol">×</a> seed <a href="libs-LoRA-src-LoRA.xtl.html#l.s_eeded" class="c-libfunc">ˡᵒs̲eeded</a> <span class="c-number">2</span> <span class="c-number">9</span>
+  As ← <span class="c-number">5</span> <span class="c-number">2</span> <span class="c-number">9</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.3</span> <a href="builtins.html#-2a" class="c-symbol">×</a> (seed <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">1</span>) <a href="libs-LoRA-src-LoRA.xtl.html#l.s_eeded" class="c-libfunc">ˡᵒs̲eeded</a> <span class="c-number">10</span> <span class="c-number">9</span>
+  R ← <a href="demos-moe-finetune-moe-finetune.xtl.html#R0">R0</a> <a href="builtins.html#-2b" class="c-symbol">+</a> fN <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="demos-moe-finetune-moe-finetune.xtl.html#R5">R5</a> <a href="builtins.html#-2d" class="c-symbol">−</a> <a href="demos-moe-finetune-moe-finetune.xtl.html#R0">R0</a>
+  zero ← (<span class="c-number">0.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> aS, <span class="c-number">8</span> <span class="c-number">2</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.0</span>, <span class="c-number">0.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="demos-moe-finetune-moe-finetune.xtl.html#R0">R0</a>, <span class="c-number">0.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="demos-moe-finetune-moe-finetune.xtl.html#W0">W0</a>, <span class="c-number">0.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> As, <span class="c-number">5</span> <span class="c-number">3</span> <span class="c-number">2</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.0</span>)
+  (zS, zB, zR, zW, zA, zE) ← zero
+  (m, _, _, losses) ← steps <span class="c-quote">'</span>{ st → ((fS, fE, fR, fN), tokens) <a href="demos-moe-finetune-moe-finetune.xtl.html#u.s_tep" class="c-userfunc">ᵘs̲tep</a> st } <a href="builtins.html#p_ower" class="c-builtin">p̲ower</a> ((aS, zB, R, <a href="demos-moe-finetune-moe-finetune.xtl.html#W0">W0</a>, As, zE), (zS, zS, zB, zB, zR, zR, zW, zW, zA, zA, zE, zE), <span class="c-number">1</span>, <span class="c-number">0</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.0</span>)
+  (m, losses)
+}</pre>
+<div class="uses">Used in: <a href="demos-moe-finetune-moe-finetune.xtl.html#u.r_ow"><span class="c-userfunc">ᵘr̲ow</span></a></div>
+</div>
+<div class="item" id="u.s_ize">
+<h3><a href="#u.s_ize"><span class="c-userfunc">ᵘs̲ize</span></a> <span class="type">: Num a =&gt; (a, a) -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="demos-moe-finetune-moe-finetune.xtl.src.html#L147">line 147</a></div>
+<div class="doc">
+<p><code><span class="c-builtin">s̲ize</span> (A, B)</code>: an update's size, |s B A| (Frobenius).</p>
+</div>
+<pre class="code"><span class="c-userfunc">ᵘs̲ize</span> ← { (A, B) → <a href="demos-moe-finetune-moe-finetune.xtl.html#s">s</a> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#s_qrt" class="c-builtin">s̲qrt</a> <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> (B <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#i_nner" class="c-builtin">i̲nner</a> A) <a href="builtins.html#-5e" class="c-symbol">^</a> <span class="c-number">2</span> }</pre>
+<div class="uses">Used in: <a href="demos-moe-finetune-moe-finetune.xtl.html#u.r_eport"><span class="c-userfunc">ᵘr̲eport</span></a></div>
+</div>
+<div class="item" id="u.r_eport">
+<h3><a href="#u.r_eport"><span class="c-userfunc">ᵘr̲eport</span></a> <span class="type">: (Float, Float, Float, Float, Float, Float) -&gt; (Float, Float, Float, Float) -&gt; (Float, Float, Float, Float, Float, Float, Float)</span></h3>
+<div class="meta">function &middot; <a href="demos-moe-finetune-moe-finetune.xtl.src.html#L153">line 153</a></div>
+<div class="doc">
+<p><code>m <span class="c-builtin">r̲eport</span> method</code>: a method's measures: the new task's accuracy and
+the old task's; the numbers trained and their bytes in FP32; the
+new and the old tokens' share of each of the 5 experts; the update's
+size on each base expert, the shared layer and the new expert (its
+weights, from 0).</p>
+</div>
+<pre class="code"><span class="c-userfunc">ᵘr̲eport</span> ← { m (fS, fE, fR, fN) →
+  (aS, bS, R, Ws, As, Bs) ← m
+  n ← (fS <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">34.0</span>) <a href="builtins.html#-2b" class="c-symbol">+</a> (<span class="c-number">24.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> fE) <a href="builtins.html#-2b" class="c-symbol">+</a> (fR <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">36.0</span>) <a href="builtins.html#-2b" class="c-symbol">+</a> fN <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">36.0</span>
+  sizes ← <span class="c-quote">'</span>{ e → <a href="demos-moe-finetune-moe-finetune.xtl.html#u.s_ize" class="c-userfunc">ᵘs̲ize</a> (e <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> As, e <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> Bs) } <a href="builtins.html#e_ach" class="c-builtin">e̲ach</a> <a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <span class="c-number">4</span>
+  new ← <a href="builtins.html#s_qrt" class="c-builtin">s̲qrt</a> <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> (<span class="c-number">5</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> Ws) <a href="builtins.html#-5e" class="c-symbol">^</a> <span class="c-number">2</span>
+  (m <a href="demos-moe-finetune-moe-finetune.xtl.html#u.a_ccuracy" class="c-userfunc">ᵘa̲ccuracy</a> (<a href="demos-moe-finetune-moe-finetune.xtl.html#xn">xn</a>, <a href="demos-moe-finetune-moe-finetune.xtl.html#Yn">Yn</a>), m <a href="demos-moe-finetune-moe-finetune.xtl.html#u.a_ccuracy" class="c-userfunc">ᵘa̲ccuracy</a> (<a href="demos-moe-finetune-moe-finetune.xtl.html#xo">xo</a>, <a href="demos-moe-finetune-moe-finetune.xtl.html#Yo">Yo</a>), n, <span class="c-number">4.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> n, m <a href="demos-moe-finetune-moe-finetune.xtl.html#u.s_hare" class="c-userfunc">ᵘs̲hare</a> <a href="demos-moe-finetune-moe-finetune.xtl.html#xn">xn</a>, m <a href="demos-moe-finetune-moe-finetune.xtl.html#u.s_hare" class="c-userfunc">ᵘs̲hare</a> <a href="demos-moe-finetune-moe-finetune.xtl.html#xo">xo</a>, sizes <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="demos-moe-finetune-moe-finetune.xtl.html#u.s_ize" class="c-userfunc">ᵘs̲ize</a> (aS, bS)) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> new)
+}</pre>
+<div class="uses">Used in: <a href="demos-moe-finetune-moe-finetune.xtl.html#u.r_ow"><span class="c-userfunc">ᵘr̲ow</span></a></div>
+</div>
+<div class="item" id="picked">
+<h3><a href="#picked">picked</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-moe-finetune-moe-finetune.xtl.src.html#L162">line 162</a></div>
+<div class="doc">
+<p>The methods, in the research's order, then a new expert; &quot;selected&quot;
+takes the two experts the base sends most of the new tokens to.</p>
+</div>
+<pre class="code">picked ← <span class="c-number">4</span> <a href="builtins.html#t_ake" class="c-builtin">t̲ake</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> <span class="c-number">2</span> <a href="libs-MoE-src-MoE.xtl.html#l.m_ask" class="c-libfunc">ᵐᵒᵉm̲ask</a> <span class="c-number">5</span> <span class="c-number">1</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <a href="demos-moe-finetune-moe-finetune.xtl.html#base">base</a> <a href="demos-moe-finetune-moe-finetune.xtl.html#u.s_hare" class="c-userfunc">ᵘs̲hare</a> <a href="demos-moe-finetune-moe-finetune.xtl.html#x">x</a></pre>
+<div class="uses">Used in: <a href="demos-moe-finetune-moe-finetune.xtl.html#selected">selected</a></div>
+</div>
+<div class="item" id="none">
+<h3><a href="#none">none</a> <span class="type">: (Float, Float, Float, Float)</span></h3>
+<div class="meta">value &middot; <a href="demos-moe-finetune-moe-finetune.xtl.src.html#L163">line 163</a></div>
+<pre class="code">none ← (<span class="c-number">0.0</span>, <span class="c-number">4</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.0</span>, <span class="c-number">0.0</span>, <span class="c-number">0.0</span>)</pre>
+<div class="uses">Used in: <a href="demos-moe-finetune-moe-finetune.xtl.html#u.a_ll"><span class="c-userfunc">ᵘa̲ll</span></a></div>
+</div>
+<div class="item" id="shared">
+<h3><a href="#shared">shared</a> <span class="type">: (Float, Float, Float, Float)</span></h3>
+<div class="meta">value &middot; <a href="demos-moe-finetune-moe-finetune.xtl.src.html#L164">line 164</a></div>
+<pre class="code">shared ← (<span class="c-number">1.0</span>, <span class="c-number">4</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.0</span>, <span class="c-number">0.0</span>, <span class="c-number">0.0</span>)</pre>
+<div class="uses">Used in: <a href="demos-moe-finetune-moe-finetune.xtl.html#u.a_ll"><span class="c-userfunc">ᵘa̲ll</span></a></div>
+</div>
+<div class="item" id="experts">
+<h3><a href="#experts">experts</a> <span class="type">: (Float, Float, Float, Float)</span></h3>
+<div class="meta">value &middot; <a href="demos-moe-finetune-moe-finetune.xtl.src.html#L165">line 165</a></div>
+<pre class="code">experts ← (<span class="c-number">0.0</span>, <span class="c-number">4</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">1.0</span>, <span class="c-number">0.0</span>, <span class="c-number">0.0</span>)</pre>
+<div class="uses">Used in: <a href="demos-moe-finetune-moe-finetune.xtl.html#u.a_ll"><span class="c-userfunc">ᵘa̲ll</span></a></div>
+</div>
+<div class="item" id="both">
+<h3><a href="#both">both</a> <span class="type">: (Float, Float, Float, Float)</span></h3>
+<div class="meta">value &middot; <a href="demos-moe-finetune-moe-finetune.xtl.src.html#L166">line 166</a></div>
+<pre class="code">both ← (<span class="c-number">1.0</span>, <span class="c-number">4</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">1.0</span>, <span class="c-number">0.0</span>, <span class="c-number">0.0</span>)</pre>
+<div class="uses">Used in: <a href="demos-moe-finetune-moe-finetune.xtl.html#u.a_ll"><span class="c-userfunc">ᵘa̲ll</span></a></div>
+</div>
+<div class="item" id="selected">
+<h3><a href="#selected">selected</a> <span class="type">: (Float, Float, Float, Float)</span></h3>
+<div class="meta">value &middot; <a href="demos-moe-finetune-moe-finetune.xtl.src.html#L167">line 167</a></div>
+<pre class="code">selected ← (<span class="c-number">0.0</span>, <a href="demos-moe-finetune-moe-finetune.xtl.html#picked">picked</a>, <span class="c-number">0.0</span>, <span class="c-number">0.0</span>)</pre>
+<div class="uses">Used in: <a href="demos-moe-finetune-moe-finetune.xtl.html#u.a_ll"><span class="c-userfunc">ᵘa̲ll</span></a></div>
+</div>
+<div class="item" id="router">
+<h3><a href="#router">router</a> <span class="type">: (Float, Float, Float, Float)</span></h3>
+<div class="meta">value &middot; <a href="demos-moe-finetune-moe-finetune.xtl.src.html#L168">line 168</a></div>
+<pre class="code">router ← (<span class="c-number">0.0</span>, <span class="c-number">4</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">1.0</span>, <span class="c-number">1.0</span>, <span class="c-number">0.0</span>)</pre>
+<div class="uses">Used in: <a href="demos-moe-finetune-moe-finetune.xtl.html#u.a_ll"><span class="c-userfunc">ᵘa̲ll</span></a></div>
+</div>
+<div class="item" id="added">
+<h3><a href="#added">added</a> <span class="type">: (Float, Float, Float, Float)</span></h3>
+<div class="meta">value &middot; <a href="demos-moe-finetune-moe-finetune.xtl.src.html#L169">line 169</a></div>
+<pre class="code">added ← (<span class="c-number">0.0</span>, <span class="c-number">4</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.0</span>, <span class="c-number">0.0</span>, <span class="c-number">1.0</span>)</pre>
+<div class="uses">Used in: <a href="demos-moe-finetune-moe-finetune.xtl.html#u.a_ll"><span class="c-userfunc">ᵘa̲ll</span></a></div>
+</div>
+<div class="item" id="u.r_ound">
+<h3><a href="#u.r_ound"><span class="c-userfunc">ᵘr̲ound</span></a> <span class="type">: Float -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="demos-moe-finetune-moe-finetune.xtl.src.html#L170">line 170</a></div>
+<pre class="code"><span class="c-userfunc">ᵘr̲ound</span> ← { v → (<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> <span class="c-number">0.5</span> <a href="builtins.html#-2b" class="c-symbol">+</a> v <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">1000.0</span>) <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-number">1000.0</span> }</pre>
+<div class="uses">Used in: <a href="demos-moe-finetune-moe-finetune.xtl.html#u.r_ow"><span class="c-userfunc">ᵘr̲ow</span></a>, <a href="demos-moe-finetune-moe-finetune.xtl.html#u.l_ine"><span class="c-userfunc">ᵘl̲ine</span></a></div>
+</div>
+<h2 class="section" id="section-5">Four adapters compared</h2>
+<div class="item" id="u.p_ad">
+<h3><a href="#u.p_ad"><span class="c-userfunc">ᵘp̲ad</span></a> <span class="type">: Float -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="demos-moe-finetune-moe-finetune.xtl.src.html#L186">line 186</a></div>
+<div class="doc">
+<p>The research's comparison (L4307-4430), the router frozen: shared
+LoRA (kind 1, on the shared layer: the research's attention LoRA),
+expert LoRA (2), LoRA-FA (3: each expert's A frozen) and shared VeRA
+(4: one pair of frozen projections for every expert, A0 (r x 9) and
+B0 (3 x r) from the seed, each expert its own d (r numbers) and b
+(3)), at any rank r, alpha 4. Each is the model above with its parts
+filled in: VeRA's expert e is LoRA's factors diag(d_e) A0 and
+diag(b_e) B0 (scale 1), which the MoE library runs as any adapter,
+and its gradients follow from theirs: dd_e is dA_e times A0 summed
+along each row, db_e is dB_e times B0 likewise.
+<code><span class="c-builtin">p̲ad</span> M</code>: the 4 experts' stack M with a fifth of zeros (the waiting
+expert).</p>
+</div>
+<pre class="code"><span class="c-userfunc">ᵘp̲ad</span> ← { M → M <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-number">1</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">1</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> <a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> M) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.0</span> }</pre>
+<div class="uses">Used in: <a href="demos-moe-finetune-moe-finetune.xtl.html#u.e_ffective"><span class="c-userfunc">ᵘe̲ffective</span></a></div>
+</div>
+<div class="item" id="u.e_ffective">
+<h3><a href="#u.e_ffective"><span class="c-userfunc">ᵘe̲ffective</span></a> <span class="type">: Num a =&gt; (a, Int, Float, Float) -&gt; (Float, Float) -&gt; (Float, Float, Float, Float, Float, Float)</span></h3>
+<div class="meta">function &middot; <a href="demos-moe-finetune-moe-finetune.xtl.src.html#L189">line 189</a></div>
+<div class="doc">
+<p><code>(kind, r, A0, B0) <span class="c-builtin">e̲ffective</span> (P, Q)</code>: the model of the adapter of a
+kind at rank r, P and Q its trained arrays (A and B, or d and b).</p>
+</div>
+<pre class="code"><span class="c-userfunc">ᵘe̲ffective</span> ← { (kind, r, A0, B0) (P, Q) →
+  k ← (<span class="c-number">4.0</span> <a href="libs-LoRA-src-LoRA.xtl.html#l.s_caling" class="c-libfunc">ˡᵒs̲caling</a> r) <a href="builtins.html#-2f" class="c-symbol">÷</a> <a href="demos-moe-finetune-moe-finetune.xtl.html#s">s</a>
+  kind <a href="builtins.html#-3d" class="c-symbol">=</a> <span class="c-number">1</span> ? (P, k <a href="builtins.html#-2a" class="c-symbol">×</a> Q, <a href="demos-moe-finetune-moe-finetune.xtl.html#R0">R0</a>, <a href="demos-moe-finetune-moe-finetune.xtl.html#W0">W0</a>, <span class="c-number">5</span> <span class="c-number">1</span> <span class="c-number">9</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.0</span>, <span class="c-number">5</span> <span class="c-number">3</span> <span class="c-number">1</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.0</span>)
+  kind <a href="builtins.html#-3c" class="c-symbol">&lt;</a> <span class="c-number">4</span> ? (<span class="c-number">1</span> <span class="c-number">9</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.0</span>, <span class="c-number">8</span> <span class="c-number">1</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.0</span>, <a href="demos-moe-finetune-moe-finetune.xtl.html#R0">R0</a>, <a href="demos-moe-finetune-moe-finetune.xtl.html#W0">W0</a>, <a href="demos-moe-finetune-moe-finetune.xtl.html#u.p_ad" class="c-userfunc">ᵘp̲ad</a> P, <a href="demos-moe-finetune-moe-finetune.xtl.html#u.p_ad" class="c-userfunc">ᵘp̲ad</a> k <a href="builtins.html#-2a" class="c-symbol">×</a> Q)
+  dA ← (<span class="c-number">4</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> r <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">9</span>) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> (<a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> P) <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> <span class="c-number">9</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">1.0</span>
+  dB ← (<span class="c-number">4</span> <span class="c-number">3</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> r) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> (<a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> Q) <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> r <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">1.0</span>
+  (<span class="c-number">1</span> <span class="c-number">9</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.0</span>, <span class="c-number">8</span> <span class="c-number">1</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.0</span>, <a href="demos-moe-finetune-moe-finetune.xtl.html#R0">R0</a>, <a href="demos-moe-finetune-moe-finetune.xtl.html#W0">W0</a>, <a href="demos-moe-finetune-moe-finetune.xtl.html#u.p_ad" class="c-userfunc">ᵘp̲ad</a> dA <a href="builtins.html#-2a" class="c-symbol">×</a> (<span class="c-number">4</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> r <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">9</span>) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> A0, <a href="demos-moe-finetune-moe-finetune.xtl.html#u.p_ad" class="c-userfunc">ᵘp̲ad</a> (dB <a href="builtins.html#-2a" class="c-symbol">×</a> (<span class="c-number">4</span> <span class="c-number">3</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> r) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> B0) <a href="builtins.html#-2f" class="c-symbol">÷</a> <a href="demos-moe-finetune-moe-finetune.xtl.html#s">s</a>)
+}</pre>
+<div class="uses">Used in: <a href="demos-moe-finetune-moe-finetune.xtl.html#u.s_tepC"><span class="c-userfunc">ᵘs̲tepC</span></a>, <a href="demos-moe-finetune-moe-finetune.xtl.html#u.c_ompare"><span class="c-userfunc">ᵘc̲ompare</span></a></div>
+</div>
+<div class="item" id="u.c_hain">
+<h3><a href="#u.c_hain"><span class="c-userfunc">ᵘc̲hain</span></a> <span class="type">: Num a =&gt; (a, Int, Float, Float) -&gt; (Float, Float, Float, Float) -&gt; (Float, Float)</span></h3>
+<div class="meta">function &middot; <a href="demos-moe-finetune-moe-finetune.xtl.src.html#L199">line 199</a></div>
+<div class="doc">
+<p><code>(kind, r, A0, B0) <span class="c-builtin">c̲hain</span> (daS, dbS, dAs, dBs)</code>: the model's
+gradients back to the trained arrays', (dP, dQ); LoRA-FA's A gets 0.</p>
+</div>
+<pre class="code"><span class="c-userfunc">ᵘc̲hain</span> ← { (kind, r, A0, B0) (daS, dbS, dAs, dBs) →
+  k ← (<span class="c-number">4.0</span> <a href="libs-LoRA-src-LoRA.xtl.html#l.s_caling" class="c-libfunc">ˡᵒs̲caling</a> r) <a href="builtins.html#-2f" class="c-symbol">÷</a> <a href="demos-moe-finetune-moe-finetune.xtl.html#s">s</a>
+  kind <a href="builtins.html#-3d" class="c-symbol">=</a> <span class="c-number">1</span> ? (daS, k <a href="builtins.html#-2a" class="c-symbol">×</a> dbS)
+  dA ← (<span class="c-number">4</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> r <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">9</span>) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> dAs
+  dB ← (<span class="c-number">4</span> <span class="c-number">3</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> r) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> dBs
+  kind <a href="builtins.html#-3d" class="c-symbol">=</a> <span class="c-number">2</span> ? (dA, k <a href="builtins.html#-2a" class="c-symbol">×</a> dB)
+  kind <a href="builtins.html#-3d" class="c-symbol">=</a> <span class="c-number">3</span> ? (<span class="c-number">0.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> dA, k <a href="builtins.html#-2a" class="c-symbol">×</a> dB)
+  (<span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/₃</a> dA <a href="builtins.html#-2a" class="c-symbol">×</a> (<a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> dA) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> A0, (<span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/₃</a> dB <a href="builtins.html#-2a" class="c-symbol">×</a> (<a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> dB) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> B0) <a href="builtins.html#-2f" class="c-symbol">÷</a> <a href="demos-moe-finetune-moe-finetune.xtl.html#s">s</a>)
+}</pre>
+<div class="uses">Used in: <a href="demos-moe-finetune-moe-finetune.xtl.html#u.s_tepC"><span class="c-userfunc">ᵘs̲tepC</span></a></div>
+</div>
+<div class="item" id="u.s_tartC">
+<h3><a href="#u.s_tartC"><span class="c-userfunc">ᵘs̲tartC</span></a> <span class="type">: (Num a, Num b) =&gt; (a, Int) -&gt; b -&gt; (Float, Float)</span></h3>
+<div class="meta">function &middot; <a href="demos-moe-finetune-moe-finetune.xtl.src.html#L211">line 211</a></div>
+<div class="doc">
+<p><code>(kind, r) <span class="c-builtin">s̲tartC</span> seed</code>: where training starts: each A (or A0's
+stack) from the seed, as the methods above start; B at 0; VeRA's d
+at 0.1 and b at 0.</p>
+</div>
+<pre class="code"><span class="c-userfunc">ᵘs̲tartC</span> ← { (kind, r) seed →
+  kind <a href="builtins.html#-3d" class="c-symbol">=</a> <span class="c-number">1</span> ? (<span class="c-number">0.3</span> <a href="builtins.html#-2a" class="c-symbol">×</a> seed <a href="libs-LoRA-src-LoRA.xtl.html#l.s_eeded" class="c-libfunc">ˡᵒs̲eeded</a> r <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">9</span>, (<span class="c-number">8</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> r) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.0</span>)
+  kind <a href="builtins.html#-3c" class="c-symbol">&lt;</a> <span class="c-number">4</span> ? ((<span class="c-number">4</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> r <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">9</span>) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.3</span> <a href="builtins.html#-2a" class="c-symbol">×</a> (seed <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">1</span>) <a href="libs-LoRA-src-LoRA.xtl.html#l.s_eeded" class="c-libfunc">ˡᵒs̲eeded</a> (<span class="c-number">4</span> <a href="builtins.html#-2a" class="c-symbol">×</a> r) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">9</span>, (<span class="c-number">4</span> <span class="c-number">3</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> r) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.0</span>)
+  ((<span class="c-number">4</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> r) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.1</span>, <span class="c-number">4</span> <span class="c-number">3</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.0</span>)
+}</pre>
+<div class="uses">Used in: <a href="demos-moe-finetune-moe-finetune.xtl.html#u.c_ompare"><span class="c-userfunc">ᵘc̲ompare</span></a></div>
+</div>
+<div class="item" id="u.s_tepC">
+<h3><a href="#u.s_tepC"><span class="c-userfunc">ᵘs̲tepC</span></a> <span class="type">: Num a =&gt; (((a, Int, Float, Float), Float), (Float, Float)) -&gt; ((Float, Float), (Float, Float, Float, Float), Float, Float) -&gt; ((Float, Float), (Float, Float, Float, Float), Float, Float)</span></h3>
+<div class="meta">function &middot; <a href="demos-moe-finetune-moe-finetune.xtl.src.html#L218">line 218</a></div>
+<div class="doc">
+<p><code>((ctx, lr), (xs, Ys)) <span class="c-builtin">s̲tepC</span> state</code>: Adam's step on P and Q at the
+rate lr.</p>
+</div>
+<pre class="code"><span class="c-userfunc">ᵘs̲tepC</span> ← { ((ctx, lr), (xs, Ys)) ((P, Q), (mP, vP, mQ, vQ), t, losses) →
+  (daS, dbS, _, _, dAs, dBs, loss) ← (ctx <a href="demos-moe-finetune-moe-finetune.xtl.html#u.e_ffective" class="c-userfunc">ᵘe̲ffective</a> (P, Q)) <a href="demos-moe-finetune-moe-finetune.xtl.html#u.g_rads6" class="c-userfunc">ᵘg̲rads6</a> (xs, Ys)
+  (dP, dQ) ← ctx <a href="demos-moe-finetune-moe-finetune.xtl.html#u.c_hain" class="c-userfunc">ᵘc̲hain</a> (daS, dbS, dAs, dBs)
+  (P2, mP2, vP2) ← (lr, t) <a href="libs-Optim-src-Optim.xtl.html#l.a_dam" class="c-libfunc">ᵒᵖa̲dam</a> (P, mP, vP, dP)
+  (Q2, mQ2, vQ2) ← (lr, t) <a href="libs-Optim-src-Optim.xtl.html#l.a_dam" class="c-libfunc">ᵒᵖa̲dam</a> (Q, mQ, vQ, dQ)
+  ((P2, Q2), (mP2, vP2, mQ2, vQ2), t <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">1</span>, losses <a href="builtins.html#c_at" class="c-builtin">c̲at</a> loss)
+}</pre>
+<div class="uses">Used in: <a href="demos-moe-finetune-moe-finetune.xtl.html#u.c_ompare"><span class="c-userfunc">ᵘc̲ompare</span></a></div>
+</div>
+<div class="item" id="u.c_ompare">
+<h3><a href="#u.c_ompare"><span class="c-userfunc">ᵘc̲ompare</span></a> <span class="type">: Num a =&gt; (Int, Int, (Float, Float), Int, Float) -&gt; a -&gt; ((Float, Float, Float, Float, Float, Float), Float, Int)</span></h3>
+<div class="meta">function &middot; <a href="demos-moe-finetune-moe-finetune.xtl.src.html#L229">line 229</a></div>
+<div class="doc">
+<p><code>(kind, r, tokens, steps, lr) <span class="c-builtin">c̲ompare</span> seed</code>: an adapter of the
+kind at rank r fine-tuned on the tokens at the rate lr, VeRA's
+projections from the seed: the model, the loss after each step, the
+numbers it trains.</p>
+</div>
+<pre class="code"><span class="c-userfunc">ᵘc̲ompare</span> ← { (kind, r, tokens, steps, lr) seed →
+  (A0, B0) ← (seed <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">1</span>) <a href="libs-LoRA-src-LoRA.xtl.html#l.p_rojections" class="c-libfunc">ˡᵒp̲rojections</a> <span class="c-number">3</span> <span class="c-number">9</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> r
+  (P, Q) ← (kind, r) <a href="demos-moe-finetune-moe-finetune.xtl.html#u.s_tartC" class="c-userfunc">ᵘs̲tartC</a> seed
+  ((P2, Q2), _, _, losses) ← steps <span class="c-quote">'</span>{ st → (((kind, r, A0, B0), lr), tokens) <a href="demos-moe-finetune-moe-finetune.xtl.html#u.s_tepC" class="c-userfunc">ᵘs̲tepC</a> st } <a href="builtins.html#p_ower" class="c-builtin">p̲ower</a> ((P, Q), (<span class="c-number">0.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> P, <span class="c-number">0.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> P, <span class="c-number">0.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> Q, <span class="c-number">0.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> Q), <span class="c-number">1</span>, <span class="c-number">0</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.0</span>)
+  ((kind, r, A0, B0) <a href="demos-moe-finetune-moe-finetune.xtl.html#u.e_ffective" class="c-userfunc">ᵘe̲ffective</a> (P2, Q2), losses, kind <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> (<span class="c-number">17</span> <a href="builtins.html#-2a" class="c-symbol">×</a> r) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-number">48</span> <a href="builtins.html#-2a" class="c-symbol">×</a> r) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-number">12</span> <a href="builtins.html#-2a" class="c-symbol">×</a> r) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">4</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">3</span> <a href="builtins.html#-2b" class="c-symbol">+</a> r)
+}</pre>
+<div class="uses">Used in: <a href="demos-moe-finetune-moe-finetune.xtl.html#u.l_ine"><span class="c-userfunc">ᵘl̲ine</span></a></div>
+</div>
+<div class="item" id="equalRanks">
+<h3><a href="#equalRanks">equalRanks</a> <span class="type">: Int</span></h3>
+<div class="meta">value &middot; <a href="demos-moe-finetune-moe-finetune.xtl.src.html#L240">line 240</a></div>
+<div class="doc">
+<p>Equal ranks, 2 each; then equal budgets, about 48 numbers each:
+shared LoRA at rank 3 (51), expert LoRA at 1 (48), LoRA-FA at 4
+(48), VeRA at 9 (48). Each at the methods' rate, 0.02, and at 0.1:
+an adapter whose projections are frozen moves slowly at LoRA's rate,
+and VeRA's paper trains at a rate several times LoRA's.</p>
+</div>
+<pre class="code">equalRanks ← <span class="c-number">2</span> <span class="c-number">2</span> <span class="c-number">2</span> <span class="c-number">2</span></pre>
+<div class="uses">Used in: <a href="demos-moe-finetune-moe-finetune.xtl.src.html#L270">demos/moe-finetune/moe-finetune.xtl:270</a>, <a href="demos-moe-finetune-moe-finetune.xtl.src.html#L272">demos/moe-finetune/moe-finetune.xtl:272</a></div>
+</div>
+<div class="item" id="equalBudgets">
+<h3><a href="#equalBudgets">equalBudgets</a> <span class="type">: Int</span></h3>
+<div class="meta">value &middot; <a href="demos-moe-finetune-moe-finetune.xtl.src.html#L241">line 241</a></div>
+<pre class="code">equalBudgets ← <span class="c-number">3</span> <span class="c-number">1</span> <span class="c-number">4</span> <span class="c-number">9</span></pre>
+<div class="uses">Used in: <a href="demos-moe-finetune-moe-finetune.xtl.src.html#L271">demos/moe-finetune/moe-finetune.xtl:271</a>, <a href="demos-moe-finetune-moe-finetune.xtl.src.html#L273">demos/moe-finetune/moe-finetune.xtl:273</a></div>
+</div>
+<h2 class="section" id="section-6">Each method, seed 1, 120 steps</h2>
+<div class="item" id="u.r_ow">
+<h3><a href="#u.r_ow"><span class="c-userfunc">ᵘr̲ow</span></a> <span class="type">: ((Float, Float, Float, Float), (Float, Float)) -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="demos-moe-finetune-moe-finetune.xtl.src.html#L250">line 250</a></div>
+<div class="doc">
+<p>A line per method: the new task's accuracy, the old task's, the
+numbers trained, their bytes, the new tokens' share of each of the 5
+experts, the old tokens', then the update sizes (the 4 experts, the
+shared layer, the new expert).</p>
+</div>
+<pre class="code"><span class="c-userfunc">ᵘr̲ow</span> ← { (method, tokens) →
+  (m, _) ← (method, tokens, <span class="c-number">120</span>) <a href="demos-moe-finetune-moe-finetune.xtl.html#u.t_une" class="c-userfunc">ᵘt̲une</a> <span class="c-number">1</span>
+  (a, o, n, b, sn, so, sz) ← m <a href="demos-moe-finetune-moe-finetune.xtl.html#u.r_eport" class="c-userfunc">ᵘr̲eport</a> method
+  <a href="demos-moe-finetune-moe-finetune.xtl.html#u.r_ound" class="c-userfunc">ᵘr̲ound</a> a <a href="builtins.html#c_at" class="c-builtin">c̲at</a> o <a href="builtins.html#c_at" class="c-builtin">c̲at</a> n <a href="builtins.html#c_at" class="c-builtin">c̲at</a> b <a href="builtins.html#c_at" class="c-builtin">c̲at</a> sn <a href="builtins.html#c_at" class="c-builtin">c̲at</a> so <a href="builtins.html#c_at" class="c-builtin">c̲at</a> sz
+}</pre>
+<div class="uses">Used in: <a href="demos-moe-finetune-moe-finetune.xtl.html#u.a_ll"><span class="c-userfunc">ᵘa̲ll</span></a></div>
+</div>
+<div class="item" id="u.a_ll">
+<h3><a href="#u.a_ll"><span class="c-userfunc">ᵘa̲ll</span></a> <span class="type">: (Float, Float) -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="demos-moe-finetune-moe-finetune.xtl.src.html#L255">line 255</a></div>
+<pre class="code"><span class="c-userfunc">ᵘa̲ll</span> ← { tokens → <span class="c-number">7</span> <span class="c-number">20</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> (<a href="demos-moe-finetune-moe-finetune.xtl.html#u.r_ow" class="c-userfunc">ᵘr̲ow</a> (<a href="demos-moe-finetune-moe-finetune.xtl.html#none">none</a>, tokens)) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="demos-moe-finetune-moe-finetune.xtl.html#u.r_ow" class="c-userfunc">ᵘr̲ow</a> (<a href="demos-moe-finetune-moe-finetune.xtl.html#shared">shared</a>, tokens)) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="demos-moe-finetune-moe-finetune.xtl.html#u.r_ow" class="c-userfunc">ᵘr̲ow</a> (<a href="demos-moe-finetune-moe-finetune.xtl.html#experts">experts</a>, tokens)) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="demos-moe-finetune-moe-finetune.xtl.html#u.r_ow" class="c-userfunc">ᵘr̲ow</a> (<a href="demos-moe-finetune-moe-finetune.xtl.html#both">both</a>, tokens)) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="demos-moe-finetune-moe-finetune.xtl.html#u.r_ow" class="c-userfunc">ᵘr̲ow</a> (<a href="demos-moe-finetune-moe-finetune.xtl.html#selected">selected</a>, tokens)) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="demos-moe-finetune-moe-finetune.xtl.html#u.r_ow" class="c-userfunc">ᵘr̲ow</a> (<a href="demos-moe-finetune-moe-finetune.xtl.html#router">router</a>, tokens)) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="demos-moe-finetune-moe-finetune.xtl.html#u.r_ow" class="c-userfunc">ᵘr̲ow</a> (<a href="demos-moe-finetune-moe-finetune.xtl.html#added">added</a>, tokens) }</pre>
+<div class="uses">Used in: <a href="demos-moe-finetune-moe-finetune.xtl.src.html#L257">demos/moe-finetune/moe-finetune.xtl:257</a>, <a href="demos-moe-finetune-moe-finetune.xtl.src.html#L258">demos/moe-finetune/moe-finetune.xtl:258</a></div>
+</div>
+<h2 class="section" id="section-7">The four adapters, seed 1, 120 steps, on the new tokens alone</h2>
+<div class="item" id="u.l_ine">
+<h3><a href="#u.l_ine"><span class="c-userfunc">ᵘl̲ine</span></a> <span class="type">: (Int, Int, Float) -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="demos-moe-finetune-moe-finetune.xtl.src.html#L265">line 265</a></div>
+<div class="doc">
+<p>A line per adapter (shared LoRA, expert LoRA, LoRA-FA, shared VeRA):
+the new task's accuracy, the old task's, the numbers trained; at
+equal ranks, then at equal budgets; at the rate 0.02, then 0.1.</p>
+</div>
+<pre class="code"><span class="c-userfunc">ᵘl̲ine</span> ← { (kind, r, lr) →
+  (m, _, n) ← (kind, r, (<a href="demos-moe-finetune-moe-finetune.xtl.html#x">x</a>, <a href="demos-moe-finetune-moe-finetune.xtl.html#Y">Y</a>), <span class="c-number">120</span>, lr) <a href="demos-moe-finetune-moe-finetune.xtl.html#u.c_ompare" class="c-userfunc">ᵘc̲ompare</a> <span class="c-number">1</span>
+  (<a href="demos-moe-finetune-moe-finetune.xtl.html#u.r_ound" class="c-userfunc">ᵘr̲ound</a> m <a href="demos-moe-finetune-moe-finetune.xtl.html#u.a_ccuracy" class="c-userfunc">ᵘa̲ccuracy</a> (<a href="demos-moe-finetune-moe-finetune.xtl.html#xn">xn</a>, <a href="demos-moe-finetune-moe-finetune.xtl.html#Yn">Yn</a>)) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="demos-moe-finetune-moe-finetune.xtl.html#u.r_ound" class="c-userfunc">ᵘr̲ound</a> m <a href="demos-moe-finetune-moe-finetune.xtl.html#u.a_ccuracy" class="c-userfunc">ᵘa̲ccuracy</a> (<a href="demos-moe-finetune-moe-finetune.xtl.html#xo">xo</a>, <a href="demos-moe-finetune-moe-finetune.xtl.html#Yo">Yo</a>)) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> n
+}</pre>
+<div class="uses">Used in: <a href="demos-moe-finetune-moe-finetune.xtl.html#u.f_our"><span class="c-userfunc">ᵘf̲our</span></a></div>
+</div>
+<div class="item" id="u.f_our">
+<h3><a href="#u.f_our"><span class="c-userfunc">ᵘf̲our</span></a> <span class="type">: (Int, Float) -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="demos-moe-finetune-moe-finetune.xtl.src.html#L269">line 269</a></div>
+<pre class="code"><span class="c-userfunc">ᵘf̲our</span> ← { (ranks, lr) → <span class="c-number">4</span> <span class="c-number">3</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> (<a href="demos-moe-finetune-moe-finetune.xtl.html#u.l_ine" class="c-userfunc">ᵘl̲ine</a> (<span class="c-number">1</span>, <span class="c-number">1</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> ranks, lr)) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="demos-moe-finetune-moe-finetune.xtl.html#u.l_ine" class="c-userfunc">ᵘl̲ine</a> (<span class="c-number">2</span>, <span class="c-number">2</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> ranks, lr)) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="demos-moe-finetune-moe-finetune.xtl.html#u.l_ine" class="c-userfunc">ᵘl̲ine</a> (<span class="c-number">3</span>, <span class="c-number">3</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> ranks, lr)) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="demos-moe-finetune-moe-finetune.xtl.html#u.l_ine" class="c-userfunc">ᵘl̲ine</a> (<span class="c-number">4</span>, <span class="c-number">4</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> ranks, lr) }</pre>
+<div class="uses">Used in: <a href="demos-moe-finetune-moe-finetune.xtl.src.html#L270">demos/moe-finetune/moe-finetune.xtl:270</a>, <a href="demos-moe-finetune-moe-finetune.xtl.src.html#L271">demos/moe-finetune/moe-finetune.xtl:271</a>, <a href="demos-moe-finetune-moe-finetune.xtl.src.html#L272">demos/moe-finetune/moe-finetune.xtl:272</a>, <a href="demos-moe-finetune-moe-finetune.xtl.src.html#L273">demos/moe-finetune/moe-finetune.xtl:273</a></div>
+</div>
+</main>
+</body>
+</html>
