@@ -96,10 +96,22 @@ screenshots only (no copied photographs or figures).
 | 10b | timeline-history | the events from 1943 to 2026, papers and milestones, each checked and listed in `docs/ml-timeline-sources.md`; a test that every event has a source and a well-formed date |
 | 10c | timeline-demos | a `demo` event for every live demo, at the idea it shows, its webp made at build time from demos/<slug>/screenshot.png (`just screenshots` refreshed first), its summary and link from demo.toml; a test that every live demo has exactly one; the catalog, the README and each demo's README link the timeline; published and checked live |
 
-## The events to check (a first list, not yet verified)
+## The events (the first list, now checked)
 
-Papers and milestones the history step starts from, each still to be
-checked; the demos each would stand beside are in brackets.
+The list the history step started from; the demos each would stand
+beside are in brackets. Every one of them is in, checked and listed in
+`docs/ml-timeline-sources.md`, with these changes from the list: VeRA
+stands at October 2023 (its first arXiv version; ICLR 2024), Mixtral's
+release at December 2023 and its paper at January 2024, Lloyd's
+k-means at its 1957 memo (published 1982), Samuel at 1952 (his program)
+and 1959 (his paper); and these were added: SNARC (1951), Ivakhnenko
+and Lapa (1965), the Lighthill report (1973), Werbos's thesis as a note,
+Watson (2011), dropout, batch normalization, PPO, AlphaGo Zero, GPT-2,
+the scaling laws, the Vision Transformer, AlphaFold, CLIP, latent
+diffusion, InstructGPT, LLaMA, DPO, BitNet, the 2024 Nobel prizes,
+DeepSeek-V3 and R1, the Turing award for reinforcement learning (2025),
+gold at the 2025 Mathematical Olympiad, and X_eTaL's start, its v0.1.0
+and this repository (2026). 83 events in all.
 
 - 1943 McCulloch and Pitts, a logical calculus of nervous activity;
   1949 Hebb, The Organization of Behavior.

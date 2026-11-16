@@ -15,8 +15,10 @@ mod event;
 mod layout;
 mod nav;
 mod scale;
+mod sources;
 
-pub use event::{Event, Kind, check, events};
+pub use event::{Event, Kind, MONTHS, check, events};
 pub use layout::{Placed, Side, place};
 pub use nav::{Go, LEAD, frame, hash, key, mini, mini_year, parse, scroll_for, target};
 pub use scale::{EMPTY, FIRST, FOLD, FOLD_RUN, MIN_YEAR, NOW, Scale, Segment};
+pub use sources::{Source, sources, unsourced};

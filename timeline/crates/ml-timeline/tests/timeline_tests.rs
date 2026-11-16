@@ -2,7 +2,7 @@
 
 use ml_timeline::{
     EMPTY, FIRST, FOLD, Go, Kind, LEAD, MIN_YEAR, NOW, Scale, Side, check, events, frame, hash,
-    key, mini, mini_year, parse, place, scroll_for, target,
+    key, mini, mini_year, parse, place, scroll_for, sources, target, unsourced,
 };
 
 const DATA: &str = include_str!("../../../data/timeline.json");
@@ -49,12 +49,13 @@ fn check_finds_what_is_wrong() {
     let wrong = check(&events(json).unwrap());
     let says = |what: &str| wrong.iter().filter(|w| w.contains(what)).count();
     assert_eq!(says("outside"), 1);
-    assert_eq!(says("month"), 1);
-    assert_eq!(says("does not name"), 1);
+    assert_eq!(says("not 1 to 12"), 1);
+    assert_eq!(says("does not name the year"), 1);
+    assert_eq!(says("month alone"), 1, "month 13 is named by no when");
     assert_eq!(says("slug"), 2);
     assert_eq!(says("link"), 1);
     assert_eq!(says("no title"), 1);
-    assert_eq!(wrong.len(), 7);
+    assert_eq!(wrong.len(), 8);
 }
 
 #[test]
@@ -106,9 +107,9 @@ fn x_and_year_at_are_inverse() {
 #[test]
 fn our_quiet_years_fold_and_busy_ones_are_wide() {
     let s = ours();
-    let fold = s.segment(1975).unwrap();
-    assert!(fold.folded() && fold.from == 1970 && fold.to == 1986, "1970-1985 is one break");
-    assert!(s.segment(1997).unwrap().width > s.segment(1989).unwrap().width, "two events need more");
+    let fold = s.segment(1977).unwrap();
+    assert!(fold.folded() && fold.from == 1975 && fold.to == 1980, "1975-1979 is one break");
+    assert!(s.segment(2023).unwrap().width > 2.0 * s.segment(1989).unwrap().width, "a busy year is wide");
     assert!(s.segments.iter().all(|g| g.events == 0 || g.width >= MIN_YEAR));
 }
 
@@ -186,4 +187,55 @@ fn the_minimap_spans_every_year_alike() {
     assert!(near(mini_year(&s, mini(&s, 2017.3)), 2017.3));
     let (from, to) = frame(&s, s.x(1989.0), s.x(1998.0) - s.x(1989.0));
     assert!(near(from, 1989.0) && near(to, 1998.0));
+}
+
+#[test]
+fn a_when_names_its_month_alone() {
+    let json = r#"[{"year": 2017, "month": 6, "when": "June 2017", "title": "Fine", "kind": "note"},
+                   {"year": 2017, "month": 6, "when": "2017", "title": "Unnamed", "kind": "note"},
+                   {"year": 2017, "month": 6, "when": "July 2017", "title": "Other", "kind": "note"},
+                   {"year": 2017, "month": 6, "when": "June-July 2017", "title": "Two", "kind": "note"},
+                   {"year": 1956, "when": "Summer 1956", "title": "Season", "kind": "note"},
+                   {"year": 1956, "when": "May 1956", "title": "Unsaid", "kind": "note"}]"#;
+    let wrong = check(&events(json).unwrap());
+    let named = |t: &str| wrong.iter().any(|w| w.contains(&format!("{t:?}")));
+    assert_eq!(wrong.len(), 4, "{wrong:?}");
+    assert!(named("Unnamed") && named("Other") && named("Two") && named("Unsaid"));
+}
+
+#[test]
+fn sources_read_from_their_table() {
+    let md = "# Sources\n\n| Year | Month | Title | Checked | Link |\n| ---- | ----- | ----- | ------- | ---- |\n\
+              | 1958 | 11 | The perceptron | Rosenblatt, Psychological Review 65 (6) | <https://doi.org/10.1037/h0042519> |\n\
+              | 1956 | - | The Dartmouth workshop | a reference page | <https://en.wikipedia.org/wiki/Dartmouth_workshop> |\n\
+              | not | a | row |\n";
+    let rows = sources(md);
+    assert_eq!(rows.len(), 2);
+    assert_eq!((rows[0].year, rows[0].month, rows[0].title.as_str()), (1958, Some(11), "The perceptron"));
+    assert_eq!(rows[0].link, "https://doi.org/10.1037/h0042519");
+    assert_eq!(rows[1].month, None);
+}
+
+#[test]
+fn unsourced_finds_what_is_missing_or_stale() {
+    let json = r#"[{"year": 1958, "month": 11, "when": "November 1958", "title": "Sourced", "kind": "paper", "href": "https://a"},
+                   {"year": 1959, "when": "1959", "title": "Missing", "kind": "note"},
+                   {"year": 1960, "when": "1960", "title": "Elsewhere", "kind": "paper", "href": "https://b"},
+                   {"year": 1961, "when": "1961", "title": "Ours", "kind": "demo", "demo": "k-means"}]"#;
+    let md = "| 1958 | 11 | Sourced | the paper | <https://a> |\n| 1960 | - | Elsewhere | the paper | <https://c> |\n\
+              | 1962 | - | Orphan | a page | <https://d> |\n| 1958 | 11 | Sourced | again | http://a |\n";
+    let wrong = unsourced(&events(json).unwrap(), &sources(md));
+    let says = |what: &str| wrong.iter().filter(|w| w.contains(what)).count();
+    assert_eq!(says("no source"), 1, "{wrong:?}");
+    assert_eq!(says("its source is"), 1);
+    assert_eq!(says("no event"), 1);
+    assert_eq!(says("twice"), 1);
+    assert_eq!(says("an https link"), 1);
+    assert_eq!(wrong.len(), 5, "a demo needs no source: {wrong:?}");
+}
+
+#[test]
+fn every_event_has_its_source() {
+    let rows = sources(include_str!("../../../../docs/ml-timeline-sources.md"));
+    assert_eq!(unsourced(&events(DATA).unwrap(), &rows), Vec::<String>::new());
 }

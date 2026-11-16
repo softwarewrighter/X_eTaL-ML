@@ -5,9 +5,10 @@
 |<-
 ->|
 Go to
-1944-1949
-1970-1985
+1944-1948
+1975-1979
 December 1943: A logical calculus of the ideas immanent in nervous activity
 VeRA: vector-based random matrix adaptation
 Attention is all you need
+July 1959: Some studies in machine learning using the game of checkers
 2017

@@ -17,7 +17,7 @@ show, this repository's demos. Live at
   or below the axis. A year is as wide as its callouts need, at least
   120 pixels, so the busy recent years are wide and the 1950s narrow; a
   year with no event is 40 pixels; a run of three or more empty years
-  folds into one break on the axis ("1970-1985"). Months are ticked in a
+  folds into one break on the axis ("1975-1979"). Months are ticked in a
   year wide enough, and lettered in a wider one.
 - **Moving**: `|<-` to the start, `<<-` and `->>` back and on by most
   of a window, `->|` to the end; the year box takes `1989`, `2017-06` or
@@ -34,11 +34,18 @@ show, this repository's demos. Live at
 
 - `data/timeline.json` -- the events, each `{year, month, when, title,
   text, href, kind, topics, demo, image, tip, side}`; sorted by time
-  when read. `docs/ml-timeline-sources.md` lists each event's source.
+  when read. 83 papers, milestones and notes from 1943 to 2026.
+- `../docs/ml-timeline-sources.md` -- where each event comes from: a
+  row for every event but the demos, with its year, month and title as
+  the event writes them, what was checked (authors, title, venue, date)
+  and the link it was checked at, which must be the event's. How a
+  date is chosen (an arXiv paper at its first version's month, a
+  journal paper at its issue's) is written there.
 - `crates/ml-timeline` -- free of the browser, tested natively: the
-  events and their checks (a year on the axis, a month 1 to 12, a `when`
-  naming its year, a demo with its slug, a paper with its link); the
-  scale (the segments: a year with events as wide as its callouts, an
+  events and their checks (a year on the axis, a month 1 to 12, a
+  `when` naming its year and its month alone, a demo with its slug, a
+  paper with its link); the sources' table read and held to the events
+  (`sources`, `unsourced`); the scale (the segments: a year with events as wide as its callouts, an
   empty year narrow, a run folded; a year with its fraction to pixels
   and back); the layout; the moves, the hash and the minimap's mapping.
 - `crates/ml-timeline-web` -- the page in Yew: the controls, the

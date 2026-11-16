@@ -94,8 +94,9 @@ pub fn events(json: &str) -> Result<Vec<Event>, serde_json::Error> {
 
 /// What is wrong with `list`, one line each: a year outside the axis, a
 /// month outside 1 to 12, a title or a `when` left empty, a `when` that
-/// does not name its year, a demo without its slug or a slug on what is
-/// not a demo, a paper with nowhere to lead.
+/// does not name its year, or its month alone (or names a month the
+/// event has not), a demo without its slug or a slug on what is not a
+/// demo, a paper with nowhere to lead.
 #[must_use]
 pub fn check(list: &[Event]) -> Vec<String> {
     let mut wrong = Vec::new();
@@ -113,6 +114,9 @@ pub fn check(list: &[Event]) -> Vec<String> {
         if !e.when.contains(&e.year.to_string()) {
             wrong.push(format!("{name}: when {:?} does not name the year", e.when));
         }
+        if let Some(said) = said_month(&e.when, e.month) {
+            wrong.push(format!("{name}: when {:?} {said}", e.when));
+        }
         if (e.kind == Kind::Demo) != e.demo.is_some() {
             wrong.push(format!("{name}: a demo needs its slug, and only a demo has one"));
         }
@@ -121,4 +125,21 @@ pub fn check(list: &[Event]) -> Vec<String> {
         }
     }
     wrong
+}
+
+/// The months' names, as a `when` writes them.
+pub const MONTHS: [&str; 12] = [
+    "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November",
+    "December",
+];
+
+/// What is wrong with how `when` names the month, if anything: with a
+/// month it must name that month and no other; without one, none.
+fn said_month(when: &str, month: Option<u8>) -> Option<&'static str> {
+    let named: Vec<usize> = (0..12).filter(|&i| when.split(|c: char| !c.is_alphabetic()).any(|w| w == MONTHS[i])).collect();
+    match month {
+        Some(m) if named != [usize::from(m).saturating_sub(1)] => Some("does not name the month alone"),
+        None if !named.is_empty() => Some("names a month the event has not"),
+        _ => None,
+    }
 }
