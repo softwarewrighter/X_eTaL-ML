@@ -1,0 +1,1 @@
+A demo event for each of the 18 live demos beside the idea it shows, filled from demo.toml (title, summary, link) with a build-time webp from its screenshot; X_eTaL's own demos at the end; a test that every live demo is on the timeline exactly once; the catalog, README and each demo README link it; full gate passed (commit 52706a3).
