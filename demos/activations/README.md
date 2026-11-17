@@ -16,6 +16,11 @@ Live: [Activation functions](https://softwarewrighter.github.io/X_eTaL-ML/activa
 Swish's beta and the charts are drawn again; write an activation of
 your own and Run it).
 
+On [the ML
+timeline](https://softwarewrighter.github.io/X_eTaL-ML/ml-timeline/#2010-06),
+at June 2010, beside the idea it shows: the ReLU (Nair and Hinton),
+and the activations after it.
+
 ## Run it
 
 From a clone of this repository (Rust, git and `just`):

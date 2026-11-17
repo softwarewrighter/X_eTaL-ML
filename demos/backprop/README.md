@@ -10,6 +10,11 @@ Live: [Backprop microscope](https://softwarewrighter.github.io/X_eTaL-ML/backpro
 [Plot](https://github.com/softwarewrighter/X_eTaL-libraries) library's `p:c_hart!` in the page's program; change the
 learning rate and watch it overshoot).
 
+On [the ML
+timeline](https://softwarewrighter.github.io/X_eTaL-ML/ml-timeline/#1986-10),
+at October 1986, beside the idea it shows: backpropagation (Rumelhart,
+Hinton and Williams).
+
 [![Backprop microscope: the live page](screenshot.png)](https://softwarewrighter.github.io/X_eTaL-ML/backprop/)
 
 ## Run it

@@ -1,11 +1,31 @@
 //! The timeline's events, scale, layout and navigation, natively.
 
 use ml_timeline::{
-    EMPTY, FIRST, FOLD, Go, Kind, LEAD, MIN_YEAR, NOW, Scale, Side, check, events, frame, hash,
+    Demo, Event, EMPTY, demo, fill, undemoed, FIRST, FOLD, Go, Kind, LEAD, MIN_YEAR, NOW, Scale, Side, check, events, frame, hash,
     key, mini, mini_year, parse, place, scroll_for, sources, target, unsourced,
 };
 
 const DATA: &str = include_str!("../../../data/timeline.json");
+
+/// Every demo's `demo.toml`, read from demos/.
+fn all_demos() -> Vec<Demo> {
+    let dir = std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join("../../../demos");
+    let mut found: Vec<Demo> = std::fs::read_dir(dir)
+        .unwrap()
+        .filter_map(|d| std::fs::read_to_string(d.ok()?.path().join("demo.toml")).ok())
+        .filter_map(|t| demo(&t))
+        .collect();
+    found.sort_by(|a, b| a.slug.cmp(&b.slug));
+    found
+}
+
+/// The timeline's events, the demos' filled from their demo.toml, as the
+/// page shows them.
+fn filled() -> Vec<Event> {
+    let mut list = events(DATA).unwrap();
+    assert_eq!(fill(&mut list, &all_demos()), Vec::<String>::new());
+    list
+}
 
 fn near(a: f64, b: f64) -> bool {
     (a - b).abs() < 1e-6
@@ -13,14 +33,14 @@ fn near(a: f64, b: f64) -> bool {
 
 /// The scale of the timeline's own events.
 fn ours() -> Scale {
-    let list = events(DATA).unwrap();
+    let list = filled();
     let sized: Vec<(f64, f64)> = list.iter().map(|e| (e.at(), e.size(false).0)).collect();
     Scale::new(FIRST, NOW, &sized, 260.0)
 }
 
 #[test]
 fn the_events_read_and_check() {
-    let list = events(DATA).unwrap();
+    let list = filled();
     assert!(list.len() >= 12, "a few events to show the strip");
     assert_eq!(check(&list), Vec::<String>::new());
     assert!(list.windows(2).all(|w| w[0].at() <= w[1].at()), "in time order");
@@ -53,9 +73,10 @@ fn check_finds_what_is_wrong() {
     assert_eq!(says("does not name the year"), 1);
     assert_eq!(says("month alone"), 1, "month 13 is named by no when");
     assert_eq!(says("slug"), 2);
+    assert_eq!(says("the idea it shows"), 1);
     assert_eq!(says("link"), 1);
     assert_eq!(says("no title"), 1);
-    assert_eq!(wrong.len(), 8);
+    assert_eq!(wrong.len(), 9);
 }
 
 #[test]
@@ -238,4 +259,48 @@ fn unsourced_finds_what_is_missing_or_stale() {
 fn every_event_has_its_source() {
     let rows = sources(include_str!("../../../../docs/ml-timeline-sources.md"));
     assert_eq!(unsourced(&events(DATA).unwrap(), &rows), Vec::<String>::new());
+}
+
+#[test]
+fn a_demo_reads_from_its_toml() {
+    let toml = "# A demo.\nslug = \"net-macro\"\ntitle = \"Network macro\"\nsummary = \"A network as one line: a spec such as \\\"2 16 relu\\\" becomes code. More.\"\n\
+                status = \"live\"\norder = 3\n[web]\ntitle = \"not this\"\n";
+    let d = demo(toml).unwrap();
+    assert_eq!((d.slug.as_str(), d.title.as_str(), d.live()), ("net-macro", "Network macro", true));
+    assert_eq!(d.summary, "A network as one line: a spec such as \"2 16 relu\" becomes code. More.");
+    assert_eq!(d.short(), "A network as one line.");
+    assert_eq!(demo("title = \"no slug\"\n"), None);
+}
+
+#[test]
+fn fill_takes_a_demo_from_its_toml() {
+    let demos = [
+        Demo { slug: "k-means".into(), title: "k-means".into(), summary: "Clustering. Then more.".into(), status: "live".into() },
+        Demo { slug: "draft".into(), status: "draft".into(), ..Demo::default() },
+    ];
+    let json = r#"[{"year": 1957, "when": "1957", "kind": "demo", "demo": "k-means", "shows": "Lloyd's algorithm"},
+                   {"year": 1958, "when": "1958", "kind": "demo", "demo": "draft", "shows": "x"},
+                   {"year": 1959, "when": "1959", "kind": "demo", "demo": "gone", "shows": "x"},
+                   {"year": 1960, "when": "1960", "title": "Twice", "kind": "demo", "demo": "k-means", "shows": "x"}]"#;
+    let mut list = events(json).unwrap();
+    let wrong = fill(&mut list, &demos);
+    let e = &list[0];
+    assert_eq!((e.title.as_str(), e.text.as_str()), ("k-means", "Clustering."));
+    assert_eq!((e.href.as_deref(), e.image.as_deref()), (Some("../k-means/"), Some("shots/k-means.webp")));
+    assert_eq!(e.tip.as_deref(), Some("Clustering. Then more."));
+    assert!(e.size(false).0 > 290.0, "a pictured box");
+    let says = |what: &str| wrong.iter().filter(|w| w.contains(what)).count();
+    assert_eq!((says("not live"), says("no such demo"), says("come from its demo.toml")), (1, 1, 1), "{wrong:?}");
+    assert_eq!(wrong.len(), 3);
+    let missing = undemoed(&list[..1], &demos);
+    assert_eq!(missing, Vec::<String>::new(), "a draft needs no event");
+    assert_eq!(undemoed(&list, &demos), vec!["demo k-means: on the timeline 2 times".to_string()]);
+    assert_eq!(undemoed(&[], &demos), vec!["demo k-means: live, but not on the timeline".to_string()]);
+}
+
+#[test]
+fn every_live_demo_is_on_the_timeline_once() {
+    let demos = all_demos();
+    assert!(demos.iter().filter(|d| d.live()).count() >= 18, "the live demos read");
+    assert_eq!(undemoed(&filled(), &demos), Vec::<String>::new());
 }

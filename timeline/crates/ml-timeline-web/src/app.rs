@@ -16,7 +16,7 @@ use std::rc::Rc;
 
 use gloo_events::EventListener;
 use gloo_timers::callback::Timeout;
-use ml_timeline::{Event, FIRST, Go, NOW, Placed, Scale, Side, events, frame, hash, key, parse, place, scroll_for, target};
+use ml_timeline::{Event, FIRST, demo, fill, Go, NOW, Placed, Scale, Side, events, frame, hash, key, parse, place, scroll_for, target};
 use wasm_bindgen::{JsCast, JsValue};
 use web_sys::{Element, HtmlElement, HtmlInputElement, KeyboardEvent, ScrollBehavior, ScrollToOptions};
 use yew::prelude::*;
@@ -27,6 +27,9 @@ use crate::minimap::Minimap;
 
 /// The events, built in, so the page fetches nothing for them.
 const DATA: &str = include_str!("../../../data/timeline.json");
+
+/// The demos' `demo.toml` files, gathered by `build.rs`.
+const DEMOS: &str = include_str!(concat!(env!("OUT_DIR"), "/demos.txt"));
 
 /// Room before the first year and after the last, for callouts that fan
 /// out past the ends.
@@ -41,7 +44,7 @@ const PHONE: f64 = 640.0;
 /// The timeline.
 #[function_component]
 pub fn App() -> Html {
-    let list = use_memo((), |()| events(DATA).unwrap_or_default());
+    let list = use_memo((), |()| ours());
     let wide = use_window_width();
     let narrow = wide < PHONE;
     let scale = Rc::new(scale_of(&list, narrow));
@@ -49,6 +52,8 @@ pub fn App() -> Html {
     let placed = place(&use_sizes(&list, &track, narrow), &scale);
     let axis = reach(&placed, Side::Above) + BAND + 8.0;
     let height = axis + reach(&placed, Side::Below) + BAND + 16.0;
+    // The last boxes may be pushed past the last year's margin.
+    let span = placed.iter().map(|p| p.left + p.width + 16.0).fold(scale.width(), f64::max);
     let view = use_state(|| (0.0, wide));
     let go = mover(&strip, &scale);
     use_opening(&strip, &scale);
@@ -65,13 +70,21 @@ pub fn App() -> Html {
             { controls(&go) }
             <Minimap scale={(*scale).clone()} {marks} frame={frame(&scale, left, width)} go={go.clone()} />
             <div class="strip" ref={strip.clone()} tabindex="0" {onscroll} onwheel={sideways(strip)} aria-label="The timeline: scroll sideways">
-                <div class="track" ref={track} style={format!("width:{}px;height:{height}px", scale.width())}>
+                <div class="track" ref={track} style={format!("width:{span}px;height:{height}px")}>
                     <Axis scale={(*scale).clone()} y={axis} />
                     { for callouts }
                 </div>
             </div>
         </>
     }
+}
+
+/// The events, each demo's filled from its `demo.toml`.
+fn ours() -> Vec<Event> {
+    let mut list = events(DATA).unwrap_or_default();
+    let demos: Vec<_> = DEMOS.split('\0').filter_map(demo).collect();
+    fill(&mut list, &demos);
+    list
 }
 
 /// The scale for the events' boxes, a phone's when `narrow`.
@@ -131,7 +144,11 @@ fn mover(strip: &NodeRef, scale: &Rc<Scale>) -> Callback<(Go, bool)> {
 
 fn move_strip(strip: &NodeRef, scale: &Scale, go: Go, smooth: bool) {
     let Some(strip) = strip.cast::<Element>() else { return };
-    let left = scroll_for(go, scale, f64::from(strip.scroll_left()), f64::from(strip.client_width()));
+    // The end is the strip's, which may reach past the scale's for the last boxes.
+    let left = match go {
+        Go::End => f64::from(strip.scroll_width() - strip.client_width()),
+        _ => scroll_for(go, scale, f64::from(strip.scroll_left()), f64::from(strip.client_width())),
+    };
     let options = ScrollToOptions::new();
     options.set_left(left);
     options.set_behavior(if smooth { ScrollBehavior::Smooth } else { ScrollBehavior::Instant });

@@ -16,6 +16,11 @@ state the network never saw; step or dream; the predicted frame as
 probabilities with the true ball outlined; the dreamed ball against
 the true one, with their paths).
 
+On [the ML
+timeline](https://softwarewrighter.github.io/X_eTaL-ML/ml-timeline/#2018-03),
+at March 2018, beside the idea it shows: World Models (Ha and
+Schmidhuber).
+
 ## Run it
 
 From a clone of this repository (Rust, git and `just`):

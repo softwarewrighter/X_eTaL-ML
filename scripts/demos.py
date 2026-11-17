@@ -40,6 +40,8 @@ def problems(d, meta):
         out.append(f"{d.name}: status must be one of {sorted(STATUSES)}")
     if not (d / "README.md").is_file():
         out.append(f"{d.name}: no README.md")
+    elif meta.get("status") == "live" and "/ml-timeline/" not in (d / "README.md").read_text():
+        out.append(f"{d.name}: live, but its README does not link the ML timeline (its place there)")
     return out
 
 

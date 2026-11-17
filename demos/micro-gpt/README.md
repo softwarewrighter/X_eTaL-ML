@@ -14,6 +14,11 @@ Live: [Tiny GPT](https://softwarewrighter.github.io/X_eTaL-ML/micro-gpt/)
 name to see the five likeliest next letters at each step and where
 each of the four heads looks).
 
+On [the ML
+timeline](https://softwarewrighter.github.io/X_eTaL-ML/ml-timeline/#2018-06),
+at June 2018, beside the idea it shows: GPT's next word (Radford et
+al.).
+
 [![Tiny GPT: the live page](screenshot.png)](https://softwarewrighter.github.io/X_eTaL-ML/micro-gpt/)
 
 ## Run it

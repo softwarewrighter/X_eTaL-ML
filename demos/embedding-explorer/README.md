@@ -13,6 +13,11 @@ Live: [Embedding explorer](https://softwarewrighter.github.io/X_eTaL-ML/embeddin
 colors are the clusters k-means finds in the 64 numbers, not told the
 kinds).
 
+On [the ML
+timeline](https://softwarewrighter.github.io/X_eTaL-ML/ml-timeline/#1990-03),
+at March 1990, beside the idea it shows: words described by the
+company they keep (Church and Hanks).
+
 [![Embedding explorer: the live page](screenshot.png)](https://softwarewrighter.github.io/X_eTaL-ML/embedding-explorer/)
 
 ## Run it

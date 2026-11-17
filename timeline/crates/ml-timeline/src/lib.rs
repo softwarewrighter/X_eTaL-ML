@@ -11,12 +11,14 @@
 //! the layout is theirs; the months, the kinds, the folded scale, the
 //! minimap and the navigation are new.
 
+mod demos;
 mod event;
 mod layout;
 mod nav;
 mod scale;
 mod sources;
 
+pub use demos::{Demo, demo, fill, undemoed};
 pub use event::{Event, Kind, MONTHS, check, events};
 pub use layout::{Placed, Side, place};
 pub use nav::{Go, LEAD, frame, hash, key, mini, mini_year, parse, scroll_for, target};

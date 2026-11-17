@@ -15,6 +15,11 @@ readings and the test loss and accuracy redrawn after each, the chart
 by the [Plot](https://github.com/softwarewrighter/X_eTaL-libraries)
 library in the page's program).
 
+On [the ML
+timeline](https://softwarewrighter.github.io/X_eTaL-ML/ml-timeline/#1998-11),
+at November 1998, beside the idea it shows: a CNN trained by its
+gradient (LeCun et al., LeNet-5).
+
 [![CNN training: the live page](screenshot.png)](https://softwarewrighter.github.io/X_eTaL-ML/cnn-backprop/)
 
 ## Run it

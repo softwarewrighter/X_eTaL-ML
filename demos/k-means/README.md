@@ -11,6 +11,10 @@ Live: [k-means](https://softwarewrighter.github.io/X_eTaL-ML/k-means/)
 their center's color, the centers as crosses with their paths; pick
 the start and k from 2 to 8).
 
+On [the ML
+timeline](https://softwarewrighter.github.io/X_eTaL-ML/ml-timeline/#1957),
+at 1957, beside the idea it shows: Lloyd's algorithm.
+
 ## Run it
 
 From a clone of this repository (Rust, git and `just`):

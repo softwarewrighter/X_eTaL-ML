@@ -1,7 +1,7 @@
 # Text the ML timeline (pages/ml-timeline/) shows once its WebAssembly
 # has drawn the strip (scripts/browser-check.sh ml-timeline): the
-# controls, a folded run of empty years, the first and a late event,
-# and a year label.
+# controls, folded runs of empty years, early and late events, a year
+# label, and a demo's callout filled from its demo.toml.
 |<-
 ->|
 Go to
@@ -12,3 +12,6 @@ VeRA: vector-based random matrix adaptation
 Attention is all you need
 July 1959: Some studies in machine learning using the game of checkers
 2017
+Demo, live
+Shows: Lloyd's algorithm
+Attention microscope

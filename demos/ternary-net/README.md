@@ -17,6 +17,11 @@ test point right as ternary.
 
 Live: [1.58-bit network](https://softwarewrighter.github.io/X_eTaL-ML/ternary-net/)
 
+On [the ML
+timeline](https://softwarewrighter.github.io/X_eTaL-ML/ml-timeline/#2024-02),
+at February 2024, beside the idea it shows: weights of -1, 0 and +1
+(BitNet b1.58; Li and Liu, 2016).
+
 [![1.58-bit network: the live page](screenshot.png)](https://softwarewrighter.github.io/X_eTaL-ML/ternary-net/)
 
 ## The program

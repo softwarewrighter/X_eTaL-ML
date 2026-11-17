@@ -12,6 +12,11 @@ layer in plain X_eTaL side by side, checked to agree in your browser;
 the example runs once as it is picked, a spinner showing meanwhile,
 about 15 seconds for the BERT layer).
 
+On [the ML
+timeline](https://softwarewrighter.github.io/X_eTaL-ML/ml-timeline/#2026-10),
+at October 2026, beside the idea it shows: layers written as data
+flow, X_eTaL's own.
+
 ## Run it
 
 From a clone of this repository (Rust, git and `just`):

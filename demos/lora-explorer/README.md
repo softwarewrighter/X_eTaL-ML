@@ -26,6 +26,10 @@ and click its stages; watch the two loss curves against the best
 possible at the slider's rank; switch the math to VeRA's layer or its
 backward step; the rank sweep runs once).
 
+On [the ML
+timeline](https://softwarewrighter.github.io/X_eTaL-ML/ml-timeline/#2021-06),
+at June 2021, beside the idea it shows: LoRA (Hu et al.).
+
 W, A, B and x are made up (a fixed ripple), to show the shapes and the
 arithmetic; the known update T to learn is too (8 x 8, of rank 4).
 

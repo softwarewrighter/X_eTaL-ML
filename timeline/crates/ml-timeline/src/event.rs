@@ -26,6 +26,8 @@ pub struct Event {
     #[serde(default)]
     pub month: Option<u8>,
     pub when: String,
+    /// Empty in the data for a demo, whose title comes from its demo.toml.
+    #[serde(default)]
     pub title: String,
     #[serde(default)]
     pub text: String,
@@ -37,6 +39,9 @@ pub struct Event {
     /// For a demo: its slug, `demos/<slug>/`.
     #[serde(default)]
     pub demo: Option<String>,
+    /// For a demo: the idea it shows, as the event beside it names it.
+    #[serde(default)]
+    pub shows: Option<String>,
     #[serde(default)]
     pub image: Option<String>,
     /// What the picture says when the pointer is over it.
@@ -59,9 +64,10 @@ impl Event {
 
     /// Its callout's width and estimated height in pixels: room for the
     /// picture, if it has one, then a line of the date and title for
-    /// every `per` characters of them and of the words for every `per`
-    /// and a third more. On a phone (`narrow`) the boxes are narrower.
-    /// The browser measures the real heights before the final layout.
+    /// every `per` characters of them, and of the words and what a demo
+    /// shows for every `per` and a third more. On a phone (`narrow`) the
+    /// boxes are narrower. The browser measures the real heights before
+    /// the final layout.
     #[must_use]
     pub fn size(&self, narrow: bool) -> (f64, f64) {
         let pictured = self.image.is_some();
@@ -76,8 +82,9 @@ impl Event {
         let title = lines(&format!("{}: {}", self.when, self.title), per);
         let words = lines(&self.text, per * 1.3);
         let topics = if self.topics.is_empty() { 0.0 } else { 1.0 };
+        let shows = self.shows.as_deref().map_or(0.0, |s| lines(s, per * 1.3));
         let picture = if pictured { width * 0.56 } else { 0.0 };
-        (width, picture + 20.0 + 21.0 * title + 18.0 * (words + topics))
+        (width, picture + 20.0 + 21.0 * title + 18.0 * (words + topics + shows))
     }
 }
 
@@ -96,7 +103,7 @@ pub fn events(json: &str) -> Result<Vec<Event>, serde_json::Error> {
 /// month outside 1 to 12, a title or a `when` left empty, a `when` that
 /// does not name its year, or its month alone (or names a month the
 /// event has not), a demo without its slug or a slug on what is not a
-/// demo, a paper with nowhere to lead.
+/// demo, a demo not saying what it shows, a paper with nowhere to lead.
 #[must_use]
 pub fn check(list: &[Event]) -> Vec<String> {
     let mut wrong = Vec::new();
@@ -119,6 +126,9 @@ pub fn check(list: &[Event]) -> Vec<String> {
         }
         if (e.kind == Kind::Demo) != e.demo.is_some() {
             wrong.push(format!("{name}: a demo needs its slug, and only a demo has one"));
+        }
+        if e.kind == Kind::Demo && e.shows.is_none() {
+            wrong.push(format!("{name}: a demo needs the idea it shows"));
         }
         if e.kind == Kind::Paper && e.href.is_none() {
             wrong.push(format!("{name}: a paper needs a link"));

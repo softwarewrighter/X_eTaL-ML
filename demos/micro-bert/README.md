@@ -18,6 +18,11 @@ Live: [Tiny BERT](https://softwarewrighter.github.io/X_eTaL-ML/micro-bert/)
 (type a name with a blank, `ma_y`; see the eight likeliest letters for
 it, where each head of each layer looks, and the model drawn as math).
 
+On [the ML
+timeline](https://softwarewrighter.github.io/X_eTaL-ML/ml-timeline/#2018-10),
+at October 2018, beside the idea it shows: BERT's masked words (Devlin
+et al.).
+
 [![Tiny BERT: the live page](screenshot.png)](https://softwarewrighter.github.io/X_eTaL-ML/micro-bert/)
 
 ## Run it

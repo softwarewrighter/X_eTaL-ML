@@ -11,6 +11,11 @@ Live: [Attention microscope](https://softwarewrighter.github.io/X_eTaL-ML/attent
 (type a sentence, switch the causal mask, click a word to see its
 query against every key).
 
+On [the ML
+timeline](https://softwarewrighter.github.io/X_eTaL-ML/ml-timeline/#2017-06),
+at June 2017, beside the idea it shows: the Transformer's attention
+(Vaswani et al.).
+
 [![Attention microscope: the live page](screenshot.png)](https://softwarewrighter.github.io/X_eTaL-ML/attention/)
 
 ## Run it

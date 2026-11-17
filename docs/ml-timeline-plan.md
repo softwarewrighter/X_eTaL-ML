@@ -26,8 +26,8 @@ a main view of months per year; sparse years kept short.
   `crates/ml-timeline-web/index.html` the shell (built in: the shell
   step).
 - Built by `scripts/build-timeline.sh` (its tests, then trunk, as the
-  rest of the site, into pages/ml-timeline/; the demos' pictures made
-  into webp in the demos step), called by
+  rest of the site, into pages/ml-timeline/; each live demo's picture
+  made into webp from its screenshot.png), called by
   `scripts/build-pages.sh`, so `just pages`, `just publish` and `just
   check-live` cover it; `just timeline` builds it alone.
 

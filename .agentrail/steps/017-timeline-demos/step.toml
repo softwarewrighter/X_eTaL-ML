@@ -1,6 +1,6 @@
 number = 17
 slug = "timeline-demos"
-status = "pending"
+status = "in-progress"
 description = "(docs/ml-timeline-plan.md, step 11c; the user: callouts with images to my dem..."
 role = "production"
 context_files = []

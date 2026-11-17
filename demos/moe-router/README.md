@@ -12,6 +12,11 @@ animal x food expert. Type your own sentence.
 
 Live: [MoE routing microscope](https://softwarewrighter.github.io/X_eTaL-ML/moe-router/)
 
+On [the ML
+timeline](https://softwarewrighter.github.io/X_eTaL-ML/ml-timeline/#2017-01),
+at January 2017, beside the idea it shows: the top-k gate of the
+sparsely-gated mixture of experts (Shazeer et al.).
+
 [![MoE routing microscope: the live page](screenshot.png)](https://softwarewrighter.github.io/X_eTaL-ML/moe-router/)
 
 ## The program

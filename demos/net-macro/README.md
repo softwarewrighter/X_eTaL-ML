@@ -13,6 +13,11 @@ function the macro wrote, its parameter count, and what the network
 decides; then train it in your browser from random weights, by the
 training step the macro writes from the same spec).
 
+On [the ML
+timeline](https://softwarewrighter.github.io/X_eTaL-ML/ml-timeline/#2026-10),
+at October 2026, beside the idea it shows: X_eTaL's macro libraries
+(v0.1.0).
+
 [![Network macro: the live page](screenshot.png)](https://softwarewrighter.github.io/X_eTaL-ML/net-macro/)
 
 ## Run it

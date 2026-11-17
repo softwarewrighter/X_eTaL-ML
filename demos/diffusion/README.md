@@ -14,6 +14,11 @@ Live: [Learned denoiser](https://softwarewrighter.github.io/X_eTaL-ML/diffusion/
 click a row for it large; draw eight more from new noise, or the same
 noise again and get the same pictures).
 
+On [the ML
+timeline](https://softwarewrighter.github.io/X_eTaL-ML/ml-timeline/#2020-06),
+at June 2020, beside the idea it shows: denoising diffusion (Ho, Jain
+and Abbeel).
+
 ## Run it
 
 From a clone of this repository (Rust, git and `just`):

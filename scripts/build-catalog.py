@@ -142,6 +142,8 @@ it. Then <a href="recorded/">run the demos yourself</a>, or see more X_eTaL:
 <a href="https://softwarewrighter.github.io/X_eTaL-games/">games</a>,
 <a href="https://softwarewrighter.github.io/X_eTaL-libraries/">libraries</a>,
 <a href="https://softwarewrighter.github.io/X_eTaL-extensions/">extensions</a>.</li>
+<li><b>Where the ideas come from.</b> <a href="ml-timeline/">The ML timeline</a>: the key papers
+and milestones from 1943 to today, each demo beside the idea it shows.</li>
 <li><b>The libraries.</b> <a href="libs/">The ML libraries</a> the demos are built from
 (networks, transformers, convolution, quantization, classic learning), each with its reference
 and demos you can edit and run.</li>

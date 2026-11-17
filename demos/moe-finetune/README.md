@@ -13,6 +13,11 @@ at equal budgets.
 
 Live: [MoE fine-tuning](https://softwarewrighter.github.io/X_eTaL-ML/moe-finetune/)
 
+On [the ML
+timeline](https://softwarewrighter.github.io/X_eTaL-ML/ml-timeline/#2023-12),
+at December 2023, beside the idea it shows: fine-tuning a mixture of
+experts such as Mixtral, with LoRA, LoRA-FA and VeRA among the ways.
+
 [![MoE fine-tuning: the live page](screenshot.png)](https://softwarewrighter.github.io/X_eTaL-ML/moe-finetune/)
 
 ## The task

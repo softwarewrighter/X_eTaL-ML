@@ -3,7 +3,8 @@
 # makes a demo that passes; a wrong reg-rs baseline fails; an unexpected
 # error fails; XETAL_BLESS=1 repairs it; a program without a baseline
 # fails until blessed; the catalog shows it (escaped,
-# no live link without a web app; its key line drawn by X_eTaL); a bad
+# no live link without a web app; its key line drawn by X_eTaL); a live
+# demo's README must link its place on the ML timeline; a bad
 # demo.toml is rejected.
 #   scripts/selftest-demos.sh
 set -euo pipefail
@@ -43,6 +44,14 @@ printf 'line = "%s"\nwhy = "One reduce."\n' "'+ r_/ r_ange 10" >> "$XETAL_DEMOS_
 "$root/scripts/py" "$root/scripts/build-catalog.py" "$out/index.html" >/dev/null
 grep -q '<pre class="xtl"><span class="c-symbol">' "$out/index.html" && grep -q 'One reduce.' "$out/index.html" \
   || { echo "selftest: the catalog does not show the demo's key line" >&2; exit 1; }
+# A live demo's README links its place on the ML timeline.
+sed -i.bak 's/^status = .*/status = "live"/' "$XETAL_DEMOS_DIR/probe/demo.toml" && rm -f "$XETAL_DEMOS_DIR/probe/demo.toml.bak"
+said="$("$root/scripts/py" "$root/scripts/demos.py" check 2>&1 || true)"
+grep -q "link the ML timeline" <<<"$said" \
+  || { echo "selftest: a live demo whose README does not link the timeline passes" >&2; exit 1; }
+echo "On [the ML timeline](https://softwarewrighter.github.io/X_eTaL-ML/ml-timeline/#2026)." >> "$XETAL_DEMOS_DIR/probe/README.md"
+"$root/scripts/py" "$root/scripts/demos.py" check >/dev/null \
+  || { echo "selftest: a live demo linking the timeline fails" >&2; exit 1; }
 sed -i.bak 's/^status = .*/status = "bogus"/' "$XETAL_DEMOS_DIR/probe/demo.toml" && rm -f "$XETAL_DEMOS_DIR/probe/demo.toml.bak"
 expect fail "a bad status"
 echo "selftest-demos: ok"

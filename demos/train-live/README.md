@@ -11,6 +11,11 @@ Live: [Training live](https://softwarewrighter.github.io/X_eTaL-ML/train-live/)
 the share of points right are drawn after every run, in one chart, by
 the [Plot](https://github.com/softwarewrighter/X_eTaL-libraries) library's `p:c_hart!`, in the page's program.
 
+On [the ML
+timeline](https://softwarewrighter.github.io/X_eTaL-ML/ml-timeline/#2014-12),
+at December 2014, beside the idea it shows: Adam (Kingma and Ba) on
+backpropagation's gradient.
+
 [![Training live: the live page](screenshot.png)](https://softwarewrighter.github.io/X_eTaL-ML/train-live/)
 
 ## Run it

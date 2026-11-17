@@ -78,6 +78,7 @@ fn body(event: &Event) -> Html {
             if !kind.is_empty() { <p class="kind">{ kind }</p> }
             <p class="when"><span class="date">{ &event.when }</span>{ ": " }<span class="title">{ &event.title }</span></p>
             if !event.text.is_empty() { <p class="text">{ &event.text }</p> }
+            if let Some(shows) = &event.shows { <p class="shows">{ "Shows: " }{ shows }</p> }
             if !event.topics.is_empty() {
                 <p class="topics">{ for event.topics.iter().map(|t| html! { <span class="topic">{ t }</span> }) }</p>
             }

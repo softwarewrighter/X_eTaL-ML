@@ -24,6 +24,11 @@ Live: [Tiny CNN](https://softwarewrighter.github.io/X_eTaL-ML/cnn-digits/)
 (draw a digit or pick one; X_eTaL runs every stage in your browser;
 click any feature map to see its patch times its filter).
 
+On [the ML
+timeline](https://softwarewrighter.github.io/X_eTaL-ML/ml-timeline/#1989-12),
+at December 1989, beside the idea it shows: a convolutional network
+that reads digits (LeCun et al.).
+
 [![Tiny CNN: the live page](screenshot.png)](https://softwarewrighter.github.io/X_eTaL-ML/cnn-digits/)
 
 ## What the command line prints
