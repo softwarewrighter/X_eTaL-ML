@@ -80,4 +80,14 @@ piped := @ flow:p_ipe< c"
 |> 2 moe:t_opk it
 |> (ex, it) moe:c_ombine x"
 c17 := "the layer as a Flow pipeline of the stages" k:t_est piped k:n_ear (R, ex, 2) moe:l_ayer x
-k:r_eport c1 k:a_nd c2 k:a_nd c3 k:a_nd c4 k:a_nd c5 k:a_nd c6 k:a_nd c7 k:a_nd c8 k:a_nd c9 k:a_nd c10 k:a_nd c11 k:a_nd c12 k:a_nd c13 k:a_nd c14 k:a_nd c15 k:a_nd c16 k:a_nd c17 k:a_nd c18 k:a_nd c19
+## The expert cache: batches of tokens need their experts; a cache of
+## c slots loads only what a step needs, every key once when all fit,
+## and never more with more slots (LRU keeps no Belady anomaly).
+c20 := "a batch of one token needs the experts it chose" k:t_est (f_loat G > 0.0) k:n_ear 1 moe:u_sed G
+c21 := "a batch needs every expert its tokens chose" k:t_est (4 1 r_eshape 'm_ax r_/_2 f_loat G > 0.0) k:n_ear 7 moe:u_sed G
+U := f_loat 0.3 < 5 12 r_eshape 0.9 u:r_ipple 60
+c22 := "a cache loads only what a step needs" k:t_est 0.0 k:n_ear '+ r_/ r_avel (2 moe:l_ru U) * 1.0 - U
+c23 := "with a slot for every key, each key used loads once" k:t_est ('m_ax r_/_2 U) k:n_ear '+ r_/_2 5 moe:l_ru U
+loads := '{ c -> '+ r_/ r_avel c moe:l_ru U } e_ach r_ange 5
+c24 := "more slots never load more" k:t_est k:t_rue '& r_/ (4 t_ake loads) >= 1 d_rop loads
+k:r_eport c1 k:a_nd c2 k:a_nd c3 k:a_nd c4 k:a_nd c5 k:a_nd c6 k:a_nd c7 k:a_nd c8 k:a_nd c9 k:a_nd c10 k:a_nd c11 k:a_nd c12 k:a_nd c13 k:a_nd c14 k:a_nd c15 k:a_nd c16 k:a_nd c17 k:a_nd c18 k:a_nd c19 k:a_nd c20 k:a_nd c21 k:a_nd c22 k:a_nd c23 k:a_nd c24

@@ -13,6 +13,8 @@
 ## gradients), every token at once, 250 steps.
 ##
 ## Writes data/train.txt (800 tokens) and data/test.txt (400 tokens),
+## the two shifted tasks' (data/shift-*.txt, kind 3 by a new rule;
+## data/shift2-*.txt, kind 1 by another; 200 and 200 tokens each),
 ## each the inputs (9 x N), the kinds and the classes, numbers rounded
 ## to 4 places; and data/base.txt, the checkpoint: S, R, then the
 ## experts' Ws (200 numbers).
@@ -34,6 +36,9 @@ M := 12 4 r_eshape (2.0 * 7 u:u_nit 48) - 1.0
 ## The shifted task: kind 3 follows a new rule (its rows from another
 ## seed); the other kinds' rules are kept.
 M2 := (6 4 r_eshape 24 t_ake r_avel M) c_at (3 4 r_eshape (2.0 * 13 u:u_nit 12) - 1.0) c_at 3 4 r_eshape 36 d_rop r_avel M
+## A second shifted task, for switching adapters on one base: kind 1
+## follows a new rule (its rows from a third seed).
+M3 := (3 4 r_eshape (2.0 * 17 u:u_nit 12) - 1.0) c_at 9 4 r_eshape 12 d_rop r_avel M
 ## `(seed, rules) t_okens kinds`: a token of each kind given, by the
 ## rules: the inputs, the kinds and the classes, as one list of 11 N
 ## numbers.
@@ -54,6 +59,9 @@ _ := (f_ormat (23, M) u:t_okens 1 + (o_ffsets 400) m_od 4) []N_PUT "data/test.tx
 ## held out.
 _ := (f_ormat (47, M2) u:t_okens 200 r_eshape 3) []N_PUT "data/shift-train.txt"
 _ := (f_ormat (53, M2) u:t_okens 200 r_eshape 3) []N_PUT "data/shift-test.txt"
+## The second task's, all of kind 1: 200 to fine-tune on, 200 held out.
+_ := (f_ormat (59, M3) u:t_okens 200 r_eshape 1) []N_PUT "data/shift2-train.txt"
+_ := (f_ormat (61, M3) u:t_okens 200 r_eshape 1) []N_PUT "data/shift2-test.txt"
 
 ### The tokens, read back
 

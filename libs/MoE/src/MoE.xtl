@@ -1,4 +1,4 @@
-## MoE: mixture-of-experts layers: router scores, top-k gates, experts as adapted projections, the sparse combine, gradients and routing statistics
+## MoE: mixture-of-experts layers: router scores, top-k gates, experts as adapted projections, the sparse combine, gradients, routing statistics and an expert cache
 ##
 ## Import it with an alias of your choice: "moe:" u_se< "MoE".
 ## Put libs/MoE/src on XETAL_PATH ("just path"); the reference is libs/MoE/docs.
@@ -191,4 +191,45 @@ l:b_alance := { (P, G) k ->
   N := 2 s_elect s_hape P
   f := ('+ r_/_2 f_loat G > 0.0) / f_loat k * N
   (f_loat E) * '+ r_/ f * ('+ r_/_2 P) / f_loat N
+}
+
+### An expert cache
+
+## `b u_sed G`: which experts each batch of b tokens needs: the gates G
+## (E x N) in batches of b tokens in turn (a last part batch left out),
+## an E x (N / b) matrix, 1 where an expert serves a token of the batch.
+## >> "moe:" u_se< "MoE"
+## >> 2 moe:u_sed 3 4 r_eshape 0.6 0.5 0.0 0.0 0.4 0.0 0.0 1.0 0.0 0.5 1.0 0.0
+## 1.0 0.0
+## 1.0 1.0
+## 1.0 1.0
+l:u_sed := { b G ->
+  E := f_irst s_hape G
+  T := (2 s_elect s_hape G) d_iv b
+  'm_ax r_/_3 (E c_at T c_at b) r_eshape (E * T * b) t_ake r_avel f_loat G > 0.0
+}
+
+## `c l_ru U`: a cache of c slots, least recently used out first, over
+## the needs U (K x T: 1 where step t needs key k, an expert or an
+## adapter): K x T, 1 where step t had to load key k (it was not held).
+## After each step the cache holds the c keys used last (a tie by the
+## higher key), so a step needing more than c keys loads them all and
+## keeps c. Its sum is the loads; times a key's bytes, what moved.
+## >> "moe:" u_se< "MoE"
+## >> 2 moe:l_ru 3 6 r_eshape 1.0 0.0 1.0 0.0 1.0 1.0 0.0 1.0 0.0 0.0 0.0 1.0 1.0 1.0 0.0 1.0 0.0 0.0
+## 1.0 0.0 1.0 0.0 0.0 0.0
+## 0.0 1.0 0.0 0.0 0.0 1.0
+## 1.0 0.0 0.0 0.0 0.0 0.0
+l:l_ru := { c U ->
+  K := f_irst s_hape U
+  T := 2 s_elect s_hape U
+  (_, _, L, _) := T '{ (last, held, L, t) ->
+    u := r_avel (t s_elect o_\ U)
+    load := u * 1.0 - held
+    last2 := (u * f_loat t) + last * 1.0 - u
+    key := (((f_loat K) * last2) + f_loat r_ange K) / f_loat K * T + 1
+    held2 := (r_avel (c m_in K) l:m_ask (K c_at 1) r_eshape key) * f_loat last2 > 0.0
+    (last2, held2, L c_at load, t + 1)
+  } p_ower (K r_eshape 0.0, K r_eshape 0.0, 0 r_eshape 0.0, 1)
+  o_\ (T c_at K) r_eshape L
 }

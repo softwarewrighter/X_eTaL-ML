@@ -12,6 +12,10 @@
 ## whose rule did not change: what fine-tuning must not break, 3 points
 ## the bar), the numbers it trains and their bytes, where the tokens are
 ## routed before and after, and how large each expert's update is.
+## Then four adapters compared (shared LoRA, expert LoRA, LoRA-FA,
+## shared VeRA), and the adapters deployed: kept apart against merged
+## (LoRA exactly, QLoRA not), two tasks' adapters switched on one base,
+## and an expert cache measuring what each way moves.
 
 "moe:" u_se< "MoE"
 "lo:" u_se< "LoRA"
@@ -131,18 +135,21 @@ u:s_tep := { ((fS, fE, fR, fN), (xs, Ys)) ((aS, bS, R, Ws, As, Bs), (m1, v1, m2,
   (Bs2, m62, v62) := (0.02, t) op:a_dam (Bs, m6, v6, (fE c_at 0.0) u:p_er dBs)
   ((aS2, bS2, R2, W2, As2, Bs2), (m12, v12, m22, v22, m32, v32, m42, v42, m52, v52, m62, v62), t + 1, losses c_at loss)
 }
-## `(method, tokens, steps) t_une seed`: the base fine-tuned by a
-## method on the tokens: each A from the seed (small), each B 0, so it
-## starts as the base; with a new expert, its router row as above.
-u:t_une := { ((fS, fE, fR, fN), tokens, steps) seed ->
+## `(Wb, method, tokens, steps) t_uneOn seed`: the base, its experts
+## Wb, fine-tuned by a method on the tokens: each A from the seed
+## (small), each B 0, so it starts as the base; with a new expert, its
+## router row as above.
+u:t_uneOn := { (Wb, (fS, fE, fR, fN), tokens, steps) seed ->
   aS := 0.3 * seed lo:s_eeded 2 9
   As := 5 2 9 r_eshape 0.3 * (seed + 1) lo:s_eeded 10 9
   R := R0 + fN * R5 - R0
-  zero := (0.0 * aS, 8 2 r_eshape 0.0, 0.0 * R0, 0.0 * W0, 0.0 * As, 5 3 2 r_eshape 0.0)
+  zero := (0.0 * aS, 8 2 r_eshape 0.0, 0.0 * R0, 0.0 * Wb, 0.0 * As, 5 3 2 r_eshape 0.0)
   (zS, zB, zR, zW, zA, zE) := zero
-  (m, _, _, losses) := steps '{ st -> ((fS, fE, fR, fN), tokens) u:s_tep st } p_ower ((aS, zB, R, W0, As, zE), (zS, zS, zB, zB, zR, zR, zW, zW, zA, zA, zE, zE), 1, 0 r_eshape 0.0)
+  (m, _, _, losses) := steps '{ st -> ((fS, fE, fR, fN), tokens) u:s_tep st } p_ower ((aS, zB, R, Wb, As, zE), (zS, zS, zB, zB, zR, zR, zW, zW, zA, zA, zE, zE), 1, 0 r_eshape 0.0)
   (m, losses)
 }
+## `(method, tokens, steps) t_une seed`: the base itself fine-tuned.
+u:t_une := { (method, tokens, steps) seed -> (W0, method, tokens, steps) u:t_uneOn seed }
 ## `s_ize (A, B)`: an update's size, |s B A| (Frobenius).
 u:s_ize := { (A, B) -> s * s_qrt '+ r_/ r_avel (B '+ '* i_nner A) ^ 2 }
 ## `m r_eport method`: a method's measures: the new task's accuracy and
@@ -239,6 +246,64 @@ u:c_ompare := { (kind, r, tokens, steps, lr) seed ->
 ## and VeRA's paper trains at a rate several times LoRA's.
 equalRanks := 2 2 2 2
 equalBudgets := 3 1 4 9
+
+### Deploying
+
+## The research's deployment (L381-460): an adapter kept apart from the
+## base (switched per task) or merged into it (one task, as fast as the
+## base). A second task, for switching: kind 1 by a new rule (200
+## tokens to fine-tune on, 200 held out); the kinds both tasks leave
+## alone are 2 and 4 (held out, 200).
+((x2, Y2), _) := u:r_ead "data/shift2-train.txt"
+((xn2, Yn2), _) := u:r_ead "data/shift2-test.txt"
+(xe, Ye) := ((w_here 0 = ka m_od 2) u:c_olumns xa, (w_here 0 = ka m_od 2) u:c_olumns Ya)
+## `d_eltas (As, Bs)`: each expert's update s B A (LoRA's d_elta),
+## stacked as the experts are (5 x 3 x 9).
+u:d_eltas := { (As, Bs) ->
+  (D, _) := 5 '{ (D, e) -> (D c_at r_avel lo:d_elta (e s_elect As, e s_elect Bs, s), e + 1) } p_ower (0 r_eshape 0.0, 1)
+  5 3 9 r_eshape D
+}
+## `Wm m_erged m`: the model m with its experts' adapters folded into
+## the weights Wm (the adapters then 0): for LoRA, Ws + s B A; for
+## QLoRA, that quantized again.
+u:m_erged := { Wm (aS, bS, R, Ws, As, Bs) -> (aS, bS, R, Wm, 0.0 * As, 0.0 * Bs) }
+## QLoRA's base: the experts in NF4, blocks of 9 (a row each), and what
+## it computes with, W~, dequantized.
+Wq := lo:d_equant 9 lo:q_base W0
+## `m a_gainst m2`: two models on every held-out token (both tasks' and
+## the old task's, 800): the largest difference of their probabilities,
+## and the tokens whose likeliest class differs.
+xh := o_\ (o_\ xn) c_at (o_\ xn2) c_at o_\ xa
+u:a_gainst := { m m2 ->
+  (_, _, P) := m u:l_ayers xh
+  (_, _, P2) := m2 u:l_ayers xh
+  ('m_ax r_/ r_avel a_bs P - P2) c_at 0.5 * '+ r_/ r_avel a_bs (1 moe:m_ask P) - 1 moe:m_ask P2
+}
+## `m t_asks`: a model on the first task (kind 3's new rule), the
+## second (kind 1's) and the kinds neither changed.
+u:t_asks := { m -> (m u:a_ccuracy (xn, Yn)) c_at (m u:a_ccuracy (xn2, Yn2)) c_at m u:a_ccuracy (xe, Ye) }
+## The cache: the held-out tokens of the two tasks in batches of 8,
+## one task's batch then the other's (50 batches), each batch's
+## experts as the base's router sends them (fine-tuning the experts
+## leaves the routing as it was). Kept apart, the base experts are one
+## cache's keys (4) and the adapters another's, one per task and expert
+## (8); merged, each task has its own copy of every expert (8 keys).
+(_, G1, _) := base u:l_ayers xn
+(_, G2, _) := base u:l_ayers xn2
+U1 := 8 moe:u_sed 4 200 r_eshape 800 t_ake r_avel G1
+U2 := 8 moe:u_sed 4 200 r_eshape 800 t_ake r_avel G2
+Ub := o_\ 50 4 r_eshape r_avel o_\ U1 c_at U2
+Ua := o_\ 50 8 r_eshape r_avel o_\ U1 c_at (0.0 * U1) c_at (0.0 * U2) c_at U2
+## `sizes t_raffic c`: with c slots in each cache, the loads (base
+## experts, adapters or merged copies) and what moved: merged copies,
+## then the base experts and LoRA, LoRA-FA and VeRA adapters kept apart,
+## in bytes, sizes the bytes of (an expert, a LoRA adapter, LoRA-FA's B,
+## VeRA's d and b), the frozen A and projections made from their seeds.
+u:t_raffic := { (ne, nl, nf, nv) c ->
+  lb := '+ r_/ r_avel c moe:l_ru Ub
+  la := '+ r_/ r_avel c moe:l_ru Ua
+  (f_loat c) c_at lb c_at la c_at (la * ne) c_at (lb * ne) + la * nl c_at nf c_at nv
+}
 # -- end of the core ------------------------------
 
 ### Each method, seed 1, 120 steps
@@ -271,3 +336,44 @@ u:f_our (equalRanks, 0.02)
 u:f_our (equalBudgets, 0.02)
 u:f_our (equalRanks, 0.1)
 u:f_our (equalBudgets, 0.1)
+
+### Deploying, seed 1, 120 steps
+
+## Kept apart against merged, the new task's adapters on every expert
+## (the router frozen): LoRA on the base, then QLoRA on its 4-bit base
+## (trained on W~, merged by quantizing W~ + s B A again). A line each:
+## the largest difference of the probabilities, the tokens whose answer
+## changed (of 800), the new task's accuracy kept apart, then merged.
+(m1, _) := (experts, (x, Y), 120) u:t_une 1
+(aS1, bS1, R1, W1, A1, B1) := m1
+# -- end of the first task's adapters
+(mq, _) := (Wq, experts, (x, Y), 120) u:t_uneOn 1
+(_, _, _, _, Aq, Bq) := mq
+ml := (W1 + u:d_eltas (A1, B1)) u:m_erged m1
+mm := (lo:d_equant 9 lo:q_base Wq + u:d_eltas (Aq, Bq)) u:m_erged mq
+(m1 u:a_gainst ml) c_at (m1 u:a_ccuracy (xn, Yn)) c_at ml u:a_ccuracy (xn, Yn)
+(mq u:a_gainst mm) c_at (mq u:a_ccuracy (xn, Yn)) c_at mm u:a_ccuracy (xn, Yn)
+# -- end of the merge
+## Two tasks' adapters on one base: the base, then with the first
+## task's adapters, then with the second's (switched: the same base,
+## the other adapters), each on the first task, the second and the
+## kinds neither changed.
+(m2, _) := (experts, (x2, Y2), 120) u:t_une 1
+(_, _, _, _, A2, B2) := m2
+3 3 r_eshape (u:r_ound u:t_asks base) c_at (u:r_ound u:t_asks m1) c_at u:r_ound u:t_asks (aS1, bS1, R1, W1, A2, B2)
+## The bytes each keeps, FP32: the base (200 numbers), a task's adapters
+## (96), a merged copy (the base again); for the two tasks kept apart,
+## then merged.
+800 384 800 c_at (800 + 2 * 384) c_at 2 * 800
+# -- end of the switch
+## The cache, 1 to 4 slots in each: slots, base-expert loads, adapter
+## (or merged-copy) loads, then the bytes moved: merged copies; kept
+## apart with LoRA, LoRA-FA and VeRA adapters (rank 2: an expert 27
+## numbers, LoRA 24, LoRA-FA's B 6, VeRA 5).
+4 7 r_eshape ((108, 96, 24, 20) u:t_raffic 1) c_at ((108, 96, 24, 20) u:t_raffic 2) c_at ((108, 96, 24, 20) u:t_raffic 3) c_at (108, 96, 24, 20) u:t_raffic 4
+## At the research's size, one SwiGLU expert of 4096 x 14336 at rank 16
+## in BF16 (the LoRA library's counts): the expert, its LoRA adapters,
+## LoRA-FA's B's, VeRA's vectors, in bytes; and the cache at 2 slots.
+(be, bl, bf, bv) := (16 lo:b_ytes 3 * 4096 * 14336, 16 lo:b_ytes 16 lo:e_xpert 4096 14336, 16 lo:b_ytes f_irst 16 lo:e_xpertFA 4096 14336, 16 lo:b_ytes 16 lo:e_xpertV 4096 14336)
+be c_at bl c_at bf c_at bv
+(be, bl, bf, bv) u:t_raffic 2

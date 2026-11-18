@@ -9,12 +9,14 @@ use microscope::run::{numbers, output_with, section};
 pub const PROGRAM: &str = include_str!("../../moe-finetune.xtl");
 
 /// The data files the program reads, as the page hands them to X_eTaL.
-pub const FILES: [(&str, &str); 5] = [
+pub const FILES: [(&str, &str); 7] = [
     ("data/base.txt", include_str!("../../data/base.txt")),
     ("data/train.txt", include_str!("../../data/train.txt")),
     ("data/test.txt", include_str!("../../data/test.txt")),
     ("data/shift-train.txt", include_str!("../../data/shift-train.txt")),
     ("data/shift-test.txt", include_str!("../../data/shift-test.txt")),
+    ("data/shift2-train.txt", include_str!("../../data/shift2-train.txt")),
+    ("data/shift2-test.txt", include_str!("../../data/shift2-test.txt")),
 ];
 
 /// Steps of Adam for every method, as the command line takes.
@@ -269,4 +271,97 @@ pub fn compare(a: Adapter, c: Config, rate: Rate, data: Data, seed: usize, steps
     let first: Vec<f64> = numbers(&out[0], 3)?;
     let losses: Vec<f64> = numbers(&out[1], steps + 1)?;
     Ok(Compared { new: first[0], old: first[1], numbers: first[2] as usize, losses: losses[1..].to_vec() })
+}
+
+/// The deployment's three parts, each its own run: kept apart against
+/// merged (LoRA and QLoRA), two tasks' adapters switched on one base,
+/// the expert cache.
+#[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord)]
+pub enum Deploy {
+    Merge,
+    Switch,
+    Cache,
+}
+
+impl Deploy {
+    pub const ALL: [Deploy; 3] = [Deploy::Merge, Deploy::Switch, Deploy::Cache];
+
+    pub fn title(self) -> &'static str {
+        match self {
+            Deploy::Merge => "kept apart against merged",
+            Deploy::Switch => "two tasks' adapters switched",
+            Deploy::Cache => "the expert cache",
+        }
+    }
+}
+
+/// The command line's deployment, from its heading to its end.
+fn deploying() -> &'static str {
+    section(PROGRAM, "### Deploying, seed 1", "\u{0}")
+}
+
+/// A deployment part's own lines, cut from the command line's: the
+/// merge and the switch each train the first task's adapters first.
+pub fn deploy_tail(part: Deploy) -> String {
+    let d = deploying();
+    let first = section(d, "(m1, _) :=", "# -- end of the first task's adapters");
+    match part {
+        Deploy::Merge => section(d, "(m1, _) :=", "# -- end of the merge").to_string(),
+        Deploy::Switch => format!("{first}{}", section(d, "## Two tasks' adapters", "# -- end of the switch")),
+        Deploy::Cache => section(d, "## The cache, 1 to 4 slots", "\u{0}").to_string(),
+    }
+}
+
+pub fn deploy_program(part: Deploy) -> String {
+    format!("{}{}", head(), deploy_tail(part))
+}
+
+/// What the deployment measured; each part fills its own.
+#[derive(Clone, Debug, Default, PartialEq)]
+pub struct Deployed {
+    /// LoRA, then QLoRA: the largest difference of the probabilities
+    /// kept apart and merged, the answers that changed (of 800), the new
+    /// task's accuracy kept apart, then merged.
+    pub merge: Vec<[f64; 4]>,
+    /// The base, the first task's adapters, the second's: each on the
+    /// first task, the second, the kinds neither changed.
+    pub switch: Vec<[f64; 3]>,
+    /// FP32 bytes: the base, a task's adapters, a merged copy; two tasks
+    /// kept apart, then merged.
+    pub keeps: Vec<f64>,
+    /// Slots 1 to 4: the slots, base-expert loads, adapter (or merged
+    /// copy) loads, bytes moved merged, then kept apart with LoRA,
+    /// LoRA-FA and VeRA.
+    pub cache: Vec<[f64; 7]>,
+    /// At the research's size: an expert's bytes, its LoRA adapters',
+    /// LoRA-FA's B's, VeRA's vectors; then the cache at 2 slots.
+    pub scale: Vec<f64>,
+    pub scale_cache: Vec<f64>,
+}
+
+fn fixed<const N: usize>(line: &str) -> Result<[f64; N], String> {
+    numbers::<f64>(line, N).map(|v| v.try_into().unwrap_or([0.0; N]))
+}
+
+pub fn deploy(part: Deploy) -> Result<Deployed, String> {
+    let src = deploy_program(part);
+    let mut d = Deployed::default();
+    match part {
+        Deploy::Merge => {
+            let out = output_with(&files(), &src, 2)?.0;
+            d.merge = vec![fixed(&out[0])?, fixed(&out[1])?];
+        }
+        Deploy::Switch => {
+            let out = output_with(&files(), &src, 4)?.0;
+            d.switch = vec![fixed(&out[0])?, fixed(&out[1])?, fixed(&out[2])?];
+            d.keeps = numbers(&out[3], 5)?;
+        }
+        Deploy::Cache => {
+            let out = output_with(&files(), &src, 6)?.0;
+            d.cache = out[..4].iter().map(|l| fixed(l)).collect::<Result<_, _>>()?;
+            d.scale = numbers(&out[4], 4)?;
+            d.scale_cache = numbers(&out[5], 7)?;
+        }
+    }
+    Ok(d)
 }

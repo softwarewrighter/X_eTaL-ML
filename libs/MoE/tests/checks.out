@@ -17,4 +17,9 @@ ok: one expert taking everything: entropy 0, balance E
 ok: the layer as a Flow pipeline of the stages
 ok: every expert's base weights' gradient (g_radsW) is the finite differences
 ok: and an expert no token chose gets none for its base weights
-19 checks, all passed
+ok: a batch of one token needs the experts it chose
+ok: a batch needs every expert its tokens chose
+ok: a cache loads only what a step needs
+ok: with a slot for every key, each key used loads once
+ok: more slots never load more
+24 checks, all passed

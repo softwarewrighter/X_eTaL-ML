@@ -1,6 +1,6 @@
 # MoE
 
-Mixture-of-experts layers: router scores, top-k gates, experts as adapted projections, the sparse combine, gradients and routing statistics
+Mixture-of-experts layers: router scores, top-k gates, experts as adapted projections, the sparse combine, gradients, routing statistics and an expert cache
 
 ```
 "moe:" u_se< "MoE"

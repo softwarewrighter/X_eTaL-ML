@@ -11,3 +11,5 @@ l:g_radsW : (Any b, Any c, Any d) => (Float, (a, b, c, d), Int) -> (Float, Float
 l:f_requency : Float -> Float
 l:e_ntropy : Float -> Float
 l:b_alance : (Float, Float) -> Int -> Float
+l:u_sed : Int -> Float -> Float
+l:l_ru : Int -> Float -> Float

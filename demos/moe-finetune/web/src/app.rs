@@ -3,7 +3,8 @@
 //! time, the page drawn between); for the method picked, where the
 //! tokens go before and after, how large each update is, the loss; the
 //! four adapters compared at equal ranks and at equal budgets, at a
-//! rate chosen; the program.
+//! rate chosen; deploying the adapters (kept apart or merged, two tasks
+//! switched, an expert cache); the program.
 
 use std::collections::{BTreeMap, VecDeque};
 use std::rc::Rc;
@@ -15,7 +16,7 @@ use microscope::chrome::{footer, header, notice, panel};
 use microscope::run::now;
 use microscope::source::{block, NONE};
 
-use crate::micro::{compare, compare_tail, head, run, tail, Adapter, Compared, Config, Data, Method, Rate, Run, STEPS};
+use crate::micro::{compare, compare_tail, deploy, deploy_tail, head, run, tail, Adapter, Compared, Config, Data, Deploy, Deployed, Method, Rate, Run, STEPS};
 
 /// A method's run: on the tokens from a seed.
 pub type MethodRun = (Method, Data, usize);
@@ -28,6 +29,7 @@ pub type CompareRun = (Adapter, Config, Rate, Data, usize);
 pub enum Job {
     Method(MethodRun),
     Compare(CompareRun),
+    Deploy(Deploy),
 }
 
 impl Job {
@@ -35,6 +37,7 @@ impl Job {
         match self {
             Job::Method((m, _, seed)) => format!("{}, seed {seed}", m.title()),
             Job::Compare((a, c, _, _, seed)) => format!("{} at rank {}, seed {seed}", a.title(), c.rank(a)),
+            Job::Deploy(p) => format!("deploying: {}", p.title()),
         }
     }
 }
@@ -51,6 +54,9 @@ pub struct Model {
     pub comparing: bool,
     pub rate: Rate,
     pub compared: BTreeMap<CompareRun, Rc<Compared>>,
+    /// The deployment asked for, its parts as they finish.
+    pub deploying: bool,
+    pub deployed: BTreeMap<Deploy, Rc<Deployed>>,
     pub queue: VecDeque<Job>,
     /// Milliseconds of the last run.
     pub ms: f64,
@@ -65,6 +71,8 @@ pub enum Action {
     Start,
     /// Compare the four adapters.
     Compare,
+    /// Deploy the adapters: kept apart or merged, switched, cached.
+    Deploy,
     Rate(Rate),
     /// Run the next job in the queue.
     Next,
@@ -72,7 +80,7 @@ pub enum Action {
 
 impl Model {
     fn new() -> Self {
-        let mut m = Model { data: Data::Mixed, seeds: 1, started: false, picked: Method::None, results: BTreeMap::new(), comparing: false, rate: Rate::Methods, compared: BTreeMap::new(), queue: VecDeque::new(), ms: 0.0, notice: None };
+        let mut m = Model { data: Data::Mixed, seeds: 1, started: false, picked: Method::None, results: BTreeMap::new(), comparing: false, rate: Rate::Methods, compared: BTreeMap::new(), deploying: false, deployed: BTreeMap::new(), queue: VecDeque::new(), ms: 0.0, notice: None };
         m.plan();
         m
     }
@@ -99,6 +107,13 @@ impl Model {
                             self.queue.push_back(Job::Compare(job));
                         }
                     }
+                }
+            }
+        }
+        if self.deploying {
+            for p in Deploy::ALL {
+                if !self.deployed.contains_key(&p) && !self.queue.contains(&Job::Deploy(p)) {
+                    self.queue.push_back(Job::Deploy(p));
                 }
             }
         }
@@ -133,6 +148,10 @@ impl Reducible for Model {
                 m.comparing = true;
                 m.plan();
             }
+            Action::Deploy => {
+                m.deploying = true;
+                m.plan();
+            }
             Action::Rate(r) => {
                 m.rate = r;
                 m.plan();
@@ -151,6 +170,9 @@ impl Reducible for Model {
                         }),
                         Job::Compare(k) => compare(k.0, k.1, k.2, k.3, k.4, STEPS).map(|r| {
                             m.compared.insert(k, Rc::new(r));
+                        }),
+                        Job::Deploy(p) => deploy(p).map(|r| {
+                            m.deployed.insert(p, Rc::new(r));
                         }),
                     };
                     m.notice = done.err().map(|e| format!("{}: {e}", job.title()));
@@ -285,6 +307,92 @@ fn comparison(m: &UseReducerHandle<Model>) -> Html {
     </> }
 }
 
+/// Thousands separated, for bytes.
+fn grouped(v: f64) -> String {
+    let s = format!("{:.0}", v);
+    let mut out = String::new();
+    for (i, c) in s.chars().enumerate() {
+        if i > 0 && (s.len() - i) % 3 == 0 {
+            out.push(',');
+        }
+        out.push(c);
+    }
+    out
+}
+
+/// The deployment: kept apart against merged, two tasks switched, the
+/// expert cache; each part as its run finishes.
+fn deployment(m: &UseReducerHandle<Model>) -> Html {
+    let ask = (!m.deploying).then(|| html! { <div class="controls"><button class="on" onclick={act(m, || Action::Deploy)}>{"Deploy the adapters"}</button></div> });
+    let waiting = || html! { <p class="calc">{ if m.deploying { "Waiting for its run." } else { "" } }</p> };
+    let merge = match m.deployed.get(&Deploy::Merge) {
+        Some(d) => {
+            let rows = ["LoRA", "QLoRA (4-bit base)"].iter().zip(&d.merge).map(|(name, r)| html! { <tr>
+                <td><b>{*name}</b></td>
+                <td class="num">{format!("{:.2e}", r[0])}</td>
+                <td class="num">{format!("{:.0} of 800", r[1])}</td>
+                <td class="num">{format!("{:.3}", r[2])}</td>
+                <td class="num">{format!("{:.3}", r[3])}</td>
+            </tr> });
+            html! { <table class="facts methods">
+                <tr><th>{"Adapters"}</th><th>{"Largest difference"}</th><th>{"Answers changed"}</th><th>{"New task, kept apart"}</th><th>{"Merged"}</th></tr>
+                { for rows }
+            </table> }
+        }
+        None => waiting(),
+    };
+    let switch = match m.deployed.get(&Deploy::Switch) {
+        Some(d) => {
+            let names = ["the base alone", "with the first task's adapters", "switched to the second's"];
+            let rows = names.iter().zip(&d.switch).map(|(name, r)| {
+                let best = |j: usize| d.switch.iter().all(|o| o[j] <= r[j]);
+                let cell = |j: usize| html! { <td class={classes!("num", (best(j)).then_some("pass"))}>{format!("{:.3}", r[j])}{ if best(j) { " \u{2713}" } else { "" } }</td> };
+                html! { <tr><td><b>{*name}</b></td>{ cell(0) }{ cell(1) }{ cell(2) }</tr> }
+            });
+            let k = &d.keeps;
+            html! { <>
+                <table class="facts methods">
+                    <tr><th>{"Model"}</th><th>{"First task (kind 3)"}</th><th>{"Second task (kind 1)"}</th><th>{"Kinds 2 and 4"}</th></tr>
+                    { for rows }
+                </table>
+                <p class="calc">{format!("Bytes kept, FP32: the base {}, a task's adapters {}, a merged copy {}; two tasks kept apart {} against {} merged.", grouped(k[0]), grouped(k[1]), grouped(k[2]), grouped(k[3]), grouped(k[4]))}</p>
+            </> }
+        }
+        None => waiting(),
+    };
+    let cache = match m.deployed.get(&Deploy::Cache) {
+        Some(d) => {
+            let rows = d.cache.iter().map(|r| html! { <tr>
+                <td class="num">{format!("{:.0}", r[0])}</td>
+                <td class="num">{format!("{:.0}", r[1])}</td>
+                <td class="num">{format!("{:.0}", r[2])}</td>
+                <td class="num">{grouped(r[3])}</td>
+                <td class="num">{grouped(r[4])}</td>
+                <td class="num">{grouped(r[5])}</td>
+                <td class="num">{grouped(r[6])}</td>
+            </tr> });
+            let (s, c) = (&d.scale, &d.scale_cache);
+            html! { <>
+                <table class="facts methods">
+                    <tr><th>{"Slots"}</th><th>{"Expert loads"}</th><th>{"Adapter loads"}</th><th>{"Bytes moved, merged"}</th><th>{"Kept apart, LoRA"}</th><th>{"LoRA-FA"}</th><th>{"VeRA"}</th></tr>
+                    { for rows }
+                </table>
+                <p class="calc">{format!("At the research's size (a SwiGLU expert of 4096 x 14336, rank 16, BF16): an expert {} bytes, its LoRA adapters {}, LoRA-FA's B's {}, VeRA's vectors {}. With 2 slots the same batches move {} bytes as merged copies, {} kept apart with LoRA, {} with VeRA.", grouped(s[0]), grouped(s[1]), grouped(s[2]), grouped(s[3]), grouped(c[3]), grouped(c[4]), grouped(c[6]))}</p>
+            </> }
+        }
+        None => waiting(),
+    };
+    html! { <>
+        { ask }
+        <p class="calc">{"Kept apart against merged: the new task's adapters on every expert, the router frozen; merged into the weights (LoRA: W + s B A; QLoRA: W~ + s B A quantized again), on all 800 held-out tokens."}</p>
+        { merge }
+        <p class="calc">{"Two tasks on one base: kind 3's new rule and kind 1's, each with its own adapters, switched on the same base; \u{2713} the best in each column."}</p>
+        { switch }
+        <p class="calc">{"The expert cache: the two tasks' held-out tokens in batches of 8, one task's then the other's (50 batches), each batch loading the experts it uses into a cache of a few slots, least recently used out. Kept apart, the base experts are shared and each task's adapters are loaded beside them; merged, each task's experts are copies of their own."}</p>
+        { cache }
+    </> }
+}
+
 /// Before and after, a bar each, for each of the 5 experts.
 fn routing(before: &[f64], after: &[f64]) -> Html {
     let rows = before.iter().zip(after).enumerate().map(|(e, (&b, &a))| {
@@ -357,6 +465,7 @@ pub fn app() -> Html {
             <div class="col">
                 { panel("Each method:", "(method, tokens, 120) u:t_une seed", "Every method fine-tunes the same base on the same tokens: kind 3's new rule. The new task is 200 held-out tokens of kind 3 by its new rule; the old task is the 300 held-out tokens of kinds 1, 2 and 4, whose rule did not change. The old task's change is in points against the base (3 points is the bar, ✓ within it). The numbers trained are adapters, a router or a new expert; the base's own weights stay frozen, and the bytes are those numbers in FP32. Click a method for its routing, its updates and its loss.", true, table(&model)) }
                 { panel("Four adapters compared:", "(kind, r, tokens, 120, lr) u:c_ompare seed", "The research's comparison, on the same base and tokens, the router frozen: shared LoRA (on the shared layer, its attention LoRA), expert LoRA, LoRA-FA (each expert's A frozen) and shared VeRA (one pair of frozen random projections for every expert, each expert its own two vectors), at equal ranks and at about equal numbers trained. The gain is the new task's accuracy over the base's, in points; the gain a number is that over the numbers trained, the research's efficiency, never a substitute for the gain itself; the old task's change is in points too. An adapter with frozen projections moves slowly at the methods' rate (VeRA's paper trains at several times LoRA's), so the rate is yours to choose. Each run is about 15 seconds.", false, comparison(&model)) }
+                { panel("Deploying the adapters:", "(be, bl, bf, bv) u:t_raffic 2", "The research's deployment: an adapter kept apart from the base, switched per task, or merged into it, one task as fast as the base. LoRA merges exactly; QLoRA's merge quantizes again, so it changes answers. Two tasks' adapters share one base, and the base alone keeps what neither task changed. Kept apart, the tasks share the base experts in the cache, so less moves, by far when an adapter is small beside its expert. Three runs, the first two training adapters (about 15 seconds each).", false, deployment(&model)) }
                 { panel("Where the tokens go:", "m u:s_hare xn", &format!("{}, seed 1: the share of the new task's tokens, then of the old task's, each expert gets, before and after (each column sums to 2, the top 2). With the router frozen and the shared layer as it was, nothing can move; the shared layer's adapter moves the router's input, so it moves the routing too; a trained router or a new expert's own row moves it on purpose.", picked.title()), false, match &detail {
                     Some(r) => html! { <>
                         <p class="calc">{"The new task's tokens:"}</p>
@@ -382,6 +491,8 @@ pub fn app() -> Html {
                     { block(&format!("{}{}", head(), tail(picked, model.data, 1, STEPS)), NONE) }
                     <p class="note">{"And a comparison's run, here shared VeRA at equal budgets (rank 9) at the rate chosen, its own lines after the same core:"}</p>
                     { block(&compare_tail(Adapter::Vera, Config::EqualBudgets, model.rate, model.data, 1, STEPS), NONE) }
+                    <p class="note">{"And the deployment's three runs, each after the same core: kept apart against merged, the two tasks switched, the expert cache."}</p>
+                    { for Deploy::ALL.iter().map(|&p| block(&deploy_tail(p), NONE)) }
                 </section>
             </div>
         </div>

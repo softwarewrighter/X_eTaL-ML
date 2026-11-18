@@ -9,7 +9,9 @@ expert of its own: every run is X_eTaL training in your browser, one
 method after another, on the new tokens alone or mixed with old ones,
 over one seed or three. Then the research's four adapters compared,
 shared LoRA, expert LoRA, LoRA-FA and shared VeRA, at equal ranks and
-at equal budgets.
+at equal budgets. Then the adapters deployed: kept apart or merged
+into the weights, two tasks' adapters switched on one base, and an
+expert cache measuring what each way moves.
 
 Live: [MoE fine-tuning](https://softwarewrighter.github.io/X_eTaL-ML/moe-finetune/)
 
@@ -205,13 +207,90 @@ efficiency):
   while learning the new: the experts kind 3 uses serve the other
   kinds too. The new expert above remains the one that does.
 
+## Deploying the adapters
+
+The research's deployment (L381-460): an adapter kept apart from the
+base, switched per task, or merged into its weights, as fast as the
+base but for one task. Every adapter here is the method "every expert,
+router frozen" (LoRA at rank 2), seed 1, 120 steps.
+
+**Kept apart against merged.** The new task's adapters folded into the
+experts (`W + s B A`, LoRA's `d_elta` per expert), and QLoRA's: the
+experts stored in NF4 (blocks of 9, a row each), the adapters trained
+on the dequantized W~, then merged as QLoRA must, W~ + s B A quantized
+again. On all 800 held-out tokens:
+
+| Adapters | Largest difference of the probabilities | Answers changed | New task, kept apart | Merged |
+| -------- | --------------------------------------- | --------------- | -------------------- | ------ |
+| LoRA | 9.4e-16 | 0 | 0.790 | 0.790 |
+| QLoRA | 0.177 | 11 | 0.800 | 0.795 |
+
+LoRA merges exactly, to the last bits of rounding; QLoRA's merged
+numbers fall between NF4's levels, so its answers move, as the
+research warns (L460).
+
+**Two tasks on one base.** A second task changes kind 1's rule
+(`data/shift2-*.txt`, made by `train/base.xtl` with the rest; the base
+and the other files are byte for byte as before). Each task gets its
+own adapters, and switching is replacing the experts' A and B on the
+same base. Held-out accuracy:
+
+| Model | First task (kind 3) | Second task (kind 1) | Kinds 2 and 4 |
+| ----- | ------------------- | -------------------- | ------------- |
+| the base alone | 0.485 | 0.260 | 0.905 |
+| with the first task's adapters | 0.790 | 0.375 | 0.685 |
+| switched to the second's | 0.310 | 0.860 | 0.575 |
+
+Each task is served best by its own adapters, and the kinds neither
+task changed by the base alone: a request switched to its task's
+adapters, or to none, keeps every answer the base had, which one
+merged model cannot. In FP32 the base is 800 bytes and a task's
+adapters 384, so two tasks kept apart take 1,568 bytes against 1,600
+for two merged copies: at this toy size an adapter (24 numbers per
+expert) is nearly as large as its expert (27).
+
+**The expert cache.** The research's offloading question (L379,
+L567-605, L4447): the two tasks' held-out tokens in batches of 8, one
+task's batch then the other's (50 batches), each batch loading the
+experts its tokens are routed to into a cache of c slots, least
+recently used out first (the MoE library's `moe:u_sed` and `moe:l_ru`).
+Kept apart, the 4 base experts are one cache's keys and each task's
+adapters another's (8 keys); merged, each task has its own copy of
+every expert (8 keys, 108 bytes each). Bytes moved, FP32, adapters at
+rank 2 (LoRA 96 bytes an expert, LoRA-FA's B 24 with A made from its
+seed, VeRA's d and b 20 with the projections made from theirs):
+
+| Slots | Expert loads | Adapter loads | Merged | Kept apart, LoRA | LoRA-FA | VeRA |
+| ----- | ------------ | ------------- | ------ | ---------------- | ------- | ---- |
+| 1 | 143 | 186 | 20,088 | 33,300 | 19,908 | 19,164 |
+| 2 | 94 | 186 | 20,088 | 28,008 | 14,616 | 13,872 |
+| 3 | 45 | 185 | 19,980 | 22,620 | 9,300 | 8,560 |
+| 4 | 4 | 172 | 18,576 | 16,944 | 4,560 | 3,872 |
+
+Merged copies are keys of their own per task, so they load as often as
+the adapters do; kept apart, the tasks share the base experts, which
+stay in the cache once it holds all 4. With an adapter nearly an
+expert's size, LoRA kept apart moves more than merged copies until the
+cache holds every expert; LoRA-FA and VeRA move less at every size.
+(Kept apart holds c experts and c adapters, more than merged's c
+copies; at the research's size the adapters' share is small.)
+
+At the research's size, one SwiGLU expert of 4096 x 14336 at rank 16
+in BF16 (the LoRA library's counts), an expert is 352,321,536 bytes,
+its LoRA adapters 1,769,472, LoRA-FA's B's 1,048,576 and VeRA's
+vectors 65,632; the same batches at 2 slots move 65.5 GB as merged
+copies against 33.4 GB kept apart with LoRA and 33.1 GB with VeRA:
+keeping adapters apart halves what moves, because the two tasks share
+the base experts.
+
 ## The program
 
 `moe-finetune.xtl`: the tokens, the base with room for a new expert,
 the model with its adapters, a method's step and its measures, the
-four adapters, up to `# -- end of the core`; then every method on both
-choices of tokens at seed 1, and the four adapters at both rates (the
-CLI baseline). The page runs the core, then one run's own
+four adapters, the second task and the deployment's measures, up to
+`# -- end of the core`; then every method on both choices of tokens at
+seed 1, the four adapters at both rates, and the deployment (the CLI
+baseline). The page runs the core, then one run's own
 lines, for each method, tokens and seed:
 
 ```
@@ -225,12 +304,17 @@ and for a comparison's run, here shared VeRA at rank 9 at the rate 0.1:
 (m, losses, n) := (4, 9, (x, Y), 120, 0.1) u:c_ompare 1
 ```
 
+The deployment's three runs are the command line's own lines, cut at
+its markers: kept apart against merged (`# -- end of the merge`), the
+two tasks switched (after the first task's adapters, `# -- end of the
+switch`), and the cache (`(sizes) u:t_raffic slots`).
+
 ## Run it
 
 ```bash
-just run moe-finetune             # every method and the four adapters, seed 1 (three minutes)
+just run moe-finetune             # every method, the four adapters and the deployment, seed 1 (four minutes)
 just run moe-finetune base.xtl    # the base's baseline
-just moe-base                     # make the tokens and train the base again (half a minute)
+just moe-base                     # make both tasks' tokens and train the base again (half a minute)
 just serve moe-finetune           # the page, locally
 just test-demo moe-finetune       # its baselines, the page's tests, the retraining
 ```

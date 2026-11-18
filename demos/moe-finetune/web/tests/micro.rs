@@ -1,4 +1,4 @@
-use moe_finetune_web::micro::{compare, compare_program, files, head, program, run, Adapter, Config, Data, Method, Rate, PROGRAM, STEPS};
+use moe_finetune_web::micro::{compare, compare_program, deploy, deploy_program, files, head, program, run, Adapter, Config, Data, Deploy, Method, Rate, PROGRAM, STEPS};
 
 /// The command line's baseline: the mixed tokens' rows at seed 1.
 const CLI: &str = include_str!("../../reg/cli-moe-finetune.out");
@@ -137,9 +137,9 @@ fn the_comparison_s_runs_are_the_methods_and_the_command_line_s() {
     let e = compare(Adapter::Expert, Config::EqualRanks, Rate::Methods, Data::New, 1, STEPS).unwrap();
     let me = run(Method::Experts, Data::New, 1, STEPS).unwrap();
     assert_eq!((e.new, e.old), (me.new, me.old));
-    // The CLI baseline's last 16 rows: equal ranks, equal budgets, at
+    // The CLI baseline's 16 rows after the methods': equal ranks, equal budgets, at
     // 0.02, then at 0.1; its last row is VeRA at rank 9 at 0.1.
-    let rows: Vec<Vec<f64>> = CLI.lines().skip(14).map(|l| l.split_whitespace().map(|v| v.parse().unwrap()).collect()).collect();
+    let rows: Vec<Vec<f64>> = CLI.lines().skip(14).take(16).map(|l| l.split_whitespace().map(|v| v.parse().unwrap()).collect()).collect();
     assert_eq!(rows.len(), 16);
     let v = compare(Adapter::Vera, Config::EqualBudgets, Rate::Fast, Data::New, 1, STEPS).unwrap();
     assert_eq!(vec![round(v.new), round(v.old), v.numbers as f64], rows[15]);
@@ -148,4 +148,76 @@ fn the_comparison_s_runs_are_the_methods_and_the_command_line_s() {
     for k in [2, 3] {
         assert!(rows[k][1] > rows[1][1] && rows[k][0] < rows[1][0], "row {k}: {:?} against {:?}", rows[k], rows[1]);
     }
+}
+
+/// The CLI baseline's deployment lines, after the methods' 14 and the
+/// comparison's 16: the merge's 2, the switch's 4, the cache's 6.
+fn cli_deploy() -> Vec<Vec<f64>> {
+    CLI.lines().skip(30).map(|l| l.split_whitespace().map(|v| v.parse().unwrap()).collect()).collect()
+}
+
+#[test]
+fn the_deployment_runs_the_command_line_s_lines_and_binds_each_name_once() {
+    for part in Deploy::ALL {
+        let src = deploy_program(part);
+        assert!(microscope::source::rebound(&src).is_empty(), "{part:?}: {:?}", microscope::source::rebound(&src));
+        for line in src.lines() {
+            assert!(PROGRAM.contains(line), "{part:?}: {line}");
+        }
+    }
+    assert_eq!(cli_deploy().len(), 12);
+}
+
+#[test]
+fn a_lora_merge_gives_the_same_answers_and_a_qlora_merge_does_not() {
+    let d = deploy(Deploy::Merge).unwrap();
+    let cli = cli_deploy();
+    assert_eq!((d.merge[0].to_vec(), d.merge[1].to_vec()), (cli[0].clone(), cli[1].clone()));
+    // LoRA: the probabilities agree to rounding, no answer changes.
+    let [gap, changed, kept, merged] = d.merge[0];
+    assert!(gap < 1e-12 && changed == 0.0 && kept == merged, "{:?}", d.merge[0]);
+    // QLoRA: quantizing W~ + s B A again moves the probabilities and
+    // changes some answers.
+    let [gap, changed, _, _] = d.merge[1];
+    assert!(gap > 0.01 && changed > 0.0, "{:?}", d.merge[1]);
+}
+
+#[test]
+fn each_task_has_its_adapters_and_the_base_keeps_the_rest() {
+    let d = deploy(Deploy::Switch).unwrap();
+    let cli = cli_deploy();
+    let rows: Vec<Vec<f64>> = d.switch.iter().map(|r| r.to_vec()).collect();
+    assert_eq!(rows, cli[2..5].to_vec());
+    assert_eq!(d.keeps, cli[5]);
+    let (base, one, two) = (d.switch[0], d.switch[1], d.switch[2]);
+    // Each task is best served by its own adapters, the rest by the base.
+    assert!(one[0] > base[0] && one[0] > two[0], "task 1: {:?}", d.switch);
+    assert!(two[1] > base[1] && two[1] > one[1], "task 2: {:?}", d.switch);
+    assert!(base[2] > one[2] && base[2] > two[2], "the rest: {:?}", d.switch);
+    // Two tasks kept apart: the base once and two adapters.
+    assert_eq!(d.keeps, vec![800.0, 384.0, 800.0, 1568.0, 1600.0]);
+}
+
+#[test]
+fn the_cache_loads_less_with_more_slots_and_kept_apart_moves_less_at_scale() {
+    let d = deploy(Deploy::Cache).unwrap();
+    let cli = cli_deploy();
+    let rows: Vec<Vec<f64>> = d.cache.iter().map(|r| r.to_vec()).collect();
+    assert_eq!(rows, cli[6..10].to_vec());
+    assert_eq!((&d.scale, &d.scale_cache), (&cli[10], &cli[11]));
+    for w in d.cache.windows(2) {
+        assert!(w[1][1] <= w[0][1] && w[1][2] <= w[0][2], "{w:?}");
+    }
+    // 50 batches: every one loads something at 1 slot; 4 slots hold the
+    // 4 base experts, loaded once each.
+    assert_eq!(d.cache[3][1], 4.0);
+    // Merged copies are keys of their own per task, so they load as often
+    // as the adapters; with VeRA kept apart, far fewer bytes move.
+    for r in &d.cache {
+        assert!(r[6] < r[5] && r[5] < r[4], "VeRA < LoRA-FA < LoRA: {r:?}");
+    }
+    // At the research's size an adapter is small beside its expert, so
+    // keeping it apart moves about half the merged copies' bytes.
+    let s = &d.scale_cache;
+    assert!(s[4] < 0.6 * s[3] && s[6] < s[4], "{s:?}");
 }

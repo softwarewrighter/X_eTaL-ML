@@ -7,7 +7,10 @@ chosen experts only. An expert is an adapted projection, the LoRA
 library's W x + s B (A x). The gradients with the selection fixed (the
 adapters', or the experts' own weights when training a base model), and
 the routing statistics: how often each expert is chosen, the routing's
-entropy, the load-balancing loss.
+entropy, the load-balancing loss. And an expert cache: which experts
+each batch of tokens needs, and what a cache of a few slots (least
+recently used out first) has to load, to measure what serving the
+experts, or their adapters, moves.
 
 ```
 "moe:" u_se< "MoE"
@@ -63,6 +66,8 @@ the libraries without setup.
 | `moe:f_requency G` | `Float -> Float` | the fraction of tokens choosing each expert (they sum to k) |
 | `moe:e_ntropy P` | `Float -> Float` | the mean entropy of the tokens' probabilities, in nats (log E when the router has no preference) |
 | `(P, G) moe:b_alance k` | `(Float, Float) -> Int -> Float` | the Switch Transformer's load-balancing loss, E sum_e f_e P_e: 1 when even, E when one expert takes all |
+| `b moe:u_sed G` | `Int -> Float -> Float` | which experts each batch of b tokens needs: E x (N / b), 1 where an expert serves a token of the batch |
+| `c moe:l_ru U` | `Int -> Float -> Float` | a cache of c slots, least recently used out first, over the needs U (keys x steps): 1 where a step had to load a key |
 
 ## Examples
 
@@ -94,6 +99,11 @@ From `../tests/basics.xtl` and the doc comments:
   for even routing and 0 for certain; the balance is 1 when even and
   E when one expert takes everything;
 - the layer as a Flow pipeline of the library's stages is the layer.
+- a batch of one token needs the experts it chose, a batch of all
+  7 every expert any chose; a cache (5 keys, 12 steps) loads only
+  what a step needs, each key once when every key has a slot, and
+  never more with more slots (least recently used keeps no Belady
+  anomaly).
 
 ## Demos
 
@@ -111,5 +121,9 @@ the weighted combine of adapted experts), with the gates of Mixtral
 (Jiang et al., 2024: softmax over the top k) and the load-balancing
 loss of the Switch Transformer (Fedus et al., 2021). The router
 gradient with the selection fixed is derived here and checked by
-finite differences. The repository's `demos/moe-router` demo routes
+finite differences. The expert cache follows the research's
+offloading questions (lines 379, 567-605, 4447: each expert's adapter
+a cacheable object, adapter hits measured apart from base-expert
+hits, bytes moved for LoRA against VeRA); least-recently-used is the
+textbook policy, written here. The repository's `demos/moe-router` demo routes
 words the same way, with its own code, before this library.
