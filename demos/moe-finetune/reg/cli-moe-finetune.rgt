@@ -1,3 +1,4 @@
 command = '"$XETAL" run --seed 1 --draw "$XETAL_DRAW" moe-finetune.xtl'
+timeout = 900
 exit_code = 0
 desc = "moe-finetune: moe-finetune.xtl run by the pinned xetal CLI"

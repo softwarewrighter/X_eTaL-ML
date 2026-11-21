@@ -2,7 +2,8 @@
 # Test the demo tooling itself in a scratch demos directory: new-demo
 # makes a demo that passes; a wrong reg-rs baseline fails; an unexpected
 # error fails; XETAL_BLESS=1 repairs it; a program without a baseline
-# fails until blessed; the catalog shows it (escaped,
+# fails until blessed; blessing keeps a baseline's timeout; the catalog
+# shows it (escaped,
 # no live link without a web app; its key line drawn by X_eTaL); a live
 # demo's README must link its place on the ML timeline; a bad
 # demo.toml is rejected.
@@ -34,6 +35,10 @@ expect fail "a program without a baseline"
 XETAL_BLESS=1 "$t" probe >/dev/null
 [ -f "$XETAL_DEMOS_DIR/probe/reg/cli-second.rgt" ]
 expect pass "after blessing the new program"
+echo 'timeout = 900' >> "$XETAL_DEMOS_DIR/probe/reg/cli-second.rgt"
+XETAL_BLESS=1 "$t" probe >/dev/null
+grep -q '^timeout = 900$' "$XETAL_DEMOS_DIR/probe/reg/cli-second.rgt" \
+  || { echo "selftest: blessing dropped a baseline's timeout" >&2; exit 1; }
 "$root/scripts/py" "$root/scripts/build-catalog.py" "$out/index.html" >/dev/null
 grep -q '<h2>Probe &amp; Co</h2>' "$out/index.html" \
   || { echo "selftest: the catalog has no card for the demo" >&2; exit 1; }

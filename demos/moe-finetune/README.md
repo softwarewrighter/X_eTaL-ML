@@ -11,7 +11,9 @@ over one seed or three. Then the research's four adapters compared,
 shared LoRA, expert LoRA, LoRA-FA and shared VeRA, at equal ranks and
 at equal budgets. Then the adapters deployed: kept apart or merged
 into the weights, two tasks' adapters switched on one base, and an
-expert cache measuring what each way moves.
+expert cache measuring what each way moves. Last, preference
+tuning in the research's order: supervised fine-tuning, then DPO on
+pairs whose answers are both valid.
 
 Live: [MoE fine-tuning](https://softwarewrighter.github.io/X_eTaL-ML/moe-finetune/)
 
@@ -283,14 +285,62 @@ copies against 33.4 GB kept apart with LoRA and 33.1 GB with VeRA:
 keeping adapters apart halves what moves, because the two tasks share
 the base experts.
 
+## Preference: SFT, then DPO
+
+The research's training order for preferences (L1475-1490,
+L2023-2046): supervised fine-tuning (SFT) first, then preference pairs
+(DPO, Rafailov et al., 2023), "both should ideally pass functional
+tests. Otherwise, the model may merely learn to distinguish working
+code from broken code"; reinforcement learning only once those show a
+gain, so not here.
+
+On the new task, a token's two best classes by its rule both count as
+right (two solutions that pass the tests), and the best one is
+preferred (the cleaner of the two). `train/base.xtl` writes each
+token's second-best class (`data/shift-second-*.txt`; a tie goes to the
+lower class). Every row trains the experts' adapters (rank 2), the
+router frozen, 120 steps of Adam each; DPO starts from the SFT model,
+which is also its reference. DPO's gradient at the softmax's input is
+`-beta sigma(-h) (Yw - Yl)`, the softmax's own part canceling between
+the two answers (`u:g_radsD`, checked against central differences).
+Seed 1, the 200 held-out new tokens and the old task:
+
+| Model | Valid answer | Preferred answer | Old task |
+| ----- | ------------ | ---------------- | -------- |
+| the base | 0.850 | 0.485 | 0.910 |
+| SFT on the preferred answers alone | 0.950 | 0.790 | 0.640 |
+| SFT on either valid answer, half each | 0.935 | 0.570 | 0.727 |
+| then DPO on the pairs, beta 1 | 0.960 | 0.840 | 0.580 |
+| then DPO on the pairs, beta 5 | 0.970 | 0.820 | 0.693 |
+| then DPO on right against wrong, beta 1 | 0.975 | 0.635 | 0.617 |
+
+- SFT on demonstrations of either valid answer learns what is right
+  (0.935 valid) but not which is better (0.57, little over half).
+- DPO on pairs of two valid answers learns the preference from that
+  model: 0.84, past SFT on the preferred answers alone (0.79), and the
+  answers stay valid.
+- Pairs of a right answer against a wrong one (the research's warning)
+  raise validity to 0.975 and leave the preference near SFT's: they
+  teach what SFT already had.
+- A larger beta keeps the model nearer its reference: 2 points less of
+  the preference, 11 more of the old task. Every row still costs the old
+  task, as fine-tuning the shared experts did above.
+
+A first attempt, a house style preferring the lower-numbered of the two
+valid classes, was not learnable here even by SFT on the preferred
+answers (0.43 held out), so DPO had nothing to find; with such pairs
+DPO lowered the rejected answers' probability onto the invalid class,
+a known way DPO goes wrong. The preference above follows the task's
+own rule, which the model can represent.
+
 ## The program
 
 `moe-finetune.xtl`: the tokens, the base with room for a new expert,
 the model with its adapters, a method's step and its measures, the
-four adapters, the second task and the deployment's measures, up to
-`# -- end of the core`; then every method on both choices of tokens at
-seed 1, the four adapters at both rates, and the deployment (the CLI
-baseline). The page runs the core, then one run's own
+four adapters, the second task and the deployment's measures, and
+preference tuning's, up to `# -- end of the core`; then every method
+on both choices of tokens at seed 1, the four adapters at both rates,
+the deployment and the preference rows (the CLI baseline). The page runs the core, then one run's own
 lines, for each method, tokens and seed:
 
 ```
@@ -309,10 +359,18 @@ its markers: kept apart against merged (`# -- end of the merge`), the
 two tasks switched (after the first task's adapters, `# -- end of the
 switch`), and the cache (`(sizes) u:t_raffic slots`).
 
+And a preference row, here SFT on either valid answer then DPO at beta 1:
+
+```
+(ms, _) := (experts, (x, 0.5 * V), 120) u:t_une 1
+(md, _) := (ms, experts, styled, 1.0) u:d_po 120
+u:r_ound u:p_refers md
+```
+
 ## Run it
 
 ```bash
-just run moe-finetune             # every method, the four adapters and the deployment, seed 1 (four minutes)
+just run moe-finetune             # every method, the four adapters, the deployment and preference, seed 1 (five minutes)
 just run moe-finetune base.xtl    # the base's baseline
 just moe-base                     # make both tasks' tokens and train the base again (half a minute)
 just serve moe-finetune           # the page, locally

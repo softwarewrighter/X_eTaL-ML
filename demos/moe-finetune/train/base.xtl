@@ -14,7 +14,8 @@
 ##
 ## Writes data/train.txt (800 tokens) and data/test.txt (400 tokens),
 ## the two shifted tasks' (data/shift-*.txt, kind 3 by a new rule;
-## data/shift2-*.txt, kind 1 by another; 200 and 200 tokens each),
+## data/shift2-*.txt, kind 1 by another; 200 and 200 tokens each; and
+## data/shift-second-*.txt, the first's second-best classes),
 ## each the inputs (9 x N), the kinds and the classes, numbers rounded
 ## to 4 places; and data/base.txt, the checkpoint: S, R, then the
 ## experts' Ws (200 numbers).
@@ -39,19 +40,25 @@ M2 := (6 4 r_eshape 24 t_ake r_avel M) c_at (3 4 r_eshape (2.0 * 13 u:u_nit 12) 
 ## A second shifted task, for switching adapters on one base: kind 1
 ## follows a new rule (its rows from a third seed).
 M3 := (3 4 r_eshape (2.0 * 17 u:u_nit 12) - 1.0) c_at 9 4 r_eshape 12 d_rop r_avel M
-## `(seed, rules) t_okens kinds`: a token of each kind given, by the
-## rules: the inputs, the kinds and the classes, as one list of 11 N
-## numbers.
-u:t_okens := { (seed, rules) kinds ->
+## `(seed, rules) m_ake kinds`: a token of each kind given: its inputs
+## (9 x N) and the rules' 3 scores (3 x N).
+u:m_ake := { (seed, rules) kinds ->
   N := t_ally kinds
   K := f_loat (r_ange 4) '= t_able kinds
   a := u:r_ound (4 c_at N) r_eshape (2.0 * seed u:u_nit 4 * N) - 1.0
   e := (4 c_at N) r_eshape 0.3 * ((seed + 1) u:u_nit 4 * N) - 0.5
   x := u:r_ound ((0.8 * K) + e) c_at a c_at (1 c_at N) r_eshape 1.0
   mask := f_loat (1 + (o_ffsets 12) d_iv 3) '= t_able kinds
-  S := '+ r_/_1 (4 3 c_at N) r_eshape mask * rules '+ '* i_nner a
-  classes := '+ r_/_1 (f_loat (r_ange 3) 'l_eft t_able o_ffsets N) * 1 moe:m_ask S
-  (r_avel x) c_at (f_loat kinds) c_at classes
+  (x, '+ r_/_1 (4 3 c_at N) r_eshape mask * rules '+ '* i_nner a)
+}
+## `c_lasses S`: each token's class, its largest score's (1 to 3).
+u:c_lasses := { S -> '+ r_/_1 (f_loat (r_ange 3) 'l_eft t_able o_ffsets 2 s_elect s_hape S) * 1 moe:m_ask S }
+## `(seed, rules) t_okens kinds`: a token of each kind given, by the
+## rules: the inputs, the kinds and the classes, as one list of 11 N
+## numbers.
+u:t_okens := { (seed, rules) kinds ->
+  (x, S) := (seed, rules) u:m_ake kinds
+  (r_avel x) c_at (f_loat kinds) c_at u:c_lasses S
 }
 _ := (f_ormat (11, M) u:t_okens 1 + (o_ffsets 800) m_od 4) []N_PUT "data/train.txt"
 _ := (f_ormat (23, M) u:t_okens 1 + (o_ffsets 400) m_od 4) []N_PUT "data/test.txt"
@@ -59,6 +66,16 @@ _ := (f_ormat (23, M) u:t_okens 1 + (o_ffsets 400) m_od 4) []N_PUT "data/test.tx
 ## held out.
 _ := (f_ormat (47, M2) u:t_okens 200 r_eshape 3) []N_PUT "data/shift-train.txt"
 _ := (f_ormat (53, M2) u:t_okens 200 r_eshape 3) []N_PUT "data/shift-test.txt"
+## For preference tuning, the new task's tokens' second-best class by
+## its rule (each token's two best both count as right): training's,
+## then held out's.
+u:s_econd := { (seed, rules) kinds ->
+  (_, S) := (seed, rules) u:m_ake kinds
+  T := o_\ S
+  '{ j -> f_loat 2 s_elect g_rade n_eg j s_elect T } e_ach r_ange t_ally kinds
+}
+_ := (f_ormat (47, M2) u:s_econd 200 r_eshape 3) []N_PUT "data/shift-second-train.txt"
+_ := (f_ormat (53, M2) u:s_econd 200 r_eshape 3) []N_PUT "data/shift-second-test.txt"
 ## The second task's, all of kind 1: 200 to fine-tune on, 200 held out.
 _ := (f_ormat (59, M3) u:t_okens 200 r_eshape 1) []N_PUT "data/shift2-train.txt"
 _ := (f_ormat (61, M3) u:t_okens 200 r_eshape 1) []N_PUT "data/shift2-test.txt"

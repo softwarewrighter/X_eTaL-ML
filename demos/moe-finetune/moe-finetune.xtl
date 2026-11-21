@@ -15,7 +15,9 @@
 ## Then four adapters compared (shared LoRA, expert LoRA, LoRA-FA,
 ## shared VeRA), and the adapters deployed: kept apart against merged
 ## (LoRA exactly, QLoRA not), two tasks' adapters switched on one base,
-## and an expert cache measuring what each way moves.
+## and an expert cache measuring what each way moves. Last, preference
+## tuning: SFT on either of two valid answers, then DPO on pairs of
+## them, the better preferred.
 
 "moe:" u_se< "MoE"
 "lo:" u_se< "LoRA"
@@ -110,23 +112,33 @@ R5 := 5 9 r_eshape (36 t_ake r_avel R0) c_at r5 c_at n_eg '+ r_/ r5 * 0.5 * 8 t_
 ## every expert runs on every token here (d_ense, the same sum as the
 ## sparse c_ombine, faster at this size). A frozen part's gradient is 0,
 ## so Adam leaves it where it is.
-## `m g_rads6 (xs, Ys)`: the model's loss on the tokens (xs, Ys) and its
-## gradients for every part, (daS, dbS, dR, dW, dAs, dBs, loss).
-u:g_rads6 := { (aS, bS, R, Ws, As, Bs) (xs, Ys) ->
+## `m f_orward6 xs`: the model on the tokens xs, (z0, z, P): the shared
+## layer's output, with its constant 1, each token's probabilities.
+u:f_orward6 := { (aS, bS, R, Ws, As, Bs) xs ->
   z0 := t_anh (S, aS, bS, s) lo:f_orward xs
   z := u:o_ne z0
   G := 2 moe:t_opk moe:s_oftmax R moe:s_cores z
-  P := moe:s_oftmax ((Ws, As, Bs, s), G) moe:d_ense z
-  g := (P - Ys) / f_loat 2 s_elect s_hape xs
+  (z0, z, moe:s_oftmax ((Ws, As, Bs, s), G) moe:d_ense z)
+}
+## `m b_ack6 (xs, z0, z, g)`: the gradients for every part, (daS, dbS,
+## dR, dW, dAs, dBs), from g, the loss's gradient at the softmax's input.
+u:b_ack6 := { (aS, bS, R, Ws, As, Bs) (xs, z0, z, g) ->
   (dR, dAs, dBs, dz) := (R, (Ws, As, Bs, s), 2) moe:g_rads (z, g)
   dW := (R, (Ws, As, Bs, s), 2) moe:g_radsW (z, g)
   (daS, dbS, _) := (S, aS, bS, s) lo:g_rads (xs, (8 t_ake dz) * 1.0 - z0 * z0)
+  (daS, dbS, dR, dW, dAs, dBs)
+}
+## `m g_rads6 (xs, Ys)`: the model's loss on the tokens (xs, Ys) and its
+## gradients for every part, (daS, dbS, dR, dW, dAs, dBs, loss).
+u:g_rads6 := { m (xs, Ys) ->
+  (z0, z, P) := m u:f_orward6 xs
+  (daS, dbS, dR, dW, dAs, dBs) := m u:b_ack6 (xs, z0, z, (P - Ys) / f_loat 2 s_elect s_hape xs)
   (daS, dbS, dR, dW, dAs, dBs, n_eg ('+ r_/ r_avel Ys * l_og P) / f_loat 2 s_elect s_hape xs)
 }
-## The state: the model, Adam's averages, the step, the loss after each
-## step; (xs, Ys) the tokens to fine-tune on.
-u:s_tep := { ((fS, fE, fR, fN), (xs, Ys)) ((aS, bS, R, Ws, As, Bs), (m1, v1, m2, v2, m3, v3, m4, v4, m5, v5, m6, v6), t, losses) ->
-  (daS, dbS, dR, dW, dAs, dBs, loss) := (aS, bS, R, Ws, As, Bs) u:g_rads6 (xs, Ys)
+## `method a_dam6 (state, grads)`: Adam's step on the parts the method
+## trains. The state: the model, Adam's averages, the step, the loss
+## after each step; the gradients and the loss, as g_rads6 gives them.
+u:a_dam6 := { (fS, fE, fR, fN) (((aS, bS, R, Ws, As, Bs), (m1, v1, m2, v2, m3, v3, m4, v4, m5, v5, m6, v6), t, losses), (daS, dbS, dR, dW, dAs, dBs, loss)) ->
   (aS2, m12, v12) := (0.02, t) op:a_dam (aS, m1, v1, fS * daS)
   (bS2, m22, v22) := (0.02, t) op:a_dam (bS, m2, v2, fS * dbS)
   (R2, m32, v32) := (0.02, t) op:a_dam (R, m3, v3, ((4 r_eshape fR) c_at fN) u:p_er dR)
@@ -135,6 +147,9 @@ u:s_tep := { ((fS, fE, fR, fN), (xs, Ys)) ((aS, bS, R, Ws, As, Bs), (m1, v1, m2,
   (Bs2, m62, v62) := (0.02, t) op:a_dam (Bs, m6, v6, (fE c_at 0.0) u:p_er dBs)
   ((aS2, bS2, R2, W2, As2, Bs2), (m12, v12, m22, v22, m32, v32, m42, v42, m52, v52, m62, v62), t + 1, losses c_at loss)
 }
+## `(method, (xs, Ys)) s_tep state`: a step on the cross-entropy of the
+## tokens (xs, Ys).
+u:s_tep := { (method, tokens) (m, adam, t, losses) -> method u:a_dam6 ((m, adam, t, losses), m u:g_rads6 tokens) }
 ## `(Wb, method, tokens, steps) t_uneOn seed`: the base, its experts
 ## Wb, fine-tuned by a method on the tokens: each A from the seed
 ## (small), each B 0, so it starts as the base; with a new expert, its
@@ -304,6 +319,64 @@ u:t_raffic := { (ne, nl, nf, nv) c ->
   la := '+ r_/ r_avel c moe:l_ru Ua
   (f_loat c) c_at lb c_at la c_at (la * ne) c_at (lb * ne) + la * nl c_at nf c_at nv
 }
+### Preference: supervised fine-tuning, then DPO
+
+## The research's order (L1475-1490, L2023-2046): supervised
+## fine-tuning (SFT) first, then preference pairs (DPO), both answers
+## of a pair valid, so the model learns a preference and not right from
+## wrong; reinforcement learning waits until those show a gain. Here a
+## new-task token's two best classes by its rule both count as right
+## (like two solutions that both pass the tests), and the better of the
+## two, its class, is preferred (the cleaner one). SFT on demonstrations
+## of either can learn what is right but not which is better.
+## `c o_nehot`: the one-hot columns of the classes c.
+u:o_nehot := { c -> f_loat (r_ange 3) '= t_able f_loor c }
+## `v_alid (Y, c2)`: (valid, preferred, rejected), one-hot: the two best
+## classes, the best (Y itself), the second best (c2, from its file).
+u:v_alid := { (Yc, c2) -> (Yc + u:o_nehot c2, Yc, u:o_nehot c2) }
+(V, Yw, Yl) := u:v_alid (Y, n_umbers []N_GET "data/shift-second-train.txt")
+(Vn, Ywn, _) := u:v_alid (Yn, n_umbers []N_GET "data/shift-second-test.txt")
+## `m p_refers x`: how often a model's answer is one of the two valid
+## classes, and how often it is the preferred one, on the held-out new
+## tokens; then the old task's accuracy.
+u:p_refers := { m ->
+  (_, _, P) := m u:l_ayers xn
+  A := 1 moe:m_ask P
+  N := f_loat 2 s_elect s_hape xn
+  (('+ r_/ r_avel A * Vn) / N) c_at (('+ r_/ r_avel A * Ywn) / N) c_at m u:a_ccuracy (xo, Yo)
+}
+## `m g_radsD ((xs, Yw, Yl), Pr, b)`: DPO's loss (Rafailov et al., 2023)
+## and gradients on the pairs: Yw the chosen answer of each token, Yl
+## the rejected, Pr the reference model's probabilities, b its beta. With
+## h = b ((log P - log Pr) . (Yw - Yl)) for a token, the loss is -log
+## sigma(h), and its gradient at the softmax's input is -b sigma(-h) (Yw
+## - Yl): the softmax's own part cancels between the two answers.
+u:g_radsD := { m ((xs, Wy, Ly), Pr, b) ->
+  (z0, z, P) := m u:f_orward6 xs
+  d := Wy - Ly
+  h := b * '+ r_/_1 d * (l_og P) - l_og Pr
+  N := f_loat 2 s_elect s_hape xs
+  q := (s_hape d) r_eshape 1.0 / 1.0 + e_xp h
+  (daS, dbS, dR, dW, dAs, dBs) := m u:b_ack6 (xs, z0, z, (n_eg b * q * d) / N)
+  (daS, dbS, dR, dW, dAs, dBs, ('+ r_/ l_og 1.0 + e_xp n_eg h) / N)
+}
+## `(method, pairs) s_tepD state`: a step of DPO on the pairs.
+u:s_tepD := { (method, pairs) (m, adam, t, losses) -> method u:a_dam6 ((m, adam, t, losses), m u:g_radsD pairs) }
+## `(m0, method, (xs, Yw, Yl), b) d_po steps`: DPO from the model m0,
+## which is also the reference, Adam starting afresh: the model and the
+## loss after each step.
+u:d_po := { (m0, method, (xs, Yw2, Yl2), b) steps ->
+  (_, _, Pr) := m0 u:f_orward6 xs
+  (aS, bS, R, Ws, As, Bs) := m0
+  (m, _, _, losses) := steps '{ st -> (method, ((xs, Yw2, Yl2), Pr, b)) u:s_tepD st } p_ower (m0, (0.0 * aS, 0.0 * aS, 0.0 * bS, 0.0 * bS, 0.0 * R, 0.0 * R, 0.0 * Ws, 0.0 * Ws, 0.0 * As, 0.0 * As, 0.0 * Bs, 0.0 * Bs), 1, 0 r_eshape 0.0)
+  (m, losses)
+}
+## The pairs: the house style's, both valid (preferred, rejected); and,
+## to show what the research warns of, each valid answer against the
+## invalid one (two pairs a token), which teaches right from wrong only.
+styled := (x, Yw, Yl)
+wrong := 1.0 - V
+checked := (o_\ (o_\ x) c_at o_\ x, o_\ (o_\ Yw) c_at o_\ Yl, o_\ (o_\ wrong) c_at o_\ wrong)
 # -- end of the core ------------------------------
 
 ### Each method, seed 1, 120 steps
@@ -361,15 +434,15 @@ mm := (lo:d_equant 9 lo:q_base Wq + u:d_eltas (Aq, Bq)) u:m_erged mq
 (m2, _) := (experts, (x2, Y2), 120) u:t_une 1
 (_, _, _, _, A2, B2) := m2
 3 3 r_eshape (u:r_ound u:t_asks base) c_at (u:r_ound u:t_asks m1) c_at u:r_ound u:t_asks (aS1, bS1, R1, W1, A2, B2)
-## The bytes each keeps, FP32: the base (200 numbers), a task's adapters
-## (96), a merged copy (the base again); for the two tasks kept apart,
-## then merged.
+# The bytes each keeps, FP32: the base (200 numbers), a task's adapters
+# (96), a merged copy (the base again); for the two tasks kept apart,
+# then merged.
 800 384 800 c_at (800 + 2 * 384) c_at 2 * 800
 # -- end of the switch
-## The cache, 1 to 4 slots in each: slots, base-expert loads, adapter
-## (or merged-copy) loads, then the bytes moved: merged copies; kept
-## apart with LoRA, LoRA-FA and VeRA adapters (rank 2: an expert 27
-## numbers, LoRA 24, LoRA-FA's B 6, VeRA 5).
+# The cache, 1 to 4 slots in each: slots, base-expert loads, adapter
+# (or merged-copy) loads, then the bytes moved: merged copies; kept
+# apart with LoRA, LoRA-FA and VeRA adapters (rank 2: an expert 27
+# numbers, LoRA 24, LoRA-FA's B 6, VeRA 5).
 4 7 r_eshape ((108, 96, 24, 20) u:t_raffic 1) c_at ((108, 96, 24, 20) u:t_raffic 2) c_at ((108, 96, 24, 20) u:t_raffic 3) c_at (108, 96, 24, 20) u:t_raffic 4
 ## At the research's size, one SwiGLU expert of 4096 x 14336 at rank 16
 ## in BF16 (the LoRA library's counts): the expert, its LoRA adapters,
@@ -377,3 +450,20 @@ mm := (lo:d_equant 9 lo:q_base Wq + u:d_eltas (Aq, Bq)) u:m_erged mq
 (be, bl, bf, bv) := (16 lo:b_ytes 3 * 4096 * 14336, 16 lo:b_ytes 16 lo:e_xpert 4096 14336, 16 lo:b_ytes f_irst 16 lo:e_xpertFA 4096 14336, 16 lo:b_ytes 16 lo:e_xpertV 4096 14336)
 be c_at bl c_at bf c_at bv
 (be, bl, bf, bv) u:t_raffic 2
+# -- end of the cache
+
+### Preference, seed 1, 120 steps each
+
+# A line each: how often the answer on the held-out new tokens is
+# valid (one of the two best), how often it is the preferred (the
+# best), and the old task's accuracy. The base; SFT on the preferred
+# answers alone (the method "every expert"); SFT on demonstrations of
+# either valid answer; that, then DPO on the pairs (the better against
+# the other valid), beta 1 and 5; then DPO on each valid answer against
+# the invalid one, beta 1.
+(mp, _) := (experts, (x, Y), 120) u:t_une 1
+(ms, _) := (experts, (x, 0.5 * V), 120) u:t_une 1
+(md1, _) := (ms, experts, styled, 1.0) u:d_po 120
+(md5, _) := (ms, experts, styled, 5.0) u:d_po 120
+(mc, _) := (ms, experts, checked, 1.0) u:d_po 120
+6 3 r_eshape (u:r_ound u:p_refers base) c_at (u:r_ound u:p_refers mp) c_at (u:r_ound u:p_refers ms) c_at (u:r_ound u:p_refers md1) c_at (u:r_ound u:p_refers md5) c_at u:r_ound u:p_refers mc

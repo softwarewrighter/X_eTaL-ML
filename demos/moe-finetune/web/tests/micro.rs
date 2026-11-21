@@ -1,4 +1,4 @@
-use moe_finetune_web::micro::{compare, compare_program, deploy, deploy_program, files, head, program, run, Adapter, Config, Data, Deploy, Method, Rate, PROGRAM, STEPS};
+use moe_finetune_web::micro::{compare, compare_program, deploy, deploy_program, files, head, pref_program, prefer, program, run, Adapter, Config, Data, Deploy, Method, Pref, Rate, PROGRAM, STEPS};
 
 /// The command line's baseline: the mixed tokens' rows at seed 1.
 const CLI: &str = include_str!("../../reg/cli-moe-finetune.out");
@@ -153,7 +153,7 @@ fn the_comparison_s_runs_are_the_methods_and_the_command_line_s() {
 /// The CLI baseline's deployment lines, after the methods' 14 and the
 /// comparison's 16: the merge's 2, the switch's 4, the cache's 6.
 fn cli_deploy() -> Vec<Vec<f64>> {
-    CLI.lines().skip(30).map(|l| l.split_whitespace().map(|v| v.parse().unwrap()).collect()).collect()
+    CLI.lines().skip(30).take(12).map(|l| l.split_whitespace().map(|v| v.parse().unwrap()).collect()).collect()
 }
 
 #[test]
@@ -220,4 +220,64 @@ fn the_cache_loads_less_with_more_slots_and_kept_apart_moves_less_at_scale() {
     // keeping it apart moves about half the merged copies' bytes.
     let s = &d.scale_cache;
     assert!(s[4] < 0.6 * s[3] && s[6] < s[4], "{s:?}");
+}
+
+/// The CLI baseline's preference rows, after the deployment's 12.
+fn cli_pref() -> Vec<Vec<f64>> {
+    CLI.lines().skip(42).map(|l| l.split_whitespace().map(|v| v.parse().unwrap()).collect()).collect()
+}
+
+#[test]
+fn preference_runs_bind_each_name_once_and_are_the_command_line_s() {
+    let cli = cli_pref();
+    assert_eq!(cli.len(), 6);
+    for (p, row) in Pref::ALL.into_iter().zip(&cli) {
+        let src = pref_program(p, 1, STEPS);
+        assert!(microscope::source::rebound(&src).is_empty(), "{p:?}: {:?}", microscope::source::rebound(&src));
+        let r = prefer(p, 1, STEPS).unwrap();
+        assert_eq!(vec![r.valid, r.preferred, r.old], *row, "{p:?}");
+    }
+}
+
+#[test]
+fn sft_learns_what_is_right_and_dpo_on_valid_pairs_what_is_better() {
+    let r: Vec<Vec<f64>> = cli_pref();
+    let (base, sft_preferred, sft_valid, dpo1, dpo5, checked) = (&r[0], &r[1], &r[2], &r[3], &r[4], &r[5]);
+    // SFT on either valid answer: valid nearly always, preferred little
+    // more than half the time.
+    assert!(sft_valid[0] > 0.9 && sft_valid[1] < 0.65, "{sft_valid:?}");
+    // DPO on the valid pairs learns the preference, past SFT on the
+    // preferred answers alone, and stays valid.
+    for d in [dpo1, dpo5] {
+        assert!(d[1] > sft_valid[1] + 0.2 && d[1] > sft_preferred[1] && d[0] >= sft_valid[0], "{d:?}");
+    }
+    // Pairs of right against wrong raise validity, not the preference.
+    assert!(checked[0] > sft_valid[0] && checked[1] < dpo1[1] - 0.15, "{checked:?}");
+    // A larger beta keeps closer to the reference: less of the old task lost.
+    assert!(dpo5[2] > dpo1[2], "{dpo5:?} {dpo1:?}");
+    assert!(base[2] > sft_valid[2], "fine-tuning shared experts still costs the old task");
+}
+
+#[test]
+fn dpo_s_gradients_are_the_finite_differences() {
+    // A made-up adapter on every expert, against the base as reference;
+    // the DPO loss's gradient for the experts' A and B against central
+    // differences of the loss g_radsD gives.
+    let src = format!(
+        "{}tA := 5 2 9 r_eshape 0.3 * s_in 0.7 * f_loat (r_ange 90) * r_ange 90\n\
+         tB := 5 3 2 r_eshape 0.3 * s_in 1.1 * f_loat (r_ange 30) * r_ange 30\n\
+         (tS, tbS, tR, tW, _, _) := base\n\
+         (_, _, tP) := base u:f_orward6 x\n\
+         u:l_d := {{ (A, B) ->\n  (_, _, _, _, _, _, L) := (tS, tbS, tR, tW, A, B) u:g_radsD (styled, tP, 2.0)\n  L\n}}\n\
+         (_, _, _, _, gA, gB, _) := (tS, tbS, tR, tW, tA, tB) u:g_radsD (styled, tP, 2.0)\n\
+         h := 0.00001\n\
+         u:b_ump := {{ w i -> h * f_loat (s_hape w) r_eshape i = r_ange t_ally r_avel w }}\n\
+         fA := '{{ i -> ((u:l_d (tA + tA u:b_ump i, tB)) - u:l_d (tA - tA u:b_ump i, tB)) / 2.0 * h }} e_ach r_ange 72\n\
+         fB := '{{ i -> ((u:l_d (tA, tB + tB u:b_ump i)) - u:l_d (tA, tB - tB u:b_ump i)) / 2.0 * h }} e_ach r_ange 24\n\
+         ('m_ax r_/ a_bs fA - 72 t_ake r_avel gA) c_at 'm_ax r_/ a_bs fB - 24 t_ake r_avel gB\n",
+        head()
+    );
+    let out = microscope::run::output_with(&files(), &src, 1).unwrap().0;
+    let gaps: Vec<f64> = out[0].split_whitespace().map(|v| v.parse().unwrap()).collect();
+    assert!(gaps.iter().all(|&g| g < 1e-6), "{gaps:?}");
 }

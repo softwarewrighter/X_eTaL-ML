@@ -13,7 +13,7 @@ rm -rf "$scratch"; mkdir -p "$scratch/data"
 cp "$here/train/base.xtl" "$scratch/base.xtl"
 export XETAL_PATH="$(ls -d "$root"/libs/*/src "$root"/work/libs/*/src | paste -sd: -)"
 (cd "$scratch" && "$xetal" run --seed 1 base.xtl >/dev/null)
-for f in train.txt test.txt shift-train.txt shift-test.txt shift2-train.txt shift2-test.txt base.txt; do
+for f in train.txt test.txt shift-train.txt shift-test.txt shift2-train.txt shift2-test.txt shift-second-train.txt shift-second-test.txt base.txt; do
   cmp -s "$here/data/$f" "$scratch/data/$f" || { echo "test.sh: data/$f differs from a fresh run of train/base.xtl" >&2; exit 1; }
 done
 echo "ok: the base model retrains to data/ exactly"

@@ -4,7 +4,8 @@
 //! tokens go before and after, how large each update is, the loss; the
 //! four adapters compared at equal ranks and at equal budgets, at a
 //! rate chosen; deploying the adapters (kept apart or merged, two tasks
-//! switched, an expert cache); the program.
+//! switched, an expert cache); preference tuning (SFT, then DPO); the
+//! program.
 
 use std::collections::{BTreeMap, VecDeque};
 use std::rc::Rc;
@@ -16,7 +17,7 @@ use microscope::chrome::{footer, header, notice, panel};
 use microscope::run::now;
 use microscope::source::{block, NONE};
 
-use crate::micro::{compare, compare_tail, deploy, deploy_tail, head, run, tail, Adapter, Compared, Config, Data, Deploy, Deployed, Method, Rate, Run, STEPS};
+use crate::micro::{compare, compare_tail, deploy, deploy_tail, head, pref_tail, prefer, run, tail, Adapter, Compared, Config, Data, Deploy, Deployed, Method, Pref, Prefers, Rate, Run, STEPS};
 
 /// A method's run: on the tokens from a seed.
 pub type MethodRun = (Method, Data, usize);
@@ -30,6 +31,7 @@ pub enum Job {
     Method(MethodRun),
     Compare(CompareRun),
     Deploy(Deploy),
+    Pref((Pref, usize)),
 }
 
 impl Job {
@@ -38,6 +40,7 @@ impl Job {
             Job::Method((m, _, seed)) => format!("{}, seed {seed}", m.title()),
             Job::Compare((a, c, _, _, seed)) => format!("{} at rank {}, seed {seed}", a.title(), c.rank(a)),
             Job::Deploy(p) => format!("deploying: {}", p.title()),
+            Job::Pref((p, seed)) => format!("preference: {}, seed {seed}", p.title()),
         }
     }
 }
@@ -57,6 +60,9 @@ pub struct Model {
     /// The deployment asked for, its parts as they finish.
     pub deploying: bool,
     pub deployed: BTreeMap<Deploy, Rc<Deployed>>,
+    /// Preference tuning asked for, its rows by seed.
+    pub preferring: bool,
+    pub prefs: BTreeMap<(Pref, usize), Prefers>,
     pub queue: VecDeque<Job>,
     /// Milliseconds of the last run.
     pub ms: f64,
@@ -73,6 +79,8 @@ pub enum Action {
     Compare,
     /// Deploy the adapters: kept apart or merged, switched, cached.
     Deploy,
+    /// SFT, then DPO, on the preference pairs.
+    Prefer,
     Rate(Rate),
     /// Run the next job in the queue.
     Next,
@@ -80,7 +88,7 @@ pub enum Action {
 
 impl Model {
     fn new() -> Self {
-        let mut m = Model { data: Data::Mixed, seeds: 1, started: false, picked: Method::None, results: BTreeMap::new(), comparing: false, rate: Rate::Methods, compared: BTreeMap::new(), deploying: false, deployed: BTreeMap::new(), queue: VecDeque::new(), ms: 0.0, notice: None };
+        let mut m = Model { data: Data::Mixed, seeds: 1, started: false, picked: Method::None, results: BTreeMap::new(), comparing: false, rate: Rate::Methods, compared: BTreeMap::new(), deploying: false, deployed: BTreeMap::new(), preferring: false, prefs: BTreeMap::new(), queue: VecDeque::new(), ms: 0.0, notice: None };
         m.plan();
         m
     }
@@ -117,6 +125,21 @@ impl Model {
                 }
             }
         }
+        if self.preferring {
+            for seed in 1..=self.seeds {
+                for p in Pref::ALL {
+                    let job = Job::Pref((p, seed));
+                    if !self.prefs.contains_key(&(p, seed)) && !self.queue.contains(&job) {
+                        self.queue.push_back(job);
+                    }
+                }
+            }
+        }
+    }
+
+    /// A preference row's runs, by seed.
+    pub fn preferred(&self, p: Pref) -> Vec<Prefers> {
+        (1..=self.seeds).filter_map(|s| self.prefs.get(&(p, s)).copied()).collect()
     }
 
     /// The comparison's runs of an adapter at a configuration, by seed.
@@ -152,6 +175,10 @@ impl Reducible for Model {
                 m.deploying = true;
                 m.plan();
             }
+            Action::Prefer => {
+                m.preferring = true;
+                m.plan();
+            }
             Action::Rate(r) => {
                 m.rate = r;
                 m.plan();
@@ -173,6 +200,9 @@ impl Reducible for Model {
                         }),
                         Job::Deploy(p) => deploy(p).map(|r| {
                             m.deployed.insert(p, Rc::new(r));
+                        }),
+                        Job::Pref((p, seed)) => prefer(p, seed, STEPS).map(|r| {
+                            m.prefs.insert((p, seed), r);
                         }),
                     };
                     m.notice = done.err().map(|e| format!("{}: {e}", job.title()));
@@ -393,6 +423,30 @@ fn deployment(m: &UseReducerHandle<Model>) -> Html {
     </> }
 }
 
+/// Preference tuning: each row's valid and preferred answers on the
+/// held-out new tokens and the old task's accuracy, over the seeds.
+fn preference(m: &UseReducerHandle<Model>) -> Html {
+    let ask = (!m.preferring).then(|| html! { <div class="controls"><button class="on" onclick={act(m, || Action::Prefer)}>{"Train SFT, then DPO"}</button></div> });
+    let rows = Pref::ALL.iter().map(|&p| {
+        let runs = m.preferred(p);
+        let col = |f: fn(&Prefers) -> f64| spread(&runs.iter().map(f).collect::<Vec<_>>());
+        html! { <tr>
+            <td><b>{p.title()}</b><br /><span class="what">{p.trains()}</span></td>
+            <td class="num">{col(|r| r.valid)}</td>
+            <td class="num">{col(|r| r.preferred)}</td>
+            <td class="num">{col(|r| r.old)}</td>
+            <td class="num">{format!("{} of {}", runs.len(), m.seeds)}</td>
+        </tr> }
+    });
+    html! { <>
+        { ask }
+        <table class="facts methods">
+            <tr><th>{"Model"}</th><th>{"Valid answer"}</th><th>{"Preferred answer"}</th><th>{"Old task"}</th><th>{"Seeds"}</th></tr>
+            { for rows }
+        </table>
+    </> }
+}
+
 /// Before and after, a bar each, for each of the 5 experts.
 fn routing(before: &[f64], after: &[f64]) -> Html {
     let rows = before.iter().zip(after).enumerate().map(|(e, (&b, &a))| {
@@ -466,6 +520,7 @@ pub fn app() -> Html {
                 { panel("Each method:", "(method, tokens, 120) u:t_une seed", "Every method fine-tunes the same base on the same tokens: kind 3's new rule. The new task is 200 held-out tokens of kind 3 by its new rule; the old task is the 300 held-out tokens of kinds 1, 2 and 4, whose rule did not change. The old task's change is in points against the base (3 points is the bar, ✓ within it). The numbers trained are adapters, a router or a new expert; the base's own weights stay frozen, and the bytes are those numbers in FP32. Click a method for its routing, its updates and its loss.", true, table(&model)) }
                 { panel("Four adapters compared:", "(kind, r, tokens, 120, lr) u:c_ompare seed", "The research's comparison, on the same base and tokens, the router frozen: shared LoRA (on the shared layer, its attention LoRA), expert LoRA, LoRA-FA (each expert's A frozen) and shared VeRA (one pair of frozen random projections for every expert, each expert its own two vectors), at equal ranks and at about equal numbers trained. The gain is the new task's accuracy over the base's, in points; the gain a number is that over the numbers trained, the research's efficiency, never a substitute for the gain itself; the old task's change is in points too. An adapter with frozen projections moves slowly at the methods' rate (VeRA's paper trains at several times LoRA's), so the rate is yours to choose. Each run is about 15 seconds.", false, comparison(&model)) }
                 { panel("Deploying the adapters:", "(be, bl, bf, bv) u:t_raffic 2", "The research's deployment: an adapter kept apart from the base, switched per task, or merged into it, one task as fast as the base. LoRA merges exactly; QLoRA's merge quantizes again, so it changes answers. Two tasks' adapters share one base, and the base alone keeps what neither task changed. Kept apart, the tasks share the base experts in the cache, so less moves, by far when an adapter is small beside its expert. Three runs, the first two training adapters (about 15 seconds each).", false, deployment(&model)) }
+                { panel("Preference, after SFT:", "(ms, experts, styled, beta) u:d_po 120", "The research's order: supervised fine-tuning first, then preference pairs (DPO), and both answers of a pair valid, or the model learns right from wrong instead of a preference. A new-task token's two best classes both count as right, like two solutions that pass the tests; the best is preferred, like the cleaner one. SFT on demonstrations of either learns what is right but not which is better; DPO, from that model as its reference, learns the preference from the pairs; pairs of a right answer against a wrong one teach only what SFT already had. Every row trains the experts' adapters, the router frozen; held-out new tokens, and the old task as above. Each run is about 15 seconds.", false, preference(&model)) }
                 { panel("Where the tokens go:", "m u:s_hare xn", &format!("{}, seed 1: the share of the new task's tokens, then of the old task's, each expert gets, before and after (each column sums to 2, the top 2). With the router frozen and the shared layer as it was, nothing can move; the shared layer's adapter moves the router's input, so it moves the routing too; a trained router or a new expert's own row moves it on purpose.", picked.title()), false, match &detail {
                     Some(r) => html! { <>
                         <p class="calc">{"The new task's tokens:"}</p>
@@ -493,6 +548,8 @@ pub fn app() -> Html {
                     { block(&compare_tail(Adapter::Vera, Config::EqualBudgets, model.rate, model.data, 1, STEPS), NONE) }
                     <p class="note">{"And the deployment's three runs, each after the same core: kept apart against merged, the two tasks switched, the expert cache."}</p>
                     { for Deploy::ALL.iter().map(|&p| block(&deploy_tail(p), NONE)) }
+                    <p class="note">{"And a preference run, here SFT on either valid answer, then DPO at beta 1:"}</p>
+                    { block(&pref_tail(Pref::Dpo1, 1, STEPS), NONE) }
                 </section>
             </div>
         </div>

@@ -9,7 +9,7 @@ use microscope::run::{numbers, output_with, section};
 pub const PROGRAM: &str = include_str!("../../moe-finetune.xtl");
 
 /// The data files the program reads, as the page hands them to X_eTaL.
-pub const FILES: [(&str, &str); 7] = [
+pub const FILES: [(&str, &str); 9] = [
     ("data/base.txt", include_str!("../../data/base.txt")),
     ("data/train.txt", include_str!("../../data/train.txt")),
     ("data/test.txt", include_str!("../../data/test.txt")),
@@ -17,6 +17,8 @@ pub const FILES: [(&str, &str); 7] = [
     ("data/shift-test.txt", include_str!("../../data/shift-test.txt")),
     ("data/shift2-train.txt", include_str!("../../data/shift2-train.txt")),
     ("data/shift2-test.txt", include_str!("../../data/shift2-test.txt")),
+    ("data/shift-second-train.txt", include_str!("../../data/shift-second-train.txt")),
+    ("data/shift-second-test.txt", include_str!("../../data/shift-second-test.txt")),
 ];
 
 /// Steps of Adam for every method, as the command line takes.
@@ -308,7 +310,7 @@ pub fn deploy_tail(part: Deploy) -> String {
     match part {
         Deploy::Merge => section(d, "(m1, _) :=", "# -- end of the merge").to_string(),
         Deploy::Switch => format!("{first}{}", section(d, "## Two tasks' adapters", "# -- end of the switch")),
-        Deploy::Cache => section(d, "## The cache, 1 to 4 slots", "\u{0}").to_string(),
+        Deploy::Cache => section(d, "# The cache, 1 to 4 slots", "# -- end of the cache").to_string(),
     }
 }
 
@@ -364,4 +366,78 @@ pub fn deploy(part: Deploy) -> Result<Deployed, String> {
         }
     }
     Ok(d)
+}
+
+/// Preference tuning's rows: the base, SFT on the preferred answers
+/// alone, SFT on either valid answer, that then DPO on the pairs (the
+/// better against the other valid) at beta 1 and 5, and DPO on each
+/// valid answer against the invalid one.
+#[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord)]
+pub enum Pref {
+    Base,
+    SftPreferred,
+    SftValid,
+    Dpo1,
+    Dpo5,
+    Checked,
+}
+
+impl Pref {
+    pub const ALL: [Pref; 6] = [Pref::Base, Pref::SftPreferred, Pref::SftValid, Pref::Dpo1, Pref::Dpo5, Pref::Checked];
+
+    pub fn title(self) -> &'static str {
+        match self {
+            Pref::Base => "The base",
+            Pref::SftPreferred => "SFT on the preferred answers",
+            Pref::SftValid => "SFT on either valid answer",
+            Pref::Dpo1 => "Then DPO, beta 1",
+            Pref::Dpo5 => "Then DPO, beta 5",
+            Pref::Checked => "Then DPO on right against wrong",
+        }
+    }
+
+    pub fn trains(self) -> &'static str {
+        match self {
+            Pref::Base => "nothing",
+            Pref::SftPreferred => "every expert's adapters on the best class alone",
+            Pref::SftValid => "on demonstrations of either of the two best classes, half each",
+            Pref::Dpo1 | Pref::Dpo5 => "from SFT on either: pairs, the best against the second best, both valid",
+            Pref::Checked => "from SFT on either: each valid answer against the invalid one",
+        }
+    }
+}
+
+/// A preference row's own lines at a seed: what it trains, then its
+/// measures read back.
+pub fn pref_tail(p: Pref, seed: usize, steps: usize) -> String {
+    let sft = format!("(ms, _) := (experts, (x, 0.5 * V), {steps}) u:t_une {seed}\n");
+    let dpo = |pairs: &str, beta: &str| format!("{sft}(md, _) := (ms, experts, {pairs}, {beta}) u:d_po {steps}\nu:r_ound u:p_refers md\n");
+    match p {
+        Pref::Base => "u:r_ound u:p_refers base\n".to_string(),
+        Pref::SftPreferred => format!("(mp, _) := (experts, (x, Y), {steps}) u:t_une {seed}\nu:r_ound u:p_refers mp\n"),
+        Pref::SftValid => format!("{sft}u:r_ound u:p_refers ms\n"),
+        Pref::Dpo1 => dpo("styled", "1.0"),
+        Pref::Dpo5 => dpo("styled", "5.0"),
+        Pref::Checked => dpo("checked", "1.0"),
+    }
+}
+
+pub fn pref_program(p: Pref, seed: usize, steps: usize) -> String {
+    format!("{}{}", head(), pref_tail(p, seed, steps))
+}
+
+/// A preference row's measures on the held-out new tokens: how often
+/// the answer is valid, how often it is the preferred one; then the old
+/// task's accuracy.
+#[derive(Clone, Copy, Debug, PartialEq)]
+pub struct Prefers {
+    pub valid: f64,
+    pub preferred: f64,
+    pub old: f64,
+}
+
+pub fn prefer(p: Pref, seed: usize, steps: usize) -> Result<Prefers, String> {
+    let out = output_with(&files(), &pref_program(p, seed, steps), 1)?.0;
+    let [valid, preferred, old] = fixed::<3>(&out[0])?;
+    Ok(Prefers { valid, preferred, old })
 }

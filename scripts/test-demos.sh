@@ -34,17 +34,20 @@ XETAL_PATH="$(cd "$root" && ls -d libs/*/src work/libs/*/src 2>/dev/null | sed '
 export XETAL_PATH
 # bless DIR DATA NAME COMMAND DESC: make (or remake) baseline NAME in
 # DATA from the current output, running COMMAND from DIR. An existing
-# baseline keeps its command and description; remaking (rather than
-# reg-rs rebase) also records a changed exit code.
+# baseline keeps its command, description and timeout (a program that
+# runs longer than reg-rs's default 300 seconds says so in its .rgt,
+# `timeout = 900`); remaking (rather than reg-rs rebase) also records a
+# changed exit code.
 bless() {
-  local dir="$1" data="$2" name="$3" cmd="$4" desc="$5"
+  local dir="$1" data="$2" name="$3" cmd="$4" desc="$5" timeout=300
   mkdir -p "$data"
   if [ -f "$data/$name.rgt" ]; then
     cmd="$("$root/scripts/py" -c 'import sys, tomllib; print(tomllib.load(open(sys.argv[1], "rb"))["command"])' "$data/$name.rgt")"
     desc="$("$root/scripts/py" -c 'import sys, tomllib; print(tomllib.load(open(sys.argv[1], "rb")).get("desc", ""))' "$data/$name.rgt")"
+    timeout="$("$root/scripts/py" -c 'import sys, tomllib; print(tomllib.load(open(sys.argv[1], "rb")).get("timeout", 300))' "$data/$name.rgt")"
     rm -f "$data/$name".*
   fi
-  (cd "$dir" && REG_RS_DATA_DIR="$data" reg-rs create -t "$name" -c "$cmd" --desc "$desc" >/dev/null)
+  (cd "$dir" && REG_RS_DATA_DIR="$data" reg-rs create -t "$name" -c "$cmd" --desc "$desc" --timeout "$timeout" >/dev/null)
 }
 fail=0; n=0
 for slug in ${slugs[@]+"${slugs[@]}"}; do
