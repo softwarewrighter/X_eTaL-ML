@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>demos/activations/activations.xtl - X_eTaL doc</title>
+<link rel="stylesheet" href="style.css">
+<script src="theme.js"></script>
+<script defer src="search-index.js"></script>
+<script defer src="search.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.18.10/dist/katex.min.css" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.18.10/dist/katex.min.js" crossorigin="anonymous"></script>
+<script>document.addEventListener('DOMContentLoaded', function () {
+if (typeof katex === 'undefined') return;
+document.querySelectorAll('.c-notation').forEach(function (el) {
+var tex = el.textContent; if (!tex) return;
+try { katex.render(tex, el, { throwOnError: false }); } catch (e) { el.textContent = tex; }
+});
+});</script>
+</head>
+<body>
+<nav class="side">
+<a class="home" href="index.html">X_eTaL doc</a>
+<input id="search" type="search" autocomplete="off" placeholder="Search: a name, or a type" title="A name (mean finds m_ean), or a type: Num a =&gt; a -&gt; a -&gt; a finds +, m_ax ...">
+<h2>Files</h2>
+<h3>demos/activations/</h3>
+<ul>
+<li><a href="demos-activations-activations.xtl.html">activations.xtl</a></li>
+</ul>
+<h3>demos/attention/</h3>
+<ul>
+<li><a href="demos-attention-attention.xtl.html">attention.xtl</a></li>
+</ul>
+<h3>demos/backprop/</h3>
+<ul>
+<li><a href="demos-backprop-backprop.xtl.html">backprop.xtl</a></li>
+</ul>
+<h3>demos/cnn-backprop/</h3>
+<ul>
+<li><a href="demos-cnn-backprop-cnn-backprop.xtl.html">cnn-backprop.xtl</a></li>
+</ul>
+<h3>demos/cnn-digits/</h3>
+<ul>
+<li><a href="demos-cnn-digits-batch.xtl.html">batch.xtl</a></li>
+<li><a href="demos-cnn-digits-cnn-digits.xtl.html">cnn-digits.xtl</a></li>
+</ul>
+<h3>demos/diffusion/</h3>
+<ul>
+<li><a href="demos-diffusion-diffusion.xtl.html">diffusion.xtl</a></li>
+</ul>
+<h3>demos/embedding-explorer/</h3>
+<ul>
+<li><a href="demos-embedding-explorer-embedding-explorer.xtl.html">embedding-explorer.xtl</a></li>
+</ul>
+<h3>demos/k-means/</h3>
+<ul>
+<li><a href="demos-k-means-k-means.xtl.html">k-means.xtl</a></li>
+</ul>
+<h3>demos/lora-explorer/</h3>
+<ul>
+<li><a href="demos-lora-explorer-lora-explorer.xtl.html">lora-explorer.xtl</a></li>
+</ul>
+<h3>demos/micro-bert/</h3>
+<ul>
+<li><a href="demos-micro-bert-micro-bert.xtl.html">micro-bert.xtl</a></li>
+</ul>
+<h3>demos/micro-gpt/</h3>
+<ul>
+<li><a href="demos-micro-gpt-batch.xtl.html">batch.xtl</a></li>
+<li><a href="demos-micro-gpt-micro-gpt.xtl.html">micro-gpt.xtl</a></li>
+</ul>
+<h3>demos/moe-finetune/</h3>
+<ul>
+<li><a href="demos-moe-finetune-base.xtl.html">base.xtl</a></li>
+<li><a href="demos-moe-finetune-moe-finetune.xtl.html">moe-finetune.xtl</a></li>
+</ul>
+<h3>demos/moe-router/</h3>
+<ul>
+<li><a href="demos-moe-router-moe-router.xtl.html">moe-router.xtl</a></li>
+</ul>
+<h3>demos/net-macro/</h3>
+<ul>
+<li><a href="demos-net-macro-net-macro.xtl.html">net-macro.xtl</a></li>
+<li><a href="demos-net-macro-train-it.xtl.html">train-it.xtl</a></li>
+</ul>
+<h3>demos/pipelines/</h3>
+<ul>
+<li><a href="demos-pipelines-diffusion.xtl.html">diffusion.xtl</a></li>
+<li><a href="demos-pipelines-equations.xtl.html">equations.xtl</a></li>
+<li><a href="demos-pipelines-pipelines.xtl.html">pipelines.xtl</a></li>
+<li><a href="demos-pipelines-rosetta.xtl.html">rosetta.xtl</a></li>
+</ul>
+<h3>demos/ternary-net/</h3>
+<ul>
+<li><a href="demos-ternary-net-ternary-net.xtl.html">ternary-net.xtl</a></li>
+</ul>
+<h3>demos/train-live/</h3>
+<ul>
+<li><a href="demos-train-live-train-live.xtl.html">train-live.xtl</a></li>
+</ul>
+<h3>demos/world-model/</h3>
+<ul>
+<li><a href="demos-world-model-world-model.xtl.html">world-model.xtl</a></li>
+</ul>
+<h3>libs/Activations/demos/</h3>
+<ul>
+<li><a href="libs-Activations-demos-curves.xtl.html">curves.xtl</a></li>
+</ul>
+<h3>libs/Activations/src/</h3>
+<ul>
+<li><a href="libs-Activations-src-Activations.xtl.html">Activations.xtl</a></li>
+</ul>
+<h3>libs/Attention/demos/</h3>
+<ul>
+<li><a href="libs-Attention-demos-previous.xtl.html">previous.xtl</a></li>
+</ul>
+<h3>libs/Attention/src/</h3>
+<ul>
+<li><a href="libs-Attention-src-Attention.xtl.html">Attention.xtl</a></li>
+</ul>
+<h3>libs/Conv/demos/</h3>
+<ul>
+<li><a href="libs-Conv-demos-edges.xtl.html">edges.xtl</a></li>
+</ul>
+<h3>libs/Conv/src/</h3>
+<ul>
+<li><a href="libs-Conv-src-Conv.xtl.html">Conv.xtl</a></li>
+</ul>
+<h3>libs/Embed/demos/</h3>
+<ul>
+<li><a href="libs-Embed-demos-pets.xtl.html">pets.xtl</a></li>
+</ul>
+<h3>libs/Embed/src/</h3>
+<ul>
+<li><a href="libs-Embed-src-Embed.xtl.html">Embed.xtl</a></li>
+</ul>
+<h3>libs/Flow/demos/</h3>
+<ul>
+<li><a href="libs-Flow-demos-mlp.xtl.html">mlp.xtl</a></li>
+</ul>
+<h3>libs/Flow/src/</h3>
+<ul>
+<li><a href="libs-Flow-src-Flow.xtlm.html">Flow.xtlm</a></li>
+</ul>
+<h3>libs/Integrals/demos/</h3>
+<ul>
+<li><a href="libs-Integrals-demos-convolution.xtl.html">convolution.xtl</a></li>
+<li><a href="libs-Integrals-demos-gelu.xtl.html">gelu.xtl</a></li>
+</ul>
+<h3>libs/Integrals/src/</h3>
+<ul>
+<li><a href="libs-Integrals-src-Integrals.xtlm.html">Integrals.xtlm</a></li>
+</ul>
+<h3>libs/Learn/demos/</h3>
+<ul>
+<li><a href="libs-Learn-demos-blobs.xtl.html">blobs.xtl</a></li>
+</ul>
+<h3>libs/Learn/src/</h3>
+<ul>
+<li><a href="libs-Learn-src-Learn.xtl.html">Learn.xtl</a></li>
+</ul>
+<h3>libs/LoRA/demos/</h3>
+<ul>
+<li><a href="libs-LoRA-demos-sizes.xtl.html">sizes.xtl</a></li>
+</ul>
+<h3>libs/LoRA/src/</h3>
+<ul>
+<li><a href="libs-LoRA-src-LoRA.xtl.html">LoRA.xtl</a></li>
+<li><a href="libs-LoRA-src-LoRA.xtlm.html">LoRA.xtlm</a></li>
+</ul>
+<h3>libs/MoE/demos/</h3>
+<ul>
+<li><a href="libs-MoE-demos-routing.xtl.html">routing.xtl</a></li>
+</ul>
+<h3>libs/MoE/src/</h3>
+<ul>
+<li><a href="libs-MoE-src-MoE.xtl.html">MoE.xtl</a></li>
+</ul>
+<h3>libs/Net/demos/</h3>
+<ul>
+<li><a href="libs-Net-demos-train-xor.xtl.html">train-xor.xtl</a></li>
+<li><a href="libs-Net-demos-xor.xtl.html">xor.xtl</a></li>
+</ul>
+<h3>libs/Net/src/</h3>
+<ul>
+<li><a href="libs-Net-src-Net.xtlm.html">Net.xtlm</a></li>
+</ul>
+<h3>libs/NN/demos/</h3>
+<ul>
+<li><a href="libs-NN-demos-xor.xtl.html">xor.xtl</a></li>
+</ul>
+<h3>libs/NN/src/</h3>
+<ul>
+<li><a href="libs-NN-src-NN.xtl.html">NN.xtl</a></li>
+</ul>
+<h3>libs/Norm/demos/</h3>
+<ul>
+<li><a href="libs-Norm-demos-rows.xtl.html">rows.xtl</a></li>
+</ul>
+<h3>libs/Norm/src/</h3>
+<ul>
+<li><a href="libs-Norm-src-Norm.xtl.html">Norm.xtl</a></li>
+</ul>
+<h3>libs/Optim/demos/</h3>
+<ul>
+<li><a href="libs-Optim-demos-bowl.xtl.html">bowl.xtl</a></li>
+</ul>
+<h3>libs/Optim/src/</h3>
+<ul>
+<li><a href="libs-Optim-src-Optim.xtl.html">Optim.xtl</a></li>
+</ul>
+<h3>libs/Quant/demos/</h3>
+<ul>
+<li><a href="libs-Quant-demos-formats.xtl.html">formats.xtl</a></li>
+</ul>
+<h3>libs/Quant/src/</h3>
+<ul>
+<li><a href="libs-Quant-src-Quant.xtl.html">Quant.xtl</a></li>
+</ul>
+<h3>libs/Sample/demos/</h3>
+<ul>
+<li><a href="libs-Sample-demos-next.xtl.html">next.xtl</a></li>
+</ul>
+<h3>libs/Sample/src/</h3>
+<ul>
+<li><a href="libs-Sample-src-Sample.xtl.html">Sample.xtl</a></li>
+</ul>
+<h3>std/</h3>
+<ul>
+<li><a href="std-Svg.xtl.html">Svg.xtl</a></li>
+<li><a href="std-System.xtlm.html">System.xtlm</a></li>
+</ul>
+<h3>work/libs/Check/src/</h3>
+<ul>
+<li><a href="work-libs-Check-src-Check.xtl.html">Check.xtl</a></li>
+<li><a href="work-libs-Check-src-Check.xtlm.html">Check.xtlm</a></li>
+</ul>
+<h3>work/libs/Equations/src/</h3>
+<ul>
+<li><a href="work-libs-Equations-src-Equations.xtl.html">Equations.xtl</a></li>
+<li><a href="work-libs-Equations-src-Equations.xtlm.html">Equations.xtlm</a></li>
+</ul>
+<h3>work/libs/Format/src/</h3>
+<ul>
+<li><a href="work-libs-Format-src-Format.xtl.html">Format.xtl</a></li>
+</ul>
+<h3>work/libs/Lists/src/</h3>
+<ul>
+<li><a href="work-libs-Lists-src-Lists.xtl.html">Lists.xtl</a></li>
+</ul>
+<h3>work/libs/Plot/src/</h3>
+<ul>
+<li><a href="work-libs-Plot-src-Plot.xtl.html">Plot.xtl</a></li>
+</ul>
+<h3>work/libs/Strings/src/</h3>
+<ul>
+<li><a href="work-libs-Strings-src-Strings.xtl.html">Strings.xtl</a></li>
+</ul>
+<ul>
+<li><a href="builtins.html">built-ins</a></li>
+</ul>
+<h2>On this page</h2>
+<ul>
+<li><a href="#section-1">Data</a></li>
+<li class="item"><a href="#xs">xs</a></li>
+<li class="item"><a href="#leak">leak</a></li>
+<li class="item"><a href="#alpha">alpha</a></li>
+<li class="item"><a href="#beta">beta</a></li>
+<li class="item"><a href="#u.c_hart"><span class="c-userfunc">ᵘc̲hart</span></a></li>
+<li class="item"><a href="#u.s_lope"><span class="c-userfunc">ᵘs̲lope</span></a></li>
+<li class="item"><a href="#one">one</a></li>
+<li class="item"><a href="#u.g_lu1"><span class="c-userfunc">ᵘg̲lu1</span></a></li>
+<li class="item"><a href="#u.r_eglu1"><span class="c-userfunc">ᵘr̲eglu1</span></a></li>
+<li class="item"><a href="#u.g_eglu1"><span class="c-userfunc">ᵘg̲eglu1</span></a></li>
+<li class="item"><a href="#u.s_wiglu1"><span class="c-userfunc">ᵘs̲wiglu1</span></a></li>
+<li><a href="#section-2">Classical</a></li>
+<li class="item"><a href="#classical">classical</a></li>
+<li class="item"><a href="#dClassical">dClassical</a></li>
+<li class="item"><a href="#_">_</a></li>
+<li class="item"><a href="#_">_</a></li>
+<li><a href="#section-3">Rectifiers</a></li>
+<li class="item"><a href="#rect">rect</a></li>
+<li class="item"><a href="#dRect">dRect</a></li>
+<li class="item"><a href="#_">_</a></li>
+<li class="item"><a href="#_">_</a></li>
+<li><a href="#section-4">Smooth</a></li>
+<li class="item"><a href="#smooth">smooth</a></li>
+<li class="item"><a href="#dSmooth">dSmooth</a></li>
+<li class="item"><a href="#_">_</a></li>
+<li class="item"><a href="#_">_</a></li>
+<li><a href="#section-5">Gated</a></li>
+<li class="item"><a href="#gated">gated</a></li>
+<li class="item"><a href="#dGated">dGated</a></li>
+<li class="item"><a href="#_">_</a></li>
+<li class="item"><a href="#_">_</a></li>
+<li><a href="#section-6">The ranges</a></li>
+<li class="item"><a href="#u.s_pan"><span class="c-userfunc">ᵘs̲pan</span></a></li>
+</ul>
+</nav>
+<main>
+<button class="theme" title="Light or dark">theme</button>
+<section id="results"></section>
+<h1><span class="kind">program</span>demos/activations/activations.xtl</h1>
+<div class="doc">
+<p>Activation functions, graphed: every function of this repository's
+Activations library and its derivative over x from -6 to 6, two
+charts a family (the functions, their slopes), drawn by
+X_eTaL-libraries' Plot with an x axis of real values
+(p:f_unctionChart!). The live page adds sliders for the parameters
+and an editor for an activation of your own.</p>
+</div>
+<p class="meta"><a href="demos-activations-activations.xtl.src.html">source</a> &middot; imports <code><span class="c-error">act:</span></code> <a href="libs-Activations-src-Activations.xtl.html">libs/Activations/src/Activations.xtl</a>; <code><span class="c-error">p:</span></code> <a href="work-libs-Plot-src-Plot.xtl.html">work/libs/Plot/src/Plot.xtl</a></p>
+<h2 class="section" id="section-1">Data</h2>
+<div class="item" id="xs">
+<h3><a href="#xs">xs</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-activations-activations.xtl.src.html#L16">line 16</a></div>
+<div class="doc">
+<p>The x values: 241 from -6 to 6, a twentieth apart. The parameters:
+leaky ReLU's slope, ELU's alpha, Swish's beta.</p>
+</div>
+<pre class="code">xs ← <span class="c-number">241</span> <a href="work-libs-Plot-src-Plot.xtl.html#l.l_inspace" class="c-libfunc">ᵖl̲inspace</a> (<span class="c-number">-6.0</span>, <span class="c-number">6.0</span>)</pre>
+<div class="uses">Used in: <a href="demos-activations-activations.xtl.html#u.c_hart"><span class="c-userfunc">ᵘc̲hart</span></a>, <a href="demos-activations-activations.xtl.html#classical">classical</a>, <a href="demos-activations-activations.xtl.html#dClassical">dClassical</a>, <a href="demos-activations-activations.xtl.html#rect">rect</a>, <a href="demos-activations-activations.xtl.html#dRect">dRect</a>, <a href="demos-activations-activations.xtl.html#smooth">smooth</a>, <a href="demos-activations-activations.xtl.html#dSmooth">dSmooth</a>, <a href="demos-activations-activations.xtl.html#gated">gated</a>, <a href="demos-activations-activations.xtl.html#dGated">dGated</a></div>
+</div>
+<div class="item" id="leak">
+<h3><a href="#leak">leak</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-activations-activations.xtl.src.html#L17">line 17</a></div>
+<pre class="code">leak ← <span class="c-number">0.1</span></pre>
+<div class="uses">Used in: <a href="demos-activations-activations.xtl.html#rect">rect</a>, <a href="demos-activations-activations.xtl.html#dRect">dRect</a></div>
+</div>
+<div class="item" id="alpha">
+<h3><a href="#alpha">alpha</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-activations-activations.xtl.src.html#L18">line 18</a></div>
+<pre class="code">alpha ← <span class="c-number">1.0</span></pre>
+<div class="uses">Used in: <a href="demos-activations-activations.xtl.html#rect">rect</a>, <a href="demos-activations-activations.xtl.html#dRect">dRect</a></div>
+</div>
+<div class="item" id="beta">
+<h3><a href="#beta">beta</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-activations-activations.xtl.src.html#L19">line 19</a></div>
+<pre class="code">beta ← <span class="c-number">1.5</span></pre>
+<div class="uses">Used in: <a href="demos-activations-activations.xtl.html#smooth">smooth</a>, <a href="demos-activations-activations.xtl.html#dSmooth">dSmooth</a></div>
+</div>
+<div class="item" id="u.c_hart">
+<h3><a href="#u.c_hart"><span class="c-userfunc">ᵘc̲hart</span></a> <span class="type">: Box Char -&gt; Float -&gt; Char</span></h3>
+<div class="meta">function &middot; <a href="demos-activations-activations.xtl.src.html#L23">line 23</a></div>
+<div class="doc">
+<p>A family's chart: the title, the axes' names and a name per curve,
+then the curves, a row each over xs.</p>
+</div>
+<pre class="code"><span class="c-userfunc">ᵘc̲hart</span> ← { labels ys → labels <a href="work-libs-Plot-src-Plot.xtl.html#l.f_unctionChart-21" class="c-libfunc">ᵖf̲unctionChart!</a> <span class="c-quote">'</span>{ i → <span class="c-number">2</span> <span class="c-number">241</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <a href="demos-activations-activations.xtl.html#xs">xs</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> i <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> ys } <a href="builtins.html#m_ap" class="c-builtin">m̲ap</a> <a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> ys }</pre>
+<div class="uses">Used in: <a href="demos-activations-activations.xtl.html#_">_</a></div>
+</div>
+<div class="item" id="u.s_lope">
+<h3><a href="#u.s_lope"><span class="c-userfunc">ᵘs̲lope</span></a> <span class="type">: (Float -&gt; Float) -&gt; Float -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="demos-activations-activations.xtl.src.html#L26">line 26</a></div>
+<div class="doc">
+<p>A slope by central differences, for the gates, of which Activations
+gives no derivative.</p>
+</div>
+<pre class="code"><span class="c-userfunc">ᵘs̲lope</span> ← { <span class="c-builtin">f̲</span> x → <span class="c-number">5000.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> (<span class="c-builtin">f̲</span> x <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">0.0001</span>) <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-builtin">f̲</span> x <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">0.0001</span> }</pre>
+<div class="uses">Used in: <a href="demos-activations-activations.xtl.html#dGated">dGated</a></div>
+</div>
+<div class="item" id="one">
+<h3><a href="#one">one</a> <span class="type">: (Float, Float)</span></h3>
+<div class="meta">value &middot; <a href="demos-activations-activations.xtl.src.html#L28">line 28</a></div>
+<div class="doc">
+<p>The gates as one-number layers, W = V = 1: x times its gate.</p>
+</div>
+<pre class="code">one ← (<span class="c-number">1</span> <span class="c-number">1</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">1.0</span>, <span class="c-number">1</span> <span class="c-number">1</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">1.0</span>)</pre>
+<div class="uses">Used in: <a href="demos-activations-activations.xtl.html#u.g_lu1"><span class="c-userfunc">ᵘg̲lu1</span></a>, <a href="demos-activations-activations.xtl.html#u.r_eglu1"><span class="c-userfunc">ᵘr̲eglu1</span></a>, <a href="demos-activations-activations.xtl.html#u.g_eglu1"><span class="c-userfunc">ᵘg̲eglu1</span></a>, <a href="demos-activations-activations.xtl.html#u.s_wiglu1"><span class="c-userfunc">ᵘs̲wiglu1</span></a></div>
+</div>
+<div class="item" id="u.g_lu1">
+<h3><a href="#u.g_lu1"><span class="c-userfunc">ᵘg̲lu1</span></a> <span class="type">: Float -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="demos-activations-activations.xtl.src.html#L29">line 29</a></div>
+<pre class="code"><span class="c-userfunc">ᵘg̲lu1</span> ← { x → <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> <a href="demos-activations-activations.xtl.html#one">one</a> <a href="libs-Activations-src-Activations.xtl.html#l.g_lu" class="c-libfunc">ᵃᶜᵗg̲lu</a> <span class="c-number">241</span> <span class="c-number">1</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> x }</pre>
+<div class="uses">Used in: <a href="demos-activations-activations.xtl.html#gated">gated</a>, <a href="demos-activations-activations.xtl.html#dGated">dGated</a></div>
+</div>
+<div class="item" id="u.r_eglu1">
+<h3><a href="#u.r_eglu1"><span class="c-userfunc">ᵘr̲eglu1</span></a> <span class="type">: Float -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="demos-activations-activations.xtl.src.html#L30">line 30</a></div>
+<pre class="code"><span class="c-userfunc">ᵘr̲eglu1</span> ← { x → <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> <a href="demos-activations-activations.xtl.html#one">one</a> <a href="libs-Activations-src-Activations.xtl.html#l.r_eglu" class="c-libfunc">ᵃᶜᵗr̲eglu</a> <span class="c-number">241</span> <span class="c-number">1</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> x }</pre>
+<div class="uses">Used in: <a href="demos-activations-activations.xtl.html#gated">gated</a>, <a href="demos-activations-activations.xtl.html#dGated">dGated</a></div>
+</div>
+<div class="item" id="u.g_eglu1">
+<h3><a href="#u.g_eglu1"><span class="c-userfunc">ᵘg̲eglu1</span></a> <span class="type">: Float -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="demos-activations-activations.xtl.src.html#L31">line 31</a></div>
+<pre class="code"><span class="c-userfunc">ᵘg̲eglu1</span> ← { x → <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> <a href="demos-activations-activations.xtl.html#one">one</a> <a href="libs-Activations-src-Activations.xtl.html#l.g_eglu" class="c-libfunc">ᵃᶜᵗg̲eglu</a> <span class="c-number">241</span> <span class="c-number">1</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> x }</pre>
+<div class="uses">Used in: <a href="demos-activations-activations.xtl.html#gated">gated</a>, <a href="demos-activations-activations.xtl.html#dGated">dGated</a></div>
+</div>
+<div class="item" id="u.s_wiglu1">
+<h3><a href="#u.s_wiglu1"><span class="c-userfunc">ᵘs̲wiglu1</span></a> <span class="type">: Float -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="demos-activations-activations.xtl.src.html#L32">line 32</a></div>
+<pre class="code"><span class="c-userfunc">ᵘs̲wiglu1</span> ← { x → <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> <a href="demos-activations-activations.xtl.html#one">one</a> <a href="libs-Activations-src-Activations.xtl.html#l.s_wiglu" class="c-libfunc">ᵃᶜᵗs̲wiglu</a> <span class="c-number">241</span> <span class="c-number">1</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> x }</pre>
+<div class="uses">Used in: <a href="demos-activations-activations.xtl.html#gated">gated</a>, <a href="demos-activations-activations.xtl.html#dGated">dGated</a></div>
+</div>
+<h2 class="section" id="section-2">Classical</h2>
+<div class="item" id="classical">
+<h3><a href="#classical">classical</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-activations-activations.xtl.src.html#L37">line 37</a></div>
+<div class="doc">
+<p>The squashing functions: sigmoid, tanh, hard sigmoid.</p>
+</div>
+<pre class="code">classical ← <span class="c-number">3</span> <span class="c-number">241</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> (<a href="libs-Activations-src-Activations.xtl.html#l.s_igmoid" class="c-libfunc">ᵃᶜᵗs̲igmoid</a> <a href="demos-activations-activations.xtl.html#xs">xs</a>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="libs-Activations-src-Activations.xtl.html#l.t_anh" class="c-libfunc">ᵃᶜᵗt̲anh</a> <a href="demos-activations-activations.xtl.html#xs">xs</a>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="libs-Activations-src-Activations.xtl.html#l.h_ardSigmoid" class="c-libfunc">ᵃᶜᵗh̲ardSigmoid</a> <a href="demos-activations-activations.xtl.html#xs">xs</a></pre>
+<div class="uses">Used in: <a href="demos-activations-activations.xtl.html#_">_</a>, <a href="demos-activations-activations.xtl.src.html#L73">demos/activations/activations.xtl:73</a></div>
+</div>
+<div class="item" id="dClassical">
+<h3><a href="#dClassical">dClassical</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-activations-activations.xtl.src.html#L38">line 38</a></div>
+<pre class="code">dClassical ← <span class="c-number">3</span> <span class="c-number">241</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> (<a href="libs-Activations-src-Activations.xtl.html#l.d_sigmoid" class="c-libfunc">ᵃᶜᵗd̲sigmoid</a> <a href="demos-activations-activations.xtl.html#xs">xs</a>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="libs-Activations-src-Activations.xtl.html#l.d_tanh" class="c-libfunc">ᵃᶜᵗd̲tanh</a> <a href="demos-activations-activations.xtl.html#xs">xs</a>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="libs-Activations-src-Activations.xtl.html#l.d_hardSigmoid" class="c-libfunc">ᵃᶜᵗd̲hardSigmoid</a> <a href="demos-activations-activations.xtl.html#xs">xs</a></pre>
+<div class="uses">Used in: <a href="demos-activations-activations.xtl.html#_">_</a>, <a href="demos-activations-activations.xtl.src.html#L74">demos/activations/activations.xtl:74</a></div>
+</div>
+<div class="item" id="_">
+<h3><a href="#_">_</a> <span class="type">: Char</span></h3>
+<div class="meta">function &middot; <a href="demos-activations-activations.xtl.src.html#L39">line 39</a></div>
+<pre class="code">_ ← (<span class="c-string">&quot;Classical&quot;</span> <span class="c-string">&quot;x&quot;</span> <span class="c-string">&quot;f(x)&quot;</span> <span class="c-string">&quot;sigmoid&quot;</span> <span class="c-string">&quot;tanh&quot;</span> <span class="c-string">&quot;hard sigmoid&quot;</span>) <a href="demos-activations-activations.xtl.html#u.c_hart" class="c-userfunc">ᵘc̲hart</a> <a href="demos-activations-activations.xtl.html#classical">classical</a></pre>
+</div>
+<div class="item" id="_">
+<h3><a href="#_">_</a> <span class="type">: Char</span></h3>
+<div class="meta">function &middot; <a href="demos-activations-activations.xtl.src.html#L40">line 40</a></div>
+<pre class="code">_ ← (<span class="c-string">&quot;Slopes&quot;</span> <span class="c-string">&quot;x&quot;</span> <span class="c-string">&quot;f'(x)&quot;</span> <span class="c-string">&quot;sigmoid&quot;</span> <span class="c-string">&quot;tanh&quot;</span> <span class="c-string">&quot;hard sigmoid&quot;</span>) <a href="demos-activations-activations.xtl.html#u.c_hart" class="c-userfunc">ᵘc̲hart</a> <a href="demos-activations-activations.xtl.html#dClassical">dClassical</a></pre>
+</div>
+<h2 class="section" id="section-3">Rectifiers</h2>
+<div class="item" id="rect">
+<h3><a href="#rect">rect</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-activations-activations.xtl.src.html#L45">line 45</a></div>
+<div class="doc">
+<p>ReLU, leaky ReLU (its slope leak), ELU (alpha), SELU.</p>
+</div>
+<pre class="code">rect ← <span class="c-number">4</span> <span class="c-number">241</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> (<a href="libs-Activations-src-Activations.xtl.html#l.r_elu" class="c-libfunc">ᵃᶜᵗr̲elu</a> <a href="demos-activations-activations.xtl.html#xs">xs</a>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="demos-activations-activations.xtl.html#leak">leak</a> <a href="libs-Activations-src-Activations.xtl.html#l.l_eaky" class="c-libfunc">ᵃᶜᵗl̲eaky</a> <a href="demos-activations-activations.xtl.html#xs">xs</a>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="demos-activations-activations.xtl.html#alpha">alpha</a> <a href="libs-Activations-src-Activations.xtl.html#l.e_lu" class="c-libfunc">ᵃᶜᵗe̲lu</a> <a href="demos-activations-activations.xtl.html#xs">xs</a>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="libs-Activations-src-Activations.xtl.html#l.s_elu" class="c-libfunc">ᵃᶜᵗs̲elu</a> <a href="demos-activations-activations.xtl.html#xs">xs</a></pre>
+<div class="uses">Used in: <a href="demos-activations-activations.xtl.html#_">_</a>, <a href="demos-activations-activations.xtl.src.html#L73">demos/activations/activations.xtl:73</a></div>
+</div>
+<div class="item" id="dRect">
+<h3><a href="#dRect">dRect</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-activations-activations.xtl.src.html#L46">line 46</a></div>
+<pre class="code">dRect ← <span class="c-number">4</span> <span class="c-number">241</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> (<a href="libs-Activations-src-Activations.xtl.html#l.d_relu" class="c-libfunc">ᵃᶜᵗd̲relu</a> <a href="demos-activations-activations.xtl.html#xs">xs</a>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="demos-activations-activations.xtl.html#leak">leak</a> <a href="libs-Activations-src-Activations.xtl.html#l.d_leaky" class="c-libfunc">ᵃᶜᵗd̲leaky</a> <a href="demos-activations-activations.xtl.html#xs">xs</a>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="demos-activations-activations.xtl.html#alpha">alpha</a> <a href="libs-Activations-src-Activations.xtl.html#l.d_elu" class="c-libfunc">ᵃᶜᵗd̲elu</a> <a href="demos-activations-activations.xtl.html#xs">xs</a>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="libs-Activations-src-Activations.xtl.html#l.d_selu" class="c-libfunc">ᵃᶜᵗd̲selu</a> <a href="demos-activations-activations.xtl.html#xs">xs</a></pre>
+<div class="uses">Used in: <a href="demos-activations-activations.xtl.html#_">_</a>, <a href="demos-activations-activations.xtl.src.html#L74">demos/activations/activations.xtl:74</a></div>
+</div>
+<div class="item" id="_">
+<h3><a href="#_">_</a> <span class="type">: Char</span></h3>
+<div class="meta">function &middot; <a href="demos-activations-activations.xtl.src.html#L47">line 47</a></div>
+<pre class="code">_ ← (<span class="c-string">&quot;Rectifiers&quot;</span> <span class="c-string">&quot;x&quot;</span> <span class="c-string">&quot;f(x)&quot;</span> <span class="c-string">&quot;ReLU&quot;</span> <span class="c-string">&quot;leaky ReLU&quot;</span> <span class="c-string">&quot;ELU&quot;</span> <span class="c-string">&quot;SELU&quot;</span>) <a href="demos-activations-activations.xtl.html#u.c_hart" class="c-userfunc">ᵘc̲hart</a> <a href="demos-activations-activations.xtl.html#rect">rect</a></pre>
+</div>
+<div class="item" id="_">
+<h3><a href="#_">_</a> <span class="type">: Char</span></h3>
+<div class="meta">function &middot; <a href="demos-activations-activations.xtl.src.html#L48">line 48</a></div>
+<pre class="code">_ ← (<span class="c-string">&quot;Slopes&quot;</span> <span class="c-string">&quot;x&quot;</span> <span class="c-string">&quot;f'(x)&quot;</span> <span class="c-string">&quot;ReLU&quot;</span> <span class="c-string">&quot;leaky ReLU&quot;</span> <span class="c-string">&quot;ELU&quot;</span> <span class="c-string">&quot;SELU&quot;</span>) <a href="demos-activations-activations.xtl.html#u.c_hart" class="c-userfunc">ᵘc̲hart</a> <a href="demos-activations-activations.xtl.html#dRect">dRect</a></pre>
+</div>
+<h2 class="section" id="section-4">Smooth</h2>
+<div class="item" id="smooth">
+<h3><a href="#smooth">smooth</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-activations-activations.xtl.src.html#L54">line 54</a></div>
+<div class="doc">
+<p>Softplus, SiLU, Swish (beta), GELU (the tanh form and the exact
+one), Mish, hard swish.</p>
+</div>
+<pre class="code">smooth ← <span class="c-number">7</span> <span class="c-number">241</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> (<a href="libs-Activations-src-Activations.xtl.html#l.s_oftplus" class="c-libfunc">ᵃᶜᵗs̲oftplus</a> <a href="demos-activations-activations.xtl.html#xs">xs</a>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="libs-Activations-src-Activations.xtl.html#l.s_ilu" class="c-libfunc">ᵃᶜᵗs̲ilu</a> <a href="demos-activations-activations.xtl.html#xs">xs</a>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="demos-activations-activations.xtl.html#beta">beta</a> <a href="libs-Activations-src-Activations.xtl.html#l.s_wish" class="c-libfunc">ᵃᶜᵗs̲wish</a> <a href="demos-activations-activations.xtl.html#xs">xs</a>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="libs-Activations-src-Activations.xtl.html#l.g_elu" class="c-libfunc">ᵃᶜᵗg̲elu</a> <a href="demos-activations-activations.xtl.html#xs">xs</a>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="libs-Activations-src-Activations.xtl.html#l.g_eluErf" class="c-libfunc">ᵃᶜᵗg̲eluErf</a> <a href="demos-activations-activations.xtl.html#xs">xs</a>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="libs-Activations-src-Activations.xtl.html#l.m_ish" class="c-libfunc">ᵃᶜᵗm̲ish</a> <a href="demos-activations-activations.xtl.html#xs">xs</a>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="libs-Activations-src-Activations.xtl.html#l.h_ardSwish" class="c-libfunc">ᵃᶜᵗh̲ardSwish</a> <a href="demos-activations-activations.xtl.html#xs">xs</a></pre>
+<div class="uses">Used in: <a href="demos-activations-activations.xtl.html#_">_</a>, <a href="demos-activations-activations.xtl.src.html#L73">demos/activations/activations.xtl:73</a></div>
+</div>
+<div class="item" id="dSmooth">
+<h3><a href="#dSmooth">dSmooth</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-activations-activations.xtl.src.html#L55">line 55</a></div>
+<pre class="code">dSmooth ← <span class="c-number">7</span> <span class="c-number">241</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> (<a href="libs-Activations-src-Activations.xtl.html#l.d_softplus" class="c-libfunc">ᵃᶜᵗd̲softplus</a> <a href="demos-activations-activations.xtl.html#xs">xs</a>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="libs-Activations-src-Activations.xtl.html#l.d_silu" class="c-libfunc">ᵃᶜᵗd̲silu</a> <a href="demos-activations-activations.xtl.html#xs">xs</a>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="demos-activations-activations.xtl.html#beta">beta</a> <a href="libs-Activations-src-Activations.xtl.html#l.d_swish" class="c-libfunc">ᵃᶜᵗd̲swish</a> <a href="demos-activations-activations.xtl.html#xs">xs</a>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="libs-Activations-src-Activations.xtl.html#l.d_gelu" class="c-libfunc">ᵃᶜᵗd̲gelu</a> <a href="demos-activations-activations.xtl.html#xs">xs</a>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="libs-Activations-src-Activations.xtl.html#l.d_geluErf" class="c-libfunc">ᵃᶜᵗd̲geluErf</a> <a href="demos-activations-activations.xtl.html#xs">xs</a>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="libs-Activations-src-Activations.xtl.html#l.d_mish" class="c-libfunc">ᵃᶜᵗd̲mish</a> <a href="demos-activations-activations.xtl.html#xs">xs</a>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="libs-Activations-src-Activations.xtl.html#l.d_hardSwish" class="c-libfunc">ᵃᶜᵗd̲hardSwish</a> <a href="demos-activations-activations.xtl.html#xs">xs</a></pre>
+<div class="uses">Used in: <a href="demos-activations-activations.xtl.html#_">_</a>, <a href="demos-activations-activations.xtl.src.html#L74">demos/activations/activations.xtl:74</a></div>
+</div>
+<div class="item" id="_">
+<h3><a href="#_">_</a> <span class="type">: Char</span></h3>
+<div class="meta">function &middot; <a href="demos-activations-activations.xtl.src.html#L56">line 56</a></div>
+<pre class="code">_ ← (<span class="c-string">&quot;Smooth&quot;</span> <span class="c-string">&quot;x&quot;</span> <span class="c-string">&quot;f(x)&quot;</span> <span class="c-string">&quot;softplus&quot;</span> <span class="c-string">&quot;SiLU&quot;</span> <span class="c-string">&quot;Swish&quot;</span> <span class="c-string">&quot;GELU&quot;</span> <span class="c-string">&quot;GELU (erf)&quot;</span> <span class="c-string">&quot;Mish&quot;</span> <span class="c-string">&quot;hard swish&quot;</span>) <a href="demos-activations-activations.xtl.html#u.c_hart" class="c-userfunc">ᵘc̲hart</a> <a href="demos-activations-activations.xtl.html#smooth">smooth</a></pre>
+</div>
+<div class="item" id="_">
+<h3><a href="#_">_</a> <span class="type">: Char</span></h3>
+<div class="meta">function &middot; <a href="demos-activations-activations.xtl.src.html#L57">line 57</a></div>
+<pre class="code">_ ← (<span class="c-string">&quot;Slopes&quot;</span> <span class="c-string">&quot;x&quot;</span> <span class="c-string">&quot;f'(x)&quot;</span> <span class="c-string">&quot;softplus&quot;</span> <span class="c-string">&quot;SiLU&quot;</span> <span class="c-string">&quot;Swish&quot;</span> <span class="c-string">&quot;GELU&quot;</span> <span class="c-string">&quot;GELU (erf)&quot;</span> <span class="c-string">&quot;Mish&quot;</span> <span class="c-string">&quot;hard swish&quot;</span>) <a href="demos-activations-activations.xtl.html#u.c_hart" class="c-userfunc">ᵘc̲hart</a> <a href="demos-activations-activations.xtl.html#dSmooth">dSmooth</a></pre>
+</div>
+<h2 class="section" id="section-5">Gated</h2>
+<div class="item" id="gated">
+<h3><a href="#gated">gated</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-activations-activations.xtl.src.html#L63">line 63</a></div>
+<div class="doc">
+<p>The gated layers on one number, W = V = 1: x times sigmoid, ReLU,
+GELU or SiLU of x; their slopes by central differences.</p>
+</div>
+<pre class="code">gated ← <span class="c-number">4</span> <span class="c-number">241</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> (<a href="demos-activations-activations.xtl.html#u.g_lu1" class="c-userfunc">ᵘg̲lu1</a> <a href="demos-activations-activations.xtl.html#xs">xs</a>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="demos-activations-activations.xtl.html#u.r_eglu1" class="c-userfunc">ᵘr̲eglu1</a> <a href="demos-activations-activations.xtl.html#xs">xs</a>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="demos-activations-activations.xtl.html#u.g_eglu1" class="c-userfunc">ᵘg̲eglu1</a> <a href="demos-activations-activations.xtl.html#xs">xs</a>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="demos-activations-activations.xtl.html#u.s_wiglu1" class="c-userfunc">ᵘs̲wiglu1</a> <a href="demos-activations-activations.xtl.html#xs">xs</a></pre>
+<div class="uses">Used in: <a href="demos-activations-activations.xtl.html#_">_</a>, <a href="demos-activations-activations.xtl.src.html#L73">demos/activations/activations.xtl:73</a></div>
+</div>
+<div class="item" id="dGated">
+<h3><a href="#dGated">dGated</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-activations-activations.xtl.src.html#L64">line 64</a></div>
+<pre class="code">dGated ← <span class="c-number">4</span> <span class="c-number">241</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> (<span class="c-userfunc">'</span><a href="demos-activations-activations.xtl.html#u.g_lu1" class="c-userfunc">ᵘg̲lu1</a> <a href="demos-activations-activations.xtl.html#u.s_lope" class="c-userfunc">ᵘs̲lope</a> <a href="demos-activations-activations.xtl.html#xs">xs</a>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-userfunc">'</span><a href="demos-activations-activations.xtl.html#u.r_eglu1" class="c-userfunc">ᵘr̲eglu1</a> <a href="demos-activations-activations.xtl.html#u.s_lope" class="c-userfunc">ᵘs̲lope</a> <a href="demos-activations-activations.xtl.html#xs">xs</a>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-userfunc">'</span><a href="demos-activations-activations.xtl.html#u.g_eglu1" class="c-userfunc">ᵘg̲eglu1</a> <a href="demos-activations-activations.xtl.html#u.s_lope" class="c-userfunc">ᵘs̲lope</a> <a href="demos-activations-activations.xtl.html#xs">xs</a>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-userfunc">'</span><a href="demos-activations-activations.xtl.html#u.s_wiglu1" class="c-userfunc">ᵘs̲wiglu1</a> <a href="demos-activations-activations.xtl.html#u.s_lope" class="c-userfunc">ᵘs̲lope</a> <a href="demos-activations-activations.xtl.html#xs">xs</a></pre>
+<div class="uses">Used in: <a href="demos-activations-activations.xtl.html#_">_</a>, <a href="demos-activations-activations.xtl.src.html#L74">demos/activations/activations.xtl:74</a></div>
+</div>
+<div class="item" id="_">
+<h3><a href="#_">_</a> <span class="type">: Char</span></h3>
+<div class="meta">function &middot; <a href="demos-activations-activations.xtl.src.html#L65">line 65</a></div>
+<pre class="code">_ ← (<span class="c-string">&quot;Gated (W = V = 1)&quot;</span> <span class="c-string">&quot;x&quot;</span> <span class="c-string">&quot;f(x)&quot;</span> <span class="c-string">&quot;GLU&quot;</span> <span class="c-string">&quot;ReGLU&quot;</span> <span class="c-string">&quot;GEGLU&quot;</span> <span class="c-string">&quot;SwiGLU&quot;</span>) <a href="demos-activations-activations.xtl.html#u.c_hart" class="c-userfunc">ᵘc̲hart</a> <a href="demos-activations-activations.xtl.html#gated">gated</a></pre>
+</div>
+<div class="item" id="_">
+<h3><a href="#_">_</a> <span class="type">: Char</span></h3>
+<div class="meta">function &middot; <a href="demos-activations-activations.xtl.src.html#L66">line 66</a></div>
+<pre class="code">_ ← (<span class="c-string">&quot;Slopes (by differences)&quot;</span> <span class="c-string">&quot;x&quot;</span> <span class="c-string">&quot;f'(x)&quot;</span> <span class="c-string">&quot;GLU&quot;</span> <span class="c-string">&quot;ReGLU&quot;</span> <span class="c-string">&quot;GEGLU&quot;</span> <span class="c-string">&quot;SwiGLU&quot;</span>) <a href="demos-activations-activations.xtl.html#u.c_hart" class="c-userfunc">ᵘc̲hart</a> <a href="demos-activations-activations.xtl.html#dGated">dGated</a></pre>
+</div>
+<h2 class="section" id="section-6">The ranges</h2>
+<div class="item" id="u.s_pan">
+<h3><a href="#u.s_pan"><span class="c-userfunc">ᵘs̲pan</span></a> <span class="type">: Num a =&gt; a -&gt; a</span></h3>
+<div class="meta">function &middot; <a href="demos-activations-activations.xtl.src.html#L72">line 72</a></div>
+<div class="doc">
+<p>Each family's least and greatest values over -6..6, a row a family
+(classical, rectifiers, smooth, gated); then its slopes'.</p>
+</div>
+<pre class="code"><span class="c-userfunc">ᵘs̲pan</span> ← { f → (<span class="c-builtin">'</span><a href="builtins.html#m_in" class="c-builtin">m̲in</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> f) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-builtin">'</span><a href="builtins.html#m_ax" class="c-builtin">m̲ax</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> f }</pre>
+<div class="uses">Used in: <a href="demos-activations-activations.xtl.src.html#L73">demos/activations/activations.xtl:73</a>, <a href="demos-activations-activations.xtl.src.html#L74">demos/activations/activations.xtl:74</a></div>
+</div>
+</main>
+</body>
+</html>
