@@ -1,8 +1,9 @@
 number = 19
 slug = "preference"
-status = "in-progress"
+status = "completed"
 description = "(docs/fine-tune-moe-demo-plan.md, step 12, optional; L1475-1490, L2023-2046) ..."
 role = "production"
 context_files = []
 created_at = "2026-11-01T15:15:40"
-commits = []
+completed_at = "2026-11-21T06:38:01"
+commits = ["e72f5acb50469a8abb4c44737db5fddb3a31afe8"]
