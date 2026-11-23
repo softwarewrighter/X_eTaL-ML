@@ -1363,6 +1363,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "xetal-assemble"
+version = "0.1.0"
+dependencies = [
+ "xetal-array",
+ "xetal-base",
+ "xetal-value",
+]
+
+[[package]]
 name = "xetal-ast"
 version = "0.1.0"
 dependencies = [
@@ -1533,6 +1542,7 @@ dependencies = [
 name = "xetal-frame"
 version = "0.1.0"
 dependencies = [
+ "xetal-arith",
  "xetal-array",
  "xetal-base",
  "xetal-core",
@@ -1556,11 +1566,13 @@ name = "xetal-hof"
 version = "0.1.0"
 dependencies = [
  "xetal-array",
+ "xetal-assemble",
  "xetal-axes",
  "xetal-base",
  "xetal-kernel",
  "xetal-map",
  "xetal-value",
+ "xetal-window",
 ]
 
 [[package]]
@@ -1780,6 +1792,7 @@ dependencies = [
  "xetal-macro",
  "xetal-notations",
  "xetal-sources",
+ "xetal-store",
  "xetal-system",
  "xetal-types",
 ]
@@ -1825,6 +1838,10 @@ dependencies = [
  "xetal-strtext",
  "xetal-syntax",
 ]
+
+[[package]]
+name = "xetal-replay"
+version = "0.1.0"
 
 [[package]]
 name = "xetal-report"
@@ -1911,6 +1928,9 @@ dependencies = [
 [[package]]
 name = "xetal-store"
 version = "0.1.0"
+dependencies = [
+ "xetal-replay",
+]
 
 [[package]]
 name = "xetal-strings"
@@ -1929,6 +1949,7 @@ name = "xetal-struct"
 version = "0.1.0"
 dependencies = [
  "xetal-array",
+ "xetal-assemble",
  "xetal-base",
  "xetal-value",
 ]
@@ -2047,6 +2068,16 @@ dependencies = [
  "xetal-core",
  "xetal-lex",
  "xetal-ty",
+]
+
+[[package]]
+name = "xetal-window"
+version = "0.1.0"
+dependencies = [
+ "xetal-array",
+ "xetal-base",
+ "xetal-kernel",
+ "xetal-value",
 ]
 
 [[package]]

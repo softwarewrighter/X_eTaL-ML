@@ -30,7 +30,7 @@ the libraries without setup.
 | `sm:g_reedy s` | `Num a => a -> Int` | each row's most likely token |
 | `t sm:p_robs s` | `Num a => a -> a -> Float` | softmax of the scores over the temperature t |
 | `k sm:t_op p` | `Int -> Float -> Float` | each row's k largest probabilities kept and renormalized, the rest 0 (ties at the k-th all kept) |
-| `u sm:d_raw p` | `(Num a, Num b, Truthy b) => a -> a -> b` | a token per row: the first whose running sum passes that row's uniform number |
+| `u sm:d_raw p` | `Num a => a -> a -> Int` | a token per row: the first whose running sum passes that row's uniform number |
 
 ## Examples
 
