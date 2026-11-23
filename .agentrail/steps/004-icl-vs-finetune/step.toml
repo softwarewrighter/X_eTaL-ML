@@ -1,0 +1,8 @@
+number = 4
+slug = "icl-vs-finetune"
+status = "pending"
+description = "(docs/plan.md Saga 7 row 3; XSkill arXiv 2603.12056) moe-finetune's toy task ..."
+role = "production"
+context_files = []
+created_at = "2026-11-22T16:20:03"
+commits = []

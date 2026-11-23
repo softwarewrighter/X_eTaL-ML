@@ -1,0 +1,8 @@
+number = 1
+slug = "xetal-repin"
+status = "pending"
+description = "(saga start, 2026-11-22) Move XETAL_COMMIT from abdd371 to X_eTaL's main (49c..."
+role = "production"
+context_files = []
+created_at = "2026-11-22T16:20:03"
+commits = []

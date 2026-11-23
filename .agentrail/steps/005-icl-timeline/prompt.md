@@ -1,0 +1,1 @@
+(docs/plan.md Saga 7 row 4) The ML timeline gains GPT-3's few-shot learning (2020), induction heads (Olsson et al., 2022), the label-flip study (Wei et al., 2023), XSkill (2026) and the circuit paper (2026-11), each with its sources row, and the new demos beside them.

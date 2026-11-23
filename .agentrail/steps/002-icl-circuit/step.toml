@@ -1,0 +1,8 @@
+number = 2
+slug = "icl-circuit"
+status = "pending"
+description = "(docs/plan.md Saga 7 row 1; arXiv 2611.05344 Section 12) A live demo of the p..."
+role = "production"
+context_files = []
+created_at = "2026-11-22T16:20:03"
+commits = []

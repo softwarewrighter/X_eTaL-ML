@@ -393,7 +393,7 @@ decision (the counts; the same pictures) whatever the chunking. A
 program here need not change for it: the batch is an input, and
 how it is cut is the schedule's.
 
-## Saga 6 -- moe-finetune  [DONE 2026-11-20, begun 2026-11-01]
+## Saga 6 -- moe-finetune  [DONE 2026-11-20, begun 2026-11-01; archived 2026-11-22]
 
 The user, 2026-11-01: demonstrate the ways of fine-tuning
 mixture-of-experts models, with new macros, libraries and demos, in
@@ -433,7 +433,7 @@ topic cited from its paper): load balancing and the router's z-loss,
 capacity and dropped tokens, upcycling, merging and pruning experts,
 distillation.
 
-## Saga 7 -- in-context learning  [PROPOSED 2026-11-17, not begun]
+## Saga 7 -- in-context learning  [ACTIVE, begun 2026-11-22; proposed 2026-11-17]
 
 The user, 2026-11-17: relate Gao and Gao, "A Circuit for In-Context
 Learning" (arXiv 2611.05344, November 2026, a preprint), and XSkill
@@ -457,10 +457,11 @@ it.
 
 | # | Step slug | Delivers |
 | - | --------- | -------- |
-| 1 | icl-circuit | a live demo of the paper's hand-built circuit (its Section 12) on the Attention library: a residual stream of named blocks (class, label, position, token type, duplicate flag, gate, slot key, query code), writers, a duplicate detector, a pooling head and readers with a sink; prompts picked or typed; knock out the writers, the duplicate detector or the gate, repeat a label or not; the readers' attention to the matching slots and to the sink, and the answer's margin; tests against the paper's numbers (the read law exact; the sink's share and the margins it reports) |
-| 2 | icl-trained | a tiny transformer (micro-gpt's size, a std-only Rust trainer, fixed seeds) trained to answer from in-context examples on the paper's synthetic task, then taken apart in X_eTaL: a slot swapped between twin prompts, the reader heads found by class-flip attribution; the gate looked for under the paper's three training mixes (its finding: it forms only when unique-label retrieval is penalized), reported as found |
-| 3 | icl-vs-finetune | moe-finetune's toy task given three ways: fine-tuned (weights change, the old kinds forgotten), adapters kept apart and switched per task (Saga 6), and a memory (XSkill's idea at toy size): the stored tokens with their labels retrieved by similarity into the context of step 2's in-context model, no weight changed; for each, the new task's accuracy, the old task's, the bytes kept and the cost a request; the scale stated (a toy's in-context learning is weaker than a large model's) |
-| 4 | icl-timeline | the ML timeline gains GPT-3's few-shot learning (2020), induction heads (Olsson et al., 2022), the label-flip study (Wei et al., 2023), XSkill (2026) and the circuit paper (2026-11), each with its sources row, and the new demos beside them |
+| 1 | xetal-repin | the saga's pins moved (X_eTaL abdd371 to its main, 49c00785, 78 commits in which the asks M4, M10, M11 and M20 landed; X_eTaL-libraries if it moved); every baseline rerun and each diff reviewed; the asks' statuses from X_eTaL's ledger; workarounds the landed asks retire dropped or named |
+| 2 | icl-circuit | a live demo of the paper's hand-built circuit (its Section 12) on the Attention library: a residual stream of named blocks (class, label, position, token type, duplicate flag, gate, slot key, query code), writers, a duplicate detector, a pooling head and readers with a sink; prompts picked or typed; knock out the writers, the duplicate detector or the gate, repeat a label or not; the readers' attention to the matching slots and to the sink, and the answer's margin; tests against the paper's numbers (the read law exact; the sink's share and the margins it reports) |
+| 3 | icl-trained | a tiny transformer (micro-gpt's size, a std-only Rust trainer, fixed seeds) trained to answer from in-context examples on the paper's synthetic task, then taken apart in X_eTaL: a slot swapped between twin prompts, the reader heads found by class-flip attribution; the gate looked for under the paper's three training mixes (its finding: it forms only when unique-label retrieval is penalized), reported as found |
+| 4 | icl-vs-finetune | moe-finetune's toy task given three ways: fine-tuned (weights change, the old kinds forgotten), adapters kept apart and switched per task (Saga 6), and a memory (XSkill's idea at toy size): the stored tokens with their labels retrieved by similarity into the context of step 3's in-context model, no weight changed; for each, the new task's accuracy, the old task's, the bytes kept and the cost a request; the scale stated (a toy's in-context learning is weaker than a large model's) |
+| 5 | icl-timeline | the ML timeline gains GPT-3's few-shot learning (2020), induction heads (Olsson et al., 2022), the label-flip study (Wei et al., 2023), XSkill (2026) and the circuit paper (2026-11), each with its sources row, and the new demos beside them |
 
 Later, beyond these: the circuit in a real model (Qwen3-0.6B, the
 smallest in the paper's census) at the command line, once X_eTaL can
