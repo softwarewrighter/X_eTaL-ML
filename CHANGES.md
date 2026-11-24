@@ -11,8 +11,13 @@ planning and reordering, `release` milestone release, `chore`
 agentrail bookkeeping (step complete, saga archive), `vendor` a
 refresh of the vendored X_eTaL.
 
+## 2026-11-23
+
+- `plan` Saga 8, muon, proposed (the user, 2026-11-23: Muon beside AdamW, a live demo, can we benefit as Kimi K2 did): docs/muon-plan.md from Jordan's post and code, Moonshot's "Muon is Scalable for LLM Training" (arXiv 2502.16982), the Kimi K2 report (arXiv 2507.20534, MuonClip and QK-Clip) and Wen et al.'s tuned benchmark (arXiv 2509.02046): the algorithm line by line, the RMS rule, the reported gains (2x by Moonshot's fits; 1.3x to 1.4x at 130M and 1.1x at 1.2B against well-tuned AdamW), the fine-tuning mismatch; six steps (Optim's `a_damW`, `o_rtho` and `m_uon` checked against Matrix's SVD, a live MLP comparison, QK-Clip in Saga 7's tiny transformer, moe-finetune's optimizer mismatch, the timeline); docs/plan.md's Saga 8 section
+
 ## 2026-11-22
 
+- `chore` saga step xetal-repin closed
 - `vendor` X_eTaL pinned at 49c00785 (from abdd371d, 78 commits; step xetal-repin) and X_eTaL-libraries at c7e812e (from 6b09aad). Every demo's baselines pass unchanged; the lockfiles take X_eTaL's new crates (xetal-assemble, xetal-replay, xetal-window). Sample's types baseline reblessed after review: `d_raw` is now `Num a => a -> a -> Int` (X_eTaL's T10, a comparison's number in a function's result is Int; every caller uses it as a token index), its reference page too. Of X_eTaL's breaking changes, data paths beside the program (QD9) touch only `[]T_ABLE` and `[]L_IST`, which nothing here uses, and `a_ssert<` (MC34) is not used. `docs` the asks M4 (the rank form, `1 'g_rade r_ank M`), M10 (`m_ix`), M11 (`m:` in a macro's text) and M20 (`n 'f n_wise v`) landed, each repro run at the pin; the workarounds still in place go to the Backlog (landed-asks); README's pin row; the plan. `just bench-check` flags moe-router (56 to 76 ms against the October 27 baseline), but the old and new binaries timed in turn give 63 ms both: the machine, not X_eTaL; the baseline is not reblessed
 - `plan` Saga 7, in-context learning, begun (the user, 2026-11-22: go): Saga 6 (moe-finetune, 19 steps) archived; the new saga's five steps, a repin first (X_eTaL is 78 commits past the pin, with the asks M4, M10, M11 and M20 landed), then icl-circuit, icl-trained, icl-vs-finetune and icl-timeline as proposed
 

@@ -472,6 +472,38 @@ not cover. The user's own check needs none of this: the paper's
 prompt batteries (its repository) on a local model place it on the
 paper's size curve.
 
+## Saga 8 -- muon  [PROPOSED 2026-11-23, not begun]
+
+The user, 2026-11-23: add Muon to the libraries and a live demo
+comparing it with AdamW (Kimi K2 trained with it to great advantage:
+can we get a benefit from it too). The plan, its sources (Jordan's
+post, Moonshot's "Muon is Scalable for LLM Training", the Kimi K2
+report, Wen et al.'s independent benchmark, AdamW's paper) and what
+they report is `docs/muon-plan.md`. In short: Muon is momentum whose
+update for each hidden weight matrix is orthogonalized (five
+Newton-Schulz steps, every singular value near 1), scaled to AdamW's
+update size and decayed as AdamW decays; embeddings, the output layer,
+biases and gains stay on AdamW. Optim has `s_gd`, `a_dam` and
+`a_damWith`, no AdamW yet. Reported gains: about 2x AdamW's compute
+efficiency (Moonshot's fits), but 1.3x to 1.4x at 130M parameters and
+1.1x at 1.2B against well-tuned AdamW (Wen et al.); nothing reported
+at this repository's sizes, so the demos measure, both optimizers
+tuned, over seeds, and say what they find; the update's singular
+values and the RMS rule show at any size.
+
+| # | Step slug | Delivers |
+| - | --------- | -------- |
+| 1 | adamw | Optim's `a_damW`, decoupled weight decay: equal to `a_dam` at no decay; the decay not divided by Adam's denominator as L2 in the gradient is (a check showing the difference); doc examples; the bowl demo with decay |
+| 2 | muon-lib | Optim's `o_rtho` (Newton-Schulz: Frobenius normalization, the tall side transposed, five quintic steps with Jordan's coefficients) and `m_uon` (Nesterov momentum, orthogonalize, Jordan's or Moonshot's scale, decoupled decay), `s_vdEntropy`; X_eTaL-libraries' Matrix linked (its `s_vd`); checks: the singular values in Jordan's band after five steps, the convergent coefficients reaching Matrix's U V' to 1e-6, an orthogonal update's RMS sqrt(1/max(A, B)) exactly and 0.2 after scaling, a step by hand, the FLOP count |
+| 3 | muon-vs-adamw | a live demo: an MLP on cnn-backprop's digits (784-64-64-10) trained in X_eTaL in the page with AdamW, Muon (hidden matrices; output and biases on AdamW) and Muon on everything (the wrong split), each at its swept learning rate; loss curves over seeds, the update's singular values side by side, the weights' SVD entropy, steps to a target loss, milliseconds a step; reported as found |
+| 4 | muon-attention | Saga 7's tiny transformer (icl-trained) with AdamW, Muon and MuonClip (Kimi K2's QK-Clip: a head whose largest logit passes tau has its query and key weights scaled by sqrt(tau / max), tau low for a toy): each head's largest logit over training, the heads clipped, the loss; whether the logits grow at this size reported either way |
+| 5 | muon-mismatch | moe-finetune's base trained with AdamW and with Muon, each fine-tuned with each: Moonshot's two-by-two table (same optimizer best, switching no help) at toy size, the old and new tasks; the router's and experts' SVD entropy; optional, Muon on LoRA's factors |
+| 6 | muon-timeline | the ML timeline gains AdamW (2017), Muon (2024), Moonlight (2025), Kimi K2 and MuonClip (2025) and Wen et al. (2025), each with its sources row, and the new demo beside them |
+
+Order: step 4 needs Saga 7's icl-trained; steps 1 to 3 and 5 do not,
+so they can come before Saga 7's later steps if the user wants Muon
+sooner.
+
 ## Backlog
 
 Steps planned and left waiting (the user, 2026-11-01), each to go into
