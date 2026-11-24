@@ -1,0 +1,4 @@
+# Text the page shows only after X_eTaL has run (scripts/browser-check.sh).
+Where the readers look
+On the sink 0.668
+The answer should be

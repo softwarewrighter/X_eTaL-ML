@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>In-Context Learning Circuit</title>
+  <link data-trunk rel="rust" data-bin="icl-circuit-web" />
+  <link data-trunk rel="copy-file" href="../../../images/xetal-logo-orange.png" />
+  <link data-trunk rel="icon" href="../../../images/favicon.ico" />
+  <link data-trunk rel="css" href="../../../shared/microscope/microscope.css" />
+  <style>
+    .bars.icl { height: 150px; gap: 2px; }
+    .bars.icl .bar span { writing-mode: vertical-rl; transform: rotate(180deg); height: 44px; text-align: left; }
+    .bars.icl .bar b { font-size: .62rem; font-weight: 500; color: var(--muted); }
+    .bars.icl .bar.sink .fill { background: #868e96; }
+    .bars.icl .bar.match .fill { background: #f59f00; }
+    .bars.icl .bar.slot .fill { background: #9775fa; }
+    .bars.icl .bar.rest .fill { background: #ced4da; }
+    .bars.icl .bar.match span { color: #e8590c; font-weight: 700; }
+    table.blocks td, table.blocks th { font-size: .78rem; padding: 1px 6px; white-space: nowrap; }
+    table.blocks th:first-child { text-align: left; }
+    table.blocks tr.query td, table.blocks tr.query th { background: var(--off); font-weight: 600; }
+    .controls select { margin-left: 4px; }
+  </style>
+</head>
+<body></body>
+</html>

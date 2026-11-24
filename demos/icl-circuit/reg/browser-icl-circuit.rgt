@@ -1,0 +1,3 @@
+command = "scripts/browser-check.sh icl-circuit"
+exit_code = 0
+desc = "icl-circuit: the built page run in headless Chrome shows X_eTaL's results"

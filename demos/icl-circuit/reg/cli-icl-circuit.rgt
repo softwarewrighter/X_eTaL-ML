@@ -1,0 +1,3 @@
+command = '"$XETAL" run --seed 1 --draw "$XETAL_DRAW" icl-circuit.xtl'
+exit_code = 0
+desc = "icl-circuit: icl-circuit.xtl run by the pinned xetal CLI"

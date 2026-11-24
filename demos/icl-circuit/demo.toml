@@ -1,0 +1,11 @@
+# One demo's description: read by scripts/demos.py for the tests, the
+# README's demo list and the live catalog (pages/index.html).
+slug = "icl-circuit"            # the directory name, demos/<slug>/
+title = "In-context learning circuit"
+summary = "A prompt of demonstrations answered by three attention layers set by hand, no weight trained (Gao and Gao, 2026): writers key each label by its sentence's class, a duplicate detector and a pooling head make a gate, readers match the query and copy the label, or rest on the sink while no label has repeated. Knock out a part and see the paper's numbers move."
+concepts = ["matrix product", "softmax by row", "masks", "one-hot blocks", "tuples"]        # the X_eTaL ideas it shows
+status = "live"             # draft | live | deferred
+order = 21                  # position in the catalog (lower first)
+needs = []                   # asks in docs/xetal-asks.md it waits on or works around
+line = "Wqr := (beta * oQ u:b_lock 8) c_at_2 (n_eg alpha * 1.0 - gblock) * oG u:b_lock 1"
+why = "A reader's whole query is one matrix: the query code times beta against the slot keys, and the gate times minus alpha against the sink, both read from named blocks of the residual stream."

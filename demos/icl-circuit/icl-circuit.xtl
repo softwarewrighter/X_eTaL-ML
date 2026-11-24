@@ -1,0 +1,213 @@
+#!/usr/bin/env xetal
+## A circuit for in-context learning, built by hand (Gao and Gao, arXiv
+## 2611.05344, Section 12; reimplemented from its toy/toy_circuit.py,
+## MIT). A prompt shows demonstrations, a sentence of some class and
+## then a label, and asks for the label of a query sentence. Three
+## attention layers answer it without a weight trained: writers stamp
+## each label with its sentence's class (the slot's key), a duplicate
+## detector marks a label seen before, a pooling head gathers those
+## marks into a gate at the query, and readers match the query's class
+## against the slot keys and copy the label. The readers' one other key
+## is a sink at position 0: with no repeated label the gate stays
+## closed and the readers rest there; a repeat opens it.
+
+"nn:" u_se< "NN"
+"at:" u_se< "Attention"
+
+### The residual stream: named blocks
+# Each token's row is 174 numbers in eight blocks, at these offsets:
+# class 8, label 16, position 128, token type 4 (0 the start, 1 a
+# sentence, 2 an arrow, 3 a label), the duplicate flag 1, the gate 1,
+# the slot key 8 and the query code 8.
+oC := 0
+oV := 8
+oP := 24
+oT := 152
+oD := 156
+oG := 157
+oS := 158
+oQ := 166
+W := 174
+
+## The matrix product.
+u:m_m := { a b -> a '+ '* i_nner b }
+## `o b_lock k`: the W by k matrix reading the k numbers from offset o
+## (its transpose writes them there).
+u:b_lock := { o k -> f_loat (o_ffsets W) '= t_able o + o_ffsets k }
+## `k o_ne x`: each item of x as a row of k, 1 at its value.
+u:o_ne := { k x -> f_loat x '= t_able o_ffsets k }
+## `r r_ows Y`: Y's rows where r is true, the others zero.
+u:r_ows := { r Y -> Y * (f_loat r) 'l_eft t_able o_ffsets 2 s_elect s_hape Y }
+
+### A prompt
+## `p_rompt (classes, labels, q)`: the start token, then each
+## demonstration as three tokens (its sentence, an arrow, its label),
+## then the query's sentence of class q and an arrow; each token as
+## (type, class, label).
+u:p_rompt := { (cs, ls, q) ->
+  N := t_ally cs
+  z := (N c_at 2) r_eshape 0
+  t := 0 c_at (r_avel (N c_at 3) r_eshape 1 2 3) c_at 1 2
+  c := 0 c_at (r_avel ((N c_at 1) r_eshape cs) c_at_2 z) c_at q c_at 0
+  v := 0 c_at (r_avel z c_at_2 (N c_at 1) r_eshape ls) c_at 0 0
+  (t, c, v)
+}
+## Each token's first row: its class (a sentence), its label (a label),
+## its position and its type; the rest zero until a layer writes it.
+u:e_mbed := { (t, c, v) ->
+  n := t_ally t
+  ((8 u:o_ne ((c + 100) * t = 1) - 100) c_at_2 (16 u:o_ne ((v + 100) * t = 3) - 100) c_at_2 (128 u:o_ne o_ffsets n) c_at_2 4 u:o_ne t) c_at_2 (n c_at 18) r_eshape 0.0
+}
+
+### One head
+## `(Wq, Wk, Wv, Wo, s, B) a_ttn (X, M)`: scores s (X Wq)(X Wk)' plus B,
+## softmax by row where the mask M allows (Attention's w_eights), the
+## output A X Wv Wo; and A.
+u:a_ttn := { (Wq, Wk, Wv, Wo, s, B) (X, M) ->
+  A := M at:w_eights B + s * (X u:m_m Wq) u:m_m o_\ X u:m_m Wk
+  ((A u:m_m X u:m_m Wv) u:m_m Wo, A)
+}
+## A query that finds the token d places back: the position block read
+## d rows lower.
+u:s_hift := { d -> (oP + d) u:b_lock 128 }
+
+### The circuit
+# The constants of the paper's runs: a matching slot's logit, the
+# sink's, and how far the gate lowers the sink.
+beta := 4.0
+sink := 5.0
+alpha := 8.0
+## `(kw, kd, kp, gadd, gblock, H, ov, noise) r_un prompt`: the three
+## layers. kw, kd, kp are 1 for the writers, duplicate detector and
+## pooling head, 0 to knock one out; gadd is added to the query's gate;
+## gblock 1 takes the gate out of the readers' queries; H readers, each
+## copying its label at strength ov; a noise above 0 caps the readout
+## (the paper's gain bound). Gives (the last residual, the readers'
+## attention, each label's logit at the query).
+u:r_un := { (kw, kd, kp, gadd, gblock, H, ov, noise) (t, c, v) ->
+  n := t_ally t
+  X0 := u:e_mbed (t, c, v)
+  M := at:c_ausal n
+  Z := (n c_at n) r_eshape 0.0
+  # Layer 1, the writers: a label reads the sentence two back and
+  # writes its class into the slot key; the arrow reads the sentence
+  # one back and writes the query code.
+  (S2, _) := (u:s_hift 2, oP u:b_lock 128, oC u:b_lock 8, o_\ oS u:b_lock 8, 50.0, Z) u:a_ttn (X0, M)
+  X1 := X0 + kw * (t = 3) u:r_ows S2
+  (Q1, _) := (u:s_hift 1, oP u:b_lock 128, oC u:b_lock 8, o_\ oQ u:b_lock 8, 50.0, Z) u:a_ttn (X1, M)
+  X2 := X1 + kw * (t = 2) u:r_ows Q1
+  # Layer 1, the duplicate detector: a label looks at the earlier
+  # labels (score 20 for the same label) and the start (10); its flag
+  # is the weight on labels, near 1 for a repeat.
+  eye := f_loat (o_ffsets n) '= t_able o_ffsets n
+  Md := M * (1.0 - eye) * f_loat (o_ffsets n) 'r_ight t_able (t = 3) + t = 0
+  Wqd := (oV u:b_lock 16) c_at_2 (oT + 3) u:b_lock 1
+  Wkd := (oV u:b_lock 16) c_at_2 0.5 * oT u:b_lock 1
+  (D1, _) := (Wqd, Wkd, (oT + 3) u:b_lock 1, o_\ oD u:b_lock 1, 20.0, Z) u:a_ttn (X2, Md)
+  X3 := X2 + kd * (t = 3) u:r_ows D1
+  # Layer 2, pooling: each arrow averages the labels' flags into its
+  # gate.
+  (G1, _) := ((oT + 2) u:b_lock 1, (oT + 3) u:b_lock 1, oD u:b_lock 1, o_\ oG u:b_lock 1, 30.0, Z) u:a_ttn (X3, M)
+  last := f_loat (o_ffsets n) = n - 1
+  X4 := X3 + (kp * (t = 2) u:r_ows G1) + gadd * last '* t_able f_loat (o_ffsets W) = oG
+  # Layer 3, the readers: the query code against the slot keys (beta
+  # for a match), the gate lowering the sink (sink - alpha g); the
+  # values are the labels.
+  Wqr := (beta * oQ u:b_lock 8) c_at_2 (n_eg alpha * 1.0 - gblock) * oG u:b_lock 1
+  Wkr := (oS u:b_lock 8) c_at_2 oT u:b_lock 1
+  B := sink * f_loat (o_ffsets n) 'r_ight t_able t = 0
+  I16 := f_loat (o_ffsets 16) '= t_able o_ffsets 16
+  (O, A) := (Wqr, Wkr, ov * oV u:b_lock 16, I16, 1.0, B) u:a_ttn (X4, M)
+  l := H * (n s_elect O)
+  rho := ((noise ^ 2) + (f_loat noise > 0.0) * ('+ r_/ l * l) / 16.0) ^ 0.5
+  (X4, A, l / rho + f_loat noise = 0.0)
+}
+
+### What the readers did
+## `prompt m_argin logits`: the answer's logit less the best other
+## label's in the prompt (the answer: the label of the first
+## demonstration of the query's class).
+u:m_argin := { (cs, ls, q) l ->
+  tgt := (1 + '+ r_/ '* s_\ n_ot cs = q) s_elect ls
+  other := (0.0 < '+ r_/_1 16 u:o_ne ls) * n_ot (o_ffsets 16) = tgt
+  ((1 + tgt) s_elect l) - 'm_ax r_/ l - 1e9 * 1.0 - f_loat other
+}
+## `prompt r_ead (X, A)`: the query's attention on the sink, on the
+## slots matching its class, on the other slots; the gate; and the read
+## law's matching mass (the paper's Proposition 1),
+## n_m e^beta / (n_m e^beta + (N - n_m) + n_rest + e^(sink - alpha g)).
+u:r_ead := { (cs, ls, q) (X, A) ->
+  (t, c, _) := u:p_rompt (cs, ls, q)
+  n := t_ally t
+  a := n s_elect A
+  cl := (2 r_eshape -1) c_at -2 d_rop c
+  hit := (t = 3) * cl = q
+  g := (1 + oG) s_elect n s_elect X
+  N := f_loat t_ally cs
+  nm := f_loat '+ r_/ cs = q
+  law := (nm * e_xp beta) / (nm * e_xp beta) + (N - nm) + ((f_loat n) - N + 1.0) + e_xp sink - alpha * g
+  (f_irst a) c_at ('+ r_/ a * f_loat hit) c_at ('+ r_/ a * f_loat (t = 3) * n_ot hit) c_at g c_at law
+}
+# -- end of the core ---------------------------------------
+
+## Rounded to 4 places, for reading.
+u:r_4 := { x -> (f_loat f_loor 0.5 + 10000.0 * x) / 10000.0 }
+intact := (1.0, 1.0, 1.0, 0.0, 0.0, 1.0, 1.0, 0.0)
+
+### The paper's two prompts
+## Unique labels: six classes, one demonstration each, every label
+## different (no label repeats, so the gate stays closed).
+one := (0 1 2 3 4 5, 0 1 2 3 4 5, 0)
+## Recurring labels: three classes, two demonstrations each, a class's
+## label the same both times.
+two := (0 1 2 0 1 2, 0 1 2 0 1 2, 0)
+(X1, A1, l1) := intact u:r_un u:p_rompt one
+(X2, A2, l2) := intact u:r_un u:p_rompt two
+# The query's attention: on the sink, the matching slot(s), the other
+# slots; the gate; the read law's matching mass. Unique labels: the
+# gate closed, two thirds on the sink.
+u:r_4 one u:r_ead (X1, A1)
+# Recurring labels: the gate open (half the labels are repeats), the
+# sink nearly empty.
+u:r_4 two u:r_ead (X2, A2)
+
+### Knockouts
+## A condition's (margin, sink) on a prompt.
+u:c_ase := { (pr, cfg) ->
+  (X, A, l) := cfg u:r_un u:p_rompt pr
+  (pr u:m_argin l) c_at f_irst pr u:r_ead (X, A)
+}
+# Each row: the margin, then the sink's share. The paper (Section 12):
+# unique 0.24 and sink 0.67; with the gate added 0.73, the sink
+# emptied; recurring 0.83 and 0.02; the duplicate detector knocked out
+# 0.39 and 0.54; the gate added back 0.84; the gate kept out of the
+# readers' queries 0.39; the writers knocked out 0.00.
+u:r_4 u:c_ase (one, intact)
+u:r_4 u:c_ase (one, (1.0, 0.0, 1.0, 1.0, 0.0, 1.0, 1.0, 0.0))
+u:r_4 u:c_ase (two, intact)
+u:r_4 u:c_ase (two, (1.0, 0.0, 1.0, 0.0, 0.0, 1.0, 1.0, 0.0))
+u:r_4 u:c_ase (two, (1.0, 0.0, 1.0, 1.0, 0.0, 1.0, 1.0, 0.0))
+u:r_4 u:c_ase (two, (1.0, 0.0, 1.0, 1.0, 1.0, 1.0, 1.0, 0.0))
+u:r_4 u:c_ase (two, (0.0, 1.0, 1.0, 0.0, 0.0, 1.0, 1.0, 0.0))
+
+### The read law
+# Sixteen prompts with recurring labels, 2, 3, 4 or 6 classes and 1 to
+# 4 demonstrations each: the readers' matching mass against the law,
+# the largest difference (the paper: 1e-16, since the law is the
+# softmax the readers are built from).
+u:l_aw := { (K, m) ->
+  cs := (K * m) r_eshape o_ffsets K
+  pr := (cs, cs, 0)
+  (X, A, _) := intact u:r_un u:p_rompt pr
+  r := pr u:r_ead (X, A)
+  a_bs (2 s_elect r) - 5 s_elect r
+}
+err := '{ i -> u:l_aw (i s_elect 2 2 2 2 3 3 3 3 4 4 4 4 6 6 6 6, i s_elect 1 2 3 4 1 2 3 4 1 2 3 4 1 2 3 4) } e_ach r_ange 16
+('m_ax r_/ err) < 1e-15
+
+### More readers, each capped
+# The paper's gain bound: each reader copies at a fifth of the
+# strength and the readout is normalized against unit noise, so one
+# reader moves the margin 0.16; 1, 2, 3, 5, 8, 12 and 20 readers (the
+# paper: 0.16, 0.49, 1.25 and 2.53 for 1, 3, 8 and 20).
+u:r_4 '{ h -> f_irst u:c_ase (two, (1.0, 1.0, 1.0, 0.0, 0.0, f_loat h, 0.2, 1.0)) } e_ach 1 2 3 5 8 12 20

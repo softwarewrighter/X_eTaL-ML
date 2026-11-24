@@ -112,3 +112,4 @@ repository's own screenshots only.
 | 2026 | 9 | X_eTaL | X_eTaL's repository, created September 27, 2026 (GitHub, and its first commit) | <https://github.com/softwarewrighter/X_eTaL> |
 | 2026 | 10 | X_eTaL v0.1.0 | X_eTaL's tag v0.1.0, October 5, 2026 | <https://github.com/softwarewrighter/X_eTaL/tree/v0.1.0> |
 | 2026 | 10 | X_eTaL-ML | This repository, created October 3, 2026 (GitHub, and its first commit) | <https://github.com/softwarewrighter/X_eTaL-ML> |
+| 2026 | 11 | A circuit for in-context learning | Andrew Gao and William Gao, A Circuit for In-Context Learning, arXiv v1 2026-11-03 (its hand-built circuit in the authors' repository, toy/toy_circuit.py, MIT) | <https://arxiv.org/abs/2611.05344> |
