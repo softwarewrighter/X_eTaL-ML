@@ -1,4 +1,4 @@
-number = 3
+number = 4
 slug = "icl-trained"
 status = "pending"
 description = "(docs/plan.md Saga 7 row 2) A tiny transformer (micro-gpt's size, a std-only ..."

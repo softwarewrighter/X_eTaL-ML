@@ -87,8 +87,9 @@ pub fn run(f: usize, p: Params) -> Result<Drawn, String> {
 }
 
 /// The built-ins to draw the reader's own beside: a name, its curve and
-/// its slope as X_eTaL over xs.
-pub const BUILTINS: [(&str, &str, &str); 8] = [
+/// its slope as X_eTaL over xs (the gates as one-number layers, W = V = 1,
+/// their slopes by central differences, as the Gated family draws them).
+pub const BUILTINS: [(&str, &str, &str); 12] = [
     ("GELU", "act:g_elu xs", "act:d_gelu xs"),
     ("SiLU", "act:s_ilu xs", "act:d_silu xs"),
     ("ReLU", "act:r_elu xs", "act:d_relu xs"),
@@ -97,6 +98,10 @@ pub const BUILTINS: [(&str, &str, &str); 8] = [
     ("softplus", "act:s_oftplus xs", "act:d_softplus xs"),
     ("Mish", "act:m_ish xs", "act:d_mish xs"),
     ("hard swish", "act:h_ardSwish xs", "act:d_hardSwish xs"),
+    ("GLU", "u:g_lu1 xs", "'u:g_lu1 u:s_lope xs"),
+    ("ReGLU", "u:r_eglu1 xs", "'u:r_eglu1 u:s_lope xs"),
+    ("GEGLU", "u:g_eglu1 xs", "'u:g_eglu1 u:s_lope xs"),
+    ("SwiGLU", "u:s_wiglu1 xs", "'u:s_wiglu1 u:s_lope xs"),
 ];
 
 /// What the editor starts with.

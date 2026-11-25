@@ -27,7 +27,7 @@ From a clone of this repository (Rust, git and `just`):
 
 ```bash
 just xetal                    # fetch and build the pinned X_eTaL (once)
-just run activations          # the eight charts (as SVG files) and each family's range
+just run activations          # the nine charts (as SVG files) and each family's range
 just serve activations        # the web app at http://127.0.0.1:8435/
 just test-demo activations    # its CLI and browser baselines and the web app's tests
 ```
@@ -54,13 +54,29 @@ name ending in `_`):
 u:s_lope := { f_ x -> 5000.0 * (f_ x + 0.0001) - f_ x - 0.0001 }
 ```
 
+## The gates apart
+
+With W = V = 1 each gate is x times its gate of x, so ReGLU, GEGLU and
+SwiGLU are all about x x for x > 0 and near 0 below: from -6 to 6 they
+lie on one another. The Gated family's third chart draws GEGLU and
+SwiGLU less ReGLU (x relu(x)), where they come apart: SwiGLU, x x
+sigmoid(x), keeps a little of x x below 0 and gives a little up above
+it, a bump of at most 0.4829 (where 2 (1 + e^x) = x e^x, x about 2.22),
+about three times GEGLU's, and both are smooth at 0, where ReGLU's
+slope has a kink.
+
+```
+apart := 2 241 r_eshape ((u:g_eglu1 xs) - u:r_eglu1 xs) c_at (u:s_wiglu1 xs) - u:r_eglu1 xs
+```
+
 ## Your own
 
 The page's editor holds a function of one number x named `u:m_ine`,
 which may use any of Activations' functions (it starts as GELU's
 sigmoid approximation, `x * act:s_igmoid 1.702 * x`). Run applies it
 to the 241 x values one at a time (`e_ach`), takes its slope by
-central differences, and draws both beside a built-in of your choice.
+central differences, and draws both beside a built-in of your choice
+(one of eight activations or one of the four gates, SwiGLU among them).
 An error X_eTaL reports is placed in your text (its line counted from
 your first); a value that is not finite (an overflow, say) is said,
 with the first x where it happens, and nothing is drawn, as Plot draws

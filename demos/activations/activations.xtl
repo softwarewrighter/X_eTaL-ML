@@ -64,6 +64,12 @@ gated := 4 241 r_eshape (u:g_lu1 xs) c_at (u:r_eglu1 xs) c_at (u:g_eglu1 xs) c_a
 dGated := 4 241 r_eshape ('u:g_lu1 u:s_lope xs) c_at ('u:r_eglu1 u:s_lope xs) c_at ('u:g_eglu1 u:s_lope xs) c_at 'u:s_wiglu1 u:s_lope xs
 _ := ("Gated (W = V = 1)" "x" "f(x)" "GLU" "ReGLU" "GEGLU" "SwiGLU") u:c_hart gated
 _ := ("Slopes (by differences)" "x" "f'(x)" "GLU" "ReGLU" "GEGLU" "SwiGLU") u:c_hart dGated
+## The gates' curves lie on one another from -6 to 6 (each is about
+## x times x for x > 0); GEGLU and SwiGLU less ReGLU tell them apart:
+## x x Phi(x) and x x sigmoid(x) against x x [x > 0], a bump either
+## side of 0, SwiGLU's about three times GEGLU's.
+apart := 2 241 r_eshape ((u:g_eglu1 xs) - u:r_eglu1 xs) c_at (u:s_wiglu1 xs) - u:r_eglu1 xs
+_ := ("Less ReGLU" "x" "f(x) - x relu(x)" "GEGLU" "SwiGLU") u:c_hart apart
 
 ### The ranges
 

@@ -67,10 +67,18 @@ pub fn app() -> Html {
     let charts = match drawn.as_ref().filter(|(k, _)| *k == (*family, p)).map(|(_, r)| r.clone()) {
         None => html! { <div class="running"><span class="spinner"></span>{format!("X_eTaL is drawing the {} family in your browser\u{2026}", fam.title.to_lowercase())}</div> },
         Some(r) => match r.as_ref() {
-            Ok(d) => html! { <div class="pair">
-                { picture(&d.charts[0], &format!("{}: the functions", fam.title)) }
-                { picture(&d.charts[1], &format!("{}: their slopes", fam.title)) }
-            </div> },
+            Ok(d) => html! { <>
+                <div class="pair">
+                    { picture(&d.charts[0], &format!("{}: the functions", fam.title)) }
+                    { picture(&d.charts[1], &format!("{}: their slopes", fam.title)) }
+                </div>
+                if let Some(c) = d.charts.get(2) {
+                    <div class="pair">
+                        { picture(c, "GEGLU and SwiGLU less ReGLU") }
+                        <p class="note">{"ReGLU, GEGLU and SwiGLU lie on one another above: with W = V = 1 each is x times x times its gate, about x x for x > 0 and 0 below. Less ReGLU, x relu(x), they come apart: x x Phi(x) and x x sigmoid(x) keep a little of x x below 0 and give a little up above it. SwiGLU's bump is about three times GEGLU's (sigmoid's tails are heavier than the normal's), and both are smooth at 0, where ReGLU has a kink in its slope."}</p>
+                    </div>
+                }
+            </> },
             Err(e) => html! { <pre class="err">{ e.clone() }</pre> },
         },
     };

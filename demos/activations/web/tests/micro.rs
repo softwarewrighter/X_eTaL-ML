@@ -3,7 +3,7 @@
 //! parameters; the reader's own activation, drawn, refused, or not
 //! finite.
 
-use activations_web::micro::{placed, program, run, run_yours, xs, Params, FAMILIES, POINTS, PROGRAM, YOURS};
+use activations_web::micro::{placed, program, run, run_yours, xs, Params, BUILTINS, FAMILIES, POINTS, PROGRAM, YOURS};
 use microscope::source::rebound;
 
 fn sigmoid(x: f64) -> f64 {
@@ -20,7 +20,7 @@ fn near(got: &[f64], want: impl Fn(f64) -> f64, tol: f64, what: &str) {
 fn every_family_draws_two_charts_of_its_curves() {
     for (f, fam) in FAMILIES.iter().enumerate() {
         let d = run(f, Params::default()).unwrap_or_else(|e| panic!("{}: {e}", fam.title));
-        assert_eq!(d.charts.len(), 2, "{}", fam.title);
+        assert_eq!(d.charts.len(), if fam.title == "Gated" { 3 } else { 2 }, "{}", fam.title);
         assert!(d.charts.iter().all(|c| c.starts_with("<svg") && c.contains(fam.names[0])), "{}", fam.title);
         assert_eq!((d.ys.len(), d.ds.len()), (fam.names.len(), fam.names.len()));
         assert!(d.ys.iter().chain(&d.ds).all(|c| c.len() == POINTS && c.iter().all(|v| v.is_finite())));
@@ -123,4 +123,29 @@ fn an_errors_lines_are_counted_in_the_readers_text() {
     let err = "error[x]: bad\n  --> main.xtl:42:7\n   |\n42 | u:m_ine := { x -> }\n   |";
     assert_eq!(placed(err, 40), "error[x]: bad\n  --> main.xtl:2:7\n   |\n2 | u:m_ine := { x -> }\n   |");
     assert_eq!(placed("  --> main.xtl:3:1", 40), "  --> main.xtl:3:1", "a line before the text is left");
+}
+
+#[test]
+fn every_built_in_in_the_dropdown_runs_beside_yours() {
+    // The gates among them (the user, 2026-11-24: SwiGLU was missing).
+    assert!(BUILTINS.iter().any(|b| b.0 == "SwiGLU"));
+    for (i, b) in BUILTINS.iter().enumerate() {
+        let m = run_yours(YOURS, i).unwrap_or_else(|e| panic!("beside {}: {e}", b.0));
+        assert_eq!(m.status, "drawn", "beside {}", b.0);
+        assert_eq!(m.charts.len(), 2, "beside {}", b.0);
+        assert!(m.charts[0].contains(b.0), "beside {}: its name in the legend", b.0);
+    }
+}
+
+#[test]
+fn the_gates_come_apart_less_reglu() {
+    let g = run(3, Params::default()).unwrap();
+    assert!(g.charts[2].starts_with("<svg") && g.charts[2].contains("Less ReGLU"));
+    // SwiGLU is x x sigmoid(x); less ReGLU its bump is x x sigmoid(-|x|),
+    // greatest, 0.4829, where 2 (1 + e^x) = x e^x (x about 2.22).
+    near(&g.ys[3], |x| x * x * sigmoid(x), 1e-12, "SwiGLU, W = V = 1");
+    let bump = |c: usize| (0..POINTS).map(|i| (g.ys[c][i] - g.ys[1][i]).abs()).fold(0.0, f64::max);
+    let (ge, sw) = (bump(2), bump(3));
+    assert!((sw - 0.4829).abs() < 0.001, "SwiGLU's bump {sw}");
+    assert!((sw / ge - 3.0).abs() < 0.3, "about three times GEGLU's: {sw} / {ge}");
 }
