@@ -1,8 +1,9 @@
 number = 3
 slug = "activations-gates"
-status = "in-progress"
+status = "completed"
 description = "(the user, 2026-11-24: the activations page's 'beside' dropdown lacks SwiGLU)..."
 role = "production"
 context_files = []
 created_at = "2026-11-24T17:40:30"
-commits = []
+completed_at = "2026-11-24T18:16:46"
+commits = ["f3dafa01509ccd06b9e0a266734dd1518c25c135"]

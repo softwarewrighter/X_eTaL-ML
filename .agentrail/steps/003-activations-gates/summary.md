@@ -1,0 +1,1 @@
+activations page: the four gates (SwiGLU among them) in the Your own dropdown, a third Gated chart (GEGLU and SwiGLU less ReGLU, SwiGLU's bump 0.4829, ~3x GEGLU's); 2 new tests; CLI baseline reblessed after review (one new chart line); README, CHANGES, plan. Gate ok.
