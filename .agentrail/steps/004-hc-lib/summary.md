@@ -1,0 +1,1 @@
+libs/HC (hc:) for X_eTaL-fine-tuning's FM13: s_inkhorn and s_inkhornBack, l_ayer with b_ackTop/b_ackBottom, s_tart, g_ainProxy, a_maxGain, d_ynamic and d_ynamicBack; 22 checks (every gradient vs central differences), doc examples, depth demo, page; FM13 landed. Gate ok.
