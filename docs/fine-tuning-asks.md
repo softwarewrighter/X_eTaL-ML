@@ -10,7 +10,7 @@ Status: **landed** (in the commit named), **planned** (a step of
 `docs/plan.md` named), **not planned** (no step yet: when it would be
 judged), **declined** (with its reason).
 
-Read on 2026-11-05 at their file's state of that day.
+Read on 2026-11-05 at their file's state of that day; FM13 on 2026-11-25.
 
 | # | Status | What landed or is planned | Where |
 | - | ------ | ------------------------- | ----- |
@@ -24,6 +24,7 @@ Read on 2026-11-05 at their file's state of that day.
 | FM8 | not planned | a WeightSpace library (MeZO, evolution strategies and their variants). Judged after your Saga 4's planning step specifies it | |
 | FM9 | not planned | an Edit library (ROME, MEMIT, AlphaEdit). Judged after your Saga 5's planning step specifies it | |
 | FM10 | not planned | shared-basis adapters, in LoRA or their own library, with a family of tasks and transfer and forgetting measured. Judged after your Saga 3's planning step; `lo:s_eeded` already gives a basis from a seed | |
+| FM13 | landed (step hc-lib, 2026-11-25) | `libs/HC` (`"hc:" u_se< "HC"`), every function FM13 names in its signatures: `n hc:s_inkhorn M` and `(n, M) hc:s_inkhornBack G`; `('f, Hpre, Hpost, Hres) hc:l_ayer X` giving (the next state, m, F), `(Hpost, Hres) hc:b_ackTop (X, F, G)` giving (dXres, dF, dHres, dHpost) and `Hpre hc:b_ackBottom (X, dm)` giving (dXpre, dHpre), H_pre an S x S table (the mean over streams of H_pre X) or a list of S (H_pre X, as `hc:d_ynamic` gives it); `S hc:s_tart`; `hc:g_ainProxy Hs` and `hc:a_maxGain Hs` (Hs boxed, the first layer's first); `(alpha, phi, b) hc:d_ynamic X` giving (Hpre, Hpost, Hres) and `(alpha, phi, b) hc:d_ynamicBack (X, dHpre, dHpost, dHres)` giving (dalpha, dphi, (dbpre, dbpost, dbres), dX through the tables). One change: the block `f` takes and gives a list of N (reshape to B x D inside it; the layer cannot know D). The dynamic RMS scaling has no epsilon, as your dynamic-mixing.xtl. Checked: every gradient against central differences (1e-6 relative), a whole dynamic layer's three paths added, and your plan's gains (6.39, 13.37, 27.35; log10 1/4; (e + 3/e)^12; 1) | libs/HC/docs/README.md |
 
 FM7 to FM10 would be a saga of this repository after Saga 6, in the
 order your sagas need them (FM7, FM10, FM8, FM9), unless the user asks

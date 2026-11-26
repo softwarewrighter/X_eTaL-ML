@@ -1,0 +1,23 @@
+ok: 20 rounds from exp(2 I - 1) give rows and columns summing to 1
+ok: and 0.711 on the diagonal, 0.096 off it (mhc-plan.md)
+ok: s_inkhornBack, 5 rounds, is central differences
+ok: s_inkhornBack, 20 rounds, is central differences
+ok: the layer is Hres X + Hpost' f(mean over streams of Hpre X)
+ok: by X: dXres + dXpre is central differences
+ok: by H_pre (a table)
+ok: by H_post
+ok: by H_res
+ok: with H_pre a list, the block's input is H_pre X
+ok: by H_pre (a list)
+ok: by X, H_pre a list
+ok: H_post is 2 sigmoid, in (0, 2); H_res doubly stochastic
+ok: d_ynamicBack by alpha
+ok: by phi
+ok: by the three biases
+ok: by X, through the tables
+ok: a whole dynamic layer by X: dXres + dXpre + the tables' part
+ok: HC's proxy at 12, 24, 48 layers: 6.39, 13.37, 27.35 (mhc-plan.md)
+ok: mHC's at 48 layers: log10 of 1/4
+ok: HC's Amax gain over 12 layers is (e + 3/e)^12, both ways
+ok: mHC's is 1 both ways
+22 checks, all passed

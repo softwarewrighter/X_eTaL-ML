@@ -37,7 +37,7 @@ include!(concat!(env!("OUT_DIR"), "/catalog.rs"));
 /// them (a test requires every library to be in exactly one).
 pub const GROUPS: &[(&str, &[&str])] = &[
     ("Networks", &["NN", "Activations", "Net", "Flow", "Optim"]),
-    ("Transformers", &["Attention", "Norm", "Sample"]),
+    ("Transformers", &["Attention", "Norm", "Sample", "HC"]),
     ("Pictures and weights", &["Conv", "Quant"]),
     ("Fine-tuning", &["LoRA", "MoE"]),
     ("Classic machine learning", &["Learn", "Embed"]),

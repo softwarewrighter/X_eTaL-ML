@@ -1,0 +1,39 @@
+#!/usr/bin/env xetal
+# HC: the basics, each function on small tables. Run with "just run HC basics".
+"hc:" u_se< "HC"
+"act:" u_se< "Activations"
+## The start, HC's table (its exponential) and mHC's (20 rounds of
+## Sinkhorn-Knopp of that): 0.711 on the diagonal, 0.096 off it.
+hc:s_tart 3
+e_xp hc:s_tart 3
+20 hc:s_inkhorn e_xp hc:s_tart 4
+## Sinkhorn-Knopp's gradient, one round from a table of ones.
+(1, 2 2 r_eshape 1.0) hc:s_inkhornBack 2 2 r_eshape 1.0 0.0 0.0 0.0
+## A layer: two streams of three, the block doubles its input.
+u:t_wice := { m -> 2.0 * m }
+X := 2 3 r_eshape 1.0 2.0 3.0 4.0 5.0 6.0
+(X2, m, F) := ('u:t_wice, 2 2 r_eshape 0.5, 0.5 0.5, 2 2 r_eshape 1.0 0.0 0.0 1.0) hc:l_ayer X
+X2
+m
+F
+## Its gradients from a gradient of ones at the next state.
+(dXres, dF, dHres, dHpost) := (0.5 0.5, 2 2 r_eshape 1.0 0.0 0.0 1.0) hc:b_ackTop (X, F, 2 3 r_eshape 1.0)
+dXres
+dF
+dHres
+dHpost
+(dXpre, dHpre) := (2 2 r_eshape 0.5) hc:b_ackBottom (X, 2.0 * dF)
+dXpre
+dHpre
+## The gains of 12 layers, HC's then mHC's: the proxy, then (forward, backward).
+hc:g_ainProxy 12 r_eshape e_nclose e_xp hc:s_tart 4
+hc:g_ainProxy 12 r_eshape e_nclose 20 hc:s_inkhorn e_xp hc:s_tart 4
+hc:a_maxGain 12 r_eshape e_nclose e_xp hc:s_tart 4
+hc:a_maxGain 12 r_eshape e_nclose 20 hc:s_inkhorn e_xp hc:s_tart 4
+## Input-dependent tables at the paper's gating factor, 0.01, from the
+## Python's start (biases 0, 0 and 2 I - 1; phi a ripple).
+phi := 4 8 r_eshape 0.3 * s_in f_loat r_ange 32
+(Hpre, Hpost, Hres) := (0.01 0.01 0.01, phi, (0.0 0.0, 0.0 0.0, hc:s_tart 2)) hc:d_ynamic 2 2 r_eshape 1.0 2.0 3.0 4.0
+Hpre
+Hpost
+Hres

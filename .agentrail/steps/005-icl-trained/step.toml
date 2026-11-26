@@ -1,6 +1,6 @@
-number = 4
+number = 5
 slug = "icl-trained"
-status = "pending"
+status = "in-progress"
 description = "(docs/plan.md Saga 7 row 2) A tiny transformer (micro-gpt's size, a std-only ..."
 role = "production"
 context_files = []

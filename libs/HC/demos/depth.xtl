@@ -1,0 +1,22 @@
+#!/usr/bin/env xetal
+## The gain by depth at the start, HC against mHC: the product of L
+## copies of each H_res (HC's e^(2 I - 1), mHC's Sinkhorn-Knopp of it),
+## for L = 1, 2, 4, ..., 64. The mHC-poc Python's proxy (log10 of the
+## largest entry) and the paper's Amax gain (the largest row sum,
+## log10): HC's grows as L log10(e + 3/e), mHC's stays at 1 (its proxy
+## falls to log10 1/4, the streams averaged). Run with "just demo HC depth".
+"hc:" u_se< "HC"
+HC := e_xp hc:s_tart 4
+mHC := 20 hc:s_inkhorn HC
+Ls := 1 2 4 8 16 32 64
+## Four decimals.
+u:r_ound := { v -> (f_loat f_loor 0.5 + 10000.0 * v) / 10000.0 }
+## A row per depth: L, HC's proxy, HC's forward Amax (log10), mHC's
+## proxy, mHC's forward Amax.
+u:r_ow := { L ->
+  (fh, _) := hc:a_maxGain L r_eshape e_nclose HC
+  (fm, _) := hc:a_maxGain L r_eshape e_nclose mHC
+  u:r_ound (f_loat L) c_at (hc:g_ainProxy L r_eshape e_nclose HC) c_at ((l_og fh) / l_og 10.0) c_at (hc:g_ainProxy L r_eshape e_nclose mHC) c_at (l_og fm) / l_og 10.0
+}
+(_, rows) := (t_ally Ls) '{ (k, a) -> (k + 1, a c_at u:r_ow k s_elect Ls) } p_ower (1, 0 r_eshape 0.0)
+((t_ally Ls) c_at 5) r_eshape rows

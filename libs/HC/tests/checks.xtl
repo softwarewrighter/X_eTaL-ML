@@ -1,0 +1,118 @@
+#!/usr/bin/env xetal
+## HC's properties, checked with Check: Sinkhorn-Knopp's tables are
+## doubly stochastic; the layer is its formula written out; every
+## gradient (s_inkhornBack, b_ackTop with b_ackBottom, d_ynamicBack, and
+## a whole input-dependent layer) against central differences of a
+## probe, the sum of a fixed table T times the result; the gains at the
+## start against X_eTaL-fine-tuning's measurements (its docs/mhc-plan.md:
+## 10^6.39, 10^13.37 and 10^27.35 at 12, 24 and 48 layers for HC,
+## log10 1/4 for mHC). Arrays from a fixed ripple, the sine of a square.
+
+"hc:" u_se< "HC"
+"act:" u_se< "Activations"
+"k:" u_se< "Check"
+
+u:r_ipple := { (c, s) n -> k := f_loat r_ange n; s_in c * k * s + k }
+h := 0.000001
+## The gradient of f_ at x by central differences, every entry, in x's
+## shape.
+u:c_entral := { f_ x ->
+  n := t_ally r_avel x
+  (s_hape x) r_eshape '{ i -> e := h * f_loat (r_ange n) = i; ((f_ (s_hape x) r_eshape (r_avel x) + e) - f_ (s_hape x) r_eshape (r_avel x) - e) / 2.0 * h } e_ach r_ange n
+}
+## Near: within 1e-6 of the larger, or 1e-8.
+u:c_lose := { a b -> k:t_rue (a_bs a - b) <= 0.00000001 m_ax 0.000001 * a_bs b }
+
+### Sinkhorn-Knopp
+
+S := 3
+N := 4
+I2 := hc:s_tart 4
+D4 := 20 hc:s_inkhorn e_xp I2
+c1 := "20 rounds from exp(2 I - 1) give rows and columns summing to 1" k:t_est 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 k:n_ear ('+ r_/_2 D4) c_at '+ r_/_1 D4
+c2 := "and 0.711 on the diagonal, 0.096 off it (mhc-plan.md)" k:t_est 0.711 0.096 k:n_ear (f_loat f_loor 0.5 + 1000.0 * (1 s_elect r_avel D4) c_at 2 s_elect r_avel D4) / 1000.0
+M := 3 3 r_eshape 0.5 + a_bs (0.9, 0.0) u:r_ipple 9
+T3 := 3 3 r_eshape (1.3, 0.2) u:r_ipple 9
+u:p_5 := { A -> '+ r_/ r_avel T3 * 5 hc:s_inkhorn A }
+u:p_20 := { A -> '+ r_/ r_avel T3 * 20 hc:s_inkhorn A }
+c3 := "s_inkhornBack, 5 rounds, is central differences" k:t_est ((5, M) hc:s_inkhornBack T3) u:c_lose ('u:p_5 u:c_entral M)
+c4 := "s_inkhornBack, 20 rounds, is central differences" k:t_est ((20, M) hc:s_inkhornBack T3) u:c_lose ('u:p_20 u:c_entral M)
+
+### The static layer
+
+## A block from N to N: tanh of 0.8 times its input, item by item.
+u:b_lock := { m -> act:t_anh 0.8 * m }
+X := (S c_at N) r_eshape (0.7, 0.1) u:r_ipple S * N
+Hpre := (S c_at S) r_eshape 0.2 + a_bs (1.1, 0.3) u:r_ipple S * S
+Hpost := 0.3 0.5 0.9
+Hres := 20 hc:s_inkhorn e_xp (S c_at S) r_eshape (0.5, 0.4) u:r_ipple S * S
+T := (S c_at N) r_eshape (1.7, 0.6) u:r_ipple S * N
+(X2, m, F) := ('u:b_lock, Hpre, Hpost, Hres) hc:l_ayer X
+mean := ('+ r_/_1 Hpre '+ '* i_nner X) / f_loat S
+c5 := "the layer is Hres X + Hpost' f(mean over streams of Hpre X)" k:t_est ((Hres '+ '* i_nner X) + Hpost '* t_able u:b_lock mean) k:n_ear X2
+## The gradient of the probe by X, Hpre, Hpost and Hres.
+(dXres, dF, dHres, dHpost) := (Hpost, Hres) hc:b_ackTop (X, F, T)
+dm := dF * 0.8 * act:d_tanh 0.8 * m
+(dXpre, dHpre) := Hpre hc:b_ackBottom (X, dm)
+u:p_X := { Y -> (Z, _, _) := ('u:b_lock, Hpre, Hpost, Hres) hc:l_ayer Y; '+ r_/ r_avel T * Z }
+u:p_pre := { H -> (Z, _, _) := ('u:b_lock, H, Hpost, Hres) hc:l_ayer X; '+ r_/ r_avel T * Z }
+u:p_post := { H -> (Z, _, _) := ('u:b_lock, Hpre, H, Hres) hc:l_ayer X; '+ r_/ r_avel T * Z }
+u:p_res := { H -> (Z, _, _) := ('u:b_lock, Hpre, Hpost, H) hc:l_ayer X; '+ r_/ r_avel T * Z }
+c6 := "by X: dXres + dXpre is central differences" k:t_est (dXres + dXpre) u:c_lose ('u:p_X u:c_entral X)
+c7 := "by H_pre (a table)" k:t_est dHpre u:c_lose ('u:p_pre u:c_entral Hpre)
+c8 := "by H_post" k:t_est dHpost u:c_lose ('u:p_post u:c_entral Hpost)
+c9 := "by H_res" k:t_est dHres u:c_lose ('u:p_res u:c_entral Hres)
+## H_pre as a list of S (the paper's eq. 3): the block's input H_pre X.
+hv := 0.6 0.3 0.8
+(Xv, mv, Fv) := ('u:b_lock, hv, Hpost, Hres) hc:l_ayer X
+c10 := "with H_pre a list, the block's input is H_pre X" k:t_est (hv '+ '* i_nner X) k:n_ear mv
+(dXrv, dFv, _, _) := (Hpost, Hres) hc:b_ackTop (X, Fv, T)
+(dXpv, dhv) := hv hc:b_ackBottom (X, dFv * 0.8 * act:d_tanh 0.8 * mv)
+u:p_v := { H -> (Z, _, _) := ('u:b_lock, H, Hpost, Hres) hc:l_ayer X; '+ r_/ r_avel T * Z }
+u:p_vX := { Y -> (Z, _, _) := ('u:b_lock, hv, Hpost, Hres) hc:l_ayer Y; '+ r_/ r_avel T * Z }
+c11 := "by H_pre (a list)" k:t_est dhv u:c_lose ('u:p_v u:c_entral hv)
+c12 := "by X, H_pre a list" k:t_est (dXrv + dXpv) u:c_lose ('u:p_vX u:c_entral X)
+
+### The input-dependent tables
+
+C := 2
+Xd := (S c_at C) r_eshape (0.9, 0.2) u:r_ipple S * C
+alpha := 0.3 0.4 0.5
+phi := ((S * C) c_at (2 * S) + S * S) r_eshape 0.5 * (0.53, 0.1) u:r_ipple (S * C) * (2 * S) + S * S
+b := (0.1 0.0 -0.1, 0.0 0.2 0.1, hc:s_tart S)
+(Tp, Tq, Tr) := ((0.9, 0.0) u:r_ipple S, (0.4, 0.3) u:r_ipple S, (S c_at S) r_eshape (1.9, 0.5) u:r_ipple S * S)
+u:p_d := { (al, ph, bb) Y -> (P, Q, R) := (al, ph, bb) hc:d_ynamic Y; ('+ r_/ Tp * P) + ('+ r_/ Tq * Q) + '+ r_/ r_avel Tr * R }
+(da, dphi, (dbp, dbq, dbr), dXd) := (alpha, phi, b) hc:d_ynamicBack (Xd, Tp, Tq, Tr)
+(Pd, Qd, Rd) := (alpha, phi, b) hc:d_ynamic Xd
+c13 := "H_post is 2 sigmoid, in (0, 2); H_res doubly stochastic" k:t_est k:t_rue ((Qd > 0.0) & Qd < 2.0) c_at 0.000001 > a_bs 1.0 - ('+ r_/_2 Rd) c_at '+ r_/_1 Rd
+u:p_a := { al -> (al, phi, b) u:p_d Xd }
+u:p_phi := { ph -> (alpha, ph, b) u:p_d Xd }
+u:p_bp := { v -> (bp, bq, br) := b; (alpha, phi, (v, bq, br)) u:p_d Xd }
+u:p_bq := { v -> (bp, bq, br) := b; (alpha, phi, (bp, v, br)) u:p_d Xd }
+u:p_br := { v -> (bp, bq, br) := b; (alpha, phi, (bp, bq, v)) u:p_d Xd }
+u:p_dX := { Y -> (alpha, phi, b) u:p_d Y }
+(bp0, bq0, br0) := b
+c14 := "d_ynamicBack by alpha" k:t_est da u:c_lose ('u:p_a u:c_entral alpha)
+c15 := "by phi" k:t_est dphi u:c_lose ('u:p_phi u:c_entral phi)
+c16 := "by the three biases" k:t_est (dbp c_at dbq c_at r_avel dbr) u:c_lose ('u:p_bp u:c_entral bp0) c_at ('u:p_bq u:c_entral bq0) c_at r_avel 'u:p_br u:c_entral br0
+c17 := "by X, through the tables" k:t_est dXd u:c_lose ('u:p_dX u:c_entral Xd)
+## A whole input-dependent layer: X makes its tables, then the layer;
+## the gradient by X is the layer's two paths plus the tables'.
+u:w_hole := { Y -> (P, Q, R) := (alpha, phi, b) hc:d_ynamic Y; (Z, _, _) := ('u:b_lock, P, Q, R) hc:l_ayer Y; '+ r_/ r_avel ((S c_at C) r_eshape (0.3, 0.7) u:r_ipple S * C) * Z }
+Tw := (S c_at C) r_eshape (0.3, 0.7) u:r_ipple S * C
+(Zw, mw, Fw) := ('u:b_lock, Pd, Qd, Rd) hc:l_ayer Xd
+(dXw, dFw, dRw, dQw) := (Qd, Rd) hc:b_ackTop (Xd, Fw, Tw)
+(dXpw, dPw) := Pd hc:b_ackBottom (Xd, dFw * 0.8 * act:d_tanh 0.8 * mw)
+(_, _, _, dXtw) := (alpha, phi, b) hc:d_ynamicBack (Xd, dPw, dQw, dRw)
+c18 := "a whole dynamic layer by X: dXres + dXpre + the tables' part" k:t_est (dXw + dXpw + dXtw) u:c_lose ('u:w_hole u:c_entral Xd)
+
+### The gains at the start
+
+HC := e_xp I2
+c19 := "HC's proxy at 12, 24, 48 layers: 6.39, 13.37, 27.35 (mhc-plan.md)" k:t_est 6.39 13.37 27.35 k:n_ear '{ L -> (f_loat f_loor 0.5 + 100.0 * hc:g_ainProxy L r_eshape e_nclose HC) / 100.0 } e_ach 12 24 48
+c20 := "mHC's at 48 layers: log10 of 1/4" k:t_est (hc:g_ainProxy 48 r_eshape e_nclose D4) u:c_lose (l_og 0.25) / l_og 10.0
+(fw, bw) := hc:a_maxGain 12 r_eshape e_nclose HC
+c21 := "HC's Amax gain over 12 layers is (e + 3/e)^12, both ways" k:t_est (fw c_at bw) u:c_lose 2 r_eshape ((e_xp 1.0) + 3.0 / e_xp 1.0) ^ 12.0
+(fm, bm) := hc:a_maxGain 48 r_eshape e_nclose D4
+c22 := "mHC's is 1 both ways" k:t_est 1.0 1.0 k:n_ear (f_loat f_loor 0.5 + 1000000.0 * fm c_at bm) / 1000000.0
+k:r_eport c1 k:a_nd c2 k:a_nd c3 k:a_nd c4 k:a_nd c5 k:a_nd c6 k:a_nd c7 k:a_nd c8 k:a_nd c9 k:a_nd c10 k:a_nd c11 k:a_nd c12 k:a_nd c13 k:a_nd c14 k:a_nd c15 k:a_nd c16 k:a_nd c17 k:a_nd c18 k:a_nd c19 k:a_nd c20 k:a_nd c21 k:a_nd c22

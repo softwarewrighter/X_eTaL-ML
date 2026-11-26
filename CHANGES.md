@@ -11,6 +11,12 @@ planning and reordering, `release` milestone release, `chore`
 agentrail bookkeeping (step complete, saga archive), `vendor` a
 refresh of the vendored X_eTaL.
 
+## 2026-11-25
+
+- `chore` saga step hc-lib closed
+- `lib` HC, a new library (`hc:`, step hc-lib, inserted; X_eTaL-fine-tuning's ask FM13, a blocker for its step dynamic-training): Hyper-Connections and mHC (Zhu et al., arXiv 2409.19606; Xie et al., arXiv 2512.24880) with FM13's signatures: Sinkhorn-Knopp `n hc:s_inkhorn M` and its gradient `hc:s_inkhornBack`, the layer `('f, Hpre, Hpost, Hres) hc:l_ayer X` and its backward halves `hc:b_ackTop`, `hc:b_ackBottom` (H_pre a table or a list), the start `hc:s_tart`, the gains `hc:g_ainProxy` and `hc:a_maxGain`, the input-dependent tables `hc:d_ynamic` and `hc:d_ynamicBack`; the block takes and gives a list of N (the one change from the ask). `test` 22 checks (every gradient against central differences to 1e-6, a whole dynamic layer's three paths added, the gains at the start against X_eTaL-fine-tuning's mhc-plan.md), 13 doc examples, basics, a depth demo (HC's gain growing 0.58 in log10 a layer, mHC's at 1), pinned types. `docs` the library page, README's row, the site's Transformers group, docs/fine-tuning-asks.md (FM13 landed), the plan (Saga 7 row 4 inserted, the rest renumbered; the library table). `chore` the CHANGES line for activations-gates' closing commit, missed then
+- `chore` saga step activations-gates closed
+
 ## 2026-11-24
 
 - `demo` activations: the gates in the Your own panel and apart (step activations-gates, inserted; the user: the "beside" dropdown had no SwiGLU): the dropdown gains GLU, ReGLU, GEGLU and SwiGLU (one-number layers, W = V = 1, slopes by central differences, as the Gated family draws them); the Gated family gains a third chart, GEGLU and SwiGLU less ReGLU, since the three lie on one another from -6 to 6 (SwiGLU's bump at most 0.4829, about three times GEGLU's, both smooth at 0). `test` every dropdown choice draws beside yours, the bump against its closed form; the CLI baseline gains the ninth chart, reblessed after review. `docs` the demo's README (The gates apart), the plan (Saga 7 row 3 inserted, the rest renumbered). `chore` the CHANGES line for icl-circuit's closing commit, missed then

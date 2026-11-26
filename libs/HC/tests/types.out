@@ -1,0 +1,10 @@
+l:s_inkhorn : Int -> Float -> Float
+l:s_inkhornBack : (Int, Float) -> Float -> Float
+l:l_ayer : (Float -> Float, Float, Float, Float) -> Float -> (Float, Float, Float)
+l:b_ackTop : Num a => (a, a) -> (a, a, a) -> (a, a, a, a)
+l:b_ackBottom : Float -> (Float, Float) -> (Float, Float)
+l:s_tart : Int -> Float
+l:g_ainProxy : Box Float -> Float
+l:a_maxGain : Box Float -> (Float, Float)
+l:d_ynamic : (Float, Float, (Float, Float, Float)) -> Float -> (Float, Float, Float)
+l:d_ynamicBack : (Float, Float, (Float, Float, Float)) -> (Float, Float, Float, Float) -> (Float, Float, (Float, Float, Float), Float)
