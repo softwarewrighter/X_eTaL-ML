@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>In-Context Learning, Trained</title>
+  
+<script type="module">
+import init, * as bindings from '/X_eTaL-ML/icl-trained/icl-trained-web-3951e7ebace26200.js';
+const wasm = await init({ module_or_path: '/X_eTaL-ML/icl-trained/icl-trained-web-3951e7ebace26200_bg.wasm' });
+
+
+window.wasmBindings = bindings;
+
+
+dispatchEvent(new CustomEvent("TrunkApplicationStarted", {detail: {wasm}}));
+
+</script>
+  
+  <link rel="icon" href="/X_eTaL-ML/icl-trained/favicon-a11bc0a2bcd81290.ico" integrity="sha384-xOjSLs9ZRBKy2hF6zlqNv+0U86E4BqZOJy7H7a4GXSVwDQMNie0D851/sRBSYI9a"/>
+  <link rel="stylesheet" href="/X_eTaL-ML/icl-trained/microscope-22257fd62318e7bf.css" integrity="sha384-HhCElH/+Dn/dCD6BMktfya0hcEUbJTzOz+U+aDZwhSMfcwqIb3L1cSWYSUVqWKI9"/>
+  <style>
+    .bars.icl { height: 150px; gap: 2px; }
+    .bars.icl .bar span { writing-mode: vertical-rl; transform: rotate(180deg); height: 44px; text-align: left; font-size: .7rem; }
+    .bars.icl .bar b { font-size: .62rem; font-weight: 500; color: var(--muted); }
+    .bars.icl .bar.match .fill { background: #f59f00; }
+    .bars.icl .bar.slot .fill { background: #9775fa; }
+    .bars.icl .bar.rest .fill { background: #ced4da; }
+    .bars.icl .bar.match span { color: #e8590c; font-weight: 700; }
+    .prompt { font-family: var(--mono, monospace); font-size: .85rem; line-height: 1.9; }
+    .prompt .demo { margin-right: .9em; white-space: nowrap; }
+    .prompt .cls { display: inline-block; min-width: 1.2em; text-align: center; border-radius: 3px; color: #fff; font-size: .7rem; padding: 0 3px; margin-right: 2px; }
+    .prompt .lab { font-weight: 700; }
+    .prompt .lab.answer { color: #e8590c; }
+    table.heads td { width: 4.2em; text-align: center; font-size: .8rem; }
+    table.zs td, table.zs th { font-size: .78rem; padding: 2px 6px; }
+    .controls select { margin-left: 4px; }
+    svg.curve { width: 100%; height: auto; background: #fff; border: 1px solid var(--line, #dee2e6); }
+  </style>
+<link rel="modulepreload" href="/X_eTaL-ML/icl-trained/icl-trained-web-3951e7ebace26200.js" crossorigin="anonymous" integrity="sha384-7l/mVgLEQdajzImSrNcT8pndm40M2jJ/bULdBHkBHEa3gQxPsCruzjZ3RZ6mD6O6"><link rel="preload" href="/X_eTaL-ML/icl-trained/icl-trained-web-3951e7ebace26200_bg.wasm" crossorigin="anonymous" integrity="sha384-ya9+TgA5XvDCCY+/WchaMm3heHQ+ccwxBnBwIJAukc2DcDu4nO64BhbSfWn8P1e5" as="fetch" type="application/wasm"></head>
+<body></body>
+</html>

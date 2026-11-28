@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>libs/HC/src/HC.xtl - X_eTaL doc</title>
+<link rel="stylesheet" href="style.css">
+<script src="theme.js"></script>
+<script defer src="search-index.js"></script>
+<script defer src="search.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.18.10/dist/katex.min.css" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.18.10/dist/katex.min.js" crossorigin="anonymous"></script>
+<script>document.addEventListener('DOMContentLoaded', function () {
+if (typeof katex === 'undefined') return;
+document.querySelectorAll('.c-notation').forEach(function (el) {
+var tex = el.textContent; if (!tex) return;
+try { katex.render(tex, el, { throwOnError: false }); } catch (e) { el.textContent = tex; }
+});
+});</script>
+</head>
+<body>
+<nav class="side">
+<a class="home" href="index.html">X_eTaL doc</a>
+<input id="search" type="search" autocomplete="off" placeholder="Search: a name, or a type" title="A name (mean finds m_ean), or a type: Num a =&gt; a -&gt; a -&gt; a finds +, m_ax ...">
+<h2>Files</h2>
+<h3>demos/activations/</h3>
+<ul>
+<li><a href="demos-activations-activations.xtl.html">activations.xtl</a></li>
+</ul>
+<h3>demos/attention/</h3>
+<ul>
+<li><a href="demos-attention-attention.xtl.html">attention.xtl</a></li>
+</ul>
+<h3>demos/backprop/</h3>
+<ul>
+<li><a href="demos-backprop-backprop.xtl.html">backprop.xtl</a></li>
+</ul>
+<h3>demos/cnn-backprop/</h3>
+<ul>
+<li><a href="demos-cnn-backprop-cnn-backprop.xtl.html">cnn-backprop.xtl</a></li>
+</ul>
+<h3>demos/cnn-digits/</h3>
+<ul>
+<li><a href="demos-cnn-digits-batch.xtl.html">batch.xtl</a></li>
+<li><a href="demos-cnn-digits-cnn-digits.xtl.html">cnn-digits.xtl</a></li>
+</ul>
+<h3>demos/diffusion/</h3>
+<ul>
+<li><a href="demos-diffusion-diffusion.xtl.html">diffusion.xtl</a></li>
+</ul>
+<h3>demos/embedding-explorer/</h3>
+<ul>
+<li><a href="demos-embedding-explorer-embedding-explorer.xtl.html">embedding-explorer.xtl</a></li>
+</ul>
+<h3>demos/icl-circuit/</h3>
+<ul>
+<li><a href="demos-icl-circuit-icl-circuit.xtl.html">icl-circuit.xtl</a></li>
+</ul>
+<h3>demos/icl-trained/</h3>
+<ul>
+<li><a href="demos-icl-trained-icl-trained.xtl.html">icl-trained.xtl</a></li>
+</ul>
+<h3>demos/k-means/</h3>
+<ul>
+<li><a href="demos-k-means-k-means.xtl.html">k-means.xtl</a></li>
+</ul>
+<h3>demos/lora-explorer/</h3>
+<ul>
+<li><a href="demos-lora-explorer-lora-explorer.xtl.html">lora-explorer.xtl</a></li>
+</ul>
+<h3>demos/micro-bert/</h3>
+<ul>
+<li><a href="demos-micro-bert-micro-bert.xtl.html">micro-bert.xtl</a></li>
+</ul>
+<h3>demos/micro-gpt/</h3>
+<ul>
+<li><a href="demos-micro-gpt-batch.xtl.html">batch.xtl</a></li>
+<li><a href="demos-micro-gpt-micro-gpt.xtl.html">micro-gpt.xtl</a></li>
+</ul>
+<h3>demos/moe-finetune/</h3>
+<ul>
+<li><a href="demos-moe-finetune-base.xtl.html">base.xtl</a></li>
+<li><a href="demos-moe-finetune-moe-finetune.xtl.html">moe-finetune.xtl</a></li>
+</ul>
+<h3>demos/moe-router/</h3>
+<ul>
+<li><a href="demos-moe-router-moe-router.xtl.html">moe-router.xtl</a></li>
+</ul>
+<h3>demos/net-macro/</h3>
+<ul>
+<li><a href="demos-net-macro-net-macro.xtl.html">net-macro.xtl</a></li>
+<li><a href="demos-net-macro-train-it.xtl.html">train-it.xtl</a></li>
+</ul>
+<h3>demos/pipelines/</h3>
+<ul>
+<li><a href="demos-pipelines-diffusion.xtl.html">diffusion.xtl</a></li>
+<li><a href="demos-pipelines-equations.xtl.html">equations.xtl</a></li>
+<li><a href="demos-pipelines-pipelines.xtl.html">pipelines.xtl</a></li>
+<li><a href="demos-pipelines-rosetta.xtl.html">rosetta.xtl</a></li>
+</ul>
+<h3>demos/ternary-net/</h3>
+<ul>
+<li><a href="demos-ternary-net-ternary-net.xtl.html">ternary-net.xtl</a></li>
+</ul>
+<h3>demos/train-live/</h3>
+<ul>
+<li><a href="demos-train-live-train-live.xtl.html">train-live.xtl</a></li>
+</ul>
+<h3>demos/world-model/</h3>
+<ul>
+<li><a href="demos-world-model-world-model.xtl.html">world-model.xtl</a></li>
+</ul>
+<h3>libs/Activations/demos/</h3>
+<ul>
+<li><a href="libs-Activations-demos-curves.xtl.html">curves.xtl</a></li>
+</ul>
+<h3>libs/Activations/src/</h3>
+<ul>
+<li><a href="libs-Activations-src-Activations.xtl.html">Activations.xtl</a></li>
+</ul>
+<h3>libs/Attention/demos/</h3>
+<ul>
+<li><a href="libs-Attention-demos-previous.xtl.html">previous.xtl</a></li>
+</ul>
+<h3>libs/Attention/src/</h3>
+<ul>
+<li><a href="libs-Attention-src-Attention.xtl.html">Attention.xtl</a></li>
+</ul>
+<h3>libs/Conv/demos/</h3>
+<ul>
+<li><a href="libs-Conv-demos-edges.xtl.html">edges.xtl</a></li>
+</ul>
+<h3>libs/Conv/src/</h3>
+<ul>
+<li><a href="libs-Conv-src-Conv.xtl.html">Conv.xtl</a></li>
+</ul>
+<h3>libs/Embed/demos/</h3>
+<ul>
+<li><a href="libs-Embed-demos-pets.xtl.html">pets.xtl</a></li>
+</ul>
+<h3>libs/Embed/src/</h3>
+<ul>
+<li><a href="libs-Embed-src-Embed.xtl.html">Embed.xtl</a></li>
+</ul>
+<h3>libs/Flow/demos/</h3>
+<ul>
+<li><a href="libs-Flow-demos-mlp.xtl.html">mlp.xtl</a></li>
+</ul>
+<h3>libs/Flow/src/</h3>
+<ul>
+<li><a href="libs-Flow-src-Flow.xtlm.html">Flow.xtlm</a></li>
+</ul>
+<h3>libs/HC/demos/</h3>
+<ul>
+<li><a href="libs-HC-demos-depth.xtl.html">depth.xtl</a></li>
+</ul>
+<h3>libs/HC/src/</h3>
+<ul>
+<li><a href="libs-HC-src-HC.xtl.html">HC.xtl</a></li>
+</ul>
+<h3>libs/Integrals/demos/</h3>
+<ul>
+<li><a href="libs-Integrals-demos-convolution.xtl.html">convolution.xtl</a></li>
+<li><a href="libs-Integrals-demos-gelu.xtl.html">gelu.xtl</a></li>
+</ul>
+<h3>libs/Integrals/src/</h3>
+<ul>
+<li><a href="libs-Integrals-src-Integrals.xtlm.html">Integrals.xtlm</a></li>
+</ul>
+<h3>libs/Learn/demos/</h3>
+<ul>
+<li><a href="libs-Learn-demos-blobs.xtl.html">blobs.xtl</a></li>
+</ul>
+<h3>libs/Learn/src/</h3>
+<ul>
+<li><a href="libs-Learn-src-Learn.xtl.html">Learn.xtl</a></li>
+</ul>
+<h3>libs/LoRA/demos/</h3>
+<ul>
+<li><a href="libs-LoRA-demos-sizes.xtl.html">sizes.xtl</a></li>
+</ul>
+<h3>libs/LoRA/src/</h3>
+<ul>
+<li><a href="libs-LoRA-src-LoRA.xtl.html">LoRA.xtl</a></li>
+<li><a href="libs-LoRA-src-LoRA.xtlm.html">LoRA.xtlm</a></li>
+</ul>
+<h3>libs/MoE/demos/</h3>
+<ul>
+<li><a href="libs-MoE-demos-routing.xtl.html">routing.xtl</a></li>
+</ul>
+<h3>libs/MoE/src/</h3>
+<ul>
+<li><a href="libs-MoE-src-MoE.xtl.html">MoE.xtl</a></li>
+</ul>
+<h3>libs/Net/demos/</h3>
+<ul>
+<li><a href="libs-Net-demos-train-xor.xtl.html">train-xor.xtl</a></li>
+<li><a href="libs-Net-demos-xor.xtl.html">xor.xtl</a></li>
+</ul>
+<h3>libs/Net/src/</h3>
+<ul>
+<li><a href="libs-Net-src-Net.xtlm.html">Net.xtlm</a></li>
+</ul>
+<h3>libs/NN/demos/</h3>
+<ul>
+<li><a href="libs-NN-demos-xor.xtl.html">xor.xtl</a></li>
+</ul>
+<h3>libs/NN/src/</h3>
+<ul>
+<li><a href="libs-NN-src-NN.xtl.html">NN.xtl</a></li>
+</ul>
+<h3>libs/Norm/demos/</h3>
+<ul>
+<li><a href="libs-Norm-demos-rows.xtl.html">rows.xtl</a></li>
+</ul>
+<h3>libs/Norm/src/</h3>
+<ul>
+<li><a href="libs-Norm-src-Norm.xtl.html">Norm.xtl</a></li>
+</ul>
+<h3>libs/Optim/demos/</h3>
+<ul>
+<li><a href="libs-Optim-demos-bowl.xtl.html">bowl.xtl</a></li>
+</ul>
+<h3>libs/Optim/src/</h3>
+<ul>
+<li><a href="libs-Optim-src-Optim.xtl.html">Optim.xtl</a></li>
+</ul>
+<h3>libs/Quant/demos/</h3>
+<ul>
+<li><a href="libs-Quant-demos-formats.xtl.html">formats.xtl</a></li>
+</ul>
+<h3>libs/Quant/src/</h3>
+<ul>
+<li><a href="libs-Quant-src-Quant.xtl.html">Quant.xtl</a></li>
+</ul>
+<h3>libs/Sample/demos/</h3>
+<ul>
+<li><a href="libs-Sample-demos-next.xtl.html">next.xtl</a></li>
+</ul>
+<h3>libs/Sample/src/</h3>
+<ul>
+<li><a href="libs-Sample-src-Sample.xtl.html">Sample.xtl</a></li>
+</ul>
+<h3>std/</h3>
+<ul>
+<li><a href="std-Svg.xtl.html">Svg.xtl</a></li>
+<li><a href="std-System.xtlm.html">System.xtlm</a></li>
+</ul>
+<h3>work/libs/Check/src/</h3>
+<ul>
+<li><a href="work-libs-Check-src-Check.xtl.html">Check.xtl</a></li>
+<li><a href="work-libs-Check-src-Check.xtlm.html">Check.xtlm</a></li>
+</ul>
+<h3>work/libs/Equations/src/</h3>
+<ul>
+<li><a href="work-libs-Equations-src-Equations.xtl.html">Equations.xtl</a></li>
+<li><a href="work-libs-Equations-src-Equations.xtlm.html">Equations.xtlm</a></li>
+</ul>
+<h3>work/libs/Format/src/</h3>
+<ul>
+<li><a href="work-libs-Format-src-Format.xtl.html">Format.xtl</a></li>
+</ul>
+<h3>work/libs/Lists/src/</h3>
+<ul>
+<li><a href="work-libs-Lists-src-Lists.xtl.html">Lists.xtl</a></li>
+</ul>
+<h3>work/libs/Plot/src/</h3>
+<ul>
+<li><a href="work-libs-Plot-src-Plot.xtl.html">Plot.xtl</a></li>
+</ul>
+<h3>work/libs/Strings/src/</h3>
+<ul>
+<li><a href="work-libs-Strings-src-Strings.xtl.html">Strings.xtl</a></li>
+</ul>
+<ul>
+<li><a href="builtins.html">built-ins</a></li>
+</ul>
+<h2>On this page</h2>
+<ul>
+<li><a href="#section-1">Sinkhorn-Knopp</a></li>
+<li class="item"><a href="#h.r_ows"><span class="c-libfunc">ʰr̲ows</span></a></li>
+<li class="item"><a href="#h.c_ols"><span class="c-libfunc">ʰc̲ols</span></a></li>
+<li class="item"><a href="#l.s_inkhorn"><span class="c-libfunc">ˡs̲inkhorn</span></a></li>
+<li class="item"><a href="#l.s_inkhornBack"><span class="c-libfunc">ˡs̲inkhornBack</span></a></li>
+<li><a href="#section-2">The layer</a></li>
+<li class="item"><a href="#h.w_eights"><span class="c-libfunc">ʰw̲eights</span></a></li>
+<li class="item"><a href="#l.l_ayer"><span class="c-libfunc">ˡl̲ayer</span></a></li>
+<li class="item"><a href="#l.b_ackTop"><span class="c-libfunc">ˡb̲ackTop</span></a></li>
+<li class="item"><a href="#h.d_pre"><span class="c-libfunc">ʰd̲pre</span></a></li>
+<li class="item"><a href="#l.b_ackBottom"><span class="c-libfunc">ˡb̲ackBottom</span></a></li>
+<li><a href="#section-3">The start and the gains</a></li>
+<li class="item"><a href="#l.s_tart"><span class="c-libfunc">ˡs̲tart</span></a></li>
+<li class="item"><a href="#h.p_roduct"><span class="c-libfunc">ʰp̲roduct</span></a></li>
+<li class="item"><a href="#l.g_ainProxy"><span class="c-libfunc">ˡg̲ainProxy</span></a></li>
+<li class="item"><a href="#l.a_maxGain"><span class="c-libfunc">ˡa̲maxGain</span></a></li>
+<li><a href="#section-4">The input-dependent tables</a></li>
+<li class="item"><a href="#l.d_ynamic"><span class="c-libfunc">ˡd̲ynamic</span></a></li>
+<li class="item"><a href="#h.d_yn"><span class="c-libfunc">ʰd̲yn</span></a></li>
+<li class="item"><a href="#l.d_ynamicBack"><span class="c-libfunc">ˡd̲ynamicBack</span></a></li>
+</ul>
+</nav>
+<main>
+<button class="theme" title="Light or dark">theme</button>
+<section id="results"></section>
+<h1><span class="kind">library</span>libs/HC/src/HC.xtl</h1>
+<div class="doc">
+<p>HC: Hyper-Connections and mHC: streams mixed by tables, the Sinkhorn projection, the layer and its gradients, the gains by depth, the input-dependent tables
+Import it with an alias of your choice: &quot;hc:&quot; u_se&lt; &quot;HC&quot;.
+Put libs/HC/src on XETAL_PATH (&quot;just path&quot;); the reference is libs/HC/docs.
+Names with l: are exported; the others are private to this file.</p>
+<p>Hyper-Connections (Zhu et al., arXiv 2409.19606) widen the residual
+stream into S streams mixed by small tables; mHC (Xie et al.,
+DeepSeek-AI, arXiv 2512.24880) projects the table that carries the
+state onto the doubly stochastic matrices (Sinkhorn-Knopp), so its
+gain stays bounded at any depth. A stream state X is S x N, a stream
+a row (N the width, or B times the width for a batch, examples side
+by side); H_res is S x S; H_post a list of S; H_pre an S x S table
+(the block's input the mean over streams of H_pre X, as the static
+form of the mHC-poc Python has it) or a list of S (the block's input
+H_pre X, as the paper's eq. 3 and hc:d_ynamic give it). Asked by
+X_eTaL-fine-tuning (FM13), whose depth track wrote all of it out.</p>
+</div>
+<p class="meta"><a href="libs-HC-src-HC.xtl.src.html">source</a> &middot; imports <code><span class="c-error">act:</span></code> <a href="libs-Activations-src-Activations.xtl.html">libs/Activations/src/Activations.xtl</a></p>
+<h2 class="section" id="section-1">Sinkhorn-Knopp</h2>
+<div class="item" id="h.r_ows">
+<h3><a href="#h.r_ows"><span class="c-libfunc">ʰr̲ows</span></a> <span class="type">: Num a =&gt; a -&gt; Float</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="libs-HC-src-HC.xtl.src.html#L23">line 23</a></div>
+<div class="doc">
+<p>Each row of M over its sum; each column over its sum.</p>
+</div>
+<pre class="code"><span class="c-libfunc">ʰr̲ows</span> ← <span class="c-depth0">{</span> M → M <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-depth1">(</span><span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/₂</a> M<span class="c-depth1">)</span> <span class="c-builtin">'</span><a href="builtins.html#l_eft" class="c-builtin">l̲eft</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/₁</a> M <span class="c-depth0">}</span></pre>
+<div class="uses">Used in: <a href="libs-HC-src-HC.xtl.html#l.s_inkhorn"><span class="c-libfunc">ˡs̲inkhorn</span></a>, <a href="libs-HC-src-HC.xtl.html#l.s_inkhornBack"><span class="c-libfunc">ˡs̲inkhornBack</span></a></div>
+</div>
+<div class="item" id="h.c_ols">
+<h3><a href="#h.c_ols"><span class="c-libfunc">ʰc̲ols</span></a> <span class="type">: Num a =&gt; a -&gt; Float</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="libs-HC-src-HC.xtl.src.html#L24">line 24</a></div>
+<pre class="code"><span class="c-libfunc">ʰc̲ols</span> ← <span class="c-depth0">{</span> M → M <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-depth1">(</span><span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/₂</a> M<span class="c-depth1">)</span> <span class="c-builtin">'</span><a href="builtins.html#r_ight" class="c-builtin">r̲ight</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/₁</a> M <span class="c-depth0">}</span></pre>
+<div class="uses">Used in: <a href="libs-HC-src-HC.xtl.html#l.s_inkhorn"><span class="c-libfunc">ˡs̲inkhorn</span></a>, <a href="libs-HC-src-HC.xtl.html#l.s_inkhornBack"><span class="c-libfunc">ˡs̲inkhornBack</span></a></div>
+</div>
+<div class="item" id="l.s_inkhorn">
+<h3><a href="#l.s_inkhorn"><span class="c-libfunc">ˡs̲inkhorn</span></a> <span class="type">: Int -&gt; Float -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="libs-HC-src-HC.xtl.src.html#L34">line 34</a></div>
+<div class="doc">
+<p><code>n <span class="c-builtin">s̲inkhorn</span> M</code>: n rounds of Sinkhorn-Knopp on a positive square M,
+each the rows normalized, then the columns (the paper's eq. 9; the
+Python's make_doubly_stochastic): a doubly stochastic matrix, every
+row and column summing to 1, to the tolerance n rounds reach.</p>
+<pre class="example"><span class="prompt">      </span><span class="c-string">&quot;hc:&quot;</span> <a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="libs-HC-src-HC.xtl.html" class="c-string">&quot;HC&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span><span class="c-number">20</span> <a href="libs-HC-src-HC.xtl.html#l.s_inkhorn" class="c-libfunc">ʰᶜs̲inkhorn</a> <span class="c-number">2</span> <span class="c-number">2</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">1.0</span> <span class="c-number">2.0</span> <span class="c-number">3.0</span> <span class="c-number">4.0</span>
+0.44948974278317816  0.5505102572168219
+ 0.5505102572168219 0.44948974278317816</pre>
+</div>
+<pre class="code"><span class="c-libfunc">ˡs̲inkhorn</span> ← <span class="c-depth0">{</span> n M → n <span class="c-quote">'</span><span class="c-depth1">{</span> A → <a href="libs-HC-src-HC.xtl.html#h.c_ols" class="c-libfunc">ʰc̲ols</a> <a href="libs-HC-src-HC.xtl.html#h.r_ows" class="c-libfunc">ʰr̲ows</a> A <span class="c-depth1">}</span> <a href="builtins.html#p_ower" class="c-builtin">p̲ower</a> M <span class="c-depth0">}</span></pre>
+<div class="uses">Used in: <a href="libs-HC-src-HC.xtl.html#h.d_yn"><span class="c-libfunc">ʰd̲yn</span></a>, <a href="libs-HC-demos-depth.xtl.html#mHC">mHC</a></div>
+</div>
+<div class="item" id="l.s_inkhornBack">
+<h3><a href="#l.s_inkhornBack"><span class="c-libfunc">ˡs̲inkhornBack</span></a> <span class="type">: (Int, Float) -&gt; Float -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="libs-HC-src-HC.xtl.src.html#L44">line 44</a></div>
+<div class="doc">
+<p><code><span class="c-depth0">(</span>n, M<span class="c-depth0">)</span> <span class="c-builtin">s̲inkhornBack</span> G</code>: the gradient by M of a loss whose gradient
+by <code>n <span class="c-builtin">s̲inkhorn</span> M</code> is G: the n rounds run again, each round's start
+and rows-normalized matrix kept, then undone from the last (the
+paper's section 4.3.1 recomputes them the same way).</p>
+<pre class="example"><span class="prompt">      </span><span class="c-string">&quot;hc:&quot;</span> <a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="libs-HC-src-HC.xtl.html" class="c-string">&quot;HC&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span><span class="c-depth0">(</span><span class="c-number">1</span>, <span class="c-number">2</span> <span class="c-number">2</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">1.0</span> <span class="c-number">1.0</span> <span class="c-number">1.0</span> <span class="c-number">1.0</span><span class="c-depth0">)</span> <a href="libs-HC-src-HC.xtl.html#l.s_inkhornBack" class="c-libfunc">ʰᶜs̲inkhornBack</a> <span class="c-number">2</span> <span class="c-number">2</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">1.0</span> <span class="c-number">0.0</span> <span class="c-number">0.0</span> <span class="c-number">0.0</span>
+ 0.125 -0.125
+-0.125  0.125</pre>
+</div>
+<pre class="code"><span class="c-libfunc">ˡs̲inkhornBack</span> ← <span class="c-depth0">{</span> <span class="c-depth1">(</span>n, M<span class="c-depth1">)</span> G →
+  <span class="c-depth1">(</span>_, Ms, Rs<span class="c-depth1">)</span> ← n <span class="c-quote">'</span><span class="c-depth1">{</span> <span class="c-depth2">(</span>A, Ms, Rs<span class="c-depth2">)</span> → R ← <a href="libs-HC-src-HC.xtl.html#h.r_ows" class="c-libfunc">ʰr̲ows</a> A◆ <span class="c-depth2">(</span><a href="libs-HC-src-HC.xtl.html#h.c_ols" class="c-libfunc">ʰc̲ols</a> R, Ms <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> A, Rs <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> R<span class="c-depth2">)</span> <span class="c-depth1">}</span> <a href="builtins.html#p_ower" class="c-builtin">p̲ower</a> <span class="c-depth1">(</span>M, <span class="c-number">0</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.0</span>, <span class="c-number">0</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.0</span><span class="c-depth1">)</span>
+  <span class="c-depth1">(</span>_, dM<span class="c-depth1">)</span> ← n <span class="c-quote">'</span><span class="c-depth1">{</span> <span class="c-depth2">(</span>k, dC<span class="c-depth2">)</span> →
+    A ← <span class="c-depth2">(</span><a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> M<span class="c-depth2">)</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-depth2">(</span><a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> M<span class="c-depth2">)</span> <a href="builtins.html#t_ake" class="c-builtin">t̲ake</a> <span class="c-depth2">(</span><span class="c-depth3">(</span>k <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span><span class="c-depth3">)</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> M<span class="c-depth2">)</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> Ms
+    R ← <span class="c-depth2">(</span><a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> M<span class="c-depth2">)</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-depth2">(</span><a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> M<span class="c-depth2">)</span> <a href="builtins.html#t_ake" class="c-builtin">t̲ake</a> <span class="c-depth2">(</span><span class="c-depth3">(</span>k <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span><span class="c-depth3">)</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> M<span class="c-depth2">)</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> Rs
+    cc ← <span class="c-depth2">(</span><span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/₂</a> R<span class="c-depth2">)</span> <span class="c-builtin">'</span><a href="builtins.html#r_ight" class="c-builtin">r̲ight</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/₁</a> R
+    C ← R <a href="builtins.html#-2f" class="c-symbol">÷</a> cc
+    dR ← <span class="c-depth2">(</span>dC <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-depth3">(</span><span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/₂</a> R<span class="c-depth3">)</span> <span class="c-builtin">'</span><a href="builtins.html#r_ight" class="c-builtin">r̲ight</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/₁</a> dC <a href="builtins.html#-2a" class="c-symbol">×</a> C<span class="c-depth2">)</span> <a href="builtins.html#-2f" class="c-symbol">÷</a> cc
+    <span class="c-depth2">(</span>k <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span>, <span class="c-depth3">(</span>dR <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-depth0">(</span><span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/₂</a> dR <a href="builtins.html#-2a" class="c-symbol">×</a> R<span class="c-depth0">)</span> <span class="c-builtin">'</span><a href="builtins.html#l_eft" class="c-builtin">l̲eft</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/₁</a> R<span class="c-depth3">)</span> <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-depth3">(</span><span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/₂</a> A<span class="c-depth3">)</span> <span class="c-builtin">'</span><a href="builtins.html#l_eft" class="c-builtin">l̲eft</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/₁</a> A<span class="c-depth2">)</span>
+  <span class="c-depth1">}</span> <a href="builtins.html#p_ower" class="c-builtin">p̲ower</a> <span class="c-depth1">(</span>n, G<span class="c-depth1">)</span>
+  dM
+<span class="c-depth0">}</span></pre>
+<div class="uses">Used in: <a href="libs-HC-src-HC.xtl.html#l.d_ynamicBack"><span class="c-libfunc">ˡd̲ynamicBack</span></a></div>
+</div>
+<h2 class="section" id="section-2">The layer</h2>
+<div class="item" id="h.w_eights">
+<h3><a href="#h.w_eights"><span class="c-libfunc">ʰw̲eights</span></a> <span class="type">: Float -&gt; Float</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="libs-HC-src-HC.xtl.src.html#L62">line 62</a></div>
+<div class="doc">
+<p>H_pre as the weight of each stream in the block's input: an S x S
+table's column means (the mean over streams of H_pre X), or a list
+of S as it is.</p>
+</div>
+<pre class="code"><span class="c-libfunc">ʰw̲eights</span> ← <span class="c-depth0">{</span> Hpre → <span class="c-depth1">(</span><span class="c-number">2</span> <a href="builtins.html#-3d" class="c-symbol">=</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> <a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> Hpre<span class="c-depth1">)</span> ? <span class="c-depth1">(</span><span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/₁</a> Hpre<span class="c-depth1">)</span> <a href="builtins.html#-2f" class="c-symbol">÷</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> Hpre◆ Hpre <span class="c-depth0">}</span></pre>
+<div class="uses">Used in: <a href="libs-HC-src-HC.xtl.html#l.l_ayer"><span class="c-libfunc">ˡl̲ayer</span></a>, <a href="libs-HC-src-HC.xtl.html#l.b_ackBottom"><span class="c-libfunc">ˡb̲ackBottom</span></a></div>
+</div>
+<div class="item" id="l.l_ayer">
+<h3><a href="#l.l_ayer"><span class="c-libfunc">ˡl̲ayer</span></a> <span class="type">: (Float -&gt; Float, Float, Float, Float) -&gt; Float -&gt; (Float, Float, Float)</span></h3>
+<div class="meta">function &middot; <a href="libs-HC-src-HC.xtl.src.html#L75">line 75</a></div>
+<div class="doc">
+<p><code><span class="c-depth0">(</span><span class="c-quote">'</span>f, Hpre, Hpost, Hres<span class="c-depth0">)</span> <span class="c-builtin">l̲ayer</span> X</code>: one Hyper-Connections layer: the
+block's input m (the streams weighted by H_pre, a list of N), the
+block's output F = f m (a list of N: a block of a batch reshapes it
+to B x D itself), and the next state Hres X + Hpost' F (the paper's
+eq. 3). Gives (the next state, m, F); the backward needs m and F.</p>
+<pre class="example"><span class="prompt">      </span><span class="c-string">&quot;hc:&quot;</span> <a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="libs-HC-src-HC.xtl.html" class="c-string">&quot;HC&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span><span class="c-userfunc">ᵘt̲wice</span> ← <span class="c-depth0">{</span> m → <span class="c-number">2.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> m <span class="c-depth0">}</span></pre>
+<pre class="example"><span class="prompt">      </span><span class="c-depth0">(</span>X2, m, F<span class="c-depth0">)</span> ← <span class="c-depth0">(</span><span class="c-userfunc">'</span><span class="c-userfunc">ᵘt̲wice</span>, <span class="c-number">2</span> <span class="c-number">2</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.5</span>, <span class="c-number">0.5</span> <span class="c-number">0.5</span>, <span class="c-number">2</span> <span class="c-number">2</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">1.0</span> <span class="c-number">0.0</span> <span class="c-number">0.0</span> <span class="c-number">1.0</span><span class="c-depth0">)</span> <a href="libs-HC-src-HC.xtl.html#l.l_ayer" class="c-libfunc">ʰᶜl̲ayer</a> <span class="c-number">2</span> <span class="c-number">3</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">1.0</span> <span class="c-number">2.0</span> <span class="c-number">3.0</span> <span class="c-number">4.0</span> <span class="c-number">5.0</span> <span class="c-number">6.0</span></pre>
+<pre class="example"><span class="prompt">      </span>X2
+3.5 5.5  7.5
+6.5 8.5 10.5</pre>
+</div>
+<pre class="code"><span class="c-libfunc">ˡl̲ayer</span> ← <span class="c-depth0">{</span> <span class="c-depth1">(</span><span class="c-builtin">f̲</span>, Hpre, Hpost, Hres<span class="c-depth1">)</span> X →
+  m ← <span class="c-depth1">(</span><a href="libs-HC-src-HC.xtl.html#h.w_eights" class="c-libfunc">ʰw̲eights</a> Hpre<span class="c-depth1">)</span> <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#i_nner" class="c-builtin">i̲nner</a> X
+  F ← <span class="c-builtin">f̲</span> m
+  <span class="c-depth1">(</span><span class="c-depth2">(</span>Hres <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#i_nner" class="c-builtin">i̲nner</a> X<span class="c-depth2">)</span> <a href="builtins.html#-2b" class="c-symbol">+</a> Hpost <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> F, m, F<span class="c-depth1">)</span>
+<span class="c-depth0">}</span></pre>
+</div>
+<div class="item" id="l.b_ackTop">
+<h3><a href="#l.b_ackTop"><span class="c-libfunc">ˡb̲ackTop</span></a> <span class="type">: Num a =&gt; (a, a) -&gt; (a, a, a) -&gt; (a, a, a, a)</span></h3>
+<div class="meta">function &middot; <a href="libs-HC-src-HC.xtl.src.html#L90">line 90</a></div>
+<div class="doc">
+<p><code><span class="c-depth0">(</span>Hpost, Hres<span class="c-depth0">)</span> <span class="c-builtin">b̲ackTop</span> <span class="c-depth0">(</span>X, F, G<span class="c-depth0">)</span></code>: the layer's backward above the
+block, from G, the gradient by the next state: (dXres, dF, dHres,
+dHpost): by X through Hres (Hres' G), by the block's output (Hpost
+G, a list of N), by Hres (G X'), by Hpost (G F). The caller carries
+dF back through its block to dm.</p>
+<pre class="example"><span class="prompt">      </span><span class="c-string">&quot;hc:&quot;</span> <a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="libs-HC-src-HC.xtl.html" class="c-string">&quot;HC&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span><span class="c-depth0">(</span>dX, dF, dH, dp<span class="c-depth0">)</span> ← <span class="c-depth0">(</span><span class="c-number">0.5</span> <span class="c-number">0.5</span>, <span class="c-number">2</span> <span class="c-number">2</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">1.0</span> <span class="c-number">0.0</span> <span class="c-number">0.0</span> <span class="c-number">1.0</span><span class="c-depth0">)</span> <a href="libs-HC-src-HC.xtl.html#l.b_ackTop" class="c-libfunc">ʰᶜb̲ackTop</a> <span class="c-depth0">(</span><span class="c-number">2</span> <span class="c-number">2</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">1.0</span> <span class="c-number">2.0</span> <span class="c-number">3.0</span> <span class="c-number">4.0</span>, <span class="c-number">1.0</span> <span class="c-number">1.0</span>, <span class="c-number">2</span> <span class="c-number">2</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">1.0</span><span class="c-depth0">)</span></pre>
+<pre class="example"><span class="prompt">      </span>dF
+1.0 1.0</pre>
+</div>
+<pre class="code"><span class="c-libfunc">ˡb̲ackTop</span> ← <span class="c-depth0">{</span> <span class="c-depth1">(</span>Hpost, Hres<span class="c-depth1">)</span> <span class="c-depth1">(</span>X, F, G<span class="c-depth1">)</span> →
+  <span class="c-depth1">(</span><span class="c-depth2">(</span><a href="builtins.html#o_-5c" class="c-builtin">o̲\</a> Hres<span class="c-depth2">)</span> <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#i_nner" class="c-builtin">i̲nner</a> G, Hpost <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#i_nner" class="c-builtin">i̲nner</a> G, G <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#i_nner" class="c-builtin">i̲nner</a> <a href="builtins.html#o_-5c" class="c-builtin">o̲\</a> X, G <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#i_nner" class="c-builtin">i̲nner</a> F<span class="c-depth1">)</span>
+<span class="c-depth0">}</span></pre>
+</div>
+<div class="item" id="h.d_pre">
+<h3><a href="#h.d_pre"><span class="c-libfunc">ʰd̲pre</span></a> <span class="type">: a -&gt; Float -&gt; Float</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="libs-HC-src-HC.xtl.src.html#L97">line 97</a></div>
+<div class="doc">
+<p>The gradient by H_pre from the stream weights' da: every row of a
+table da over S (each row adds 1/S of its stream weights), a list as
+it is.</p>
+</div>
+<pre class="code"><span class="c-libfunc">ʰd̲pre</span> ← <span class="c-depth0">{</span> Hpre da → <span class="c-depth1">(</span><span class="c-number">2</span> <a href="builtins.html#-3d" class="c-symbol">=</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> <a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> Hpre<span class="c-depth1">)</span> ? <span class="c-depth1">(</span><a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> Hpre<span class="c-depth1">)</span> <a href="builtins.html#r_eplicate" class="c-builtin">r̲eplicate</a> <span class="c-depth1">(</span><span class="c-number">1</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> da<span class="c-depth1">)</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> da <a href="builtins.html#-2f" class="c-symbol">÷</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> Hpre◆ da <span class="c-depth0">}</span></pre>
+<div class="uses">Used in: <a href="libs-HC-src-HC.xtl.html#l.b_ackBottom"><span class="c-libfunc">ˡb̲ackBottom</span></a></div>
+</div>
+<div class="item" id="l.b_ackBottom">
+<h3><a href="#l.b_ackBottom"><span class="c-libfunc">ˡb̲ackBottom</span></a> <span class="type">: Float -&gt; (Float, Float) -&gt; (Float, Float)</span></h3>
+<div class="meta">function &middot; <a href="libs-HC-src-HC.xtl.src.html#L108">line 108</a></div>
+<div class="doc">
+<p><code>Hpre <span class="c-builtin">b̲ackBottom</span> <span class="c-depth0">(</span>X, dm<span class="c-depth0">)</span></code>: the layer's backward below the block,
+from dm, the gradient by the block's input: (dXpre, dHpre): by X
+through H_pre, and by H_pre (a table: each row the gradient of the
+stream weights over S; a list: X dm). The gradient by X is dXres +
+dXpre.</p>
+<pre class="example"><span class="prompt">      </span><span class="c-string">&quot;hc:&quot;</span> <a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="libs-HC-src-HC.xtl.html" class="c-string">&quot;HC&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span><span class="c-depth0">(</span>dX, dH<span class="c-depth0">)</span> ← <span class="c-depth0">(</span><span class="c-number">0.25</span> <span class="c-number">0.75</span><span class="c-depth0">)</span> <a href="libs-HC-src-HC.xtl.html#l.b_ackBottom" class="c-libfunc">ʰᶜb̲ackBottom</a> <span class="c-depth0">(</span><span class="c-number">2</span> <span class="c-number">2</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">1.0</span> <span class="c-number">2.0</span> <span class="c-number">3.0</span> <span class="c-number">4.0</span>, <span class="c-number">1.0</span> <span class="c-number">1.0</span><span class="c-depth0">)</span></pre>
+<pre class="example"><span class="prompt">      </span>dH
+3.0 7.0</pre>
+</div>
+<pre class="code"><span class="c-libfunc">ˡb̲ackBottom</span> ← <span class="c-depth0">{</span> Hpre <span class="c-depth1">(</span>X, dm<span class="c-depth1">)</span> →
+  da ← X <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#i_nner" class="c-builtin">i̲nner</a> dm
+  <span class="c-depth1">(</span><span class="c-depth2">(</span><a href="libs-HC-src-HC.xtl.html#h.w_eights" class="c-libfunc">ʰw̲eights</a> Hpre<span class="c-depth2">)</span> <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> dm, Hpre <a href="libs-HC-src-HC.xtl.html#h.d_pre" class="c-libfunc">ʰd̲pre</a> da<span class="c-depth1">)</span>
+<span class="c-depth0">}</span></pre>
+</div>
+<h2 class="section" id="section-3">The start and the gains</h2>
+<div class="item" id="l.s_tart">
+<h3><a href="#l.s_tart"><span class="c-libfunc">ˡs̲tart</span></a> <span class="type">: Int -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="libs-HC-src-HC.xtl.src.html#L122">line 122</a></div>
+<div class="doc">
+<p><code><span class="c-builtin">s̲tart</span> S</code>: the logits every table starts from in the mHC-poc
+Python, 2 I - 1 (the diagonal 1, the rest -1); HC's H_res is its
+exponential, mHC's <code><span class="c-number">20</span> <span class="c-builtin">s̲inkhorn</span></code> of that.</p>
+<pre class="example"><span class="prompt">      </span><span class="c-string">&quot;hc:&quot;</span> <a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="libs-HC-src-HC.xtl.html" class="c-string">&quot;HC&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span><a href="libs-HC-src-HC.xtl.html#l.s_tart" class="c-libfunc">ʰᶜs̲tart</a> <span class="c-number">2</span>
+ 1.0 -1.0
+-1.0  1.0</pre>
+</div>
+<pre class="code"><span class="c-libfunc">ˡs̲tart</span> ← <span class="c-depth0">{</span> S → <span class="c-depth1">(</span><span class="c-number">2.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <span class="c-depth2">(</span><a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> S<span class="c-depth2">)</span> <span class="c-symbol">'</span><a href="builtins.html#-3d" class="c-symbol">=</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> <a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> S<span class="c-depth1">)</span> <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1.0</span> <span class="c-depth0">}</span></pre>
+<div class="uses">Used in: <a href="libs-HC-demos-depth.xtl.html#HC">HC</a></div>
+</div>
+<div class="item" id="h.p_roduct">
+<h3><a href="#h.p_roduct"><span class="c-libfunc">ʰp̲roduct</span></a> <span class="type">: Box Float -&gt; Float</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="libs-HC-src-HC.xtl.src.html#L126">line 126</a></div>
+<div class="doc">
+<p>The product of a chain of tables (boxed, the first layer's first),
+the last layer's on the left.</p>
+</div>
+<pre class="code"><span class="c-libfunc">ʰp̲roduct</span> ← <span class="c-depth0">{</span> Hs →
+  <span class="c-depth1">(</span>_, P<span class="c-depth1">)</span> ← <span class="c-depth1">(</span><a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> Hs<span class="c-depth1">)</span> <span class="c-quote">'</span><span class="c-depth1">{</span> <span class="c-depth2">(</span>k, P<span class="c-depth2">)</span> → <span class="c-depth2">(</span>k <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">1</span>, <span class="c-depth3">(</span><a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> k <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> Hs<span class="c-depth3">)</span> <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#i_nner" class="c-builtin">i̲nner</a> P<span class="c-depth2">)</span> <span class="c-depth1">}</span> <a href="builtins.html#p_ower" class="c-builtin">p̲ower</a> <span class="c-depth1">(</span><span class="c-number">1</span>, <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <span class="c-depth2">(</span><a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> <span class="c-number">1</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> Hs<span class="c-depth2">)</span> <span class="c-symbol">'</span><a href="builtins.html#-3d" class="c-symbol">=</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> <a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> <span class="c-number">1</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> Hs<span class="c-depth1">)</span>
+  P
+<span class="c-depth0">}</span></pre>
+<div class="uses">Used in: <a href="libs-HC-src-HC.xtl.html#l.g_ainProxy"><span class="c-libfunc">ˡg̲ainProxy</span></a>, <a href="libs-HC-src-HC.xtl.html#l.a_maxGain"><span class="c-libfunc">ˡa̲maxGain</span></a></div>
+</div>
+<div class="item" id="l.g_ainProxy">
+<h3><a href="#l.g_ainProxy"><span class="c-libfunc">ˡg̲ainProxy</span></a> <span class="type">: Box Float -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="libs-HC-src-HC.xtl.src.html#L139">line 139</a></div>
+<div class="doc">
+<p><code><span class="c-builtin">g̲ainProxy</span> Hs</code>: the mHC-poc Python's gain proxy (named a proxy
+there, not the paper's metric): log10 of the largest absolute entry
+of the product of the chain Hs (a list of boxed S x S tables, the
+first layer's first). Products of doubly stochastic tables tend to
+the table of all 1/S: log10 of 1/S.</p>
+<pre class="example"><span class="prompt">      </span><span class="c-string">&quot;hc:&quot;</span> <a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="libs-HC-src-HC.xtl.html" class="c-string">&quot;HC&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span><a href="libs-HC-src-HC.xtl.html#l.g_ainProxy" class="c-libfunc">ʰᶜg̲ainProxy</a> <span class="c-number">12</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <a href="builtins.html#e_nclose" class="c-builtin">e̲nclose</a> <a href="builtins.html#e_xp" class="c-builtin">e̲xp</a> <a href="libs-HC-src-HC.xtl.html#l.s_tart" class="c-libfunc">ʰᶜs̲tart</a> <span class="c-number">4</span>
+6.389115385966659</pre>
+</div>
+<pre class="code"><span class="c-libfunc">ˡg̲ainProxy</span> ← <span class="c-depth0">{</span> Hs → <span class="c-depth1">(</span><a href="builtins.html#l_og" class="c-builtin">l̲og</a> <span class="c-builtin">'</span><a href="builtins.html#m_ax" class="c-builtin">m̲ax</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> <a href="builtins.html#a_bs" class="c-builtin">a̲bs</a> <a href="libs-HC-src-HC.xtl.html#h.p_roduct" class="c-libfunc">ʰp̲roduct</a> Hs<span class="c-depth1">)</span> <a href="builtins.html#-2f" class="c-symbol">÷</a> <a href="builtins.html#l_og" class="c-builtin">l̲og</a> <span class="c-number">10.0</span> <span class="c-depth0">}</span></pre>
+<div class="uses">Used in: <a href="libs-HC-demos-depth.xtl.html#u.r_ow"><span class="c-userfunc">ᵘr̲ow</span></a></div>
+</div>
+<div class="item" id="l.a_maxGain">
+<h3><a href="#l.a_maxGain"><span class="c-libfunc">ˡa̲maxGain</span></a> <span class="type">: Box Float -&gt; (Float, Float)</span></h3>
+<div class="meta">function &middot; <a href="libs-HC-src-HC.xtl.src.html#L149">line 149</a></div>
+<div class="doc">
+<p><code><span class="c-builtin">a̲maxGain</span> Hs</code>: the paper's Amax Gain Magnitude (its section 3.1) of
+the product of the chain Hs: (forward, backward), the largest
+absolute row sum and the largest absolute column sum. For a doubly
+stochastic chain both are 1; for HC's start every row sums to e +
+3/e, so the forward gain over L layers is that to the power L.</p>
+<pre class="example"><span class="prompt">      </span><span class="c-string">&quot;hc:&quot;</span> <a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="libs-HC-src-HC.xtl.html" class="c-string">&quot;HC&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span><a href="libs-HC-src-HC.xtl.html#l.a_maxGain" class="c-libfunc">ʰᶜa̲maxGain</a> <span class="c-number">2</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <a href="builtins.html#e_nclose" class="c-builtin">e̲nclose</a> <span class="c-number">2</span> <span class="c-number">2</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">1.0</span> <span class="c-number">2.0</span> <span class="c-number">0.0</span> <span class="c-number">1.0</span>
+(5.0, 5.0)</pre>
+</div>
+<pre class="code"><span class="c-libfunc">ˡa̲maxGain</span> ← <span class="c-depth0">{</span> Hs →
+  P ← <a href="libs-HC-src-HC.xtl.html#h.p_roduct" class="c-libfunc">ʰp̲roduct</a> Hs
+  <span class="c-depth1">(</span><span class="c-builtin">'</span><a href="builtins.html#m_ax" class="c-builtin">m̲ax</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> <a href="builtins.html#a_bs" class="c-builtin">a̲bs</a> <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/₂</a> P, <span class="c-builtin">'</span><a href="builtins.html#m_ax" class="c-builtin">m̲ax</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> <a href="builtins.html#a_bs" class="c-builtin">a̲bs</a> <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/₁</a> P<span class="c-depth1">)</span>
+<span class="c-depth0">}</span></pre>
+<div class="uses">Used in: <a href="libs-HC-demos-depth.xtl.html#u.r_ow"><span class="c-userfunc">ᵘr̲ow</span></a></div>
+</div>
+<h2 class="section" id="section-4">The input-dependent tables</h2>
+<div class="item" id="l.d_ynamic">
+<h3><a href="#l.d_ynamic"><span class="c-libfunc">ˡd̲ynamic</span></a> <span class="type">: (Float, Float, (Float, Float, Float)) -&gt; Float -&gt; (Float, Float, Float)</span></h3>
+<div class="meta">function &middot; <a href="libs-HC-src-HC.xtl.src.html#L169">line 169</a></div>
+<div class="doc">
+<p><code><span class="c-depth0">(</span>alpha, phi, b<span class="c-depth0">)</span> <span class="c-builtin">d̲ynamic</span> X</code>: the paper's tables made from the
+state X (S x C) itself (eq. 7 and 8): X flattened and scaled to a
+root-mean-square of 1, one projection phi (S C x (2 S + S S), the
+paper's fused form) into H_pre's S numbers, H_post's S and H_res's
+S S; each group times its gating factor (alpha, three numbers; the
+paper starts them at 0.01) plus its bias (b = (bpre, bpost, bres),
+S, S and S x S); then H_pre = sigmoid, H_post = 2 sigmoid, H_res =
+20 rounds of Sinkhorn-Knopp of the exponential. Gives (Hpre, Hpost,
+Hres), H_pre a list of S.</p>
+<pre class="example"><span class="prompt">      </span><span class="c-string">&quot;hc:&quot;</span> <a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="libs-HC-src-HC.xtl.html" class="c-string">&quot;HC&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span><span class="c-depth0">(</span>Hpre, Hpost, Hres<span class="c-depth0">)</span> ← <span class="c-depth0">(</span><span class="c-number">0.0</span> <span class="c-number">0.0</span> <span class="c-number">0.0</span>, <span class="c-number">4</span> <span class="c-number">8</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.0</span>, <span class="c-depth1">(</span><span class="c-number">0.0</span> <span class="c-number">0.0</span>, <span class="c-number">0.0</span> <span class="c-number">0.0</span>, <a href="libs-HC-src-HC.xtl.html#l.s_tart" class="c-libfunc">ʰᶜs̲tart</a> <span class="c-number">2</span><span class="c-depth1">)</span><span class="c-depth0">)</span> <a href="libs-HC-src-HC.xtl.html#l.d_ynamic" class="c-libfunc">ʰᶜd̲ynamic</a> <span class="c-number">2</span> <span class="c-number">2</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">1.0</span> <span class="c-number">2.0</span> <span class="c-number">3.0</span> <span class="c-number">4.0</span></pre>
+<pre class="example"><span class="prompt">      </span>Hpost
+1.0 1.0</pre>
+</div>
+<pre class="code"><span class="c-libfunc">ˡd̲ynamic</span> ← <span class="c-depth0">{</span> <span class="c-depth1">(</span>alpha, phi, b<span class="c-depth1">)</span> X →
+  <span class="c-depth1">(</span>Hpre, Hpost, Hres, _<span class="c-depth1">)</span> ← <span class="c-depth1">(</span>alpha, phi, b<span class="c-depth1">)</span> <a href="libs-HC-src-HC.xtl.html#h.d_yn" class="c-libfunc">ʰd̲yn</a> X
+  <span class="c-depth1">(</span>Hpre, Hpost, Hres<span class="c-depth1">)</span>
+<span class="c-depth0">}</span></pre>
+</div>
+<div class="item" id="h.d_yn">
+<h3><a href="#h.d_yn"><span class="c-libfunc">ʰd̲yn</span></a> <span class="type">: (Float, Float, (Float, Float, Float)) -&gt; Float -&gt; (Float, Float, Float, (Float, Float, Float, Float, Float, Float))</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="libs-HC-src-HC.xtl.src.html#L177">line 177</a></div>
+<div class="doc">
+<p>The forward, keeping what the backward needs: the scaled list, its
+root-mean-square, the projection, the three groups' pre-activations
+and H_res's exponential.</p>
+</div>
+<pre class="code"><span class="c-libfunc">ʰd̲yn</span> ← <span class="c-depth0">{</span> <span class="c-depth1">(</span>alpha, phi, b<span class="c-depth1">)</span> X →
+  <span class="c-depth1">(</span>bp, bq, br<span class="c-depth1">)</span> ← b
+  S ← <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> X
+  xv ← <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> X
+  r ← <span class="c-depth1">(</span><span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> xv <a href="builtins.html#-2a" class="c-symbol">×</a> xv<span class="c-depth1">)</span> <a href="builtins.html#-2f" class="c-symbol">÷</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> xv
+  xn ← xv <a href="builtins.html#-2f" class="c-symbol">÷</a> r <a href="builtins.html#-5e" class="c-symbol">^</a> <span class="c-number">0.5</span>
+  pj ← xn <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#i_nner" class="c-builtin">i̲nner</a> phi
+  hp ← bp <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-depth1">(</span><span class="c-number">1</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> alpha<span class="c-depth1">)</span> <a href="builtins.html#-2a" class="c-symbol">×</a> S <a href="builtins.html#t_ake" class="c-builtin">t̲ake</a> pj
+  hq ← bq <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-depth1">(</span><span class="c-number">2</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> alpha<span class="c-depth1">)</span> <a href="builtins.html#-2a" class="c-symbol">×</a> S <a href="builtins.html#t_ake" class="c-builtin">t̲ake</a> S <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> pj
+  hr ← br <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-depth1">(</span><span class="c-number">3</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> alpha<span class="c-depth1">)</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-depth1">(</span>S <a href="builtins.html#c_at" class="c-builtin">c̲at</a> S<span class="c-depth1">)</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-depth1">(</span><span class="c-number">2</span> <a href="builtins.html#-2a" class="c-symbol">×</a> S<span class="c-depth1">)</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> pj
+  <span class="c-depth1">(</span><a href="libs-Activations-src-Activations.xtl.html#l.s_igmoid" class="c-libfunc">ᵃᶜᵗs̲igmoid</a> hp, <span class="c-number">2.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="libs-Activations-src-Activations.xtl.html#l.s_igmoid" class="c-libfunc">ᵃᶜᵗs̲igmoid</a> hq, <span class="c-number">20</span> <a href="libs-HC-src-HC.xtl.html#l.s_inkhorn" class="c-libfunc">ˡs̲inkhorn</a> <a href="builtins.html#e_xp" class="c-builtin">e̲xp</a> hr, <span class="c-depth2">(</span>xn, r <a href="builtins.html#-5e" class="c-symbol">^</a> <span class="c-number">0.5</span>, pj, hp, hq, <a href="builtins.html#e_xp" class="c-builtin">e̲xp</a> hr<span class="c-depth2">)</span><span class="c-depth1">)</span>
+<span class="c-depth0">}</span></pre>
+<div class="uses">Used in: <a href="libs-HC-src-HC.xtl.html#l.d_ynamic"><span class="c-libfunc">ˡd̲ynamic</span></a>, <a href="libs-HC-src-HC.xtl.html#l.d_ynamicBack"><span class="c-libfunc">ˡd̲ynamicBack</span></a></div>
+</div>
+<div class="item" id="l.d_ynamicBack">
+<h3><a href="#l.d_ynamicBack"><span class="c-libfunc">ˡd̲ynamicBack</span></a> <span class="type">: (Float, Float, (Float, Float, Float)) -&gt; (Float, Float, Float, Float) -&gt; (Float, Float, (Float, Float, Float), Float)</span></h3>
+<div class="meta">function &middot; <a href="libs-HC-src-HC.xtl.src.html#L199">line 199</a></div>
+<div class="doc">
+<p><code><span class="c-depth0">(</span>alpha, phi, b<span class="c-depth0">)</span> <span class="c-builtin">d̲ynamicBack</span> <span class="c-depth0">(</span>X, dHpre, dHpost, dHres<span class="c-depth0">)</span></code>: the
+gradient through hc:d_ynamic from the gradients by its three tables:
+(dalpha, dphi, (dbpre, dbpost, dbres), dX), dX the part through the
+tables only (the layer's own dXres and dXpre are added to it).</p>
+<pre class="example"><span class="prompt">      </span><span class="c-string">&quot;hc:&quot;</span> <a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="libs-HC-src-HC.xtl.html" class="c-string">&quot;HC&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span><span class="c-depth0">(</span>da, dphi, db, dX<span class="c-depth0">)</span> ← <span class="c-depth0">(</span><span class="c-number">0.0</span> <span class="c-number">0.0</span> <span class="c-number">0.0</span>, <span class="c-number">4</span> <span class="c-number">8</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.0</span>, <span class="c-depth1">(</span><span class="c-number">0.0</span> <span class="c-number">0.0</span>, <span class="c-number">0.0</span> <span class="c-number">0.0</span>, <a href="libs-HC-src-HC.xtl.html#l.s_tart" class="c-libfunc">ʰᶜs̲tart</a> <span class="c-number">2</span><span class="c-depth1">)</span><span class="c-depth0">)</span> <a href="libs-HC-src-HC.xtl.html#l.d_ynamicBack" class="c-libfunc">ʰᶜd̲ynamicBack</a> <span class="c-depth0">(</span><span class="c-number">2</span> <span class="c-number">2</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">1.0</span> <span class="c-number">2.0</span> <span class="c-number">3.0</span> <span class="c-number">4.0</span>, <span class="c-number">1.0</span> <span class="c-number">1.0</span>, <span class="c-number">0.0</span> <span class="c-number">0.0</span>, <span class="c-number">2</span> <span class="c-number">2</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.0</span><span class="c-depth0">)</span></pre>
+<pre class="example"><span class="prompt">      </span><span class="c-depth0">(</span>dbp, _, _<span class="c-depth0">)</span> ← db</pre>
+<pre class="example"><span class="prompt">      </span>dbp
+0.25 0.25</pre>
+</div>
+<pre class="code"><span class="c-libfunc">ˡd̲ynamicBack</span> ← <span class="c-depth0">{</span> <span class="c-depth1">(</span>alpha, phi, b<span class="c-depth1">)</span> <span class="c-depth1">(</span>X, dHpre, dHpost, dHres<span class="c-depth1">)</span> →
+  S ← <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> X
+  <span class="c-depth1">(</span>_, _, _, <span class="c-depth2">(</span>xn, rt, pj, hp, hq, A<span class="c-depth2">)</span><span class="c-depth1">)</span> ← <span class="c-depth1">(</span>alpha, phi, b<span class="c-depth1">)</span> <a href="libs-HC-src-HC.xtl.html#h.d_yn" class="c-libfunc">ʰd̲yn</a> X
+  dhp ← dHpre <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="libs-Activations-src-Activations.xtl.html#l.d_sigmoid" class="c-libfunc">ᵃᶜᵗd̲sigmoid</a> hp
+  dhq ← <span class="c-number">2.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> dHpost <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="libs-Activations-src-Activations.xtl.html#l.d_sigmoid" class="c-libfunc">ᵃᶜᵗd̲sigmoid</a> hq
+  dhr ← A <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-depth1">(</span><span class="c-number">20</span>, A<span class="c-depth1">)</span> <a href="libs-HC-src-HC.xtl.html#l.s_inkhornBack" class="c-libfunc">ˡs̲inkhornBack</a> dHres
+  dpj ← <span class="c-depth1">(</span><span class="c-depth2">(</span><span class="c-number">1</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> alpha<span class="c-depth2">)</span> <a href="builtins.html#-2a" class="c-symbol">×</a> dhp<span class="c-depth1">)</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-depth1">(</span><span class="c-depth2">(</span><span class="c-number">2</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> alpha<span class="c-depth2">)</span> <a href="builtins.html#-2a" class="c-symbol">×</a> dhq<span class="c-depth1">)</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-depth1">(</span><span class="c-number">3</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> alpha<span class="c-depth1">)</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> dhr
+  dxn ← phi <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#i_nner" class="c-builtin">i̲nner</a> dpj
+  dxv ← <span class="c-depth1">(</span>dxn <a href="builtins.html#-2d" class="c-symbol">−</a> xn <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-depth2">(</span><span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> dxn <a href="builtins.html#-2a" class="c-symbol">×</a> xn<span class="c-depth2">)</span> <a href="builtins.html#-2f" class="c-symbol">÷</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> xn<span class="c-depth1">)</span> <a href="builtins.html#-2f" class="c-symbol">÷</a> rt
+  da ← <span class="c-depth1">(</span><span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> dhp <a href="builtins.html#-2a" class="c-symbol">×</a> S <a href="builtins.html#t_ake" class="c-builtin">t̲ake</a> pj<span class="c-depth1">)</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-depth1">(</span><span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> dhq <a href="builtins.html#-2a" class="c-symbol">×</a> S <a href="builtins.html#t_ake" class="c-builtin">t̲ake</a> S <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> pj<span class="c-depth1">)</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> <span class="c-depth1">(</span><a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> dhr<span class="c-depth1">)</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-depth1">(</span><span class="c-number">2</span> <a href="builtins.html#-2a" class="c-symbol">×</a> S<span class="c-depth1">)</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> pj
+  <span class="c-depth1">(</span>da, xn <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> dpj, <span class="c-depth2">(</span>dhp, dhq, dhr<span class="c-depth2">)</span>, <span class="c-depth2">(</span><a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> X<span class="c-depth2">)</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> dxv<span class="c-depth1">)</span>
+<span class="c-depth0">}</span></pre>
+</div>
+</main>
+</body>
+</html>

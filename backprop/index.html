@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Backprop Microscope</title>
+  
+<script type="module">
+import init, * as bindings from '/X_eTaL-ML/backprop/backprop-web-ee7e4fdfb3caac4a.js';
+const wasm = await init({ module_or_path: '/X_eTaL-ML/backprop/backprop-web-ee7e4fdfb3caac4a_bg.wasm' });
+
+
+window.wasmBindings = bindings;
+
+
+dispatchEvent(new CustomEvent("TrunkApplicationStarted", {detail: {wasm}}));
+
+</script>
+  
+  <link rel="icon" href="/X_eTaL-ML/backprop/favicon-a11bc0a2bcd81290.ico" integrity="sha384-xOjSLs9ZRBKy2hF6zlqNv+0U86E4BqZOJy7H7a4GXSVwDQMNie0D851/sRBSYI9a"/>
+  <link rel="stylesheet" href="/X_eTaL-ML/backprop/microscope-22257fd62318e7bf.css" integrity="sha384-HhCElH/+Dn/dCD6BMktfya0hcEUbJTzOz+U+aDZwhSMfcwqIb3L1cSWYSUVqWKI9"/>
+<link rel="modulepreload" href="/X_eTaL-ML/backprop/backprop-web-ee7e4fdfb3caac4a.js" crossorigin="anonymous" integrity="sha384-ne7J+S7K0e3TkJHu3gzDUApS/2jFgy504+LwlYd94wz6bMghMLHDNAghiaNr9VNz"><link rel="preload" href="/X_eTaL-ML/backprop/backprop-web-ee7e4fdfb3caac4a_bg.wasm" crossorigin="anonymous" integrity="sha384-dwHWFjdkFUFCB2IsWiwSJt4DWZcxkgiJm58771VDNAiGkmFb5ap+KJeCKC+Fq3eL" as="fetch" type="application/wasm"></head>
+<body></body>
+</html>

@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>demos/icl-circuit/icl-circuit.xtl - X_eTaL doc</title>
+<link rel="stylesheet" href="style.css">
+<script src="theme.js"></script>
+<script defer src="search-index.js"></script>
+<script defer src="search.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.18.10/dist/katex.min.css" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.18.10/dist/katex.min.js" crossorigin="anonymous"></script>
+<script>document.addEventListener('DOMContentLoaded', function () {
+if (typeof katex === 'undefined') return;
+document.querySelectorAll('.c-notation').forEach(function (el) {
+var tex = el.textContent; if (!tex) return;
+try { katex.render(tex, el, { throwOnError: false }); } catch (e) { el.textContent = tex; }
+});
+});</script>
+</head>
+<body>
+<nav class="side">
+<a class="home" href="index.html">X_eTaL doc</a>
+<input id="search" type="search" autocomplete="off" placeholder="Search: a name, or a type" title="A name (mean finds m_ean), or a type: Num a =&gt; a -&gt; a -&gt; a finds +, m_ax ...">
+<h2>Files</h2>
+<h3>demos/activations/</h3>
+<ul>
+<li><a href="demos-activations-activations.xtl.html">activations.xtl</a></li>
+</ul>
+<h3>demos/attention/</h3>
+<ul>
+<li><a href="demos-attention-attention.xtl.html">attention.xtl</a></li>
+</ul>
+<h3>demos/backprop/</h3>
+<ul>
+<li><a href="demos-backprop-backprop.xtl.html">backprop.xtl</a></li>
+</ul>
+<h3>demos/cnn-backprop/</h3>
+<ul>
+<li><a href="demos-cnn-backprop-cnn-backprop.xtl.html">cnn-backprop.xtl</a></li>
+</ul>
+<h3>demos/cnn-digits/</h3>
+<ul>
+<li><a href="demos-cnn-digits-batch.xtl.html">batch.xtl</a></li>
+<li><a href="demos-cnn-digits-cnn-digits.xtl.html">cnn-digits.xtl</a></li>
+</ul>
+<h3>demos/diffusion/</h3>
+<ul>
+<li><a href="demos-diffusion-diffusion.xtl.html">diffusion.xtl</a></li>
+</ul>
+<h3>demos/embedding-explorer/</h3>
+<ul>
+<li><a href="demos-embedding-explorer-embedding-explorer.xtl.html">embedding-explorer.xtl</a></li>
+</ul>
+<h3>demos/icl-circuit/</h3>
+<ul>
+<li><a href="demos-icl-circuit-icl-circuit.xtl.html">icl-circuit.xtl</a></li>
+</ul>
+<h3>demos/icl-trained/</h3>
+<ul>
+<li><a href="demos-icl-trained-icl-trained.xtl.html">icl-trained.xtl</a></li>
+</ul>
+<h3>demos/k-means/</h3>
+<ul>
+<li><a href="demos-k-means-k-means.xtl.html">k-means.xtl</a></li>
+</ul>
+<h3>demos/lora-explorer/</h3>
+<ul>
+<li><a href="demos-lora-explorer-lora-explorer.xtl.html">lora-explorer.xtl</a></li>
+</ul>
+<h3>demos/micro-bert/</h3>
+<ul>
+<li><a href="demos-micro-bert-micro-bert.xtl.html">micro-bert.xtl</a></li>
+</ul>
+<h3>demos/micro-gpt/</h3>
+<ul>
+<li><a href="demos-micro-gpt-batch.xtl.html">batch.xtl</a></li>
+<li><a href="demos-micro-gpt-micro-gpt.xtl.html">micro-gpt.xtl</a></li>
+</ul>
+<h3>demos/moe-finetune/</h3>
+<ul>
+<li><a href="demos-moe-finetune-base.xtl.html">base.xtl</a></li>
+<li><a href="demos-moe-finetune-moe-finetune.xtl.html">moe-finetune.xtl</a></li>
+</ul>
+<h3>demos/moe-router/</h3>
+<ul>
+<li><a href="demos-moe-router-moe-router.xtl.html">moe-router.xtl</a></li>
+</ul>
+<h3>demos/net-macro/</h3>
+<ul>
+<li><a href="demos-net-macro-net-macro.xtl.html">net-macro.xtl</a></li>
+<li><a href="demos-net-macro-train-it.xtl.html">train-it.xtl</a></li>
+</ul>
+<h3>demos/pipelines/</h3>
+<ul>
+<li><a href="demos-pipelines-diffusion.xtl.html">diffusion.xtl</a></li>
+<li><a href="demos-pipelines-equations.xtl.html">equations.xtl</a></li>
+<li><a href="demos-pipelines-pipelines.xtl.html">pipelines.xtl</a></li>
+<li><a href="demos-pipelines-rosetta.xtl.html">rosetta.xtl</a></li>
+</ul>
+<h3>demos/ternary-net/</h3>
+<ul>
+<li><a href="demos-ternary-net-ternary-net.xtl.html">ternary-net.xtl</a></li>
+</ul>
+<h3>demos/train-live/</h3>
+<ul>
+<li><a href="demos-train-live-train-live.xtl.html">train-live.xtl</a></li>
+</ul>
+<h3>demos/world-model/</h3>
+<ul>
+<li><a href="demos-world-model-world-model.xtl.html">world-model.xtl</a></li>
+</ul>
+<h3>libs/Activations/demos/</h3>
+<ul>
+<li><a href="libs-Activations-demos-curves.xtl.html">curves.xtl</a></li>
+</ul>
+<h3>libs/Activations/src/</h3>
+<ul>
+<li><a href="libs-Activations-src-Activations.xtl.html">Activations.xtl</a></li>
+</ul>
+<h3>libs/Attention/demos/</h3>
+<ul>
+<li><a href="libs-Attention-demos-previous.xtl.html">previous.xtl</a></li>
+</ul>
+<h3>libs/Attention/src/</h3>
+<ul>
+<li><a href="libs-Attention-src-Attention.xtl.html">Attention.xtl</a></li>
+</ul>
+<h3>libs/Conv/demos/</h3>
+<ul>
+<li><a href="libs-Conv-demos-edges.xtl.html">edges.xtl</a></li>
+</ul>
+<h3>libs/Conv/src/</h3>
+<ul>
+<li><a href="libs-Conv-src-Conv.xtl.html">Conv.xtl</a></li>
+</ul>
+<h3>libs/Embed/demos/</h3>
+<ul>
+<li><a href="libs-Embed-demos-pets.xtl.html">pets.xtl</a></li>
+</ul>
+<h3>libs/Embed/src/</h3>
+<ul>
+<li><a href="libs-Embed-src-Embed.xtl.html">Embed.xtl</a></li>
+</ul>
+<h3>libs/Flow/demos/</h3>
+<ul>
+<li><a href="libs-Flow-demos-mlp.xtl.html">mlp.xtl</a></li>
+</ul>
+<h3>libs/Flow/src/</h3>
+<ul>
+<li><a href="libs-Flow-src-Flow.xtlm.html">Flow.xtlm</a></li>
+</ul>
+<h3>libs/HC/demos/</h3>
+<ul>
+<li><a href="libs-HC-demos-depth.xtl.html">depth.xtl</a></li>
+</ul>
+<h3>libs/HC/src/</h3>
+<ul>
+<li><a href="libs-HC-src-HC.xtl.html">HC.xtl</a></li>
+</ul>
+<h3>libs/Integrals/demos/</h3>
+<ul>
+<li><a href="libs-Integrals-demos-convolution.xtl.html">convolution.xtl</a></li>
+<li><a href="libs-Integrals-demos-gelu.xtl.html">gelu.xtl</a></li>
+</ul>
+<h3>libs/Integrals/src/</h3>
+<ul>
+<li><a href="libs-Integrals-src-Integrals.xtlm.html">Integrals.xtlm</a></li>
+</ul>
+<h3>libs/Learn/demos/</h3>
+<ul>
+<li><a href="libs-Learn-demos-blobs.xtl.html">blobs.xtl</a></li>
+</ul>
+<h3>libs/Learn/src/</h3>
+<ul>
+<li><a href="libs-Learn-src-Learn.xtl.html">Learn.xtl</a></li>
+</ul>
+<h3>libs/LoRA/demos/</h3>
+<ul>
+<li><a href="libs-LoRA-demos-sizes.xtl.html">sizes.xtl</a></li>
+</ul>
+<h3>libs/LoRA/src/</h3>
+<ul>
+<li><a href="libs-LoRA-src-LoRA.xtl.html">LoRA.xtl</a></li>
+<li><a href="libs-LoRA-src-LoRA.xtlm.html">LoRA.xtlm</a></li>
+</ul>
+<h3>libs/MoE/demos/</h3>
+<ul>
+<li><a href="libs-MoE-demos-routing.xtl.html">routing.xtl</a></li>
+</ul>
+<h3>libs/MoE/src/</h3>
+<ul>
+<li><a href="libs-MoE-src-MoE.xtl.html">MoE.xtl</a></li>
+</ul>
+<h3>libs/Net/demos/</h3>
+<ul>
+<li><a href="libs-Net-demos-train-xor.xtl.html">train-xor.xtl</a></li>
+<li><a href="libs-Net-demos-xor.xtl.html">xor.xtl</a></li>
+</ul>
+<h3>libs/Net/src/</h3>
+<ul>
+<li><a href="libs-Net-src-Net.xtlm.html">Net.xtlm</a></li>
+</ul>
+<h3>libs/NN/demos/</h3>
+<ul>
+<li><a href="libs-NN-demos-xor.xtl.html">xor.xtl</a></li>
+</ul>
+<h3>libs/NN/src/</h3>
+<ul>
+<li><a href="libs-NN-src-NN.xtl.html">NN.xtl</a></li>
+</ul>
+<h3>libs/Norm/demos/</h3>
+<ul>
+<li><a href="libs-Norm-demos-rows.xtl.html">rows.xtl</a></li>
+</ul>
+<h3>libs/Norm/src/</h3>
+<ul>
+<li><a href="libs-Norm-src-Norm.xtl.html">Norm.xtl</a></li>
+</ul>
+<h3>libs/Optim/demos/</h3>
+<ul>
+<li><a href="libs-Optim-demos-bowl.xtl.html">bowl.xtl</a></li>
+</ul>
+<h3>libs/Optim/src/</h3>
+<ul>
+<li><a href="libs-Optim-src-Optim.xtl.html">Optim.xtl</a></li>
+</ul>
+<h3>libs/Quant/demos/</h3>
+<ul>
+<li><a href="libs-Quant-demos-formats.xtl.html">formats.xtl</a></li>
+</ul>
+<h3>libs/Quant/src/</h3>
+<ul>
+<li><a href="libs-Quant-src-Quant.xtl.html">Quant.xtl</a></li>
+</ul>
+<h3>libs/Sample/demos/</h3>
+<ul>
+<li><a href="libs-Sample-demos-next.xtl.html">next.xtl</a></li>
+</ul>
+<h3>libs/Sample/src/</h3>
+<ul>
+<li><a href="libs-Sample-src-Sample.xtl.html">Sample.xtl</a></li>
+</ul>
+<h3>std/</h3>
+<ul>
+<li><a href="std-Svg.xtl.html">Svg.xtl</a></li>
+<li><a href="std-System.xtlm.html">System.xtlm</a></li>
+</ul>
+<h3>work/libs/Check/src/</h3>
+<ul>
+<li><a href="work-libs-Check-src-Check.xtl.html">Check.xtl</a></li>
+<li><a href="work-libs-Check-src-Check.xtlm.html">Check.xtlm</a></li>
+</ul>
+<h3>work/libs/Equations/src/</h3>
+<ul>
+<li><a href="work-libs-Equations-src-Equations.xtl.html">Equations.xtl</a></li>
+<li><a href="work-libs-Equations-src-Equations.xtlm.html">Equations.xtlm</a></li>
+</ul>
+<h3>work/libs/Format/src/</h3>
+<ul>
+<li><a href="work-libs-Format-src-Format.xtl.html">Format.xtl</a></li>
+</ul>
+<h3>work/libs/Lists/src/</h3>
+<ul>
+<li><a href="work-libs-Lists-src-Lists.xtl.html">Lists.xtl</a></li>
+</ul>
+<h3>work/libs/Plot/src/</h3>
+<ul>
+<li><a href="work-libs-Plot-src-Plot.xtl.html">Plot.xtl</a></li>
+</ul>
+<h3>work/libs/Strings/src/</h3>
+<ul>
+<li><a href="work-libs-Strings-src-Strings.xtl.html">Strings.xtl</a></li>
+</ul>
+<ul>
+<li><a href="builtins.html">built-ins</a></li>
+</ul>
+<h2>On this page</h2>
+<ul>
+<li><a href="#section-1">The residual stream: named blocks</a></li>
+<li class="item"><a href="#oC">oC</a></li>
+<li class="item"><a href="#oV">oV</a></li>
+<li class="item"><a href="#oP">oP</a></li>
+<li class="item"><a href="#oT">oT</a></li>
+<li class="item"><a href="#oD">oD</a></li>
+<li class="item"><a href="#oG">oG</a></li>
+<li class="item"><a href="#oS">oS</a></li>
+<li class="item"><a href="#oQ">oQ</a></li>
+<li class="item"><a href="#W">W</a></li>
+<li class="item"><a href="#u.m_m"><span class="c-userfunc">ᵘm̲m</span></a></li>
+<li class="item"><a href="#u.b_lock"><span class="c-userfunc">ᵘb̲lock</span></a></li>
+<li class="item"><a href="#u.o_ne"><span class="c-userfunc">ᵘo̲ne</span></a></li>
+<li class="item"><a href="#u.r_ows"><span class="c-userfunc">ᵘr̲ows</span></a></li>
+<li><a href="#section-2">A prompt</a></li>
+<li class="item"><a href="#u.p_rompt"><span class="c-userfunc">ᵘp̲rompt</span></a></li>
+<li class="item"><a href="#u.e_mbed"><span class="c-userfunc">ᵘe̲mbed</span></a></li>
+<li><a href="#section-3">One head</a></li>
+<li class="item"><a href="#u.a_ttn"><span class="c-userfunc">ᵘa̲ttn</span></a></li>
+<li class="item"><a href="#u.s_hift"><span class="c-userfunc">ᵘs̲hift</span></a></li>
+<li><a href="#section-4">The circuit</a></li>
+<li class="item"><a href="#beta">beta</a></li>
+<li class="item"><a href="#sink">sink</a></li>
+<li class="item"><a href="#alpha">alpha</a></li>
+<li class="item"><a href="#u.r_un"><span class="c-userfunc">ᵘr̲un</span></a></li>
+<li><a href="#section-5">What the readers did</a></li>
+<li class="item"><a href="#u.m_argin"><span class="c-userfunc">ᵘm̲argin</span></a></li>
+<li class="item"><a href="#u.r_ead"><span class="c-userfunc">ᵘr̲ead</span></a></li>
+<li class="item"><a href="#u.r_4"><span class="c-userfunc">ᵘr̲4</span></a></li>
+<li class="item"><a href="#intact">intact</a></li>
+<li><a href="#section-6">The paper's two prompts</a></li>
+<li class="item"><a href="#one">one</a></li>
+<li class="item"><a href="#two">two</a></li>
+<li class="item"><a href="#X1">X1</a></li>
+<li class="item"><a href="#A1">A1</a></li>
+<li class="item"><a href="#l1">l1</a></li>
+<li class="item"><a href="#X2">X2</a></li>
+<li class="item"><a href="#A2">A2</a></li>
+<li class="item"><a href="#l2">l2</a></li>
+<li><a href="#section-7">Knockouts</a></li>
+<li class="item"><a href="#u.c_ase"><span class="c-userfunc">ᵘc̲ase</span></a></li>
+<li><a href="#section-8">The read law</a></li>
+<li class="item"><a href="#u.l_aw"><span class="c-userfunc">ᵘl̲aw</span></a></li>
+<li class="item"><a href="#err">err</a></li>
+</ul>
+</nav>
+<main>
+<button class="theme" title="Light or dark">theme</button>
+<section id="results"></section>
+<h1><span class="kind">program</span>demos/icl-circuit/icl-circuit.xtl</h1>
+<div class="doc">
+<p>A circuit for in-context learning, built by hand (Gao and Gao, arXiv
+2611.05344, Section 12; reimplemented from its toy/toy_circuit.py,
+MIT). A prompt shows demonstrations, a sentence of some class and
+then a label, and asks for the label of a query sentence. Three
+attention layers answer it without a weight trained: writers stamp
+each label with its sentence's class (the slot's key), a duplicate
+detector marks a label seen before, a pooling head gathers those
+marks into a gate at the query, and readers match the query's class
+against the slot keys and copy the label. The readers' one other key
+is a sink at position 0: with no repeated label the gate stays
+closed and the readers rest there; a repeat opens it.</p>
+</div>
+<p class="meta"><a href="demos-icl-circuit-icl-circuit.xtl.src.html">source</a> &middot; imports <code><span class="c-error">nn:</span></code> <a href="libs-NN-src-NN.xtl.html">libs/NN/src/NN.xtl</a>; <code><span class="c-error">at:</span></code> <a href="libs-Attention-src-Attention.xtl.html">libs/Attention/src/Attention.xtl</a></p>
+<h2 class="section" id="section-1">The residual stream: named blocks</h2>
+<div class="item" id="oC">
+<h3><a href="#oC">oC</a> <span class="type">: Int</span></h3>
+<div class="meta">value &middot; <a href="demos-icl-circuit-icl-circuit.xtl.src.html#L22">line 22</a></div>
+<pre class="code">oC ← <span class="c-number">0</span></pre>
+<div class="uses">Used in: <a href="demos-icl-circuit-icl-circuit.xtl.html#u.r_un"><span class="c-userfunc">ᵘr̲un</span></a></div>
+</div>
+<div class="item" id="oV">
+<h3><a href="#oV">oV</a> <span class="type">: Int</span></h3>
+<div class="meta">value &middot; <a href="demos-icl-circuit-icl-circuit.xtl.src.html#L23">line 23</a></div>
+<pre class="code">oV ← <span class="c-number">8</span></pre>
+<div class="uses">Used in: <a href="demos-icl-circuit-icl-circuit.xtl.html#u.r_un"><span class="c-userfunc">ᵘr̲un</span></a></div>
+</div>
+<div class="item" id="oP">
+<h3><a href="#oP">oP</a> <span class="type">: Int</span></h3>
+<div class="meta">value &middot; <a href="demos-icl-circuit-icl-circuit.xtl.src.html#L24">line 24</a></div>
+<pre class="code">oP ← <span class="c-number">24</span></pre>
+<div class="uses">Used in: <a href="demos-icl-circuit-icl-circuit.xtl.html#u.s_hift"><span class="c-userfunc">ᵘs̲hift</span></a>, <a href="demos-icl-circuit-icl-circuit.xtl.html#u.r_un"><span class="c-userfunc">ᵘr̲un</span></a></div>
+</div>
+<div class="item" id="oT">
+<h3><a href="#oT">oT</a> <span class="type">: Int</span></h3>
+<div class="meta">value &middot; <a href="demos-icl-circuit-icl-circuit.xtl.src.html#L25">line 25</a></div>
+<pre class="code">oT ← <span class="c-number">152</span></pre>
+<div class="uses">Used in: <a href="demos-icl-circuit-icl-circuit.xtl.html#u.r_un"><span class="c-userfunc">ᵘr̲un</span></a></div>
+</div>
+<div class="item" id="oD">
+<h3><a href="#oD">oD</a> <span class="type">: Int</span></h3>
+<div class="meta">value &middot; <a href="demos-icl-circuit-icl-circuit.xtl.src.html#L26">line 26</a></div>
+<pre class="code">oD ← <span class="c-number">156</span></pre>
+<div class="uses">Used in: <a href="demos-icl-circuit-icl-circuit.xtl.html#u.r_un"><span class="c-userfunc">ᵘr̲un</span></a></div>
+</div>
+<div class="item" id="oG">
+<h3><a href="#oG">oG</a> <span class="type">: Int</span></h3>
+<div class="meta">value &middot; <a href="demos-icl-circuit-icl-circuit.xtl.src.html#L27">line 27</a></div>
+<pre class="code">oG ← <span class="c-number">157</span></pre>
+<div class="uses">Used in: <a href="demos-icl-circuit-icl-circuit.xtl.html#u.r_un"><span class="c-userfunc">ᵘr̲un</span></a>, <a href="demos-icl-circuit-icl-circuit.xtl.html#u.r_ead"><span class="c-userfunc">ᵘr̲ead</span></a></div>
+</div>
+<div class="item" id="oS">
+<h3><a href="#oS">oS</a> <span class="type">: Int</span></h3>
+<div class="meta">value &middot; <a href="demos-icl-circuit-icl-circuit.xtl.src.html#L28">line 28</a></div>
+<pre class="code">oS ← <span class="c-number">158</span></pre>
+<div class="uses">Used in: <a href="demos-icl-circuit-icl-circuit.xtl.html#u.r_un"><span class="c-userfunc">ᵘr̲un</span></a></div>
+</div>
+<div class="item" id="oQ">
+<h3><a href="#oQ">oQ</a> <span class="type">: Int</span></h3>
+<div class="meta">value &middot; <a href="demos-icl-circuit-icl-circuit.xtl.src.html#L29">line 29</a></div>
+<pre class="code">oQ ← <span class="c-number">166</span></pre>
+<div class="uses">Used in: <a href="demos-icl-circuit-icl-circuit.xtl.html#u.r_un"><span class="c-userfunc">ᵘr̲un</span></a></div>
+</div>
+<div class="item" id="W">
+<h3><a href="#W">W</a> <span class="type">: Int</span></h3>
+<div class="meta">value &middot; <a href="demos-icl-circuit-icl-circuit.xtl.src.html#L30">line 30</a></div>
+<pre class="code">W ← <span class="c-number">174</span></pre>
+<div class="uses">Used in: <a href="demos-icl-circuit-icl-circuit.xtl.html#u.b_lock"><span class="c-userfunc">ᵘb̲lock</span></a>, <a href="demos-icl-circuit-icl-circuit.xtl.html#u.r_un"><span class="c-userfunc">ᵘr̲un</span></a></div>
+</div>
+<div class="item" id="u.m_m">
+<h3><a href="#u.m_m"><span class="c-userfunc">ᵘm̲m</span></a> <span class="type">: Num a =&gt; a -&gt; a -&gt; a</span></h3>
+<div class="meta">function &middot; <a href="demos-icl-circuit-icl-circuit.xtl.src.html#L33">line 33</a></div>
+<div class="doc">
+<p>The matrix product.</p>
+</div>
+<pre class="code"><span class="c-userfunc">ᵘm̲m</span> ← <span class="c-depth0">{</span> a b → a <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#i_nner" class="c-builtin">i̲nner</a> b <span class="c-depth0">}</span></pre>
+<div class="uses">Used in: <a href="demos-icl-circuit-icl-circuit.xtl.html#u.a_ttn"><span class="c-userfunc">ᵘa̲ttn</span></a></div>
+</div>
+<div class="item" id="u.b_lock">
+<h3><a href="#u.b_lock"><span class="c-userfunc">ᵘb̲lock</span></a> <span class="type">: Int -&gt; Int -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="demos-icl-circuit-icl-circuit.xtl.src.html#L36">line 36</a></div>
+<div class="doc">
+<p><code>o <span class="c-builtin">b̲lock</span> k</code>: the W by k matrix reading the k numbers from offset o
+(its transpose writes them there).</p>
+</div>
+<pre class="code"><span class="c-userfunc">ᵘb̲lock</span> ← <span class="c-depth0">{</span> o k → <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <span class="c-depth1">(</span><a href="builtins.html#o_ffsets" class="c-builtin">o̲ffsets</a> <a href="demos-icl-circuit-icl-circuit.xtl.html#W">W</a><span class="c-depth1">)</span> <span class="c-symbol">'</span><a href="builtins.html#-3d" class="c-symbol">=</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> o <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#o_ffsets" class="c-builtin">o̲ffsets</a> k <span class="c-depth0">}</span></pre>
+<div class="uses">Used in: <a href="demos-icl-circuit-icl-circuit.xtl.html#u.s_hift"><span class="c-userfunc">ᵘs̲hift</span></a>, <a href="demos-icl-circuit-icl-circuit.xtl.html#u.r_un"><span class="c-userfunc">ᵘr̲un</span></a></div>
+</div>
+<div class="item" id="u.o_ne">
+<h3><a href="#u.o_ne"><span class="c-userfunc">ᵘo̲ne</span></a> <span class="type">: Int -&gt; Int -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="demos-icl-circuit-icl-circuit.xtl.src.html#L38">line 38</a></div>
+<div class="doc">
+<p><code>k <span class="c-builtin">o̲ne</span> x</code>: each item of x as a row of k, 1 at its value.</p>
+</div>
+<pre class="code"><span class="c-userfunc">ᵘo̲ne</span> ← <span class="c-depth0">{</span> k x → <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> x <span class="c-symbol">'</span><a href="builtins.html#-3d" class="c-symbol">=</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> <a href="builtins.html#o_ffsets" class="c-builtin">o̲ffsets</a> k <span class="c-depth0">}</span></pre>
+<div class="uses">Used in: <a href="demos-icl-circuit-icl-circuit.xtl.html#u.e_mbed"><span class="c-userfunc">ᵘe̲mbed</span></a>, <a href="demos-icl-circuit-icl-circuit.xtl.html#u.m_argin"><span class="c-userfunc">ᵘm̲argin</span></a></div>
+</div>
+<div class="item" id="u.r_ows">
+<h3><a href="#u.r_ows"><span class="c-userfunc">ᵘr̲ows</span></a> <span class="type">: Num a =&gt; a -&gt; Float -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="demos-icl-circuit-icl-circuit.xtl.src.html#L40">line 40</a></div>
+<div class="doc">
+<p><code>r <span class="c-builtin">r̲ows</span> Y</code>: Y's rows where r is true, the others zero.</p>
+</div>
+<pre class="code"><span class="c-userfunc">ᵘr̲ows</span> ← <span class="c-depth0">{</span> r Y → Y <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-depth1">(</span><a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> r<span class="c-depth1">)</span> <span class="c-builtin">'</span><a href="builtins.html#l_eft" class="c-builtin">l̲eft</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> <a href="builtins.html#o_ffsets" class="c-builtin">o̲ffsets</a> <span class="c-number">2</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> Y <span class="c-depth0">}</span></pre>
+<div class="uses">Used in: <a href="demos-icl-circuit-icl-circuit.xtl.html#u.r_un"><span class="c-userfunc">ᵘr̲un</span></a></div>
+</div>
+<h2 class="section" id="section-2">A prompt</h2>
+<div class="item" id="u.p_rompt">
+<h3><a href="#u.p_rompt"><span class="c-userfunc">ᵘp̲rompt</span></a> <span class="type">: (Num a, Num b) =&gt; (a, a, a) -&gt; (b, a, a)</span></h3>
+<div class="meta">function &middot; <a href="demos-icl-circuit-icl-circuit.xtl.src.html#L47">line 47</a></div>
+<div class="doc">
+<p><code><span class="c-builtin">p̲rompt</span> <span class="c-depth0">(</span>classes, labels, q<span class="c-depth0">)</span></code>: the start token, then each
+demonstration as three tokens (its sentence, an arrow, its label),
+then the query's sentence of class q and an arrow; each token as
+(type, class, label).</p>
+</div>
+<pre class="code"><span class="c-userfunc">ᵘp̲rompt</span> ← <span class="c-depth0">{</span> <span class="c-depth1">(</span>cs, ls, q<span class="c-depth1">)</span> →
+  N ← <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> cs
+  z ← <span class="c-depth1">(</span>N <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">2</span><span class="c-depth1">)</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0</span>
+  t ← <span class="c-number">0</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-depth1">(</span><a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> <span class="c-depth2">(</span>N <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">3</span><span class="c-depth2">)</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">1</span> <span class="c-number">2</span> <span class="c-number">3</span><span class="c-depth1">)</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">1</span> <span class="c-number">2</span>
+  c ← <span class="c-number">0</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-depth1">(</span><a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> <span class="c-depth2">(</span><span class="c-depth3">(</span>N <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">1</span><span class="c-depth3">)</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> cs<span class="c-depth2">)</span> <a href="builtins.html#c_at" class="c-builtin">c̲at₂</a> z<span class="c-depth1">)</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> q <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">0</span>
+  v ← <span class="c-number">0</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-depth1">(</span><a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> z <a href="builtins.html#c_at" class="c-builtin">c̲at₂</a> <span class="c-depth2">(</span>N <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">1</span><span class="c-depth2">)</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> ls<span class="c-depth1">)</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">0</span> <span class="c-number">0</span>
+  <span class="c-depth1">(</span>t, c, v<span class="c-depth1">)</span>
+<span class="c-depth0">}</span></pre>
+<div class="uses">Used in: <a href="demos-icl-circuit-icl-circuit.xtl.html#u.r_ead"><span class="c-userfunc">ᵘr̲ead</span></a>, <a href="demos-icl-circuit-icl-circuit.xtl.html#X1">X1</a>, <a href="demos-icl-circuit-icl-circuit.xtl.html#X2">X2</a>, <a href="demos-icl-circuit-icl-circuit.xtl.html#u.c_ase"><span class="c-userfunc">ᵘc̲ase</span></a>, <a href="demos-icl-circuit-icl-circuit.xtl.html#u.l_aw"><span class="c-userfunc">ᵘl̲aw</span></a></div>
+</div>
+<div class="item" id="u.e_mbed">
+<h3><a href="#u.e_mbed"><span class="c-userfunc">ᵘe̲mbed</span></a> <span class="type">: (Int, Int, Int) -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="demos-icl-circuit-icl-circuit.xtl.src.html#L57">line 57</a></div>
+<div class="doc">
+<p>Each token's first row: its class (a sentence), its label (a label),
+its position and its type; the rest zero until a layer writes it.</p>
+</div>
+<pre class="code"><span class="c-userfunc">ᵘe̲mbed</span> ← <span class="c-depth0">{</span> <span class="c-depth1">(</span>t, c, v<span class="c-depth1">)</span> →
+  n ← <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> t
+  <span class="c-depth1">(</span><span class="c-depth2">(</span><span class="c-number">8</span> <a href="demos-icl-circuit-icl-circuit.xtl.html#u.o_ne" class="c-userfunc">ᵘo̲ne</a> <span class="c-depth3">(</span><span class="c-depth0">(</span>c <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">100</span><span class="c-depth0">)</span> <a href="builtins.html#-2a" class="c-symbol">×</a> t <a href="builtins.html#-3d" class="c-symbol">=</a> <span class="c-number">1</span><span class="c-depth3">)</span> <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">100</span><span class="c-depth2">)</span> <a href="builtins.html#c_at" class="c-builtin">c̲at₂</a> <span class="c-depth2">(</span><span class="c-number">16</span> <a href="demos-icl-circuit-icl-circuit.xtl.html#u.o_ne" class="c-userfunc">ᵘo̲ne</a> <span class="c-depth3">(</span><span class="c-depth0">(</span>v <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">100</span><span class="c-depth0">)</span> <a href="builtins.html#-2a" class="c-symbol">×</a> t <a href="builtins.html#-3d" class="c-symbol">=</a> <span class="c-number">3</span><span class="c-depth3">)</span> <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">100</span><span class="c-depth2">)</span> <a href="builtins.html#c_at" class="c-builtin">c̲at₂</a> <span class="c-depth2">(</span><span class="c-number">128</span> <a href="demos-icl-circuit-icl-circuit.xtl.html#u.o_ne" class="c-userfunc">ᵘo̲ne</a> <a href="builtins.html#o_ffsets" class="c-builtin">o̲ffsets</a> n<span class="c-depth2">)</span> <a href="builtins.html#c_at" class="c-builtin">c̲at₂</a> <span class="c-number">4</span> <a href="demos-icl-circuit-icl-circuit.xtl.html#u.o_ne" class="c-userfunc">ᵘo̲ne</a> t<span class="c-depth1">)</span> <a href="builtins.html#c_at" class="c-builtin">c̲at₂</a> <span class="c-depth1">(</span>n <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">18</span><span class="c-depth1">)</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.0</span>
+<span class="c-depth0">}</span></pre>
+<div class="uses">Used in: <a href="demos-icl-circuit-icl-circuit.xtl.html#u.r_un"><span class="c-userfunc">ᵘr̲un</span></a></div>
+</div>
+<h2 class="section" id="section-3">One head</h2>
+<div class="item" id="u.a_ttn">
+<h3><a href="#u.a_ttn"><span class="c-userfunc">ᵘa̲ttn</span></a> <span class="type">: (Float, Float, Float, Float, Float, Float) -&gt; (Float, Float) -&gt; (Float, Float)</span></h3>
+<div class="meta">function &middot; <a href="demos-icl-circuit-icl-circuit.xtl.src.html#L66">line 66</a></div>
+<div class="doc">
+<p><code><span class="c-depth0">(</span>Wq, Wk, Wv, Wo, s, B<span class="c-depth0">)</span> <span class="c-builtin">a̲ttn</span> <span class="c-depth0">(</span>X, M<span class="c-depth0">)</span></code>: scores s (X Wq)(X Wk)' plus B,
+softmax by row where the mask M allows (Attention's w_eights), the
+output A X Wv Wo; and A.</p>
+</div>
+<pre class="code"><span class="c-userfunc">ᵘa̲ttn</span> ← <span class="c-depth0">{</span> <span class="c-depth1">(</span>Wq, Wk, Wv, Wo, s, B<span class="c-depth1">)</span> <span class="c-depth1">(</span>X, M<span class="c-depth1">)</span> →
+  A ← M <a href="libs-Attention-src-Attention.xtl.html#l.w_eights" class="c-libfunc">ᵃᵗw̲eights</a> B <a href="builtins.html#-2b" class="c-symbol">+</a> s <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-depth1">(</span>X <a href="demos-icl-circuit-icl-circuit.xtl.html#u.m_m" class="c-userfunc">ᵘm̲m</a> Wq<span class="c-depth1">)</span> <a href="demos-icl-circuit-icl-circuit.xtl.html#u.m_m" class="c-userfunc">ᵘm̲m</a> <a href="builtins.html#o_-5c" class="c-builtin">o̲\</a> X <a href="demos-icl-circuit-icl-circuit.xtl.html#u.m_m" class="c-userfunc">ᵘm̲m</a> Wk
+  <span class="c-depth1">(</span><span class="c-depth2">(</span>A <a href="demos-icl-circuit-icl-circuit.xtl.html#u.m_m" class="c-userfunc">ᵘm̲m</a> X <a href="demos-icl-circuit-icl-circuit.xtl.html#u.m_m" class="c-userfunc">ᵘm̲m</a> Wv<span class="c-depth2">)</span> <a href="demos-icl-circuit-icl-circuit.xtl.html#u.m_m" class="c-userfunc">ᵘm̲m</a> Wo, A<span class="c-depth1">)</span>
+<span class="c-depth0">}</span></pre>
+<div class="uses">Used in: <a href="demos-icl-circuit-icl-circuit.xtl.html#u.r_un"><span class="c-userfunc">ᵘr̲un</span></a></div>
+</div>
+<div class="item" id="u.s_hift">
+<h3><a href="#u.s_hift"><span class="c-userfunc">ᵘs̲hift</span></a> <span class="type">: Int -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="demos-icl-circuit-icl-circuit.xtl.src.html#L72">line 72</a></div>
+<div class="doc">
+<p>A query that finds the token d places back: the position block read
+d rows lower.</p>
+</div>
+<pre class="code"><span class="c-userfunc">ᵘs̲hift</span> ← <span class="c-depth0">{</span> d → <span class="c-depth1">(</span><a href="demos-icl-circuit-icl-circuit.xtl.html#oP">oP</a> <a href="builtins.html#-2b" class="c-symbol">+</a> d<span class="c-depth1">)</span> <a href="demos-icl-circuit-icl-circuit.xtl.html#u.b_lock" class="c-userfunc">ᵘb̲lock</a> <span class="c-number">128</span> <span class="c-depth0">}</span></pre>
+<div class="uses">Used in: <a href="demos-icl-circuit-icl-circuit.xtl.html#u.r_un"><span class="c-userfunc">ᵘr̲un</span></a></div>
+</div>
+<h2 class="section" id="section-4">The circuit</h2>
+<div class="item" id="beta">
+<h3><a href="#beta">beta</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-icl-circuit-icl-circuit.xtl.src.html#L77">line 77</a></div>
+<pre class="code">beta ← <span class="c-number">4.0</span></pre>
+<div class="uses">Used in: <a href="demos-icl-circuit-icl-circuit.xtl.html#u.r_un"><span class="c-userfunc">ᵘr̲un</span></a>, <a href="demos-icl-circuit-icl-circuit.xtl.html#u.r_ead"><span class="c-userfunc">ᵘr̲ead</span></a></div>
+</div>
+<div class="item" id="sink">
+<h3><a href="#sink">sink</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-icl-circuit-icl-circuit.xtl.src.html#L78">line 78</a></div>
+<pre class="code">sink ← <span class="c-number">5.0</span></pre>
+<div class="uses">Used in: <a href="demos-icl-circuit-icl-circuit.xtl.html#u.r_un"><span class="c-userfunc">ᵘr̲un</span></a>, <a href="demos-icl-circuit-icl-circuit.xtl.html#u.r_ead"><span class="c-userfunc">ᵘr̲ead</span></a></div>
+</div>
+<div class="item" id="alpha">
+<h3><a href="#alpha">alpha</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-icl-circuit-icl-circuit.xtl.src.html#L79">line 79</a></div>
+<pre class="code">alpha ← <span class="c-number">8.0</span></pre>
+<div class="uses">Used in: <a href="demos-icl-circuit-icl-circuit.xtl.html#u.r_un"><span class="c-userfunc">ᵘr̲un</span></a>, <a href="demos-icl-circuit-icl-circuit.xtl.html#u.r_ead"><span class="c-userfunc">ᵘr̲ead</span></a></div>
+</div>
+<div class="item" id="u.r_un">
+<h3><a href="#u.r_un"><span class="c-userfunc">ᵘr̲un</span></a> <span class="type">: (Float, Float, Float, Float, Float, Float, Float, Float) -&gt; (Int, Int, Int) -&gt; (Float, Float, Float)</span></h3>
+<div class="meta">function &middot; <a href="demos-icl-circuit-icl-circuit.xtl.src.html#L87">line 87</a></div>
+<div class="doc">
+<p><code><span class="c-depth0">(</span>kw, kd, kp, gadd, gblock, H, ov, noise<span class="c-depth0">)</span> <span class="c-builtin">r̲un</span> prompt</code>: the three
+layers. kw, kd, kp are 1 for the writers, duplicate detector and
+pooling head, 0 to knock one out; gadd is added to the query's gate;
+gblock 1 takes the gate out of the readers' queries; H readers, each
+copying its label at strength ov; a noise above 0 caps the readout
+(the paper's gain bound). Gives (the last residual, the readers'
+attention, each label's logit at the query).</p>
+</div>
+<pre class="code"><span class="c-userfunc">ᵘr̲un</span> ← <span class="c-depth0">{</span> <span class="c-depth1">(</span>kw, kd, kp, gadd, gblock, H, ov, noise<span class="c-depth1">)</span> <span class="c-depth1">(</span>t, c, v<span class="c-depth1">)</span> →
+  n ← <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> t
+  X0 ← <a href="demos-icl-circuit-icl-circuit.xtl.html#u.e_mbed" class="c-userfunc">ᵘe̲mbed</a> <span class="c-depth1">(</span>t, c, v<span class="c-depth1">)</span>
+  M ← <a href="libs-Attention-src-Attention.xtl.html#l.c_ausal" class="c-libfunc">ᵃᵗc̲ausal</a> n
+  Z ← <span class="c-depth1">(</span>n <a href="builtins.html#c_at" class="c-builtin">c̲at</a> n<span class="c-depth1">)</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.0</span>
+  <span class="c-comment">⍝</span><span class="c-comment"> Layer 1, the writers: a label reads the sentence two back and</span>
+  <span class="c-comment">⍝</span><span class="c-comment"> writes its class into the slot key; the arrow reads the sentence</span>
+  <span class="c-comment">⍝</span><span class="c-comment"> one back and writes the query code.</span>
+  <span class="c-depth1">(</span>S2, _<span class="c-depth1">)</span> ← <span class="c-depth1">(</span><a href="demos-icl-circuit-icl-circuit.xtl.html#u.s_hift" class="c-userfunc">ᵘs̲hift</a> <span class="c-number">2</span>, <a href="demos-icl-circuit-icl-circuit.xtl.html#oP">oP</a> <a href="demos-icl-circuit-icl-circuit.xtl.html#u.b_lock" class="c-userfunc">ᵘb̲lock</a> <span class="c-number">128</span>, <a href="demos-icl-circuit-icl-circuit.xtl.html#oC">oC</a> <a href="demos-icl-circuit-icl-circuit.xtl.html#u.b_lock" class="c-userfunc">ᵘb̲lock</a> <span class="c-number">8</span>, <a href="builtins.html#o_-5c" class="c-builtin">o̲\</a> <a href="demos-icl-circuit-icl-circuit.xtl.html#oS">oS</a> <a href="demos-icl-circuit-icl-circuit.xtl.html#u.b_lock" class="c-userfunc">ᵘb̲lock</a> <span class="c-number">8</span>, <span class="c-number">50.0</span>, Z<span class="c-depth1">)</span> <a href="demos-icl-circuit-icl-circuit.xtl.html#u.a_ttn" class="c-userfunc">ᵘa̲ttn</a> <span class="c-depth1">(</span>X0, M<span class="c-depth1">)</span>
+  X1 ← X0 <a href="builtins.html#-2b" class="c-symbol">+</a> kw <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-depth1">(</span>t <a href="builtins.html#-3d" class="c-symbol">=</a> <span class="c-number">3</span><span class="c-depth1">)</span> <a href="demos-icl-circuit-icl-circuit.xtl.html#u.r_ows" class="c-userfunc">ᵘr̲ows</a> S2
+  <span class="c-depth1">(</span>Q1, _<span class="c-depth1">)</span> ← <span class="c-depth1">(</span><a href="demos-icl-circuit-icl-circuit.xtl.html#u.s_hift" class="c-userfunc">ᵘs̲hift</a> <span class="c-number">1</span>, <a href="demos-icl-circuit-icl-circuit.xtl.html#oP">oP</a> <a href="demos-icl-circuit-icl-circuit.xtl.html#u.b_lock" class="c-userfunc">ᵘb̲lock</a> <span class="c-number">128</span>, <a href="demos-icl-circuit-icl-circuit.xtl.html#oC">oC</a> <a href="demos-icl-circuit-icl-circuit.xtl.html#u.b_lock" class="c-userfunc">ᵘb̲lock</a> <span class="c-number">8</span>, <a href="builtins.html#o_-5c" class="c-builtin">o̲\</a> <a href="demos-icl-circuit-icl-circuit.xtl.html#oQ">oQ</a> <a href="demos-icl-circuit-icl-circuit.xtl.html#u.b_lock" class="c-userfunc">ᵘb̲lock</a> <span class="c-number">8</span>, <span class="c-number">50.0</span>, Z<span class="c-depth1">)</span> <a href="demos-icl-circuit-icl-circuit.xtl.html#u.a_ttn" class="c-userfunc">ᵘa̲ttn</a> <span class="c-depth1">(</span>X1, M<span class="c-depth1">)</span>
+  X2 ← X1 <a href="builtins.html#-2b" class="c-symbol">+</a> kw <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-depth1">(</span>t <a href="builtins.html#-3d" class="c-symbol">=</a> <span class="c-number">2</span><span class="c-depth1">)</span> <a href="demos-icl-circuit-icl-circuit.xtl.html#u.r_ows" class="c-userfunc">ᵘr̲ows</a> Q1
+  <span class="c-comment">⍝</span><span class="c-comment"> Layer 1, the duplicate detector: a label looks at the earlier</span>
+  <span class="c-comment">⍝</span><span class="c-comment"> labels (score 20 for the same label) and the start (10); its flag</span>
+  <span class="c-comment">⍝</span><span class="c-comment"> is the weight on labels, near 1 for a repeat.</span>
+  eye ← <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <span class="c-depth1">(</span><a href="builtins.html#o_ffsets" class="c-builtin">o̲ffsets</a> n<span class="c-depth1">)</span> <span class="c-symbol">'</span><a href="builtins.html#-3d" class="c-symbol">=</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> <a href="builtins.html#o_ffsets" class="c-builtin">o̲ffsets</a> n
+  Md ← M <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-depth1">(</span><span class="c-number">1.0</span> <a href="builtins.html#-2d" class="c-symbol">−</a> eye<span class="c-depth1">)</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <span class="c-depth1">(</span><a href="builtins.html#o_ffsets" class="c-builtin">o̲ffsets</a> n<span class="c-depth1">)</span> <span class="c-builtin">'</span><a href="builtins.html#r_ight" class="c-builtin">r̲ight</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> <span class="c-depth1">(</span>t <a href="builtins.html#-3d" class="c-symbol">=</a> <span class="c-number">3</span><span class="c-depth1">)</span> <a href="builtins.html#-2b" class="c-symbol">+</a> t <a href="builtins.html#-3d" class="c-symbol">=</a> <span class="c-number">0</span>
+  Wqd ← <span class="c-depth1">(</span><a href="demos-icl-circuit-icl-circuit.xtl.html#oV">oV</a> <a href="demos-icl-circuit-icl-circuit.xtl.html#u.b_lock" class="c-userfunc">ᵘb̲lock</a> <span class="c-number">16</span><span class="c-depth1">)</span> <a href="builtins.html#c_at" class="c-builtin">c̲at₂</a> <span class="c-depth1">(</span><a href="demos-icl-circuit-icl-circuit.xtl.html#oT">oT</a> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">3</span><span class="c-depth1">)</span> <a href="demos-icl-circuit-icl-circuit.xtl.html#u.b_lock" class="c-userfunc">ᵘb̲lock</a> <span class="c-number">1</span>
+  Wkd ← <span class="c-depth1">(</span><a href="demos-icl-circuit-icl-circuit.xtl.html#oV">oV</a> <a href="demos-icl-circuit-icl-circuit.xtl.html#u.b_lock" class="c-userfunc">ᵘb̲lock</a> <span class="c-number">16</span><span class="c-depth1">)</span> <a href="builtins.html#c_at" class="c-builtin">c̲at₂</a> <span class="c-number">0.5</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="demos-icl-circuit-icl-circuit.xtl.html#oT">oT</a> <a href="demos-icl-circuit-icl-circuit.xtl.html#u.b_lock" class="c-userfunc">ᵘb̲lock</a> <span class="c-number">1</span>
+  <span class="c-depth1">(</span>D1, _<span class="c-depth1">)</span> ← <span class="c-depth1">(</span>Wqd, Wkd, <span class="c-depth2">(</span><a href="demos-icl-circuit-icl-circuit.xtl.html#oT">oT</a> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">3</span><span class="c-depth2">)</span> <a href="demos-icl-circuit-icl-circuit.xtl.html#u.b_lock" class="c-userfunc">ᵘb̲lock</a> <span class="c-number">1</span>, <a href="builtins.html#o_-5c" class="c-builtin">o̲\</a> <a href="demos-icl-circuit-icl-circuit.xtl.html#oD">oD</a> <a href="demos-icl-circuit-icl-circuit.xtl.html#u.b_lock" class="c-userfunc">ᵘb̲lock</a> <span class="c-number">1</span>, <span class="c-number">20.0</span>, Z<span class="c-depth1">)</span> <a href="demos-icl-circuit-icl-circuit.xtl.html#u.a_ttn" class="c-userfunc">ᵘa̲ttn</a> <span class="c-depth1">(</span>X2, Md<span class="c-depth1">)</span>
+  X3 ← X2 <a href="builtins.html#-2b" class="c-symbol">+</a> kd <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-depth1">(</span>t <a href="builtins.html#-3d" class="c-symbol">=</a> <span class="c-number">3</span><span class="c-depth1">)</span> <a href="demos-icl-circuit-icl-circuit.xtl.html#u.r_ows" class="c-userfunc">ᵘr̲ows</a> D1
+  <span class="c-comment">⍝</span><span class="c-comment"> Layer 2, pooling: each arrow averages the labels' flags into its</span>
+  <span class="c-comment">⍝</span><span class="c-comment"> gate.</span>
+  <span class="c-depth1">(</span>G1, _<span class="c-depth1">)</span> ← <span class="c-depth1">(</span><span class="c-depth2">(</span><a href="demos-icl-circuit-icl-circuit.xtl.html#oT">oT</a> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">2</span><span class="c-depth2">)</span> <a href="demos-icl-circuit-icl-circuit.xtl.html#u.b_lock" class="c-userfunc">ᵘb̲lock</a> <span class="c-number">1</span>, <span class="c-depth2">(</span><a href="demos-icl-circuit-icl-circuit.xtl.html#oT">oT</a> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">3</span><span class="c-depth2">)</span> <a href="demos-icl-circuit-icl-circuit.xtl.html#u.b_lock" class="c-userfunc">ᵘb̲lock</a> <span class="c-number">1</span>, <a href="demos-icl-circuit-icl-circuit.xtl.html#oD">oD</a> <a href="demos-icl-circuit-icl-circuit.xtl.html#u.b_lock" class="c-userfunc">ᵘb̲lock</a> <span class="c-number">1</span>, <a href="builtins.html#o_-5c" class="c-builtin">o̲\</a> <a href="demos-icl-circuit-icl-circuit.xtl.html#oG">oG</a> <a href="demos-icl-circuit-icl-circuit.xtl.html#u.b_lock" class="c-userfunc">ᵘb̲lock</a> <span class="c-number">1</span>, <span class="c-number">30.0</span>, Z<span class="c-depth1">)</span> <a href="demos-icl-circuit-icl-circuit.xtl.html#u.a_ttn" class="c-userfunc">ᵘa̲ttn</a> <span class="c-depth1">(</span>X3, M<span class="c-depth1">)</span>
+  last ← <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <span class="c-depth1">(</span><a href="builtins.html#o_ffsets" class="c-builtin">o̲ffsets</a> n<span class="c-depth1">)</span> <a href="builtins.html#-3d" class="c-symbol">=</a> n <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span>
+  X4 ← X3 <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-depth1">(</span>kp <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-depth2">(</span>t <a href="builtins.html#-3d" class="c-symbol">=</a> <span class="c-number">2</span><span class="c-depth2">)</span> <a href="demos-icl-circuit-icl-circuit.xtl.html#u.r_ows" class="c-userfunc">ᵘr̲ows</a> G1<span class="c-depth1">)</span> <a href="builtins.html#-2b" class="c-symbol">+</a> gadd <a href="builtins.html#-2a" class="c-symbol">×</a> last <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <span class="c-depth1">(</span><a href="builtins.html#o_ffsets" class="c-builtin">o̲ffsets</a> <a href="demos-icl-circuit-icl-circuit.xtl.html#W">W</a><span class="c-depth1">)</span> <a href="builtins.html#-3d" class="c-symbol">=</a> <a href="demos-icl-circuit-icl-circuit.xtl.html#oG">oG</a>
+  <span class="c-comment">⍝</span><span class="c-comment"> Layer 3, the readers: the query code against the slot keys (beta</span>
+  <span class="c-comment">⍝</span><span class="c-comment"> for a match), the gate lowering the sink (sink - alpha g); the</span>
+  <span class="c-comment">⍝</span><span class="c-comment"> values are the labels.</span>
+  Wqr ← <span class="c-depth1">(</span><a href="demos-icl-circuit-icl-circuit.xtl.html#beta">beta</a> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="demos-icl-circuit-icl-circuit.xtl.html#oQ">oQ</a> <a href="demos-icl-circuit-icl-circuit.xtl.html#u.b_lock" class="c-userfunc">ᵘb̲lock</a> <span class="c-number">8</span><span class="c-depth1">)</span> <a href="builtins.html#c_at" class="c-builtin">c̲at₂</a> <span class="c-depth1">(</span><a href="builtins.html#n_eg" class="c-builtin">n̲eg</a> <a href="demos-icl-circuit-icl-circuit.xtl.html#alpha">alpha</a> <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">1.0</span> <a href="builtins.html#-2d" class="c-symbol">−</a> gblock<span class="c-depth1">)</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="demos-icl-circuit-icl-circuit.xtl.html#oG">oG</a> <a href="demos-icl-circuit-icl-circuit.xtl.html#u.b_lock" class="c-userfunc">ᵘb̲lock</a> <span class="c-number">1</span>
+  Wkr ← <span class="c-depth1">(</span><a href="demos-icl-circuit-icl-circuit.xtl.html#oS">oS</a> <a href="demos-icl-circuit-icl-circuit.xtl.html#u.b_lock" class="c-userfunc">ᵘb̲lock</a> <span class="c-number">8</span><span class="c-depth1">)</span> <a href="builtins.html#c_at" class="c-builtin">c̲at₂</a> <a href="demos-icl-circuit-icl-circuit.xtl.html#oT">oT</a> <a href="demos-icl-circuit-icl-circuit.xtl.html#u.b_lock" class="c-userfunc">ᵘb̲lock</a> <span class="c-number">1</span>
+  B ← <a href="demos-icl-circuit-icl-circuit.xtl.html#sink">sink</a> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <span class="c-depth1">(</span><a href="builtins.html#o_ffsets" class="c-builtin">o̲ffsets</a> n<span class="c-depth1">)</span> <span class="c-builtin">'</span><a href="builtins.html#r_ight" class="c-builtin">r̲ight</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> t <a href="builtins.html#-3d" class="c-symbol">=</a> <span class="c-number">0</span>
+  I16 ← <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <span class="c-depth1">(</span><a href="builtins.html#o_ffsets" class="c-builtin">o̲ffsets</a> <span class="c-number">16</span><span class="c-depth1">)</span> <span class="c-symbol">'</span><a href="builtins.html#-3d" class="c-symbol">=</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> <a href="builtins.html#o_ffsets" class="c-builtin">o̲ffsets</a> <span class="c-number">16</span>
+  <span class="c-depth1">(</span>O, A<span class="c-depth1">)</span> ← <span class="c-depth1">(</span>Wqr, Wkr, ov <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="demos-icl-circuit-icl-circuit.xtl.html#oV">oV</a> <a href="demos-icl-circuit-icl-circuit.xtl.html#u.b_lock" class="c-userfunc">ᵘb̲lock</a> <span class="c-number">16</span>, I16, <span class="c-number">1.0</span>, B<span class="c-depth1">)</span> <a href="demos-icl-circuit-icl-circuit.xtl.html#u.a_ttn" class="c-userfunc">ᵘa̲ttn</a> <span class="c-depth1">(</span>X4, M<span class="c-depth1">)</span>
+  l ← H <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-depth1">(</span>n <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> O<span class="c-depth1">)</span>
+  rho ← <span class="c-depth1">(</span><span class="c-depth2">(</span>noise <a href="builtins.html#-5e" class="c-symbol">^</a> <span class="c-number">2</span><span class="c-depth2">)</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-depth2">(</span><a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> noise <a href="builtins.html#-3e" class="c-symbol">&gt;</a> <span class="c-number">0.0</span><span class="c-depth2">)</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-depth2">(</span><span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> l <a href="builtins.html#-2a" class="c-symbol">×</a> l<span class="c-depth2">)</span> <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-number">16.0</span><span class="c-depth1">)</span> <a href="builtins.html#-5e" class="c-symbol">^</a> <span class="c-number">0.5</span>
+  <span class="c-depth1">(</span>X4, A, l <a href="builtins.html#-2f" class="c-symbol">÷</a> rho <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> noise <a href="builtins.html#-3d" class="c-symbol">=</a> <span class="c-number">0.0</span><span class="c-depth1">)</span>
+<span class="c-depth0">}</span></pre>
+<div class="uses">Used in: <a href="demos-icl-circuit-icl-circuit.xtl.html#X1">X1</a>, <a href="demos-icl-circuit-icl-circuit.xtl.html#X2">X2</a>, <a href="demos-icl-circuit-icl-circuit.xtl.html#u.c_ase"><span class="c-userfunc">ᵘc̲ase</span></a>, <a href="demos-icl-circuit-icl-circuit.xtl.html#u.l_aw"><span class="c-userfunc">ᵘl̲aw</span></a></div>
+</div>
+<h2 class="section" id="section-5">What the readers did</h2>
+<div class="item" id="u.m_argin">
+<h3><a href="#u.m_argin"><span class="c-userfunc">ᵘm̲argin</span></a> <span class="type">: Eq a =&gt; (a, Int, a) -&gt; Float -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="demos-icl-circuit-icl-circuit.xtl.src.html#L130">line 130</a></div>
+<div class="doc">
+<p><code>prompt <span class="c-builtin">m̲argin</span> logits</code>: the answer's logit less the best other
+label's in the prompt (the answer: the label of the first
+demonstration of the query's class).</p>
+</div>
+<pre class="code"><span class="c-userfunc">ᵘm̲argin</span> ← <span class="c-depth0">{</span> <span class="c-depth1">(</span>cs, ls, q<span class="c-depth1">)</span> l →
+  tgt ← <span class="c-depth1">(</span><span class="c-number">1</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#s_-5c" class="c-builtin">s̲\</a> <a href="builtins.html#n_ot" class="c-builtin">n̲ot</a> cs <a href="builtins.html#-3d" class="c-symbol">=</a> q<span class="c-depth1">)</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> ls
+  other ← <span class="c-depth1">(</span><span class="c-number">0.0</span> <a href="builtins.html#-3c" class="c-symbol">&lt;</a> <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/₁</a> <span class="c-number">16</span> <a href="demos-icl-circuit-icl-circuit.xtl.html#u.o_ne" class="c-userfunc">ᵘo̲ne</a> ls<span class="c-depth1">)</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#n_ot" class="c-builtin">n̲ot</a> <span class="c-depth1">(</span><a href="builtins.html#o_ffsets" class="c-builtin">o̲ffsets</a> <span class="c-number">16</span><span class="c-depth1">)</span> <a href="builtins.html#-3d" class="c-symbol">=</a> tgt
+  <span class="c-depth1">(</span><span class="c-depth2">(</span><span class="c-number">1</span> <a href="builtins.html#-2b" class="c-symbol">+</a> tgt<span class="c-depth2">)</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> l<span class="c-depth1">)</span> <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-builtin">'</span><a href="builtins.html#m_ax" class="c-builtin">m̲ax</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> l <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1e9</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">1.0</span> <a href="builtins.html#-2d" class="c-symbol">−</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> other
+<span class="c-depth0">}</span></pre>
+<div class="uses">Used in: <a href="demos-icl-circuit-icl-circuit.xtl.html#u.c_ase"><span class="c-userfunc">ᵘc̲ase</span></a></div>
+</div>
+<div class="item" id="u.r_ead">
+<h3><a href="#u.r_ead"><span class="c-userfunc">ᵘr̲ead</span></a> <span class="type">: Num a =&gt; (a, a, a) -&gt; (Float, Float) -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="demos-icl-circuit-icl-circuit.xtl.src.html#L139">line 139</a></div>
+<div class="doc">
+<p><code>prompt <span class="c-builtin">r̲ead</span> <span class="c-depth0">(</span>X, A<span class="c-depth0">)</span></code>: the query's attention on the sink, on the
+slots matching its class, on the other slots; the gate; and the read
+law's matching mass (the paper's Proposition 1),
+n_m e^beta / (n_m e^beta + (N - n_m) + n_rest + e^(sink - alpha g)).</p>
+</div>
+<pre class="code"><span class="c-userfunc">ᵘr̲ead</span> ← <span class="c-depth0">{</span> <span class="c-depth1">(</span>cs, ls, q<span class="c-depth1">)</span> <span class="c-depth1">(</span>X, A<span class="c-depth1">)</span> →
+  <span class="c-depth1">(</span>t, c, _<span class="c-depth1">)</span> ← <a href="demos-icl-circuit-icl-circuit.xtl.html#u.p_rompt" class="c-userfunc">ᵘp̲rompt</a> <span class="c-depth1">(</span>cs, ls, q<span class="c-depth1">)</span>
+  n ← <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> t
+  a ← n <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> A
+  cl ← <span class="c-depth1">(</span><span class="c-number">2</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">-1</span><span class="c-depth1">)</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">-2</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> c
+  hit ← <span class="c-depth1">(</span>t <a href="builtins.html#-3d" class="c-symbol">=</a> <span class="c-number">3</span><span class="c-depth1">)</span> <a href="builtins.html#-2a" class="c-symbol">×</a> cl <a href="builtins.html#-3d" class="c-symbol">=</a> q
+  g ← <span class="c-depth1">(</span><span class="c-number">1</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="demos-icl-circuit-icl-circuit.xtl.html#oG">oG</a><span class="c-depth1">)</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> n <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> X
+  N ← <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> cs
+  nm ← <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> cs <a href="builtins.html#-3d" class="c-symbol">=</a> q
+  law ← <span class="c-depth1">(</span>nm <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#e_xp" class="c-builtin">e̲xp</a> <a href="demos-icl-circuit-icl-circuit.xtl.html#beta">beta</a><span class="c-depth1">)</span> <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-depth1">(</span>nm <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#e_xp" class="c-builtin">e̲xp</a> <a href="demos-icl-circuit-icl-circuit.xtl.html#beta">beta</a><span class="c-depth1">)</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-depth1">(</span>N <a href="builtins.html#-2d" class="c-symbol">−</a> nm<span class="c-depth1">)</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-depth1">(</span><span class="c-depth2">(</span><a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> n<span class="c-depth2">)</span> <a href="builtins.html#-2d" class="c-symbol">−</a> N <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">1.0</span><span class="c-depth1">)</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#e_xp" class="c-builtin">e̲xp</a> <a href="demos-icl-circuit-icl-circuit.xtl.html#sink">sink</a> <a href="builtins.html#-2d" class="c-symbol">−</a> <a href="demos-icl-circuit-icl-circuit.xtl.html#alpha">alpha</a> <a href="builtins.html#-2a" class="c-symbol">×</a> g
+  <span class="c-depth1">(</span><a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> a<span class="c-depth1">)</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-depth1">(</span><span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> a <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> hit<span class="c-depth1">)</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-depth1">(</span><span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> a <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <span class="c-depth2">(</span>t <a href="builtins.html#-3d" class="c-symbol">=</a> <span class="c-number">3</span><span class="c-depth2">)</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#n_ot" class="c-builtin">n̲ot</a> hit<span class="c-depth1">)</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> g <a href="builtins.html#c_at" class="c-builtin">c̲at</a> law
+<span class="c-depth0">}</span></pre>
+<div class="uses">Used in: <a href="demos-icl-circuit-icl-circuit.xtl.src.html#L169">demos/icl-circuit/icl-circuit.xtl:169</a>, <a href="demos-icl-circuit-icl-circuit.xtl.src.html#L172">demos/icl-circuit/icl-circuit.xtl:172</a>, <a href="demos-icl-circuit-icl-circuit.xtl.html#u.c_ase"><span class="c-userfunc">ᵘc̲ase</span></a>, <a href="demos-icl-circuit-icl-circuit.xtl.html#u.l_aw"><span class="c-userfunc">ᵘl̲aw</span></a></div>
+</div>
+<div class="item" id="u.r_4">
+<h3><a href="#u.r_4"><span class="c-userfunc">ᵘr̲4</span></a> <span class="type">: Float -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="demos-icl-circuit-icl-circuit.xtl.src.html#L154">line 154</a></div>
+<div class="doc">
+<p>Rounded to 4 places, for reading.</p>
+</div>
+<pre class="code"><span class="c-userfunc">ᵘr̲4</span> ← <span class="c-depth0">{</span> x → <span class="c-depth1">(</span><a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> <span class="c-number">0.5</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">10000.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> x<span class="c-depth1">)</span> <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-number">10000.0</span> <span class="c-depth0">}</span></pre>
+<div class="uses">Used in: <a href="demos-icl-circuit-icl-circuit.xtl.src.html#L169">demos/icl-circuit/icl-circuit.xtl:169</a>, <a href="demos-icl-circuit-icl-circuit.xtl.src.html#L172">demos/icl-circuit/icl-circuit.xtl:172</a>, <a href="demos-icl-circuit-icl-circuit.xtl.src.html#L185">demos/icl-circuit/icl-circuit.xtl:185</a>, <a href="demos-icl-circuit-icl-circuit.xtl.src.html#L186">demos/icl-circuit/icl-circuit.xtl:186</a>, <a href="demos-icl-circuit-icl-circuit.xtl.src.html#L187">demos/icl-circuit/icl-circuit.xtl:187</a>, <a href="demos-icl-circuit-icl-circuit.xtl.src.html#L188">demos/icl-circuit/icl-circuit.xtl:188</a>, <a href="demos-icl-circuit-icl-circuit.xtl.src.html#L189">demos/icl-circuit/icl-circuit.xtl:189</a>, <a href="demos-icl-circuit-icl-circuit.xtl.src.html#L190">demos/icl-circuit/icl-circuit.xtl:190</a>, <a href="demos-icl-circuit-icl-circuit.xtl.src.html#L191">demos/icl-circuit/icl-circuit.xtl:191</a>, <a href="demos-icl-circuit-icl-circuit.xtl.src.html#L213">demos/icl-circuit/icl-circuit.xtl:213</a></div>
+</div>
+<div class="item" id="intact">
+<h3><a href="#intact">intact</a> <span class="type">: (Float, Float, Float, Float, Float, Float, Float, Float)</span></h3>
+<div class="meta">value &middot; <a href="demos-icl-circuit-icl-circuit.xtl.src.html#L155">line 155</a></div>
+<pre class="code">intact ← <span class="c-depth0">(</span><span class="c-number">1.0</span>, <span class="c-number">1.0</span>, <span class="c-number">1.0</span>, <span class="c-number">0.0</span>, <span class="c-number">0.0</span>, <span class="c-number">1.0</span>, <span class="c-number">1.0</span>, <span class="c-number">0.0</span><span class="c-depth0">)</span></pre>
+<div class="uses">Used in: <a href="demos-icl-circuit-icl-circuit.xtl.html#X1">X1</a>, <a href="demos-icl-circuit-icl-circuit.xtl.html#X2">X2</a>, <a href="demos-icl-circuit-icl-circuit.xtl.src.html#L185">demos/icl-circuit/icl-circuit.xtl:185</a>, <a href="demos-icl-circuit-icl-circuit.xtl.src.html#L187">demos/icl-circuit/icl-circuit.xtl:187</a>, <a href="demos-icl-circuit-icl-circuit.xtl.html#u.l_aw"><span class="c-userfunc">ᵘl̲aw</span></a></div>
+</div>
+<h2 class="section" id="section-6">The paper's two prompts</h2>
+<div class="item" id="one">
+<h3><a href="#one">one</a> <span class="type">: (Int, Int, Int)</span></h3>
+<div class="meta">value &middot; <a href="demos-icl-circuit-icl-circuit.xtl.src.html#L160">line 160</a></div>
+<div class="doc">
+<p>Unique labels: six classes, one demonstration each, every label
+different (no label repeats, so the gate stays closed).</p>
+</div>
+<pre class="code">one ← <span class="c-depth0">(</span><span class="c-number">0</span> <span class="c-number">1</span> <span class="c-number">2</span> <span class="c-number">3</span> <span class="c-number">4</span> <span class="c-number">5</span>, <span class="c-number">0</span> <span class="c-number">1</span> <span class="c-number">2</span> <span class="c-number">3</span> <span class="c-number">4</span> <span class="c-number">5</span>, <span class="c-number">0</span><span class="c-depth0">)</span></pre>
+<div class="uses">Used in: <a href="demos-icl-circuit-icl-circuit.xtl.html#X1">X1</a>, <a href="demos-icl-circuit-icl-circuit.xtl.src.html#L169">demos/icl-circuit/icl-circuit.xtl:169</a>, <a href="demos-icl-circuit-icl-circuit.xtl.src.html#L185">demos/icl-circuit/icl-circuit.xtl:185</a>, <a href="demos-icl-circuit-icl-circuit.xtl.src.html#L186">demos/icl-circuit/icl-circuit.xtl:186</a></div>
+</div>
+<div class="item" id="two">
+<h3><a href="#two">two</a> <span class="type">: (Int, Int, Int)</span></h3>
+<div class="meta">value &middot; <a href="demos-icl-circuit-icl-circuit.xtl.src.html#L163">line 163</a></div>
+<div class="doc">
+<p>Recurring labels: three classes, two demonstrations each, a class's
+label the same both times.</p>
+</div>
+<pre class="code">two ← <span class="c-depth0">(</span><span class="c-number">0</span> <span class="c-number">1</span> <span class="c-number">2</span> <span class="c-number">0</span> <span class="c-number">1</span> <span class="c-number">2</span>, <span class="c-number">0</span> <span class="c-number">1</span> <span class="c-number">2</span> <span class="c-number">0</span> <span class="c-number">1</span> <span class="c-number">2</span>, <span class="c-number">0</span><span class="c-depth0">)</span></pre>
+<div class="uses">Used in: <a href="demos-icl-circuit-icl-circuit.xtl.html#X2">X2</a>, <a href="demos-icl-circuit-icl-circuit.xtl.src.html#L172">demos/icl-circuit/icl-circuit.xtl:172</a>, <a href="demos-icl-circuit-icl-circuit.xtl.src.html#L187">demos/icl-circuit/icl-circuit.xtl:187</a>, <a href="demos-icl-circuit-icl-circuit.xtl.src.html#L188">demos/icl-circuit/icl-circuit.xtl:188</a>, <a href="demos-icl-circuit-icl-circuit.xtl.src.html#L189">demos/icl-circuit/icl-circuit.xtl:189</a>, <a href="demos-icl-circuit-icl-circuit.xtl.src.html#L190">demos/icl-circuit/icl-circuit.xtl:190</a>, <a href="demos-icl-circuit-icl-circuit.xtl.src.html#L191">demos/icl-circuit/icl-circuit.xtl:191</a>, <a href="demos-icl-circuit-icl-circuit.xtl.src.html#L213">demos/icl-circuit/icl-circuit.xtl:213</a></div>
+</div>
+<div class="item" id="X1">
+<h3><a href="#X1">X1</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-icl-circuit-icl-circuit.xtl.src.html#L164">line 164</a></div>
+<pre class="code"><span class="c-depth0">(</span><a href="demos-icl-circuit-icl-circuit.xtl.html#X1">X1</a>, <a href="demos-icl-circuit-icl-circuit.xtl.html#A1">A1</a>, <a href="demos-icl-circuit-icl-circuit.xtl.html#l1">l1</a><span class="c-depth0">)</span> ← <a href="demos-icl-circuit-icl-circuit.xtl.html#intact">intact</a> <a href="demos-icl-circuit-icl-circuit.xtl.html#u.r_un" class="c-userfunc">ᵘr̲un</a> <a href="demos-icl-circuit-icl-circuit.xtl.html#u.p_rompt" class="c-userfunc">ᵘp̲rompt</a> <a href="demos-icl-circuit-icl-circuit.xtl.html#one">one</a></pre>
+<div class="uses">Used in: <a href="demos-icl-circuit-icl-circuit.xtl.html#X1">X1</a>, <a href="demos-icl-circuit-icl-circuit.xtl.src.html#L169">demos/icl-circuit/icl-circuit.xtl:169</a></div>
+</div>
+<div class="item" id="A1">
+<h3><a href="#A1">A1</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-icl-circuit-icl-circuit.xtl.src.html#L164">line 164</a></div>
+<pre class="code"><span class="c-depth0">(</span><a href="demos-icl-circuit-icl-circuit.xtl.html#X1">X1</a>, <a href="demos-icl-circuit-icl-circuit.xtl.html#A1">A1</a>, <a href="demos-icl-circuit-icl-circuit.xtl.html#l1">l1</a><span class="c-depth0">)</span> ← <a href="demos-icl-circuit-icl-circuit.xtl.html#intact">intact</a> <a href="demos-icl-circuit-icl-circuit.xtl.html#u.r_un" class="c-userfunc">ᵘr̲un</a> <a href="demos-icl-circuit-icl-circuit.xtl.html#u.p_rompt" class="c-userfunc">ᵘp̲rompt</a> <a href="demos-icl-circuit-icl-circuit.xtl.html#one">one</a></pre>
+<div class="uses">Used in: <a href="demos-icl-circuit-icl-circuit.xtl.html#X1">X1</a>, <a href="demos-icl-circuit-icl-circuit.xtl.src.html#L169">demos/icl-circuit/icl-circuit.xtl:169</a></div>
+</div>
+<div class="item" id="l1">
+<h3><a href="#l1">l1</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-icl-circuit-icl-circuit.xtl.src.html#L164">line 164</a></div>
+<pre class="code"><span class="c-depth0">(</span><a href="demos-icl-circuit-icl-circuit.xtl.html#X1">X1</a>, <a href="demos-icl-circuit-icl-circuit.xtl.html#A1">A1</a>, <a href="demos-icl-circuit-icl-circuit.xtl.html#l1">l1</a><span class="c-depth0">)</span> ← <a href="demos-icl-circuit-icl-circuit.xtl.html#intact">intact</a> <a href="demos-icl-circuit-icl-circuit.xtl.html#u.r_un" class="c-userfunc">ᵘr̲un</a> <a href="demos-icl-circuit-icl-circuit.xtl.html#u.p_rompt" class="c-userfunc">ᵘp̲rompt</a> <a href="demos-icl-circuit-icl-circuit.xtl.html#one">one</a></pre>
+<div class="uses">Used in: <a href="demos-icl-circuit-icl-circuit.xtl.html#X1">X1</a></div>
+</div>
+<div class="item" id="X2">
+<h3><a href="#X2">X2</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-icl-circuit-icl-circuit.xtl.src.html#L165">line 165</a></div>
+<pre class="code"><span class="c-depth0">(</span><a href="demos-icl-circuit-icl-circuit.xtl.html#X2">X2</a>, <a href="demos-icl-circuit-icl-circuit.xtl.html#A2">A2</a>, <a href="demos-icl-circuit-icl-circuit.xtl.html#l2">l2</a><span class="c-depth0">)</span> ← <a href="demos-icl-circuit-icl-circuit.xtl.html#intact">intact</a> <a href="demos-icl-circuit-icl-circuit.xtl.html#u.r_un" class="c-userfunc">ᵘr̲un</a> <a href="demos-icl-circuit-icl-circuit.xtl.html#u.p_rompt" class="c-userfunc">ᵘp̲rompt</a> <a href="demos-icl-circuit-icl-circuit.xtl.html#two">two</a></pre>
+<div class="uses">Used in: <a href="demos-icl-circuit-icl-circuit.xtl.html#X2">X2</a>, <a href="demos-icl-circuit-icl-circuit.xtl.src.html#L172">demos/icl-circuit/icl-circuit.xtl:172</a></div>
+</div>
+<div class="item" id="A2">
+<h3><a href="#A2">A2</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-icl-circuit-icl-circuit.xtl.src.html#L165">line 165</a></div>
+<pre class="code"><span class="c-depth0">(</span><a href="demos-icl-circuit-icl-circuit.xtl.html#X2">X2</a>, <a href="demos-icl-circuit-icl-circuit.xtl.html#A2">A2</a>, <a href="demos-icl-circuit-icl-circuit.xtl.html#l2">l2</a><span class="c-depth0">)</span> ← <a href="demos-icl-circuit-icl-circuit.xtl.html#intact">intact</a> <a href="demos-icl-circuit-icl-circuit.xtl.html#u.r_un" class="c-userfunc">ᵘr̲un</a> <a href="demos-icl-circuit-icl-circuit.xtl.html#u.p_rompt" class="c-userfunc">ᵘp̲rompt</a> <a href="demos-icl-circuit-icl-circuit.xtl.html#two">two</a></pre>
+<div class="uses">Used in: <a href="demos-icl-circuit-icl-circuit.xtl.html#X2">X2</a>, <a href="demos-icl-circuit-icl-circuit.xtl.src.html#L172">demos/icl-circuit/icl-circuit.xtl:172</a></div>
+</div>
+<div class="item" id="l2">
+<h3><a href="#l2">l2</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-icl-circuit-icl-circuit.xtl.src.html#L165">line 165</a></div>
+<pre class="code"><span class="c-depth0">(</span><a href="demos-icl-circuit-icl-circuit.xtl.html#X2">X2</a>, <a href="demos-icl-circuit-icl-circuit.xtl.html#A2">A2</a>, <a href="demos-icl-circuit-icl-circuit.xtl.html#l2">l2</a><span class="c-depth0">)</span> ← <a href="demos-icl-circuit-icl-circuit.xtl.html#intact">intact</a> <a href="demos-icl-circuit-icl-circuit.xtl.html#u.r_un" class="c-userfunc">ᵘr̲un</a> <a href="demos-icl-circuit-icl-circuit.xtl.html#u.p_rompt" class="c-userfunc">ᵘp̲rompt</a> <a href="demos-icl-circuit-icl-circuit.xtl.html#two">two</a></pre>
+<div class="uses">Used in: <a href="demos-icl-circuit-icl-circuit.xtl.html#X2">X2</a></div>
+</div>
+<h2 class="section" id="section-7">Knockouts</h2>
+<div class="item" id="u.c_ase">
+<h3><a href="#u.c_ase"><span class="c-userfunc">ᵘc̲ase</span></a> <span class="type">: ((Int, Int, Int), (Float, Float, Float, Float, Float, Float, Float, Float)) -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="demos-icl-circuit-icl-circuit.xtl.src.html#L176">line 176</a></div>
+<div class="doc">
+<p>A condition's (margin, sink) on a prompt.</p>
+</div>
+<pre class="code"><span class="c-userfunc">ᵘc̲ase</span> ← <span class="c-depth0">{</span> <span class="c-depth1">(</span>pr, cfg<span class="c-depth1">)</span> →
+  <span class="c-depth1">(</span>X, A, l<span class="c-depth1">)</span> ← cfg <a href="demos-icl-circuit-icl-circuit.xtl.html#u.r_un" class="c-userfunc">ᵘr̲un</a> <a href="demos-icl-circuit-icl-circuit.xtl.html#u.p_rompt" class="c-userfunc">ᵘp̲rompt</a> pr
+  <span class="c-depth1">(</span>pr <a href="demos-icl-circuit-icl-circuit.xtl.html#u.m_argin" class="c-userfunc">ᵘm̲argin</a> l<span class="c-depth1">)</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> pr <a href="demos-icl-circuit-icl-circuit.xtl.html#u.r_ead" class="c-userfunc">ᵘr̲ead</a> <span class="c-depth1">(</span>X, A<span class="c-depth1">)</span>
+<span class="c-depth0">}</span></pre>
+<div class="uses">Used in: <a href="demos-icl-circuit-icl-circuit.xtl.src.html#L185">demos/icl-circuit/icl-circuit.xtl:185</a>, <a href="demos-icl-circuit-icl-circuit.xtl.src.html#L186">demos/icl-circuit/icl-circuit.xtl:186</a>, <a href="demos-icl-circuit-icl-circuit.xtl.src.html#L187">demos/icl-circuit/icl-circuit.xtl:187</a>, <a href="demos-icl-circuit-icl-circuit.xtl.src.html#L188">demos/icl-circuit/icl-circuit.xtl:188</a>, <a href="demos-icl-circuit-icl-circuit.xtl.src.html#L189">demos/icl-circuit/icl-circuit.xtl:189</a>, <a href="demos-icl-circuit-icl-circuit.xtl.src.html#L190">demos/icl-circuit/icl-circuit.xtl:190</a>, <a href="demos-icl-circuit-icl-circuit.xtl.src.html#L191">demos/icl-circuit/icl-circuit.xtl:191</a>, <a href="demos-icl-circuit-icl-circuit.xtl.src.html#L213">demos/icl-circuit/icl-circuit.xtl:213</a></div>
+</div>
+<h2 class="section" id="section-8">The read law</h2>
+<div class="item" id="u.l_aw">
+<h3><a href="#u.l_aw"><span class="c-userfunc">ᵘl̲aw</span></a> <span class="type">: (Int, Int) -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="demos-icl-circuit-icl-circuit.xtl.src.html#L198">line 198</a></div>
+<pre class="code"><span class="c-userfunc">ᵘl̲aw</span> ← <span class="c-depth0">{</span> <span class="c-depth1">(</span>K, m<span class="c-depth1">)</span> →
+  cs ← <span class="c-depth1">(</span>K <a href="builtins.html#-2a" class="c-symbol">×</a> m<span class="c-depth1">)</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <a href="builtins.html#o_ffsets" class="c-builtin">o̲ffsets</a> K
+  pr ← <span class="c-depth1">(</span>cs, cs, <span class="c-number">0</span><span class="c-depth1">)</span>
+  <span class="c-depth1">(</span>X, A, _<span class="c-depth1">)</span> ← <a href="demos-icl-circuit-icl-circuit.xtl.html#intact">intact</a> <a href="demos-icl-circuit-icl-circuit.xtl.html#u.r_un" class="c-userfunc">ᵘr̲un</a> <a href="demos-icl-circuit-icl-circuit.xtl.html#u.p_rompt" class="c-userfunc">ᵘp̲rompt</a> pr
+  r ← pr <a href="demos-icl-circuit-icl-circuit.xtl.html#u.r_ead" class="c-userfunc">ᵘr̲ead</a> <span class="c-depth1">(</span>X, A<span class="c-depth1">)</span>
+  <a href="builtins.html#a_bs" class="c-builtin">a̲bs</a> <span class="c-depth1">(</span><span class="c-number">2</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> r<span class="c-depth1">)</span> <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">5</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> r
+<span class="c-depth0">}</span></pre>
+<div class="uses">Used in: <a href="demos-icl-circuit-icl-circuit.xtl.html#err">err</a></div>
+</div>
+<div class="item" id="err">
+<h3><a href="#err">err</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="demos-icl-circuit-icl-circuit.xtl.src.html#L205">line 205</a></div>
+<pre class="code">err ← <span class="c-quote">'</span><span class="c-depth0">{</span> i → <a href="demos-icl-circuit-icl-circuit.xtl.html#u.l_aw" class="c-userfunc">ᵘl̲aw</a> <span class="c-depth1">(</span>i <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <span class="c-number">2</span> <span class="c-number">2</span> <span class="c-number">2</span> <span class="c-number">2</span> <span class="c-number">3</span> <span class="c-number">3</span> <span class="c-number">3</span> <span class="c-number">3</span> <span class="c-number">4</span> <span class="c-number">4</span> <span class="c-number">4</span> <span class="c-number">4</span> <span class="c-number">6</span> <span class="c-number">6</span> <span class="c-number">6</span> <span class="c-number">6</span>, i <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <span class="c-number">1</span> <span class="c-number">2</span> <span class="c-number">3</span> <span class="c-number">4</span> <span class="c-number">1</span> <span class="c-number">2</span> <span class="c-number">3</span> <span class="c-number">4</span> <span class="c-number">1</span> <span class="c-number">2</span> <span class="c-number">3</span> <span class="c-number">4</span> <span class="c-number">1</span> <span class="c-number">2</span> <span class="c-number">3</span> <span class="c-number">4</span><span class="c-depth1">)</span> <span class="c-depth0">}</span> <a href="builtins.html#e_ach" class="c-builtin">e̲ach</a> <a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <span class="c-number">16</span></pre>
+<div class="uses">Used in: <a href="demos-icl-circuit-icl-circuit.xtl.src.html#L206">demos/icl-circuit/icl-circuit.xtl:206</a></div>
+</div>
+</main>
+</body>
+</html>

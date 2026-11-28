@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>In-Context Learning Circuit</title>
+  
+<script type="module">
+import init, * as bindings from '/X_eTaL-ML/icl-circuit/icl-circuit-web-1264e8102824333b.js';
+const wasm = await init({ module_or_path: '/X_eTaL-ML/icl-circuit/icl-circuit-web-1264e8102824333b_bg.wasm' });
+
+
+window.wasmBindings = bindings;
+
+
+dispatchEvent(new CustomEvent("TrunkApplicationStarted", {detail: {wasm}}));
+
+</script>
+  
+  <link rel="icon" href="/X_eTaL-ML/icl-circuit/favicon-a11bc0a2bcd81290.ico" integrity="sha384-xOjSLs9ZRBKy2hF6zlqNv+0U86E4BqZOJy7H7a4GXSVwDQMNie0D851/sRBSYI9a"/>
+  <link rel="stylesheet" href="/X_eTaL-ML/icl-circuit/microscope-22257fd62318e7bf.css" integrity="sha384-HhCElH/+Dn/dCD6BMktfya0hcEUbJTzOz+U+aDZwhSMfcwqIb3L1cSWYSUVqWKI9"/>
+  <style>
+    .bars.icl { height: 150px; gap: 2px; }
+    .bars.icl .bar span { writing-mode: vertical-rl; transform: rotate(180deg); height: 44px; text-align: left; }
+    .bars.icl .bar b { font-size: .62rem; font-weight: 500; color: var(--muted); }
+    .bars.icl .bar.sink .fill { background: #868e96; }
+    .bars.icl .bar.match .fill { background: #f59f00; }
+    .bars.icl .bar.slot .fill { background: #9775fa; }
+    .bars.icl .bar.rest .fill { background: #ced4da; }
+    .bars.icl .bar.match span { color: #e8590c; font-weight: 700; }
+    table.blocks td, table.blocks th { font-size: .78rem; padding: 1px 6px; white-space: nowrap; }
+    table.blocks th:first-child { text-align: left; }
+    table.blocks tr.query td, table.blocks tr.query th { background: var(--off); font-weight: 600; }
+    .controls select { margin-left: 4px; }
+  </style>
+<link rel="modulepreload" href="/X_eTaL-ML/icl-circuit/icl-circuit-web-1264e8102824333b.js" crossorigin="anonymous" integrity="sha384-d49+l/6kY6CSRDsZ7ZsEqLfPIqUCldeJclBn8w3a09OVGckVTt2vtr/EHZ+W/ilC"><link rel="preload" href="/X_eTaL-ML/icl-circuit/icl-circuit-web-1264e8102824333b_bg.wasm" crossorigin="anonymous" integrity="sha384-t4jzAuctCuAOk5EMe0SatJ4b5Vh1qRTS/tcLggXfTrhQnOS0Jm+3tv/osV1aoyMv" as="fetch" type="application/wasm"></head>
+<body></body>
+</html>
