@@ -11,6 +11,11 @@ planning and reordering, `release` milestone release, `chore`
 agentrail bookkeeping (step complete, saga archive), `vendor` a
 refresh of the vendored X_eTaL.
 
+## 2026-11-27
+
+- `chore` saga step icl-trained closed
+- `demo` icl-trained (step icl-trained), live: a small transformer trained from scratch on Gao and Gao's task (arXiv 2611.05344, Section 12 and its appendix) under its three training mixes, taken apart by X_eTaL. `train/` (std-only Rust, a Llama-style model of 180,288 weights: 4 layers, 64 wide, 4 heads, SwiGLU, learned positions; the backward pass written out, `--check` against central differences; AdamW as the paper's; the authors' toy/train_toy.py generator reimplemented, MIT): mix, recurring-only and gate models shipped, the seeds that did not learn reported. icl-trained.xtl: the forward pass with an edit of the residual stream after any layer (a slot swap keeping positions, a push at the arrow), the margins, class-flip attribution of every head, the slot swap, the gate direction decoded and steered against a random control, on 8 prompts of each kind (M16). Found: slots and last-layer readers in the mix model; the gate (decoded 1.00, a push toward unique costing 2.0 nats against 0.2) only in the gate model, as the paper found, weaker. The page: models, prompts, heads, swaps, the gate found in the browser and pushed, the training curves, the command line's table beside the paper's. `test` 7 page tests (X_eTaL's logits are the Rust model's, the swap, the page's gate is the command line's, the steer). `build` `just icl-trained-data` (scripts/icl-trained-data.sh). `docs` the demo's README, README's row and counts (20 demos), the plan, M16's detail (this demo's numbers), the timeline's demo event (20 demos)
+
 ## 2026-11-25
 
 - `chore` saga step hc-lib closed

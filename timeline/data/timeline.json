@@ -101,5 +101,6 @@
   {"year": 2026, "month": 10, "when": "October 2026", "kind": "demo", "demo": "net-macro", "shows": "X_eTaL's macro libraries (v0.1.0)", "topics": ["neural networks"]},
   {"year": 2026, "month": 10, "when": "October 2026", "kind": "demo", "demo": "pipelines", "shows": "layers written as data flow, X_eTaL's own", "topics": ["attention", "CNN"]},
   {"year": 2026, "month": 11, "when": "November 2026", "title": "A circuit for in-context learning", "text": "Gao and Gao: in models of 0.6B to 8B parameters, writer heads key each label by its sentence's class, readers match the query against those keys and copy the label, and a gate opens the read only when a label has repeated; built by hand in three layers.", "href": "https://arxiv.org/abs/2611.05344", "kind": "paper", "topics": ["attention"]},
-  {"year": 2026, "month": 11, "when": "November 2026", "kind": "demo", "demo": "icl-circuit", "shows": "the paper's hand-built circuit, its parts knocked out one at a time", "topics": ["attention"]}
+  {"year": 2026, "month": 11, "when": "November 2026", "kind": "demo", "demo": "icl-circuit", "shows": "the paper's hand-built circuit, its parts knocked out one at a time", "topics": ["attention"]},
+  {"year": 2026, "month": 11, "when": "November 2026", "kind": "demo", "demo": "icl-trained", "shows": "the same parts grown by a small transformer trained from scratch, and the gate only when retrieving does not pay", "topics": ["attention"]}
 ]

@@ -1,0 +1,4 @@
+command = '"$XETAL" run --seed 1 --draw "$XETAL_DRAW" icl-trained.xtl'
+exit_code = 0
+desc = "icl-trained: icl-trained.xtl run by the pinned xetal CLI"
+timeout = 900

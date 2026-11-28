@@ -1,0 +1,256 @@
+#!/usr/bin/env xetal
+## In-context learning, trained: a small transformer (4 layers, 64
+## wide, 4 heads, a SwiGLU feed-forward layer of 128; 180,288 weights)
+## trained from scratch on Gao and Gao's synthetic task (arXiv
+## 2611.05344, Section 12 and its appendix) by train/, then taken apart
+## here as the paper's authors took theirs apart (their
+## toy/analyze_toy.py): the query's margin on unique-label and
+## recurring-label prompts; the reader heads, by class-flip attribution;
+## the slot swap; the gate, a direction at the query's arrow, decoded
+## and steered. A prompt is the start token, demonstrations `w w w ->
+## label`, then the query `w w w ->`: 48 words, each in two of eight
+## classes, a sentence three words sharing one class, 32 labels redrawn
+## for every prompt. Token numbers: 1 the start, 2 the arrow, 3 a line's
+## end, 4 to 51 the words, 52 to 83 the labels.
+
+"act:" u_se< "Activations"
+"at:" u_se< "Attention"
+
+### The models, read from data/ (just icl-trained-data)
+
+D := 64
+V := 84
+## A weight file of a model, by its training mix: "mix" (half
+## unique-label prompts, half recurring) or "gate" (half recurring,
+## half unique-label prompts whose query label is fresh, so retrieval
+## never pays on them).
+u:g_et := { (model, name) -> n_umbers []N_GET "data/" c_at model c_at "/" c_at name c_at ".txt" }
+## A model: the embeddings, then each layer's norms, attention and
+## SwiGLU weights stacked (layer 1 first), the last norm, the
+## unembedding. Every matrix as x times it is written.
+u:l_oad := { m -> (
+  (V c_at D) r_eshape u:g_et (m, "emb"),
+  (80 c_at D) r_eshape u:g_et (m, "pos"),
+  4 64 r_eshape u:g_et (m, "g1"),
+  4 64 r_eshape u:g_et (m, "g2"),
+  4 64 64 r_eshape u:g_et (m, "wq"),
+  4 64 64 r_eshape u:g_et (m, "wk"),
+  4 64 64 r_eshape u:g_et (m, "wv"),
+  4 64 64 r_eshape u:g_et (m, "wo"),
+  4 64 128 r_eshape u:g_et (m, "wg"),
+  4 64 128 r_eshape u:g_et (m, "wu"),
+  4 128 64 r_eshape u:g_et (m, "wd"),
+  u:g_et (m, "gf"),
+  (D c_at V) r_eshape u:g_et (m, "un")) }
+
+### The forward pass
+
+## RMS norm with a gain (eps 1e-6, as the trainer's).
+u:r_ms := { g X -> ((r_ange t_ally X) 'r_ight t_able g) * X / ((0.000001 + ('+ r_/_2 X * X) / f_loat D) ^ 0.5) 'l_eft t_able r_ange D }
+## Columns c of a matrix.
+u:c_ols := { c W -> o_\ c s_elect o_\ W }
+## Head j's columns (16 of the 64).
+u:h_ead := { j -> (16 * j - 1) + r_ange 16 }
+## Layer l on the stream X (n x 64): four heads of 16, concatenated,
+## through Wo, added back; then the SwiGLU feed-forward layer, added
+## back. Gives the new stream, each head's write at the last token
+## (4 x 64) and each head's attention from the last token (4 x n).
+u:l_ayer := { (Wt, l) X ->
+  (_, _, g1, g2, Wq, Wk, Wv, Wo, Wg, Wu, Wd, _, _) := Wt
+  n := t_ally X
+  hN := (l s_elect g1) u:r_ms X
+  M := at:c_ausal n
+  (_, O, writes, looks) := 4 '{ (j, O, ws, ls) ->
+    c := u:h_ead j
+    A := M at:w_eights (c u:c_ols l s_elect Wq, c u:c_ols l s_elect Wk) at:s_cores hN
+    o := A '+ '* i_nner hN '+ '* i_nner c u:c_ols l s_elect Wv
+    (j + 1, O c_at_2 o, ws c_at (n s_elect o) '+ '* i_nner c s_elect l s_elect Wo, ls c_at n s_elect A)
+  } p_ower (1, (n c_at 0) r_eshape 0.0, 0 r_eshape 0.0, 0 r_eshape 0.0)
+  X2 := X + O '+ '* i_nner l s_elect Wo
+  h2 := (l s_elect g2) u:r_ms X2
+  (X2 + ((l s_elect Wg, l s_elect Wu) act:s_wiglu h2) '+ '* i_nner l s_elect Wd, (4 c_at D) r_eshape writes, (4 c_at n) r_eshape looks)
+}
+## An edit of the stream after a layer: (ls, a, b) swaps the rows of
+## tokens a and b after layer ls, each keeping its own position's
+## embedding (Pn: in the paper's model, with rotary positions, a row
+## carries no position, so a swap moves the content alone); (lv, v) adds v to the last token's row
+## after layer lv; layer 0 is the embedding, 9 none.
+none := (9, 1, 1, 9, D r_eshape 0.0)
+u:e_dit := { (l, (ls, a, b, lv, v), Pn) X ->
+  n := t_ally X
+  k := r_ange n
+  sw := (l = ls) * ((b - a) * k = a) + (a - b) * k = b
+  Pn + ((k + sw) s_elect X - Pn) + (f_loat (l = lv) * k = n) '* t_able v
+}
+## The prompt's tokens (as the trainer numbers them, from 0) through a
+## model, with an edit: the stream after every layer, every head's write
+## and look at the last token (each boxed, a layer a box), the logits
+## at the last token, and the last token's root mean square.
+u:r_un := { (Wt, e) ids ->
+  (emb, pos, _, _, _, _, _, _, _, _, _, gf, U) := Wt
+  n := t_ally ids
+  Pn := (r_ange n) s_elect pos
+  X0 := (0, e, Pn) u:e_dit ((ids + 1) s_elect emb) + Pn
+  (_, XL, Xs, Ws, As) := 4 '{ (l, X, Xs, Ws, As) ->
+    (X2, w, a) := (Wt, l) u:l_ayer X
+    X3 := (l, e, Pn) u:e_dit X2
+    (l + 1, X3, Xs c_at e_nclose X3, Ws c_at e_nclose w, As c_at e_nclose a)
+  } p_ower (1, X0, 0 r_eshape e_nclose 0.0, 0 r_eshape e_nclose 0.0, 0 r_eshape e_nclose 0.0)
+  last := n s_elect XL
+  (Xs, Ws, As, (n s_elect gf u:r_ms XL) '+ '* i_nner U, (0.000001 + ('+ r_/ last * last) / f_loat D) ^ 0.5)
+}
+# -- end of the core ---
+
+### The prompts
+
+## Each prompt a row: its length, its tokens, 0s after (written by
+## train/ from its own seed; the twins have the query sentence of
+## another class shown, the answer kept).
+u:p_rompts := { name -> 40 81 r_eshape f_loor n_umbers []N_GET "data/" c_at name c_at ".txt" }
+uniq := u:p_rompts "unique"
+rec := u:p_rompts "recurring"
+flip := u:p_rompts "flipped"
+## Prompt k of P: its tokens without the answer, and the answer.
+u:p_rompt := { (P, k) -> row := k s_elect P; n := 1 s_elect row; ((n - 1) t_ake 1 d_rop row, n s_elect 1 d_rop row) }
+## The labels shown in prompt k other than its answer.
+u:s_hown := { (P, k) -> row := k s_elect P; full := (1 s_elect row) t_ake 1 d_rop row; ls := u_nique (full >= 52) r_eplicate full; (ls != (t_ally full) s_elect full) r_eplicate ls }
+
+### Measures
+
+## Prompt k of P through model Wt with edit e: (the run, the margin,
+## the best other label shown, the answer). The margin is the answer's
+## logit less the best other label shown, as the paper's.
+u:m_easure := { (Wt, P, k, e) ->
+  (ids, ans) := u:p_rompt (P, k)
+  run := (Wt, e) u:r_un ids
+  (_, _, _, lg, _) := run
+  others := u:s_hown (P, k)
+  alt := (1 s_elect g_rade n_eg (others + 1) s_elect lg) s_elect others
+  (run, ((ans + 1) s_elect lg) - (alt + 1) s_elect lg, alt, ans)
+}
+## Each head's direct contribution to the margin (16, layer by layer):
+## its write at the last token through the last norm's gain and scale
+## and the unembedding's answer column less the alternative's.
+u:d_la := { Wt (run, _, alt, ans) ->
+  (_, Ws, _, _, rho) := run
+  (_, _, _, _, _, _, _, _, _, _, _, gf, U) := Wt
+  W16 := 16 64 r_eshape (d_isclose 1 s_elect Ws) c_at (d_isclose 2 s_elect Ws) c_at (d_isclose 3 s_elect Ws) c_at d_isclose 4 s_elect Ws
+  ((W16 * (r_ange 16) 'r_ight t_able gf) / rho) '+ '* i_nner ((ans + 1) s_elect o_\ U) - (alt + 1) s_elect o_\ U
+}
+## The query arrow's row after layer l.
+u:a_rrow := { (run, l) -> (Xs, _, _, _, _) := run; X := d_isclose l s_elect Xs; (t_ally X) s_elect X }
+u:m_ean := { v -> ('+ r_/ v) / f_loat t_ally v }
+
+## The slots of a prompt (its label tokens, each after an arrow): the
+## first holding the answer and the first holding another label.
+u:p_air := { ids ans ->
+  slots := w_here (ids >= 52) & (0 c_at ((t_ally ids) - 1) t_ake ids) = 2
+  (1 s_elect ((slots s_elect ids) = ans) r_eplicate slots, 1 s_elect ((slots s_elect ids) != ans) r_eplicate slots)
+}
+
+### Taking a model apart
+
+## N prompts of each kind (the paper's authors used 200; a forward
+## pass here costs about a quarter of a second).
+N := 8
+## The intact runs: each unique and recurring prompt's margin; its
+## arrow's rows after layers 1 to 3 (N x 3 x 64 each kind); each
+## recurring prompt's heads' attribution less its twin's (N x 16).
+u:i_ntact := { Wt ->
+  (_, mu, mr, Au, Ar, fl) := N '{ (k, mu, mr, Au, Ar, fl) ->
+    (ru, um, _, _) := u:m_easure (Wt, uniq, k, none)
+    r := u:m_easure (Wt, rec, k, none)
+    (rr, rm, _, ans) := r
+    (fr, _, falt, _) := u:m_easure (Wt, flip, k, none)
+    au := (u:a_rrow (ru, 1)) c_at (u:a_rrow (ru, 2)) c_at u:a_rrow (ru, 3)
+    ar := (u:a_rrow (rr, 1)) c_at (u:a_rrow (rr, 2)) c_at u:a_rrow (rr, 3)
+    (k + 1, mu c_at um, mr c_at rm, Au c_at au, Ar c_at ar, fl c_at (Wt u:d_la r) - Wt u:d_la (fr, 0.0, falt, ans))
+  } p_ower (1, 0 r_eshape 0.0, 0 r_eshape 0.0, 0 r_eshape 0.0, 0 r_eshape 0.0, 0 r_eshape 0.0)
+  (mu, mr, (N c_at 3 c_at D) r_eshape Au, (N c_at 3 c_at D) r_eshape Ar, (N c_at 16) r_eshape fl)
+}
+## The gate direction after layer l: the recurring prompts' mean arrow
+## less the unique ones', from the first half of each, made of length 1;
+## on the other half, the gap between the two kinds' mean projections
+## and how many fall on their side of the midpoint.
+u:g_ate := { (Bu, Br) l ->
+  h := N d_iv 2
+  (U, R) := (l s_elect_2 Bu, l s_elect_2 Br)
+  g0 := (u:c_mean h t_ake R) - u:c_mean h t_ake U
+  g := g0 / ('+ r_/ g0 * g0) ^ 0.5
+  (po, pt) := ((h d_rop U) '+ '* i_nner g, (h d_rop R) '+ '* i_nner g)
+  mid := ((u:m_ean po) + u:m_ean pt) / 2.0
+  (g, (u:m_ean pt) - u:m_ean po, (f_loat ('+ r_/ po < mid) + '+ r_/ pt > mid) / f_loat 2 * N - h)
+}
+u:c_mean := { M -> ('+ r_/_1 M) / f_loat t_ally M }
+## The mean margin of P's prompts with v added at the arrow after layer l.
+u:s_teer := { (Wt, P, l, v) ->
+  (_, ms) := N '{ (k, ms) -> (_, m, _, _) := u:m_easure (Wt, P, k, (9, 1, 1, l, v)); (k + 1, ms c_at m) } p_ower (1, 0 r_eshape 0.0)
+  u:m_ean ms
+}
+## The slot swap after layer l (0 the embedding): in each recurring prompt the first slot
+## holding the answer and the first holding another label exchange
+## their rows; how far the swapped-in label then beats the answer.
+u:s_wap := { (Wt, l) ->
+  (_, fs) := N '{ (k, fs) ->
+    (ids, ans) := u:p_rompt (rec, k)
+    (a, b) := ids u:p_air ans
+    (_, _, _, lg, _) := (Wt, (l, a, b, 9, D r_eshape 0.0)) u:r_un ids
+    (k + 1, fs c_at ((1 + b s_elect ids) s_elect lg) - (ans + 1) s_elect lg)
+  } p_ower (1, 0 r_eshape 0.0)
+  u:m_ean fs
+}
+## A direction to steer by for control: a fixed ripple, of length 1.
+r0 := s_in 1.7 * f_loat (r_ange D) * r_ange D
+rnd := r0 / ('+ r_/ r0 * r0) ^ 0.5
+## A model taken apart: the margins (unique, recurring); the two heads
+## the class flip moves most (layer, head, attribution, each); the gate
+## direction after layers 1 to 3 (gap, sign accuracy, each); the layer
+## of the largest gap, the recurring prompts' margin pushed by one gap
+## toward unique and the same push in the random direction, the unique
+## prompts' pushed toward recurring and its control; the label shown against the answer
+## with no swap, then with the swap at the embedding and after layers 1
+## to 3.
+u:a_part := { m ->
+  Wt := u:l_oad m
+  (mu, mr, Bu, Br, fl) := u:i_ntact Wt
+  f := u:c_mean fl
+  top := 2 t_ake g_rade n_eg f
+  (_, gs) := 3 '{ (l, gs) -> (_, gap, acc) := (Bu, Br) u:g_ate l; (l + 1, gs c_at gap c_at acc) } p_ower (1, 0 r_eshape 0.0)
+  gl := 1 s_elect g_rade n_eg 1 s_elect_2 3 2 r_eshape gs
+  (g, gap, _) := (Bu, Br) u:g_ate gl
+  v := g * a_bs gap
+  w := rnd * a_bs gap
+  st := (u:s_teer (Wt, rec, gl, n_eg v)) c_at (u:s_teer (Wt, rec, gl, n_eg w)) c_at (u:s_teer (Wt, uniq, gl, v)) c_at u:s_teer (Wt, uniq, gl, w)
+  sw := (u:s_wap (Wt, 9)) c_at (u:s_wap (Wt, 0)) c_at (u:s_wap (Wt, 1)) c_at (u:s_wap (Wt, 2)) c_at u:s_wap (Wt, 3)
+  ((u:m_ean mu) c_at u:m_ean mr, (1 + (top - 1) d_iv 4) c_at (1 + (top - 1) m_od 4), top s_elect f, gs, (f_loat gl) c_at st, sw)
+}
+
+### The three models, taken apart
+
+## Each model: its margins, its readers, its gate direction, its
+## steering, its slot swap (as u:a_part gives them). Mix first, then
+## recurring-only, then gate.
+
+## Rounded to 2 places.
+u:r_2 := { v -> (f_loat f_loor 0.5 + 100.0 * v) / 100.0 }
+(m1, h1, a1, g1, s1, w1) := u:a_part "mix"
+u:r_2 m1
+h1
+u:r_2 a1
+u:r_2 g1
+u:r_2 s1
+u:r_2 w1
+(m2, h2, a2, g2, s2, w2) := u:a_part "recurring"
+u:r_2 m2
+h2
+u:r_2 a2
+u:r_2 g2
+u:r_2 s2
+u:r_2 w2
+(m3, h3, a3, g3, s3, w3) := u:a_part "gate"
+u:r_2 m3
+h3
+u:r_2 a3
+u:r_2 g3
+u:r_2 s3
+u:r_2 w3

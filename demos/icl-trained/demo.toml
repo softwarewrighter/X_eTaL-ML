@@ -1,0 +1,11 @@
+# One demo's description: read by scripts/demos.py for the tests, the
+# README's demo list and the live catalog (pages/index.html).
+slug = "icl-trained"            # the directory name, demos/<slug>/
+title = "In-context learning, trained"
+summary = "A small transformer trained from scratch to answer from demonstrations it has never seen (Gao and Gao's task), under three training mixes, then taken apart in your browser: the heads that read the answer, the slots the labels are kept in, and the gate the paper found forms only when retrieving on unique-label prompts does not pay."
+concepts = ["transformer forward pass", "edits of the residual stream", "direct logit attribution", "steering", "tuples of weights"]        # the X_eTaL ideas it shows
+status = "live"             # draft | live | deferred
+order = 22                  # position in the catalog (lower first)
+needs = ["M16"]                   # asks in docs/xetal-asks.md it waits on or works around
+line = "Pn + ((k + sw) s_elect X - Pn) + (f_loat (l = lv) * k = n) '* t_able v"
+why = "Taking a model apart is editing its residual stream between layers: one line swaps two tokens' rows (each keeping its position) and adds a push to the last token's, and every experiment of the paper is the forward pass run with such an edit."

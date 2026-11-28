@@ -87,6 +87,10 @@ micro-bert-data:
     @[ -s work/names.txt ] || curl -fsSL -o work/names.txt https://raw.githubusercontent.com/karpathy/makemore/988aa59/names.txt
     cargo run --release -q --manifest-path demos/micro-bert/train/Cargo.toml
 
+# Train the icl-trained demo's three transformers (mix, recurring only, gate; about 5 hours) and write their weights and prompts into data/
+icl-trained-data:
+    scripts/icl-trained-data.sh
+
 # Train the world-model demo's network (1,936 states of a bouncing ball, a fifth held out; 25 s) and write its weights into data/
 world-model-data:
     cargo run --release -q --manifest-path demos/world-model/train/Cargo.toml

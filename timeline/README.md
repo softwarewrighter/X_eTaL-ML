@@ -36,7 +36,7 @@ show, this repository's demos. Live at
 - `data/timeline.json` -- the events, each `{year, month, when, title,
   text, href, kind, topics, demo, shows, image, tip, side}`; sorted by
   time when read. 84 papers, milestones and notes from 1943 to 2026,
-  and a demo event for each of the 19 live demos. A demo event names
+  and a demo event for each of the 20 live demos. A demo event names
   only its slug, its place (the idea's month), what it shows and its
   topics; its title, its words (the summary's first clause), its tip
   (the whole summary) and its link come from `demos/<slug>/demo.toml`,

@@ -1,0 +1,21 @@
+[package]
+name = "icl-trained-web"
+description = "In-context learning, trained: a small transformer trained on the paper's task, taken apart by X_eTaL in the browser: its readers, its slots, its gate"
+version = "0.1.0"
+edition = "2021"
+license = "MIT"
+publish = false
+
+[dependencies]
+microscope = { path = "../../../shared/microscope" }
+yew = { version = "0.21", features = ["csr"] }
+gloo-timers = "0.3"
+web-sys = { version = "0.3", features = ["HtmlInputElement", "HtmlSelectElement"] }
+console_error_panic_hook = "0.1"
+
+[workspace]
+
+# The tests run the circuit by X_eTaL natively: the interpreter (a
+# dependency) optimized, or a run takes many times as long.
+[profile.dev.package."*"]
+opt-level = 3
